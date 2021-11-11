@@ -18,7 +18,7 @@ android {
         minSdk = libs.versions.android.sdk.min.get().toInt()
         targetSdk = libs.versions.android.sdk.target.get().toInt()
 
-        testInstrumentationRunner = "org.tiqr.eduid.runner.HiltAndroidTestRunner"
+        testInstrumentationRunner = "nl.eduid.runner.HiltAndroidTestRunner"
 
         manifestPlaceholders["schemeEnroll"] = project.property("schemeEnroll") as String
         manifestPlaceholders["schemeAuth"] = project.property("schemeAuth") as String
