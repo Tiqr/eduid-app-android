@@ -27,7 +27,7 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.tiqr.eduid
+package nl.eduid
 
 import android.app.Application
 import coil.Coil

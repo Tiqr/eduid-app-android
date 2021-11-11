@@ -11,7 +11,7 @@ android {
     buildToolsVersion = libs.versions.android.buildTools.get()
 
     defaultConfig {
-        applicationId = "org.tiqr.eduid"
+        applicationId = "nl.eduid"
         versionCode = 30
         versionName = "4.0.0"
 

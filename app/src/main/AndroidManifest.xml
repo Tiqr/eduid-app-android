@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="UnusedAttribute"
-    package="org.tiqr.eduid">
+    package="nl.eduid">
 
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <!-- Permissions for QR code scanning -->
@@ -17,7 +17,7 @@
     </queries>
 
     <application
-        android:name="org.tiqr.eduid.EduIdApplication"
+        android:name="nl.eduid.EduIdApplication"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:dataExtractionRules="@xml/backup_descriptor_v31"
