@@ -107,4 +107,9 @@
     <style name="TopBarIconSmall">
         <item name="android:background">@drawable/appbar_background</item>
     </style>
+
+    <style name="AboutSurfIcon">
+        <item name="drawableBottomCompat">@drawable/surfnet_background</item>
+    </style>
+
 </resources>
