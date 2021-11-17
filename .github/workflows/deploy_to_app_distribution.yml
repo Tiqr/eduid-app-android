@@ -37,10 +37,3 @@ jobs:
           FIREBASE_APP_ID_ANDROID: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
           GIT_COMMIT: ${{ steps.short-sha.outputs.sha }}
           BUILD_NUMBER: ${{ github.run_number }}
-      - name: Notify Slack about success
-        run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"icon_emoji": ":lock:", "username": "GitHub Actions", "text":":white_check_mark: [Tiqr Android] Build #${{ github.run_number }} completed successfully (${{ steps.short-sha.outputs.sha }})"}' ${{ secrets.SLACK_WEBHOOK_URL }}
-      - name: Notify Slack about failure
-        run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"icon_emoji": ":lock:", "username": "GitHub Actions", "text":":x: [Tiqr Android] Build #${{ github.run_number }} failed (${{ steps.short-sha.outputs.sha }})"}' ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()
