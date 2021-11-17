@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - develop
+      - TIQR-234_add_firebase_dist
 
 jobs:
   distribute:
