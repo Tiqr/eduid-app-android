@@ -21,18 +21,50 @@ platform :android do
     gradle(task: "test")
   end
 
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
+  desc "Build store package"
+  lane :storebuild do
+    gradle(task: "clean")
+
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      print_command: false,
+      properties: {
+        "android.injected.signing.store.file" => ENV['TIQR_FASTLANE_STORE_FILE'],
+        "android.injected.signing.store.password" => ENV['TIQR_FASTLANE_STORE_PASS'],
+        "android.injected.signing.key.alias" => ENV['TIQR_FASTLANE_KEY_ALIAS'],
+        "android.injected.signing.key.password" => ENV['TIQR_FASTLANE_KEY_PASS'],
+      }
+    )
+
+    artifacts = []
+    artifacts << lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
+    artifacts << lane_context[SharedValues::GRADLE_MAPPING_TXT_OUTPUT_PATH] if lane_context[SharedValues::GRADLE_MAPPING_TXT_OUTPUT_PATH]
+
+    copy_artifacts(
+        target_path: File.absolute_path("../distribution/"),
+        artifacts: artifacts
+    )
   end
 
-  desc "Deploy a new version to the Google Play"
-  lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store
+
+  desc "Build app and upload to Firebase App Distribution"
+  lane :bundle_for_distribution  do
+      gradle(task: "clean assembleRelease",
+        properties: {
+          "android.injected.signing.store.file" => 'app_distribution_keystore.jks',
+          "android.injected.signing.store.password" => 'eduideduid',
+          "android.injected.signing.key.alias" => 'eduid',
+          "android.injected.signing.key.password" => 'eduideduid',
+          "commit" => ENV["GIT_COMMIT"],
+        }
+
+      )
+      firebase_app_distribution(
+          app: ENV["FIREBASE_APP_ID_ANDROID"],
+          firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"],
+          groups: "internal-testers-eduid",
+          release_notes: `printf 'Build #%s [%s]' $BUILD_NUMBER $GIT_COMMIT` + "\n\nChanges:\n" + `git log --pretty=format:"* %b [%h]" --merges --first-parent develop --max-count 50`,
+      )
   end
 end
