@@ -52,7 +52,7 @@ platform :android do
   lane :bundle_for_distribution  do
       gradle(task: "clean assembleRelease",
         properties: {
-          "android.injected.signing.store.file" => 'firebase_distribution_keystore.jks',
+          "android.injected.signing.store.file" => 'app_distribution_keystore.jks',
           "android.injected.signing.store.password" => 'eduideduid',
           "android.injected.signing.key.alias" => 'eduid',
           "android.injected.signing.key.password" => 'eduideduid',
