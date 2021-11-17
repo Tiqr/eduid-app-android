@@ -30,10 +30,10 @@ platform :android do
       build_type: "Release",
       print_command: false,
       properties: {
-        "android.injected.signing.store.file" => ENV['TIQR_FASTLANE_STORE_FILE'],
-        "android.injected.signing.store.password" => ENV['TIQR_FASTLANE_STORE_PASS'],
-        "android.injected.signing.key.alias" => ENV['TIQR_FASTLANE_KEY_ALIAS'],
-        "android.injected.signing.key.password" => ENV['TIQR_FASTLANE_KEY_PASS'],
+        "android.injected.signing.store.file" => ENV['EDUID_FASTLANE_STORE_FILE'],
+        "android.injected.signing.store.password" => ENV['EDUID_FASTLANE_STORE_PASS'],
+        "android.injected.signing.key.alias" => ENV['EDUID_FASTLANE_KEY_ALIAS'],
+        "android.injected.signing.key.password" => ENV['EDUID_FASTLANE_KEY_PASS'],
       }
     )
 
