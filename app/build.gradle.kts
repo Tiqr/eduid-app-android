@@ -24,7 +24,7 @@ android {
         manifestPlaceholders["schemeAuth"] = project.property("schemeAuth") as String
 
         // only package supported languages
-        resourceConfigurations += listOf("en", "da", "de", "es", "fr", "fy", "hr", "ja", "lt", "nl", "no", "ro", "sk", "sl", "sr", "tr")
+        resourceConfigurations += listOf("en", "nl")
     }
 
     buildTypes {
