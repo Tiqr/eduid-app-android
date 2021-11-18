@@ -33,6 +33,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022552493891:android:c9e09fb0fd6b085d21e9f6",
+        "android_client_info": {
+          "package_name": "nl.eduid.testing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022552493891-o0ui659bmse2bookvnnclhm7hnpnvvpk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAV2VxKHNOovNFzL5-dPA_IjhbDHRU91dQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1022552493891-o0ui659bmse2bookvnnclhm7hnpnvvpk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
