@@ -23,7 +23,7 @@ platform :android do
 
   desc "Build app and upload to Firebase App Distribution"
   lane :bundle_for_distribution  do
-      gradle(task: "clean assembleRelease",
+      gradle(task: "clean assembleAcceptance",
         properties: {
           "android.injected.signing.store.file" => 'app_distribution_keystore.jks',
           "android.injected.signing.store.password" => 'eduideduid',
