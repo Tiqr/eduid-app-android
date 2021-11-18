@@ -24,7 +24,7 @@ android {
         manifestPlaceholders["schemeAuth"] = project.property("schemeAuth") as String
 
         // only package supported languages
-        resourceConfigurations += listOf("en", "da", "de", "es", "fr", "fy", "hr", "ja", "lt", "nl", "no", "ro", "sk", "sl", "sr", "tr")
+        resourceConfigurations += listOf("en", "nl")
     }
 
     buildTypes {
@@ -137,4 +137,17 @@ dependencies {
 
     androidTestImplementation(libs.dagger.hilt.testing)
     kaptAndroidTest(libs.dagger.hilt.compiler)
+}
+
+// Disable analytics
+configurations {
+    all {
+        exclude(group = "com.google.firebase", module = "firebase-core")
+        exclude(group = "com.google.firebase", module = "firebase-analytics")
+        exclude(group = "com.google.firebase", module = "firebase-measurement-connector")
+    }
+}
+
+apply {
+    plugin("com.google.gms.google-services")
 }
