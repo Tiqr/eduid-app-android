@@ -10,7 +10,8 @@
         <item name="colorError">@color/errorColor</item>
         <item name="android:colorBackground">@color/grey_50</item>
 
-        <item name="android:autofilledHighlight" tools:ignore="NewApi">@android:color/transparent</item>
+        <item name="android:autofilledHighlight" tools:ignore="NewApi">@android:color/transparent
+        </item>
         <item name="android:textColorPrimary">@color/primaryTextColor</item>
         <item name="android:textColorLink">@color/linkColor</item>
         <item name="android:textViewStyle">@style/AppTheme.TextView</item>
@@ -104,5 +105,12 @@
     <style name="AboutSurfIcon">
         <item name="drawableBottomCompat">@drawable/surfnet_background</item>
     </style>
+
+    <style name="AboutAppIcon">
+        <item name="drawableBottomCompat">@drawable/logo_eduid_big</item>
+        <item name="android:width">90dp</item>
+        <item name="android:height">40dp</item>
+    </style>
+
 
 </resources>
