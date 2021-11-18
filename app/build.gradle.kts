@@ -127,3 +127,16 @@ dependencies {
     androidTestImplementation(libs.dagger.hilt.testing)
     kaptAndroidTest(libs.dagger.hilt.compiler)
 }
+
+// Disable analytics
+configurations {
+    all {
+        exclude(group = "com.google.firebase", module = "firebase-core")
+        exclude(group = "com.google.firebase", module = "firebase-analytics")
+        exclude(group = "com.google.firebase", module = "firebase-measurement-connector")
+    }
+}
+
+apply {
+    plugin("com.google.gms.google-services")
+}
