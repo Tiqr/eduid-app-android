@@ -4,6 +4,7 @@
     <color name="primaryTextColor">#ffffff</color>
     <color name="scanColor">#ffffff</color>
     <color name="basicColor">#000000</color>
+    <color name="splashScreenColor">#011955</color>
 
     <color name="white">#FFFFFF</color>
     <color name="grey_50">#FAFAFA</color>
