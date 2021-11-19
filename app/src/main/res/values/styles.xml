@@ -107,9 +107,7 @@
     </style>
 
     <style name="AboutAppIcon">
-        <item name="drawableBottomCompat">@drawable/logo_eduid_big</item>
-        <item name="android:width">90dp</item>
-        <item name="android:height">40dp</item>
+        <item name="drawableBottomCompat">@drawable/appbar_background</item>
     </style>
 
 
