@@ -2,6 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
 
     <string name="app_name" translatable="false">eduID</string>
+    <string name="app_url" translatable="false">https://eduid.nl/</string>
 
     <!--    Strings below override strings from core module that are app-specific-->
 
