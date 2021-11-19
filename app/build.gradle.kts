@@ -12,8 +12,8 @@ android {
 
     defaultConfig {
         applicationId = "nl.eduid"
-        versionCode = 30
-        versionName = "4.0.0"
+        versionCode = 1
+        versionName = "1.0.0"
 
         minSdk = libs.versions.android.sdk.min.get().toInt()
         targetSdk = libs.versions.android.sdk.target.get().toInt()
