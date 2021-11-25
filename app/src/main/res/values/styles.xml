@@ -10,7 +10,8 @@
         <item name="colorError">@color/errorColor</item>
         <item name="android:colorBackground">@color/grey_50</item>
 
-        <item name="android:autofilledHighlight" tools:ignore="NewApi">@android:color/transparent</item>
+        <item name="android:autofilledHighlight" tools:ignore="NewApi">@android:color/transparent
+        </item>
         <item name="android:textColorPrimary">@color/primaryTextColor</item>
         <item name="android:textColorLink">@color/linkColor</item>
         <item name="android:textViewStyle">@style/AppTheme.TextView</item>
@@ -18,7 +19,7 @@
     </style>
 
     <style name="AppTheme.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/primaryColor</item>
+        <item name="windowSplashScreenBackground">@color/splashScreenColor</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash_screen</item>
         <item name="postSplashScreenTheme">@style/AppTheme</item>
     </style>
@@ -104,5 +105,10 @@
     <style name="AboutSurfIcon">
         <item name="drawableBottomCompat">@drawable/surfnet_background</item>
     </style>
+
+    <style name="AboutAppIcon">
+        <item name="drawableBottomCompat">@drawable/appbar_background</item>
+    </style>
+
 
 </resources>
