@@ -40,7 +40,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltAndroidApp
-class EduIdApplication : Application(), ImageLoaderFactory {
+class EduIdApplication : Application() {
     @Inject
     internal lateinit var imageOkHttpClient: OkHttpClient.Builder
 
@@ -53,21 +53,13 @@ class EduIdApplication : Application(), ImageLoaderFactory {
 
         }
 
-        // Set the Coil's singleton instance
-        Coil.setImageLoader(this)
-    }
-
-    /**
-     * Use our own okHttp to share pools
-     */
-    override fun newImageLoader(): ImageLoader {
-        return ImageLoader.Builder(context = this)
-                .crossfade(enable = true)
-                .okHttpClient {
-                    imageOkHttpClient
-                            .cache(CoilUtils.createDefaultCache(context = this))
-                            .build()
-                }
-                .build()
+        Coil.setImageLoader(ImageLoader.Builder(context = this)
+            .crossfade(enable = true)
+            .okHttpClient {
+                imageOkHttpClient
+                    .cache(CoilUtils.createDefaultCache(context = this))
+                    .build()
+            }
+            .build())
     }
 }
