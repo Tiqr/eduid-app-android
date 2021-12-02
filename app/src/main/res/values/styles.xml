@@ -91,7 +91,7 @@
 
     <style name="ScanButtonIcon" parent="Widget.MaterialComponents.Button.Icon">
         <item name="android:textColor">@color/scanColor</item>
-        <item name="android:fontFamily">@font/sourcesanspro_regular</item>
+        <item name="android:fontFamily">@font/nunito_bold</item>
     </style>
 
     <style name="BottomBarIconSmallRight">
