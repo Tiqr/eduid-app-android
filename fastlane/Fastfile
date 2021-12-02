@@ -21,18 +21,23 @@ platform :android do
     gradle(task: "test")
   end
 
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
-  end
+  desc "Build app and upload to Firebase App Distribution"
+  lane :bundle_for_distribution  do
+      gradle(task: "clean assembleAcceptance",
+        properties: {
+          "android.injected.signing.store.file" => 'app_distribution_keystore.jks',
+          "android.injected.signing.store.password" => 'eduideduid',
+          "android.injected.signing.key.alias" => 'eduid',
+          "android.injected.signing.key.password" => 'eduideduid',
+          "commit" => ENV["GIT_COMMIT"],
+        }
 
-  desc "Deploy a new version to the Google Play"
-  lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store
+      )
+      firebase_app_distribution(
+          app: ENV["FIREBASE_APP_ID_ANDROID"],
+          firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"],
+          groups: "internal-testers-eduid",
+          release_notes: `printf 'Build #%s [%s]' $BUILD_NUMBER $GIT_COMMIT` + "\n\nChanges:\n" + `git log --pretty=format:"* %b [%h]" --merges --first-parent develop --max-count 50`,
+      )
   end
 end

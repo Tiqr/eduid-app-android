@@ -12,8 +12,8 @@ android {
 
     defaultConfig {
         applicationId = "nl.eduid"
-        versionCode = 30
-        versionName = "4.0.0"
+        versionCode = 1
+        versionName = "1.0.0"
 
         minSdk = libs.versions.android.sdk.min.get().toInt()
         targetSdk = libs.versions.android.sdk.target.get().toInt()
@@ -24,7 +24,7 @@ android {
         manifestPlaceholders["schemeAuth"] = project.property("schemeAuth") as String
 
         // only package supported languages
-        resourceConfigurations += listOf("en", "da", "de", "es", "fr", "fy", "hr", "ja", "lt", "nl", "no", "ro", "sk", "sl", "sr", "tr")
+        resourceConfigurations += listOf("en", "nl")
     }
 
     buildTypes {
@@ -32,6 +32,17 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+        }
+    }
+
+    flavorDimensions.add("releaseType")
+    productFlavors {
+        create("acceptance") {
+            dimension = "releaseType"
+            applicationIdSuffix = ".testing"
+        }
+        create("production") {
+            dimension = "releaseType"
         }
     }
 
@@ -71,7 +82,7 @@ dependencies {
         }
     }
 
-    implementation("org.tiqr:core:0.0.17-SNAPSHOT")
+    implementation("org.tiqr:core:0.0.18-SNAPSHOT")
     implementation("org.tiqr:data:0.0.5-SNAPSHOT")
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.core)
@@ -126,4 +137,17 @@ dependencies {
 
     androidTestImplementation(libs.dagger.hilt.testing)
     kaptAndroidTest(libs.dagger.hilt.compiler)
+}
+
+// Disable analytics
+configurations {
+    all {
+        exclude(group = "com.google.firebase", module = "firebase-core")
+        exclude(group = "com.google.firebase", module = "firebase-analytics")
+        exclude(group = "com.google.firebase", module = "firebase-measurement-connector")
+    }
+}
+
+apply {
+    plugin("com.google.gms.google-services")
 }

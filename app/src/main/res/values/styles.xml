@@ -10,7 +10,8 @@
         <item name="colorError">@color/errorColor</item>
         <item name="android:colorBackground">@color/grey_50</item>
 
-        <item name="android:autofilledHighlight" tools:ignore="NewApi">@android:color/transparent</item>
+        <item name="android:autofilledHighlight" tools:ignore="NewApi">@android:color/transparent
+        </item>
         <item name="android:textColorPrimary">@color/primaryTextColor</item>
         <item name="android:textColorLink">@color/linkColor</item>
         <item name="android:textViewStyle">@style/AppTheme.TextView</item>
@@ -18,8 +19,8 @@
     </style>
 
     <style name="AppTheme.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/primaryColor</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/logo_surf_big</item>
+        <item name="windowSplashScreenBackground">@color/splashScreenColor</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_screen</item>
         <item name="postSplashScreenTheme">@style/AppTheme</item>
     </style>
 
@@ -39,24 +40,25 @@
     <!-- TextAppearance -->
     <style name="AppTheme.TextAppearance" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textColor">@color/basicColor</item>
+        <item name="android:fontFamily">@font/sourcesanspro_regular</item>
     </style>
 
     <style name="AppTheme.TextAppearance.Label">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/basicColor</item>
-        <item name="android:fontFamily">@font/nunito_extrabold</item>
+        <item name="android:fontFamily">@font/sourcesanspro_regular</item>
     </style>
 
     <style name="AppTheme.TextAppearance.Title" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/basicColor</item>
-        <item name="android:fontFamily">@font/nunito_extrabold</item>
+        <item name="android:fontFamily">@font/sourcesanspro_regular</item>
     </style>
 
     <style name="AppTheme.TextAppearance.Error">
         <item name="android:textColor">?attr/colorError</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">@font/nunito_extrabold</item>
+        <item name="android:fontFamily">@font/sourcesanspro_regular</item>
     </style>
 
     <!-- Widgets -->
@@ -93,15 +95,7 @@
     </style>
 
     <style name="BottomBarIconSmallRight">
-        <item name="android:layout_width">80dp</item>
-        <item name="android:layout_height">48dp</item>
         <item name="android:src">@drawable/logo_power_by_surf</item>
-    </style>
-
-    <style name="BottomBarIconSmallLeft">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:src">@drawable/ic_info</item>
     </style>
 
     <style name="TopBarIconSmall">
@@ -111,5 +105,10 @@
     <style name="AboutSurfIcon">
         <item name="drawableBottomCompat">@drawable/surfnet_background</item>
     </style>
+
+    <style name="AboutAppIcon">
+        <item name="drawableBottomCompat">@drawable/appbar_background</item>
+    </style>
+
 
 </resources>
