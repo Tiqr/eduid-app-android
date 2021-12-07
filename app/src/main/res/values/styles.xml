@@ -99,15 +99,15 @@
     </style>
 
     <style name="TopBarIconSmall">
-        <item name="android:background">@drawable/appbar_background</item>
+        <item name="android:src">@drawable/logo_eduid_big</item>
     </style>
 
     <style name="AboutSurfIcon">
-        <item name="drawableBottomCompat">@drawable/surfnet_background</item>
+        <item name="android:src">@drawable/logo_surf_big</item>
     </style>
 
     <style name="AboutAppIcon">
-        <item name="drawableBottomCompat">@drawable/appbar_background</item>
+        <item name="android:src">@drawable/logo_eduid_big</item>
     </style>
 
 
