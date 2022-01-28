@@ -87,6 +87,8 @@
         <item name="android:inputType">numberPassword</item>
         <item name="android:maxLength">1</item>
         <item name="android:maxLines">1</item>
+        <item name="android:textAppearance">@style/AppTheme.TextAppearance</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="ScanButtonIcon" parent="Widget.MaterialComponents.Button.Icon">
