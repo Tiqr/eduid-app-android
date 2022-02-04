@@ -82,7 +82,7 @@ dependencies {
         }
     }
 
-    implementation("org.tiqr:core:0.0.33.11-SNAPSHOT")
+    implementation("org.tiqr:core:0.0.33.12-SNAPSHOT")
     implementation("org.tiqr:data:0.0.10.4-SNAPSHOT")
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.core)
