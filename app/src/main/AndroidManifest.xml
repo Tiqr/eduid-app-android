@@ -45,8 +45,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="${schemeEnroll}" />
-                <data android:scheme="${schemeAuth}" />
+                <data
+                    android:host="*.eduid.nl"
+                    android:path="/tiqrenroll"
+                    android:scheme="https" />
+                <data
+                    android:host="*.eduid.nl"
+                    android:path="/tiqrauth"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
 

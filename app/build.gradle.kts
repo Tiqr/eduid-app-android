@@ -20,9 +20,6 @@ android {
 
         testInstrumentationRunner = "nl.eduid.runner.HiltAndroidTestRunner"
 
-        manifestPlaceholders["schemeEnroll"] = project.property("schemeEnroll") as String
-        manifestPlaceholders["schemeAuth"] = project.property("schemeAuth") as String
-
         // only package supported languages
         resourceConfigurations += listOf("en", "nl")
     }
