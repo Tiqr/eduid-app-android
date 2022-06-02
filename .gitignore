@@ -61,7 +61,3 @@ lint/tmp/
 
 # Android Profiling
 *.hprof
-
-# Gradle wrapper
-gradle/wrapper/gradle-wrapper.properties
-gradlew
