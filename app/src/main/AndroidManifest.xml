@@ -32,6 +32,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash"
             android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleTop"
             tools:ignore="LockedOrientationActivity"
             android:exported="true">
             <intent-filter>
@@ -57,8 +58,11 @@
 
                 <data android:host="eduid.nl" android:scheme="https" />
 
-                <data android:pathPrefix="/${tiqr_config_auth_path_param}/"/>
-                <data android:pathPrefix="/${tiqr_config_enroll_path_param}/"/>
+                <!-- We accept the path both with and without the slash -->
+                <data android:path="/${tiqr_config_auth_path_param}"/>
+                <data android:path="/${tiqr_config_enroll_path_param}"/>
+                <data android:path="/${tiqr_config_auth_path_param}/"/>
+                <data android:path="/${tiqr_config_enroll_path_param}/"/>
             </intent-filter>
         </activity>
 
