@@ -21,7 +21,7 @@ jobs:
 #      run: ./gradlew build
 
     - name: Build APK
-      run: bash ./gradlew assembleRelease
+      run: ./gradlew assembleRelease
     - name: Sign APK
       id: sign_apk
       uses: r0adkll/sign-android-release@v1
@@ -33,7 +33,7 @@ jobs:
         keyPassword: ${{ secrets.KEYPASSWORD }}
 
     - name: Build App bundle
-      run: bash ./gradlew bundle
+      run: ./gradlew bundle
     - name: Sign App Bundle
       id: sign_aab
       uses: r0adkll/sign-android-release@v1
