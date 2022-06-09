@@ -13,12 +13,12 @@ jobs:
       with:
         java-version: 11
         distribution: 'temurin'
-    - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
-    - name: Install gradle wrapper
-      run: gradle wrapper
-    - name: Execute Gradle build
-      run: ./gradlew build
+#    - name: Setup Gradle
+#      uses: gradle/gradle-build-action@v2
+#    - name: Install gradle wrapper
+#      run: gradle wrapper
+#    - name: Execute Gradle build
+#      run: ./gradlew build
 
     - name: Build APK
       run: bash ./gradlew assembleRelease
