@@ -6,14 +6,31 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
+
+fun String.runCommand(workingDir: File = file("./")): String {
+    val parts = this.split("\\s".toRegex())
+    val proc = ProcessBuilder(*parts.toTypedArray())
+        .directory(workingDir)
+        .redirectOutput(ProcessBuilder.Redirect.PIPE)
+        .redirectError(ProcessBuilder.Redirect.PIPE)
+        .start()
+
+    proc.waitFor(1, TimeUnit.MINUTES)
+    return proc.inputStream.bufferedReader().readText().trim()
+}
+
 android {
     compileSdk = libs.versions.android.sdk.compile.get().toInt()
     buildToolsVersion = libs.versions.android.buildTools.get()
 
+
+    val gitTagCount = "git tag --list".runCommand().split('\n').size
+    val gitTag = "git describe --tags --dirty".runCommand()
+
     defaultConfig {
         applicationId = "nl.eduid"
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = gitTagCount.toInt()
+        versionName = gitTag.toString().trim()
 
         minSdk = libs.versions.android.sdk.min.get().toInt()
         targetSdk = libs.versions.android.sdk.target.get().toInt()

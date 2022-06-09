@@ -61,3 +61,5 @@ lint/tmp/
 
 # Android Profiling
 *.hprof
+
+keystore.jks
