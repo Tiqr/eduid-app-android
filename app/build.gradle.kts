@@ -6,22 +6,46 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
+
+fun String.runCommand(workingDir: File = file("./")): String {
+    val parts = this.split("\\s".toRegex())
+    val proc = ProcessBuilder(*parts.toTypedArray())
+        .directory(workingDir)
+        .redirectOutput(ProcessBuilder.Redirect.PIPE)
+        .redirectError(ProcessBuilder.Redirect.PIPE)
+        .start()
+
+    proc.waitFor(1, TimeUnit.MINUTES)
+    return proc.inputStream.bufferedReader().readText().trim()
+}
+
 android {
     compileSdk = libs.versions.android.sdk.compile.get().toInt()
     buildToolsVersion = libs.versions.android.buildTools.get()
 
+
+    val gitTagCount = "git tag --list".runCommand().split('\n').size
+    val gitTag = "git describe --tags --dirty".runCommand()
+
     defaultConfig {
         applicationId = "nl.eduid"
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = gitTagCount.toInt()
+        versionName = gitTag.toString().trim()
 
         minSdk = libs.versions.android.sdk.min.get().toInt()
         targetSdk = libs.versions.android.sdk.target.get().toInt()
 
         testInstrumentationRunner = "nl.eduid.runner.HiltAndroidTestRunner"
 
-        manifestPlaceholders["schemeEnroll"] = project.property("schemeEnroll") as String
-        manifestPlaceholders["schemeAuth"] = project.property("schemeAuth") as String
+        manifestPlaceholders["tiqr_config_base_url"] = "https://demo.tiqr.org"
+        manifestPlaceholders["tiqr_config_protocol_version"] = "2"
+        manifestPlaceholders["tiqr_config_protocol_compatibility_mode"] =  "true"
+        manifestPlaceholders["tiqr_config_enforce_challenge_host"] = "eduid.nl"
+        manifestPlaceholders["tiqr_config_enroll_path_param"] = "tiqrenroll"
+        manifestPlaceholders["tiqr_config_auth_path_param"] = "tiqrauth"
+        manifestPlaceholders["tiqr_config_enroll_scheme"] = "eduidenroll"
+        manifestPlaceholders["tiqr_config_auth_scheme"] = "eduidauth"
+        manifestPlaceholders["tiqr_config_token_exchange_enabled"] = "false"
 
         // only package supported languages
         resourceConfigurations += listOf("en", "nl")
@@ -82,8 +106,8 @@ dependencies {
         }
     }
 
-    implementation("org.tiqr:core:0.0.33.14-SNAPSHOT")
-    implementation("org.tiqr:data:0.0.10.5-SNAPSHOT")
+    implementation("org.tiqr:core:0.0.33.25-SNAPSHOT")
+    implementation("org.tiqr:data:1.0.1.8-SNAPSHOT")
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)

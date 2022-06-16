@@ -32,6 +32,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash"
             android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleTop"
             tools:ignore="LockedOrientationActivity"
             android:exported="true">
             <intent-filter>
@@ -45,8 +46,23 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="${schemeEnroll}" />
-                <data android:scheme="${schemeAuth}" />
+                <data android:scheme="${tiqr_config_enroll_scheme}" />
+                <data android:scheme="${tiqr_config_auth_scheme}" />
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="eduid.nl" android:scheme="https" />
+
+                <!-- We accept the path both with and without the slash -->
+                <data android:path="/${tiqr_config_auth_path_param}"/>
+                <data android:path="/${tiqr_config_enroll_path_param}"/>
+                <data android:path="/${tiqr_config_auth_path_param}/"/>
+                <data android:path="/${tiqr_config_enroll_path_param}/"/>
             </intent-filter>
         </activity>
 
@@ -57,6 +73,15 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <meta-data android:name="tiqr_config_base_url" android:value="${tiqr_config_base_url}"/>
+        <meta-data android:name="tiqr_config_protocol_version" android:value="${tiqr_config_protocol_version}"/>
+        <meta-data android:name="tiqr_config_protocol_compatibility_mode" android:value="${tiqr_config_protocol_compatibility_mode}"/>
+        <meta-data android:name="tiqr_config_enroll_path_param" android:value="${tiqr_config_enroll_path_param}"/>
+        <meta-data android:name="tiqr_config_auth_path_param" android:value="${tiqr_config_auth_path_param}"/>
+        <meta-data android:name="tiqr_config_enroll_scheme" android:value="${tiqr_config_enroll_scheme}"/>
+        <meta-data android:name="tiqr_config_auth_scheme" android:value="${tiqr_config_auth_scheme}"/>
+        <meta-data android:name="tiqr_config_token_exchange_enabled" android:value="${tiqr_config_token_exchange_enabled}"/>
 
     </application>
 </manifest>
