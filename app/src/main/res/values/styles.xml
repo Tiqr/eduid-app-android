@@ -19,8 +19,8 @@
     </style>
 
     <style name="AppTheme.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/splashScreenColor</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_screen</item>
+        <item name="windowSplashScreenBackground">@color/primaryColor</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_screen_logo</item>
         <item name="postSplashScreenTheme">@style/AppTheme</item>
     </style>
 
