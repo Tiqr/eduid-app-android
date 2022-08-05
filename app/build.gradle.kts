@@ -40,7 +40,7 @@ android {
         manifestPlaceholders["tiqr_config_base_url"] = "https://demo.tiqr.org"
         manifestPlaceholders["tiqr_config_protocol_version"] = "2"
         manifestPlaceholders["tiqr_config_protocol_compatibility_mode"] =  "true"
-        manifestPlaceholders["tiqr_config_enforce_challenge_host"] = "eduid.nl"
+        manifestPlaceholders["tiqr_config_enforce_challenge_hosts"] = "eduid.nl,surfconext.nl"
         manifestPlaceholders["tiqr_config_enroll_path_param"] = "tiqrenroll"
         manifestPlaceholders["tiqr_config_auth_path_param"] = "tiqrauth"
         manifestPlaceholders["tiqr_config_enroll_scheme"] = "eduidenroll"
@@ -106,8 +106,8 @@ dependencies {
         }
     }
 
-    implementation("org.tiqr:core:0.0.33.25-SNAPSHOT")
-    implementation("org.tiqr:data:1.0.1.8-SNAPSHOT")
+    implementation("org.tiqr:core:0.0.33.26-SNAPSHOT")
+    implementation("org.tiqr:data:1.0.1.9-SNAPSHOT")
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
