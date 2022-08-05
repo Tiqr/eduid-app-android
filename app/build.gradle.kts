@@ -4,8 +4,8 @@ plugins {
     kotlin("kapt")
     id("kotlin-parcelize")
     id("dagger.hilt.android.plugin")
+    id("de.nanogiants.android-versioning") version "2.4.0"
 }
-
 
 fun String.runCommand(workingDir: File = file("./")): String {
     val parts = this.split("\\s".toRegex())
@@ -23,14 +23,10 @@ android {
     compileSdk = libs.versions.android.sdk.compile.get().toInt()
     buildToolsVersion = libs.versions.android.buildTools.get()
 
-
-    val gitTagCount = "git tag --list".runCommand().split('\n').size
-    val gitTag = "git describe --tags --dirty".runCommand()
-
-    defaultConfig {
+     defaultConfig {
         applicationId = "nl.eduid"
-        versionCode = gitTagCount.toInt()
-        versionName = gitTag.toString().trim()
+        versionCode = versioning.getVersionCode()
+        versionName = versioning.getVersionName().drop(1)
 
         minSdk = libs.versions.android.sdk.min.get().toInt()
         targetSdk = libs.versions.android.sdk.target.get().toInt()
