@@ -99,13 +99,11 @@ dependencies {
     repositories {
         google()
         mavenCentral()
-        maven {
-            setUrl("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-        }
     }
 
-    implementation("org.tiqr:core:0.0.33.27-SNAPSHOT")
-    implementation("org.tiqr:data:1.0.1.10-SNAPSHOT")
+    implementation(project(":data"))
+    implementation(project(":core"))
+
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
