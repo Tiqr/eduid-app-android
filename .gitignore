@@ -63,3 +63,4 @@ lint/tmp/
 *.hprof
 
 keystore.jks
+keystore.jks.base64.txt
