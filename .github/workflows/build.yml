@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - develop
 # Where will they run
 jobs:
   build:
@@ -18,10 +19,17 @@ jobs:
         java-version: 11
         distribution: 'temurin'
         cache: 'gradle'
-    - name: Build APK
-      run: bash ./gradlew assembleDebug --stacktrace
+    - name: Build nl.eduid APK
+      run: bash ./gradlew assembleProductionRelease --stacktrace
+    - name: Build nl.eduid.testing APK
+      run: bash ./gradlew assembleAcceptanceRelease --stacktrace
     - name: Upload APK
       uses: actions/upload-artifact@v1
       with:
-        name: apk
-        path: app/build/outputs/apk/production/debug/app-production-debug.apk
+        name: app-production-release-unsigned
+        path: app/build/outputs/apk/production/release/app-production-release-unsigned.apk
+    - name: Upload testing APK
+      uses: actions/upload-artifact@v1
+      with:
+        name: app-acceptance-release-unsigned
+        path: app/build/outputs/apk/acceptance/release/app-acceptance-release-unsigned.apk

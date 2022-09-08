@@ -32,7 +32,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash"
             android:windowSoftInputMode="adjustResize"
-            android:launchMode="singleTop"
+            android:launchMode="singleInstance"
+            android:taskAffinity=""
             tools:ignore="LockedOrientationActivity"
             android:exported="true">
             <intent-filter>
