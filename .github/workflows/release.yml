@@ -66,7 +66,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{steps.sign_apk.outputs.signedReleaseFile}}
+        asset_path: ${{ steps.sign_apk.outputs.signedReleaseFile }}
         asset_name: eduID-${{ github.ref_name }}.apk
         asset_content_type: application/zip
     - name: Upload App bundle
@@ -75,6 +75,15 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{steps.sign_aab.outputs.signedReleaseFile}}
+        asset_path: ${{ steps.sign_aab.outputs.signedReleaseFile }}
         asset_name: eduID-${{ github.ref_name }}.aab
         asset_content_type: application/zip
+
+    - name: Publish to play store test track
+      uses: r0adkll/upload-google-play@v1
+      with:
+        serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        packageName: nl.eduid
+        releaseFiles: ${{ steps.sign_aab.outputs.signedReleaseFile }}
+        track: internal
+        status: completed
