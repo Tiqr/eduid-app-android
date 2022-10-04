@@ -6,7 +6,7 @@
 
     <!--    Strings below override strings from core module that are app-specific-->
 
-    <string name="start_welcome"><![CDATA[<b>Use the eduID app to log in to websites easily and secure.</b><br/><br/>Go to <a href=\"https://mijn.eduid.nl\">eduid.nl</a> to activate your eduID app<br/> <br/>During the activation process you will need to scan a QR code. Press <b>Scan</b> when asked.]]></string>
+    <string name="start_welcome"><![CDATA[<b>With the eduID app you can log in safely and securely to various web services.</b><br/><br/>Go to <a href=\"https://mijn.eduid.nl\">eduid.nl</a> to activate your eduID app<br/> <br/>During the activation process you will need to scan a QR code. Press <b>Scan</b> when asked.]]></string>
 
     <string name="start_instructions"><![CDATA[<b>Use eduID to log in</b> <br/>
 <br/>1. Open the push message or press <b>Scan</b> and scan the QR-code on the website.<br/><br/>2. Confirm with your biometric or enter your PIN<br/><br/>3. You are logged in!]]></string>
