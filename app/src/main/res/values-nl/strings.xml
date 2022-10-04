@@ -5,14 +5,23 @@
 
     <string name="scan_permission_required_message">Voor het scannen van een QR code, heeft eduID toegang nodig tot de camera.</string>
 
-    <string name="start_welcome"><![CDATA[<b>Met de eduID app kunt u veilig en vertrouwd inloggen bij verschillende webdiensten.</b><br/> <br/> Ga naar <a href=\"https://mijn.eduid.nl\">eduid.nl</a> om je eduID app te activeren<br/> <br/>Tijdens het activatieproces moet je een QR code scannen. Druk op <b>Scan</> als u hier om gevraagd wordt.]]></string>
+    <!-- Start -->
+    <string name="start_welcome"><![CDATA[<b>Met de eduID app kun je veilig en vertrouwd inloggen bij verschillende webdiensten.</b><br/> <br/> Ga naar <a href=\"https://mijn.eduid.nl\">eduid.nl</a> om je eduID app te activeren<br/> <br/>Tijdens het activatieproces moet je een QR code scannen. Druk op <b>Scan</> als hierom gevraagd wordt.]]></string>
 
     <string name="start_instructions"><![CDATA[<b>Gebruik eduID om in te loggen</b> <br/> <br/> 1. Open de eduID notificatie of druk op <b>Scan</b> en scan de QR-code op de website <br/> <br/> 2. Bevestig met je biometrie of vul je PIN in <br/> <br/> 3. Je bent ingelogd!]]></string>
 
+    <string name="start_blocked"><![CDATA[<b>Wat nu?</b><br/>
+    <br/>
+    Verwijder je eduID app registratie door naar je account overzicht rechtsboven te gaan. Ga vervolgens naar <a href=\"https://mijn.eduid.nl\">mijn.eduid.nl</a> en verwijder daar ook je
+    app registratie. Hiervoor heb je je eerder gekozen herstelmethode voor nodig. Daarna kun je de eduID app opnieuw registreren.]]></string>
+    
+    
     <string name="enroll_pin_title">Kies een unieke PIN voor eduID</string>
 
     <string name="auth_pin_title">Voer je PIN in</string>
 
     <string name="notification_channel_description">Notificaties voor berichten van eduID</string>
+    
+   
 
 </resources>
