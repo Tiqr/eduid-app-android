@@ -20,7 +20,7 @@
 
     <string name="account_id">eduID account id</string>
 
-    <string name="auth_pin_title">Enter your PIN</string>
+    <string name="auth_pin_title">Enter your eduID PIN</string>
 
     <string name="notification_channel_description">Notifications for messages from eduID</string>
 </resources>
