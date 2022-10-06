@@ -18,7 +18,7 @@
     
     <string name="enroll_pin_title">Kies een unieke PIN voor eduID</string>
 
-    <string name="auth_pin_title">Voer je PIN in</string>
+    <string name="auth_pin_title">Voer je eduID PIN in</string>
 
     <string name="notification_channel_description">Notificaties voor berichten van eduID</string>
     
