@@ -2,7 +2,48 @@
 
 ## [Unreleased](https://github.com/SURFnet/eduid-app-android/tree/HEAD)
 
-[Full Changelog](https://github.com/SURFnet/eduid-app-android/compare/c065f304a883cbfbca7ad5a88f1cd0609c916c2e...HEAD)
+# 0.0.11
+
+Light in-app icons
+
+# 0.0.10
+
+* Update translations
+* @peterclijsters1 made their first contribution in https://github.com/Tiqr/eduid-app-android/pull/40
+
+
+**Full Changelog**: https://github.com/Tiqr/eduid-app-android/compare/v0.0.9...v0.0.10
+
+# 0.0.9
+
+* Use correct core/data branche (https://github.com/Tiqr/eduid-app-android/commit/ac2adc8d90b1a2aca1db78d197c29263d908b355 by @welsinga)
+* Mitigations against task hijacking (https://github.com/Tiqr/eduid-app-android/commit/32e2cb9e41419c6f2f7930ab9b126a1658c57142 by @dzolnai)
+* Make it run on Java 11 (https://github.com/Tiqr/eduid-app-android/commit/261a5b8ca839a5cdb807c79f8c2e9ee4c620f7ff by @welsinga)
+
+
+**Full Changelog**: https://github.com/Tiqr/eduid-app-android/compare/v0.0.8...v0.0.9
+
+# 0.0.8
+
+* Use app-core as submodule (https://github.com/Tiqr/eduid-app-android/pull/34 https://github.com/Tiqr/eduid-app-android/commit/0fc71a048fb62e6ba696db36b28afd043f6070d4 by @welsinga)
+* Update library versions (https://github.com/Tiqr/eduid-app-android/commit/2f45e9c3fd0b4013b293d59aafb5a0bcea0b82d5 by @dzolnai)
+
+
+**Full Changelog**: https://github.com/Tiqr/eduid-app-android/compare/v0.0.7...v0.0.8
+
+# 0.0.7
+
+* Enforce multiple hosts (https://github.com/Tiqr/eduid-app-android/commit/44bdb2f716a536c47153e3b32cac4d22b7ed6df4 by @dzolnai)
+* Fix splash logo (https://github.com/Tiqr/eduid-app-android/commit/cec4ba9870acb550220e200c3e32adaad3019487 by @dzolnai)
+* Fix notification logo's (https://github.com/Tiqr/eduid-app-android/commit/81e75f22c9c60e032d805d3c41380d20c3c07f26 by @dzolnai)
+* core and tiqr:data version (https://github.com/Tiqr/eduid-app-android/commit/d670e54bbf5c8f2a580a496d3370f10555899f9e by @phavekes)
+* Accept path with and without slash, only allow one activity at a time (https://github.com/Tiqr/eduid-app-android/commit/26f02fa220c17a4aacdcc4d84c0127f8e463d172 by @dzolnai)
+* SURFnet/eduid-app-android into feature/TIQR-262 (https://github.com/Tiqr/eduid-app-android/commit/3265755cfb5c3fb2b06ea0f4e442f9df6f37f895 by @phavekes)
+* Fix dependency versions (https://github.com/Tiqr/eduid-app-android/commit/ec8fc0b33e756536a22837eb17efe1d57791fef1 by @dzolnai)
+* Allow opening URLs from links (https://github.com/Tiqr/eduid-app-android/commit/8d2925402b6628b41e525785297901bce4cae82c by @dzolnai)
+* SURFnet/eduid-app-android into f/TIQR-214 (https://github.com/Tiqr/eduid-app-android/commit/6bdf680529903a23f141ec1711d257e2ee234fe2 by @dima-ko)
+
+## Earlier
 
 **Merged pull requests:**
 
