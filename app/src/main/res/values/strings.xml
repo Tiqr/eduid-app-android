@@ -23,4 +23,10 @@
     <string name="auth_pin_title">Enter your eduID PIN</string>
 
     <string name="notification_channel_description">Notifications for messages from eduID</string>
+
+    <!-- The eduID server does not block accounts, but uses an incremental backoff-time. The tiqr-protocol has no way of communicating this yet.
+            For now, we just replace the message shown to the user -->
+    <string name="error_auth_title_blocked">Authentication failed</string>
+    <string name="error_auth_blocked">Try again in a moment.</string>
+
 </resources>
