@@ -31,11 +31,18 @@ android {
 
     defaultConfig {
         applicationId = "nl.eduid"
-        versionCode = gitTagCount.toInt()
-        versionName = gitTag.toString().trim().drop(1)
+        val versionCode = gitTagCount.toInt()
+        val versionName = gitTag.toString().trim().drop(1)
+
+	val pattern = Regex("^[0-9]\\d*\\.[0-9]\\d*\\.[0-9]\\d*(\\-.*)?")
+	if (!pattern.containsMatchIn(versionName)) {
+		throw StopExecutionException("Invalid version name.")
+	}
 
         minSdk = libs.versions.android.sdk.min.get().toInt()
         targetSdk = libs.versions.android.sdk.target.get().toInt()
+
+        logger.lifecycle("Building version "+versionName+"("+versionCode+")", "info")
 
         testInstrumentationRunner = "nl.eduid.runner.HiltAndroidTestRunner"
 
