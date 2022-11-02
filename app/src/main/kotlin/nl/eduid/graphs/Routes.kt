@@ -35,6 +35,15 @@ object OAuth {
 object RequestEduIdCreated {
     const val route = "request_edu_id_created"
     val uriPatternHttps = "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/created"
+    val customScheme = "eduid:///client/mobile/created"
+
+    /**
+     * After the account is created, the server redirects with the production URL, not the environment
+     * dependent URL.  The production `.well-known/assetlinks.json` does not include the signature from the testing variant
+     * We do not have the production signing, so we must match both environment dependent link *and* production
+     * environment redirect link.
+     * */
+    val uriProdPatternHttps = "https://login.eduid.nl/client/mobile/created"
 }
 
 object AccountLinked {

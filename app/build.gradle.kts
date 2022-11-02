@@ -75,7 +75,6 @@ android {
         //Only used for signing debuggable builds when building locally or apks from PRs that are archived
         //Must not be used for signing when building a bundle for Google Play upload
         if (isAppDebuggable) {
-            println("ADDING debug signing")
             getByName("debug") {
                 storeFile = file("keystore/testing.keystore")
                 storePassword = keystorePass

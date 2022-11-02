@@ -56,7 +56,6 @@ open class EduIdApplication : Application() {
         // Setup Timber
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
-
         }
 
         Coil.setImageLoader(ImageLoader.Builder(context = this)

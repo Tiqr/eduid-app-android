@@ -14,6 +14,7 @@
             android:logo="@drawable/settings_icon"
             android:icon="@drawable/settings_icon"
             android:label="@string/title_activity_test_settings"
+            android:networkSecurityConfig="@xml/network_security_config"
             android:launchMode="singleInstance"
             android:theme="@style/AppTheme">
             <intent-filter>

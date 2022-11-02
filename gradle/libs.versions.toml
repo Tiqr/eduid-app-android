@@ -4,7 +4,7 @@ android-sdk-target = "34"
 android-sdk-min = "24"
 
 
-androidGradlePlugin = "8.2.0"
+androidGradlePlugin = "8.2.1"
 hilt = "2.48.1"
 kotlin = "1.9.20"
 ksp = "1.9.20-1.0.14"
@@ -13,12 +13,11 @@ androidxComposeBom = "2023.10.01"
 coroutines = "1.7.3"
 navigation = "2.7.6"
 room = "2.6.1"
-lifecycle = "2.6.2"
+lifecycle = "2.7.0"
 camera = "1.3.1"
 okhttp = "4.12.0"
 retrofit = "2.9.0"
 moshi = "1.15.0"
-lifecycleProcess = "2.6.2"
 
 [libraries]
 
@@ -49,7 +48,7 @@ androidx-concurrent = "androidx.concurrent:concurrent-futures-ktx:1.1.0"
 androidx-constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4"
 androidx-compose-constraint = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 androidx-core = "androidx.core:core-ktx:1.12.0"
-androidx-datastore = "androidx.datastore:datastore-preferences:1.1.0-alpha07"
+androidx-datastore = "androidx.datastore:datastore-preferences:1.1.0-beta01"
 androidx-fragment = "androidx.fragment:fragment-ktx:1.6.2"
 androidx-localBroadcastManager = "androidx.localbroadcastmanager:localbroadcastmanager:1.1.0"
 androidx-recyclerview = "androidx.recyclerview:recyclerview:1.3.2"
@@ -86,9 +85,9 @@ androidx-camera-extensions = "androidx.camera:camera-extensions:1.3.1"
 
 appauth = "net.openid:appauth:0.11.1"
 jwtdecode = "com.auth0.android:jwtdecode:2.0.2"
-google-android-material = "com.google.android.material:material:1.10.0"
+google-android-material = "com.google.android.material:material:1.11.0"
 google-mlkit-barcode = "com.google.mlkit:barcode-scanning:17.2.0"
-google-firebase-messaging = "com.google.firebase:firebase-messaging-ktx:23.3.1"
+google-firebase-messaging = "com.google.firebase:firebase-messaging-ktx:23.4.0"
 material3-html-text = "de.charlex.compose.material3:material3-html-text:2.0.0-beta01"
 
 okhttp-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
@@ -113,7 +112,7 @@ junit = "junit:junit:4.13.2"
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
-androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycleProcess" }
+androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycle" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
