@@ -57,7 +57,6 @@ class EduIdApplication : Application() {
             .crossfade(enable = true)
             .okHttpClient {
                 imageOkHttpClient
-                    .cache(CoilUtils.createDefaultCache(context = this))
                     .build()
             }
             .build())
