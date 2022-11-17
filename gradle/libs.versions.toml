@@ -1,7 +1,7 @@
 [versions]
 android-sdk-compile = "33"
 android-sdk-target = "33"
-android-sdk-min = "21"
+android-sdk-min = "24"
 android-buildTools = "33.0.0"
 
 kotlin = "1.7.20"
