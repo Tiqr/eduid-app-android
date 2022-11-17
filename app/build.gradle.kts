@@ -28,11 +28,12 @@ android {
 
     val gitTagCount = "git tag --list".runCommand().split('\n').size
     val gitTag = "git describe --tags --dirty".runCommand()
+    val gitCoreSha = "git submodule status".runCommand().substring(0, 8)
 
     defaultConfig {
         applicationId = "nl.eduid"
-        versionCode = gitTagCount.toInt()
-        versionName = gitTag.toString().trim().drop(1)
+        versionCode = gitTagCount
+        versionName = gitTag.trim().drop(1) + " core($gitCoreSha)"
 
         minSdk = libs.versions.android.sdk.min.get().toInt()
         targetSdk = libs.versions.android.sdk.target.get().toInt()
@@ -41,7 +42,7 @@ android {
 
         manifestPlaceholders["tiqr_config_base_url"] = "https://demo.tiqr.org"
         manifestPlaceholders["tiqr_config_protocol_version"] = "2"
-        manifestPlaceholders["tiqr_config_protocol_compatibility_mode"] =  "true"
+        manifestPlaceholders["tiqr_config_protocol_compatibility_mode"] = "true"
         manifestPlaceholders["tiqr_config_enforce_challenge_hosts"] = "eduid.nl,surfconext.nl"
         manifestPlaceholders["tiqr_config_enroll_path_param"] = "tiqrenroll"
         manifestPlaceholders["tiqr_config_auth_path_param"] = "tiqrauth"
