@@ -2,6 +2,14 @@
 
 ## [Unreleased](https://github.com/SURFnet/eduid-app-android/tree/HEAD)
 
+# 0.0.16
+- Update minSDK to 24 (Android 7) 
+- Add core sha to version name
+
+# 0.0.14
+- Update to latest Tiqr-core
+- Update translations
+
 # 0.0.11
 
 Light in-app icons
