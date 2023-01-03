@@ -2,6 +2,9 @@
 
 ## [Unreleased](https://github.com/SURFnet/eduid-app-android/tree/HEAD)
 
+# 0.0.17
+- Add dark theme
+
 # 0.0.16
 - Update minSDK to 24 (Android 7) 
 - Add core sha to version name
