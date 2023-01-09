@@ -31,5 +31,5 @@ jobs:
     - name: Upload testing APK
       uses: actions/upload-artifact@v1
       with:
-        name: app-debug-unsigned
-        path: app/build/outputs/apk/debug/app-debug-unsigned.apk
+        name: app-debug
+        path: app/build/outputs/apk/debug/app-debug.apk
