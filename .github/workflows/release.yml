@@ -19,24 +19,24 @@ jobs:
         cache: 'gradle'
 
     - name: Build APK
-      run: ./gradlew assembleProductionRelease
+      run: ./gradlew assembleRelease
     - name: Sign APK
       id: sign_apk
       uses: r0adkll/sign-android-release@v1
       with:
-        releaseDirectory: app/build/outputs/apk/production/release/
+        releaseDirectory: app/build/outputs/apk/release/
         signingKeyBase64: ${{ secrets.SIGNINGKEYBASE64 }}
         alias: ${{ secrets.ALIAS }}
         keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
         keyPassword: ${{ secrets.KEYPASSWORD }}
 
     - name: Build App bundle
-      run: ./gradlew bundleProductionRelease
+      run: ./gradlew bundleRelease
     - name: Sign App Bundle
       id: sign_aab
       uses: r0adkll/sign-android-release@v1
       with:
-        releaseDirectory: app/build/outputs/bundle/productionRelease/
+        releaseDirectory: app/build/outputs/bundle/release/
         signingKeyBase64: ${{ secrets.SIGNINGKEYBASE64 }}
         alias: ${{ secrets.ALIAS }}
         keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}

@@ -60,16 +60,9 @@ android {
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
-    }
 
-    flavorDimensions.add("releaseType")
-    productFlavors {
-        create("acceptance") {
-            dimension = "releaseType"
+        getByName("debug") {
             applicationIdSuffix = ".testing"
-        }
-        create("production") {
-            dimension = "releaseType"
         }
     }
 
