@@ -19,7 +19,7 @@ import nl.eduid.R
 fun SplashScreen(
     viewModel: SplashViewModel,
     onFirstTimeUser: () -> Unit,
-    onSignIn: () -> Unit,
+    onLogin: () -> Unit,
     onResumeApp: () -> Unit,
     modifier: Modifier = Modifier
 ) = Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -42,7 +42,7 @@ fun SplashScreen(
         } else {
             when (startupData) {
                 Startup.RegistrationRequired -> onFirstTimeUser()
-                Startup.ShowSignIn -> onSignIn()
+                Startup.ShowSignIn -> onLogin()
                 else -> onResumeApp()
             }
         }

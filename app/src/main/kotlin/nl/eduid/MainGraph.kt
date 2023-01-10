@@ -19,7 +19,7 @@ fun MainGraph(navController: NavHostController) = NavHost(
         val viewModel = hiltViewModel<SplashViewModel>(it)
         SplashScreen(viewModel = viewModel,
             onFirstTimeUser = { navController.navigate(Graph.ENROLL) },
-            onSignIn = { navController.navigate(Graph.LOGIN) },
+            onLogin = { navController.navigate(Graph.LOGIN) },
             onResumeApp = { navController.navigate(Graph.READY) })
     }
     composable(Graph.ENROLL) {
