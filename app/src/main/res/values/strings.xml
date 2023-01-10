@@ -30,4 +30,6 @@
     <string name="error_auth_blocked">Try again in a moment.</string>
     <string name="title_activity_main">Alpha eduId</string>
 
+    <string name="splash_title">Personal account for Education and Research</string>
+
 </resources>
