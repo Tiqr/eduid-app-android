@@ -32,8 +32,6 @@ package nl.eduid
 import android.app.Application
 import coil.Coil
 import coil.ImageLoader
-import coil.ImageLoaderFactory
-import coil.util.CoilUtils
 import dagger.hilt.android.HiltAndroidApp
 import okhttp3.OkHttpClient
 import timber.log.Timber
