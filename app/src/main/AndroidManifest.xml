@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="UnusedAttribute"
-    package="nl.eduid">
+    package="nl.eduid"
+    tools:ignore="UnusedAttribute">
 
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <!-- Permissions for QR code scanning -->
@@ -19,8 +19,8 @@
     <application
         android:name="nl.eduid.EduIdApplication"
         android:allowBackup="true"
-        android:fullBackupContent="@xml/backup_descriptor"
         android:dataExtractionRules="@xml/backup_descriptor_v31"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -28,13 +28,13 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="org.tiqr.core.MainActivity"
+            android:exported="true"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
+            android:taskAffinity=""
             android:theme="@style/AppTheme.Splash"
             android:windowSoftInputMode="adjustResize"
-            android:launchMode="singleInstance"
-            android:taskAffinity=""
-            tools:ignore="LockedOrientationActivity"
-            android:exported="true">
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,13 +58,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:host="eduid.nl" android:scheme="https" />
+                <data
+                    android:host="eduid.nl"
+                    android:scheme="https" />
 
                 <!-- We accept the path both with and without the slash -->
-                <data android:path="/${tiqr_config_auth_path_param}"/>
-                <data android:path="/${tiqr_config_enroll_path_param}"/>
-                <data android:path="/${tiqr_config_auth_path_param}/"/>
-                <data android:path="/${tiqr_config_enroll_path_param}/"/>
+                <data android:path="/${tiqr_config_auth_path_param}" />
+                <data android:path="/${tiqr_config_enroll_path_param}" />
+                <data android:path="/${tiqr_config_auth_path_param}/" />
+                <data android:path="/${tiqr_config_enroll_path_param}/" />
             </intent-filter>
         </activity>
 
@@ -80,6 +82,11 @@
 
         </activity>
 
+        <activity
+            android:name=".biometric.SignInWithBiometricsActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.Transparent" />
+
         <service
             android:name="org.tiqr.core.messaging.TiqrMessagingService"
             android:exported="false">
@@ -88,15 +95,33 @@
             </intent-filter>
         </service>
 
-        <meta-data android:name="tiqr_config_base_url" android:value="${tiqr_config_base_url}"/>
-        <meta-data android:name="tiqr_config_protocol_version" android:value="${tiqr_config_protocol_version}"/>
-        <meta-data android:name="tiqr_config_protocol_compatibility_mode" android:value="${tiqr_config_protocol_compatibility_mode}"/>
-        <meta-data android:name="tiqr_config_enroll_path_param" android:value="${tiqr_config_enroll_path_param}"/>
-        <meta-data android:name="tiqr_config_auth_path_param" android:value="${tiqr_config_auth_path_param}"/>
-        <meta-data android:name="tiqr_config_enroll_scheme" android:value="${tiqr_config_enroll_scheme}"/>
-        <meta-data android:name="tiqr_config_auth_scheme" android:value="${tiqr_config_auth_scheme}"/>
-        <meta-data android:name="tiqr_config_token_exchange_enabled" android:value="${tiqr_config_token_exchange_enabled}"/>
-        <meta-data android:name="tiqr_config_enforce_challenge_hosts" android:value="${tiqr_config_enforce_challenge_hosts}"/>
+        <meta-data
+            android:name="tiqr_config_base_url"
+            android:value="${tiqr_config_base_url}" />
+        <meta-data
+            android:name="tiqr_config_protocol_version"
+            android:value="${tiqr_config_protocol_version}" />
+        <meta-data
+            android:name="tiqr_config_protocol_compatibility_mode"
+            android:value="${tiqr_config_protocol_compatibility_mode}" />
+        <meta-data
+            android:name="tiqr_config_enroll_path_param"
+            android:value="${tiqr_config_enroll_path_param}" />
+        <meta-data
+            android:name="tiqr_config_auth_path_param"
+            android:value="${tiqr_config_auth_path_param}" />
+        <meta-data
+            android:name="tiqr_config_enroll_scheme"
+            android:value="${tiqr_config_enroll_scheme}" />
+        <meta-data
+            android:name="tiqr_config_auth_scheme"
+            android:value="${tiqr_config_auth_scheme}" />
+        <meta-data
+            android:name="tiqr_config_token_exchange_enabled"
+            android:value="${tiqr_config_token_exchange_enabled}" />
+        <meta-data
+            android:name="tiqr_config_enforce_challenge_hosts"
+            android:value="${tiqr_config_enforce_challenge_hosts}" />
 
     </application>
 </manifest>
