@@ -31,5 +31,6 @@
     <string name="title_activity_main">Alpha eduId</string>
 
     <string name="splash_title">Personal account for Education and Research</string>
+    <string name="enroll_screen_title">Personal account for Education and Research</string>
 
 </resources>

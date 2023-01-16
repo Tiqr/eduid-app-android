@@ -139,6 +139,7 @@ dependencies {
     implementation(libs.androidx.compose.navigation)
     implementation(libs.androidx.compose.hilt.navigation)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.compose.constraint)
     implementation(libs.androidx.core)
     implementation(libs.androidx.concurrent)
     implementation(libs.androidx.lifecycle.common)

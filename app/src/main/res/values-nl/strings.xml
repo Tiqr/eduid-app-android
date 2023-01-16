@@ -26,5 +26,9 @@
             Voor nu tonen we een aangepaste melding aan de gebruiker. -->
     <string name="error_auth_title_blocked">Inloggen mislukt</string>
     <string name="error_auth_blocked">Probeer het over een ogenblik opnieuw.</string>
+    <string name="title_activity_main">Alpha eduId</string>
+
+    <string name="splash_title">Personal account for Education and Research</string>
+    <string name="enroll_screen_title">Personal account for Education and Research</string>
 
 </resources>

@@ -23,13 +23,20 @@ fun MainGraph(navController: NavHostController) = NavHost(
             onResumeApp = { navController.navigate(Graph.READY) })
     }
     composable(Graph.ENROLL) {
-        EnrollScreen()
+        EnrollScreen(
+            onLogin = { navController.navigate(Graph.LOGIN) },
+            onScan = { navController.navigate(Graph.SCAN) },
+            onRequestEduId = { navController.navigate(Graph.REQUEST_EDU_ID) }
+        )
     }
     composable(Graph.READY) {
         ReadyScreen()
     }
     composable(Graph.LOGIN) {
         LoginScreen()
+    }
+    composable(Graph.SCAN) {
+
     }
 }
 
@@ -39,4 +46,6 @@ object Graph {
     const val ENROLL = "enroll"
     const val READY = "ready"
     const val LOGIN = "login"
+    const val SCAN = "scan"
+    const val REQUEST_EDU_ID = "request_edu_id"
 }
