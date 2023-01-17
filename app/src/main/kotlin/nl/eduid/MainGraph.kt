@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import nl.eduid.enroll.EnrollScreen
 import nl.eduid.login.LoginScreen
 import nl.eduid.ready.ReadyScreen
-import nl.eduid.requestid.RequestIdStartScreen
+import nl.eduid.requestidstart.RequestIdStartScreen
 import nl.eduid.splash.SplashScreen
 import nl.eduid.splash.SplashViewModel
 
