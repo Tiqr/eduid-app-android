@@ -12,3 +12,4 @@ val Pink40 = Color(0xFF7D5260)
 
 val ButtonGreen = Color(0xFF008939)
 val TextBlack = Color(0xFF050E1D)
+val SplashScreenBackgroundColor = Color(0xFF0062B0)

@@ -48,7 +48,7 @@ fun EnrollScreen(
             painter = painterResource(id = R.drawable.logo_eduid_big),
             contentDescription = "",
             modifier = Modifier
-                .sizeIn(minWidth = 150.dp, minHeight = 59.dp)
+                .size(width = 150.dp, height = 59.dp)
                 .constrainAs(eduIdLogo) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
@@ -124,7 +124,6 @@ fun EnrollScreen(
             )
         }
     }
-//    }
 }
 
 @Preview()

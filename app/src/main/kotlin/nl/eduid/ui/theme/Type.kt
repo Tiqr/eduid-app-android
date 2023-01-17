@@ -25,12 +25,12 @@ val Typography = Typography(
         letterSpacing = (-0.18).sp,
         color = Color(0xFF173552)
     ),
-    /*labelSmall = TextStyle(
+
+    headlineLarge = TextStyle(
         fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
-    */
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 32.sp,
+        lineHeight = 48.sp,
+        letterSpacing = (-0.18).sp,
+    ),
 )
