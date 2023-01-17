@@ -21,9 +21,20 @@ fun MainGraph(navController: NavHostController) = NavHost(
     composable(Graph.SPLASH) {
         val viewModel = hiltViewModel<SplashViewModel>(it)
         SplashScreen(viewModel = viewModel,
-            onFirstTimeUser = { navController.navigate(Graph.ENROLL) },
-            onLogin = { navController.navigate(Graph.LOGIN) },
-            onResumeApp = { navController.navigate(Graph.READY) })
+            onFirstTimeUser = {
+                navController.navigate(Graph.ENROLL) {
+                    popUpTo(Graph.SPLASH) {
+                        inclusive = true
+                    }
+                }
+            }
+        ) {
+            navController.navigate(Graph.READY) {
+                popUpTo(Graph.SPLASH) {
+                    inclusive = true
+                }
+            }
+        }
     }
     composable(Graph.ENROLL) {
         EnrollScreen(
@@ -43,8 +54,8 @@ fun MainGraph(navController: NavHostController) = NavHost(
     }
     composable(Graph.REQUEST_EDU_ID_START) {
         RequestIdStartScreen(
-            requestId = { navController.navigate(Graph.REQUEST_EDU_ID_DETAILS)},
-            onBackClicked = {navController.popBackStack()}
+            requestId = { navController.navigate(Graph.REQUEST_EDU_ID_DETAILS) },
+            onBackClicked = { navController.popBackStack() }
         )
     }
     composable(Graph.REQUEST_EDU_ID_DETAILS) {
@@ -52,7 +63,7 @@ fun MainGraph(navController: NavHostController) = NavHost(
         RequestIdDetailsScreen(
             viewModel = viewModel,
             requestId = { },
-            onBackClicked = {navController.popBackStack()}
+            onBackClicked = { navController.popBackStack() }
         )
     }
 }

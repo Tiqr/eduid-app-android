@@ -1,7 +1,10 @@
 package nl.eduid.splash
 
-object Startup {
-    val Unknown = 0
-    val RegistrationRequired = 1
-    val ShowSignIn = 2
+import androidx.compose.foundation.interaction.DragInteraction
+
+sealed class Startup {
+    object Unknown : Startup()
+    object RegistrationRequired : Startup()
+
+    object AppReady : Startup()
 }

@@ -27,7 +27,7 @@ class SplashViewModel @Inject constructor(db: DatabaseService) : ViewModel() {
                 }
                 else -> {
                     delay(400)
-                    emit(Startup.ShowSignIn)
+                    emit(Startup.AppReady)
                 }
             }
         }

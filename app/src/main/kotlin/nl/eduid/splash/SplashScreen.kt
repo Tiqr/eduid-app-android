@@ -1,7 +1,10 @@
 package nl.eduid.splash
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -9,6 +12,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -23,103 +27,91 @@ import nl.eduid.ui.theme.SplashScreenBackgroundColor
 fun SplashScreen(
     viewModel: SplashViewModel,
     onFirstTimeUser: () -> Unit,
-    onLogin: () -> Unit,
-    onResumeApp: () -> Unit,
-) = Scaffold { paddingValues ->
-    val startupData by viewModel.startupData.observeAsState(Startup.Unknown)
+    onAppReady: () -> Unit,
+) = Scaffold(containerColor = SplashScreenBackgroundColor) { paddingValues ->
+    val startupData: Startup by viewModel.startupData.observeAsState(Startup.Unknown)
     SplashContent(
-        startupData,
-        paddingValues,
-        onFirstTimeUser,
-        onLogin,
-        onResumeApp
+        startupData = startupData,
+        paddingValues = paddingValues,
+        onFirstTimeUser = onFirstTimeUser,
+        onAppReady = onAppReady
     )
 }
 
 @Composable
 private fun SplashContent(
-    startupData: Int,
+    startupData: Startup,
     paddingValues: PaddingValues,
     onFirstTimeUser: () -> Unit,
-    onLogin: () -> Unit,
-    onResumeApp: () -> Unit
+    onAppReady: () -> Unit,
+) = Column(
+    horizontalAlignment = Alignment.CenterHorizontally,
+    modifier = Modifier
+        .fillMaxSize()
+        .padding(paddingValues)
 ) {
-    var animateBackground by remember { mutableStateOf(false) }
+    val uriHandler = LocalUriHandler.current
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
         modifier = Modifier
-            .fillMaxSize()
-            .background(SplashScreenBackgroundColor)
-            .padding(paddingValues)
+            .fillMaxWidth()
+            .weight(1f)
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.logo_eduid_big),
+            contentDescription = "",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 32.dp),
+        )
 
+        Spacer(Modifier.height(36.dp))
 
-        Surface(
-            modifier = if (animateBackground) Modifier.fillMaxSize() else Modifier.size(0.dp, 0.dp),
-            color = SplashScreenBackgroundColor
-        ) {
-            Box {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.Center)
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.logo_eduid_big),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 32.dp),
-                    )
+        Text(
+            text = stringResource(id = R.string.splash_title),
+            style = MaterialTheme.typography.headlineLarge.copy(
+                color = Color.White, textAlign = TextAlign.Center
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 64.dp),
+        )
 
-                    Spacer(Modifier.height(36.dp))
+        Spacer(Modifier.height(72.dp))
+    }
+    Image(
+        painter = painterResource(id = R.drawable.splash_footer_logo),
+        contentDescription = "",
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { uriHandler.openUri("https://surf.nl") }
+            .sizeIn(minWidth = 140.dp, minHeight = 32.dp)
+            .padding(horizontal = 64.dp, vertical = 24.dp),
+    )
 
-                    Text(
-                        text = stringResource(id = R.string.splash_title),
-                        style = MaterialTheme.typography.headlineLarge.copy(
-                            color = Color.White,
-                            textAlign = TextAlign.Center
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 64.dp),
-                    )
-
-                    Spacer(Modifier.height(72.dp))
-                }
-                Image(
-                    painter = painterResource(id = R.drawable.splash_footer_logo),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.BottomCenter)
-                        .sizeIn(minWidth = 140.dp, minHeight = 32.dp)
-                        .padding(horizontal = 64.dp, vertical = 24.dp),
-                )
-            }
-        }
-
-        LaunchedEffect(startupData) {
-            if (startupData == Startup.Unknown) {
-                animateBackground = true
-            } else {
-                when (startupData) {
-                    Startup.RegistrationRequired -> onFirstTimeUser()
-                    Startup.ShowSignIn -> onLogin()
-                    else -> onResumeApp()
-                }
-            }
+    LaunchedEffect(startupData) {
+        when (startupData) {
+            Startup.Unknown -> {}
+            Startup.RegistrationRequired -> onFirstTimeUser()
+            Startup.AppReady -> onAppReady()
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 private fun PreviewSplashScreen() {
     EduidAppAndroidTheme {
-        SplashContent(startupData = Startup.RegistrationRequired, paddingValues = PaddingValues(), {},{},{})
+        Scaffold(containerColor = SplashScreenBackgroundColor) { paddingValues ->
+            SplashContent(
+                startupData = Startup.RegistrationRequired,
+                paddingValues = paddingValues,
+                onFirstTimeUser = {},
+                onAppReady = {},
+            )
+        }
     }
 }
 
