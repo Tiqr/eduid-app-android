@@ -18,7 +18,7 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 fun BulletPoint(
     text: String, textStyle: TextStyle, modifier: Modifier = Modifier
 ) = Row(
-    modifier = modifier
+    modifier = modifier.padding(vertical = 2.dp)
 ) {
     Text(
         text = "  •  ",

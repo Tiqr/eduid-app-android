@@ -26,6 +26,25 @@ fun SplashScreen(
     onLogin: () -> Unit,
     onResumeApp: () -> Unit,
 ) = Scaffold { paddingValues ->
+    val startupData by viewModel.startupData.observeAsState(Startup.Unknown)
+    SplashContent(
+        startupData,
+        paddingValues,
+        onFirstTimeUser,
+        onLogin,
+        onResumeApp
+    )
+}
+
+@Composable
+private fun SplashContent(
+    startupData: Int,
+    paddingValues: PaddingValues,
+    onFirstTimeUser: () -> Unit,
+    onLogin: () -> Unit,
+    onResumeApp: () -> Unit
+) {
+    var animateBackground by remember { mutableStateOf(false) }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -34,8 +53,6 @@ fun SplashScreen(
             .padding(paddingValues)
     ) {
 
-        val startupData by viewModel.startupData.observeAsState(Startup.Unknown)
-        var animateBackground by remember { mutableStateOf(false) }
 
         Surface(
             modifier = if (animateBackground) Modifier.fillMaxSize() else Modifier.size(0.dp, 0.dp),
@@ -96,14 +113,13 @@ fun SplashScreen(
             }
         }
     }
-
 }
 
 @Preview
 @Composable
 private fun PreviewSplashScreen() {
     EduidAppAndroidTheme {
-
+        SplashContent(startupData = Startup.RegistrationRequired, paddingValues = PaddingValues(), {},{},{})
     }
 }
 

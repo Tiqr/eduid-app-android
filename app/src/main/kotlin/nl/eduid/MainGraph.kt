@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import nl.eduid.enroll.EnrollScreen
 import nl.eduid.login.LoginScreen
 import nl.eduid.ready.ReadyScreen
+import nl.eduid.requestiddetails.RequestIdDetailsScreen
+import nl.eduid.requestiddetails.RequestIdDetailsViewModel
 import nl.eduid.requestidstart.RequestIdStartScreen
 import nl.eduid.splash.SplashScreen
 import nl.eduid.splash.SplashViewModel
@@ -42,6 +44,14 @@ fun MainGraph(navController: NavHostController) = NavHost(
     composable(Graph.REQUEST_EDU_ID_START) {
         RequestIdStartScreen(
             requestId = { navController.navigate(Graph.REQUEST_EDU_ID_DETAILS)},
+            onBackClicked = {navController.popBackStack()}
+        )
+    }
+    composable(Graph.REQUEST_EDU_ID_DETAILS) {
+        val viewModel = hiltViewModel<RequestIdDetailsViewModel>(it)
+        RequestIdDetailsScreen(
+            viewModel = viewModel,
+            requestId = { },
             onBackClicked = {navController.popBackStack()}
         )
     }

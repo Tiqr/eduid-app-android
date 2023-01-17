@@ -41,4 +41,13 @@
     <string name="request_id_screen_bullet_point_3">eduID is a lifelong account. It stays valid after you graduate.</string>
     <string name="request_id_screen_create_id_button">Create a new eduID</string>
 
+    <string name="request_id_details_screen_title">Request your eduID</string>
+    <string name="request_id_details_screen_email_input_title">Request your eduID</string>
+    <string name="request_id_details_screen_email_input_hint">Request your eduID</string>
+    <string name="request_id_details_screen_first_name_input_title">Request your eduID</string>
+    <string name="request_id_details_screen_first_name_input_hint">Request your eduID</string>
+    <string name="request_id_details_screen_last_name_input_title">Request your eduID</string>
+    <string name="request_id_details_screen_last_name_input_hint">Request your eduID</string>
+    <string name="request_id_details_screen_request_id_button">Request your eduID</string>
+
 </resources>
