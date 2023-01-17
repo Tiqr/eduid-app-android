@@ -20,16 +20,16 @@ jobs:
         distribution: 'temurin'
         cache: 'gradle'
     - name: Build nl.eduid APK
-      run: bash ./gradlew assembleProductionRelease --stacktrace
+      run: bash ./gradlew assembleRelease --stacktrace
     - name: Build nl.eduid.testing APK
-      run: bash ./gradlew assembleAcceptanceRelease --stacktrace
+      run: bash ./gradlew assembleDebug --stacktrace
     - name: Upload APK
       uses: actions/upload-artifact@v1
       with:
-        name: app-production-release-unsigned
-        path: app/build/outputs/apk/production/release/app-production-release-unsigned.apk
+        name: app-release-unsigned
+        path: app/build/outputs/apk/release/app-release-unsigned.apk
     - name: Upload testing APK
       uses: actions/upload-artifact@v1
       with:
-        name: app-acceptance-release-unsigned
-        path: app/build/outputs/apk/acceptance/release/app-acceptance-release-unsigned.apk
+        name: app-debug
+        path: app/build/outputs/apk/debug/app-debug.apk
