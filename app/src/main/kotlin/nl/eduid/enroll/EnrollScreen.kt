@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -47,7 +48,7 @@ fun EnrollScreen(
             painter = painterResource(id = R.drawable.logo_eduid_big),
             contentDescription = "",
             modifier = Modifier
-                .sizeIn(minWidth = 15.dp, minHeight = 59.dp)
+                .sizeIn(minWidth = 150.dp, minHeight = 59.dp)
                 .constrainAs(eduIdLogo) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
@@ -82,25 +83,25 @@ fun EnrollScreen(
         )
 
         Column(
-//            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .constrainAs(buttons) {
                     bottom.linkTo(requestEduIdButton.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
                 }
                 .fillMaxWidth()
         ) {
 
             PrimaryButton(
-                text = "Sign In", onClick = onLogin,
+                text = stringResource(R.string.enroll_screen_sign_in_button), onClick = onLogin,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
             )
 
+            Spacer(Modifier.height(24.dp))
+
             PrimaryButton(
-                text = "Scan QR Code", onClick = onScan,
+                text = stringResource(R.string.scan_button), onClick = onScan,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
@@ -110,15 +111,14 @@ fun EnrollScreen(
         TextButton(
             onClick = onRequestEduId,
             modifier = Modifier
+                .fillMaxWidth()
                 .constrainAs(requestEduIdButton) {
                     bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
                 },
         )
         {
             Text(
-                text = "I don't have an eduID",
+                text = stringResource(R.string.enroll_screen_request_id_button),
                 style = MaterialTheme.typography.bodyLarge.copy(color = ButtonGreen),
                 fontWeight = FontWeight.SemiBold,
             )

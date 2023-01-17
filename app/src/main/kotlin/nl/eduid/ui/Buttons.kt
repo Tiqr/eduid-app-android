@@ -23,7 +23,7 @@ fun PrimaryButton(
     enabled = enabled,
     shape = RoundedCornerShape(CornerSize(6.dp)),
     colors = ButtonDefaults.buttonColors(containerColor = ButtonGreen),
-    modifier = modifier.sizeIn(minHeight = ButtonDefaults.MinHeight)
+    modifier = modifier.sizeIn(minHeight = 48.dp)
 ) {
     Text(
         text = text, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold

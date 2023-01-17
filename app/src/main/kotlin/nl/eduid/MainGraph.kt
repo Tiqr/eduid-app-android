@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import nl.eduid.enroll.EnrollScreen
 import nl.eduid.login.LoginScreen
 import nl.eduid.ready.ReadyScreen
+import nl.eduid.requestid.RequestIdStartScreen
 import nl.eduid.splash.SplashScreen
 import nl.eduid.splash.SplashViewModel
 
@@ -26,7 +27,7 @@ fun MainGraph(navController: NavHostController) = NavHost(
         EnrollScreen(
             onLogin = { navController.navigate(Graph.LOGIN) },
             onScan = { navController.navigate(Graph.SCAN) },
-            onRequestEduId = { navController.navigate(Graph.REQUEST_EDU_ID) }
+            onRequestEduId = { navController.navigate(Graph.REQUEST_EDU_ID_START) }
         )
     }
     composable(Graph.READY) {
@@ -38,6 +39,12 @@ fun MainGraph(navController: NavHostController) = NavHost(
     composable(Graph.SCAN) {
 
     }
+    composable(Graph.REQUEST_EDU_ID_START) {
+        RequestIdStartScreen(
+            requestId = { navController.navigate(Graph.REQUEST_EDU_ID_DETAILS)},
+            onBackClicked = {navController.popBackStack()}
+        )
+    }
 }
 
 object Graph {
@@ -47,5 +54,6 @@ object Graph {
     const val READY = "ready"
     const val LOGIN = "login"
     const val SCAN = "scan"
-    const val REQUEST_EDU_ID = "request_edu_id"
+    const val REQUEST_EDU_ID_START = "request_edu_id_start"
+    const val REQUEST_EDU_ID_DETAILS = "request_edu_id_details"
 }

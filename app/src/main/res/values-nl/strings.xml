@@ -30,5 +30,15 @@
 
     <string name="splash_title">Personal account for Education and Research</string>
     <string name="enroll_screen_title">Personal account for Education and Research</string>
+    <string name="enroll_screen_sign_in_button">Sign in</string>
+    <string name="enroll_screen_scan_button">Scan a QR code</string>
+    <string name="enroll_screen_request_id_button">I don\'t have an eduID</string>
+
+    <string name="request_id_screen_title">Don’t have an eduID yet?</string>
+    <string name="request_id_screen_header_text">eduID is a central account for users associated with Dutch education and research. It is yours and exists independent of an educational institution.</string>
+    <string name="request_id_screen_bullet_point_1">Use it to login to several services connected to SURFconext.</string>
+    <string name="request_id_screen_bullet_point_2">Users without an institution account can also request an eduID.</string>
+    <string name="request_id_screen_bullet_point_3">eduID is a lifelong account. It stays valid after you graduate.</string>
+    <string name="request_id_screen_create_id_button">Create a new eduID</string>
 
 </resources>
