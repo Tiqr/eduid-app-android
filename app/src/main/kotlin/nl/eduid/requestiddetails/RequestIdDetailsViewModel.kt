@@ -19,6 +19,18 @@ class RequestIdDetailsViewModel @Inject constructor() : ViewModel() {
         inputForm.value = inputForm.value?.copy(email = newValue)
     }
 
+    fun onFirstNameChange(newValue: String) {
+        inputForm.value = inputForm.value?.copy(firstName = newValue)
+    }
+
+    fun onLastNameChange(newValue: String) {
+        inputForm.value = inputForm.value?.copy(lastName = newValue)
+    }
+
+    fun onTermsAccepted(newValue: Boolean) {
+        inputForm.value = inputForm.value?.copy(termsAccepted = newValue)
+    }
+
 }
 
 data class InputForm(
@@ -27,7 +39,16 @@ data class InputForm(
     val lastName: String = "",
     val termsAccepted: Boolean = false,
 ) {
-    val isFormValid: Boolean
+    val emailValid: Boolean
         get() = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+
+    val firstNameValid: Boolean
+        get() = firstName.length > 2
+
+    val lastNameValid: Boolean
+        get() = lastName.length > 2
+
+    val isFormValid: Boolean
+        get() = (emailValid && firstNameValid && lastNameValid && termsAccepted)
 }
 

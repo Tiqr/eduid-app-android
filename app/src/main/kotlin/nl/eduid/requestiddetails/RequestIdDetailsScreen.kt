@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import nl.eduid.R
+import nl.eduid.ui.CheckToSAndPrivacyPolicy
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.ScaffoldWithTopBarBackButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
@@ -24,7 +25,8 @@ fun RequestIdDetailsScreen(
     requestId: () -> Unit,
     onBackClicked: () -> Unit,
     viewModel: RequestIdDetailsViewModel,
-) = ScaffoldWithTopBarBackButton(onBackClicked = onBackClicked,
+) = ScaffoldWithTopBarBackButton(
+    onBackClicked = onBackClicked,
     modifier = Modifier
 ) {
     val inputFormData by viewModel.inputForm.observeAsState(InputForm())
@@ -36,7 +38,7 @@ fun RequestIdDetailsScreen(
         val (content, bottomButton, bottomSpacer) = createRefs()
 
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(content) {
@@ -46,23 +48,67 @@ fun RequestIdDetailsScreen(
 
             Text(
                 text = stringResource(R.string.request_id_details_screen_title),
-                style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Start, color = TextBlack),
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-
-            OutlinedTextField(
-                value = inputFormData.email,
-                isError = (!inputFormData.isFormValid && inputFormData.email.length > 2),
-                onValueChange = {newValue -> viewModel.onEmailChange(newValue)},
-                label = {Text(stringResource(R.string.request_id_details_screen_email_input_title))},
-                placeholder = {Text(stringResource(R.string.request_id_details_screen_email_input_hint))},
+                style = MaterialTheme.typography.titleLarge.copy(
+                    textAlign = TextAlign.Start,
+                    color = TextBlack
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
             )
 
             Spacer(
-                modifier = Modifier.height(32.dp)
+                modifier = Modifier.height(24.dp)
+            )
+
+            OutlinedTextField(
+                value = inputFormData.email,
+                isError = (inputFormData.email.length > 2 && !inputFormData.emailValid),
+                onValueChange = { newValue -> viewModel.onEmailChange(newValue) },
+                label = { Text(stringResource(R.string.request_id_details_screen_email_input_title)) },
+                placeholder = { Text(stringResource(R.string.request_id_details_screen_email_input_hint)) },
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+
+            Spacer(
+                modifier = Modifier.height(12.dp)
+            )
+
+            OutlinedTextField(
+                value = inputFormData.firstName,
+                onValueChange = { newValue -> viewModel.onFirstNameChange(newValue) },
+                label = { Text(stringResource(R.string.request_id_details_screen_first_name_input_title)) },
+                placeholder = { Text(stringResource(R.string.request_id_details_screen_first_name_input_hint)) },
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+
+            Spacer(
+                modifier = Modifier.height(12.dp)
+            )
+
+            OutlinedTextField(
+                value = inputFormData.lastName,
+                onValueChange = { newValue -> viewModel.onLastNameChange(newValue) },
+                label = { Text(stringResource(R.string.request_id_details_screen_last_name_input_title)) },
+                placeholder = { Text(stringResource(R.string.request_id_details_screen_last_name_input_hint)) },
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+
+            Spacer(
+                modifier = Modifier.height(24.dp)
+            )
+
+            CheckToSAndPrivacyPolicy(
+                onAcceptChange = { newValue -> viewModel.onTermsAccepted(newValue) },
+                hasAcceptedToC = inputFormData.termsAccepted,
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+
+            Spacer(
+                modifier = Modifier.height(20.dp)
             )
 
         }
@@ -93,7 +139,6 @@ private fun PreviewEnroll() {
 //        RequestIdDetailsScreen({}, {})
     }
 }
-
 
 
 

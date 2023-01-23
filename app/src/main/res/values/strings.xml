@@ -47,10 +47,10 @@
     <string name="request_id_details_screen_title">Request your eduID</string>
     <string name="request_id_details_screen_email_input_title">Your email address</string>
     <string name="request_id_details_screen_email_input_hint">e.g. timbernerslee@gmail.com</string>
-    <string name="request_id_details_screen_first_name_input_title">Request your eduID</string>
-    <string name="request_id_details_screen_first_name_input_hint">Request your eduID</string>
-    <string name="request_id_details_screen_last_name_input_title">Request your eduID</string>
-    <string name="request_id_details_screen_last_name_input_hint">Request your eduID</string>
+    <string name="request_id_details_screen_first_name_input_title">First name</string>
+    <string name="request_id_details_screen_first_name_input_hint">e.g. Tim</string>
+    <string name="request_id_details_screen_last_name_input_title">Last name</string>
+    <string name="request_id_details_screen_last_name_input_hint">e.g. Berners-Lee</string>
     <string name="request_id_details_screen_request_id_button">Request your eduID</string>
 
     <string name="button_back">Back</string>
@@ -58,5 +58,11 @@
     <string name="button_scan">Scan</string>
     <string name="biometric_failed_unknown">Biometrics failed for unknown reason.</string>
     <string name="login_access_description">to access the eduID app</string>
+
+    <string name="tc_full_text">I agree with the terms of service. I also understand the privacy policy.</string>
+    <string name="tc_understand">"I also understand"</string>
+    <string name="tc_agree">"I agree with"</string>
+    <string name="tc_terms">the terms of service.</string>
+    <string name="tc_privacy_policy">the privacy policy</string>
 
 </resources>
