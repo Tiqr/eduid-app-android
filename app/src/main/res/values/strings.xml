@@ -52,7 +52,6 @@
     <string name="request_id_details_screen_last_name_input_title">Request your eduID</string>
     <string name="request_id_details_screen_last_name_input_hint">Request your eduID</string>
     <string name="request_id_details_screen_request_id_button">Request your eduID</string>
-    <string name="button_back">Back button</string>
 
     <string name="button_back">Back</string>
     <string name="confirmpin_mismatch">PIN doesn\'t match.</string>
