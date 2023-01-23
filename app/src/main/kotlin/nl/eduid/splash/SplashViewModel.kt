@@ -25,6 +25,10 @@ class SplashViewModel @Inject constructor(db: DatabaseService) : ViewModel() {
                     delay(400)
                     emit(Startup.RegistrationRequired)
                 }
+//                1 -> {
+//                    delay(400)
+//                    emit(Startup.ReadyToUse)
+//                }
                 else -> {
                     delay(400)
                     emit(Startup.AppReady)

@@ -34,6 +34,7 @@ import coil.Coil
 import coil.ImageLoader
 import dagger.hilt.android.HiltAndroidApp
 import okhttp3.OkHttpClient
+import org.tiqr.data.model.TiqrConfig
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -45,6 +46,7 @@ class EduIdApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        TiqrConfig.initialize(this)
         // Setup Timber
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())

@@ -28,10 +28,10 @@
             For now, we just replace the message shown to the user -->
     <string name="error_auth_title_blocked">Authentication failed</string>
     <string name="error_auth_blocked">Try again in a moment.</string>
+
+    <!--Compose strings-->
     <string name="title_activity_main">Alpha eduId</string>
-
     <string name="splash_title">Personal account for Education and Research</string>
-
     <string name="enroll_screen_title">Personal account for Education and Research</string>
     <string name="enroll_screen_sign_in_button">Sign in</string>
     <string name="enroll_screen_scan_button">Scan a QR code</string>
@@ -54,5 +54,10 @@
     <string name="request_id_details_screen_request_id_button">Request your eduID</string>
     <string name="button_back">Back button</string>
 
+    <string name="button_back">Back</string>
+    <string name="confirmpin_mismatch">PIN doesn\'t match.</string>
+    <string name="button_scan">Scan</string>
+    <string name="biometric_failed_unknown">Biometrics failed for unknown reason.</string>
+    <string name="login_access_description">to access the eduID app</string>
 
 </resources>

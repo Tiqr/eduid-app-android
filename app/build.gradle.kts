@@ -122,6 +122,7 @@ dependencies {
 
     implementation(libs.androidx.activity)
     implementation(libs.androidx.autofill)
+    implementation(libs.androidx.biometric)
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui-tooling-preview")

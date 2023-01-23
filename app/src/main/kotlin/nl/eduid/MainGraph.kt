@@ -7,12 +7,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import nl.eduid.enroll.EnrollScreen
 import nl.eduid.login.LoginScreen
+import nl.eduid.login.LoginViewModel
 import nl.eduid.ready.ReadyScreen
 import nl.eduid.requestiddetails.RequestIdDetailsScreen
 import nl.eduid.requestiddetails.RequestIdDetailsViewModel
 import nl.eduid.requestidstart.RequestIdStartScreen
 import nl.eduid.splash.SplashScreen
 import nl.eduid.splash.SplashViewModel
+import org.tiqr.data.viewmodel.AuthenticationViewModel
 
 @Composable
 fun MainGraph(navController: NavHostController) = NavHost(
@@ -47,7 +49,11 @@ fun MainGraph(navController: NavHostController) = NavHost(
         ReadyScreen()
     }
     composable(Graph.LOGIN) {
-        LoginScreen()
+        val viewModel = hiltViewModel<LoginViewModel>(it)
+        LoginScreen(
+            viewModel = viewModel,
+            onLoginDone = {},
+            goBack = { navController.popBackStack() })
     }
     composable(Graph.SCAN) {
 
