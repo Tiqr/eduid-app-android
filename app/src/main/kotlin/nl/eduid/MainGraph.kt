@@ -20,7 +20,7 @@ import nl.eduid.splash.SplashViewModel
 
 @Composable
 fun MainGraph(navController: NavHostController) = NavHost(
-    navController = navController, route = Graph.MAIN, startDestination = Graph.REQUEST_EDU_ID_DETAILS
+    navController = navController, route = Graph.MAIN, startDestination = Graph.SPLASH
 ) {
     composable(Graph.SPLASH) {
         val viewModel = hiltViewModel<SplashViewModel>(it)
