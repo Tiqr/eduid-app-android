@@ -48,6 +48,9 @@ fun CheckToSAndPrivacyPolicy(
             append(stringResource(R.string.tc_privacy_policy))
             toAnnotatedString()
         }
+
+        val termsLink = stringResource(R.string.edu_id_terms_link)
+        val privacyPolicyLink = stringResource(R.string.edu_id_privacy_policy_link)
         ClickableText(
             text = annotatedString,
             style = MaterialTheme.typography.bodySmall,
@@ -55,9 +58,9 @@ fun CheckToSAndPrivacyPolicy(
             onClick = {
                 val privacyPosition = fullText.indexOf(privacyPolicy)
                 if (it < privacyPosition) {
-                    uriHandler.openUri("https://sisaa.com/legal-terms/")
+                    uriHandler.openUri(termsLink)
                 } else {
-                    uriHandler.openUri("https://sisaa.com/privacy-notice/")
+                    uriHandler.openUri(privacyPolicyLink)
                 }
             }
         )

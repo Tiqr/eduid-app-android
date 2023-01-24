@@ -3,22 +3,24 @@ package nl.eduid
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import nl.eduid.enroll.EnrollScreen
 import nl.eduid.login.LoginScreen
 import nl.eduid.login.LoginViewModel
 import nl.eduid.ready.ReadyScreen
 import nl.eduid.requestiddetails.RequestIdDetailsScreen
 import nl.eduid.requestiddetails.RequestIdDetailsViewModel
+import nl.eduid.requestidlinksent.RequestIdLinkSentScreen
 import nl.eduid.requestidstart.RequestIdStartScreen
 import nl.eduid.splash.SplashScreen
 import nl.eduid.splash.SplashViewModel
-import org.tiqr.data.viewmodel.AuthenticationViewModel
 
 @Composable
 fun MainGraph(navController: NavHostController) = NavHost(
-    navController = navController, route = Graph.MAIN, startDestination = Graph.SPLASH
+    navController = navController, route = Graph.MAIN, startDestination = Graph.REQUEST_EDU_ID_DETAILS
 ) {
     composable(Graph.SPLASH) {
         val viewModel = hiltViewModel<SplashViewModel>(it)
@@ -68,6 +70,14 @@ fun MainGraph(navController: NavHostController) = NavHost(
         val viewModel = hiltViewModel<RequestIdDetailsViewModel>(it)
         RequestIdDetailsScreen(
             viewModel = viewModel,
+            requestId = { email -> navController.navigate(Graph.REQUEST_EDU_ID_LINK_SENT + "/" + email) },
+            onBackClicked = { navController.popBackStack() }
+        )
+    }
+
+    composable(Graph.REQUEST_EDU_ID_LINK_SENT + "/{userId}") { backStackEntry ->
+        RequestIdLinkSentScreen(
+            userEmail = backStackEntry.arguments?.getString("userId") ?: "your email address",
             requestId = { },
             onBackClicked = { navController.popBackStack() }
         )
@@ -83,4 +93,5 @@ object Graph {
     const val SCAN = "scan"
     const val REQUEST_EDU_ID_START = "request_edu_id_start"
     const val REQUEST_EDU_ID_DETAILS = "request_edu_id_details"
+    const val REQUEST_EDU_ID_LINK_SENT = "request_edu_id_link_sent"
 }

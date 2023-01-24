@@ -40,7 +40,7 @@ data class InputForm(
     val termsAccepted: Boolean = false,
 ) {
     val emailValid: Boolean
-        get() = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        get() = Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()
 
     val firstNameValid: Boolean
         get() = firstName.length > 2

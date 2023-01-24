@@ -64,5 +64,14 @@
     <string name="tc_agree">"I agree with"</string>
     <string name="tc_terms">the terms of service.</string>
     <string name="tc_privacy_policy">the privacy policy</string>
+    <string name="edu_id_terms_link">https://eduid.nl/terms-of-use/</string>
+    <string name="edu_id_privacy_policy_link">https://eduid.nl/privacy_policy/</string>
+
+    <string name="request_id_link_title">Check your email</string>
+    <string name="request_id_link_header_text">To sign in, click the link in the email we sent to </string>
+    <string name="request_id_link_open_gmail">Open Gmail</string>
+    <string name="request_id_link_open_outlook">Open Outlook</string>
+    <string name="request_id_link_spam_text">Can’t find it? Check your spam folder.</string>
+
 
 </resources>
