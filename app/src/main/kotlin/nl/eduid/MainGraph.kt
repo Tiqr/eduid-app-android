@@ -1,13 +1,17 @@
 package nl.eduid
 
+import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import nl.eduid.screens.enroll.EnrollScreen
 import nl.eduid.screens.login.LoginScreen
 import nl.eduid.screens.login.LoginViewModel
+import nl.eduid.screens.pinsetup.RegistrationPinSetupScreen
 import nl.eduid.screens.ready.ReadyScreen
 import nl.eduid.screens.requestiddetails.RequestIdDetailsScreen
 import nl.eduid.screens.requestiddetails.RequestIdDetailsViewModel
@@ -15,8 +19,13 @@ import nl.eduid.screens.requestidlinksent.RequestIdLinkSentScreen
 import nl.eduid.screens.requestidrecovery.RequestIdRecoveryScreen
 import nl.eduid.screens.requestidrecovery.RequestIdRecoveryViewModel
 import nl.eduid.screens.requestidstart.RequestIdStartScreen
+import nl.eduid.screens.scan.ScanScreen
 import nl.eduid.screens.splash.SplashScreen
 import nl.eduid.screens.splash.SplashViewModel
+import org.tiqr.data.model.EnrollmentChallenge
+import org.tiqr.data.model.Identity
+import org.tiqr.data.model.IdentityProvider
+import org.tiqr.data.viewmodel.ScanViewModel
 
 @Composable
 fun MainGraph(navController: NavHostController) = NavHost(
@@ -24,15 +33,13 @@ fun MainGraph(navController: NavHostController) = NavHost(
 ) {
     composable(Graph.SPLASH) {
         val viewModel = hiltViewModel<SplashViewModel>(it)
-        SplashScreen(viewModel = viewModel,
-            onFirstTimeUser = {
-                navController.navigate(Graph.ENROLL) {
-                    popUpTo(Graph.SPLASH) {
-                        inclusive = true
-                    }
+        SplashScreen(viewModel = viewModel, onFirstTimeUser = {
+            navController.navigate(Graph.ENROLL) {
+                popUpTo(Graph.SPLASH) {
+                    inclusive = true
                 }
             }
-        ) {
+        }) {
             navController.navigate(Graph.READY) {
                 popUpTo(Graph.SPLASH) {
                     inclusive = true
@@ -41,52 +48,56 @@ fun MainGraph(navController: NavHostController) = NavHost(
         }
     }
     composable(Graph.ENROLL) {
-        EnrollScreen(
-            onLogin = { navController.navigate(Graph.LOGIN) },
-            onScan = { navController.navigate(Graph.SCAN) },
-            onRequestEduId = { navController.navigate(Graph.REQUEST_EDU_ID_START) }
-        )
+        EnrollScreen(onLogin = { navController.navigate(Graph.LOGIN) },
+            onScan = { navController.navigate(Graph.SCAN_REGISTRATION) },
+            onRequestEduId = { navController.navigate(Graph.REQUEST_EDU_ID_START) })
     }
     composable(Graph.READY) {
         ReadyScreen()
     }
     composable(Graph.LOGIN) {
         val viewModel = hiltViewModel<LoginViewModel>(it)
-        LoginScreen(
-            viewModel = viewModel,
+        LoginScreen(viewModel = viewModel,
             onLoginDone = {},
             goBack = { navController.popBackStack() })
     }
-    composable(Graph.SCAN) {
-
+    composable(Graph.SCAN_REGISTRATION) {
+        val viewModel = hiltViewModel<ScanViewModel>(it)
+        ScanScreen(viewModel = viewModel,
+            isRegistration = true,
+            goBack = { navController.popBackStack() },
+            goToRegistrationPinSetup = { challenge ->
+                navController.navigate(RegistrationPinSetup.encodeEnrollmentChallenge(challenge))
+            },
+            goToAuthentication = {})
+    }
+    composable(
+        route = RegistrationPinSetup.routeWithArgs, arguments = RegistrationPinSetup.arguments
+    ) {
+        RegistrationPinSetupScreen(RegistrationPinSetup.decodeEnrollmentChallenge(it.arguments))
     }
     composable(Graph.REQUEST_EDU_ID_START) {
-        RequestIdStartScreen(
-            requestId = { navController.navigate(Graph.REQUEST_EDU_ID_DETAILS) },
-            onBackClicked = { navController.popBackStack() }
-        )
+        RequestIdStartScreen(requestId = { navController.navigate(Graph.REQUEST_EDU_ID_DETAILS) },
+            onBackClicked = { navController.popBackStack() })
     }
     composable(Graph.REQUEST_EDU_ID_DETAILS) {
         val viewModel = hiltViewModel<RequestIdDetailsViewModel>(it)
-        RequestIdDetailsScreen(
-            viewModel = viewModel,
+        RequestIdDetailsScreen(viewModel = viewModel,
             requestId = { email -> navController.navigate(Graph.REQUEST_EDU_ID_LINK_SENT + "/" + email.ifBlank { "(no email provided)" }) },
-            onBackClicked = { navController.popBackStack() }
-        )
+            onBackClicked = { navController.popBackStack() })
     }
 
     composable(Graph.REQUEST_EDU_ID_LINK_SENT + "/{userId}") { backStackEntry ->
-        RequestIdLinkSentScreen(
-            userEmail = backStackEntry.arguments?.getString("userId") ?: "your email address",
+        RequestIdLinkSentScreen(userEmail = backStackEntry.arguments?.getString("userId")
+            ?: "your email address",
             requestId = { navController.navigate(Graph.REQUEST_EDU_ID_RECOVERY) },
-            onBackClicked = { navController.popBackStack() }
-        )
+            onBackClicked = { navController.popBackStack() })
     }
 
     composable(Graph.REQUEST_EDU_ID_RECOVERY) {
         val viewModel = hiltViewModel<RequestIdRecoveryViewModel>(it)
         RequestIdRecoveryScreen(
-            onVerifyPhoneNumberClicked = {  },
+            onVerifyPhoneNumberClicked = { },
             onBackClicked = { navController.popBackStack() },
             viewModel = viewModel,
         )
@@ -99,9 +110,51 @@ object Graph {
     const val ENROLL = "enroll"
     const val READY = "ready"
     const val LOGIN = "login"
-    const val SCAN = "scan"
+    const val SCAN_REGISTRATION = "scan_registration"
     const val REQUEST_EDU_ID_START = "request_edu_id_start"
     const val REQUEST_EDU_ID_DETAILS = "request_edu_id_details"
     const val REQUEST_EDU_ID_LINK_SENT = "request_edu_id_link_sent"
     const val REQUEST_EDU_ID_RECOVERY = "request_edu_id_recovery"
 }
+
+object RegistrationPinSetup {
+    private const val route: String = "registration_pin_setup"
+    private const val registrationChallengeArg = "registrationChallenge"
+
+    const val routeWithArgs = "${route}/{${registrationChallengeArg}}"
+    val arguments = listOf(navArgument(registrationChallengeArg) {
+        type = NavType.StringType
+        nullable = false
+        defaultValue = ""
+    })
+
+    fun decodeEnrollmentChallenge(arguments: Bundle?): EnrollmentChallenge? {
+//        val encoded = arguments?.getString(registrationChallengeArg) ?: ""
+//        val decoded = URLDecoder.decode(encoded, Charsets.UTF_8.name())
+//        val adapter = Moshi.Builder().build().adapter(EnrollmentChallenge::class.java)
+//        return adapter.fromJson(decoded)
+        return EnrollmentChallenge(
+            identityProvider = IdentityProvider(
+                displayName = "Dummy identity provider until core is with @JsonClass(generateAdapter = true) for the challenge classes",
+                identifier = "fake identifier",
+                authenticationUrl = "fake url"
+            ),
+            identity = Identity(
+                displayName = "fake identity name",
+                identifier = "fake identifier",
+            ),
+            enrollmentHost = "fake enrollment host",
+            enrollmentUrl = "fake enrollment url",
+            returnUrl = null,
+        )
+    }
+
+    fun encodeEnrollmentChallenge(enrollmentChallenge: EnrollmentChallenge): String {
+//        val adapter = Moshi.Builder().build().adapter(EnrollmentChallenge::class.java)
+//        val challenge =
+//            URLEncoder.encode(adapter.toJson(enrollmentChallenge), Charsets.UTF_8.name())
+//        return "$route/$challenge"
+        return "$route/dummy_enrollemnt_challenge"
+    }
+}
+

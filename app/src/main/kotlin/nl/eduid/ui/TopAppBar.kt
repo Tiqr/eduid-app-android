@@ -19,7 +19,11 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScaffoldWithTopBarBackButton(onBackClicked: () -> Unit, modifier: Modifier = Modifier, content: @Composable () -> Unit) =
+fun ScaffoldWithTopBarBackButton(
+    onBackClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) =
     Scaffold(modifier = modifier.systemBarsPadding(), topBar = {
         CenterAlignedTopAppBar(modifier = Modifier
             .padding(top = 52.dp, bottom = 40.dp)
@@ -40,7 +44,7 @@ fun ScaffoldWithTopBarBackButton(onBackClicked: () -> Unit, modifier: Modifier =
                 alignment = Alignment.Center
             )
         })
-    }) {paddingValues ->
+    }) { paddingValues ->
         Row(
             modifier = Modifier
                 .padding(paddingValues)

@@ -54,6 +54,7 @@
     <string name="request_id_details_screen_request_id_button">Request your eduID</string>
 
     <string name="button_back">Back</string>
+    <string name="button_torch">Turn on flashlight</string>
     <string name="confirmpin_mismatch">PIN doesn\'t match.</string>
     <string name="button_scan">Scan</string>
     <string name="biometric_failed_unknown">Biometrics failed for unknown reason.</string>
@@ -81,4 +82,12 @@
     <string name="request_id_recovery_input_hint">Recovery Phone Number</string>
 
 
+    <string name="scan_title" tools:ignore="ExtraTranslation">Scan the QR-code</string>
+    <string name="scan_registration_explaination" tools:ignore="ExtraTranslation">Don\'t see a QR code?</string>
+    <string name="scan_registration_explaination1a" tools:ignore="ExtraTranslation">1. Go to </string>
+    <string name="scan_registration_explaination1b" tools:ignore="ExtraTranslation">eduid.nl\/security</string>
+    <string name="scan_registration_explaination1c" tools:ignore="ExtraTranslation">on your desktop</string>
+    <string name="scan_registration_explaination2" tools:ignore="ExtraTranslation">2. Create your personal QR code</string>
+    <string name="scan_registration_explaination3" tools:ignore="ExtraTranslation">3. Scan it here.</string>
+    <string name="scan_permission_explanation" tools:ignore="ExtraTranslation">Please grant access to the camera.</string>
 </resources>

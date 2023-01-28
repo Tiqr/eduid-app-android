@@ -14,8 +14,8 @@
     <br/>
     Verwijder je eduID app registratie door naar je account overzicht rechtsboven te gaan. Ga vervolgens naar <a href=\"https://mijn.eduid.nl\">mijn.eduid.nl</a> en verwijder daar ook je
     app registratie. Hiervoor heb je je eerder gekozen herstelmethode voor nodig. Daarna kun je de eduID app opnieuw registreren.]]></string>
-    
-    
+
+
     <string name="enroll_pin_title">Kies een unieke PIN voor eduID</string>
 
     <string name="auth_pin_title">Voer je eduID PIN in</string>
@@ -51,6 +51,7 @@
     <string name="request_id_details_screen_request_id_button">Request your eduID</string>
 
     <string name="button_back">Back</string>
+    <string name="button_torch">Turn on flashlight</string>
     <string name="confirmpin_mismatch">PIN doesn\'t match.</string>
     <string name="button_scan">Scan</string>
     <string name="biometric_failed_unknown">Biometrics failed for unknown reason.</string>
@@ -78,4 +79,6 @@
     <string name="request_id_recovery_input_hint">Recovery Phone Number</string>
 
 
+    <string name="scan_title">Scan the QR-code</string>
+    <string name="scan_permission_explanation">Please grant access to the camera.</string>
 </resources>

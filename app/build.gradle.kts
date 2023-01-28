@@ -122,6 +122,8 @@ dependencies {
 
     implementation(libs.androidx.activity)
     implementation(libs.androidx.autofill)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
     implementation(libs.androidx.biometric)
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.material3:material3")
