@@ -70,7 +70,7 @@ fun MainGraph(navController: NavHostController) = NavHost(
         val viewModel = hiltViewModel<RequestIdDetailsViewModel>(it)
         RequestIdDetailsScreen(
             viewModel = viewModel,
-            requestId = { email -> navController.navigate(Graph.REQUEST_EDU_ID_LINK_SENT + "/" + email) },
+            requestId = { email -> navController.navigate(Graph.REQUEST_EDU_ID_LINK_SENT + "/" + email.ifBlank { "(no email provided)" }) },
             onBackClicked = { navController.popBackStack() }
         )
     }
