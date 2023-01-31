@@ -1,18 +1,19 @@
 package nl.eduid.requestiddetails
 
 import android.util.Patterns
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onStart
-import org.tiqr.data.service.DatabaseService
-import timber.log.Timber
+import nl.eduid.di.repository.EduIdRepository
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class RequestIdDetailsViewModel @Inject constructor() : ViewModel() {
+class RequestIdDetailsViewModel @Inject constructor(
+    private val eduIdRepo: EduIdRepository,
+) : ViewModel() {
     val inputForm = MutableLiveData(InputForm())
 
     fun onEmailChange(newValue: String) {
@@ -31,6 +32,15 @@ class RequestIdDetailsViewModel @Inject constructor() : ViewModel() {
         inputForm.value = inputForm.value?.copy(termsAccepted = newValue)
     }
 
+    //todo api work
+    val requestNewId = MutableLiveData<UUID>()
+    val challenge = requestNewId.switchMap { uuid ->
+        liveData {
+            eduIdRepo.requestEnroll(uuid).run {
+                emit(this)
+            }
+        }
+    }
 }
 
 data class InputForm(
