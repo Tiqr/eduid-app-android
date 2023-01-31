@@ -1,4 +1,4 @@
-package nl.eduid.biometric
+package nl.eduid.screens.biometric
 
 import android.content.Context
 import androidx.biometric.BiometricManager

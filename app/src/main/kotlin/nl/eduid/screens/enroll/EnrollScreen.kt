@@ -1,4 +1,4 @@
-package nl.eduid.enroll
+package nl.eduid.screens.enroll
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*

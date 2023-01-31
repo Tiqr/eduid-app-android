@@ -1,4 +1,4 @@
-package nl.eduid.login
+package nl.eduid.screens.login
 
 import android.content.Context
 import androidx.compose.material3.SnackbarHostState
@@ -9,8 +9,8 @@ import androidx.lifecycle.LifecycleOwner
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import nl.eduid.biometric.BiometricSignIn
-import nl.eduid.biometric.Biometricks
+import nl.eduid.screens.biometric.BiometricSignIn
+import nl.eduid.screens.biometric.Biometricks
 import org.tiqr.data.model.SecretCredential
 
 @Composable

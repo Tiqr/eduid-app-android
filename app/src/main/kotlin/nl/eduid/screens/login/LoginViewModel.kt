@@ -1,4 +1,4 @@
-package nl.eduid.login
+package nl.eduid.screens.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

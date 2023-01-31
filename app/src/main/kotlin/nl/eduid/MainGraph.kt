@@ -7,16 +7,16 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import nl.eduid.enroll.EnrollScreen
-import nl.eduid.login.LoginScreen
-import nl.eduid.login.LoginViewModel
-import nl.eduid.ready.ReadyScreen
-import nl.eduid.requestiddetails.RequestIdDetailsScreen
-import nl.eduid.requestiddetails.RequestIdDetailsViewModel
-import nl.eduid.requestidlinksent.RequestIdLinkSentScreen
-import nl.eduid.requestidstart.RequestIdStartScreen
-import nl.eduid.splash.SplashScreen
-import nl.eduid.splash.SplashViewModel
+import nl.eduid.screens.enroll.EnrollScreen
+import nl.eduid.screens.login.LoginScreen
+import nl.eduid.screens.login.LoginViewModel
+import nl.eduid.screens.ready.ReadyScreen
+import nl.eduid.screens.requestiddetails.RequestIdDetailsScreen
+import nl.eduid.screens.requestiddetails.RequestIdDetailsViewModel
+import nl.eduid.screens.requestidlinksent.RequestIdLinkSentScreen
+import nl.eduid.screens.requestidstart.RequestIdStartScreen
+import nl.eduid.screens.splash.SplashScreen
+import nl.eduid.screens.splash.SplashViewModel
 
 @Composable
 fun MainGraph(navController: NavHostController) = NavHost(

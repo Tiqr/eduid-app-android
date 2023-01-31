@@ -1,4 +1,4 @@
-package nl.eduid.login
+package nl.eduid.screens.login
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.Image
@@ -16,8 +16,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
-import nl.eduid.biometric.Biometricks
-import nl.eduid.biometric.SignInWithBiometricsContract
+import nl.eduid.screens.biometric.Biometricks
+import nl.eduid.screens.biometric.SignInWithBiometricsContract
 import nl.eduid.ui.PinInputField
 import nl.eduid.ui.PrimaryButton
 import org.tiqr.data.viewmodel.AuthenticationViewModel

@@ -83,7 +83,7 @@
         </activity>
 
         <activity
-            android:name=".biometric.SignInWithBiometricsActivity"
+            android:name=".screens.biometric.SignInWithBiometricsActivity"
             android:exported="false"
             android:theme="@style/AppTheme.Transparent" />
 

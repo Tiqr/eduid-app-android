@@ -1,4 +1,4 @@
-package nl.eduid.splash
+package nl.eduid.screens.splash
 
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel

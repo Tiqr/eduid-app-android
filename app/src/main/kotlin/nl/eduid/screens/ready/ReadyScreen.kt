@@ -1,4 +1,4 @@
-package nl.eduid.ready
+package nl.eduid.screens.ready
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState

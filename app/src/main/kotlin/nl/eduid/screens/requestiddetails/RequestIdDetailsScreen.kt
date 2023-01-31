@@ -1,4 +1,4 @@
-package nl.eduid.requestiddetails
+package nl.eduid.screens.requestiddetails
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions

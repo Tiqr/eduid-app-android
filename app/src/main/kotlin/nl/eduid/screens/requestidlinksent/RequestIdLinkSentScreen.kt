@@ -1,4 +1,4 @@
-package nl.eduid.requestidlinksent
+package nl.eduid.screens.requestidlinksent
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*

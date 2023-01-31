@@ -1,4 +1,4 @@
-package nl.eduid.requestiddetails
+package nl.eduid.screens.requestiddetails
 
 import android.util.Patterns
 import androidx.lifecycle.MutableLiveData

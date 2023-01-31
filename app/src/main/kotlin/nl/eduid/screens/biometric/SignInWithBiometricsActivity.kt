@@ -1,4 +1,4 @@
-package nl.eduid.biometric
+package nl.eduid.screens.biometric
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,11 +8,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 import nl.eduid.R
-import nl.eduid.biometric.SignInWithBiometricsContract.Companion.BIOMETRIC_CANCELED
-import nl.eduid.biometric.SignInWithBiometricsContract.Companion.BIOMETRIC_ERRORCODE_KEY
-import nl.eduid.biometric.SignInWithBiometricsContract.Companion.BIOMETRIC_ERRORMESSAGE_KEY
-import nl.eduid.biometric.SignInWithBiometricsContract.Companion.BIOMETRIC_FAILED
-import nl.eduid.biometric.SignInWithBiometricsContract.Companion.BIOMETRIC_OK
+import nl.eduid.screens.biometric.SignInWithBiometricsContract.Companion.BIOMETRIC_CANCELED
+import nl.eduid.screens.biometric.SignInWithBiometricsContract.Companion.BIOMETRIC_ERRORCODE_KEY
+import nl.eduid.screens.biometric.SignInWithBiometricsContract.Companion.BIOMETRIC_ERRORMESSAGE_KEY
+import nl.eduid.screens.biometric.SignInWithBiometricsContract.Companion.BIOMETRIC_FAILED
+import nl.eduid.screens.biometric.SignInWithBiometricsContract.Companion.BIOMETRIC_OK
 
 @AndroidEntryPoint
 class SignInWithBiometricsActivity : AppCompatActivity() {

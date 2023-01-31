@@ -1,4 +1,4 @@
-package nl.eduid.requestidstart
+package nl.eduid.screens.requestidstart
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
