@@ -78,6 +78,7 @@
     <string name="request_id_recovery_sub_header">If you can\'t access eduID with the app or via email, you can use this to sign in to your eduID Account.</string>
     <string name="request_id_recovery_text_code">We will text you a code to verify your number.</string>
     <string name="request_id_recovery_button">Verify this phone number</string>
+    <string name="request_id_recovery_input_hint">Recovery Phone Number</string>
 
 
 </resources>

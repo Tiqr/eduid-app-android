@@ -13,6 +13,7 @@ import nl.eduid.screens.requestiddetails.RequestIdDetailsScreen
 import nl.eduid.screens.requestiddetails.RequestIdDetailsViewModel
 import nl.eduid.screens.requestidlinksent.RequestIdLinkSentScreen
 import nl.eduid.screens.requestidrecovery.RequestIdRecoveryScreen
+import nl.eduid.screens.requestidrecovery.RequestIdRecoveryViewModel
 import nl.eduid.screens.requestidstart.RequestIdStartScreen
 import nl.eduid.screens.splash.SplashScreen
 import nl.eduid.screens.splash.SplashViewModel
@@ -83,9 +84,11 @@ fun MainGraph(navController: NavHostController) = NavHost(
     }
 
     composable(Graph.REQUEST_EDU_ID_RECOVERY) {
+        val viewModel = hiltViewModel<RequestIdRecoveryViewModel>(it)
         RequestIdRecoveryScreen(
             onVerifyPhoneNumberClicked = {  },
-            onBackClicked = { navController.popBackStack() }
+            onBackClicked = { navController.popBackStack() },
+            viewModel = viewModel,
         )
     }
 }
