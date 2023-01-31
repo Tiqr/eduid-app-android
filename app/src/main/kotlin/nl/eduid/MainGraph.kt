@@ -3,10 +3,8 @@ package nl.eduid
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import nl.eduid.screens.enroll.EnrollScreen
 import nl.eduid.screens.login.LoginScreen
 import nl.eduid.screens.login.LoginViewModel
@@ -14,6 +12,7 @@ import nl.eduid.screens.ready.ReadyScreen
 import nl.eduid.screens.requestiddetails.RequestIdDetailsScreen
 import nl.eduid.screens.requestiddetails.RequestIdDetailsViewModel
 import nl.eduid.screens.requestidlinksent.RequestIdLinkSentScreen
+import nl.eduid.screens.requestidrecovery.RequestIdRecoveryScreen
 import nl.eduid.screens.requestidstart.RequestIdStartScreen
 import nl.eduid.screens.splash.SplashScreen
 import nl.eduid.screens.splash.SplashViewModel
@@ -78,7 +77,14 @@ fun MainGraph(navController: NavHostController) = NavHost(
     composable(Graph.REQUEST_EDU_ID_LINK_SENT + "/{userId}") { backStackEntry ->
         RequestIdLinkSentScreen(
             userEmail = backStackEntry.arguments?.getString("userId") ?: "your email address",
-            requestId = { },
+            requestId = { navController.navigate(Graph.REQUEST_EDU_ID_RECOVERY) },
+            onBackClicked = { navController.popBackStack() }
+        )
+    }
+
+    composable(Graph.REQUEST_EDU_ID_RECOVERY) {
+        RequestIdRecoveryScreen(
+            onVerifyPhoneNumberClicked = {  },
             onBackClicked = { navController.popBackStack() }
         )
     }
@@ -94,4 +100,5 @@ object Graph {
     const val REQUEST_EDU_ID_START = "request_edu_id_start"
     const val REQUEST_EDU_ID_DETAILS = "request_edu_id_details"
     const val REQUEST_EDU_ID_LINK_SENT = "request_edu_id_link_sent"
+    const val REQUEST_EDU_ID_RECOVERY = "request_edu_id_recovery"
 }
