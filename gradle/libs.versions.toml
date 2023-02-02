@@ -4,21 +4,21 @@ android-sdk-target = "33"
 android-sdk-min = "24"
 android-buildTools = "33.0.0"
 
-kotlin = "1.7.20"
+kotlin = "1.8.0"
 coroutines = "1.6.4"
 
 hilt = "2.44"
 navigation = "2.5.3"
 room = "2.5.0-beta01"
 lifecycle = "2.5.1"
-camera = "1.2.0-rc01"
+camera = "1.3.0-alpha03"
 
 okhttp = "4.9.2"
 retrofit = "2.9.0"
 moshi = "1.14.0"
 
 [libraries]
-android-gradle = "com.android.tools.build:gradle:7.3.1"
+android-gradle = "com.android.tools.build:gradle:7.4.0"
 
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
