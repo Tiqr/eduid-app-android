@@ -67,7 +67,13 @@ fun MainGraph(navController: NavHostController) = NavHost(
             isRegistration = true,
             goBack = { navController.popBackStack() },
             goToRegistrationPinSetup = { challenge ->
-                navController.navigate(RegistrationPinSetup.encodeEnrollmentChallenge(challenge))
+                navController.navigate(
+                    RegistrationPinSetup.buildRouteWithEncodedChallenge(
+                        encodedChallenge = viewModel.encodeChallenge(
+                            challenge
+                        )
+                    )
+                )
             },
             goToAuthentication = {})
     }
@@ -149,12 +155,8 @@ object RegistrationPinSetup {
         )
     }
 
-    fun encodeEnrollmentChallenge(enrollmentChallenge: EnrollmentChallenge): String {
-//        val adapter = Moshi.Builder().build().adapter(EnrollmentChallenge::class.java)
-//        val challenge =
-//            URLEncoder.encode(adapter.toJson(enrollmentChallenge), Charsets.UTF_8.name())
-//        return "$route/$challenge"
-        return "$route/dummy_enrollemnt_challenge"
+    fun buildRouteWithEncodedChallenge(encodedChallenge: String?): String {
+        return "$route/$encodedChallenge"
     }
 }
 

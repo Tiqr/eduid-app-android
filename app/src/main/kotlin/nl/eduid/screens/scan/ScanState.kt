@@ -90,7 +90,7 @@ class ScanState(
 
     fun toggleTorch() {
         torchState = !torchState
-//        scanComponent?.toggleTorch(torchState)
+        scanComponent?.toggleTorch(torchState)
     }
 
     fun onScanResult(result: String) = viewModel.parseChallenge(result)
