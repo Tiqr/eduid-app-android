@@ -90,4 +90,7 @@
     <string name="scan_registration_explaination2" tools:ignore="ExtraTranslation">2. Create your personal QR code</string>
     <string name="scan_registration_explaination3" tools:ignore="ExtraTranslation">3. Scan it here.</string>
     <string name="scan_permission_explanation" tools:ignore="ExtraTranslation">Please grant access to the camera.</string>
+
+    <string name="pinsetup_title" tools:ignore="ExtraTranslation">Setup a PIN code</string>
+    <string name="pinsetup_description" tools:ignore="ExtraTranslation">to access the eduID app</string>
 </resources>

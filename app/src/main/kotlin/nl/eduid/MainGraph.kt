@@ -80,7 +80,10 @@ fun MainGraph(navController: NavHostController) = NavHost(
     composable(
         route = RegistrationPinSetup.routeWithArgs, arguments = RegistrationPinSetup.arguments
     ) {
-        RegistrationPinSetupScreen(RegistrationPinSetup.decodeEnrollmentChallenge(it.arguments))
+        RegistrationPinSetupScreen(
+            goToPinConfirm = {},
+            goBack = { navController.popBackStack() },
+        )
     }
     composable(Graph.REQUEST_EDU_ID_START) {
         RequestIdStartScreen(requestId = { navController.navigate(Graph.REQUEST_EDU_ID_DETAILS) },
@@ -125,7 +128,7 @@ object Graph {
 
 object RegistrationPinSetup {
     private const val route: String = "registration_pin_setup"
-    private const val registrationChallengeArg = "registrationChallenge"
+    const val registrationChallengeArg = "registrationChallenge"
 
     const val routeWithArgs = "${route}/{${registrationChallengeArg}}"
     val arguments = listOf(navArgument(registrationChallengeArg) {
