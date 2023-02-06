@@ -32,6 +32,7 @@ fun PinInputField(
     modifier: Modifier = Modifier,
     onPinChange: (String) -> Unit = {},
     submitPin: () -> Unit = {},
+    pinMaxLength: Int = PIN_MAX_LENGTH,
 ) = Column(
     modifier = modifier,
     verticalArrangement = Arrangement.Center,
@@ -55,7 +56,7 @@ fun PinInputField(
                 .wrapContentWidth(align = Alignment.CenterHorizontally),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            for (i in 0 until PIN_MAX_LENGTH) {
+            for (i in 0 until pinMaxLength) {
                 val code = if (pinCode.length - 1 >= i) {
                     pinCode[i].toString()
                 } else {
@@ -73,7 +74,7 @@ fun PinInputField(
                 )
             }
         }
-        val options = if (pinCode.length == PIN_MAX_LENGTH) {
+        val options = if (pinCode.length == pinMaxLength) {
             KeyboardOptions(
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Number
