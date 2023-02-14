@@ -94,6 +94,13 @@
     <string name="start_item_three_bold">Verify your identity</string>
     <string name="start_item_three_regular">so you can access more secure services.</string>
 
+    <string name="homepage_title_one">Your eduID app</string>
+    <string name="homepage_title_two">is ready for use</string>
+
+    <string name="personal_info_title">Your personal info</string>
+    <string name="personal_info_subtitle">When you use eduID to login to other websites, some of your personal information will be shared. Some websites require that your personal information is validated by a third party.</string>
+    <string name="personal_info_info_header">Shareable information</string>
+
 
     <string name="scan_title" tools:ignore="ExtraTranslation">Scan the QR-code</string>
     <string name="scan_registration_explaination" tools:ignore="ExtraTranslation">Don\'t see a QR code?</string>

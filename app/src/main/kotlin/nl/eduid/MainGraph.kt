@@ -10,8 +10,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import nl.eduid.screens.enroll.EnrollScreen
 import nl.eduid.screens.firsttimedialog.FirstTimeDialogScreen
+import nl.eduid.screens.homepage.HomePageScreen
+import nl.eduid.screens.homepage.HomePageViewModel
 import nl.eduid.screens.login.LoginScreen
 import nl.eduid.screens.login.LoginViewModel
+import nl.eduid.screens.personalinfo.PersonalInfoScreen
+import nl.eduid.screens.personalinfo.PersonalInfoViewModel
 import nl.eduid.screens.pinsetup.RegistrationPinSetupScreen
 import nl.eduid.screens.ready.ReadyScreen
 import nl.eduid.screens.requestiddetails.RequestIdDetailsScreen
@@ -129,6 +133,28 @@ fun MainGraph(navController: NavHostController) = NavHost(
     composable(Graph.FIRST_TIME_DIALOG) {
         FirstTimeDialogScreen()
     }
+
+    composable(Graph.HOME_PAGE) {
+        val viewModel = hiltViewModel<HomePageViewModel>(it)
+        HomePageScreen(
+            viewModel = viewModel,
+            onActivityClicked = {},
+            onPersonalInfoClicked = { navController.navigate(Graph.PERSONAL_INFO) },
+            onSecurityClicked = {},
+        )
+    }
+
+    composable(Graph.PERSONAL_INFO) {
+        val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
+        PersonalInfoScreen(
+            viewModel = viewModel,
+            onNameClicked = {  },
+            onEmailClicked = {  },
+            onRoleClicked = {  },
+            onInstitutionClicked = {  },
+            goBack = { navController.popBackStack() },
+        )
+    }
 }
 
 object Graph {
@@ -145,6 +171,8 @@ object Graph {
     const val REQUEST_EDU_ID_PIN = "request_edu_id_pin"
     const val START = "start"
     const val FIRST_TIME_DIALOG = "first_time_dialog"
+    const val HOME_PAGE = "home_page"
+    const val PERSONAL_INFO = "personal_info"
 }
 
 object RegistrationPinSetup {
