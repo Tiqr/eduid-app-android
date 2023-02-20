@@ -9,19 +9,27 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import nl.eduid.screens.enroll.EnrollScreen
+import nl.eduid.screens.firsttimedialog.FirstTimeDialogScreen
+import nl.eduid.screens.homepage.HomePageScreen
+import nl.eduid.screens.homepage.HomePageViewModel
 import nl.eduid.screens.login.LoginScreen
 import nl.eduid.screens.login.LoginViewModel
+import nl.eduid.screens.personalinfo.PersonalInfoScreen
+import nl.eduid.screens.personalinfo.PersonalInfoViewModel
 import nl.eduid.screens.pinsetup.RegistrationPinSetupScreen
 import nl.eduid.screens.ready.ReadyScreen
 import nl.eduid.screens.requestiddetails.RequestIdDetailsScreen
 import nl.eduid.screens.requestiddetails.RequestIdDetailsViewModel
 import nl.eduid.screens.requestidlinksent.RequestIdLinkSentScreen
+import nl.eduid.screens.requestidpin.RequestIdPinScreen
+import nl.eduid.screens.requestidpin.RequestIdPinViewModel
 import nl.eduid.screens.requestidrecovery.RequestIdRecoveryScreen
 import nl.eduid.screens.requestidrecovery.RequestIdRecoveryViewModel
 import nl.eduid.screens.requestidstart.RequestIdStartScreen
 import nl.eduid.screens.scan.ScanScreen
 import nl.eduid.screens.splash.SplashScreen
 import nl.eduid.screens.splash.SplashViewModel
+import nl.eduid.screens.start.StartScreen
 import org.tiqr.data.model.EnrollmentChallenge
 import org.tiqr.data.model.Identity
 import org.tiqr.data.model.IdentityProvider
@@ -106,9 +114,48 @@ fun MainGraph(navController: NavHostController) = NavHost(
     composable(Graph.REQUEST_EDU_ID_RECOVERY) {
         val viewModel = hiltViewModel<RequestIdRecoveryViewModel>(it)
         RequestIdRecoveryScreen(
-            onVerifyPhoneNumberClicked = { },
+            onVerifyPhoneNumberClicked = { navController.navigate(Graph.REQUEST_EDU_ID_PIN) },
             onBackClicked = { navController.popBackStack() },
             viewModel = viewModel,
+        )
+    }
+
+    composable(Graph.REQUEST_EDU_ID_PIN) {
+        val viewModel = hiltViewModel<RequestIdPinViewModel>(it)
+        RequestIdPinScreen(viewModel = viewModel,
+            onPinVerified = { navController.navigate(Graph.START) },
+            goBack = { navController.popBackStack() })
+    }
+
+    composable(Graph.START) {
+        StartScreen(
+            onNext = {Graph.FIRST_TIME_DIALOG},
+        )
+    }
+
+    composable(Graph.FIRST_TIME_DIALOG) {
+        FirstTimeDialogScreen()
+    }
+
+    composable(Graph.HOME_PAGE) {
+        val viewModel = hiltViewModel<HomePageViewModel>(it)
+        HomePageScreen(
+            viewModel = viewModel,
+            onActivityClicked = {},
+            onPersonalInfoClicked = { navController.navigate(Graph.PERSONAL_INFO) },
+            onSecurityClicked = {},
+        )
+    }
+
+    composable(Graph.PERSONAL_INFO) {
+        val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
+        PersonalInfoScreen(
+            viewModel = viewModel,
+            onNameClicked = {  },
+            onEmailClicked = {  },
+            onRoleClicked = {  },
+            onInstitutionClicked = {  },
+            goBack = { navController.popBackStack() },
         )
     }
 }
@@ -124,6 +171,11 @@ object Graph {
     const val REQUEST_EDU_ID_DETAILS = "request_edu_id_details"
     const val REQUEST_EDU_ID_LINK_SENT = "request_edu_id_link_sent"
     const val REQUEST_EDU_ID_RECOVERY = "request_edu_id_recovery"
+    const val REQUEST_EDU_ID_PIN = "request_edu_id_pin"
+    const val START = "start"
+    const val FIRST_TIME_DIALOG = "first_time_dialog"
+    const val HOME_PAGE = "home_page"
+    const val PERSONAL_INFO = "personal_info"
 }
 
 object RegistrationPinSetup {

@@ -81,6 +81,26 @@
     <string name="request_id_recovery_button">Verify this phone number</string>
     <string name="request_id_recovery_input_hint">Recovery Phone Number</string>
 
+    <string name="request_id_pin_title">Check your messages!</string>
+    <string name="request_id_pin_subtitle">Enter the six-digit code we sent to your phone to continue</string>
+    <string name="request_id_pin_button">Verify this phonenumber</string>
+
+    <string name="start_button">OK, got it!</string>
+    <string name="start_title">Welcome! Use this app to</string>
+    <string name="start_item_one_bold">Quickly login </string>
+    <string name="start_item_one_regular">to educational services</string>
+    <string name="start_item_two_bold">View</string>
+    <string name="start_item_two_regular">what details of your eduID get shared with those services</string>
+    <string name="start_item_three_bold">Verify your identity</string>
+    <string name="start_item_three_regular">so you can access more secure services.</string>
+
+    <string name="homepage_title_one">Your eduID app</string>
+    <string name="homepage_title_two">is ready for use</string>
+
+    <string name="personal_info_title">Your personal info</string>
+    <string name="personal_info_subtitle">When you use eduID to login to other websites, some of your personal information will be shared. Some websites require that your personal information is validated by a third party.</string>
+    <string name="personal_info_info_header">Shareable information</string>
+
 
     <string name="scan_title" tools:ignore="ExtraTranslation">Scan the QR-code</string>
     <string name="scan_registration_explaination" tools:ignore="ExtraTranslation">Don\'t see a QR code?</string>
