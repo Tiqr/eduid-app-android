@@ -94,13 +94,7 @@ fun PinInputField(
             isError = isPinInvalid,
             keyboardOptions = options,
             keyboardActions = KeyboardActions(
-                onNext = {
-                    if (isPinInvalid.not()) {
-                        focusManager.clearFocus()
-                    }
-                },
                 onDone = {
-                    focusManager.clearFocus()
                     submitPin.invoke()
                 }
             ),

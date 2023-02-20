@@ -1,6 +1,5 @@
 package nl.eduid
 
-import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -8,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.squareup.moshi.Moshi
 import nl.eduid.screens.enroll.EnrollScreen
 import nl.eduid.screens.firsttimedialog.FirstTimeDialogScreen
 import nl.eduid.screens.homepage.HomePageScreen
@@ -17,6 +17,7 @@ import nl.eduid.screens.login.LoginViewModel
 import nl.eduid.screens.personalinfo.PersonalInfoScreen
 import nl.eduid.screens.personalinfo.PersonalInfoViewModel
 import nl.eduid.screens.pinsetup.RegistrationPinSetupScreen
+import nl.eduid.screens.pinsetup.RegistrationPinSetupViewModel
 import nl.eduid.screens.ready.ReadyScreen
 import nl.eduid.screens.requestiddetails.RequestIdDetailsScreen
 import nl.eduid.screens.requestiddetails.RequestIdDetailsViewModel
@@ -31,9 +32,8 @@ import nl.eduid.screens.splash.SplashScreen
 import nl.eduid.screens.splash.SplashViewModel
 import nl.eduid.screens.start.StartScreen
 import org.tiqr.data.model.EnrollmentChallenge
-import org.tiqr.data.model.Identity
-import org.tiqr.data.model.IdentityProvider
 import org.tiqr.data.viewmodel.ScanViewModel
+import java.net.URLDecoder
 
 @Composable
 fun MainGraph(navController: NavHostController) = NavHost(
@@ -87,11 +87,17 @@ fun MainGraph(navController: NavHostController) = NavHost(
     }
     composable(
         route = RegistrationPinSetup.routeWithArgs, arguments = RegistrationPinSetup.arguments
-    ) {
+    ) { backStackEntry ->
+        val viewModel = hiltViewModel<RegistrationPinSetupViewModel>(backStackEntry)
         RegistrationPinSetupScreen(
-            goToPinConfirm = {},
-            goBack = { navController.popBackStack() },
-        )
+            viewModel,
+            enrollChallengeReceived = {
+                backStackEntry.arguments?.putString(
+                    RegistrationPinSetup.registrationChallengeArg, null
+                )
+            },
+            closePinSetupFlow = { navController.popBackStack() }
+        ) { navController.navigate(Graph.HOME_PAGE) }
     }
     composable(Graph.REQUEST_EDU_ID_START) {
         RequestIdStartScreen(requestId = { navController.navigate(Graph.REQUEST_EDU_ID_DETAILS) },
@@ -129,7 +135,7 @@ fun MainGraph(navController: NavHostController) = NavHost(
 
     composable(Graph.START) {
         StartScreen(
-            onNext = {Graph.FIRST_TIME_DIALOG},
+            onNext = { Graph.FIRST_TIME_DIALOG },
         )
     }
 
@@ -151,10 +157,10 @@ fun MainGraph(navController: NavHostController) = NavHost(
         val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
         PersonalInfoScreen(
             viewModel = viewModel,
-            onNameClicked = {  },
-            onEmailClicked = {  },
-            onRoleClicked = {  },
-            onInstitutionClicked = {  },
+            onNameClicked = { },
+            onEmailClicked = { },
+            onRoleClicked = { },
+            onInstitutionClicked = { },
             goBack = { navController.popBackStack() },
         )
     }
@@ -189,25 +195,11 @@ object RegistrationPinSetup {
         defaultValue = ""
     })
 
-    fun decodeEnrollmentChallenge(arguments: Bundle?): EnrollmentChallenge? {
+    fun decodeEnrollmentChallenge(encoded: String): EnrollmentChallenge? {
 //        val encoded = arguments?.getString(registrationChallengeArg) ?: ""
-//        val decoded = URLDecoder.decode(encoded, Charsets.UTF_8.name())
-//        val adapter = Moshi.Builder().build().adapter(EnrollmentChallenge::class.java)
-//        return adapter.fromJson(decoded)
-        return EnrollmentChallenge(
-            identityProvider = IdentityProvider(
-                displayName = "Dummy identity provider until core is with @JsonClass(generateAdapter = true) for the challenge classes",
-                identifier = "fake identifier",
-                authenticationUrl = "fake url"
-            ),
-            identity = Identity(
-                displayName = "fake identity name",
-                identifier = "fake identifier",
-            ),
-            enrollmentHost = "fake enrollment host",
-            enrollmentUrl = "fake enrollment url",
-            returnUrl = null,
-        )
+        val decoded = URLDecoder.decode(encoded, Charsets.UTF_8.name())
+        val adapter = Moshi.Builder().build().adapter(EnrollmentChallenge::class.java)
+        return adapter.fromJson(decoded)
     }
 
     fun buildRouteWithEncodedChallenge(encodedChallenge: String?): String {

@@ -113,4 +113,6 @@
 
     <string name="pinsetup_title" tools:ignore="ExtraTranslation">Setup a PIN code</string>
     <string name="pinsetup_description" tools:ignore="ExtraTranslation">to access the eduID app</string>
+    <string name="pinsetup_confirm_title" tools:ignore="ExtraTranslation">Confirm your chosen PIN code</string>
+    <string name="pinsetup_confirm_description" tools:ignore="ExtraTranslation">remember your PIN</string>
 </resources>

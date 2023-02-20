@@ -10,6 +10,52 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.text.font.FontWeight
 
 @Composable
+fun AlertDialogWithSingleButton(
+    title: String,
+    explanation: String,
+    buttonLabel: String,
+    onDismiss: () -> Unit = {}
+) {
+    val openDialog = remember { mutableStateOf(true) }
+
+    if (openDialog.value) {
+        AlertDialog(
+            onDismissRequest = {
+                openDialog.value = false
+                onDismiss()
+            },
+            title = {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge,
+                )
+            },
+            text = {
+                Text(
+                    text = explanation,
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+            },
+            confirmButton = {},
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        openDialog.value = false
+                        onDismiss()
+                    }
+                ) {
+                    Text(
+                        text = buttonLabel,
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+            }
+        )
+    }
+}
+
+@Composable
 fun AlertDialogWithTwoButton(
     title: String,
     explanation: String,
