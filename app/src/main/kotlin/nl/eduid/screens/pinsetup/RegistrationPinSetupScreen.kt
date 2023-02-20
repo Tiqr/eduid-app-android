@@ -20,16 +20,18 @@ import androidx.compose.ui.unit.dp
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.AlertDialogWithTwoButton
+import org.tiqr.data.viewmodel.EnrollmentViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistrationPinSetupScreen(
-    viewModel: RegistrationPinSetupViewModel,
+    regViewModel: RegistrationPinSetupViewModel,
+    viewModel: EnrollmentViewModel,
     enrollChallengeReceived: () -> Unit,
     closePinSetupFlow: () -> Unit,
     onRegistrationDone: () -> Unit
 ) {
-    BackHandler { viewModel.handleBackNavigation(closePinSetupFlow) }
+    BackHandler { regViewModel.handleBackNavigation(closePinSetupFlow) }
     val dispatcher = LocalOnBackPressedDispatcherOwner.current!!.onBackPressedDispatcher
 
     Scaffold(
@@ -59,17 +61,17 @@ fun RegistrationPinSetupScreen(
         modifier = Modifier.systemBarsPadding(),
     ) { paddingValues ->
 
-        val pinStep by viewModel.pinStep.observeAsState(PinStep.PinCreate)
-        val pinValue: String by viewModel.pinCreate.observeAsState("")
-        val pinConfirmValue: String by viewModel.pinConfirm.observeAsState("")
-        val isPinInvalid: Boolean by viewModel.isPinInvalid.observeAsState(false)
-        val encodedChallenge by viewModel.challenge.observeAsState(null)
-        val promptBiometric by viewModel.promptBiometric.observeAsState(null)
-        val errorData by viewModel.errorData.observeAsState(null)
+        val pinStep by regViewModel.pinStep.observeAsState(PinStep.PinCreate)
+        val pinValue: String by regViewModel.pinCreate.observeAsState("")
+        val pinConfirmValue: String by regViewModel.pinConfirm.observeAsState("")
+        val isPinInvalid: Boolean by regViewModel.isPinInvalid.observeAsState(false)
+        val encodedChallenge by regViewModel.challenge.observeAsState(null)
+        val promptBiometric by regViewModel.promptBiometric.observeAsState(null)
+        val errorData by regViewModel.errorData.observeAsState(null)
         val context = LocalContext.current
 
         encodedChallenge?.let { encodedChallenge ->
-            LaunchedEffect(viewModel, encodedChallenge) {
+            LaunchedEffect(regViewModel, encodedChallenge) {
                 enrollChallengeReceived()
             }
         }
@@ -78,7 +80,7 @@ fun RegistrationPinSetupScreen(
                 title = errorData!!.title,
                 explanation = errorData!!.message,
                 buttonLabel = stringResource(R.string.button_ok),
-                onDismiss = viewModel::dismissError
+                onDismiss = regViewModel::dismissError
             )
         }
 
@@ -89,12 +91,12 @@ fun RegistrationPinSetupScreen(
                     explanation = stringResource(id = org.tiqr.core.R.string.account_upgrade_biometric_message),
                     dismissButtonLabel = stringResource(R.string.button_cancel),
                     onDismiss = {
-                        viewModel::stopOfferBiometric
+                        regViewModel::stopOfferBiometric
                         onRegistrationDone()
                     },
                     confirmButtonLabel = stringResource(R.string.button_ok),
                     onConfirm = {
-                        viewModel::upgradeBiometric
+                        regViewModel::upgradeBiometric
                         onRegistrationDone()
                     }
                 )
@@ -124,10 +126,10 @@ fun RegistrationPinSetupScreen(
             },
             label = "",
             onPinChange = { pin, step ->
-                viewModel.onPinChange(pin, step)
+                regViewModel.onPinChange(pin, step)
             },
             onClick = {
-                viewModel.submitPin(context, pinStep)
+                regViewModel.submitPin(context, pinStep)
             },
             paddingValues = paddingValues,
             isProcessing = false
