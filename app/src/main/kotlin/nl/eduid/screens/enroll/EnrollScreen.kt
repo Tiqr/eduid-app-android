@@ -119,8 +119,7 @@ fun EnrollScreen(
         {
             Text(
                 text = stringResource(R.string.enroll_screen_request_id_button),
-                style = MaterialTheme.typography.bodyLarge.copy(color = ButtonGreen),
-                fontWeight = FontWeight.SemiBold,
+                style = MaterialTheme.typography.bodyLarge.copy(color = ButtonGreen, fontWeight = FontWeight.SemiBold),
             )
         }
     }

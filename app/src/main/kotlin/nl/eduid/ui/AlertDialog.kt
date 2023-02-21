@@ -46,8 +46,7 @@ fun AlertDialogWithSingleButton(
                 ) {
                     Text(
                         text = buttonLabel,
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.SemiBold
+                        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
                     )
                 }
             }
@@ -90,8 +89,7 @@ fun AlertDialogWithTwoButton(
             }) {
                 Text(
                     text = confirmButtonLabel,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.SemiBold
+                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
                 )
             }
         }, dismissButton = {
@@ -101,8 +99,7 @@ fun AlertDialogWithTwoButton(
             }) {
                 Text(
                     text = dismissButtonLabel,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.SemiBold
+                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
                 )
             }
         })

@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -85,7 +84,6 @@ fun PinInputField(
                 keyboardType = KeyboardType.Number
             )
         }
-        val focusManager = LocalFocusManager.current
         val focusRequester = remember { FocusRequester() }
         OutlinedTextField(
             value = pinCode,
@@ -109,9 +107,10 @@ fun PinInputField(
     if (isPinInvalid) {
         Text(
             text = stringResource(R.string.confirmpin_mismatch),
-            color = MaterialTheme.colorScheme.error,
-            fontWeight = FontWeight.SemiBold,
-            style = MaterialTheme.typography.bodySmall,
+            style = MaterialTheme.typography.bodySmall.copy(
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.error
+            ),
             modifier = Modifier
                 .padding(start = 8.dp, top = 4.dp)
         )

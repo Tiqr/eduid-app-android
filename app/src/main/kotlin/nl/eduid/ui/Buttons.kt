@@ -18,7 +18,7 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
 fun PrimaryButton(
-    text: String, onClick: () -> Unit, enabled: Boolean = true, modifier: Modifier = Modifier
+    text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true
 ) = Button(
     onClick = onClick,
     enabled = enabled,
@@ -28,8 +28,11 @@ fun PrimaryButton(
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.bodyLarge.copy(color = Color.White),
-        fontWeight = FontWeight.SemiBold)
+        style = MaterialTheme.typography.bodyLarge.copy(
+            color = Color.White,
+            fontWeight = FontWeight.SemiBold
+        ),
+    )
 }
 
 @Preview
