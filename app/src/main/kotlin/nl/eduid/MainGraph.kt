@@ -7,7 +7,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.squareup.moshi.Moshi
+import nl.eduid.screens.biometric.EnableBiometricScreen
+import nl.eduid.screens.biometric.EnableBiometricViewModel
 import nl.eduid.screens.enroll.EnrollScreen
 import nl.eduid.screens.firsttimedialog.FirstTimeDialogScreen
 import nl.eduid.screens.homepage.HomePageScreen
@@ -31,8 +32,6 @@ import nl.eduid.screens.scan.StatelessScanViewModel
 import nl.eduid.screens.splash.SplashScreen
 import nl.eduid.screens.splash.SplashViewModel
 import nl.eduid.screens.start.StartScreen
-import org.tiqr.data.model.EnrollmentChallenge
-import java.net.URLDecoder
 
 @Composable
 fun MainGraph(navController: NavHostController) = NavHost(
@@ -85,17 +84,40 @@ fun MainGraph(navController: NavHostController) = NavHost(
         route = RegistrationPinSetup.routeWithArgs, arguments = RegistrationPinSetup.arguments
     ) { entry ->
         val viewModel = hiltViewModel<RegistrationPinSetupViewModel>(entry)
-        RegistrationPinSetupScreen(viewModel = viewModel
-            ,
+        RegistrationPinSetupScreen(
+            viewModel = viewModel,
             enrolChallengeReceived = {
                 entry.savedStateHandle.remove<String>(RegistrationPinSetup.registrationChallengeArg)
             },
-            closePinSetupFlow = { navController.popBackStack() }) {
+            closePinSetupFlow = { navController.popBackStack() },
+            goToBiometricEnable = { challenge, pin ->
+                navController.navigate(
+                    EnableBiometric.buildRouteForEnrolment(
+                        encodedChallenge = viewModel.encodeChallenge(challenge),
+                        pin = pin
+                    )
+                )
+            }
+        ) {
             navController.navigate(Graph.HOME_PAGE) {
                 popUpTo(Graph.SCAN_REGISTRATION) {
                     inclusive = true
                 }
             }
+        }
+    }
+    composable(
+        route = EnableBiometric.routeWithArgs, arguments = EnableBiometric.arguments
+    ) { entry ->
+        val viewModel = hiltViewModel<EnableBiometricViewModel>(entry)
+        EnableBiometricScreen(viewModel = viewModel, onRegistrationDone = {
+            navController.navigate(Graph.HOME_PAGE) {
+                popUpTo(Graph.SCAN_REGISTRATION) {
+                    inclusive = true
+                }
+            }
+        }) {
+            navController.popBackStack()
         }
     }
     composable(Graph.REQUEST_EDU_ID_START) {
@@ -146,7 +168,7 @@ fun MainGraph(navController: NavHostController) = NavHost(
         val viewModel = hiltViewModel<HomePageViewModel>(it)
         HomePageScreen(
             viewModel = viewModel,
-            onActivityClicked = {},
+            onActivityClicked = {navController.navigate("enable_biometric/challenge?biometric_pin_arg=pinValue&biometric_is_enrolment_arg=true")},
             onPersonalInfoClicked = { navController.navigate(Graph.PERSONAL_INFO) },
             onSecurityClicked = {},
         )
@@ -193,15 +215,44 @@ object RegistrationPinSetup {
         defaultValue = ""
     })
 
-    fun decodeEnrollmentChallenge(encoded: String): EnrollmentChallenge? {
-//        val encoded = arguments?.getString(registrationChallengeArg) ?: ""
-        val decoded = URLDecoder.decode(encoded, Charsets.UTF_8.name())
-        val adapter = Moshi.Builder().build().adapter(EnrollmentChallenge::class.java)
-        return adapter.fromJson(decoded)
-    }
-
     fun buildRouteWithEncodedChallenge(encodedChallenge: String?): String {
         return "$route/$encodedChallenge"
     }
 }
 
+object EnableBiometric {
+    private const val route: String = "enable_biometric"
+    const val biometricChallengeArg = "biometric_challenge_arg"
+    const val biometricPinArg = "biometric_pin_arg"
+    const val biometricIsEnrolmentArg = "biometric_is_enrolment_arg"
+    const val routeWithArgs =
+        "${route}/{${biometricChallengeArg}}?$biometricPinArg={${biometricPinArg}}&$biometricIsEnrolmentArg={${biometricIsEnrolmentArg}}"
+    val arguments = listOf(
+        navArgument(biometricChallengeArg) {
+            type = NavType.StringType
+            nullable = false
+            defaultValue = ""
+        },
+        navArgument(biometricPinArg) {
+            type = NavType.StringType
+            nullable = false
+            defaultValue = ""
+        },
+        navArgument(biometricIsEnrolmentArg) {
+            type = NavType.BoolType
+            nullable = false
+            defaultValue = true
+        })
+
+
+    fun buildRouteForEnrolment(encodedChallenge: String, pin: String): String =
+        "$route/$encodedChallenge/$pin/true"
+
+    fun buildRouteForAuthentication(encodedChallenge: String, pin: String): String =
+        "$route/$encodedChallenge/$pin/false"
+
+    @JvmStatic
+    fun main(args: Array<String>) {
+        println(routeWithArgs)
+    }
+}

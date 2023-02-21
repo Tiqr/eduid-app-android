@@ -35,7 +35,6 @@ fun PinContent(
         .fillMaxSize()
         .verticalScroll(rememberScrollState())
         .systemBarsPadding()
-        .padding(horizontal = 8.dp)
 ) {
     Column(
         modifier = Modifier
@@ -46,14 +45,14 @@ fun PinContent(
         Text(
             text = title,
             style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Start,
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(modifier = Modifier.height(32.dp))
         Text(
             text = description,
             style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Start,
             modifier = Modifier.fillMaxWidth(),
         )
         if (isProcessing) {

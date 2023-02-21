@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import nl.eduid.BaseViewModel
 import nl.eduid.RegistrationPinSetup
 import nl.eduid.screens.scan.ErrorData
 import nl.eduid.ui.PIN_MAX_LENGTH
@@ -15,12 +17,15 @@ import org.tiqr.data.model.ChallengeCompleteResult
 import org.tiqr.data.model.EnrollmentChallenge
 import org.tiqr.data.model.EnrollmentCompleteRequest
 import org.tiqr.data.repository.EnrollmentRepository
+import java.net.URLDecoder
 import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationPinSetupViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle, private val repository: EnrollmentRepository
-) : ViewModel() {
+    savedStateHandle: SavedStateHandle,
+    moshi: Moshi,
+    private val repository: EnrollmentRepository
+) : BaseViewModel(moshi) {
     val pinStep: MutableLiveData<PinStep> = MutableLiveData(PinStep.PinCreate)
     val isPinInvalid = MutableLiveData(false)
     val pinCreate = MutableLiveData("")
@@ -32,7 +37,9 @@ class RegistrationPinSetupViewModel @Inject constructor(
     init {
         val enrolChallenge =
             savedStateHandle.get<String>(RegistrationPinSetup.registrationChallengeArg) ?: ""
-        challenge.value = RegistrationPinSetup.decodeEnrollmentChallenge(enrolChallenge)
+        val decoded = URLDecoder.decode(enrolChallenge, Charsets.UTF_8.name())
+        val adapter = moshi.adapter(EnrollmentChallenge::class.java)
+        challenge.value = adapter.fromJson(decoded)
     }
 
     fun onPinChange(inputCode: String, pinStep: PinStep) {

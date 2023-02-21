@@ -1,14 +1,15 @@
 package nl.eduid.screens.scan
 
 import android.content.res.Resources
-import androidx.lifecycle.ViewModel
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
+import nl.eduid.BaseViewModel
 import nl.eduid.R
-import org.tiqr.data.model.*
+import org.tiqr.data.model.ChallengeParseFailure
+import org.tiqr.data.model.ChallengeParseResult
+import org.tiqr.data.model.ParseFailure
 import org.tiqr.data.repository.AuthenticationRepository
 import org.tiqr.data.repository.EnrollmentRepository
-import java.net.URLEncoder
 import javax.inject.Inject
 
 /**
@@ -24,8 +25,8 @@ class StatelessScanViewModel @Inject constructor(
     private val resources: Resources,
     private val enroll: EnrollmentRepository,
     private val auth: AuthenticationRepository,
-    private val moshi: Moshi
-) : ViewModel() {
+    moshi: Moshi
+) : BaseViewModel(moshi) {
 
     suspend fun parseChallenge(rawChallenge: String): ChallengeParseResult<*, ChallengeParseFailure> =
         when {
@@ -38,19 +39,4 @@ class StatelessScanViewModel @Inject constructor(
                 )
             )
         }
-
-    fun encodeChallenge(scanResult: Challenge): String {
-        val asJson: String = when (scanResult) {
-            is EnrollmentChallenge -> {
-                val adapter = moshi.adapter(EnrollmentChallenge::class.java)
-                adapter.toJson(scanResult)
-            }
-            is AuthenticationChallenge -> {
-                val adapter = moshi.adapter(AuthenticationChallenge::class.java)
-                adapter.toJson(scanResult)
-            }
-        }
-        return URLEncoder.encode(asJson, Charsets.UTF_8.toString())
-    }
-
 }

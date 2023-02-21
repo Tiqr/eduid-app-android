@@ -111,8 +111,13 @@
     <string name="scan_registration_explaination3" tools:ignore="ExtraTranslation">3. Scan it here.</string>
     <string name="scan_permission_explanation" tools:ignore="ExtraTranslation">Please grant access to the camera.</string>
 
-    <string name="pinsetup_title" tools:ignore="ExtraTranslation">Setup a PIN code</string>
-    <string name="pinsetup_description" tools:ignore="ExtraTranslation">to access the eduID app</string>
-    <string name="pinsetup_confirm_title" tools:ignore="ExtraTranslation">Confirm your chosen PIN code</string>
-    <string name="pinsetup_confirm_description" tools:ignore="ExtraTranslation">remember your PIN</string>
+    <string name="pinsetup_title" tools:ignore="ExtraTranslation">Select a PINcode</string>
+    <string name="pinsetup_description" tools:ignore="ExtraTranslation">To use the eduID app you need a PIN code.</string>
+    <string name="pinsetup_confirm_title" tools:ignore="ExtraTranslation">Repeat your PINcode</string>
+    <string name="pinsetup_confirm_description" tools:ignore="ExtraTranslation">Enter your PINcode again.</string>
+
+    <string name="biometric_enable_title" tools:ignore="ExtraTranslation">Biometric approval</string>
+    <string name="biometric_enable_description" tools:ignore="ExtraTranslation">Do you want to use your biometrics to add an extra layer of security to your eduID?</string>
+    <string name="biometric_enable_allow" tools:ignore="ExtraTranslation">Set up biometric access</string>
+    <string name="biometric_enable_skip" tools:ignore="ExtraTranslation">Skip this</string>
 </resources>
