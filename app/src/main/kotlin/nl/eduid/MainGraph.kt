@@ -27,12 +27,11 @@ import nl.eduid.screens.requestidrecovery.RequestIdRecoveryScreen
 import nl.eduid.screens.requestidrecovery.RequestIdRecoveryViewModel
 import nl.eduid.screens.requestidstart.RequestIdStartScreen
 import nl.eduid.screens.scan.ScanScreen
+import nl.eduid.screens.scan.StatelessScanViewModel
 import nl.eduid.screens.splash.SplashScreen
 import nl.eduid.screens.splash.SplashViewModel
 import nl.eduid.screens.start.StartScreen
 import org.tiqr.data.model.EnrollmentChallenge
-import org.tiqr.data.viewmodel.EnrollmentViewModel
-import org.tiqr.data.viewmodel.ScanViewModel
 import java.net.URLDecoder
 
 @Composable
@@ -67,7 +66,7 @@ fun MainGraph(navController: NavHostController) = NavHost(
             goBack = { navController.popBackStack() })
     }
     composable(Graph.SCAN_REGISTRATION) {
-        val viewModel = hiltViewModel<ScanViewModel>(it)
+        val viewModel = hiltViewModel<StatelessScanViewModel>(it)
         ScanScreen(viewModel = viewModel,
             isRegistration = true,
             goBack = { navController.popBackStack() },
@@ -84,19 +83,14 @@ fun MainGraph(navController: NavHostController) = NavHost(
     }
     composable(
         route = RegistrationPinSetup.routeWithArgs, arguments = RegistrationPinSetup.arguments
-    ) { backStackEntry ->
-        val regViewModel = hiltViewModel<RegistrationPinSetupViewModel>(backStackEntry)
-        val viewModel = hiltViewModel<EnrollmentViewModel>(backStackEntry)
-        RegistrationPinSetupScreen(
-            regViewModel = regViewModel,
-            viewModel = viewModel,
-            enrollChallengeReceived = {
-                backStackEntry.arguments?.putString(
-                    RegistrationPinSetup.registrationChallengeArg, null
-                )
+    ) { entry ->
+        val viewModel = hiltViewModel<RegistrationPinSetupViewModel>(entry)
+        RegistrationPinSetupScreen(viewModel = viewModel
+            ,
+            enrolChallengeReceived = {
+                entry.savedStateHandle.remove<String>(RegistrationPinSetup.registrationChallengeArg)
             },
-            closePinSetupFlow = { navController.popBackStack() }
-        ) {
+            closePinSetupFlow = { navController.popBackStack() }) {
             navController.navigate(Graph.HOME_PAGE) {
                 popUpTo(Graph.SCAN_REGISTRATION) {
                     inclusive = true
@@ -175,7 +169,6 @@ object Graph {
     const val MAIN = "main_graph"
     const val SPLASH = "splash"
     const val ENROLL = "enroll"
-    const val READY = "ready"
     const val LOGIN = "login"
     const val SCAN_REGISTRATION = "scan_registration"
     const val REQUEST_EDU_ID_START = "request_edu_id_start"
@@ -191,7 +184,7 @@ object Graph {
 
 object RegistrationPinSetup {
     private const val route: String = "registration_pin_setup"
-    const val registrationChallengeArg = "challenge"
+    const val registrationChallengeArg = "registration_challenge_arg"
 
     const val routeWithArgs = "${route}/{${registrationChallengeArg}}"
     val arguments = listOf(navArgument(registrationChallengeArg) {

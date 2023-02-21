@@ -20,7 +20,6 @@ import nl.eduid.screens.biometric.Biometricks
 import nl.eduid.screens.biometric.SignInWithBiometricsContract
 import nl.eduid.ui.PinInputField
 import nl.eduid.ui.PrimaryButton
-import org.tiqr.data.viewmodel.AuthenticationViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

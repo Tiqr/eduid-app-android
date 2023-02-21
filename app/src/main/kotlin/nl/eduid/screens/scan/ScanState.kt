@@ -16,13 +16,13 @@ import org.tiqr.core.scan.ScanComponent
 import org.tiqr.data.model.AuthenticationChallenge
 import org.tiqr.data.model.ChallengeParseResult
 import org.tiqr.data.model.EnrollmentChallenge
-import org.tiqr.data.viewmodel.ScanViewModel
+import timber.log.Timber
 import java.util.*
 
 
 @Composable
 fun rememberScanState(
-    viewModel: ScanViewModel,
+    viewModel: StatelessScanViewModel,
     goBack: () -> Unit,
     goToEnroll: (EnrollmentChallenge) -> Unit,
     goToAuthentication: (AuthenticationChallenge) -> Unit,
@@ -38,11 +38,11 @@ fun rememberScanState(
         ScanState(
             viewModel = viewModel,
             currentGoBack = currentGoBack,
-            lifecycleOwner = lifecycleOwner,
-            context = context,
+            coroutineScope = coroutineScope,
             goToEnroll = currentGoToEnroll,
             goToAuthentication = currentGoToAuthentication,
-            coroutineScope = coroutineScope
+            context = context,
+            lifecycleOwner = lifecycleOwner
         )
     }
 
@@ -50,13 +50,13 @@ fun rememberScanState(
 
 @Stable
 class ScanState(
-    private val viewModel: ScanViewModel,
+    private val viewModel: StatelessScanViewModel,
     private val currentGoBack: () -> Unit,
-    val lifecycleOwner: LifecycleOwner,
+    private val coroutineScope: CoroutineScope,
+    private val goToEnroll: (EnrollmentChallenge) -> Unit,
+    private val goToAuthentication: (AuthenticationChallenge) -> Unit,
     val context: Context,
-    goToEnroll: (EnrollmentChallenge) -> Unit,
-    goToAuthentication: (AuthenticationChallenge) -> Unit,
-    coroutineScope: CoroutineScope,
+    val lifecycleOwner: LifecycleOwner,
 ) {
     private var torchState: Boolean by mutableStateOf(false)
 
@@ -68,32 +68,30 @@ class ScanState(
         ) == PackageManager.PERMISSION_GRANTED
     )
 
-    init {
-        viewModel.challenge.observe(lifecycleOwner) { result ->
-            when (result) {
-                is ChallengeParseResult.Success -> {
-                    coroutineScope.launch {
-                        delay(200L) // delay a bit, otherwise beep sound is cutoff
-                        when (result.value) {
-                            is EnrollmentChallenge -> goToEnroll(result.value as EnrollmentChallenge)
-                            is AuthenticationChallenge -> goToAuthentication(result.value as AuthenticationChallenge)
-                        }
-                    }
-                }
-                is ChallengeParseResult.Failure -> {
-                    errorData = ErrorData(result.failure.title, result.failure.message)
-                }
-            }
-        }
-
-    }
-
     fun toggleTorch() {
         torchState = !torchState
         scanComponent?.toggleTorch(torchState)
     }
 
-    fun onScanResult(result: String) = viewModel.parseChallenge(result)
+    fun onScanResult(result: String) = coroutineScope.launch {
+        val parseResult = viewModel.parseChallenge(result)
+        when (parseResult) {
+            is ChallengeParseResult.Success -> {
+                delay(200L) // delay a bit, otherwise beep sound is cutoff
+                when (parseResult.value) {
+                    is EnrollmentChallenge -> {
+                        Timber.tag("ScanPinRegistration")
+                            .e("ScanState observer for viewModel.challenge. Navigate to enroll: with ${parseResult.value.hashCode()} Method hash: ${goToEnroll.hashCode()}")
+                        goToEnroll(parseResult.value as EnrollmentChallenge)
+                    }
+                    is AuthenticationChallenge -> goToAuthentication(parseResult.value as AuthenticationChallenge)
+                }
+            }
+            is ChallengeParseResult.Failure -> {
+                errorData = ErrorData(parseResult.failure.title, parseResult.failure.message)
+            }
+        }
+    }
 
     fun dismissErrorDialog() {
         errorData = null

@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -131,12 +130,12 @@ fun RequestIdDetailsScreen(
         PrimaryButton(
             text = stringResource(R.string.enroll_screen_request_id_button),
             onClick = {requestId(inputFormData.email)},
-            enabled = inputFormData.isFormValid,
             modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(bottomButton) {
                     bottom.linkTo(bottomSpacer.top)
                 },
+            enabled = inputFormData.isFormValid,
         )
         Spacer(
             Modifier

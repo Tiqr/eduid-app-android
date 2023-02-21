@@ -31,13 +31,12 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 import org.tiqr.core.scan.ScanComponent
 import org.tiqr.data.model.AuthenticationChallenge
 import org.tiqr.data.model.EnrollmentChallenge
-import org.tiqr.data.viewmodel.ScanViewModel
 import androidx.camera.core.Preview as CameraPreview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScanScreen(
-    viewModel: ScanViewModel,
+    viewModel: StatelessScanViewModel,
     isRegistration: Boolean,
     goBack: () -> Unit,
     goToRegistrationPinSetup: (EnrollmentChallenge) -> Unit,
@@ -103,7 +102,6 @@ fun ScanScreen(
         retryErrorDialog = state::retryErrorDialog,
         onScanResult = { state.onScanResult(it) },
         updateScanComponent = { state.updateScanComponent(it) },
-        toggleTorch = state::toggleTorch,
         paddingValues = paddingValues,
         lifecycleOwner = state.lifecycleOwner
     )
@@ -119,7 +117,6 @@ private fun ScanContent(
     retryErrorDialog: () -> Unit,
     onScanResult: (String) -> Unit,
     updateScanComponent: (ScanComponent) -> Unit,
-    toggleTorch: () -> Unit,
     paddingValues: PaddingValues = PaddingValues(),
     lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
 ) {
@@ -235,8 +232,7 @@ private fun Preview_ScanScreen_Registration() {
             dismissErrorDialog = {},
             retryErrorDialog = {},
             onScanResult = {},
-            updateScanComponent = {},
-            toggleTorch = {})
+            updateScanComponent = {})
     }
 }
 
@@ -251,8 +247,7 @@ private fun Preview_ScanScreen_MissingCamPermission() {
             dismissErrorDialog = {},
             retryErrorDialog = {},
             onScanResult = {},
-            updateScanComponent = {},
-            toggleTorch = {})
+            updateScanComponent = {})
     }
 }
 
@@ -267,7 +262,6 @@ private fun Preview_ScanScreen_Authentication() {
             dismissErrorDialog = {},
             retryErrorDialog = {},
             onScanResult = {},
-            updateScanComponent = {},
-            toggleTorch = {})
+            updateScanComponent = {})
     }
 }
