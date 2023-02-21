@@ -41,4 +41,12 @@ val Typography = Typography(
         lineHeight = 16.sp,
         color = TextBlack
     ),
+
+    bodySmall = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontSize = 12.sp,
+        lineHeight = 15.sp,
+        fontWeight = FontWeight.Normal,
+        color = TextBlack
+    ),
 )
