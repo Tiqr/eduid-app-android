@@ -126,7 +126,7 @@ fun MainGraph(navController: NavHostController) = NavHost(
 
     composable(Graph.START) {
         StartScreen(
-            onNext = {Graph.FIRST_TIME_DIALOG},
+            onNext = { navController.navigate(Graph.HOME_PAGE) },
         )
     }
 
