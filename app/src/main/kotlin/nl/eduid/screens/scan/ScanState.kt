@@ -16,7 +16,6 @@ import org.tiqr.core.scan.ScanComponent
 import org.tiqr.data.model.AuthenticationChallenge
 import org.tiqr.data.model.ChallengeParseResult
 import org.tiqr.data.model.EnrollmentChallenge
-import timber.log.Timber
 import java.util.*
 
 
@@ -79,11 +78,7 @@ class ScanState(
             is ChallengeParseResult.Success -> {
                 delay(200L) // delay a bit, otherwise beep sound is cutoff
                 when (parseResult.value) {
-                    is EnrollmentChallenge -> {
-                        Timber.tag("ScanPinRegistration")
-                            .e("ScanState observer for viewModel.challenge. Navigate to enroll: with ${parseResult.value.hashCode()} Method hash: ${goToEnroll.hashCode()}")
-                        goToEnroll(parseResult.value as EnrollmentChallenge)
-                    }
+                    is EnrollmentChallenge -> goToEnroll(parseResult.value as EnrollmentChallenge)
                     is AuthenticationChallenge -> goToAuthentication(parseResult.value as AuthenticationChallenge)
                 }
             }
