@@ -86,9 +86,6 @@ fun MainGraph(navController: NavHostController) = NavHost(
         val viewModel = hiltViewModel<RegistrationPinSetupViewModel>(entry)
         RegistrationPinSetupScreen(
             viewModel = viewModel,
-            enrolChallengeReceived = {
-                entry.savedStateHandle.remove<String>(RegistrationPinSetup.registrationChallengeArg)
-            },
             closePinSetupFlow = { navController.popBackStack() },
             goToBiometricEnable = { challenge, pin ->
                 navController.navigate(
@@ -110,14 +107,12 @@ fun MainGraph(navController: NavHostController) = NavHost(
         route = EnableBiometric.routeWithArgs, arguments = EnableBiometric.arguments
     ) { entry ->
         val viewModel = hiltViewModel<EnableBiometricViewModel>(entry)
-        EnableBiometricScreen(viewModel = viewModel, onRegistrationDone = {
+        EnableBiometricScreen(viewModel = viewModel) {
             navController.navigate(Graph.HOME_PAGE) {
                 popUpTo(Graph.SCAN_REGISTRATION) {
                     inclusive = true
                 }
             }
-        }) {
-            navController.popBackStack()
         }
     }
     composable(Graph.REQUEST_EDU_ID_START) {
@@ -168,7 +163,7 @@ fun MainGraph(navController: NavHostController) = NavHost(
         val viewModel = hiltViewModel<HomePageViewModel>(it)
         HomePageScreen(
             viewModel = viewModel,
-            onActivityClicked = {navController.navigate("enable_biometric/challenge?biometric_pin_arg=pinValue&biometric_is_enrolment_arg=true")},
+            onActivityClicked = { },
             onPersonalInfoClicked = { navController.navigate(Graph.PERSONAL_INFO) },
             onSecurityClicked = {},
         )
@@ -226,7 +221,7 @@ object EnableBiometric {
     const val biometricPinArg = "biometric_pin_arg"
     const val biometricIsEnrolmentArg = "biometric_is_enrolment_arg"
     const val routeWithArgs =
-        "${route}/{${biometricChallengeArg}}?$biometricPinArg={${biometricPinArg}}&$biometricIsEnrolmentArg={${biometricIsEnrolmentArg}}"
+        "${route}/{${biometricChallengeArg}}/{${biometricPinArg}}/{${biometricIsEnrolmentArg}}"
     val arguments = listOf(
         navArgument(biometricChallengeArg) {
             type = NavType.StringType

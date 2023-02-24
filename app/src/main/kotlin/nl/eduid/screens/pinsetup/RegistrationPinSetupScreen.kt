@@ -3,10 +3,9 @@ package nl.eduid.screens.pinsetup
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import nl.eduid.R
@@ -17,7 +16,6 @@ import org.tiqr.data.model.Challenge
 @Composable
 fun RegistrationPinSetupScreen(
     viewModel: RegistrationPinSetupViewModel,
-    enrolChallengeReceived: () -> Unit,
     closePinSetupFlow: () -> Unit,
     goToBiometricEnable: (Challenge, String) -> Unit,
     onRegistrationDone: () -> Unit
@@ -30,52 +28,48 @@ fun RegistrationPinSetupScreen(
     ScaffoldWithTopBarBackButton(
         onBackClicked = dispatcher::onBackPressed,
     ) {
-
-        val pinStep by viewModel.pinStep.observeAsState(PinStep.PinCreate)
-        val pinValue: String by viewModel.pinCreate.observeAsState("")
-        val pinConfirmValue: String by viewModel.pinConfirm.observeAsState("")
-        val isPinInvalid: Boolean by viewModel.isPinInvalid.observeAsState(false)
-        val encodedChallenge by viewModel.challenge.observeAsState(null)
-        val promptBiometric by viewModel.promptBiometric.observeAsState(null)
-        val errorData by viewModel.errorData.observeAsState(null)
         val context = LocalContext.current
-        encodedChallenge?.let { challenge ->
-            LaunchedEffect(viewModel, challenge) {
-                enrolChallengeReceived()
+        val uiState by viewModel.uiState.observeAsState(initial = RegistrationPinUiState())
+        var validationInProgress by rememberSaveable { mutableStateOf(false) }
+
+
+        if (validationInProgress && uiState.promptBiometric != null) {
+            val currentGoToBiometric by rememberUpdatedState(goToBiometricEnable)
+            val currentRegistrationDone by rememberUpdatedState(onRegistrationDone)
+            LaunchedEffect(viewModel) {
+                validationInProgress = false
+                if (uiState.promptBiometric == true && viewModel.challenge != null) {
+                    currentGoToBiometric(viewModel.challenge, uiState.pinValue)
+                }
+                if (uiState.promptBiometric == false) {
+                    currentRegistrationDone()
+                }
             }
         }
-        if (errorData != null) {
+
+        if (uiState.errorData != null) {
             AlertDialogWithSingleButton(
-                title = errorData!!.title,
-                explanation = errorData!!.message,
+                title = uiState.errorData!!.title,
+                explanation = uiState.errorData!!.message,
                 buttonLabel = stringResource(R.string.button_ok),
                 onDismiss = viewModel::dismissError
             )
         }
 
-        if (promptBiometric != null) {
-            if (promptBiometric == true) {
-                goToBiometricEnable(encodedChallenge!!, pinValue)
-            }
-            if (promptBiometric == false) {
-                onRegistrationDone()
-            }
-        }
-
         PinContent(
-            pinCode = if (pinStep is PinStep.PinCreate) {
-                pinValue
+            pinCode = if (uiState.pinStep is PinStep.PinCreate) {
+                uiState.pinValue
             } else {
-                pinConfirmValue
+                uiState.pinConfirmValue
             },
-            pinStep = pinStep,
-            isPinInvalid = isPinInvalid,
-            title = if (pinStep is PinStep.PinCreate) {
+            pinStep = uiState.pinStep,
+            isPinInvalid = uiState.isPinInvalid,
+            title = if (uiState.pinStep is PinStep.PinCreate) {
                 stringResource(R.string.pinsetup_title)
             } else {
                 stringResource(R.string.pinsetup_confirm_title)
             },
-            description = if (pinStep is PinStep.PinCreate) {
+            description = if (uiState.pinStep is PinStep.PinCreate) {
                 stringResource(R.string.pinsetup_description)
             } else {
                 stringResource(R.string.pinsetup_confirm_description)
@@ -85,7 +79,8 @@ fun RegistrationPinSetupScreen(
                 viewModel.onPinChange(pin, step)
             },
             onClick = {
-                viewModel.submitPin(context, pinStep)
+                viewModel.submitPin(context, uiState.pinStep)
+                validationInProgress = uiState.pinStep == PinStep.PinConfirm
             },
             paddingValues = PaddingValues(),
             isProcessing = false
