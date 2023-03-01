@@ -67,6 +67,7 @@ android {
 
         getByName("debug") {
             applicationIdSuffix = ".testing"
+            versionNameSuffix = " DEBUG"            
         }
     }
 
