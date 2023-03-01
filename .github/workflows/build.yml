@@ -1,11 +1,10 @@
-name: Debug Build
+name: Build APK's
 on:
+  workflow_dispatch:
   pull_request:
   push:
     branches:
-      - main
       - develop
-# Where will they run
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,17 +18,18 @@ jobs:
         java-version: 11
         distribution: 'temurin'
         cache: 'gradle'
-    - name: Build nl.eduid APK
+    - name: Build nl.eduid Release APK
       run: bash ./gradlew assembleRelease --stacktrace
-    - name: Build nl.eduid.testing APK
-      run: bash ./gradlew assembleDebug --stacktrace
-    - name: Upload APK
+    - name: Upload nl.eduid Release APK
       uses: actions/upload-artifact@v1
       with:
-        name: app-release-unsigned
+        name: eduID-${{ github.sha }}.apk
         path: app/build/outputs/apk/release/app-release-unsigned.apk
-    - name: Upload testing APK
+
+    - name: Build nl.eduid.testing Debug APK
+      run: bash ./gradlew assembleDebug --stacktrace
+    - name: Upload nl.eduid.testing Debug APK
       uses: actions/upload-artifact@v1
       with:
-        name: app-debug
+        name: eduID-${{ github.sha }}-debug.apk
         path: app/build/outputs/apk/debug/app-debug.apk
