@@ -1,0 +1,34 @@
+name: Create signed testing release for internal use
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        submodules: recursive
+    - uses: actions/setup-java@v2
+      with:
+        java-version: 11
+        distribution: 'temurin'
+        cache: 'gradle'
+
+    - name: Build APK
+      run: ./gradlew assembleInternalRelease
+    - name: Sign APK
+      id: sign_apk
+      uses: r0adkll/sign-android-release@v1
+      with:
+        releaseDirectory: app/build/outputs/apk/internal/release/
+        signingKeyBase64: ${{ secrets.SIGNINGKEYBASE64 }}
+        alias: ${{ secrets.ALIAS }}
+        keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
+        keyPassword: ${{ secrets.KEYPASSWORD }}
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v1
+      with:
+        name: eduID-${{ github.ref_name }}-testing.apk
+        path: ${{steps.sign_apk.outputs.signedReleaseFile}}

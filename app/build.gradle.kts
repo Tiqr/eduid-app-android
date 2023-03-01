@@ -27,6 +27,7 @@ android {
     buildToolsVersion = libs.versions.android.buildTools.get()
 
     val gitTagCount = "git tag --list".runCommand().split('\n').size
+    val gitCommitCount = "git rev-list --all --count".runCommand().toInt()
     val gitTag = "git describe --tags --dirty".runCommand()
     val gitCoreSha = "git submodule status".runCommand().substring(0, 8)
 
@@ -58,13 +59,27 @@ android {
         }
     }
 
+    flavorDimensions += "version"
+    productFlavors {
+        create("internal") {
+          dimension = "version"
+          versionCode = gitCommitCount
+          applicationIdSuffix = ".testing"
+          versionName = gitTag.trim().drop(1) + " core($gitCoreSha) internal"
+        }
+        create("prod") {
+          dimension = "version"
+          versionCode = gitTagCount
+          versionName = gitTag.trim().drop(1) + " core($gitCoreSha)"
+        }
+    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
-
         getByName("debug") {
             applicationIdSuffix = ".testing"
         }

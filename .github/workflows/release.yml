@@ -1,6 +1,5 @@
-name: Release Build
+name: Create signed release for Playstore
 on:
-  workflow_dispatch:
   push:
     tags:
       - 'v*'
@@ -19,29 +18,28 @@ jobs:
         cache: 'gradle'
 
     - name: Build APK
-      run: ./gradlew assembleRelease
+      run: ./gradlew assembleProdRelease
     - name: Sign APK
       id: sign_apk
       uses: r0adkll/sign-android-release@v1
       with:
-        releaseDirectory: app/build/outputs/apk/release/
+        releaseDirectory: app/build/outputs/apk/prod/release/
         signingKeyBase64: ${{ secrets.SIGNINGKEYBASE64 }}
         alias: ${{ secrets.ALIAS }}
         keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
         keyPassword: ${{ secrets.KEYPASSWORD }}
 
     - name: Build App bundle
-      run: ./gradlew bundleRelease
+      run: ./gradlew bundleProdRelease
     - name: Sign App Bundle
       id: sign_aab
       uses: r0adkll/sign-android-release@v1
       with:
-        releaseDirectory: app/build/outputs/bundle/release/
+        releaseDirectory: app/build/outputs/bundle/prodRelease/
         signingKeyBase64: ${{ secrets.SIGNINGKEYBASE64 }}
         alias: ${{ secrets.ALIAS }}
         keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
         keyPassword: ${{ secrets.KEYPASSWORD }}
-
 
     - name: Build Changelog
       id: changelog
