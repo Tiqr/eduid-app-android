@@ -1,13 +1,17 @@
 package nl.eduid.di.module
 
+import android.content.Context
 import com.squareup.moshi.Moshi
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import nl.eduid.di.api.EduIdApi
+import nl.eduid.di.assist.AuthenticationAssistant
 import nl.eduid.di.repository.EduIdRepository
+import nl.eduid.di.repository.StorageRepository
 import okhttp3.OkHttpClient
 import org.tiqr.data.api.response.ApiResponseAdapterFactory
 import retrofit2.Retrofit
@@ -36,25 +40,31 @@ internal object RepositoryModule {
 
     @Provides
     @Singleton
+    internal fun providesStorageRepository(
+        @ApplicationContext context: Context,
+    ) = StorageRepository(context)
+
+    @Provides
+    @Singleton
+    internal fun providesAuthenticationAssist(
+    ) = AuthenticationAssistant()
+
+    @Provides
+    @Singleton
     internal fun provideApiRetrofit(
-        client: Lazy<OkHttpClient>,
-        moshi: Moshi
+        client: Lazy<OkHttpClient>, moshi: Moshi
     ): Retrofit {
-        return Retrofit.Builder()
-            .callFactory { client.get().newCall(it) }
+        return Retrofit.Builder().callFactory { client.get().newCall(it) }
             .addCallAdapterFactory(ApiResponseAdapterFactory.create())
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl("https://login.eduid.nl/")
-            .build()
+            .baseUrl("https://login.eduid.nl/").build()
     }
 
     @Provides
     @Singleton
     internal fun provideOkHttpClientBuilder(): OkHttpClient {
-        return OkHttpClient.Builder()
-            .connectTimeout(15, TimeUnit.SECONDS)
-            .build()
+        return OkHttpClient.Builder().connectTimeout(15, TimeUnit.SECONDS).build()
     }
 
 }
