@@ -70,23 +70,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".MainComposeActivity"
-            android:exported="true"
-            android:label="@string/title_activity_main"
-            android:theme="@style/ComposeAppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
-
-        <activity
-            android:name=".screens.biometric.SignInWithBiometricsActivity"
-            android:exported="false"
-            android:theme="@style/AppTheme.Transparent" />
-
         <service
             android:name="org.tiqr.core.messaging.TiqrMessagingService"
             android:exported="false">
