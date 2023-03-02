@@ -1,12 +1,13 @@
 package nl.eduid.screens.biometric
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import nl.eduid.EnableBiometric
+import nl.eduid.BaseViewModel
+import nl.eduid.WithChallenge
+import org.tiqr.data.model.AuthenticationChallenge
 import org.tiqr.data.model.Challenge
 import org.tiqr.data.model.EnrollmentChallenge
 import org.tiqr.data.repository.EnrollmentRepository
@@ -17,14 +18,13 @@ import javax.inject.Inject
 @HiltViewModel
 class EnableBiometricViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle, moshi: Moshi, private val repository: EnrollmentRepository
-) : ViewModel() {
+) : BaseViewModel(moshi) {
     private val challenge: Challenge?
     private val pin: String
 
     init {
-        val isEnrolment =
-            savedStateHandle.get<Boolean>(EnableBiometric.biometricIsEnrolmentArg) ?: true
-        val challengeArg = savedStateHandle.get<String>(EnableBiometric.biometricChallengeArg) ?: ""
+        val isEnrolment = savedStateHandle.get<Boolean>(WithChallenge.isEnrolmentArg) ?: true
+        val challengeArg = savedStateHandle.get<String>(WithChallenge.challengeArg) ?: ""
         val decoded = try {
             URLDecoder.decode(challengeArg, Charsets.UTF_8.name())
         } catch (e: Exception) {
@@ -33,10 +33,9 @@ class EnableBiometricViewModel @Inject constructor(
         val adapter = if (isEnrolment) {
             moshi.adapter(EnrollmentChallenge::class.java)
         } else {
-            moshi.adapter(EnrollmentChallenge::class.java)
+            moshi.adapter(AuthenticationChallenge::class.java)
         }
-        pin = savedStateHandle.get<String>(EnableBiometric.biometricPinArg) ?: ""
-
+        pin = savedStateHandle.get<String>(WithChallenge.pinArg) ?: ""
         challenge = try {
             adapter.fromJson(decoded)
         } catch (e: Exception) {

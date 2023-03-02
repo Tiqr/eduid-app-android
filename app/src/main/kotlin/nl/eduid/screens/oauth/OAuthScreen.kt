@@ -19,79 +19,101 @@ import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.ScaffoldWithTopBarBackButton
+import org.tiqr.data.model.Challenge
 
 @Composable
-fun OAuthScreen(viewModel: OAuthViewModel, onBackPressed: () -> Unit) =
-    ScaffoldWithTopBarBackButton(
-        onBackClicked = onBackPressed,
-    ) {
-        val isInitializing by viewModel.isProcessing.observeAsState(true)
-        val isReady by viewModel.isReady.observeAsState(null)
-        val errorData by viewModel.errorData.observeAsState(null)
-        var isOAuthOngoing by rememberSaveable { mutableStateOf(false) }
-        val launcher =
-            rememberLauncherForActivityResult(contract = OAuthContract(), onResult = { intent ->
-                isOAuthOngoing = false
-                viewModel.continueWithFetchToken(intent)
-            })
-        val context = LocalContext.current
+fun OAuthScreen(
+    viewModel: OAuthViewModel,
+    onBackPressed: () -> Unit
+) = ScaffoldWithTopBarBackButton(
+    onBackClicked = onBackPressed,
+) {
+    val uiState by viewModel.uiState.observeAsState(UiState(OAuthStep.Loading))
+    var isAuthorizationLaunched by rememberSaveable { mutableStateOf(false) }
+    val context = LocalContext.current
+    val launcher =
+        rememberLauncherForActivityResult(contract = OAuthContract(), onResult = { intent ->
+            isAuthorizationLaunched = false
+            viewModel.continueWithFetchToken(intent)
+        })
 
-        if (errorData != null) {
-            AlertDialogWithSingleButton(
-                title = errorData!!.title,
-                explanation = errorData!!.message,
-                buttonLabel = stringResource(R.string.button_ok),
-                onDismiss = viewModel::dismissError
-            )
-        }
+    OAuthContent(
+        uiState = uiState,
+        isAuthorizationLaunched = isAuthorizationLaunched,
+        launchAuthorization = {
+            isAuthorizationLaunched = true
+            launcher.launch(viewModel)
+        },
+        dismissError = viewModel::dismissError,
+        onRetry = { viewModel.prepareAppAuth(context) },
+    )
+}
 
-        Column(
-            Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .systemBarsPadding()
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-            ) {
-                Spacer(modifier = Modifier.height(40.dp))
-                Text(
-                    text = stringResource(R.string.oauth_title),
-                    style = MaterialTheme.typography.titleLarge,
-                    textAlign = TextAlign.Start,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Spacer(modifier = Modifier.height(32.dp))
-                Text(
-                    text = stringResource(R.string.oauth_description),
-                    style = MaterialTheme.typography.bodyLarge,
-                    textAlign = TextAlign.Start,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                if (isInitializing) {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    LinearProgressIndicator(
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                }
-                if (isReady != null && !isOAuthOngoing) {
-                    LaunchedEffect(viewModel) {
-                        isOAuthOngoing = true
-                        launcher.launch(viewModel)
-                    }
-                }
-            }
-            if (!isInitializing && !isOAuthOngoing) {
-                PrimaryButton(
-                    text = stringResource(R.string.button_retry),
-                    onClick = { viewModel.prepareAppAuth(context) },
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Spacer(modifier = Modifier.height(40.dp))
-            }
+@Composable
+private fun OAuthContent(
+    uiState: UiState,
+    isAuthorizationLaunched: Boolean,
+    launchAuthorization: () -> Unit,
+    dismissError: () -> Unit,
+    onRetry: () -> Unit,
+) {
+    val context = LocalContext.current
 
-        }
+    if (uiState.error != null) {
+        AlertDialogWithSingleButton(
+            title = uiState.error.title,
+            explanation = uiState.error.message,
+            buttonLabel = stringResource(R.string.button_ok),
+            onDismiss = dismissError
+        )
     }
+
+    Column(
+        Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .systemBarsPadding()
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        ) {
+            Spacer(modifier = Modifier.height(40.dp))
+            Text(
+                text = stringResource(R.string.oauth_title),
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.Start,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            Text(
+                text = stringResource(R.string.oauth_description),
+                style = MaterialTheme.typography.bodyLarge,
+                textAlign = TextAlign.Start,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            if (uiState.oauthStep.isProcessing) {
+                Spacer(modifier = Modifier.height(16.dp))
+                LinearProgressIndicator(
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            if (uiState.oauthStep is OAuthStep.Initialized && !isAuthorizationLaunched) {
+                LaunchedEffect(Unit) {
+                    launchAuthorization()
+                }
+            }
+        }
+        if (uiState.oauthStep is Error) {
+            PrimaryButton(
+                text = stringResource(R.string.button_retry),
+                onClick = onRetry,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Spacer(modifier = Modifier.height(40.dp))
+        }
+
+    }
+}

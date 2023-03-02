@@ -18,7 +18,7 @@ fun RegistrationPinSetupScreen(
     viewModel: RegistrationPinSetupViewModel,
     closePinSetupFlow: () -> Unit,
     goToBiometricEnable: (Challenge, String) -> Unit,
-    onRegistrationDone: () -> Unit
+    onRegistrationDone: (Challenge, String) -> Unit
 ) {
     BackHandler { viewModel.handleBackNavigation(closePinSetupFlow) }
     //Because the same screen is being used for creating the PIN as well as confirming the PIN
@@ -32,17 +32,18 @@ fun RegistrationPinSetupScreen(
         val uiState by viewModel.uiState.observeAsState(initial = RegistrationPinUiState())
         var validationInProgress by rememberSaveable { mutableStateOf(false) }
 
-
         if (validationInProgress && uiState.promptBiometric != null) {
             val currentGoToBiometric by rememberUpdatedState(goToBiometricEnable)
             val currentRegistrationDone by rememberUpdatedState(onRegistrationDone)
             LaunchedEffect(viewModel) {
                 validationInProgress = false
-                if (uiState.promptBiometric == true && viewModel.challenge != null) {
-                    currentGoToBiometric(viewModel.challenge, uiState.pinValue)
-                }
-                if (uiState.promptBiometric == false) {
-                    currentRegistrationDone()
+                if (viewModel.challenge != null) {
+                    if (uiState.promptBiometric == true) {
+                        currentGoToBiometric(viewModel.challenge, uiState.pinValue)
+                    }
+                    if (uiState.promptBiometric == false) {
+                        currentRegistrationDone(viewModel.challenge, uiState.pinValue)
+                    }
                 }
             }
         }
