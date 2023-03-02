@@ -34,8 +34,13 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:path="/oauth2redirect"
-                    android:scheme="${applicationId}" />
+                    android:host="login.test2.eduid.nl"
+                    android:path="/myconext/api/mobile/swagger-ui/oauth2-redirect.html"
+                    android:scheme="http" />
+                <data
+                    android:host="login.test2.eduid.nl"
+                    android:path="/myconext/api/mobile/swagger-ui/oauth2-redirect.html"
+                    android:scheme="https" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

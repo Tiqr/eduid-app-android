@@ -9,80 +9,48 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import net.openid.appauth.*
 import net.openid.appauth.ClientAuthentication.UnsupportedAuthenticationMethod
 import net.openid.appauth.browser.BrowserAllowList
 import net.openid.appauth.browser.VersionedBrowserMatcher
 import net.openid.appauth.connectivity.DefaultConnectionBuilder
-import nl.eduid.BaseViewModel
 import nl.eduid.R
-import nl.eduid.WithChallenge
 import nl.eduid.di.assist.AuthenticationAssistant
 import nl.eduid.di.repository.StorageRepository
 import nl.eduid.screens.scan.ErrorData
-import org.tiqr.core.util.extensions.biometricUsable
-import org.tiqr.data.model.AuthenticationChallenge
-import org.tiqr.data.model.Challenge
-import org.tiqr.data.model.EnrollmentChallenge
 import timber.log.Timber
 import java.io.IOException
-import java.net.URLDecoder
 import javax.inject.Inject
 
 
 @HiltViewModel
 class OAuthViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val repository: StorageRepository,
     private val assistant: AuthenticationAssistant,
     moshi: Moshi,
     @ApplicationContext context: Context,
-) : BaseViewModel(moshi) {
+) : ViewModel() {
     val uiState: MutableLiveData<UiState> = MutableLiveData(UiState(OAuthStep.Loading))
 
     private var service: AuthorizationService? = null
     private val configAdapter: JsonAdapter<Configuration>
     private var configuration: Configuration = Configuration.EMPTY
-    private val authState = repository.authState.asLiveData()
-    private val clientId = repository.clientId.asLiveData()
-    private val authRequest = repository.authRequest.asLiveData()
-    private val challenge: Challenge?
-    private val pin: String
-    private val promptBiometric: Boolean?
 
     init {
         configAdapter = moshi.adapter(Configuration::class.java)
-        val isEnrolment = savedStateHandle.get<Boolean>(WithChallenge.isEnrolmentArg) ?: true
-        val challengeArg = savedStateHandle.get<String>(WithChallenge.challengeArg) ?: ""
-        val decoded = try {
-            URLDecoder.decode(challengeArg, Charsets.UTF_8.name())
-        } catch (e: Exception) {
-            ""
-        }
-        val adapter = if (isEnrolment) {
-            moshi.adapter(EnrollmentChallenge::class.java)
-        } else {
-            moshi.adapter(AuthenticationChallenge::class.java)
-        }
-        pin = savedStateHandle.get<String>(WithChallenge.pinArg) ?: ""
-        challenge = try {
-            adapter.fromJson(decoded)
-        } catch (e: Exception) {
-            Timber.e(e, "Failed to parse challenge")
-            null
-        }
-        promptBiometric =
-            context.biometricUsable() && challenge?.identity?.biometricOfferUpgrade == true
         prepareAppAuth(context)
     }
 
     fun prepareAppAuth(context: Context) = viewModelScope.launch {
         uiState.postValue(UiState(OAuthStep.Loading))
         try {
-            loadConfigurationFromResources(context.resources)
+            configuration = loadConfigurationFromResources(context.resources)
+            checkIfConfigurationChanged()
             initializeAppAuth(context)
-            uiState.postValue(UiState(OAuthStep.Initialized))
+            val authorizationIntent = createAuthorizationIntent()
+            uiState.postValue(UiState(OAuthStep.Initialized(authorizationIntent)))
         } catch (e: Exception) {
             setError(
                 title = "Unexpected error", message = "Failed to initialize AppData. Please retry"
@@ -91,8 +59,8 @@ class OAuthViewModel @Inject constructor(
         }
     }
 
-    fun createAuthorizationIntent(): Intent {
-        val currentAuthRequest = authRequest.value
+    private suspend fun createAuthorizationIntent(): Intent {
+        val currentAuthRequest = repository.authRequest.first()
             ?: throw IllegalStateException("AuthorizationRequest not available when trying to create authorization request Intent")
         val availableService = service
             ?: throw IllegalStateException("AuthorizationService not available when trying to create authorization request Intent")
@@ -101,7 +69,7 @@ class OAuthViewModel @Inject constructor(
     }
 
     fun continueWithFetchToken(intent: Intent?) = viewModelScope.launch {
-        val currentAuthState = authState.value
+        val currentAuthState = repository.authState.first()
         when {
             intent == null -> {
                 setError(
@@ -120,7 +88,6 @@ class OAuthViewModel @Inject constructor(
                     UiState(
                         oauthStep = OAuthStep.Authorized,
                         error = null,
-                        promptBiometric = promptBiometric
                     )
                 )
             }
@@ -142,7 +109,6 @@ class OAuthViewModel @Inject constructor(
                                 UiState(
                                     oauthStep = OAuthStep.Authorized,
                                     error = null,
-                                    promptBiometric = promptBiometric
                                 )
                             )
                         } else {
@@ -177,8 +143,17 @@ class OAuthViewModel @Inject constructor(
         UiState(OAuthStep.Error, ErrorData(title, message))
     )
 
+    private suspend fun checkIfConfigurationChanged() {
+        val lastKnownHash = repository.lastKnownConfigHash.first()
+        if (configuration.hashCode() != lastKnownHash) {
+            Timber.d("Configuration change detected, discarding old state")
+            repository.saveCurrentAuthState(AuthState())
+            repository.acceptNewConfiguration(configuration.hashCode())
+        }
+    }
+
     private suspend fun exchangeAuthorizationCode(response: AuthorizationResponse): TokenResponse {
-        val currentAuthState = authState.value
+        val currentAuthState = repository.authState.first()
             ?: throw IllegalStateException("AuthState not available when trying to exchange authorization code.")
         val availableService = service
             ?: throw IllegalStateException("AuthenticationService not available when trying to exchange authorization code.")
@@ -188,7 +163,9 @@ class OAuthViewModel @Inject constructor(
         } catch (e: UnsupportedAuthenticationMethod) {
             throw IllegalStateException("AuthenticationService not available when trying to exchange authorization code.")
         }
-        return assistant.exchangeAuthorizationCode(response, clientAuthentication, availableService)
+        return assistant.exchangeAuthorizationCode(
+            response, clientAuthentication, availableService
+        )
     }
 
     fun dismissError() {
@@ -208,7 +185,6 @@ class OAuthViewModel @Inject constructor(
     }
 
     private suspend fun recreateAuthorizationService(context: Context) {
-        Timber.d("Discarding existing authorization service if available")
         service?.dispose()
         service = createAuthorizationService(context)
         repository.saveCurrentAuthRequest(null)
@@ -233,7 +209,7 @@ class OAuthViewModel @Inject constructor(
         Timber.d("Initializing AppAuth")
         recreateAuthorizationService(context)
 
-        val currentAuthState = authState.value
+        val currentAuthState = repository.authState.first()
         if (currentAuthState != null) {
             // configuration is already created, skip to client initialization
             Timber.d("auth config already established")
@@ -248,7 +224,7 @@ class OAuthViewModel @Inject constructor(
                 configuration.authEndpointUri,
                 configuration.tokenEndpointUri,
                 configuration.registrationEndpointUri,
-                configuration.endSessionEndpoint
+                configuration.endSessionEndpointUri
             )
             repository.saveCurrentAuthState(AuthState(serviceConfig))
             initializeClient()
@@ -267,7 +243,7 @@ class OAuthViewModel @Inject constructor(
             createAuthRequest()
             return
         }
-        val currentAuthState = authState.value ?: return
+        val currentAuthState = repository.authState.first() ?: return
         val lastRegistrationResponse = currentAuthState.lastRegistrationResponse
         if (lastRegistrationResponse != null) {
             Timber.d("Using dynamic client id learned from previous registration: ${lastRegistrationResponse.clientId}")
@@ -288,9 +264,9 @@ class OAuthViewModel @Inject constructor(
         }
     }
 
-    private fun warmupBrowser(): CustomTabsIntent {
+    private suspend fun warmupBrowser(): CustomTabsIntent {
         Timber.d("Warming up browser instance for auth request. Building custom tab intent")
-        val currentAuthRequest = authRequest.value
+        val currentAuthRequest = repository.authRequest.first()
             ?: throw IllegalStateException("AuthorizationRequest not available when trying to create CustomTabsIntent")
         val availableService = service
             ?: throw IllegalStateException("AuthorizationService not available when trying to create CustomTabsIntent")
@@ -300,9 +276,9 @@ class OAuthViewModel @Inject constructor(
     }
 
     private suspend fun createAuthRequest(loginHint: String? = null) {
-        val currentAuthState = authState.value
+        val currentAuthState = repository.authState.first()
             ?: throw IllegalStateException("AuthState not available when trying to create AuthorizationRequest")
-        val currentClientId = clientId.value
+        val currentClientId = repository.clientId.first()
             ?: throw IllegalStateException("clientId not available when trying to create AuthorizationRequest")
         val currentConfiguration = currentAuthState.authorizationServiceConfiguration
             ?: throw IllegalStateException("AuthorizationServiceConfiguration not available when trying to create AuthorizationRequest")

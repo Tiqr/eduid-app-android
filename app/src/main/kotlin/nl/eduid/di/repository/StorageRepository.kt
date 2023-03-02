@@ -3,6 +3,7 @@ package nl.eduid.di.repository
 import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
@@ -58,6 +59,17 @@ class StorageRepository(private val context: Context) {
         preferences[PreferencesKeys.CLIENT_ID]
     }
 
+    val lastKnownConfigHash: Flow<Int?> = context.dataStore.data.catch { exception ->
+        if (exception is IOException) {
+            Timber.e(exception, "Error reading preferences.")
+            emit(emptyPreferences())
+        } else {
+            throw exception
+        }
+    }.map { preferences ->
+        preferences[PreferencesKeys.LAST_KNOWN_CONFIG_HASH]
+    }
+
     suspend fun saveCurrentAuthState(authState: AuthState?) = context.dataStore.edit { settings ->
         settings[PreferencesKeys.CURRENT_AUTHSTATE] =
             authState?.jsonSerializeString() ?: settings.remove(PreferencesKeys.CURRENT_AUTHSTATE)
@@ -73,10 +85,15 @@ class StorageRepository(private val context: Context) {
         settings[PreferencesKeys.CLIENT_ID] = clientId
     }
 
+    suspend fun acceptNewConfiguration(configHash: Int) = context.dataStore.edit { settings ->
+        settings[PreferencesKeys.LAST_KNOWN_CONFIG_HASH] = configHash
+    }
+
     private object PreferencesKeys {
         val CURRENT_AUTHSTATE = stringPreferencesKey("current_authstate")
         val CURRENT_AUTHREQUEST = stringPreferencesKey("current_authrequest")
         val CLIENT_ID = stringPreferencesKey("currentClientId")
+        val LAST_KNOWN_CONFIG_HASH = intPreferencesKey("last_known_configuration_hash")
     }
 
 }

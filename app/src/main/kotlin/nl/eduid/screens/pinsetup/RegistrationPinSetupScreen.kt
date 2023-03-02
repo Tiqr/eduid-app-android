@@ -18,7 +18,7 @@ fun RegistrationPinSetupScreen(
     viewModel: RegistrationPinSetupViewModel,
     closePinSetupFlow: () -> Unit,
     goToBiometricEnable: (Challenge, String) -> Unit,
-    onRegistrationDone: (Challenge, String) -> Unit
+    onRegistrationDone: () -> Unit
 ) {
     BackHandler { viewModel.handleBackNavigation(closePinSetupFlow) }
     //Because the same screen is being used for creating the PIN as well as confirming the PIN
@@ -42,7 +42,7 @@ fun RegistrationPinSetupScreen(
                         currentGoToBiometric(viewModel.challenge, uiState.pinValue)
                     }
                     if (uiState.promptBiometric == false) {
-                        currentRegistrationDone(viewModel.challenge, uiState.pinValue)
+                        currentRegistrationDone()
                     }
                 }
             }

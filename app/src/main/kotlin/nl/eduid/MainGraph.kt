@@ -96,12 +96,8 @@ fun MainGraph(navController: NavHostController) = NavHost(
                         inclusive = true
                     }
                 }
-            }) { challenge, pin ->
-            navController.navigate(
-                WithChallenge.OAuth.buildRouteForEnrolment(
-                    encodedChallenge = viewModel.encodeChallenge(challenge), pin = pin
-                )
-            ) {
+            }) {
+            navController.navigate(Graph.OAUTH_MOBILE) {
                 popUpTo(Graph.ENROLL) {
                     inclusive = true
                 }
@@ -113,33 +109,17 @@ fun MainGraph(navController: NavHostController) = NavHost(
     ) { entry ->
         val viewModel = hiltViewModel<EnableBiometricViewModel>(entry)
         EnableBiometricScreen(viewModel = viewModel) {
-            navController.navigate(
-                WithChallenge.OAuth.buildRouteForEnrolment(
-                    encodedChallenge = viewModel.encodeChallenge(challenge), pin = pin
-                )
-            ) {
+            navController.navigate(Graph.OAUTH_MOBILE) {
                 popUpTo(Graph.ENROLL) {
                     inclusive = true
                 }
             }
         }
     }
-    composable(
-        route = WithChallenge.OAuth.routeWithArgs, arguments = WithChallenge.arguments
-    ) { entry ->
+    composable(Graph.OAUTH_MOBILE) { entry ->
         val viewModel = hiltViewModel<OAuthViewModel>(entry)
-        OAuthScreen(viewModel = viewModel, goToBiometricEnable = { challenge, pin ->
-            navController.navigate(
-                WithChallenge.EnableBiometric.buildRouteForEnrolment(
-                    encodedChallenge = viewModel.encodeChallenge(challenge), pin = pin
-                )
-            )
-        }) {
-            navController.navigate(Graph.HOME_PAGE) {
-                popUpTo(Graph.SCAN_REGISTRATION) {
-                    inclusive = true
-                }
-            }
+        OAuthScreen(viewModel = viewModel) {
+            navController.navigate(Graph.HOME_PAGE)
         }
     }
     composable(Graph.REQUEST_EDU_ID_START) {

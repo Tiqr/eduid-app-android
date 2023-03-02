@@ -8,10 +8,10 @@ import timber.log.Timber
 
 
 class OAuthContract(
-) : ActivityResultContract<OAuthViewModel, Intent?>() {
+) : ActivityResultContract<Intent, Intent?>() {
 
-    override fun createIntent(context: Context, viewModel: OAuthViewModel): Intent = try {
-        viewModel.createAuthorizationIntent()
+    override fun createIntent(context: Context, input: Intent): Intent = try {
+        input
     } catch (e: Exception) {
         Timber.e(e, "Failed to create authorization request intent")
         Intent()

@@ -1,5 +1,6 @@
 package nl.eduid.screens.oauth
 
+import android.content.Intent
 import nl.eduid.screens.scan.ErrorData
 
 /**
@@ -11,7 +12,7 @@ import nl.eduid.screens.scan.ErrorData
  * */
 sealed class OAuthStep() {
     object Loading : OAuthStep()
-    object Initialized : OAuthStep()
+    class Initialized(val intent: Intent) : OAuthStep()
     object ExchangingTokenRequest : OAuthStep()
     object Authorized : OAuthStep()
     object Error : OAuthStep()
@@ -23,6 +24,5 @@ sealed class OAuthStep() {
 data class UiState(
     val oauthStep: OAuthStep,
     val error: ErrorData? = null,
-    val promptBiometric: Boolean? = null
 )
 

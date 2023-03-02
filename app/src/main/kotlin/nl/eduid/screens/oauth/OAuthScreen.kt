@@ -1,5 +1,6 @@
 package nl.eduid.screens.oauth
 
+import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -19,7 +20,6 @@ import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.ScaffoldWithTopBarBackButton
-import org.tiqr.data.model.Challenge
 
 @Composable
 fun OAuthScreen(
@@ -40,9 +40,9 @@ fun OAuthScreen(
     OAuthContent(
         uiState = uiState,
         isAuthorizationLaunched = isAuthorizationLaunched,
-        launchAuthorization = {
+        launchAuthorization = { intentAvailable ->
             isAuthorizationLaunched = true
-            launcher.launch(viewModel)
+            launcher.launch(intentAvailable)
         },
         dismissError = viewModel::dismissError,
         onRetry = { viewModel.prepareAppAuth(context) },
@@ -53,12 +53,10 @@ fun OAuthScreen(
 private fun OAuthContent(
     uiState: UiState,
     isAuthorizationLaunched: Boolean,
-    launchAuthorization: () -> Unit,
+    launchAuthorization: (Intent) -> Unit,
     dismissError: () -> Unit,
     onRetry: () -> Unit,
 ) {
-    val context = LocalContext.current
-
     if (uiState.error != null) {
         AlertDialogWithSingleButton(
             title = uiState.error.title,
@@ -102,11 +100,11 @@ private fun OAuthContent(
             }
             if (uiState.oauthStep is OAuthStep.Initialized && !isAuthorizationLaunched) {
                 LaunchedEffect(Unit) {
-                    launchAuthorization()
+                    launchAuthorization(uiState.oauthStep.intent)
                 }
             }
         }
-        if (uiState.oauthStep is Error) {
+        if (uiState.oauthStep is OAuthStep.Error) {
             PrimaryButton(
                 text = stringResource(R.string.button_retry),
                 onClick = onRetry,

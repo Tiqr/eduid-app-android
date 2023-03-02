@@ -9,6 +9,8 @@ object Graph {
     const val ENROLL = "enroll"
     const val LOGIN = "login"
     const val SCAN_REGISTRATION = "scan_registration"
+    const val OAUTH_MOBILE = "oauth_mobile_eduid"
+
     const val REQUEST_EDU_ID_START = "request_edu_id_start"
     const val REQUEST_EDU_ID_DETAILS = "request_edu_id_details"
     const val REQUEST_EDU_ID_LINK_SENT = "request_edu_id_link_sent"
@@ -56,16 +58,6 @@ sealed class WithChallenge(val route: String) {
             nullable = false
             defaultValue = true
         })
-    }
-
-    object OAuth : WithChallenge("app_oauth") {
-        val routeWithArgs = "$route/$args"
-        fun buildRouteForEnrolment(encodedChallenge: String, pin: String): String =
-            "$route/$encodedChallenge/$pin/true"
-
-        fun buildRouteForAuthentication(encodedChallenge: String, pin: String): String =
-            "$route/$encodedChallenge/$pin/false"
-
     }
 
     object EnableBiometric : WithChallenge("enable_biometric") {
