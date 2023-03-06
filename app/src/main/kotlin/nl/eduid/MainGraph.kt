@@ -3,10 +3,8 @@ package nl.eduid
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import nl.eduid.screens.biometric.EnableBiometricScreen
 import nl.eduid.screens.biometric.EnableBiometricViewModel
 import nl.eduid.screens.enroll.EnrollScreen
@@ -15,6 +13,8 @@ import nl.eduid.screens.homepage.HomePageScreen
 import nl.eduid.screens.homepage.HomePageViewModel
 import nl.eduid.screens.login.LoginScreen
 import nl.eduid.screens.login.LoginViewModel
+import nl.eduid.screens.oauth.OAuthScreen
+import nl.eduid.screens.oauth.OAuthViewModel
 import nl.eduid.screens.personalinfo.PersonalInfoScreen
 import nl.eduid.screens.personalinfo.PersonalInfoViewModel
 import nl.eduid.screens.pinsetup.RegistrationPinSetupScreen
@@ -84,35 +84,42 @@ fun MainGraph(navController: NavHostController) = NavHost(
         route = RegistrationPinSetup.routeWithArgs, arguments = RegistrationPinSetup.arguments
     ) { entry ->
         val viewModel = hiltViewModel<RegistrationPinSetupViewModel>(entry)
-        RegistrationPinSetupScreen(
-            viewModel = viewModel,
+        RegistrationPinSetupScreen(viewModel = viewModel,
             closePinSetupFlow = { navController.popBackStack() },
             goToBiometricEnable = { challenge, pin ->
                 navController.navigate(
-                    EnableBiometric.buildRouteForEnrolment(
-                        encodedChallenge = viewModel.encodeChallenge(challenge),
-                        pin = pin
+                    WithChallenge.EnableBiometric.buildRouteForEnrolment(
+                        encodedChallenge = viewModel.encodeChallenge(challenge), pin = pin
                     )
-                )
-            }
-        ) {
-            navController.navigate(Graph.HOME_PAGE) {
-                popUpTo(Graph.SCAN_REGISTRATION) {
+                ) {
+                    popUpTo(Graph.ENROLL) {
+                        inclusive = true
+                    }
+                }
+            }) {
+            navController.navigate(Graph.OAUTH_MOBILE) {
+                popUpTo(Graph.ENROLL) {
                     inclusive = true
                 }
             }
         }
     }
     composable(
-        route = EnableBiometric.routeWithArgs, arguments = EnableBiometric.arguments
+        route = WithChallenge.EnableBiometric.routeWithArgs, arguments = WithChallenge.arguments
     ) { entry ->
         val viewModel = hiltViewModel<EnableBiometricViewModel>(entry)
         EnableBiometricScreen(viewModel = viewModel) {
-            navController.navigate(Graph.HOME_PAGE) {
-                popUpTo(Graph.SCAN_REGISTRATION) {
+            navController.navigate(Graph.OAUTH_MOBILE) {
+                popUpTo(Graph.ENROLL) {
                     inclusive = true
                 }
             }
+        }
+    }
+    composable(Graph.OAUTH_MOBILE) { entry ->
+        val viewModel = hiltViewModel<OAuthViewModel>(entry)
+        OAuthScreen(viewModel = viewModel) {
+            navController.navigate(Graph.HOME_PAGE)
         }
     }
     composable(Graph.REQUEST_EDU_ID_START) {
@@ -179,75 +186,5 @@ fun MainGraph(navController: NavHostController) = NavHost(
             onInstitutionClicked = { },
             goBack = { navController.popBackStack() },
         )
-    }
-}
-
-object Graph {
-    const val MAIN = "main_graph"
-    const val SPLASH = "splash"
-    const val ENROLL = "enroll"
-    const val LOGIN = "login"
-    const val SCAN_REGISTRATION = "scan_registration"
-    const val REQUEST_EDU_ID_START = "request_edu_id_start"
-    const val REQUEST_EDU_ID_DETAILS = "request_edu_id_details"
-    const val REQUEST_EDU_ID_LINK_SENT = "request_edu_id_link_sent"
-    const val REQUEST_EDU_ID_RECOVERY = "request_edu_id_recovery"
-    const val REQUEST_EDU_ID_PIN = "request_edu_id_pin"
-    const val START = "start"
-    const val FIRST_TIME_DIALOG = "first_time_dialog"
-    const val HOME_PAGE = "home_page"
-    const val PERSONAL_INFO = "personal_info"
-}
-
-object RegistrationPinSetup {
-    private const val route: String = "registration_pin_setup"
-    const val registrationChallengeArg = "registration_challenge_arg"
-
-    const val routeWithArgs = "${route}/{${registrationChallengeArg}}"
-    val arguments = listOf(navArgument(registrationChallengeArg) {
-        type = NavType.StringType
-        nullable = false
-        defaultValue = ""
-    })
-
-    fun buildRouteWithEncodedChallenge(encodedChallenge: String?): String {
-        return "$route/$encodedChallenge"
-    }
-}
-
-object EnableBiometric {
-    private const val route: String = "enable_biometric"
-    const val biometricChallengeArg = "biometric_challenge_arg"
-    const val biometricPinArg = "biometric_pin_arg"
-    const val biometricIsEnrolmentArg = "biometric_is_enrolment_arg"
-    const val routeWithArgs =
-        "${route}/{${biometricChallengeArg}}/{${biometricPinArg}}/{${biometricIsEnrolmentArg}}"
-    val arguments = listOf(
-        navArgument(biometricChallengeArg) {
-            type = NavType.StringType
-            nullable = false
-            defaultValue = ""
-        },
-        navArgument(biometricPinArg) {
-            type = NavType.StringType
-            nullable = false
-            defaultValue = ""
-        },
-        navArgument(biometricIsEnrolmentArg) {
-            type = NavType.BoolType
-            nullable = false
-            defaultValue = true
-        })
-
-
-    fun buildRouteForEnrolment(encodedChallenge: String, pin: String): String =
-        "$route/$encodedChallenge/$pin/true"
-
-    fun buildRouteForAuthentication(encodedChallenge: String, pin: String): String =
-        "$route/$encodedChallenge/$pin/false"
-
-    @JvmStatic
-    fun main(args: Array<String>) {
-        println(routeWithArgs)
     }
 }

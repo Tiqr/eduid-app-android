@@ -128,7 +128,7 @@ fun RequestIdDetailsScreen(
 
         }
         PrimaryButton(
-            text = stringResource(R.string.enroll_screen_request_id_button),
+            text = stringResource(R.string.request_id_screen_create_id_button),
             onClick = {requestId(inputFormData.email)},
             modifier = Modifier
                 .fillMaxWidth()

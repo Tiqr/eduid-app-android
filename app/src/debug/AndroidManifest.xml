@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="nl.eduid"
+    tools:ignore="UnusedAttribute">
+
+    <application
+        android:name="nl.eduid.DebugEduIdApplication"
+        android:allowBackup="false"
+        tools:ignore="DataExtractionRules"
+        tools:replace="android:allowBackup, android:name">
+        <activity
+            android:name=".MainComposeActivity"
+            android:exported="true"
+            android:label="@string/title_activity_main"
+            android:theme="@style/ComposeAppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="authorize_response" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="net.openid.appauth.RedirectUriReceiverActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="login.test2.eduid.nl"
+                    android:path="/myconext/api/mobile/swagger-ui/oauth2-redirect.html"
+                    android:scheme="http" />
+                <data
+                    android:host="login.test2.eduid.nl"
+                    android:path="/myconext/api/mobile/swagger-ui/oauth2-redirect.html"
+                    android:scheme="https" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:path="/logout"
+                    android:scheme="${applicationId}" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".screens.biometric.SignInWithBiometricsActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.Transparent" />
+    </application>
+</manifest>

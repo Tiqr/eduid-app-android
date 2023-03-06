@@ -3,7 +3,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("kotlin-parcelize")
-    id("dagger.hilt.android.plugin")
+    id("com.google.dagger.hilt.android")
 }
 
 if (JavaVersion.current() < JavaVersion.VERSION_11) {
@@ -50,7 +50,7 @@ android {
         manifestPlaceholders["tiqr_config_enroll_scheme"] = "eduidenroll"
         manifestPlaceholders["tiqr_config_auth_scheme"] = "eduidauth"
         manifestPlaceholders["tiqr_config_token_exchange_enabled"] = "false"
-
+        manifestPlaceholders["appAuthRedirectScheme"] = "login.test2.eduid"
         // only package supported languages
         resourceConfigurations += listOf("en", "nl")
         vectorDrawables {
@@ -139,6 +139,7 @@ dependencies {
     implementation(libs.androidx.compose.constraint)
     implementation(libs.androidx.core)
     implementation(libs.androidx.concurrent)
+    implementation(libs.androidx.datastore)
     implementation(libs.androidx.lifecycle.common)
     implementation(libs.androidx.lifecycle.livedata)
     implementation(libs.androidx.localBroadcastManager)
@@ -149,6 +150,7 @@ dependencies {
     implementation(libs.google.android.material)
     implementation(libs.google.mlkit.barcode)
     implementation(libs.google.firebase.messaging)
+    implementation(libs.appauth)
 
     implementation(libs.dagger.hilt.android)
     implementation(libs.dagger.hilt.fragment)
