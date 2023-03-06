@@ -1,11 +1,14 @@
-package nl.eduid.screens.enroll
+package nl.eduid.screens.homepage
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -18,14 +21,15 @@ import nl.eduid.R
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EnrollScreen(
-    onLogin: () -> Unit,
-    onScan: () -> Unit,
-    onRequestEduId: () -> Unit
+fun HomePageNoAccountContent(
+    onScan: () -> Unit, onRequestEduId: () -> Unit
 ) = Scaffold { paddingValues ->
+
+    val context = LocalContext.current
 
     ConstraintLayout(
         modifier = Modifier
@@ -82,17 +86,22 @@ fun EnrollScreen(
                 },
         )
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+        Column(horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .constrainAs(buttons) {
                     bottom.linkTo(requestEduIdButton.top)
                 }
-                .fillMaxWidth()
-        ) {
+                .fillMaxWidth()) {
 
             PrimaryButton(
-                text = stringResource(R.string.enroll_screen_sign_in_button), onClick = onLogin,
+                text = stringResource(R.string.enroll_screen_sign_in_button),
+                onClick = {
+                    val intent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://mijn.test2.eduid.nl/")
+                    )
+                    context.startActivity(intent)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
@@ -101,7 +110,8 @@ fun EnrollScreen(
             Spacer(Modifier.height(24.dp))
 
             PrimaryButton(
-                text = stringResource(R.string.scan_button), onClick = onScan,
+                text = stringResource(R.string.scan_button),
+                onClick = onScan,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
@@ -115,11 +125,12 @@ fun EnrollScreen(
                 .constrainAs(requestEduIdButton) {
                     bottom.linkTo(parent.bottom)
                 },
-        )
-        {
+        ) {
             Text(
                 text = stringResource(R.string.enroll_screen_request_id_button),
-                style = MaterialTheme.typography.bodyLarge.copy(color = ButtonGreen, fontWeight = FontWeight.SemiBold),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = ButtonGreen, fontWeight = FontWeight.SemiBold
+                ),
             )
         }
     }
@@ -129,7 +140,7 @@ fun EnrollScreen(
 @Composable
 private fun PreviewEnroll() {
     EduidAppAndroidTheme {
-        EnrollScreen({}, {}, {})
+        HomePageNoAccountContent({}) {}
     }
 }
 

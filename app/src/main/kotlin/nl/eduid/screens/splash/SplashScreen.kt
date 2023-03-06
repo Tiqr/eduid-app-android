@@ -1,14 +1,10 @@
 package nl.eduid.screens.splash
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,28 +18,19 @@ import nl.eduid.R
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.SplashScreenBackgroundColor
 
+const val SplashWaitTime: Long = 2000
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SplashScreen(
-    viewModel: SplashViewModel,
-    onFirstTimeUser: () -> Unit,
-    onAppReady: () -> Unit,
-) = Scaffold(containerColor = SplashScreenBackgroundColor) { paddingValues ->
-    val startupData: Startup by viewModel.startupData.observeAsState(Startup.Unknown)
+fun SplashScreen() = Scaffold(containerColor = SplashScreenBackgroundColor) { paddingValues ->
     SplashContent(
-        startupData = startupData,
         paddingValues = paddingValues,
-        onFirstTimeUser = onFirstTimeUser,
-        onAppReady = onAppReady
     )
 }
 
 @Composable
 private fun SplashContent(
-    startupData: Startup,
     paddingValues: PaddingValues,
-    onFirstTimeUser: () -> Unit,
-    onAppReady: () -> Unit,
 ) = Column(
     horizontalAlignment = Alignment.CenterHorizontally,
     modifier = Modifier
@@ -89,14 +76,6 @@ private fun SplashContent(
             .sizeIn(minWidth = 140.dp, minHeight = 32.dp)
             .padding(horizontal = 64.dp, vertical = 24.dp),
     )
-
-    LaunchedEffect(startupData) {
-        when (startupData) {
-            Startup.Unknown -> {}
-            Startup.RegistrationRequired -> onFirstTimeUser()
-            Startup.AppReady -> onAppReady()
-        }
-    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -106,10 +85,7 @@ private fun PreviewSplashScreen() {
     EduidAppAndroidTheme {
         Scaffold(containerColor = SplashScreenBackgroundColor) { paddingValues ->
             SplashContent(
-                startupData = Startup.RegistrationRequired,
                 paddingValues = paddingValues,
-                onFirstTimeUser = {},
-                onAppReady = {},
             )
         }
     }

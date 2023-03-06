@@ -8,7 +8,7 @@ import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.BaseViewModel
-import nl.eduid.RegistrationPinSetup
+import nl.eduid.graphs.ExistingAccount
 import nl.eduid.screens.scan.ErrorData
 import nl.eduid.ui.PIN_MAX_LENGTH
 import org.tiqr.core.util.extensions.biometricUsable
@@ -32,7 +32,8 @@ class RegistrationPinSetupViewModel @Inject constructor(
 
     init {
         val enrolChallenge =
-            savedStateHandle.get<String>(RegistrationPinSetup.registrationChallengeArg) ?: ""
+            savedStateHandle.get<String>(ExistingAccount.RegistrationPinSetup.registrationChallengeArg)
+                ?: ""
         val decoded = URLDecoder.decode(enrolChallenge, Charsets.UTF_8.name())
         val adapter = moshi.adapter(EnrollmentChallenge::class.java)
         challenge = try {

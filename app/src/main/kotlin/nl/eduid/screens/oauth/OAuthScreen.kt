@@ -24,19 +24,28 @@ import nl.eduid.ui.ScaffoldWithTopBarBackButton
 @Composable
 fun OAuthScreen(
     viewModel: OAuthViewModel,
-    onBackPressed: () -> Unit
+    continueWith: () -> Unit,
+    onBackPressed: () -> Unit,
 ) = ScaffoldWithTopBarBackButton(
     onBackClicked = onBackPressed,
 ) {
     val uiState by viewModel.uiState.observeAsState(UiState(OAuthStep.Loading))
     var isAuthorizationLaunched by rememberSaveable { mutableStateOf(false) }
+    var isFetchingToken by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
     val launcher =
         rememberLauncherForActivityResult(contract = OAuthContract(), onResult = { intent ->
             isAuthorizationLaunched = false
             viewModel.continueWithFetchToken(intent)
+            isFetchingToken = true
         })
 
+    if (isFetchingToken && uiState.oauthStep is OAuthStep.Authorized) {
+        LaunchedEffect(viewModel) {
+            isFetchingToken = false
+            continueWith()
+        }
+    }
     OAuthContent(
         uiState = uiState,
         isAuthorizationLaunched = isAuthorizationLaunched,

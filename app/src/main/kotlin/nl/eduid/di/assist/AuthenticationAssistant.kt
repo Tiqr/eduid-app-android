@@ -80,4 +80,22 @@ class AuthenticationAssistant {
         }
     }
 
+    suspend fun refreshToken(authState: AuthState, service: AuthorizationService): TokenResponse =
+        suspendCoroutine { continuation ->
+            val refreshTokenRequest = authState.createTokenRefreshRequest()
+            service.performTokenRequest(refreshTokenRequest) { tokenResponse, ex ->
+                when {
+                    ex != null -> {
+                        Timber.e(ex, "Failed to refresh token")
+                        continuation.resumeWith(Result.failure(ex))
+                    }
+                    tokenResponse != null -> {
+                        continuation.resumeWith(Result.success(tokenResponse))
+                    }
+                    else -> {
+                        continuation.resumeWith(Result.failure(RuntimeException("Could not complete token refresh")))
+                    }
+                }
+            }
+        }
 }
