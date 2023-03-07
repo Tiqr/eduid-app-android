@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,9 +15,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import net.openid.appauth.*
 import net.openid.appauth.ClientAuthentication.UnsupportedAuthenticationMethod
-import net.openid.appauth.browser.BrowserAllowList
-import net.openid.appauth.browser.VersionedBrowserMatcher
-import net.openid.appauth.connectivity.DefaultConnectionBuilder
 import nl.eduid.R
 import nl.eduid.di.assist.AuthenticationAssistant
 import nl.eduid.di.repository.StorageRepository
@@ -186,23 +185,8 @@ class OAuthViewModel @Inject constructor(
 
     private suspend fun recreateAuthorizationService(context: Context) {
         service?.dispose()
-        service = createAuthorizationService(context)
+        service = AuthenticationAssistant.createAuthorizationService(context)
         repository.saveCurrentAuthRequest(null)
-    }
-
-    private fun createAuthorizationService(context: Context): AuthorizationService {
-        Timber.d("Creating AuthorizationService")
-        val builder = AppAuthConfiguration.Builder()
-        builder.setBrowserMatcher(
-            BrowserAllowList(
-                VersionedBrowserMatcher.CHROME_CUSTOM_TAB,
-                VersionedBrowserMatcher.SAMSUNG_CUSTOM_TAB,
-                VersionedBrowserMatcher.FIREFOX_CUSTOM_TAB
-            )
-        )
-        builder.setConnectionBuilder(DefaultConnectionBuilder.INSTANCE)
-
-        return AuthorizationService(context, builder.build())
     }
 
     private suspend fun initializeAppAuth(context: Context) {

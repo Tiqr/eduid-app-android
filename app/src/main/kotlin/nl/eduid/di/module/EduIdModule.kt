@@ -61,8 +61,10 @@ internal object RepositoryModule {
     @Provides
     @Singleton
     internal fun providesTokenProvider(
-        repository: StorageRepository
-    ) = TokenProvider(repository)
+        repository: StorageRepository,
+        assistant: AuthenticationAssistant,
+        @ApplicationContext context: Context,
+    ) = TokenProvider(repository, assistant, context)
 
     @Provides
     @EduIdScope

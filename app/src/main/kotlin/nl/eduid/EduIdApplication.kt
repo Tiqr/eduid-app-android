@@ -30,6 +30,7 @@
 package nl.eduid
 
 import android.app.Application
+import androidx.lifecycle.ProcessLifecycleOwner
 import coil.Coil
 import coil.ImageLoader
 import dagger.hilt.android.HiltAndroidApp
@@ -42,6 +43,9 @@ import javax.inject.Inject
 open class EduIdApplication : Application() {
     @Inject
     internal lateinit var imageOkHttpClient: OkHttpClient.Builder
+
+    @Inject
+    internal lateinit var appLifecycleObserver: ApplicationLifecycleObserver
 
     override fun onCreate() {
         super.onCreate()
@@ -60,5 +64,7 @@ open class EduIdApplication : Application() {
                     .build()
             }
             .build())
+
+        ProcessLifecycleOwner.get().lifecycle.addObserver(appLifecycleObserver)
     }
 }

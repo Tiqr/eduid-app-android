@@ -11,7 +11,11 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
         if (response.isSuccessful) {
             response.body()
         } else {
-            Timber.w("User details not available ${response.code()}: ${response.errorBody()}")
+            Timber.w(
+                "User details not available [${response.code()}/${response.message()}]${
+                    response.errorBody()?.string()
+                }"
+            )
             null
         }
     } catch (e: Exception) {
