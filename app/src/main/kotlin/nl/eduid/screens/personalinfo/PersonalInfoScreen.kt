@@ -113,10 +113,35 @@ fun PersonalInfoScreenContent(
             )
             Spacer(Modifier.height(12.dp))
 
-            InfoTab(header = "Name", title = "R. van Hamersdonksveer", subtitle = "Provided by Universiteit van Amsterdam", onClick = { }, endIcon = R.drawable.shield_tick_blue)
-            InfoTab(header = "Email", title = personalInfo.email, subtitle = "Provided by " + personalInfo.emailProvider, onClick = { }, endIcon = R.drawable.edit_icon)
-            InfoTab(header = "Your role at your institution", title = "Student or employee", subtitle = "Not added to your eduID yet", onClick = { }, endIcon = R.drawable.plus_icon_gray, enabled = false)
-            InfoTab(header = "Your institution", title = "Universiteit van Amsterdam", subtitle = "Provided by Universiteit van Amsterdam", onClick = { }, endIcon = R.drawable.shield_tick_blue)
+            InfoTab(
+                header = "Name",
+                title = personalInfo.name,
+                subtitle = "Provided by Universiteit van Amsterdam",
+                onClick = { },
+                endIcon = R.drawable.shield_tick_blue
+            )
+            InfoTab(
+                header = "Email",
+                title = personalInfo.email,
+                subtitle = "Provided by " + personalInfo.emailProvider,
+                onClick = { },
+                endIcon = R.drawable.edit_icon
+            )
+            InfoTab(
+                header = "Your role at your institution",
+                title = "Student or employee",
+                subtitle = "Not added to your eduID yet",
+                onClick = { },
+                endIcon = R.drawable.plus_icon_gray,
+                enabled = false
+            )
+            InfoTab(
+                header = "Your institution",
+                title = "Universiteit van Amsterdam",
+                subtitle = "Provided by Universiteit van Amsterdam",
+                onClick = { },
+                endIcon = R.drawable.shield_tick_blue
+            )
 
             Spacer(Modifier.height(24.dp))
         }

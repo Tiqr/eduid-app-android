@@ -15,7 +15,7 @@ data class PersonalInfo(
     val institutionStatus: InfoStatus = InfoStatus.Final,
 ) {
     companion object {
-        fun demoData(): PersonalInfo  {
+        fun demoData(): PersonalInfo {
             return PersonalInfo(
                 name = "R. van Hamersdonksveer",
                 nameProvider = "Universiteit van Amsterdam",
@@ -31,10 +31,12 @@ data class PersonalInfo(
                 institutionStatus = InfoStatus.Final,
             )
         }
-        sealed class InfoStatus {
-            object Empty : InfoStatus()
-            object Editable : InfoStatus()
-            object Final : InfoStatus()
-        }
     }
+
+    sealed class InfoStatus {
+        object Empty : InfoStatus()
+        object Editable : InfoStatus()
+        object Final : InfoStatus()
+    }
+
 }
