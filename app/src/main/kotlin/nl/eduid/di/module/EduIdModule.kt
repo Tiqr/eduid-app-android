@@ -78,7 +78,8 @@ internal object RepositoryModule {
         }
 
         return builder.addInterceptor(tokenInterceptor)
-            .authenticator(tokenAuthenticator).build()
+            .authenticator(tokenAuthenticator)
+            .build()
     }
 
     @Provides
