@@ -25,11 +25,12 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 @Composable
 fun EnableBiometricScreen(
     viewModel: EnableBiometricViewModel,
-    onRegistrationDone: () -> Unit,
+    goToOauth: () -> Unit,
+    goToHome: () -> Unit,
 ) {
     BackHandler {
         viewModel.stopOfferBiometric()
-        onRegistrationDone()
+        goToHome()
     }
     //If & when the user navigates back from this screen, we'll treat it as a Skip This action.
     val dispatcher = LocalOnBackPressedDispatcherOwner.current!!.onBackPressedDispatcher
@@ -39,11 +40,11 @@ fun EnableBiometricScreen(
         EnableBiometricContent(
             enable = {
                 viewModel.upgradeBiometric()
-                onRegistrationDone()
+                goToOauth()
             },
         ) {
             viewModel.stopOfferBiometric()
-            onRegistrationDone()
+            goToOauth()
         }
     }
 }
@@ -106,10 +107,9 @@ fun EnableBiometricContent(
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 40.dp)
                 .constrainAs(buttons) {
                     top.linkTo(background.bottom)
-                    bottom.linkTo(parent.bottom)
+                    bottom.linkTo(parent.bottom, margin = 40.dp)
                 }) {
             PrimaryButton(
                 text = stringResource(R.string.biometric_enable_allow),

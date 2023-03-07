@@ -6,7 +6,7 @@ import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.BaseViewModel
-import nl.eduid.WithChallenge
+import nl.eduid.graphs.WithChallenge
 import org.tiqr.data.model.AuthenticationChallenge
 import org.tiqr.data.model.Challenge
 import org.tiqr.data.model.EnrollmentChallenge

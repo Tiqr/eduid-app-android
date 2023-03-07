@@ -14,13 +14,12 @@ import nl.eduid.ui.PinInputField
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.ScaffoldWithTopBarBackButton
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RequestIdPinScreen(
-    onPinVerified: () -> Unit,
+fun RequestIdConfirmPhoneNumber(
+    onCodeVerified: () -> Unit,
     viewModel: RequestIdPinViewModel,
     state: RequestIdState = rememberRequestIdState(
-        viewModel = viewModel, onPinVerified = onPinVerified
+        viewModel = viewModel, onPinVerified = onCodeVerified
     ),
     goBack: () -> Unit,
 ) = ScaffoldWithTopBarBackButton(
