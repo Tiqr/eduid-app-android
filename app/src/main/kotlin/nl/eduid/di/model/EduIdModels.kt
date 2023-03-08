@@ -4,20 +4,17 @@ import android.os.Parcelable
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class RequestEduIdAccount(
+    val email: String,
+    val givenName: String,
+    val familyName: String,
+) : Parcelable
 
-data class RequestNewIdRequest(
-    val user: User,
-    val authenticationRequestId: String,
-) {
-    data class User(
-        val email: String,
-        val givenName: String,
-        val familyName: String,
-    )
-}
-
-//{"user":{"email":"test4@test.com","givenName":"Tester","familyName":"Testerson"},"authenticationRequestId":"48e0eb5f-62ae-429e-b103-444ad24f2cc0"}
-
+const val CREATE_EMAIL_SENT = 201
+const val FAIL_EMAIL_IN_USE = 409
+const val EMAIL_DOMAIN_FORBIDDEN = 412
 
 @Parcelize
 @JsonClass(generateAdapter = true)

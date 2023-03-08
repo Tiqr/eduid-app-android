@@ -1,5 +1,6 @@
 package nl.eduid
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,6 +14,7 @@ import nl.eduid.graphs.MainGraph
 import nl.eduid.screens.homepage.HomePageViewModel
 import nl.eduid.screens.splash.SplashScreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainComposeActivity : ComponentActivity() {
@@ -33,4 +35,16 @@ class MainComposeActivity : ComponentActivity() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (intent != null && intent.action == Intent.ACTION_VIEW) {
+            intent.dataString?.let { rawChallenge ->
+                Timber.e("Compose activity resumed, Intent data: $rawChallenge")
+                intent.data = null
+            }
+        }
+    }
+
 }

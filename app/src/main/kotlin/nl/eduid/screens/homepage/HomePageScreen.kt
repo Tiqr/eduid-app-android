@@ -15,6 +15,7 @@ fun HomePageScreen(
     onPersonalInfoClicked: () -> Unit,
     onSecurityClicked: () -> Unit,
     onEnrollWithQR: () -> Unit,
+    launchOAuth: () -> Unit,
     onCreateEduIdAccount: () -> Unit,
 ) {
     val haveRegisteredAccount by viewModel.haveRegisteredAccounts.observeAsState()
@@ -25,7 +26,8 @@ fun HomePageScreen(
                 onActivityClicked = onActivityClicked,
                 onPersonalInfoClicked = onPersonalInfoClicked,
                 onSecurityClicked = onSecurityClicked,
-                onScanForAuthorization = onScanForAuthorization
+                onScanForAuthorization = onScanForAuthorization,
+                launchOAuth = launchOAuth
             )
         }
         false -> {

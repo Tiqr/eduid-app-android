@@ -32,6 +32,7 @@ fun HomePageWithAccountContent(
     onPersonalInfoClicked: () -> Unit,
     onSecurityClicked: () -> Unit,
     onScanForAuthorization: () -> Unit,
+    launchOAuth: () -> Unit
 ) = Scaffold(
     topBar = {
         CenterAlignedTopAppBar(
@@ -95,7 +96,11 @@ fun HomePageWithAccountContent(
                 painter = painterResource(id = R.drawable.medidate_image),
                 contentDescription = "",
                 contentScale = ContentScale.FillWidth,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        launchOAuth()
+                    }
             )
 
             Column(
@@ -137,5 +142,6 @@ private fun PreviewHomePageScreen() = EduidAppAndroidTheme {
         onActivityClicked = {},
         onPersonalInfoClicked = {},
         onSecurityClicked = {},
+        launchOAuth = {},
     )
 }

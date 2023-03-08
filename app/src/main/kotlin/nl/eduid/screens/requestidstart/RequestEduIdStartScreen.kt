@@ -18,7 +18,7 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextBlack
 
 @Composable
-fun RequestIdStartScreen(
+fun RequestEduIdStartScreen(
     requestId: () -> Unit,
     onBackClicked: () -> Unit,
 ) = ScaffoldWithTopBarBackButton(onBackClicked = onBackClicked,
@@ -105,7 +105,7 @@ fun RequestIdStartScreen(
 @Composable
 private fun PreviewEnroll() {
     EduidAppAndroidTheme {
-        RequestIdStartScreen({},{})
+        RequestEduIdStartScreen({},{})
     }
 }
 
