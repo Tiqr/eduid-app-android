@@ -34,6 +34,8 @@ class StorageRepository(private val context: Context) {
         }
     }
 
+    val isAuthorized: Flow<Boolean> = authState.map { it != null && it.isAuthorized }
+
     val authRequest: Flow<AuthorizationRequest?> = context.dataStore.data.catch { exception ->
         if (exception is IOException) {
             Timber.e(exception, "Error reading preferences.")

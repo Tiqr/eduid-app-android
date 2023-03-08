@@ -8,11 +8,18 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import nl.eduid.di.EduIdScope
 import nl.eduid.di.api.EduIdApi
 import nl.eduid.di.assist.AuthenticationAssistant
+import nl.eduid.di.auth.TokenAuthenticator
+import nl.eduid.di.auth.TokenInterceptor
+import nl.eduid.di.auth.TokenProvider
 import nl.eduid.di.repository.EduIdRepository
 import nl.eduid.di.repository.StorageRepository
+import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import org.tiqr.data.BuildConfig
 import org.tiqr.data.api.response.ApiResponseAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -29,7 +36,8 @@ internal object RepositoryModule {
 
     @Provides
     @Singleton
-    internal fun provideEduApi(retrofit: Retrofit): EduIdApi = retrofit.create(EduIdApi::class.java)
+    internal fun provideEduApi(@EduIdScope retrofit: Retrofit): EduIdApi =
+        retrofit.create(EduIdApi::class.java)
 
 
     @Provides
@@ -40,9 +48,41 @@ internal object RepositoryModule {
 
     @Provides
     @Singleton
+    internal fun providesPersonalInfoRepository(
+        api: EduIdApi,
+    ) = PersonalInfoRepository(api)
+
+    @Provides
+    @Singleton
     internal fun providesStorageRepository(
         @ApplicationContext context: Context,
     ) = StorageRepository(context)
+
+    @Provides
+    @Singleton
+    internal fun providesTokenProvider(
+        repository: StorageRepository,
+        assistant: AuthenticationAssistant,
+        @ApplicationContext context: Context,
+    ) = TokenProvider(repository, assistant, context)
+
+    @Provides
+    @EduIdScope
+    fun providesTokenAuthOkHttp(
+        tokenAuthenticator: TokenAuthenticator,
+        tokenInterceptor: TokenInterceptor,
+        loggingInterceptor: HttpLoggingInterceptor,
+        okHttpClient: OkHttpClient
+    ): OkHttpClient {
+        val builder = okHttpClient.newBuilder()
+        if (BuildConfig.DEBUG) {
+            builder.addInterceptor(loggingInterceptor)
+        }
+
+        return builder.addInterceptor(tokenInterceptor)
+            .authenticator(tokenAuthenticator)
+            .build()
+    }
 
     @Provides
     @Singleton
@@ -51,14 +91,15 @@ internal object RepositoryModule {
 
     @Provides
     @Singleton
-    internal fun provideApiRetrofit(
-        client: Lazy<OkHttpClient>, moshi: Moshi
+    @EduIdScope
+    internal fun provideEduIdRetrofit(
+        @EduIdScope client: Lazy<OkHttpClient>, moshi: Moshi
     ): Retrofit {
         return Retrofit.Builder().callFactory { client.get().newCall(it) }
             .addCallAdapterFactory(ApiResponseAdapterFactory.create())
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl("https://login.eduid.nl/").build()
+            .baseUrl("https://login.test2.eduid.nl/").build()
     }
 
     @Provides
@@ -66,5 +107,4 @@ internal object RepositoryModule {
     internal fun provideOkHttpClientBuilder(): OkHttpClient {
         return OkHttpClient.Builder().connectTimeout(15, TimeUnit.SECONDS).build()
     }
-
 }

@@ -112,12 +112,40 @@ fun PersonalInfoScreenContent(
                     .fillMaxWidth()
             )
             Spacer(Modifier.height(12.dp))
+            if (personalInfo.name.isBlank()) {
+                Spacer(Modifier.height(24.dp))
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .height(80.dp)
+                        .width(80.dp)
+                        .align(alignment = Alignment.CenterHorizontally)
+                )
+            } else {
+                InfoTab(
+                    header = "Name",
+                    title = personalInfo.name,
+                    subtitle = "Provided by ${personalInfo.nameProvider}",
+                    onClick = { },
+                    endIcon = R.drawable.shield_tick_blue
+                )
+                InfoTab(
+                    header = "Email",
+                    title = personalInfo.email,
+                    subtitle = "Provided by ${personalInfo.emailProvider}",
+                    onClick = { },
+                    endIcon = R.drawable.edit_icon
+                )
 
-            InfoTab(header = "Name", title = "R. van Hamersdonksveer", subtitle = "Provided by Universiteit van Amsterdam", onClick = { }, endIcon = R.drawable.shield_tick_blue)
-            InfoTab(header = "Email", title = personalInfo.email, subtitle = "Provided by " + personalInfo.emailProvider, onClick = { }, endIcon = R.drawable.edit_icon)
-            InfoTab(header = "Your role at your institution", title = "Student or employee", subtitle = "Not added to your eduID yet", onClick = { }, endIcon = R.drawable.plus_icon_gray, enabled = false)
-            InfoTab(header = "Your institution", title = "Universiteit van Amsterdam", subtitle = "Provided by Universiteit van Amsterdam", onClick = { }, endIcon = R.drawable.shield_tick_blue)
-
+                personalInfo.institutionAccounts.forEach {
+                    InfoTab(
+                        header = "Role & institution",
+                        title = it.role,
+                        subtitle = it.institution,
+                        onClick = { },
+                        endIcon = R.drawable.chevron_down,
+                    )
+                }
+            }
             Spacer(Modifier.height(24.dp))
         }
     }

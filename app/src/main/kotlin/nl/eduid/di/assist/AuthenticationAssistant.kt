@@ -1,7 +1,10 @@
 package nl.eduid.di.assist
 
+import android.content.Context
 import android.net.Uri
 import net.openid.appauth.*
+import net.openid.appauth.browser.BrowserAllowList
+import net.openid.appauth.browser.VersionedBrowserMatcher
 import net.openid.appauth.connectivity.DefaultConnectionBuilder
 import nl.eduid.screens.oauth.Configuration
 import timber.log.Timber
@@ -98,4 +101,21 @@ class AuthenticationAssistant {
                 }
             }
         }
+
+    companion object {
+        fun createAuthorizationService(context: Context): AuthorizationService {
+            Timber.d("Creating AuthorizationService")
+            val builder = AppAuthConfiguration.Builder()
+            builder.setBrowserMatcher(
+                BrowserAllowList(
+                    VersionedBrowserMatcher.CHROME_CUSTOM_TAB,
+                    VersionedBrowserMatcher.SAMSUNG_CUSTOM_TAB,
+                    VersionedBrowserMatcher.FIREFOX_CUSTOM_TAB
+                )
+            )
+            builder.setConnectionBuilder(DefaultConnectionBuilder.INSTANCE)
+
+            return AuthorizationService(context, builder.build())
+        }
+    }
 }
