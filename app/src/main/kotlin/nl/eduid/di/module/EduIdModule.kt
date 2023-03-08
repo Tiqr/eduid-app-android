@@ -17,6 +17,7 @@ import nl.eduid.di.auth.TokenProvider
 import nl.eduid.di.repository.EduIdRepository
 import nl.eduid.di.repository.StorageRepository
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
+import nl.eduid.screens.requestidrecovery.RecoveryRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.tiqr.data.BuildConfig
@@ -39,7 +40,6 @@ internal object RepositoryModule {
     internal fun provideEduApi(@EduIdScope retrofit: Retrofit): EduIdApi =
         retrofit.create(EduIdApi::class.java)
 
-
     @Provides
     @Singleton
     internal fun providesEduIdRepository(
@@ -51,6 +51,12 @@ internal object RepositoryModule {
     internal fun providesPersonalInfoRepository(
         api: EduIdApi,
     ) = PersonalInfoRepository(api)
+
+    @Provides
+    @Singleton
+    internal fun providesRecoveryRepository(
+        api: EduIdApi,
+    ) = RecoveryRepository(api)
 
     @Provides
     @Singleton

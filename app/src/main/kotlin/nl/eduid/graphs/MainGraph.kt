@@ -21,10 +21,10 @@ import nl.eduid.screens.pinsetup.RegistrationPinSetupViewModel
 import nl.eduid.screens.requestiddetails.RequestEduIdFormScreen
 import nl.eduid.screens.requestiddetails.RequestEduIdFormViewModel
 import nl.eduid.screens.requestidlinksent.RequestEduIdEmailSentScreen
-import nl.eduid.screens.requestidpin.RequestIdConfirmPhoneNumber
-import nl.eduid.screens.requestidpin.RequestIdPinViewModel
-import nl.eduid.screens.requestidrecovery.RequestIdRecoveryScreen
-import nl.eduid.screens.requestidrecovery.RequestIdRecoveryViewModel
+import nl.eduid.screens.requestidpin.ConfirmCodeScreen
+import nl.eduid.screens.requestidpin.ConfirmCodeViewModel
+import nl.eduid.screens.requestidrecovery.PhoneRequestCodeScreen
+import nl.eduid.screens.requestidrecovery.PhoneRequestCodeViewModel
 import nl.eduid.screens.requestidstart.RequestEduIdStartScreen
 import nl.eduid.screens.scan.ScanScreen
 import nl.eduid.screens.scan.StatelessScanViewModel
@@ -34,6 +34,7 @@ import nl.eduid.screens.start.StartScreen
 fun MainGraph(navController: NavHostController, homePageViewModel: HomePageViewModel) = NavHost(
     navController = navController, route = Graph.MAIN, startDestination = Graph.HOME_PAGE
 ) {
+
     composable(Graph.HOME_PAGE) {
         HomePageScreen(viewModel = homePageViewModel,
             onScanForAuthorization = { /*QR authorization for 3rd party*/ },
@@ -41,7 +42,7 @@ fun MainGraph(navController: NavHostController, homePageViewModel: HomePageViewM
             onPersonalInfoClicked = { navController.navigate(Graph.PERSONAL_INFO) },
             onSecurityClicked = {},
             onEnrollWithQR = { navController.navigate(ExistingAccount.EnrollWithQR.route) },
-            launchOAuth = { navController.navigate(OAuth.routeWithoutPhone) }
+            launchOAuth = { navController.navigate(OAuth.routeForAuthentication) }
         ) {
             navController.navigate(
                 Graph.REQUEST_EDU_ID_ACCOUNT
@@ -83,7 +84,7 @@ fun MainGraph(navController: NavHostController, homePageViewModel: HomePageViewM
                 }
             },
             onRegistrationDone = {
-                navController.navigate(OAuth.routeWithPhone) {
+                navController.navigate(OAuth.routeForEnrollment) {
                     popUpTo(navController.graph.findStartDestination().id)
                 }
             })
@@ -93,7 +94,7 @@ fun MainGraph(navController: NavHostController, homePageViewModel: HomePageViewM
     ) { entry ->
         val viewModel = hiltViewModel<EnableBiometricViewModel>(entry)
         val isEnroll = entry.arguments?.getBoolean(WithChallenge.isEnrolmentArg, true) ?: true
-        val authRoute = if (isEnroll) OAuth.routeWithPhone else OAuth.routeWithoutPhone
+        val authRoute = if (isEnroll) OAuth.routeForEnrollment else OAuth.routeForAuthentication
         EnableBiometricScreen(
             viewModel = viewModel,
             goToOauth = { navController.goToWithPopCurrent(destination = authRoute) }
@@ -106,7 +107,7 @@ fun MainGraph(navController: NavHostController, homePageViewModel: HomePageViewM
             if (isEnroll) {
                 navController.goToWithPopCurrent(destination = PhoneNumberRecovery.RequestCode.route)
             } else {
-                navController.goToWithPopCurrent(destination = Graph.MAIN)
+                navController.goToWithPopCurrent(destination = Graph.HOME_PAGE)
             }
         }) {
             navController.popBackStack()
@@ -127,32 +128,40 @@ fun MainGraph(navController: NavHostController, homePageViewModel: HomePageViewM
     composable(
         route = RequestEduIdLinkSent.routeWithArgs, arguments = RequestEduIdLinkSent.arguments
     ) { entry ->
-        RequestEduIdEmailSentScreen(userEmail = RequestEduIdLinkSent.decodeFromEntry(entry),
-            requestId = { navController.navigate(PhoneNumberRecovery.RequestCode.route) },
-            onBackClicked = { navController.popBackStack() })
+        RequestEduIdEmailSentScreen(
+            onBackClicked = { navController.popBackStack() },
+            userEmail = RequestEduIdLinkSent.decodeFromEntry(entry)
+        )
     }
 
     composable(
         PhoneNumberRecovery.RequestCode.route,
     ) {
-        val viewModel = hiltViewModel<RequestIdRecoveryViewModel>(it)
-        RequestIdRecoveryScreen(
-            onVerifyPhoneNumberClicked = { navController.navigate(PhoneNumberRecovery.ConfirmCode.route) },
-            onBackClicked = { navController.popBackStack() },
+        val viewModel = hiltViewModel<PhoneRequestCodeViewModel>(it)
+        PhoneRequestCodeScreen(
             viewModel = viewModel,
-        )
+            onBackClicked = { navController.popBackStack() },
+        ) { phoneNumber ->
+            navController.navigate(
+                PhoneNumberRecovery.ConfirmCode.routeWithPhoneNumber(phoneNumber)
+            )
+        }
     }
 
-    composable(PhoneNumberRecovery.ConfirmCode.route) {
-        val viewModel = hiltViewModel<RequestIdPinViewModel>(it)
-        RequestIdConfirmPhoneNumber(viewModel = viewModel,
-            onCodeVerified = { navController.navigate(Graph.START) },
-            goBack = { navController.popBackStack() })
+    composable(
+        route = PhoneNumberRecovery.ConfirmCode.routeWithArgs,
+        arguments = PhoneNumberRecovery.ConfirmCode.arguments
+    ) { entry ->
+        val viewModel = hiltViewModel<ConfirmCodeViewModel>(entry)
+        ConfirmCodeScreen(viewModel = viewModel,
+            phoneNumber = PhoneNumberRecovery.ConfirmCode.decodeFromEntry(entry),
+            goToStartScreen = { navController.navigate(Graph.START) }
+        ) { navController.popBackStack() }
     }
 
     composable(Graph.START) {
         StartScreen(
-            onNext = { navController.navigate(Graph.HOME_PAGE) },
+            onNext = { navController.navigate(Graph.FIRST_TIME_DIALOG) },
         )
     }
 

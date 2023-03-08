@@ -2,7 +2,6 @@ package nl.eduid.screens.homepage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -19,7 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import nl.eduid.R
-import nl.eduid.ui.HomeGreenButton
+import nl.eduid.ui.AlertDialogWithTwoButton
+import nl.eduid.ui.PrimaryButtonWithIcon
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.SplashScreenBackgroundColor
@@ -28,27 +28,19 @@ import nl.eduid.ui.theme.TextBlack
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePageWithAccountContent(
+    isAuthorizedForDataAccess: Boolean,
+    shouldPromptAuthorization: Unit?,
     onActivityClicked: () -> Unit,
     onPersonalInfoClicked: () -> Unit,
     onSecurityClicked: () -> Unit,
     onScanForAuthorization: () -> Unit,
-    launchOAuth: () -> Unit
+    launchOAuth: () -> Unit,
+    promptAuthorization: () -> Unit = {},
+    clearAuth: () -> Unit = {}
 ) = Scaffold(
     topBar = {
         CenterAlignedTopAppBar(
             modifier = Modifier.padding(top = 42.dp, start = 26.dp, end = 26.dp),
-            navigationIcon = {
-                Image(
-                    painter = painterResource(R.drawable.ic_top_scan),
-                    contentDescription = stringResource(R.string.button_scan),
-                    modifier = Modifier
-                        .size(width = 32.dp, height = 32.dp)
-                        .clickable {
-                            onScanForAuthorization()
-                        },
-                    alignment = Alignment.Center
-                )
-            },
             title = {
                 Image(
                     painter = painterResource(R.drawable.ic_top_logo),
@@ -60,6 +52,19 @@ fun HomePageWithAccountContent(
         )
     },
 ) { paddingValues ->
+    if (shouldPromptAuthorization != null) {
+        AlertDialogWithTwoButton(
+            title = stringResource(R.string.app_not_authorized),
+            explanation = stringResource(id = R.string.app_not_authorized_explanation),
+            dismissButtonLabel = stringResource(R.string.button_cancel),
+            confirmButtonLabel = stringResource(R.string.button_allow),
+            onDismiss = clearAuth,
+            onConfirm = {
+                clearAuth()
+                launchOAuth()
+            }
+        )
+    }
     ConstraintLayout(
         modifier = Modifier
             .padding(paddingValues)
@@ -98,9 +103,6 @@ fun HomePageWithAccountContent(
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable {
-                        launchOAuth()
-                    }
             )
 
             Column(
@@ -112,20 +114,38 @@ fun HomePageWithAccountContent(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    HomeGreenButton(
-                        text = "Security",
-                        onClick = onSecurityClicked,
-                        icon = R.drawable.homepage_security_icon
+                    PrimaryButtonWithIcon(
+                        text = stringResource(R.string.home_with_account_scan), onClick = {
+                            promptAuthorization()
+                        }, icon = R.drawable.homepage_scan_icon
                     )
-                    HomeGreenButton(
-                        text = "Personal Info",
-                        onClick = onPersonalInfoClicked,
-                        icon = R.drawable.homepage_info_icon
+                    PrimaryButtonWithIcon(
+                        text = stringResource(R.string.home_with_account_personal_info), onClick = {
+                            if (isAuthorizedForDataAccess) {
+                                onPersonalInfoClicked()
+                            } else {
+                                promptAuthorization()
+                            }
+                        }, icon = R.drawable.homepage_info_icon
                     )
-                    HomeGreenButton(
-                        text = "Activity",
-                        onClick = onActivityClicked,
-                        icon = R.drawable.homepage_activity_icon
+
+                    PrimaryButtonWithIcon(
+                        text = stringResource(R.string.home_with_account_security), onClick = {
+                            if (isAuthorizedForDataAccess) {
+                                onSecurityClicked()
+                            } else {
+                                promptAuthorization()
+                            }
+                        }, icon = R.drawable.homepage_security_icon
+                    )
+                    PrimaryButtonWithIcon(
+                        text = stringResource(R.string.home_with_account_activity), onClick = {
+                            if (isAuthorizedForDataAccess) {
+                                onActivityClicked()
+                            } else {
+                                promptAuthorization()
+                            }
+                        }, icon = R.drawable.homepage_activity_icon
                     )
                 }
                 Spacer(Modifier.height(40.dp))
@@ -137,11 +157,13 @@ fun HomePageWithAccountContent(
 @Preview
 @Composable
 private fun PreviewHomePageScreen() = EduidAppAndroidTheme {
-    HomePageWithAccountContent(
-        onScanForAuthorization = {},
+    HomePageWithAccountContent(isAuthorizedForDataAccess = true,
+        shouldPromptAuthorization = null,
         onActivityClicked = {},
         onPersonalInfoClicked = {},
         onSecurityClicked = {},
+        onScanForAuthorization = {},
         launchOAuth = {},
-    )
+        promptAuthorization = {},
+        clearAuth = {})
 }

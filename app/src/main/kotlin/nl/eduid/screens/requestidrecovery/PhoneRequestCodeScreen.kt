@@ -7,9 +7,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -21,27 +21,64 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import nl.eduid.R
+import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.ScaffoldWithTopBarBackButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun RequestIdRecoveryScreen(
-    onVerifyPhoneNumberClicked: (phoneNumber: String) -> Unit,
+fun PhoneRequestCodeScreen(
+    viewModel: PhoneRequestCodeViewModel,
     onBackClicked: () -> Unit,
-    viewModel: RequestIdRecoveryViewModel,
+    goToConfirmPhoneNumber: (phoneNumber: String) -> Unit,
 ) = ScaffoldWithTopBarBackButton(
     onBackClicked = onBackClicked, modifier = Modifier
 ) {
-    val recoveryPhoneInput by viewModel.recoveryPhoneInput.observeAsState("")
+    val uiState by viewModel.uiState.observeAsState(UiState())
+    var canContinue by rememberSaveable { mutableStateOf(false) }
+
+    if (canContinue && !uiState.inProgress && uiState.errorData == null) {
+        val currentGoToConfirmNumber by rememberUpdatedState(newValue = goToConfirmPhoneNumber)
+        LaunchedEffect(key1 = viewModel) {
+            canContinue = false
+            currentGoToConfirmNumber(uiState.input)
+        }
+    }
+
+    PhoneRequestCodeContent(
+        uiState = uiState,
+        onClick = {
+            canContinue = true
+            viewModel.requestPhoneCode()
+        },
+        dismissError = viewModel::dismissError,
+        onValueChange = { viewModel.onPhoneNumberChange(it) },
+    )
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+private fun PhoneRequestCodeContent(
+    uiState: UiState,
+    onClick: () -> Unit = {},
+    dismissError: () -> Unit = {},
+    onValueChange: (String) -> Unit = {},
+) {
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    if (uiState.errorData != null) {
+        AlertDialogWithSingleButton(
+            title = uiState.errorData.title,
+            explanation = uiState.errorData.message,
+            buttonLabel = stringResource(R.string.button_ok),
+            onDismiss = dismissError
+        )
+    }
 
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
     ) {
         val (content, bottomButton, bottomSpacer) = createRefs()
-
 
         Column(horizontalAlignment = Alignment.Start,
             modifier = Modifier
@@ -76,20 +113,18 @@ fun RequestIdRecoveryScreen(
             )
 
             OutlinedTextField(
-                value = recoveryPhoneInput,
+                value = uiState.input,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done, keyboardType = KeyboardType.Number
                 ),
                 keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
-                onValueChange = { newValue -> viewModel.onPhoneNumberChanged(newValue) },
+                onValueChange = onValueChange,
                 modifier = Modifier.fillMaxWidth()
             )
-
-
         }
         PrimaryButton(
             text = stringResource(R.string.request_id_recovery_button),
-            onClick = { onVerifyPhoneNumberClicked("") },
+            onClick = onClick,
             modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(bottomButton) {
@@ -110,7 +145,7 @@ fun RequestIdRecoveryScreen(
 @Composable
 private fun PreviewEnroll() {
     EduidAppAndroidTheme {
-        RequestIdRecoveryScreen({}, {}, RequestIdRecoveryViewModel())
+        PhoneRequestCodeContent(UiState("065555555"))
     }
 }
 

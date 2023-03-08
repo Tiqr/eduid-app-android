@@ -44,8 +44,8 @@ object RequestEduIdLinkSent {
 object OAuth {
     private const val route = "oauth_mobile_eduid"
     const val withPhoneConfirmArg = "confirm_phone_arg"
-    const val routeWithPhone = "$route/true"
-    const val routeWithoutPhone = "$route/false"
+    const val routeForEnrollment = "$route/true"
+    const val routeForAuthentication = "$route/false"
     const val routeWithArgs = "$route/{$withPhoneConfirmArg}"
     val arguments = listOf(navArgument(withPhoneConfirmArg) {
         type = NavType.BoolType
@@ -56,7 +56,29 @@ object OAuth {
 
 sealed class PhoneNumberRecovery(val route: String) {
     object RequestCode : PhoneNumberRecovery("phone_number_recover")
-    object ConfirmCode : PhoneNumberRecovery("phone_number_confirm_code")
+    object ConfirmCode : PhoneNumberRecovery("phone_number_confirm_code") {
+        private const val phoneNumberArg = "phone_number_arg"
+
+        val routeWithArgs = "${route}/{$phoneNumberArg}"
+        val arguments = listOf(navArgument(phoneNumberArg) {
+            type = NavType.StringType
+            nullable = false
+            defaultValue = ""
+        })
+
+        fun routeWithPhoneNumber(phoneNumber: String) =
+            "${route}/${URLEncoder.encode(phoneNumber, Charsets.UTF_8.toString())}"
+
+        fun decodeFromEntry(entry: NavBackStackEntry): String {
+            val phoneNumberArg = entry.arguments?.getString(phoneNumberArg) ?: ""
+            return try {
+                URLDecoder.decode(phoneNumberArg, Charsets.UTF_8.name())
+            } catch (e: UnsupportedEncodingException) {
+                ""
+            }
+        }
+
+    }
 }
 
 sealed class ExistingAccount(val route: String) {

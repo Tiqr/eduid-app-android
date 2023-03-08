@@ -26,7 +26,6 @@ import timber.log.Timber
 
 @Composable
 fun RequestEduIdEmailSentScreen(
-    requestId: () -> Unit,
     onBackClicked: () -> Unit,
     userEmail: String,
 ) = ScaffoldWithTopBarBackButton(
@@ -142,6 +141,6 @@ fun RequestEduIdEmailSentScreen(
 @Composable
 private fun PreviewEnroll() {
     EduidAppAndroidTheme {
-        RequestEduIdEmailSentScreen({}, {}, "test@email.com")
+        RequestEduIdEmailSentScreen({}, "test@email.com")
     }
 }
