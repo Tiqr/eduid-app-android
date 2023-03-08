@@ -8,7 +8,6 @@ import androidx.lifecycle.LifecycleOwner
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import nl.eduid.screens.biometric.Biometricks
 
 @Composable
 fun rememberRequestIdState(
@@ -37,7 +36,6 @@ class RequestIdState(
     lifecycleOwner: LifecycleOwner,
 ) {
     var pinCode: String by mutableStateOf("")
-    var biometrics: Biometricks by mutableStateOf(Biometricks.NoneEnrolled)
     private var validationJob: Job? = null
 
 
