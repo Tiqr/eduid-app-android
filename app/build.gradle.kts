@@ -3,7 +3,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("kotlin-parcelize")
-    id("dagger.hilt.android.plugin")
+    id("com.google.dagger.hilt.android")
 }
 
 if (JavaVersion.current() < JavaVersion.VERSION_11) {
@@ -31,6 +31,7 @@ android {
     val gitCoreSha = "git submodule status".runCommand().substring(0, 8)
 
     defaultConfig {
+        manifestPlaceholders += mapOf()
         applicationId = "nl.eduid"
         versionCode = gitTagCount
         versionName = gitTag.trim().drop(1) + " core($gitCoreSha)"
@@ -49,9 +50,12 @@ android {
         manifestPlaceholders["tiqr_config_enroll_scheme"] = "eduidenroll"
         manifestPlaceholders["tiqr_config_auth_scheme"] = "eduidauth"
         manifestPlaceholders["tiqr_config_token_exchange_enabled"] = "false"
-
+        manifestPlaceholders["appAuthRedirectScheme"] = "login.test2.eduid"
         // only package supported languages
         resourceConfigurations += listOf("en", "nl")
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -69,11 +73,15 @@ android {
 
     buildFeatures {
         dataBinding = true
+        compose = true
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
     kapt {
@@ -84,12 +92,16 @@ android {
         }
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
-    }
-
     lint {
         abortOnError = false
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.0"
+    }
+    packagingOptions {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 }
 
@@ -99,7 +111,7 @@ dependencies {
         google()
         mavenCentral()
     }
-
+    implementation(platform("androidx.compose:compose-bom:2022.12.00"))
     implementation(project(":data"))
     implementation(project(":core"))
 
@@ -111,9 +123,23 @@ dependencies {
 
     implementation(libs.androidx.activity)
     implementation(libs.androidx.autofill)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.biometric)
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.runtime:runtime-livedata")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    implementation(libs.androidx.compose.activity)
+    implementation(libs.androidx.compose.navigation)
+    implementation(libs.androidx.compose.hilt.navigation)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.compose.constraint)
     implementation(libs.androidx.core)
     implementation(libs.androidx.concurrent)
+    implementation(libs.androidx.datastore)
     implementation(libs.androidx.lifecycle.common)
     implementation(libs.androidx.lifecycle.livedata)
     implementation(libs.androidx.localBroadcastManager)
@@ -124,6 +150,7 @@ dependencies {
     implementation(libs.google.android.material)
     implementation(libs.google.mlkit.barcode)
     implementation(libs.google.firebase.messaging)
+    implementation(libs.appauth)
 
     implementation(libs.dagger.hilt.android)
     implementation(libs.dagger.hilt.fragment)

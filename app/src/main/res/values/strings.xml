@@ -18,7 +18,7 @@
 
     <string name="enroll_pin_title">Choose a unique PIN for eduID</string>
 
-    <string name="account_id">eduID account id</string>
+    <string name="account_id" translatable="false">eduID account id</string>
 
     <string name="auth_pin_title">Enter your eduID PIN</string>
 
@@ -29,4 +29,97 @@
     <string name="error_auth_title_blocked">Authentication failed</string>
     <string name="error_auth_blocked">Try again in a moment.</string>
 
+    <!--Compose strings-->
+    <string name="title_activity_main">Alpha eduId</string>
+    <string name="splash_title">Personal account for Education and Research</string>
+    <string name="enroll_screen_title">Personal account for Education and Research</string>
+    <string name="enroll_screen_sign_in_button">Sign in</string>
+    <string name="enroll_screen_scan_button">Scan a QR code</string>
+    <string name="enroll_screen_request_id_button">I don\'t have an eduID</string>
+
+    <string name="request_id_screen_title">Don’t have an eduID yet?</string>
+    <string name="request_id_screen_header_text">eduID is a central account for users associated with Dutch education and research. It is yours and exists independent of an educational institution.</string>
+    <string name="request_id_screen_bullet_point_1">Use it to login to several services connected to SURFconext.</string>
+    <string name="request_id_screen_bullet_point_2">Users without an institution account can also request an eduID.</string>
+    <string name="request_id_screen_bullet_point_3">eduID is a lifelong account. It stays valid after you graduate.</string>
+    <string name="request_id_screen_create_id_button">Create a new eduID</string>
+
+    <string name="request_id_details_screen_title">Request your eduID</string>
+    <string name="request_id_details_screen_email_input_title">Your email address</string>
+    <string name="request_id_details_screen_email_input_hint">e.g. timbernerslee@gmail.com</string>
+    <string name="request_id_details_screen_first_name_input_title">First name</string>
+    <string name="request_id_details_screen_first_name_input_hint">e.g. Tim</string>
+    <string name="request_id_details_screen_last_name_input_title">Last name</string>
+    <string name="request_id_details_screen_last_name_input_hint">e.g. Berners-Lee</string>
+    <string name="request_id_details_screen_request_id_button">Request your eduID</string>
+
+    <string name="button_back">Back</string>
+    <string name="button_torch">Turn on flashlight</string>
+    <string name="confirmpin_mismatch">PIN doesn\'t match.</string>
+    <string name="button_scan">Scan</string>
+    <string name="biometric_failed_unknown">Biometrics failed for unknown reason.</string>
+    <string name="login_access_description">to access the eduID app</string>
+
+    <string name="tc_full_text">I agree with the terms of service. I also understand the privacy policy.</string>
+    <string name="tc_understand">"I also understand"</string>
+    <string name="tc_agree">"I agree with"</string>
+    <string name="tc_terms">the terms of service.</string>
+    <string name="tc_privacy_policy">the privacy policy</string>
+    <string name="edu_id_terms_link">https://eduid.nl/terms-of-use/</string>
+    <string name="edu_id_privacy_policy_link">https://eduid.nl/privacy_policy/</string>
+
+    <string name="request_id_link_title">Check your email</string>
+    <string name="request_id_link_header_text">To sign in, click the link in the email we sent to </string>
+    <string name="request_id_link_open_gmail">Open Gmail</string>
+    <string name="request_id_link_open_outlook">Open Outlook</string>
+    <string name="request_id_link_spam_text">Can’t find it? Check your spam folder.</string>
+
+    <string name="request_id_recovery_title">Add a recovery phone number</string>
+    <string name="request_id_recovery_text_code">If you can\'t access eduID with the app or via email, you can use this to sign in to your eduID Account.</string>
+    <string name="request_id_recovery_button">Verify this phone number</string>
+    <string name="request_id_recovery_input_hint">We will text you a code to verify your number.</string>
+
+    <string name="request_id_pin_title">Check your messages!</string>
+    <string name="request_id_pin_subtitle">Enter the six-digit code we sent to your phone to continue</string>
+    <string name="request_id_pin_button">Verify this phonenumber</string>
+
+    <string name="start_button">OK, got it!</string>
+    <string name="start_title">Welcome! Use this app to</string>
+    <string name="start_item_one_bold">Quickly login </string>
+    <string name="start_item_one_regular">to educational services</string>
+    <string name="start_item_two_bold">View</string>
+    <string name="start_item_two_regular">what details of your eduID get shared with those services</string>
+    <string name="start_item_three_bold">Verify your identity</string>
+    <string name="start_item_three_regular">so you can access more secure services.</string>
+
+    <string name="homepage_title_one">Your eduID app</string>
+    <string name="homepage_title_two">is ready for use</string>
+
+    <string name="personal_info_title">Your personal info</string>
+    <string name="personal_info_subtitle">When you use eduID to login to other websites, some of your personal information will be shared. Some websites require that your personal information is validated by a third party.</string>
+    <string name="personal_info_info_header">Shareable information</string>
+
+
+    <string name="scan_title" tools:ignore="ExtraTranslation">Scan the QR-code</string>
+    <string name="scan_registration_explaination" tools:ignore="ExtraTranslation">Don\'t see a QR code?</string>
+    <string name="scan_registration_explaination1a" tools:ignore="ExtraTranslation">1. Go to </string>
+    <string name="scan_registration_explaination1b" tools:ignore="ExtraTranslation">eduid.nl\/security</string>
+    <string name="scan_registration_explaination1c" tools:ignore="ExtraTranslation">on your desktop</string>
+    <string name="scan_registration_explaination2" tools:ignore="ExtraTranslation">2. Create your personal QR code</string>
+    <string name="scan_registration_explaination3" tools:ignore="ExtraTranslation">3. Scan it here.</string>
+    <string name="scan_permission_explanation" tools:ignore="ExtraTranslation">Please grant access to the camera.</string>
+
+    <string name="pinsetup_title" tools:ignore="ExtraTranslation">Select a PINcode</string>
+    <string name="pinsetup_description" tools:ignore="ExtraTranslation">To use the eduID app you need a PIN code.</string>
+    <string name="pinsetup_confirm_title" tools:ignore="ExtraTranslation">Repeat your PINcode</string>
+    <string name="pinsetup_confirm_description" tools:ignore="ExtraTranslation">Enter your PINcode again.</string>
+
+    <string name="oauth_title" tools:ignore="ExtraTranslation">Authorize app</string>
+    <string name="oauth_description" tools:ignore="ExtraTranslation">Allow the mobile application to access your data.</string>
+    <string name="oauth_processing" tools:ignore="ExtraTranslation">Processing…</string>
+
+    <string name="biometric_enable_title" tools:ignore="ExtraTranslation">Biometric approval</string>
+    <string name="biometric_enable_description" tools:ignore="ExtraTranslation">Do you want to use your biometrics to add an extra layer of security to your eduID?</string>
+    <string name="biometric_enable_allow" tools:ignore="ExtraTranslation">Set up biometric access</string>
+    <string name="biometric_enable_skip" tools:ignore="ExtraTranslation">Skip this</string>
 </resources>

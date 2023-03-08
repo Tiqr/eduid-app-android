@@ -29,42 +29,4 @@
 
 package nl.eduid
 
-import android.app.Application
-import androidx.lifecycle.ProcessLifecycleOwner
-import coil.Coil
-import coil.ImageLoader
-import dagger.hilt.android.HiltAndroidApp
-import okhttp3.OkHttpClient
-import org.tiqr.data.model.TiqrConfig
-import timber.log.Timber
-import javax.inject.Inject
-
-@HiltAndroidApp
-open class EduIdApplication : Application() {
-    @Inject
-    internal lateinit var imageOkHttpClient: OkHttpClient.Builder
-
-    @Inject
-    internal lateinit var appLifecycleObserver: ApplicationLifecycleObserver
-
-    override fun onCreate() {
-        super.onCreate()
-
-        TiqrConfig.initialize(this)
-        // Setup Timber
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-
-        }
-
-        Coil.setImageLoader(ImageLoader.Builder(context = this)
-            .crossfade(enable = true)
-            .okHttpClient {
-                imageOkHttpClient
-                    .build()
-            }
-            .build())
-
-        ProcessLifecycleOwner.get().lifecycle.addObserver(appLifecycleObserver)
-    }
-}
+class DebugEduIdApplication : EduIdApplication()
