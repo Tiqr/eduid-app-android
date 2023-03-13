@@ -21,8 +21,8 @@ import nl.eduid.ui.theme.TextBlack
 fun RequestEduIdStartScreen(
     requestId: () -> Unit,
     onBackClicked: () -> Unit,
-) = EduIdTopAppBar(onBackClicked = onBackClicked,
-    modifier = Modifier
+) = EduIdTopAppBar(
+    onBackClicked = onBackClicked,
 ) {
     ConstraintLayout(
         modifier = Modifier

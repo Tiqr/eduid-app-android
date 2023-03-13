@@ -26,7 +26,7 @@ fun RequestEduIdEmailSentScreen(
     onBackClicked: () -> Unit,
     userEmail: String,
 ) = EduIdTopAppBar(
-    onBackClicked = onBackClicked, modifier = Modifier
+    onBackClicked = onBackClicked
 ) {
 
     val context = LocalContext.current

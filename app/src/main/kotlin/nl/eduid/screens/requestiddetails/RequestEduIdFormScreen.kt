@@ -34,7 +34,7 @@ fun RequestEduIdFormScreen(
     onBackClicked: () -> Unit,
     viewModel: RequestEduIdFormViewModel,
 ) = EduIdTopAppBar(
-    onBackClicked = onBackClicked, modifier = Modifier
+    onBackClicked = onBackClicked
 ) {
     val inputFormData by viewModel.inputForm.observeAsState(InputForm())
     var processingRequest by rememberSaveable { mutableStateOf(false) }

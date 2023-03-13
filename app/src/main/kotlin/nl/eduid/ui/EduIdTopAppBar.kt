@@ -18,12 +18,11 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EduIdTopAppBar(
-    onBackClicked: () -> Unit,
-    modifier: Modifier = Modifier,
+    onBackClicked: () -> Unit = {},
     withBackIcon: Boolean = true,
     content: @Composable () -> Unit
 ) =
-    Scaffold(modifier = modifier.systemBarsPadding(), topBar = {
+    Scaffold(modifier = Modifier.systemBarsPadding(), topBar = {
         CenterAlignedTopAppBar(
             modifier = Modifier
                 .padding(top = 52.dp, bottom = 40.dp)
@@ -40,6 +39,7 @@ fun EduIdTopAppBar(
                     }
                 }
             },
+
             title = {
                 Image(
                     painter = painterResource(R.drawable.logo_eduid_big),
@@ -66,7 +66,7 @@ fun EduIdTopAppBar(
 private fun Preview_TopAppBarWithBackButton() {
     EduidAppAndroidTheme {
         EduIdTopAppBar(
-            { }, content = {}
-        )
+            onBackClicked = { }
+        ) {}
     }
 }

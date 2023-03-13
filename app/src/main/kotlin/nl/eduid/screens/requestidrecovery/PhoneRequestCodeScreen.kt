@@ -32,7 +32,7 @@ fun PhoneRequestCodeScreen(
     onBackClicked: () -> Unit,
     goToConfirmPhoneNumber: (phoneNumber: String) -> Unit,
 ) = EduIdTopAppBar(
-    onBackClicked = onBackClicked, modifier = Modifier
+    onBackClicked = onBackClicked
 ) {
     val uiState by viewModel.uiState.observeAsState(UiState())
     var canContinue by rememberSaveable { mutableStateOf(false) }
