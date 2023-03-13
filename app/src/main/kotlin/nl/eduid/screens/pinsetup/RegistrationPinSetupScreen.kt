@@ -10,7 +10,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
-import nl.eduid.ui.ScaffoldWithTopBarBackButton
+import nl.eduid.ui.EduIdTopAppBar
 import org.tiqr.data.model.Challenge
 
 @Composable
@@ -25,7 +25,7 @@ fun RegistrationPinSetupScreen(
     //we're using this dispatcher to ensure we can navigate back between the 2 stages correctly
     val dispatcher = LocalOnBackPressedDispatcherOwner.current!!.onBackPressedDispatcher
 
-    ScaffoldWithTopBarBackButton(
+    EduIdTopAppBar(
         onBackClicked = dispatcher::onBackPressed,
     ) {
         val context = LocalContext.current

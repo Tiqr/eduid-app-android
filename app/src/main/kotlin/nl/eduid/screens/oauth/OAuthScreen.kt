@@ -19,14 +19,14 @@ import androidx.compose.ui.unit.dp
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.PrimaryButton
-import nl.eduid.ui.ScaffoldWithTopBarBackButton
+import nl.eduid.ui.EduIdTopAppBar
 
 @Composable
 fun OAuthScreen(
     viewModel: OAuthViewModel,
     continueWith: () -> Unit,
     onBackPressed: () -> Unit,
-) = ScaffoldWithTopBarBackButton(
+) = EduIdTopAppBar(
     onBackClicked = onBackPressed,
 ) {
     val uiState by viewModel.uiState.observeAsState(UiState(OAuthStep.Loading))

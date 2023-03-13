@@ -25,7 +25,7 @@ import nl.eduid.R
 import nl.eduid.screens.requestidrecovery.UiState
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.PrimaryButton
-import nl.eduid.ui.ScaffoldWithTopBarBackButton
+import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -34,7 +34,7 @@ fun ConfirmCodeScreen(
     phoneNumber: String,
     goToStartScreen: () -> Unit,
     goBack: () -> Unit,
-) = ScaffoldWithTopBarBackButton(
+) = EduIdTopAppBar(
     onBackClicked = goBack
 ) {
     val uiState by viewModel.uiState.observeAsState(UiState())

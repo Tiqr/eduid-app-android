@@ -23,7 +23,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.PrimaryButton
-import nl.eduid.ui.ScaffoldWithTopBarBackButton
+import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -31,7 +31,7 @@ fun PhoneRequestCodeScreen(
     viewModel: PhoneRequestCodeViewModel,
     onBackClicked: () -> Unit,
     goToConfirmPhoneNumber: (phoneNumber: String) -> Unit,
-) = ScaffoldWithTopBarBackButton(
+) = EduIdTopAppBar(
     onBackClicked = onBackClicked, modifier = Modifier
 ) {
     val uiState by viewModel.uiState.observeAsState(UiState())

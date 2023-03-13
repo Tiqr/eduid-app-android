@@ -13,7 +13,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import nl.eduid.R
 import nl.eduid.ui.BulletPoint
 import nl.eduid.ui.PrimaryButton
-import nl.eduid.ui.ScaffoldWithTopBarBackButton
+import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextBlack
 
@@ -21,7 +21,7 @@ import nl.eduid.ui.theme.TextBlack
 fun RequestEduIdStartScreen(
     requestId: () -> Unit,
     onBackClicked: () -> Unit,
-) = ScaffoldWithTopBarBackButton(onBackClicked = onBackClicked,
+) = EduIdTopAppBar(onBackClicked = onBackClicked,
     modifier = Modifier
 ) {
     ConstraintLayout(
