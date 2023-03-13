@@ -8,9 +8,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
+import nl.eduid.screens.accountlinked.AccountLinkedScreen
 import nl.eduid.screens.biometric.EnableBiometricScreen
 import nl.eduid.screens.biometric.EnableBiometricViewModel
 import nl.eduid.screens.created.RequestEduIdCreatedScreen
+import nl.eduid.screens.firsttimedialog.LinkAccountViewModel
 import nl.eduid.screens.firsttimedialog.FirstTimeDialogScreen
 import nl.eduid.screens.homepage.HomePageScreen
 import nl.eduid.screens.homepage.HomePageViewModel
@@ -36,9 +38,8 @@ import nl.eduid.screens.start.StartScreen
 fun MainGraph(
     navController: NavHostController,
     homePageViewModel: HomePageViewModel,
-    startDestination: String = Graph.HOME_PAGE
 ) = NavHost(
-    navController = navController, route = Graph.MAIN, startDestination = startDestination
+    navController = navController, route = Graph.MAIN, startDestination = Graph.HOME_PAGE
 ) {
 
     composable(Graph.HOME_PAGE) {
@@ -48,8 +49,7 @@ fun MainGraph(
             onPersonalInfoClicked = { navController.navigate(Graph.PERSONAL_INFO) },
             onSecurityClicked = {},
             onEnrollWithQR = { navController.navigate(ExistingAccount.EnrollWithQR.route) },
-            launchOAuth = { navController.navigate(OAuth.routeForAuthentication) }
-        ) {
+            launchOAuth = { navController.navigate(OAuth.routeForAuthentication) }) {
             navController.navigate(
                 Graph.REQUEST_EDU_ID_ACCOUNT
             )
@@ -101,10 +101,8 @@ fun MainGraph(
         val viewModel = hiltViewModel<EnableBiometricViewModel>(entry)
         val isEnroll = entry.arguments?.getBoolean(WithChallenge.isEnrolmentArg, true) ?: true
         val authRoute = if (isEnroll) OAuth.routeForEnrollment else OAuth.routeForAuthentication
-        EnableBiometricScreen(
-            viewModel = viewModel,
-            goToOauth = { navController.goToWithPopCurrent(destination = authRoute) }
-        ) { navController.popBackStack() }
+        EnableBiometricScreen(viewModel = viewModel,
+            goToOauth = { navController.goToWithPopCurrent(destination = authRoute) }) { navController.popBackStack() }
     }
     composable(route = OAuth.routeWithArgs, arguments = OAuth.arguments) { entry ->
         val viewModel = hiltViewModel<OAuthViewModel>(entry)
@@ -140,8 +138,7 @@ fun MainGraph(
         )
     }
     composable(
-        route = RequestEduIdCreated.routeWithArgs,
-        deepLinks = listOf(navDeepLink {
+        route = RequestEduIdCreated.routeWithArgs, deepLinks = listOf(navDeepLink {
             uriPattern = RequestEduIdCreated.uriPattern
         })
     ) { entry ->
@@ -170,18 +167,25 @@ fun MainGraph(
         val viewModel = hiltViewModel<ConfirmCodeViewModel>(entry)
         ConfirmCodeScreen(viewModel = viewModel,
             phoneNumber = PhoneNumberRecovery.ConfirmCode.decodeFromEntry(entry),
-            goToStartScreen = { navController.navigate(Graph.START) }
-        ) { navController.popBackStack() }
+            goToStartScreen = {
+                navController.navigate(Graph.START) {
+                    //Flow for phone number recovery completed, remove from stack entirely
+                    popUpTo(PhoneNumberRecovery.RequestCode.route) { inclusive = true }
+                }
+            }) { navController.popBackStack() }
     }
 
     composable(Graph.START) {
         StartScreen(
-            onNext = { navController.navigate(Graph.FIRST_TIME_DIALOG) },
+            onNext = { navController.goToWithPopCurrent(Graph.FIRST_TIME_DIALOG) },
         )
     }
 
-    composable(Graph.FIRST_TIME_DIALOG) {
-        FirstTimeDialogScreen()
+    composable(Graph.FIRST_TIME_DIALOG) { entry ->
+        val viewModel = hiltViewModel<LinkAccountViewModel>(entry)
+        FirstTimeDialogScreen(viewModel = viewModel,
+            goToAccountLinked = { navController.goToWithPopCurrent(AccountLinked.route) },
+            skipThis = { navController.goToWithPopCurrent(Graph.HOME_PAGE) })
     }
 
     composable(Graph.PERSONAL_INFO) {
@@ -193,6 +197,16 @@ fun MainGraph(
             onRoleClicked = { },
             onInstitutionClicked = { },
             goBack = { navController.popBackStack() },
+        )
+    }
+    composable(
+        route = AccountLinked.route,
+        deepLinks = listOf(navDeepLink { uriPattern = AccountLinked.uriPattern })
+    ) {
+        val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
+        AccountLinkedScreen(
+            viewModel = viewModel,
+            continueToHome = { navController.goToWithPopCurrent(Graph.HOME_PAGE) },
         )
     }
 }

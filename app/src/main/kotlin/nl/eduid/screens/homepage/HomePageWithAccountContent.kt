@@ -20,10 +20,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithTwoButton
 import nl.eduid.ui.PrimaryButtonWithIcon
-import nl.eduid.ui.theme.ButtonGreen
-import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.SplashScreenBackgroundColor
-import nl.eduid.ui.theme.TextBlack
+import nl.eduid.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -75,7 +72,7 @@ fun HomePageWithAccountContent(
         Text(
             style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
             text = buildAnnotatedString {
-                withStyle(style = SpanStyle(color = ButtonGreen)) {
+                withStyle(style = SpanStyle(color = TextGreen)) {
                     append(stringResource(R.string.homepage_title_one))
                 }
                 append("\n")

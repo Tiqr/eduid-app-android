@@ -56,7 +56,23 @@
     <string name="request_id_created_title">Your eduID has been created!</string>
     <string name="request_id_created_description">To safely use this app, we need you to set a pincode and provide a phone number in case you might forget it.</string>
 
+    <string name="first_time_title">Are you studying in NL?</string>
+    <string name="first_time_subtitle">Connect your institution!</string>
+    <string name="first_time_description01">When you study in the Netherlands</string>
+    <string name="first_time_description02">and you want to use eduID to logon to an educational service, we need to be sure it\'s you and not someone impersonating you.</string>
+    <string name="first_time_description03">You must therefore add the following information to your eduID:</string>
+    <string name="first_time_required">&#x2022; Validation of your full name by a third party\n&#x2022; Proof of being a student\n&#x2022; Your current institution</string>
+    <string name="first_time_footer01">Add this information</string>
+    <string name="first_time_footer02">by connecting your school/institution via SURFconext.</string>
+    <string name="first_time_button_connect">Connect your school/institution</string>
+    <string name="first_time_button_skip">Skip this</string>
+
+    <string name="account_linked_title">Your school/uni</string>
+    <string name="account_linked_subtitle">was contacted successfully</string>
+    <string name="account_linked_description">The following information has been added to your eduID and can now be shared.</string>
+
     <string name="button_back">Back</string>
+    <string name="button_continue">Continue</string>
     <string name="button_torch">Turn on flashlight</string>
     <string name="confirmpin_mismatch">PIN doesn\'t match.</string>
     <string name="button_scan">Scan</string>
@@ -100,7 +116,6 @@
     <string name="personal_info_title">Your personal info</string>
     <string name="personal_info_subtitle">When you use eduID to login to other websites, some of your personal information will be shared. Some websites require that your personal information is validated by a third party.</string>
     <string name="personal_info_info_header">Shareable information</string>
-
 
     <string name="scan_title" tools:ignore="ExtraTranslation">Scan the QR-code</string>
     <string name="scan_registration_explaination" tools:ignore="ExtraTranslation">Don\'t see a QR code?</string>

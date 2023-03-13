@@ -68,6 +68,7 @@ val md_theme_dark_scrim = Color(0xFF000000)
 val seed = Color(0xFF0062B0)
 
 val ButtonGreen = Color(0xFF008939)
+val TextGreen = Color(0xFF008738)
 val TextBlack = Color(0xFF050E1D)
 val SplashScreenBackgroundColor = Color(0xFF0062B0)
 val ButtonTextGrey = Color(0xFF5E6873)

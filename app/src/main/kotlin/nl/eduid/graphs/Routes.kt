@@ -29,6 +29,12 @@ object RequestEduIdCreated {
         entry.arguments?.getBoolean(isCreatedArg) ?: false
 }
 
+object AccountLinked {
+    const val route = "account_linked"
+    val uriPattern = "https://mijn.test2.eduid.nl/myconext/api/sp/oidc/redirect"
+
+}
+
 object RequestEduIdLinkSent {
     private const val route = "request_edu_id_link_sent"
     const val emailArg = "email_arg"

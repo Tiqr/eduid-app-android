@@ -26,6 +26,13 @@ data class ConfirmPhoneCode(
 ) : Parcelable
 
 
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class UrlResponse(
+    val url: String,
+) : Parcelable
+
+
 const val CREATE_EMAIL_SENT = 201
 const val FAIL_EMAIL_IN_USE = 409
 const val EMAIL_DOMAIN_FORBIDDEN = 412

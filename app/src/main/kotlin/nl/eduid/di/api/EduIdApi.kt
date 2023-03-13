@@ -1,9 +1,6 @@
 package nl.eduid.di.api
 
-import nl.eduid.di.model.ConfirmPhoneCode
-import nl.eduid.di.model.RequestEduIdAccount
-import nl.eduid.di.model.RequestPhoneCode
-import nl.eduid.di.model.UserDetails
+import nl.eduid.di.model.*
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -26,4 +23,7 @@ interface EduIdApi {
 
     @GET("mobile/api/sp/me")
     suspend fun getUserDetails(): Response<UserDetails>
+
+    @GET("/mobile/api/sp/oidc/link")
+    suspend fun getStartLinkAccount(): Response<UrlResponse>
 }
