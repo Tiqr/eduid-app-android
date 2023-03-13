@@ -10,6 +10,7 @@ data class RequestEduIdAccount(
     val email: String,
     val givenName: String,
     val familyName: String,
+    val relyingPartClientId: String,
 ) : Parcelable
 
 @Parcelize

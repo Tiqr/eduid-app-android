@@ -3,6 +3,7 @@ package nl.eduid.graphs
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import nl.eduid.BuildConfig
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 import java.net.URLEncoder
@@ -16,6 +17,16 @@ object Graph {
     const val START = "start"
     const val FIRST_TIME_DIALOG = "first_time_dialog"
     const val PERSONAL_INFO = "personal_info"
+}
+
+object RequestEduIdCreated {
+    private const val route = "request_edu_id_created"
+    private const val isCreatedArg = "isCreated"
+    const val routeWithArgs = "${route}/{${isCreatedArg}}"
+    val uriPattern = "${BuildConfig.ENV_HOST}/client/mobile/created?new={$isCreatedArg}"
+
+    fun decodeFromEntry(entry: NavBackStackEntry): Boolean =
+        entry.arguments?.getBoolean(isCreatedArg) ?: false
 }
 
 object RequestEduIdLinkSent {

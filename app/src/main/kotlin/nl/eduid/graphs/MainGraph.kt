@@ -7,8 +7,10 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
 import nl.eduid.screens.biometric.EnableBiometricScreen
 import nl.eduid.screens.biometric.EnableBiometricViewModel
+import nl.eduid.screens.created.RequestEduIdCreatedScreen
 import nl.eduid.screens.firsttimedialog.FirstTimeDialogScreen
 import nl.eduid.screens.homepage.HomePageScreen
 import nl.eduid.screens.homepage.HomePageViewModel
@@ -31,8 +33,12 @@ import nl.eduid.screens.scan.StatelessScanViewModel
 import nl.eduid.screens.start.StartScreen
 
 @Composable
-fun MainGraph(navController: NavHostController, homePageViewModel: HomePageViewModel) = NavHost(
-    navController = navController, route = Graph.MAIN, startDestination = Graph.HOME_PAGE
+fun MainGraph(
+    navController: NavHostController,
+    homePageViewModel: HomePageViewModel,
+    startDestination: String = Graph.HOME_PAGE
+) = NavHost(
+    navController = navController, route = Graph.MAIN, startDestination = startDestination
 ) {
 
     composable(Graph.HOME_PAGE) {
@@ -132,6 +138,15 @@ fun MainGraph(navController: NavHostController, homePageViewModel: HomePageViewM
             onBackClicked = { navController.popBackStack() },
             userEmail = RequestEduIdLinkSent.decodeFromEntry(entry)
         )
+    }
+    composable(
+        route = RequestEduIdCreated.routeWithArgs,
+        deepLinks = listOf(navDeepLink {
+            uriPattern = RequestEduIdCreated.uriPattern
+        })
+    ) { entry ->
+        val isCreated = RequestEduIdCreated.decodeFromEntry(entry)
+        RequestEduIdCreatedScreen(isCreated) { navController.popBackStack() }
     }
 
     composable(

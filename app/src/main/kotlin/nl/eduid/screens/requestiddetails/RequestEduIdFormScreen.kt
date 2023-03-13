@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -24,7 +25,7 @@ import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.CheckToSAndPrivacyPolicy
 import nl.eduid.ui.PrimaryButton
-import nl.eduid.ui.ScaffoldWithTopBarBackButton
+import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -32,12 +33,12 @@ fun RequestEduIdFormScreen(
     goToEmailLinkSent: (emailAddress: String) -> Unit,
     onBackClicked: () -> Unit,
     viewModel: RequestEduIdFormViewModel,
-) = ScaffoldWithTopBarBackButton(
+) = EduIdTopAppBar(
     onBackClicked = onBackClicked, modifier = Modifier
 ) {
     val inputFormData by viewModel.inputForm.observeAsState(InputForm())
     var processingRequest by rememberSaveable { mutableStateOf(false) }
-
+    val context = LocalContext.current
     if (inputFormData.errorData != null) {
         AlertDialogWithSingleButton(
             title = inputFormData.errorData!!.title,
@@ -60,7 +61,7 @@ fun RequestEduIdFormScreen(
         onAcceptToC = { viewModel.onTermsAccepted(it) },
         onRequestEduIdAccount = {
             processingRequest = true
-            viewModel.requestNewEduIdAccount()
+            viewModel.requestNewEduIdAccount(context)
         })
 }
 

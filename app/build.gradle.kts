@@ -50,7 +50,7 @@ android {
         manifestPlaceholders["tiqr_config_enroll_scheme"] = "eduidenroll"
         manifestPlaceholders["tiqr_config_auth_scheme"] = "eduidauth"
         manifestPlaceholders["tiqr_config_token_exchange_enabled"] = "false"
-        manifestPlaceholders["appAuthRedirectScheme"] = "login.test2.eduid"
+        manifestPlaceholders["appAuthRedirectScheme"] = "login.test2.eduid.nl"
         // only package supported languages
         resourceConfigurations += listOf("en", "nl")
         vectorDrawables {
@@ -63,11 +63,15 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            buildConfigField("String", "ENV_HOST", "\"https://login.test2.eduid.nl\"")
+            buildConfigField("String", "CLIENT_ID", "\"\"")
         }
 
         getByName("debug") {
             applicationIdSuffix = ".testing"
-            versionNameSuffix = " DEBUG"            
+            versionNameSuffix = " DEBUG"
+            buildConfigField("String", "ENV_HOST", "\"https://login.test2.eduid.nl\"")
+            buildConfigField("String", "CLIENT_ID", "\"dev.egeniq.nl\"")
         }
     }
 
