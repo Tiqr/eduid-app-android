@@ -116,7 +116,7 @@ fun HomePageWithAccountContent(
                 ) {
                     PrimaryButtonWithIcon(
                         text = stringResource(R.string.home_with_account_scan), onClick = {
-                            promptAuthorization()
+                            onScanForAuthorization()
                         }, icon = R.drawable.homepage_scan_icon
                     )
                     PrimaryButtonWithIcon(
