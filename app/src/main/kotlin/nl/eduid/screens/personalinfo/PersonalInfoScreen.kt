@@ -140,7 +140,8 @@ fun PersonalInfoScreenContent(
                     InfoTab(
                         header = "Role & institution",
                         title = it.role,
-                        subtitle = it.institution,
+                        subtitle = "At ${it.institution}",
+                        institutionInfo = it,
                         onClick = { },
                         endIcon = R.drawable.chevron_down,
                     )
