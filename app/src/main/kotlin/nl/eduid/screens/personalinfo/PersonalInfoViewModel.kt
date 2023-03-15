@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import nl.eduid.BuildConfig
 import nl.eduid.di.model.UserDetails
 import javax.inject.Inject
 
@@ -36,11 +35,15 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
         val emailProvider = "You"
         val email: String = userDetails.email
 
-        val institutionAccounts = linkedAccounts.mapNotNull {
-            it.eduPersonAffiliations.firstOrNull()?.let {affiliation ->
+        val institutionAccounts = linkedAccounts.mapNotNull {account ->
+            account.eduPersonAffiliations.firstOrNull()?.let {affiliation ->
                 PersonalInfo.Companion.InstitutionAccount(
                     role = affiliation.substring(0,affiliation.indexOf("@")),
-                    institution = affiliation.substring(affiliation.indexOf("@")+1, affiliation.length)
+                    roleProvider = affiliation.substring(affiliation.indexOf("@")+1, affiliation.length),
+                    institution = affiliation.substring(affiliation.indexOf("@")+1, affiliation.length),
+                    affiliationString = affiliation,
+                    createdStamp = account.createdAt,
+                    expiryStamp = account.expiresAt,
                 )
             }
         }
