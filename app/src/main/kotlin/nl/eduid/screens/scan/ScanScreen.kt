@@ -29,8 +29,7 @@ import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithTwoButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import org.tiqr.core.scan.ScanComponent
-import org.tiqr.data.model.AuthenticationChallenge
-import org.tiqr.data.model.EnrollmentChallenge
+import org.tiqr.data.model.Challenge
 import androidx.camera.core.Preview as CameraPreview
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,13 +38,11 @@ fun ScanScreen(
     viewModel: StatelessScanViewModel,
     isRegistration: Boolean,
     goBack: () -> Unit,
-    goToRegistrationPinSetup: (EnrollmentChallenge) -> Unit,
-    goToAuthentication: (AuthenticationChallenge) -> Unit,
+    goToNext: (Challenge) -> Unit,
     state: ScanState = rememberScanState(
         viewModel = viewModel,
         goBack = goBack,
-        goToEnroll = goToRegistrationPinSetup,
-        goToAuthentication = goToAuthentication,
+        goToNext = goToNext,
     )
 ) = Scaffold(
     modifier = Modifier

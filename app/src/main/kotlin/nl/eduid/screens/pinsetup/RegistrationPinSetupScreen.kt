@@ -7,10 +7,12 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
-import nl.eduid.ui.ScaffoldWithTopBarBackButton
+import nl.eduid.ui.EduIdTopAppBar
+import nl.eduid.ui.theme.findActivity
 import org.tiqr.data.model.Challenge
 
 @Composable
@@ -25,11 +27,11 @@ fun RegistrationPinSetupScreen(
     //we're using this dispatcher to ensure we can navigate back between the 2 stages correctly
     val dispatcher = LocalOnBackPressedDispatcherOwner.current!!.onBackPressedDispatcher
 
-    ScaffoldWithTopBarBackButton(
+    EduIdTopAppBar(
         onBackClicked = dispatcher::onBackPressed,
     ) {
         val context = LocalContext.current
-        val uiState by viewModel.uiState.observeAsState(initial = RegistrationPinUiState())
+        val uiState by viewModel.uiState.observeAsState(initial = UiState())
         var validationInProgress by rememberSaveable { mutableStateOf(false) }
 
         if (validationInProgress && uiState.promptBiometric != null) {

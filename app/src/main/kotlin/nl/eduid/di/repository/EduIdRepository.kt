@@ -1,8 +1,8 @@
 package nl.eduid.di.repository
 
 import nl.eduid.di.api.EduIdApi
-import nl.eduid.di.model.RequestNewIdRequest
-import java.util.UUID
+import nl.eduid.di.model.RequestEduIdAccount
+import timber.log.Timber
 
 /**
  * Repository to handle enrollment challenges.
@@ -10,9 +10,11 @@ import java.util.UUID
 class EduIdRepository(
     val api: EduIdApi,
 ) {
-    suspend fun requestEnroll(uuid: UUID) {
-        api.requestNewEduId(RequestNewIdRequest(RequestNewIdRequest.User(email = "email44@email.com", givenName = "Tester", familyName = "Testerson"), authenticationRequestId = uuid.toString())).run {
-
-        }
+    suspend fun requestEnroll(request: RequestEduIdAccount): Int = try {
+        val response = api.createNewEduIdAccount(request)
+        response.code()
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to create new edu id accout")
+        418
     }
 }

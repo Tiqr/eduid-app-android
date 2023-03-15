@@ -12,8 +12,12 @@ data class PersonalInfo(
     companion object {
         data class InstitutionAccount(
             val role: String,
+            val roleProvider: String,
             val institution: String,
-            val status: InfoStatus = InfoStatus.Final
+            val affiliationString: String,
+            val status: InfoStatus = InfoStatus.Final,
+            val createdStamp: Long,
+            val expiryStamp: Long,
         )
         fun demoData(): PersonalInfo {
             return PersonalInfo(

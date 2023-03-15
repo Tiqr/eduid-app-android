@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import nl.eduid.R
 import nl.eduid.ui.PrimaryButton
-import nl.eduid.ui.ScaffoldWithTopBarBackButton
+import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.SecondaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
@@ -34,7 +34,7 @@ fun EnableBiometricScreen(
     }
     //If & when the user navigates back from this screen, we'll treat it as a Skip This action.
     val dispatcher = LocalOnBackPressedDispatcherOwner.current!!.onBackPressedDispatcher
-    ScaffoldWithTopBarBackButton(
+    EduIdTopAppBar(
         onBackClicked = dispatcher::onBackPressed,
     ) {
         EnableBiometricContent(

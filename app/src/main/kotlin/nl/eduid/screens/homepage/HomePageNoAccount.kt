@@ -98,7 +98,7 @@ fun HomePageNoAccountContent(
                 onClick = {
                     val intent = Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse("https://mijn.test2.eduid.nl/")
+                        Uri.parse("https://mijn.test2.eduid.nl/enroll-app/")
                     )
                     context.startActivity(intent)
                 },

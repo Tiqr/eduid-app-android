@@ -1,7 +1,6 @@
 package nl.eduid.di.api
 
-import nl.eduid.di.model.RequestNewIdRequest
-import nl.eduid.di.model.UserDetails
+import nl.eduid.di.model.*
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -9,9 +8,25 @@ import retrofit2.http.*
  * Retrofit API endpoints.
  */
 interface EduIdApi {
-    @POST("myconext/api/idp/magic_link_request/")
-    suspend fun requestNewEduId(@Body request: RequestNewIdRequest): Response<String>
+
+    @POST("/mobile/api/idp/create")
+    suspend fun createNewEduIdAccount(@Body request: RequestEduIdAccount): Response<Unit>
+
+    @POST("/mobile/tiqr/sp/send-phone-code")
+    suspend fun requestPhoneCode(@Body request: RequestPhoneCode): Response<Unit>
+
+    @POST("/mobile/tiqr/sp/verify-phone-code")
+    suspend fun confirmPhoneCode(@Body request: ConfirmPhoneCode): Response<Unit>
+
+    @POST("/mobile/tiqr/sp/re-send-phone-code")
+    suspend fun retryRequestPhoneCode(@Body request: RequestEduIdAccount): Response<Unit>
 
     @GET("mobile/api/sp/me")
     suspend fun getUserDetails(): Response<UserDetails>
+
+    @GET("/mobile/api/sp/oidc/link")
+    suspend fun getStartLinkAccount(): Response<UrlResponse>
+
+    @GET("/mobile/tiqr/sp/start-enrollment")
+    suspend fun startEnrollment(): Response<EnrollResponse>
 }

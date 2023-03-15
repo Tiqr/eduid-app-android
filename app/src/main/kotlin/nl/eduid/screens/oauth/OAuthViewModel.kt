@@ -194,9 +194,9 @@ class OAuthViewModel @Inject constructor(
         recreateAuthorizationService(context)
 
         val currentAuthState = repository.authState.first()
-        if (currentAuthState != null) {
+        if (currentAuthState?.authorizationServiceConfiguration != null) {
             // configuration is already created, skip to client initialization
-            Timber.d("auth config already established")
+            Timber.d("authorization service configuration already established")
             initializeClient()
             return
         }

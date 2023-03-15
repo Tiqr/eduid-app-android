@@ -23,6 +23,47 @@
                 <action android:name="authorize_response" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
+            <!--            This should be the real intent filter for the account created redirect-->
+            <!--            <intent-filter android:autoVerify="true">-->
+            <!--                <action android:name="android.intent.action.VIEW" />-->
+
+            <!--                <category android:name="android.intent.category.DEFAULT" />-->
+            <!--                <category android:name="android.intent.category.BROWSABLE" />-->
+
+            <!--                <data-->
+            <!--                    android:host="${appAuthRedirectScheme}"-->
+            <!--                    android:path="/client/mobile/created"-->
+            <!--                    android:scheme="https" />-->
+
+            <!--            </intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:path="/client/mobile/created"
+                    android:scheme="eduid" />
+
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <!--Duplicating this link so enrollment can happen via link/notification for the compose screens as well-->
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="eduid.nl"
+                    android:scheme="https" />
+                <data android:path="/tiqrenroll" />
+                <data android:path="/tiqrenroll/" />
+                <data android:path="/tiqrauth" />
+                <data android:path="/tiqrauth/" />
+            </intent-filter>
         </activity>
         <activity
             android:name="net.openid.appauth.RedirectUriReceiverActivity"
@@ -34,23 +75,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="login.test2.eduid.nl"
-                    android:path="/myconext/api/mobile/swagger-ui/oauth2-redirect.html"
-                    android:scheme="http" />
-                <data
-                    android:host="login.test2.eduid.nl"
-                    android:path="/myconext/api/mobile/swagger-ui/oauth2-redirect.html"
-                    android:scheme="https" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:path="/logout"
-                    android:scheme="${applicationId}" />
+                    android:host="client"
+                    android:path="/mobile/oauth-redirect"
+                    android:scheme="eduid" />
             </intent-filter>
         </activity>
         <activity

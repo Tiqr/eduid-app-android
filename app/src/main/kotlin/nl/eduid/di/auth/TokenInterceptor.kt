@@ -9,7 +9,7 @@ class TokenInterceptor @Inject constructor(private val tokenProvider: TokenProvi
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         return if (request.header("Authorization") == null) {
-            Timber.e("0 - Request requires authorization")
+            Timber.e("0 - Request does not have an Authorization header.")
             val token = tokenProvider.getToken()
             if (token != null) {
                 Timber.e("1 - Have a non-null token. Adding authorization headers")
@@ -21,7 +21,7 @@ class TokenInterceptor @Inject constructor(private val tokenProvider: TokenProvi
                 chain.proceed(request)
             }
         } else {
-            Timber.e("1 - Request does not require authorization header")
+            Timber.e("1 - Request does not have an authorization header")
             chain.proceed(request)
         }
     }

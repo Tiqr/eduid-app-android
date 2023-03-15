@@ -8,6 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import nl.eduid.BuildConfig
 import nl.eduid.di.EduIdScope
 import nl.eduid.di.api.EduIdApi
 import nl.eduid.di.assist.AuthenticationAssistant
@@ -17,9 +18,9 @@ import nl.eduid.di.auth.TokenProvider
 import nl.eduid.di.repository.EduIdRepository
 import nl.eduid.di.repository.StorageRepository
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
+import nl.eduid.screens.requestidrecovery.RecoveryRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.tiqr.data.BuildConfig
 import org.tiqr.data.api.response.ApiResponseAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -39,7 +40,6 @@ internal object RepositoryModule {
     internal fun provideEduApi(@EduIdScope retrofit: Retrofit): EduIdApi =
         retrofit.create(EduIdApi::class.java)
 
-
     @Provides
     @Singleton
     internal fun providesEduIdRepository(
@@ -51,6 +51,12 @@ internal object RepositoryModule {
     internal fun providesPersonalInfoRepository(
         api: EduIdApi,
     ) = PersonalInfoRepository(api)
+
+    @Provides
+    @Singleton
+    internal fun providesRecoveryRepository(
+        api: EduIdApi,
+    ) = RecoveryRepository(api)
 
     @Provides
     @Singleton
@@ -99,7 +105,7 @@ internal object RepositoryModule {
             .addCallAdapterFactory(ApiResponseAdapterFactory.create())
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl("https://login.test2.eduid.nl/").build()
+            .baseUrl(BuildConfig.ENV_HOST).build()
     }
 
     @Provides
