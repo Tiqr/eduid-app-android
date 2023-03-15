@@ -109,7 +109,7 @@ fun EduidAppAndroidTheme(
     )
 }
 
-private tailrec fun Context.findActivity(): Activity = when (this) {
+tailrec fun Context.findActivity(): Activity = when (this) {
     is Activity -> this
     is ContextWrapper -> this.baseContext.findActivity()
     else -> throw IllegalArgumentException("Could not find activity!")

@@ -1,5 +1,7 @@
 package nl.eduid.graphs
 
+import android.content.Intent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -12,6 +14,8 @@ import nl.eduid.screens.accountlinked.AccountLinkedScreen
 import nl.eduid.screens.biometric.EnableBiometricScreen
 import nl.eduid.screens.biometric.EnableBiometricViewModel
 import nl.eduid.screens.created.RequestEduIdCreatedScreen
+import nl.eduid.screens.deeplinks.DeepLinkScreen
+import nl.eduid.screens.deeplinks.DeepLinkViewModel
 import nl.eduid.screens.firsttimedialog.LinkAccountViewModel
 import nl.eduid.screens.firsttimedialog.FirstTimeDialogScreen
 import nl.eduid.screens.homepage.HomePageScreen
@@ -33,49 +37,56 @@ import nl.eduid.screens.requestidstart.RequestEduIdStartScreen
 import nl.eduid.screens.scan.ScanScreen
 import nl.eduid.screens.scan.StatelessScanViewModel
 import nl.eduid.screens.start.StartScreen
+import org.tiqr.data.model.EnrollmentChallenge
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainGraph(
     navController: NavHostController,
     homePageViewModel: HomePageViewModel,
 ) = NavHost(
-    navController = navController, route = Graph.MAIN, startDestination = Graph.HOME_PAGE
+    navController = navController, startDestination = Graph.HOME_PAGE
 ) {
 
+    //region HomePage
     composable(Graph.HOME_PAGE) {
         HomePageScreen(viewModel = homePageViewModel,
             onScanForAuthorization = { /*QR authorization for 3rd party*/ },
             onActivityClicked = { },
             onPersonalInfoClicked = { navController.navigate(Graph.PERSONAL_INFO) },
             onSecurityClicked = {},
-            onEnrollWithQR = { navController.navigate(ExistingAccount.EnrollWithQR.route) },
-            launchOAuth = { navController.navigate(OAuth.routeForAuthentication) }) {
+            onEnrollWithQR = { navController.navigate(Account.ScanQR.route) },
+            launchOAuth = { navController.navigate(OAuth.routeForAuthorization) }) {
             navController.navigate(
                 Graph.REQUEST_EDU_ID_ACCOUNT
             )
         }
     }
-
-    composable(ExistingAccount.EnrollWithQR.route) {
+    //endregion
+    //region Scan
+    composable(Account.ScanQR.route) {
         val viewModel = hiltViewModel<StatelessScanViewModel>(it)
         ScanScreen(viewModel = viewModel,
             isRegistration = true,
             goBack = { navController.popBackStack() },
-            goToRegistrationPinSetup = { challenge ->
-                navController.navigate(
-                    "${ExistingAccount.RegistrationPinSetup.route}/${
-                        viewModel.encodeChallenge(
-                            challenge
-                        )
-                    }"
-                )
-            },
-            goToAuthentication = {})
+            goToNext = { challenge ->
+                val encodedChallenge = viewModel.encodeChallenge(challenge)
+                if (challenge is EnrollmentChallenge) {
+                    navController.goToWithPopCurrent(
+                        "${Account.EnrollPinSetup.route}/$encodedChallenge"
+                    )
+                } else {
+                    navController.goToWithPopCurrent(
+                        "${Account.Authorize.route}/$encodedChallenge"
+                    )
+                }
+            })
     }
-
+    //endregion
+    //region PinSetup
     composable(
-        route = ExistingAccount.RegistrationPinSetup.routeWithArgs,
-        arguments = ExistingAccount.RegistrationPinSetup.arguments
+        route = Account.EnrollPinSetup.routeWithArgs,
+        arguments = Account.EnrollPinSetup.arguments,
     ) { entry ->
         val viewModel = hiltViewModel<RegistrationPinSetupViewModel>(entry)
         RegistrationPinSetupScreen(viewModel = viewModel,
@@ -95,29 +106,75 @@ fun MainGraph(
                 }
             })
     }
+    //endregion
+    //region Authorize
+    composable(
+        route = Account.Authorize.routeWithArgs,
+        arguments = Account.Authorize.arguments,
+    ) { entry ->
+    }
+    //endregion
+
+    //region DeepLinks
+    composable(
+        route = Account.DeepLink.route, deepLinks = listOf(navDeepLink {
+            uriPattern = Account.DeepLink.enrollPattern
+            action = Intent.ACTION_VIEW
+        }, navDeepLink {
+            uriPattern = Account.DeepLink.authPattern
+            action = Intent.ACTION_VIEW
+        })
+    ) { entry ->
+        val viewModel = hiltViewModel<DeepLinkViewModel>(entry)
+        DeepLinkScreen(viewModel = viewModel, goToNext = { challenge ->
+            val encodedChallenge = viewModel.encodeChallenge(challenge)
+            if (challenge is EnrollmentChallenge) {
+                navController.goToWithPopCurrent("${Account.EnrollPinSetup.route}/$encodedChallenge")
+            } else {
+                navController.goToWithPopCurrent(
+                    "${Account.Authorize.route}/$encodedChallenge"
+                )
+            }
+        })
+    }
+
+    //endregion
+    //region EnableBiometric-Conditional
     composable(
         route = WithChallenge.EnableBiometric.routeWithArgs, arguments = WithChallenge.arguments
     ) { entry ->
         val viewModel = hiltViewModel<EnableBiometricViewModel>(entry)
         val isEnroll = entry.arguments?.getBoolean(WithChallenge.isEnrolmentArg, true) ?: true
-        val authRoute = if (isEnroll) OAuth.routeForEnrollment else OAuth.routeForAuthentication
+        val authRoute = if (isEnroll) OAuth.routeForEnrollment else OAuth.routeForAuthorization
         EnableBiometricScreen(viewModel = viewModel,
             goToOauth = { navController.goToWithPopCurrent(destination = authRoute) }) { navController.popBackStack() }
     }
+    //endregion
+    //region OAuth-Conditional
     composable(route = OAuth.routeWithArgs, arguments = OAuth.arguments) { entry ->
         val viewModel = hiltViewModel<OAuthViewModel>(entry)
-        val isEnroll = entry.arguments?.getBoolean(OAuth.withPhoneConfirmArg, true) ?: true
-        OAuthScreen(viewModel = viewModel, continueWith = {
-            if (isEnroll) {
-                navController.goToWithPopCurrent(destination = PhoneNumberRecovery.RequestCode.route)
-            } else {
-                navController.goToWithPopCurrent(destination = Graph.HOME_PAGE)
+        val nextStep = entry.arguments?.getString(OAuth.nextStepArg, OAuth.routeForEnrollment)
+            ?: OAuth.routeForEnrollment
+        ExampleAnimation {
+            OAuthScreen(viewModel = viewModel, continueWith = {
+                when (nextStep) {
+                    OAuth.routeForEnrollment -> {
+                        navController.goToWithPopCurrent(destination = PhoneNumberRecovery.RequestCode.route)
+                    }
+                    OAuth.routeForAuthorization -> {
+                        navController.goToWithPopCurrent(destination = Graph.HOME_PAGE)
+                    }
+                    OAuth.routeForOAuth -> {
+                        navController.popBackStack()
+                    }
+                }
+            }) {
+                navController.popBackStack()
             }
-        }) {
-            navController.popBackStack()
         }
     }
-
+    //endregion
+    //region CreateAccount
     composable(Graph.REQUEST_EDU_ID_ACCOUNT) {
         RequestEduIdStartScreen(requestId = { navController.navigate(Graph.REQUEST_EDU_ID_FORM) },
             onBackClicked = { navController.popBackStack() })
@@ -143,9 +200,27 @@ fun MainGraph(
         })
     ) { entry ->
         val isCreated = RequestEduIdCreated.decodeFromEntry(entry)
-        RequestEduIdCreatedScreen(isCreated) { navController.popBackStack() }
+        RequestEduIdCreatedScreen(
+            justCreated = isCreated,
+            viewModel = homePageViewModel,
+            goToOAuth = { navController.navigate(OAuth.routeForOAuth) },
+            goToRegistrationPinSetup = { challenge ->
+                navController.navigate(
+                    "${Account.EnrollPinSetup.route}/${
+                        homePageViewModel.encodeChallenge(
+                            challenge
+                        )
+                    }"
+                ) {
+                    //Clear the entire flow for creating a new eduid account
+                    popUpTo(Graph.REQUEST_EDU_ID_ACCOUNT)
+                }
+            },
+        )
     }
+    //endregion
 
+    //region VerifyPhone-Recovery
     composable(
         PhoneNumberRecovery.RequestCode.route,
     ) {
@@ -174,7 +249,9 @@ fun MainGraph(
                 }
             }) { navController.popBackStack() }
     }
+    //endregion
 
+    //region Welcome-FirstTime
     composable(Graph.START) {
         StartScreen(
             onNext = { navController.goToWithPopCurrent(Graph.FIRST_TIME_DIALOG) },
@@ -187,7 +264,7 @@ fun MainGraph(
             goToAccountLinked = { navController.goToWithPopCurrent(AccountLinked.route) },
             skipThis = { navController.goToWithPopCurrent(Graph.HOME_PAGE) })
     }
-
+    //endregion
     composable(Graph.PERSONAL_INFO) {
         val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
         PersonalInfoScreen(

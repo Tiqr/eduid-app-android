@@ -54,7 +54,11 @@
     <string name="request_id_details_screen_request_id_button">Request your eduID</string>
 
     <string name="request_id_created_title">Your eduID has been created!</string>
+    <string name="request_id_created_ask_oauth">In order to associate this device with your newly created account, the application requires access to your account\'s data.</string>
     <string name="request_id_created_description">To safely use this app, we need you to set a pincode and provide a phone number in case you might forget it.</string>
+
+    <string name="request_id_created_fail_title">Could not create your eduID account!</string>
+    <string name="request_id_created_fail_description">The account creation has failed. Please try again.</string>
 
     <string name="first_time_title">Are you studying in NL?</string>
     <string name="first_time_subtitle">Connect your institution!</string>
@@ -71,8 +75,11 @@
     <string name="account_linked_subtitle">was contacted successfully</string>
     <string name="account_linked_description">The following information has been added to your eduID and can now be shared.</string>
 
+    <string name="deeplink_processing">Checking request…</string>
+
     <string name="button_back">Back</string>
     <string name="button_continue">Continue</string>
+    <string name="button_allow">Allow</string>
     <string name="button_torch">Turn on flashlight</string>
     <string name="confirmpin_mismatch">PIN doesn\'t match.</string>
     <string name="button_scan">Scan</string>

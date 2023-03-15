@@ -1,6 +1,7 @@
 package nl.eduid.di.model
 
 import android.os.Parcelable
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
@@ -32,10 +33,18 @@ data class UrlResponse(
     val url: String,
 ) : Parcelable
 
-
 const val CREATE_EMAIL_SENT = 201
 const val FAIL_EMAIL_IN_USE = 409
 const val EMAIL_DOMAIN_FORBIDDEN = 412
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class EnrollResponse(
+    val url: String,
+    val enrollmentKey: String,
+    @Json(name = "qrcode")
+    val qrCode: String,
+) : Parcelable
 
 @Parcelize
 @JsonClass(generateAdapter = true)

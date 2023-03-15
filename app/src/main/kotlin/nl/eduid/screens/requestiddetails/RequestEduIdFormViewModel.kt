@@ -52,7 +52,6 @@ class RequestEduIdFormViewModel @Inject constructor(
         return viewModelScope.launch {
             val inputData = inputForm.value ?: return@launch
             val relyingPartClientId = getClientIdFromOAuthConfig(context.resources)
-            Timber.e("UUID for create: $relyingPartClientId")
             inputForm.postValue(inputData.copy(isProcessing = true, requestComplete = false))
             val responseStatus = eduIdRepo.requestEnroll(
                 RequestEduIdAccount(

@@ -20,20 +20,20 @@ fun HomePageScreen(
 ) {
     val haveRegisteredAccount by viewModel.haveRegisteredAccounts.observeAsState()
     val isAuthorizedForDataAccess by viewModel.isAuthorizedForDataAccess.observeAsState(false)
-    val promptForAuth by viewModel.promptForAuth.observeAsState()
+    val uiState by viewModel.uiState.observeAsState(UiState())
 
     when (haveRegisteredAccount) {
         true -> {
             HomePageWithAccountContent(
                 isAuthorizedForDataAccess = isAuthorizedForDataAccess,
-                shouldPromptAuthorization = promptForAuth,
+                shouldPromptAuthorization = uiState.promptForAuth,
                 onActivityClicked = onActivityClicked,
                 onPersonalInfoClicked = onPersonalInfoClicked,
                 onSecurityClicked = onSecurityClicked,
                 onScanForAuthorization = onScanForAuthorization,
                 launchOAuth = launchOAuth,
-                promptAuthorization = viewModel::promptForAuth,
-                clearAuth = viewModel::clearPromptForAuth
+                promptAuthorization = viewModel::triggerPromptForAuth,
+                clearAuth = viewModel::clearPromptForAuthTrigger
             )
         }
         false -> {

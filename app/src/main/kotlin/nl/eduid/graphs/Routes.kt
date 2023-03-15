@@ -3,13 +3,11 @@ package nl.eduid.graphs
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import nl.eduid.BuildConfig
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 import java.net.URLEncoder
 
 object Graph {
-    const val MAIN = "main_graph"
     const val HOME_PAGE = "home_page"
     const val REQUEST_EDU_ID_ACCOUNT = "request_edu_id_account"
     const val REQUEST_EDU_ID_FORM = "request_edu_id_details"
@@ -21,12 +19,12 @@ object Graph {
 
 object RequestEduIdCreated {
     private const val route = "request_edu_id_created"
-    private const val isCreatedArg = "isCreated"
+    private const val isCreatedArg = "new"
     const val routeWithArgs = "${route}/{${isCreatedArg}}"
-    val uriPattern = "${BuildConfig.ENV_HOST}/client/mobile/created?new={$isCreatedArg}"
+    val uriPattern = "eduid:///client/mobile/created?new={${isCreatedArg}}"
 
     fun decodeFromEntry(entry: NavBackStackEntry): Boolean =
-        entry.arguments?.getBoolean(isCreatedArg) ?: false
+        (entry.arguments?.getString(isCreatedArg, "true") ?: "false").toBoolean()
 }
 
 object AccountLinked {
@@ -60,14 +58,15 @@ object RequestEduIdLinkSent {
 
 object OAuth {
     private const val route = "oauth_mobile_eduid"
-    const val withPhoneConfirmArg = "confirm_phone_arg"
-    const val routeForEnrollment = "$route/true"
-    const val routeForAuthentication = "$route/false"
-    const val routeWithArgs = "$route/{$withPhoneConfirmArg}"
-    val arguments = listOf(navArgument(withPhoneConfirmArg) {
-        type = NavType.BoolType
+    const val nextStepArg = "confirm_phone_arg"
+    const val routeForEnrollment = "$route/enroll"
+    const val routeForAuthorization = "$route/authorize"
+    const val routeForOAuth = "$route/apiauth"
+    const val routeWithArgs = "$route/{$nextStepArg}"
+    val arguments = listOf(navArgument(nextStepArg) {
+        type = NavType.StringType
         nullable = false
-        defaultValue = true
+        defaultValue = routeForEnrollment
     })
 }
 
@@ -98,17 +97,34 @@ sealed class PhoneNumberRecovery(val route: String) {
     }
 }
 
-sealed class ExistingAccount(val route: String) {
-    object EnrollWithQR : ExistingAccount("scan_registration")
-    object RegistrationPinSetup : ExistingAccount("registration_pin_setup") {
-        const val registrationChallengeArg = "registration_challenge_arg"
+sealed class Account(val route: String) {
 
-        val routeWithArgs = "$route/{$registrationChallengeArg}"
-        val arguments = listOf(navArgument(registrationChallengeArg) {
+    object ScanQR : Account("scan")
+    object EnrollPinSetup : Account("enroll_pin_setup") {
+        const val enrollChallenge = "enroll_challenge_arg"
+
+        val routeWithArgs = "$route/{$enrollChallenge}"
+        val arguments = listOf(navArgument(enrollChallenge) {
             type = NavType.StringType
             nullable = false
             defaultValue = ""
         })
+    }
+
+    object Authorize : Account("authorization") {
+        const val challengeArg = "challenge_arg"
+
+        val routeWithArgs = "$route/{$challengeArg}"
+        val arguments = listOf(navArgument(challengeArg) {
+            type = NavType.StringType
+            nullable = false
+            defaultValue = ""
+        })
+    }
+
+    object DeepLink : Account("deeplinks") {
+        const val enrollPattern = "https://eduid.nl/tiqrenroll/"
+        const val authPattern = "https://eduid.nl/tiqrauth/"
     }
 }
 

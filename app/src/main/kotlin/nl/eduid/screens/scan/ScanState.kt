@@ -13,9 +13,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.tiqr.core.scan.ScanComponent
-import org.tiqr.data.model.AuthenticationChallenge
+import org.tiqr.data.model.Challenge
 import org.tiqr.data.model.ChallengeParseResult
-import org.tiqr.data.model.EnrollmentChallenge
 import java.util.*
 
 
@@ -23,23 +22,20 @@ import java.util.*
 fun rememberScanState(
     viewModel: StatelessScanViewModel,
     goBack: () -> Unit,
-    goToEnroll: (EnrollmentChallenge) -> Unit,
-    goToAuthentication: (AuthenticationChallenge) -> Unit,
+    goToNext: (Challenge) -> Unit,
     lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
     context: Context = LocalContext.current,
     coroutineScope: CoroutineScope = rememberCoroutineScope()
 ): ScanState {
     val currentGoBack by rememberUpdatedState(newValue = goBack)
-    val currentGoToEnroll by rememberUpdatedState(newValue = goToEnroll)
-    val currentGoToAuthentication by rememberUpdatedState(newValue = goToAuthentication)
+    val currentGoToNext by rememberUpdatedState(newValue = goToNext)
 
     return remember(viewModel, lifecycleOwner, context, coroutineScope) {
         ScanState(
             viewModel = viewModel,
             currentGoBack = currentGoBack,
             coroutineScope = coroutineScope,
-            goToEnroll = currentGoToEnroll,
-            goToAuthentication = currentGoToAuthentication,
+            goToNext = currentGoToNext,
             context = context,
             lifecycleOwner = lifecycleOwner
         )
@@ -52,8 +48,7 @@ class ScanState(
     private val viewModel: StatelessScanViewModel,
     private val currentGoBack: () -> Unit,
     private val coroutineScope: CoroutineScope,
-    private val goToEnroll: (EnrollmentChallenge) -> Unit,
-    private val goToAuthentication: (AuthenticationChallenge) -> Unit,
+    private val goToNext: (Challenge) -> Unit,
     val context: Context,
     val lifecycleOwner: LifecycleOwner,
 ) {
@@ -77,10 +72,7 @@ class ScanState(
         when (parseResult) {
             is ChallengeParseResult.Success -> {
                 delay(200L) // delay a bit, otherwise beep sound is cutoff
-                when (parseResult.value) {
-                    is EnrollmentChallenge -> goToEnroll(parseResult.value as EnrollmentChallenge)
-                    is AuthenticationChallenge -> goToAuthentication(parseResult.value as AuthenticationChallenge)
-                }
+                goToNext(parseResult.value)
             }
             is ChallengeParseResult.Failure -> {
                 errorData = ErrorData(parseResult.failure.title, parseResult.failure.message)

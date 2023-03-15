@@ -26,4 +26,7 @@ interface EduIdApi {
 
     @GET("/mobile/api/sp/oidc/link")
     suspend fun getStartLinkAccount(): Response<UrlResponse>
+
+    @GET("/mobile/tiqr/sp/start-enrollment")
+    suspend fun startEnrollment(): Response<EnrollResponse>
 }

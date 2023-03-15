@@ -3,12 +3,15 @@ package nl.eduid.screens.pinsetup
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import nl.eduid.BaseViewModel
-import nl.eduid.graphs.ExistingAccount
+import nl.eduid.di.repository.StorageRepository
+import nl.eduid.graphs.Account
 import nl.eduid.screens.scan.ErrorData
 import nl.eduid.ui.PIN_MAX_LENGTH
 import org.tiqr.core.util.extensions.biometricUsable
@@ -22,22 +25,26 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationPinSetupViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle, moshi: Moshi, private val repository: EnrollmentRepository
+    savedStateHandle: SavedStateHandle,
+    moshi: Moshi,
+    private val enrollRepository: EnrollmentRepository,
+    private val storage: StorageRepository
 ) : BaseViewModel(moshi) {
-    val uiState: MutableLiveData<RegistrationPinUiState> = MutableLiveData(
-        RegistrationPinUiState()
+    val uiState: MutableLiveData<UiState> = MutableLiveData(
+        UiState()
     )
 
     val challenge: EnrollmentChallenge?
+    private val isAuthorized = storage.isAuthorized.asLiveData()
 
     init {
         val enrolChallenge =
-            savedStateHandle.get<String>(ExistingAccount.RegistrationPinSetup.registrationChallengeArg)
+            savedStateHandle.get<String>(Account.EnrollPinSetup.enrollChallenge)
                 ?: ""
-        val decoded = URLDecoder.decode(enrolChallenge, Charsets.UTF_8.name())
+        val challengeUrl = URLDecoder.decode(enrolChallenge, Charsets.UTF_8.name())
         val adapter = moshi.adapter(EnrollmentChallenge::class.java)
         challenge = try {
-            adapter.fromJson(decoded)
+            adapter.fromJson(challengeUrl)
         } catch (e: Exception) {
             Timber.e(e, "Failed to parse enrollment challenge")
             uiState.value = uiState.value?.copy(
@@ -82,7 +89,12 @@ class RegistrationPinSetupViewModel @Inject constructor(
     private fun enroll(context: Context, password: String) = viewModelScope.launch {
         val currentChallenge = challenge ?: return@launch
         val result =
-            repository.completeChallenge(EnrollmentCompleteRequest(currentChallenge, password))
+            enrollRepository.completeChallenge(
+                EnrollmentCompleteRequest(
+                    currentChallenge,
+                    password
+                )
+            )
         when (result) {
             is ChallengeCompleteResult.Failure -> {
                 uiState.postValue(
@@ -96,7 +108,24 @@ class RegistrationPinSetupViewModel @Inject constructor(
             ChallengeCompleteResult.Success -> {
                 uiState.value =
                     uiState.value?.copy(promptBiometric = context.biometricUsable() && currentChallenge.identity.biometricOfferUpgrade)
+                calculateNextStep(context, currentChallenge)
             }
+        }
+    }
+
+    private suspend fun calculateNextStep(
+        context: Context,
+        currentChallenge: EnrollmentChallenge
+    ): NextStep {
+        val isAuthorized = storage.isAuthorized.firstOrNull()
+        return if (isAuthorized == true) {
+            if (context.biometricUsable() && currentChallenge.identity.biometricOfferUpgrade) {
+                NextStep.PromptBiometric
+            } else {
+                NextStep.Recovery
+            }
+        } else {
+            NextStep.Authenticate()
         }
     }
 
@@ -105,7 +134,7 @@ class RegistrationPinSetupViewModel @Inject constructor(
         if (currentStep is PinStep.PinCreate) {
             closePinSetupFlow()
         } else {
-            uiState.value = RegistrationPinUiState()
+            uiState.value = UiState()
         }
     }
 

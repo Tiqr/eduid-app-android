@@ -35,22 +35,4 @@ class MainComposeActivity : ComponentActivity() {
             }
         }
     }
-
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        setIntent(intent)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        if (intent != null && intent.action == Intent.ACTION_VIEW) {
-            intent.dataString?.let { rawChallenge ->
-                Timber.e("Compose activity resumed, Intent data: $rawChallenge")
-                intent.data = null
-            }
-        }
-    }
-
 }
