@@ -54,7 +54,6 @@
     <string name="request_id_details_screen_request_id_button">Request your eduID</string>
 
     <string name="request_id_created_title">Your eduID has been created!</string>
-    <string name="request_id_created_ask_oauth">In order to associate this device with your newly created account, the application requires access to your account\'s data.</string>
     <string name="request_id_created_description">To safely use this app, we need you to set a pincode and provide a phone number in case you might forget it.</string>
 
     <string name="request_id_created_fail_title">Could not create your eduID account!</string>

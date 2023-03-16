@@ -34,14 +34,24 @@ fun RequestEduIdCreatedScreen(
     EduIdTopAppBar(
         withBackIcon = false,
     ) {
-        val isAuthorized by viewModel.isAuthorizedForDataAccess.observeAsState(initial = false)
         val uiState by viewModel.uiState.observeAsState(initial = UiState())
         var isProcessing by rememberSaveable { mutableStateOf(false) }
+        var authOngoing by rememberSaveable { mutableStateOf(false) }
 
-        if (isProcessing && uiState.haveValidChallenge()) {
+        if (isProcessing && uiState.promptForAuth != null) {
+            val currentGoToAuth by rememberUpdatedState(newValue = goToOAuth)
+            LaunchedEffect(key1 = viewModel) {
+                isProcessing = false
+                authOngoing = true
+                currentGoToAuth()
+            }
+
+        }
+        if ((isProcessing || authOngoing) && uiState.haveValidChallenge()) {
             val currentGoToRegistrationPinSetup by rememberUpdatedState(newValue = goToRegistrationPinSetup)
             LaunchedEffect(key1 = viewModel) {
                 isProcessing = false
+                authOngoing = false
                 currentGoToRegistrationPinSetup(uiState.currentChallenge as EnrollmentChallenge)
             }
         }
@@ -51,11 +61,9 @@ fun RequestEduIdCreatedScreen(
         } else {
             RequestEduIdCreatedContent(
                 uiState = uiState,
-                isAuthorized = isAuthorized,
-                goToOAuth = goToOAuth,
                 startEnrollment = {
-                    viewModel.startEnrollment()
                     isProcessing = true
+                    viewModel.startEnrollment()
                 },
                 dismissError = viewModel::dismissError
             )
@@ -66,8 +74,6 @@ fun RequestEduIdCreatedScreen(
 @Composable
 private fun RequestEduIdCreatedContent(
     uiState: UiState,
-    isAuthorized: Boolean,
-    goToOAuth: () -> Unit = {},
     startEnrollment: () -> Unit = {},
     dismissError: () -> Unit = {},
 ) = Column(modifier = Modifier.fillMaxSize()) {
@@ -101,19 +107,11 @@ private fun RequestEduIdCreatedContent(
             )
         }
 
-        if (isAuthorized) {
-            Text(
-                text = stringResource(R.string.request_id_created_description),
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.fillMaxWidth()
-            )
-        } else {
-            Text(
-                text = stringResource(R.string.request_id_created_ask_oauth),
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
+        Text(
+            text = stringResource(R.string.request_id_created_description),
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.fillMaxWidth()
+        )
         Spacer(Modifier.height(24.dp))
         Image(
             painter = painterResource(id = R.drawable.account_created_logo),
@@ -126,19 +124,11 @@ private fun RequestEduIdCreatedContent(
         Spacer(Modifier.height(24.dp))
     }
 
-    if (isAuthorized) {
-        PrimaryButton(
-            text = stringResource(id = R.string.button_continue),
-            onClick = startEnrollment,
-            modifier = Modifier.fillMaxWidth()
-        )
-    } else {
-        PrimaryButton(
-            text = stringResource(id = R.string.button_allow),
-            onClick = goToOAuth,
-            modifier = Modifier.fillMaxWidth()
-        )
-    }
+    PrimaryButton(
+        text = stringResource(id = R.string.button_continue),
+        onClick = startEnrollment,
+        modifier = Modifier.fillMaxWidth()
+    )
     Spacer(Modifier.height(40.dp))
 }
 
@@ -175,7 +165,6 @@ private fun Preview_AccountCreatedScreen() {
     EduidAppAndroidTheme {
         RequestEduIdCreatedContent(
             uiState = UiState(),
-            isAuthorized = true,
         )
     }
 }

@@ -5,7 +5,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,6 +23,7 @@ import nl.eduid.screens.oauth.OAuthScreen
 import nl.eduid.screens.oauth.OAuthViewModel
 import nl.eduid.screens.personalinfo.PersonalInfoScreen
 import nl.eduid.screens.personalinfo.PersonalInfoViewModel
+import nl.eduid.screens.pinsetup.NextStep
 import nl.eduid.screens.pinsetup.RegistrationPinSetupScreen
 import nl.eduid.screens.pinsetup.RegistrationPinSetupViewModel
 import nl.eduid.screens.requestiddetails.RequestEduIdFormScreen
@@ -56,7 +56,7 @@ fun MainGraph(
             onPersonalInfoClicked = { navController.navigate(Graph.PERSONAL_INFO) },
             onSecurityClicked = {},
             onEnrollWithQR = { navController.navigate(Account.ScanQR.route) },
-            launchOAuth = { navController.navigate(OAuth.routeForAuthorization) }) {
+            launchOAuth = { navController.navigate(Graph.OAUTH) }) {
             navController.navigate(
                 Graph.REQUEST_EDU_ID_ACCOUNT
             )
@@ -89,22 +89,36 @@ fun MainGraph(
         arguments = Account.EnrollPinSetup.arguments,
     ) { entry ->
         val viewModel = hiltViewModel<RegistrationPinSetupViewModel>(entry)
-        RegistrationPinSetupScreen(viewModel = viewModel,
+        RegistrationPinSetupScreen(
+            viewModel = viewModel,
             closePinSetupFlow = { navController.popBackStack() },
-            goToBiometricEnable = { challenge, pin ->
-                navController.navigate(
-                    WithChallenge.EnableBiometric.buildRouteForEnrolment(
-                        encodedChallenge = viewModel.encodeChallenge(challenge), pin = pin
-                    )
-                ) {
-                    popUpTo(navController.graph.findStartDestination().id)
+            goToNextStep = { nextStep ->
+                when (nextStep) {
+                    NextStep.Home -> {
+                        //Go to the home page and clear the entire stack while doing so
+                        navController.navigate(Graph.HOME_PAGE) {
+                            popUpTo(Graph.HOME_PAGE) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                    is NextStep.PromptBiometric -> {
+                        navController.navigate(
+                            WithChallenge.EnableBiometric.buildRouteForEnrolment(
+                                encodedChallenge = viewModel.encodeChallenge(nextStep.challenge),
+                                pin = nextStep.pin
+                            )
+                        ) {
+                            popUpTo(Graph.HOME_PAGE)
+                        }
+
+                    }
+                    NextStep.Recovery -> navController.navigate(PhoneNumberRecovery.RequestCode.route) {
+                        popUpTo(Graph.HOME_PAGE)
+                    }
                 }
             },
-            onRegistrationDone = {
-                navController.navigate(OAuth.routeForEnrollment) {
-                    popUpTo(navController.graph.findStartDestination().id)
-                }
-            })
+            promptAuth = { navController.navigate(Graph.OAUTH) })
     }
     //endregion
     //region Authorize
@@ -144,31 +158,23 @@ fun MainGraph(
         route = WithChallenge.EnableBiometric.routeWithArgs, arguments = WithChallenge.arguments
     ) { entry ->
         val viewModel = hiltViewModel<EnableBiometricViewModel>(entry)
-        val isEnroll = entry.arguments?.getBoolean(WithChallenge.isEnrolmentArg, true) ?: true
-        val authRoute = if (isEnroll) OAuth.routeForEnrollment else OAuth.routeForAuthorization
-        EnableBiometricScreen(viewModel = viewModel,
-            goToOauth = { navController.goToWithPopCurrent(destination = authRoute) }) { navController.popBackStack() }
+        EnableBiometricScreen(viewModel = viewModel, goToNext = { askRecovery ->
+            if (askRecovery) {
+                navController.navigate(PhoneNumberRecovery.RequestCode.route) {
+                    popUpTo(Graph.HOME_PAGE)
+                }
+            } else {
+                //Recovery is already completed/done via web
+                navController.navigate(Graph.HOME_PAGE)
+            }
+        }) { navController.popBackStack() }
     }
     //endregion
     //region OAuth-Conditional
-    composable(route = OAuth.routeWithArgs, arguments = OAuth.arguments) { entry ->
+    composable(route = Graph.OAUTH) { entry ->
         val viewModel = hiltViewModel<OAuthViewModel>(entry)
-        val nextStep = entry.arguments?.getString(OAuth.nextStepArg, OAuth.routeForEnrollment)
-            ?: OAuth.routeForEnrollment
         ExampleAnimation {
-            OAuthScreen(viewModel = viewModel, continueWith = {
-                when (nextStep) {
-                    OAuth.routeForEnrollment -> {
-                        navController.goToWithPopCurrent(destination = PhoneNumberRecovery.RequestCode.route)
-                    }
-                    OAuth.routeForAuthorization -> {
-                        navController.goToWithPopCurrent(destination = Graph.HOME_PAGE)
-                    }
-                    OAuth.routeForOAuth -> {
-                        navController.popBackStack()
-                    }
-                }
-            }) {
+            OAuthScreen(viewModel = viewModel) {
                 navController.popBackStack()
             }
         }
@@ -203,7 +209,7 @@ fun MainGraph(
         RequestEduIdCreatedScreen(
             justCreated = isCreated,
             viewModel = homePageViewModel,
-            goToOAuth = { navController.navigate(OAuth.routeForOAuth) },
+            goToOAuth = { navController.navigate(Graph.OAUTH) },
             goToRegistrationPinSetup = { challenge ->
                 navController.navigate(
                     "${Account.EnrollPinSetup.route}/${
@@ -213,7 +219,9 @@ fun MainGraph(
                     }"
                 ) {
                     //Clear the entire flow for creating a new eduid account
-                    popUpTo(Graph.REQUEST_EDU_ID_ACCOUNT)
+                    popUpTo(Graph.REQUEST_EDU_ID_ACCOUNT) {
+                        inclusive = true
+                    }
                 }
             },
         )

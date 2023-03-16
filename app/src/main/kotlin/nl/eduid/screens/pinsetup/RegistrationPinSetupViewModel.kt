@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import nl.eduid.BaseViewModel
 import nl.eduid.di.repository.StorageRepository
 import nl.eduid.graphs.Account
+import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import nl.eduid.screens.scan.ErrorData
 import nl.eduid.ui.PIN_MAX_LENGTH
 import org.tiqr.core.util.extensions.biometricUsable
@@ -28,14 +29,14 @@ class RegistrationPinSetupViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     moshi: Moshi,
     private val enrollRepository: EnrollmentRepository,
-    private val storage: StorageRepository
+    private val personal: PersonalInfoRepository,
+    private val storage: StorageRepository,
 ) : BaseViewModel(moshi) {
     val uiState: MutableLiveData<UiState> = MutableLiveData(
         UiState()
     )
-
+    val isAuthorized = storage.isAuthorized.asLiveData()
     val challenge: EnrollmentChallenge?
-    private val isAuthorized = storage.isAuthorized.asLiveData()
 
     init {
         val enrolChallenge =
@@ -106,9 +107,12 @@ class RegistrationPinSetupViewModel @Inject constructor(
                 )
             }
             ChallengeCompleteResult.Success -> {
+                val nextStep = calculateNextStep(context, currentChallenge)
                 uiState.value =
-                    uiState.value?.copy(promptBiometric = context.biometricUsable() && currentChallenge.identity.biometricOfferUpgrade)
-                calculateNextStep(context, currentChallenge)
+                    uiState.value?.copy(
+                        promptAuth = storage.isAuthorized.firstOrNull(),
+                        nextStep = nextStep
+                    )
             }
         }
     }
@@ -117,15 +121,15 @@ class RegistrationPinSetupViewModel @Inject constructor(
         context: Context,
         currentChallenge: EnrollmentChallenge
     ): NextStep {
-        val isAuthorized = storage.isAuthorized.firstOrNull()
-        return if (isAuthorized == true) {
-            if (context.biometricUsable() && currentChallenge.identity.biometricOfferUpgrade) {
-                NextStep.PromptBiometric
-            } else {
-                NextStep.Recovery
-            }
+        val userDetails = personal.getUserDetails()
+        return if (context.biometricUsable() && currentChallenge.identity.biometricOfferUpgrade) {
+            NextStep.PromptBiometric(currentChallenge, uiState.value?.pinConfirmValue.orEmpty())
         } else {
-            NextStep.Authenticate()
+            if (userDetails != null && userDetails.isRecoveryRequired()) {
+                NextStep.Recovery
+            } else {
+                NextStep.Home
+            }
         }
     }
 

@@ -75,10 +75,18 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="client"
-                    android:path="/mobile/oauth-redirect"
+                    android:path="client/mobile/oauth-redirect"
                     android:scheme="eduid" />
+                <data
+                    android:host="login.test2.eduid.nl"
+                    android:path="/myconext/api/mobile/swagger-ui/oauth2-redirect.html"
+                    android:scheme="https" />
+                <data
+                    android:host="login.test2.eduid.nl"
+                    android:path="/myconext/api/mobile/swagger-ui/oauth2-redirect.html"
+                    android:scheme="http" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".screens.biometric.SignInWithBiometricsActivity"

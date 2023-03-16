@@ -66,8 +66,11 @@ data class UserDetails(
     val eduIdPerServiceProvider: Map<String, EduIdPerServiceProvider>,
 
     val loginOptions: List<String>,
-//    val registration: JsonObject
-) : Parcelable
+    val registration: Registration?
+) : Parcelable {
+
+    fun isRecoveryRequired(): Boolean = registration?.status != "FINALIZED"
+}
 
 @Parcelize
 @JsonClass(generateAdapter = true)
@@ -91,4 +94,15 @@ data class LinkedAccount(
     val eduPersonAffiliations: List<String>,
     val createdAt: Long,
     val expiresAt: Long
+) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class Registration(
+    val phoneNumber: String?,
+    val created: String,
+    val phoneVerified: Boolean,
+    val recoveryCode: Boolean,
+    //FINALIZED - is completed
+    val status: String,
 ) : Parcelable
