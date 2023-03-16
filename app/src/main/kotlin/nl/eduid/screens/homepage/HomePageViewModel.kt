@@ -30,26 +30,22 @@ class HomePageViewModel @Inject constructor(
     private val eduIdApi: EduIdApi
 ) : BaseViewModel(moshi) {
 
-    val haveRegisteredAccounts =
-        db.identityCount().asLiveData(viewModelScope.coroutineContext).map {
-            it != 0
-        }
     val isAuthorizedForDataAccess = repository.isAuthorized.asLiveData()
-
-    val knownState = MutableLiveData<Unit?>(null)
     val uiState = MutableLiveData(UiState())
 
     init {
         viewModelScope.launch {
-            val countFromDb = async {
+            uiState.postValue(uiState.value?.copy(isEnrolled = IsEnrolled.Unknown))
+            val haveDbEntry = async {
                 val totalCount = db.identityCount().firstOrNull()
                 totalCount != 0
             }
             val showSplashForMinimum = async(start = CoroutineStart.LAZY) {
                 delay(SplashWaitTime)
             }
-            joinAll(countFromDb, showSplashForMinimum)
-            knownState.postValue(Unit)
+            joinAll(haveDbEntry, showSplashForMinimum)
+            val isEnrolled = if (haveDbEntry.await()) IsEnrolled.Yes else IsEnrolled.No
+            uiState.postValue(uiState.value?.copy(isEnrolled = isEnrolled))
         }
     }
 

@@ -43,14 +43,14 @@ import org.tiqr.data.model.EnrollmentChallenge
 @Composable
 fun MainGraph(
     navController: NavHostController,
-    homePageViewModel: HomePageViewModel,
 ) = NavHost(
     navController = navController, startDestination = Graph.HOME_PAGE
 ) {
 
     //region HomePage
     composable(Graph.HOME_PAGE) {
-        HomePageScreen(viewModel = homePageViewModel,
+        val viewModel = hiltViewModel<HomePageViewModel>(it)
+        HomePageScreen(viewModel = viewModel,
             onScanForAuthorization = { /*QR authorization for 3rd party*/ },
             onActivityClicked = { },
             onPersonalInfoClicked = { navController.navigate(Graph.PERSONAL_INFO) },
@@ -205,15 +205,16 @@ fun MainGraph(
             uriPattern = RequestEduIdCreated.uriPattern
         })
     ) { entry ->
+        val viewModel = hiltViewModel<HomePageViewModel>(entry)
         val isCreated = RequestEduIdCreated.decodeFromEntry(entry)
         RequestEduIdCreatedScreen(
             justCreated = isCreated,
-            viewModel = homePageViewModel,
+            viewModel = viewModel,
             goToOAuth = { navController.navigate(Graph.OAUTH) },
             goToRegistrationPinSetup = { challenge ->
                 navController.navigate(
                     "${Account.EnrollPinSetup.route}/${
-                        homePageViewModel.encodeChallenge(
+                        viewModel.encodeChallenge(
                             challenge
                         )
                     }"

@@ -100,9 +100,8 @@ data class LinkedAccount(
 @JsonClass(generateAdapter = true)
 data class Registration(
     val phoneNumber: String?,
-    val created: String,
-    val phoneVerified: Boolean,
-    val recoveryCode: Boolean,
+    val phoneVerified: Boolean?,
+    val recoveryCode: Boolean?,
     //FINALIZED - is completed
-    val status: String,
+    val status: String?,
 ) : Parcelable
