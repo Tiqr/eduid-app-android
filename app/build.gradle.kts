@@ -31,7 +31,18 @@ android {
     val gitCoreSha = "git submodule status".runCommand().substring(0, 8)
 
     defaultConfig {
-        manifestPlaceholders += mapOf()
+        manifestPlaceholders += mapOf(
+            "tiqr_config_base_url" to "https://demo.tiqr.org",
+            "tiqr_config_protocol_version" to "2",
+            "tiqr_config_protocol_compatibility_mode" to "true",
+            "tiqr_config_enforce_challenge_hosts" to "eduid.nl,surfconext.nl",
+            "tiqr_config_enroll_path_param" to "tiqrenroll",
+            "tiqr_config_auth_path_param" to "tiqrauth",
+            "tiqr_config_enroll_scheme" to "eduidenroll",
+            "tiqr_config_auth_scheme" to "eduidauth",
+            "tiqr_config_token_exchange_enabled" to "false",
+            "appAuthRedirectScheme" to "login.test2.eduid.nl"
+        )
         applicationId = "nl.eduid"
         versionCode = gitTagCount
         versionName = gitTag.trim().drop(1) + " core($gitCoreSha)"
@@ -41,16 +52,6 @@ android {
 
         testInstrumentationRunner = "nl.eduid.runner.HiltAndroidTestRunner"
 
-        manifestPlaceholders["tiqr_config_base_url"] = "https://demo.tiqr.org"
-        manifestPlaceholders["tiqr_config_protocol_version"] = "2"
-        manifestPlaceholders["tiqr_config_protocol_compatibility_mode"] = "true"
-        manifestPlaceholders["tiqr_config_enforce_challenge_hosts"] = "eduid.nl,surfconext.nl"
-        manifestPlaceholders["tiqr_config_enroll_path_param"] = "tiqrenroll"
-        manifestPlaceholders["tiqr_config_auth_path_param"] = "tiqrauth"
-        manifestPlaceholders["tiqr_config_enroll_scheme"] = "eduidenroll"
-        manifestPlaceholders["tiqr_config_auth_scheme"] = "eduidauth"
-        manifestPlaceholders["tiqr_config_token_exchange_enabled"] = "false"
-        manifestPlaceholders["appAuthRedirectScheme"] = "login.test2.eduid.nl"
         // only package supported languages
         resourceConfigurations += listOf("en", "nl")
         vectorDrawables {
