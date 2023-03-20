@@ -17,17 +17,36 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
         viewModelScope.launch {
             val userDetails = repository.getUserDetails()
             if (userDetails != null) {
-                val uidata = convertToUiData(userDetails)
-                personalInfo.postValue(uidata)
+                var uiData = convertToUiData(userDetails)
+                val nameMap = mutableMapOf<String, String>()
+                for (account in userDetails.linkedAccounts) {
+                    val mappedName = repository.getInstitutionName(account.schacHomeOrganization)
+                    mappedName?.let {
+                        //If name found, add to list of mapped names
+                        nameMap[account.schacHomeOrganization] = mappedName
+                        //Get name provider from FIRST linked account
+                        if (account.schacHomeOrganization == userDetails.linkedAccounts.firstOrNull()?.schacHomeOrganization) {
+                            uiData = uiData.copy(nameProvider = nameMap[account.schacHomeOrganization] ?: uiData.nameProvider)
+                        }
+                        //Update UI data to include mapped institution names
+                        uiData = uiData.copy(institutionAccounts = uiData.institutionAccounts.map { institution ->
+                                institution.copy(roleProvider = nameMap[institution.roleProvider] ?: institution.roleProvider)
+                            })
+                        personalInfo.postValue(uiData)
+                    }
+                }
+                personalInfo.postValue(uiData)
             }
         }
     }
 
     private fun convertToUiData(userDetails: UserDetails): PersonalInfo {
         val linkedAccounts = userDetails.linkedAccounts
-        val affiliation = linkedAccounts.firstOrNull()?.eduPersonAffiliations?.firstOrNull()
 
-        val nameProvider = affiliation?.substring(affiliation.indexOf("@"),affiliation.length) ?: "You"
+        //Not sure if we should use the eduPersonAffiliations or the schacHomeOrganisation to get the institution name
+        //val affiliation = linkedAccounts.firstOrNull()?.eduPersonAffiliations?.firstOrNull()
+        //val nameProvider = affiliation?.substring(affiliation.indexOf("@"),affiliation.length) ?: "You"
+        val nameProvider = linkedAccounts.firstOrNull()?.schacHomeOrganization ?: "You"
         val name: String = linkedAccounts.firstOrNull()?.let {
             "${it.givenName} ${it.familyName}"
         } ?: "${userDetails.givenName} ${userDetails.familyName}"
@@ -39,7 +58,7 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
             account.eduPersonAffiliations.firstOrNull()?.let {affiliation ->
                 PersonalInfo.Companion.InstitutionAccount(
                     role = affiliation.substring(0,affiliation.indexOf("@")),
-                    roleProvider = affiliation.substring(affiliation.indexOf("@")+1, affiliation.length),
+                    roleProvider = account.schacHomeOrganization,
                     institution = affiliation.substring(affiliation.indexOf("@")+1, affiliation.length),
                     affiliationString = affiliation,
                     createdStamp = account.createdAt,
