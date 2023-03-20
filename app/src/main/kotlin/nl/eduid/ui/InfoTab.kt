@@ -3,15 +3,18 @@ package nl.eduid.ui
 import android.annotation.SuppressLint
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,8 +32,9 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextGrayScale
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
 import nl.eduid.ui.theme.BlueText
-import nl.eduid.ui.theme.SplashScreenBackgroundColor
+import nl.eduid.ui.theme.ButtonRed
 import nl.eduid.ui.theme.TextBlack
 import java.text.SimpleDateFormat
 import java.util.*
@@ -43,6 +47,7 @@ fun InfoTab(
     onClick: () -> Unit,
     enabled: Boolean = true,
     institutionInfo: PersonalInfo.Companion.InstitutionAccount? = null,
+    onRemoveConnectionClicked: () -> Unit = { },
     @DrawableRes endIcon: Int = 0,
     @DrawableRes startIcon: Int = 0,
 ) {
@@ -60,7 +65,10 @@ fun InfoTab(
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(6.dp))
-            .border(width = (if (enabled) 3.dp else 1.dp), color = (if (enabled) BlueButton else TextGrayScale))
+            .border(
+                width = (if (enabled) 3.dp else 1.dp),
+                color = (if (enabled) BlueButton else TextGrayScale)
+            )
             .sizeIn(minHeight = 72.dp)
             .fillMaxWidth()
             .padding(start = 18.dp, end = 18.dp, top = 12.dp, bottom = 12.dp)
@@ -142,7 +150,7 @@ fun InfoTab(
                     ) {
                         Text(
                             modifier = Modifier.weight(1f),
-                            text = "Institution",
+                            text = "Affiliation(s)",
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 textAlign = TextAlign.Start,
                                 color = BlueText,
@@ -180,6 +188,22 @@ fun InfoTab(
                             ),
                         )
                     }
+                    Spacer(Modifier.height(12.dp))
+                    Divider(color = TextBlack, thickness = 1.dp)
+                    Spacer(Modifier.height(12.dp))
+                }
+                Button(
+                    shape = RoundedCornerShape(CornerSize(6.dp)),
+                    onClick = onRemoveConnectionClicked,
+                    border = BorderStroke(1.dp, Color.Red),
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
+                    modifier = Modifier
+                        .sizeIn(minHeight = 48.dp)
+                        .fillMaxWidth(),
+                    ) {
+                    Text(text = "Remove connection", style = MaterialTheme.typography.bodyLarge.copy(
+                        color = ButtonRed, fontWeight = FontWeight.SemiBold
+                    ))
                 }
             }
         }
