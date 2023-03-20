@@ -287,7 +287,10 @@ fun MainGraph(
     }
     composable(
         route = AccountLinked.route,
-        deepLinks = listOf(navDeepLink { uriPattern = AccountLinked.uriPattern })
+        deepLinks = listOf(navDeepLink {
+            uriPattern = AccountLinked.uriPattern
+            action = Intent.ACTION_VIEW
+        })
     ) {
         val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
         AccountLinkedScreen(

@@ -1,5 +1,6 @@
 package nl.eduid
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import nl.eduid.graphs.MainGraph
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainComposeActivity : ComponentActivity() {
@@ -19,6 +21,13 @@ class MainComposeActivity : ComponentActivity() {
             EduidAppAndroidTheme {
                 MainGraph(navController = rememberNavController())
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (intent != null && intent.action == Intent.ACTION_VIEW) {
+            Timber.e("Intent captured by MainComposeActivity: Received: ${intent.dataString}. Category: ${intent.categories}")
         }
     }
 }

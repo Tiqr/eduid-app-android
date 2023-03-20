@@ -22,7 +22,7 @@ object RequestEduIdCreated {
     private const val route = "request_edu_id_created"
     private const val isCreatedArg = "new"
     const val routeWithArgs = "${route}/{${isCreatedArg}}"
-    val uriPattern = "eduid:///client/mobile/created?new={${isCreatedArg}}"
+    const val uriPattern = "eduid:///client/mobile/created?new={${isCreatedArg}}"
 
     fun decodeFromEntry(entry: NavBackStackEntry): Boolean =
         (entry.arguments?.getString(isCreatedArg, "true") ?: "false").toBoolean()
@@ -30,7 +30,7 @@ object RequestEduIdCreated {
 
 object AccountLinked {
     const val route = "account_linked"
-    val uriPattern = "https://mijn.test2.eduid.nl/myconext/api/sp/oidc/redirect"
+    const val uriPattern = "eduid:///client/mobile/account-linked"
 
 }
 
