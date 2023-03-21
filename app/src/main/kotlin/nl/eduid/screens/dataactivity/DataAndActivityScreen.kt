@@ -13,9 +13,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import nl.eduid.R
 import nl.eduid.ui.InfoTab
+import nl.eduid.ui.getDateString
+import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
@@ -105,7 +106,7 @@ fun DataAndActivityScreenContent(
                     InfoTab(
                         startIconLargeUrl = provider.providerLogoUrl,
                         title = provider.providerName,
-                        subtitle = "Provided by ${provider.firstLoginStamp}",
+                        subtitle = "on ${provider.firstLoginStamp.getDateTimeString()}",
                         onClick = { },
                         endIcon = R.drawable.chevron_down,
                         serviceProviderInfo = provider,
