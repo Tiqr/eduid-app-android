@@ -48,7 +48,6 @@ fun PrimaryButtonWithIcon(
     modifier: Modifier = Modifier,
 ) = Column(
     modifier = Modifier
-        .wrapContentSize()
         .clickable {
             onClick()
         },
@@ -58,6 +57,7 @@ fun PrimaryButtonWithIcon(
         onClick = onClick,
         shape = RoundedCornerShape(CornerSize(6.dp)),
         colors = ButtonDefaults.buttonColors(containerColor = ButtonGreen),
+        contentPadding = PaddingValues(16.dp),
         modifier = modifier
             .size(height = 60.dp, width = 60.dp)
     ) {

@@ -5,6 +5,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -40,6 +41,7 @@ import coil.compose.AsyncImage
 import nl.eduid.screens.dataactivity.DataAndActivityData
 import nl.eduid.ui.theme.BlueText
 import nl.eduid.ui.theme.ButtonRed
+import nl.eduid.ui.theme.InfoTabDarkFill
 import nl.eduid.ui.theme.TextBlack
 import java.text.SimpleDateFormat
 import java.util.*
@@ -78,7 +80,6 @@ fun InfoTab(
             )
             .sizeIn(minHeight = 72.dp)
             .fillMaxWidth()
-            .padding(start = 18.dp, end = 18.dp, top = 12.dp, bottom = 12.dp)
             .clickable {
                 if (institutionInfo != null || serviceProviderInfo != null) {
                     isOpen.value = !isOpen.value
@@ -86,11 +87,13 @@ fun InfoTab(
                     onClick.invoke()
                 }
             }
+            .background(if (serviceProviderInfo != null) InfoTabDarkFill else Color.Transparent)
             .animateContentSize()
     ) {
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(start = 18.dp, end = 18.dp, top = 12.dp, bottom = 12.dp)
         ) {
             val (startImage, titleArea, endImage, expandedArea) = createRefs()
             Box(
