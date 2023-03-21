@@ -33,6 +33,11 @@ import nl.eduid.ui.theme.TextGrayScale
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
+import coil.compose.AsyncImage
+import nl.eduid.screens.dataactivity.DataAndActivityData
 import nl.eduid.ui.theme.BlueText
 import nl.eduid.ui.theme.ButtonRed
 import nl.eduid.ui.theme.TextBlack
@@ -47,9 +52,11 @@ fun InfoTab(
     onClick: () -> Unit,
     enabled: Boolean = true,
     institutionInfo: PersonalInfo.Companion.InstitutionAccount? = null,
-    onRemoveConnectionClicked: () -> Unit = { },
+    serviceProviderInfo: DataAndActivityData.Companion.Provider? = null,
+    onDeleteButtonClicked: () -> Unit = { },
+    startIconLargeUrl: String = "",
+    @DrawableRes startIconSmall: Int = 0,
     @DrawableRes endIcon: Int = 0,
-    @DrawableRes startIcon: Int = 0,
 ) {
     val isOpen = remember { mutableStateOf(false) }
     if (header.isNotBlank()) {
@@ -73,7 +80,7 @@ fun InfoTab(
             .fillMaxWidth()
             .padding(start = 18.dp, end = 18.dp, top = 12.dp, bottom = 12.dp)
             .clickable {
-                if (institutionInfo != null) {
+                if (institutionInfo != null || serviceProviderInfo != null) {
                     isOpen.value = !isOpen.value
                 } else {
                     onClick.invoke()
@@ -81,140 +88,284 @@ fun InfoTab(
             }
             .animateContentSize()
     ) {
-        Column(
-            horizontalAlignment = Alignment.Start,
+        ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
-                .align(Alignment.CenterStart)
         ) {
-            Text(
-                modifier = Modifier.fillMaxWidth(0.85f),
-                text = title,
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    textAlign = TextAlign.Start,
-                    fontWeight = FontWeight.Bold,
-                    lineHeight = 20.sp
-                ),
-            )
-            Spacer(Modifier.height(4.dp))
-            Text(
-                modifier = Modifier.fillMaxWidth(0.85f),
-                text = subtitle,
-                style = MaterialTheme.typography.bodySmall.copy(
-                    textAlign = TextAlign.Start,
-                    color = TextGrayScale,
-                ),
-            )
-            if (isOpen.value && institutionInfo != null) {
-                Spacer(Modifier.height(24.dp))
-                Text(
-                    text = "Verified by ${institutionInfo.institution} on ${institutionInfo.createdStamp.getDateTime()}",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        textAlign = TextAlign.Start,
-                        color = BlueText,
-                    ),
-                )
-                Spacer(Modifier.height(12.dp))
-                Divider(color = TextBlack, thickness = 1.dp)
-                Spacer(Modifier.height(12.dp))
+            val (startImage, titleArea, endImage, expandedArea) = createRefs()
+            Box(
+                modifier = Modifier
+                    .constrainAs(startImage) {
+                        top.linkTo(titleArea.top)
+                        bottom.linkTo(titleArea.bottom)
+                        start.linkTo(parent.start)
+                    }
+                    .height(48.dp)
+            ) {
+                if (startIconLargeUrl.isNotBlank()) {
+                    AsyncImage(
+                        model = startIconLargeUrl,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(end = 12.dp)
+                            .heightIn(max = 48.dp)
+                            .widthIn(max = 48.dp),
 
-                Column(
-                    Modifier
-                        .fillMaxWidth()
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = "Institution",
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                textAlign = TextAlign.Start,
-                                color = BlueText,
-                            ),
-                        )
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = institutionInfo.institution,
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                textAlign = TextAlign.Start,
-                                color = BlueText,
-                            ),
-                        )
-                    }
-                    Spacer(Modifier.height(12.dp))
-                    Divider(color = TextBlack, thickness = 1.dp)
-                    Spacer(Modifier.height(12.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = "Affiliation(s)",
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                textAlign = TextAlign.Start,
-                                color = BlueText,
-                            ),
-                        )
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = institutionInfo.affiliationString,
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                textAlign = TextAlign.Start,
-                                color = BlueText,
-                            ),
-                        )
-                    }
-                    Spacer(Modifier.height(12.dp))
-                    Divider(color = TextBlack, thickness = 1.dp)
-                    Spacer(Modifier.height(12.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = "Link Expires",
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                textAlign = TextAlign.Start,
-                                color = BlueText,
-                            ),
-                        )
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = institutionInfo.expiryStamp.getDateTime(),
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                textAlign = TextAlign.Start,
-                                color = BlueText,
-                            ),
-                        )
-                    }
-                    Spacer(Modifier.height(12.dp))
-                    Divider(color = TextBlack, thickness = 1.dp)
-                    Spacer(Modifier.height(12.dp))
-                }
-                Button(
-                    shape = RoundedCornerShape(CornerSize(6.dp)),
-                    onClick = onRemoveConnectionClicked,
-                    border = BorderStroke(1.dp, Color.Red),
-                    colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
-                    modifier = Modifier
-                        .sizeIn(minHeight = 48.dp)
-                        .fillMaxWidth(),
-                    ) {
-                    Text(text = "Remove connection", style = MaterialTheme.typography.bodyLarge.copy(
-                        color = ButtonRed, fontWeight = FontWeight.SemiBold
-                    ))
+                    )
                 }
             }
+
+            Column(
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .constrainAs(titleArea) {
+                        top.linkTo(parent.top)
+                        start.linkTo(startImage.end)
+                        end.linkTo(endImage.start)
+                        width = Dimension.fillToConstraints
+                    }
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        textAlign = TextAlign.Start,
+                        fontWeight = FontWeight.Bold,
+                        lineHeight = 20.sp
+                    ),
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = subtitle,
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        textAlign = TextAlign.Start,
+                        color = TextGrayScale,
+                    ),
+                )
+            }
+            if (isOpen.value && serviceProviderInfo != null) {
+                Column(
+                    horizontalAlignment = Alignment.Start,
+                    modifier = Modifier
+                        .constrainAs(expandedArea) {
+                            top.linkTo(titleArea.bottom, margin = 24.dp)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        }
+                ) {
+                    Text(
+                        text = "Login Details",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            textAlign = TextAlign.Start,
+                            color = BlueText,
+                        ),
+                    )
+                    Spacer(Modifier.height(12.dp))
+                    Divider(color = TextBlack, thickness = 1.dp)
+                    Spacer(Modifier.height(12.dp))
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = "First Login",
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    textAlign = TextAlign.Start,
+                                    color = BlueText,
+                                ),
+                            )
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = serviceProviderInfo.firstLoginStamp.getDateTime(),
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    textAlign = TextAlign.Start,
+                                    color = BlueText,
+                                ),
+                            )
+                        }
+                        Spacer(Modifier.height(12.dp))
+                        Divider(color = TextBlack, thickness = 1.dp)
+                        Spacer(Modifier.height(12.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = "Unique eduID",
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    textAlign = TextAlign.Start,
+                                    color = BlueText,
+                                ),
+                            )
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = serviceProviderInfo.uniqueId,
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    textAlign = TextAlign.Start,
+                                    color = BlueText,
+                                ),
+                            )
+                        }
+                        Spacer(Modifier.height(12.dp))
+                        Divider(color = TextBlack, thickness = 1.dp)
+                        Spacer(Modifier.height(12.dp))
+                        Button(
+                            shape = RoundedCornerShape(CornerSize(6.dp)),
+                            onClick = onDeleteButtonClicked,
+                            border = BorderStroke(1.dp, Color.Red),
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
+                            modifier = Modifier
+                                .sizeIn(minHeight = 48.dp)
+                                .fillMaxWidth(),
+                        ) {
+                            Text(
+                                text = "Delete login details *",
+                                style = MaterialTheme.typography.bodyLarge.copy(
+                                    color = ButtonRed, fontWeight = FontWeight.SemiBold
+                                )
+                            )
+                        }
+                        Spacer(Modifier.height(24.dp))
+                        Text(
+                            text = stringResource(R.string.data_info_delete_disclaimer),
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                textAlign = TextAlign.Start,
+                                color = TextBlack,
+                            ),
+                        )
+                        Spacer(Modifier.height(32.dp))
+                    }
+                }
+            }
+            if (isOpen.value && institutionInfo != null) {
+                Column(
+                    horizontalAlignment = Alignment.Start,
+                    modifier = Modifier
+                        .constrainAs(expandedArea) {
+                            top.linkTo(titleArea.bottom, margin = 24.dp)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        }
+                ) {
+                    Text(
+                        text = "Verified by ${institutionInfo.institution} on ${institutionInfo.createdStamp.getDateTime()}",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            textAlign = TextAlign.Start,
+                            color = BlueText,
+                        ),
+                    )
+                    Spacer(Modifier.height(12.dp))
+                    Divider(color = TextBlack, thickness = 1.dp)
+                    Spacer(Modifier.height(12.dp))
+
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = "Institution",
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    textAlign = TextAlign.Start,
+                                    color = BlueText,
+                                ),
+                            )
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = institutionInfo.institution,
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    textAlign = TextAlign.Start,
+                                    color = BlueText,
+                                ),
+                            )
+                        }
+                        Spacer(Modifier.height(12.dp))
+                        Divider(color = TextBlack, thickness = 1.dp)
+                        Spacer(Modifier.height(12.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = "Affiliation(s)",
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    textAlign = TextAlign.Start,
+                                    color = BlueText,
+                                ),
+                            )
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = institutionInfo.affiliationString,
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    textAlign = TextAlign.Start,
+                                    color = BlueText,
+                                ),
+                            )
+                        }
+                        Spacer(Modifier.height(12.dp))
+                        Divider(color = TextBlack, thickness = 1.dp)
+                        Spacer(Modifier.height(12.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = "Link Expires",
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    textAlign = TextAlign.Start,
+                                    color = BlueText,
+                                ),
+                            )
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = institutionInfo.expiryStamp.getDateTime(),
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    textAlign = TextAlign.Start,
+                                    color = BlueText,
+                                ),
+                            )
+                        }
+                        Spacer(Modifier.height(12.dp))
+                        Divider(color = TextBlack, thickness = 1.dp)
+                        Spacer(Modifier.height(12.dp))
+                    }
+                    Button(
+                        shape = RoundedCornerShape(CornerSize(6.dp)),
+                        onClick = onDeleteButtonClicked,
+                        border = BorderStroke(1.dp, Color.Red),
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
+                        modifier = Modifier
+                            .sizeIn(minHeight = 48.dp)
+                            .fillMaxWidth(),
+                    ) {
+                        Text(
+                            text = "Remove connection",
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                color = ButtonRed, fontWeight = FontWeight.SemiBold
+                            )
+                        )
+                    }
+                }
+            }
+            Image(
+                painter = painterResource(endIcon),
+                contentDescription = "",
+                modifier = Modifier
+                    .constrainAs(endImage) {
+                        top.linkTo(titleArea.top)
+                        bottom.linkTo(titleArea.bottom)
+                        end.linkTo(parent.end)
+                    }
+                    .padding(start = 12.dp)
+            )
         }
-        Image(
-            painter = painterResource(endIcon),
-            contentDescription = "",
-            modifier = Modifier
-                .fillMaxWidth(0.15f)
-                .align(Alignment.TopEnd)
-                .padding(top = 12.dp)
-        )
     }
     Spacer(Modifier.height(16.dp))
 }
@@ -235,11 +386,21 @@ private fun Long.getDateTime(): String {
 private fun PreviewInfoTab() {
     EduidAppAndroidTheme {
         InfoTab(
-            title = "OK",
-            subtitle = "OK",
+            header = "Header",
+            title = "OK a very long long long long long long long long long long",
+            subtitle = "OK long long long long long long long long long long long long",
             onClick = { },
             enabled = true,
             endIcon = R.drawable.shield_tick_blue,
+            institutionInfo = PersonalInfo.Companion.InstitutionAccount(
+                role = "Long string here",
+                roleProvider = "Long string here",
+                institution = "Long string here",
+                affiliationString = "Long string here",
+                createdStamp = 1231321321321,
+                expiryStamp = 12313213131313,
+            ),
+            startIconLargeUrl = "https://static.surfconext.nl/media/sp/eduid.png"
         )
     }
 }

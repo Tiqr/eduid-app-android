@@ -13,6 +13,8 @@ import nl.eduid.screens.accountlinked.AccountLinkedScreen
 import nl.eduid.screens.biometric.EnableBiometricScreen
 import nl.eduid.screens.biometric.EnableBiometricViewModel
 import nl.eduid.screens.created.RequestEduIdCreatedScreen
+import nl.eduid.screens.dataactivity.DataAndActivityScreen
+import nl.eduid.screens.dataactivity.DataAndActivityViewModel
 import nl.eduid.screens.deeplinks.DeepLinkScreen
 import nl.eduid.screens.deeplinks.DeepLinkViewModel
 import nl.eduid.screens.firsttimedialog.LinkAccountViewModel
@@ -52,7 +54,7 @@ fun MainGraph(
         val viewModel = hiltViewModel<HomePageViewModel>(it)
         HomePageScreen(viewModel = viewModel,
             onScanForAuthorization = { /*QR authorization for 3rd party*/ },
-            onActivityClicked = { },
+            onActivityClicked = { navController.navigate(Graph.DATA_AND_ACTIVITY) },
             onPersonalInfoClicked = { navController.navigate(Graph.PERSONAL_INFO) },
             onSecurityClicked = {},
             onEnrollWithQR = { navController.navigate(Account.ScanQR.route) },
@@ -283,6 +285,14 @@ fun MainGraph(
             onRoleClicked = { },
             onInstitutionClicked = { },
             goBack = { navController.popBackStack() },
+        )
+    }
+    composable(Graph.DATA_AND_ACTIVITY) {
+        val viewModel = hiltViewModel<DataAndActivityViewModel>(it)
+        DataAndActivityScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
+            onDeleteLoginClicked = {},
         )
     }
     composable(

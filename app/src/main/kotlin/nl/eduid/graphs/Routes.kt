@@ -15,6 +15,7 @@ object Graph {
     const val START = "start"
     const val FIRST_TIME_DIALOG = "first_time_dialog"
     const val PERSONAL_INFO = "personal_info"
+    const val DATA_AND_ACTIVITY = "data_and_activity"
     const val OAUTH = "oauth_mobile_eduid"
 }
 
