@@ -136,10 +136,10 @@ fun PersonalInfoScreenContent(
                     endIcon = R.drawable.edit_icon
                 )
 
-                personalInfo.institutionAccounts.forEach {
+                personalInfo.institutionAccounts.forEachIndexed {index, it ->
                     InfoTab(
-                        header = "Role & institution",
-                        title = it.role,
+                        header = if (index < 1) "Role & institution" else "",
+                        title =  it.role,
                         subtitle = "At ${it.roleProvider}",
                         institutionInfo = it,
                         onClick = { },
