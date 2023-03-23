@@ -13,8 +13,8 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
             if (BuildConfig.DEBUG) {
                 response.body()?.copy(
                     linkedAccounts = listOfNotNull(
+                        response.body()?.linkedAccounts?.firstOrNull(),
                         response.body()?.linkedAccounts?.firstOrNull()?.copy(schacHomeOrganization = "uva.nl"),
-                        response.body()?.linkedAccounts?.firstOrNull()
                     )
                 ) ?: response.body()
             } else {

@@ -59,7 +59,7 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
                 PersonalInfo.Companion.InstitutionAccount(
                     role = affiliation.substring(0,affiliation.indexOf("@")),
                     roleProvider = account.schacHomeOrganization,
-                    institution = affiliation.substring(affiliation.indexOf("@")+1, affiliation.length),
+                    institution = account.schacHomeOrganization,
                     affiliationString = affiliation,
                     createdStamp = account.createdAt,
                     expiryStamp = account.expiresAt,
