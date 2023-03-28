@@ -1,6 +1,7 @@
 package nl.eduid.ui
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -24,18 +25,22 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
 fun PrimaryButton(
-    text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true
+    text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true,
+    buttonBackgroundColor: Color = ButtonGreen,
+    buttonTextColor: Color = Color.White,
+    buttonBorderColor: Color = Color.Transparent,
 ) = Button(
     onClick = onClick,
     enabled = enabled,
     shape = RoundedCornerShape(CornerSize(6.dp)),
-    colors = ButtonDefaults.buttonColors(containerColor = ButtonGreen),
+    border = BorderStroke(1.dp, buttonBorderColor),
+    colors = ButtonDefaults.buttonColors(containerColor = buttonBackgroundColor),
     modifier = modifier.sizeIn(minHeight = 48.dp)
 ) {
     Text(
         text = text,
         style = MaterialTheme.typography.bodyLarge.copy(
-            color = Color.White, fontWeight = FontWeight.SemiBold
+            color = buttonTextColor, fontWeight = FontWeight.SemiBold
         ),
     )
 }

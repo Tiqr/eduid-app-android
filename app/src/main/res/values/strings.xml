@@ -127,6 +127,20 @@
     <string name="data_info_subtitle">Each service you accessed through eduID receives certain personal data (attributes) from your eduID account. E.g. your name &amp; email address or a pseudonym which the service can use to uniquely identify you.</string>
     <string name="data_info_delete_disclaimer">Each service you accessed through eduID receives certain personal data (attributes) from your eduID account. E.g. your name &amp; email address or a pseudonym which the service can use to uniquely identify you.</string>
 
+    <string name="security_title">Security settings</string>
+    <string name="security_subtitle">We provide different methods to sign in to your eduID account.</string>
+
+    <string name="reset_password_title">Change or delete password</string>
+    <string name="reset_password_subtitle">We will send you an email instantly with a link to change or delete your current password.</string>
+    <string name="reset_password_cancel_button">Cancel</string>
+    <string name="reset_password_confirm_button">Send email</string>
+
+    <string name="edit_email_title">Email</string>
+    <string name="edit_email_subtitle">Please enter your new email address. A verification mail will be sent to this address.</string>
+    <string name="edit_email_cancel_button">Cancel</string>
+    <string name="edit_email_confirm_button">Save</string>
+    <string name="edit_email_new_email_title">Your new email address</string>
+
     <string name="scan_title" tools:ignore="ExtraTranslation">Scan the QR-code</string>
     <string name="scan_registration_explaination" tools:ignore="ExtraTranslation">Don\'t see a QR code?</string>
     <string name="scan_registration_explaination1a" tools:ignore="ExtraTranslation">1. Go to </string>
