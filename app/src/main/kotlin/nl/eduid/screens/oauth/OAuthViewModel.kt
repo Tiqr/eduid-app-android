@@ -3,6 +3,7 @@ package nl.eduid.screens.oauth
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.util.Base64
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,8 +20,11 @@ import nl.eduid.R
 import nl.eduid.di.assist.AuthenticationAssistant
 import nl.eduid.di.repository.StorageRepository
 import nl.eduid.screens.scan.ErrorData
+import org.tiqr.data.service.DatabaseService
 import timber.log.Timber
 import java.io.IOException
+import java.security.MessageDigest
+import java.security.SecureRandom
 import javax.inject.Inject
 
 
@@ -29,10 +33,11 @@ class OAuthViewModel @Inject constructor(
     private val repository: StorageRepository,
     private val assistant: AuthenticationAssistant,
     moshi: Moshi,
+    private val db: DatabaseService,
     @ApplicationContext context: Context,
 ) : ViewModel() {
     val uiState: MutableLiveData<UiState> = MutableLiveData(UiState(OAuthStep.Loading))
-
+    private val usePKCE = true
     private var service: AuthorizationService? = null
     private val configAdapter: JsonAdapter<Configuration>
     private var configuration: Configuration = Configuration.EMPTY
@@ -260,6 +265,14 @@ class OAuthViewModel @Inject constructor(
     }
 
     private suspend fun createAuthRequest(loginHint: String? = null) {
+        if (usePKCE) {
+            createAuthRequestViaPKCE(loginHint)
+        } else {
+            createAuthRequestViaAuthenticationFlow(loginHint)
+        }
+    }
+
+    private suspend fun createAuthRequestViaAuthenticationFlow(loginHint: String? = null) {
         val currentAuthState = repository.authState.first()
             ?: throw IllegalStateException("AuthState not available when trying to create AuthorizationRequest")
         val currentClientId = repository.clientId.first()
@@ -271,10 +284,40 @@ class OAuthViewModel @Inject constructor(
             currentClientId,
             ResponseTypeValues.CODE,
             configuration.redirectUri
-        ).setScope(configuration.scope)
+        ).setScopes(configuration.scope, "openid", "profile", "email")
         if (loginHint?.isEmpty() == false) {
             authRequestBuilder.setLoginHint(loginHint)
         }
+        repository.saveCurrentAuthRequest(authRequestBuilder.build())
+    }
+
+    private suspend fun createAuthRequestViaPKCE(loginHint: String? = null) {
+        val secureRandom = SecureRandom()
+        val bytes = ByteArray(64)
+        secureRandom.nextBytes(bytes)
+
+        val encoding = Base64.URL_SAFE or Base64.NO_PADDING or Base64.NO_WRAP
+        val codeVerifier = Base64.encodeToString(bytes, encoding)
+        val digest = MessageDigest.getInstance("SHA-256")
+        val hash = digest.digest(codeVerifier.toByteArray())
+        val codeChallenge = Base64.encodeToString(hash, encoding)
+
+        val currentAuthState = repository.authState.first()
+            ?: throw IllegalStateException("AuthState not available when trying to create AuthorizationRequest")
+        val currentClientId = repository.clientId.first()
+            ?: throw IllegalStateException("clientId not available when trying to create AuthorizationRequest")
+        val currentConfiguration = currentAuthState.authorizationServiceConfiguration
+            ?: throw IllegalStateException("AuthorizationServiceConfiguration not available when trying to create AuthorizationRequest")
+        val authRequestBuilder = AuthorizationRequest.Builder(
+            currentConfiguration,
+            currentClientId,
+            ResponseTypeValues.CODE,
+            configuration.redirectUri
+        ).setCodeVerifier(
+            codeVerifier,
+            codeChallenge,
+            "S246"
+        ).setScope(configuration.scope)
         repository.saveCurrentAuthRequest(authRequestBuilder.build())
     }
 

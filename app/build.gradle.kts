@@ -41,7 +41,7 @@ android {
             "tiqr_config_enroll_scheme" to "eduidenroll",
             "tiqr_config_auth_scheme" to "eduidauth",
             "tiqr_config_token_exchange_enabled" to "false",
-            "appAuthRedirectScheme" to "login.test2.eduid.nl"
+            "appAuthRedirectScheme" to "https"
         )
         applicationId = "nl.eduid"
         versionCode = gitTagCount
@@ -108,6 +108,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    namespace = "nl.eduid"
 }
 
 dependencies {
@@ -156,6 +157,7 @@ dependencies {
     implementation(libs.google.mlkit.barcode)
     implementation(libs.google.firebase.messaging)
     implementation(libs.appauth)
+    implementation(libs.jwtdecode)
 
     implementation(libs.dagger.hilt.android)
     implementation(libs.dagger.hilt.fragment)

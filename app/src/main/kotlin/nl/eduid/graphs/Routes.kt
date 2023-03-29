@@ -18,6 +18,11 @@ object Graph {
     const val OAUTH = "oauth_mobile_eduid"
 }
 
+object OAuth {
+    const val route = "oauth_mobile_eduid"
+    const val uriPattern = "eduid:///client/mobile/oauth-redirect"
+}
+
 object RequestEduIdCreated {
     private const val route = "request_edu_id_created"
     private const val isCreatedArg = "new"
@@ -30,8 +35,8 @@ object RequestEduIdCreated {
 
 object AccountLinked {
     const val route = "account_linked"
-    const val uriPattern = "eduid:///client/mobile/account-linked"
-
+    const val uriPattern = "https://login.test2.eduid.nl/client/mobile/account-linked"
+    const val uriCustomScheme = "eduid:///client/mobile/account-linked"
 }
 
 object RequestEduIdLinkSent {
@@ -109,8 +114,9 @@ sealed class Account(val route: String) {
         })
     }
 
+    //https://eduid.nl/tiqrenroll/?metadata=https%3A%2F%2Flogin.test2.eduid.nl%2Ftiqr%2Fmetadata%3Fenrollment_key%3Dd47fa31400084edc043f8c547c5ed3f6b18d69f5a71f422519911f034b865f96153c8fc1507d81bc05aba95d095489a8d0400909f8aab348e2ac1786b28db572
     object DeepLink : Account("deeplinks") {
-        const val enrollPattern = "https://eduid.nl/tiqrenroll/"
+        const val enrollPattern = "https://eduid.nl/tiqrenroll/?metadata="
         const val authPattern = "https://eduid.nl/tiqrauth/"
     }
 }

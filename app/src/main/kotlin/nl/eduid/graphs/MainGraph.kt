@@ -171,7 +171,9 @@ fun MainGraph(
     }
     //endregion
     //region OAuth-Conditional
-    composable(route = Graph.OAUTH) { entry ->
+    composable(
+        route = OAuth.route,
+    ) { entry ->
         val viewModel = hiltViewModel<OAuthViewModel>(entry)
         ExampleAnimation {
             OAuthScreen(viewModel = viewModel) {

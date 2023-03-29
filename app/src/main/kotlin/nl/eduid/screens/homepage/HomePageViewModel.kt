@@ -2,6 +2,7 @@ package nl.eduid.screens.homepage
 
 import android.content.res.Resources
 import androidx.lifecycle.*
+import com.auth0.android.jwt.JWT
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -32,6 +33,7 @@ class HomePageViewModel @Inject constructor(
 
     val isAuthorizedForDataAccess = repository.isAuthorized.asLiveData()
     val uiState = MutableLiveData(UiState())
+    var jwt: JWT? = null
 
     init {
         viewModelScope.launch {
@@ -43,6 +45,15 @@ class HomePageViewModel @Inject constructor(
             val showSplashForMinimum = async(start = CoroutineStart.LAZY) {
                 delay(SplashWaitTime)
             }
+            val allIdentities = db.getAllIdentities()
+            val authState = repository.authState.firstOrNull()
+            authState?.idToken?.let {
+                jwt = JWT(it)
+            }
+            Timber.e(
+                "All identities: $allIdentities. Token: $jwt"
+            )
+
             joinAll(haveDbEntry, showSplashForMinimum)
             val isEnrolled = if (haveDbEntry.await()) IsEnrolled.Yes else IsEnrolled.No
             uiState.postValue(uiState.value?.copy(isEnrolled = isEnrolled))

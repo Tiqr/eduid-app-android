@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="nl.eduid"
     tools:ignore="UnusedAttribute">
 
     <application
@@ -74,8 +73,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:path="/client/mobile/account-linked"
-                    android:scheme="eduid" />
+                    android:host="login.test2.eduid.nl"
+                    android:pathPrefix="/client/mobile/account-linked"
+                    android:scheme="https" />
 
             </intent-filter>
         </activity>
@@ -90,19 +90,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:path="/client/mobile/oauth-redirect"
-                    android:scheme="eduid" />
-                <data
-                    android:path="/client/mobile/oauth-redirect/"
-                    android:scheme="eduid" />
-                <data
-                    android:host="login.test2.eduid.nl"
-                    android:path="/myconext/api/mobile/swagger-ui/oauth2-redirect.html"
+                    android:host="eduid.nl"
+                    android:pathPrefix="/client/mobile/oauth-redirect"
                     android:scheme="https" />
-                <data
-                    android:host="login.test2.eduid.nl"
-                    android:path="/myconext/api/mobile/swagger-ui/oauth2-redirect.html"
-                    android:scheme="http" />
             </intent-filter>
 
         </activity>
