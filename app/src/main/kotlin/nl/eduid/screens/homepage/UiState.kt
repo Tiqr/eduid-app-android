@@ -10,7 +10,8 @@ data class UiState(
     val errorData: ErrorData? = null,
     val isEnrolled: IsEnrolled = IsEnrolled.Unknown,
 ) {
-    fun haveValidChallenge() = !inProgress && errorData == null && currentChallenge != null
+    fun haveValidChallenge() =
+        !inProgress && errorData == null && currentChallenge != null && promptForAuth == null
 }
 
 sealed class IsEnrolled {

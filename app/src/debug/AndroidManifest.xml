@@ -23,8 +23,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
+            <!--Duplicating this link so enrollment can happen via link/notification for the compose screens as well-->
             <intent-filter android:autoVerify="true">
-                <!--Duplicating this link so enrollment can happen via link/notification for the compose screens as well-->
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -38,22 +38,72 @@
                 <data android:path="/tiqrauth" />
                 <data android:path="/tiqrauth/" />
             </intent-filter>
-            <!-- Unverified (for now) redirect for account created-->
-            <intent-filter>
+
+            <!--
+            Scheme for account created redirect
+            Create an eduID account and sent a verification mail to the user to confirm the ownership of the
+            email. Link in the validation email is https://login.{environment}.eduid.nl/mobile/api/create-from-mobile-api?h=={{hash}}
+            which must NOT be captured by the eduID app.
+            After the account is finalized server-side the user is logged in and the server redirects
+            to https://login.{environment}.eduid.nl/client/mobile/created
+            If the URL is not properly intercepted by the eduID app, then the browser app redirects
+            to eduid://client/mobile/created?new=true
+            -->
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="login.test2.eduid.nl"
+                    android:host="*.eduid.nl"
+                    android:path="/client/mobile/created"
                     android:scheme="https" />
 
-                <!-- We accept the path both with and without the slash -->
-                <data android:path="/client/mobile" />
-                <data android:path="/client/mobile/" />
             </intent-filter>
-            <!--Custom scheme for account created redirect-->
+            <!--
+            Schemes for account linked:
+                Success: https://login.{environment}.eduid.nl/client/mobile/account-linked
+                Failure, EPPN already linked: https://login.{environment}.eduid.nl/client/mobile/eppn-already-linked?email=jdoe%40example.com
+                Failure, session expired: https://login.{environment}.eduid.nl/client/mobile/expired
+            -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*.eduid.nl"
+                    android:path="/client/mobile/account-linked"
+                    android:scheme="https" />
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*.eduid.nl"
+                    android:pathPrefix="/client/mobile/eppn-already-linked"
+                    android:scheme="https" />
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*.eduid.nl"
+                    android:path="/client/mobile/expired"
+                    android:scheme="https" />
+            </intent-filter>
+
+            <!-- The current test2 environment is using a custom scheme for the account created redirect -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -61,21 +111,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
+                    android:host="*"
                     android:path="/client/mobile/created"
                     android:scheme="eduid" />
-
-            </intent-filter>
-            <!--Custom scheme for account linked-->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="login.test2.eduid.nl"
-                    android:pathPrefix="/client/mobile/account-linked"
-                    android:scheme="https" />
 
             </intent-filter>
         </activity>
@@ -83,7 +121,7 @@
         <activity
             android:name="net.openid.appauth.RedirectUriReceiverActivity"
             android:exported="true">
-            <intent-filter>
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -94,7 +132,17 @@
                     android:pathPrefix="/client/mobile/oauth-redirect"
                     android:scheme="https" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*"
+                    android:pathPrefix="/client/mobile/oauth-redirect"
+                    android:scheme="eduid" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".screens.biometric.SignInWithBiometricsActivity"

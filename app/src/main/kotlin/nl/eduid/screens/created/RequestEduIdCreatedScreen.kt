@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
+import nl.eduid.RequireOAuth
 import nl.eduid.screens.homepage.HomePageViewModel
 import nl.eduid.screens.homepage.UiState
 import nl.eduid.ui.AlertDialogWithSingleButton
@@ -35,23 +36,22 @@ fun RequestEduIdCreatedScreen(
         withBackIcon = false,
     ) {
         val uiState by viewModel.uiState.observeAsState(initial = UiState())
-        var isProcessing by rememberSaveable { mutableStateOf(false) }
-        var authOngoing by rememberSaveable { mutableStateOf(false) }
+        var requireOAuth by rememberSaveable { mutableStateOf(RequireOAuth()) }
 
-        if (isProcessing && uiState.promptForAuth != null) {
+        if (requireOAuth.isProcessing && uiState.promptForAuth != null) {
             val currentGoToAuth by rememberUpdatedState(newValue = goToOAuth)
             LaunchedEffect(key1 = viewModel) {
-                isProcessing = false
-                authOngoing = true
+                requireOAuth = RequireOAuth(isProcessing = false, isOAuthOngoing = true)
+                viewModel.clearLaunchOAuth()
                 currentGoToAuth()
             }
 
         }
-        if ((isProcessing || authOngoing) && uiState.haveValidChallenge()) {
+        if (requireOAuth.isProcessing && uiState.haveValidChallenge()) {
             val currentGoToRegistrationPinSetup by rememberUpdatedState(newValue = goToRegistrationPinSetup)
             LaunchedEffect(key1 = viewModel) {
-                isProcessing = false
-                authOngoing = false
+                //Reset the composable UI state to avoid potential backstack navigation issues
+                requireOAuth = RequireOAuth()
                 currentGoToRegistrationPinSetup(uiState.currentChallenge as EnrollmentChallenge)
             }
         }
@@ -62,7 +62,7 @@ fun RequestEduIdCreatedScreen(
             RequestEduIdCreatedContent(
                 uiState = uiState,
                 startEnrollment = {
-                    isProcessing = true
+                    requireOAuth = RequireOAuth(isProcessing = true)
                     viewModel.startEnrollment()
                 },
                 dismissError = viewModel::dismissError

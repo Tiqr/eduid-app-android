@@ -64,3 +64,5 @@ lint/tmp/
 
 keystore.jks
 keystore.jks.base64.txt
+app/keystore/testing.keystore
+app/keystore/keystorepass.txt

@@ -12,7 +12,7 @@ object Graph {
     const val REQUEST_EDU_ID_ACCOUNT = "request_edu_id_account"
     const val REQUEST_EDU_ID_FORM = "request_edu_id_details"
 
-    const val START = "start"
+    const val WELCOME_START = "start"
     const val FIRST_TIME_DIALOG = "first_time_dialog"
     const val PERSONAL_INFO = "personal_info"
     const val OAUTH = "oauth_mobile_eduid"
@@ -20,23 +20,19 @@ object Graph {
 
 object OAuth {
     const val route = "oauth_mobile_eduid"
-    const val uriPattern = "eduid:///client/mobile/oauth-redirect"
 }
 
 object RequestEduIdCreated {
-    private const val route = "request_edu_id_created"
-    private const val isCreatedArg = "new"
-    const val routeWithArgs = "${route}/{${isCreatedArg}}"
-    const val uriPattern = "eduid:///client/mobile/created?new={${isCreatedArg}}"
-
-    fun decodeFromEntry(entry: NavBackStackEntry): Boolean =
-        (entry.arguments?.getString(isCreatedArg, "true") ?: "false").toBoolean()
+    const val route = "request_edu_id_created"
+    const val uriPatternHttps = "https://client/mobile/created"
+    const val uriPatternCustomScheme = "eduid:///client/mobile/created"
 }
 
 object AccountLinked {
     const val route = "account_linked"
-    const val uriPattern = "https://login.test2.eduid.nl/client/mobile/account-linked"
-    const val uriCustomScheme = "eduid:///client/mobile/account-linked"
+    const val uriPatternOK = "https://login.test2.eduid.nl/client/mobile/account-linked"
+    const val uriPatternFailed = "https://login.test2.eduid.nl/client/mobile/eppn-already-linked"
+    const val uriPatternExpired = "https://login.test2.eduid.nl/client/mobile/expired"
 }
 
 object RequestEduIdLinkSent {

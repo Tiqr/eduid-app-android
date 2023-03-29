@@ -73,6 +73,7 @@ class OAuthViewModel @Inject constructor(
     }
 
     fun continueWithFetchToken(intent: Intent?) = viewModelScope.launch {
+        Timber.d("Continue with fetch token")
         val currentAuthState = repository.authState.first()
         when {
             intent == null -> {
@@ -81,13 +82,16 @@ class OAuthViewModel @Inject constructor(
                     message = "Did not receive valid authentication."
                 )
             }
+
             currentAuthState == null -> {
                 setError(
                     title = "Authorization failed",
                     message = "No authorization state retained - reauthorization required."
                 )
             }
+
             currentAuthState.isAuthorized -> {
+                Timber.d("Current state is already authorized.")
                 uiState.postValue(
                     UiState(
                         oauthStep = OAuthStep.Authorized,
@@ -95,9 +99,11 @@ class OAuthViewModel @Inject constructor(
                     )
                 )
             }
+
             else -> {
                 val response = AuthorizationResponse.fromIntent(intent)
                 val ex = AuthorizationException.fromIntent(intent)
+                Timber.d("Processing authorization response from intent.")
                 if (response != null || ex != null) {
                     currentAuthState.update(response, ex)
                     repository.saveCurrentAuthState(currentAuthState)
@@ -316,12 +322,16 @@ class OAuthViewModel @Inject constructor(
         ).setCodeVerifier(
             codeVerifier,
             codeChallenge,
-            "S246"
+            "S256"
         ).setScope(configuration.scope)
         repository.saveCurrentAuthRequest(authRequestBuilder.build())
     }
 
     override fun onCleared() {
         service?.dispose()
+    }
+
+    fun authorizationLaunched() {
+        uiState.value = uiState.value?.copy(oauthStep = OAuthStep.Launched)
     }
 }

@@ -28,7 +28,7 @@ class HomePageViewModel @Inject constructor(
     private val enroll: EnrollmentRepository,
     private val auth: AuthenticationRepository,
     private val repository: StorageRepository,
-    private val eduIdApi: EduIdApi
+    private val eduIdApi: EduIdApi,
 ) : BaseViewModel(moshi) {
 
     val isAuthorizedForDataAccess = repository.isAuthorized.asLiveData()
@@ -129,5 +129,9 @@ class HomePageViewModel @Inject constructor(
                 )
             )
         }
+
+    fun clearLaunchOAuth() {
+        uiState.value = uiState.value?.copy(promptForAuth = null)
+    }
 
 }
