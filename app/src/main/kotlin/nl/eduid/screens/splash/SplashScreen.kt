@@ -18,7 +18,7 @@ import nl.eduid.R
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.SplashScreenBackgroundColor
 
-const val SplashWaitTime: Long = 2000
+const val SplashWaitTime: Long = 800
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

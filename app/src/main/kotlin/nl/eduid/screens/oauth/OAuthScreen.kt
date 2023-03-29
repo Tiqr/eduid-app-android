@@ -24,10 +24,9 @@ import nl.eduid.ui.EduIdTopAppBar
 @Composable
 fun OAuthScreen(
     viewModel: OAuthViewModel,
-    continueWith: () -> Unit,
-    onBackPressed: () -> Unit,
+    goToPrevious: () -> Unit,
 ) = EduIdTopAppBar(
-    onBackClicked = onBackPressed,
+    onBackClicked = goToPrevious,
 ) {
     val uiState by viewModel.uiState.observeAsState(UiState(OAuthStep.Loading))
     var isAuthorizationLaunched by rememberSaveable { mutableStateOf(false) }
@@ -41,9 +40,10 @@ fun OAuthScreen(
         })
 
     if (isFetchingToken && uiState.oauthStep is OAuthStep.Authorized) {
+        val currentGoToPrevious by rememberUpdatedState(newValue = goToPrevious)
         LaunchedEffect(viewModel) {
             isFetchingToken = false
-            continueWith()
+            currentGoToPrevious()
         }
     }
     OAuthContent(

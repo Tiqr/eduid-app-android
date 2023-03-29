@@ -15,13 +15,14 @@ object Graph {
     const val START = "start"
     const val FIRST_TIME_DIALOG = "first_time_dialog"
     const val PERSONAL_INFO = "personal_info"
+    const val OAUTH = "oauth_mobile_eduid"
 }
 
 object RequestEduIdCreated {
     private const val route = "request_edu_id_created"
     private const val isCreatedArg = "new"
     const val routeWithArgs = "${route}/{${isCreatedArg}}"
-    val uriPattern = "eduid:///client/mobile/created?new={${isCreatedArg}}"
+    const val uriPattern = "eduid:///client/mobile/created?new={${isCreatedArg}}"
 
     fun decodeFromEntry(entry: NavBackStackEntry): Boolean =
         (entry.arguments?.getString(isCreatedArg, "true") ?: "false").toBoolean()
@@ -29,7 +30,7 @@ object RequestEduIdCreated {
 
 object AccountLinked {
     const val route = "account_linked"
-    val uriPattern = "https://mijn.test2.eduid.nl/myconext/api/sp/oidc/redirect"
+    const val uriPattern = "eduid:///client/mobile/account-linked"
 
 }
 
@@ -54,20 +55,6 @@ object RequestEduIdLinkSent {
             ""
         }
     }
-}
-
-object OAuth {
-    private const val route = "oauth_mobile_eduid"
-    const val nextStepArg = "confirm_phone_arg"
-    const val routeForEnrollment = "$route/enroll"
-    const val routeForAuthorization = "$route/authorize"
-    const val routeForOAuth = "$route/apiauth"
-    const val routeWithArgs = "$route/{$nextStepArg}"
-    val arguments = listOf(navArgument(nextStepArg) {
-        type = NavType.StringType
-        nullable = false
-        defaultValue = routeForEnrollment
-    })
 }
 
 sealed class PhoneNumberRecovery(val route: String) {

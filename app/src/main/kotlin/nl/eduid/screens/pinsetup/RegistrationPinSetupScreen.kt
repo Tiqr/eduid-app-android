@@ -2,25 +2,31 @@ package nl.eduid.screens.pinsetup
 
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import nl.eduid.BuildConfig
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
-import nl.eduid.ui.theme.findActivity
-import org.tiqr.data.model.Challenge
 
 @Composable
 fun RegistrationPinSetupScreen(
     viewModel: RegistrationPinSetupViewModel,
     closePinSetupFlow: () -> Unit,
-    goToBiometricEnable: (Challenge, String) -> Unit,
-    onRegistrationDone: () -> Unit
+    goToNextStep: (NextStep) -> Unit,
+    promptAuth: () -> Unit
 ) {
     BackHandler { viewModel.handleBackNavigation(closePinSetupFlow) }
     //Because the same screen is being used for creating the PIN as well as confirming the PIN
@@ -30,35 +36,69 @@ fun RegistrationPinSetupScreen(
     EduIdTopAppBar(
         onBackClicked = dispatcher::onBackPressed,
     ) {
-        val context = LocalContext.current
         val uiState by viewModel.uiState.observeAsState(initial = UiState())
-        var validationInProgress by rememberSaveable { mutableStateOf(false) }
+        val isAuthorized by viewModel.isAuthorized.observeAsState(initial = null)
 
-        if (validationInProgress && uiState.promptBiometric != null) {
-            val currentGoToBiometric by rememberUpdatedState(goToBiometricEnable)
-            val currentRegistrationDone by rememberUpdatedState(onRegistrationDone)
-            LaunchedEffect(viewModel) {
-                validationInProgress = false
-                if (viewModel.challenge != null) {
-                    if (uiState.promptBiometric == true) {
-                        currentGoToBiometric(viewModel.challenge, uiState.pinValue)
-                    }
-                    if (uiState.promptBiometric == false) {
-                        currentRegistrationDone()
-                    }
-                }
+        RegistrationPinSetupContent(
+            uiState = uiState,
+            isAuthorized = isAuthorized,
+            goToNextStep = goToNextStep,
+            promptAuth = promptAuth,
+            viewModel = viewModel,
+        )
+    }
+}
+
+@Composable
+private fun RegistrationPinSetupContent(
+    uiState: UiState,
+    isAuthorized: Boolean? = null,
+    goToNextStep: (NextStep) -> Unit = {},
+    promptAuth: () -> Unit = {},
+    viewModel: RegistrationPinSetupViewModel,
+) {
+    var enrollmentInProgress by rememberSaveable { mutableStateOf(false) }
+    var authInProgress by rememberSaveable { mutableStateOf(false) }
+    val context = LocalContext.current
+    val owner = LocalLifecycleOwner.current
+
+    if (enrollmentInProgress && isAuthorized != null) {
+        val currentPromptAuth by rememberUpdatedState(promptAuth)
+        if (isAuthorized == false) {
+            LaunchedEffect(owner) {
+                authInProgress = true
+                enrollmentInProgress = false
+                currentPromptAuth()
             }
+        }
+    }
+    if ((enrollmentInProgress || authInProgress) && uiState.nextStep != null) {
+        val currentGoToNextStep by rememberUpdatedState(goToNextStep)
+        LaunchedEffect(owner) {
+            enrollmentInProgress = false
+            authInProgress = false
+            currentGoToNextStep(uiState.nextStep)
+        }
+    }
+
+    Column(modifier = Modifier.fillMaxSize()) {
+        if (BuildConfig.DEBUG) {
+            Text(
+                text = "PinStep: ${uiState.pinStep}. Enrolling? $enrollmentInProgress OAuth $authInProgress. Next step: ${uiState.nextStep}",
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.Start,
+                modifier = Modifier.fillMaxWidth(),
+            )
         }
 
         if (uiState.errorData != null) {
             AlertDialogWithSingleButton(
-                title = uiState.errorData!!.title,
-                explanation = uiState.errorData!!.message,
+                title = uiState.errorData.title,
+                explanation = uiState.errorData.message,
                 buttonLabel = stringResource(R.string.button_ok),
                 onDismiss = viewModel::dismissError
             )
         }
-
         PinContent(
             pinCode = if (uiState.pinStep is PinStep.PinCreate) {
                 uiState.pinValue
@@ -83,10 +123,10 @@ fun RegistrationPinSetupScreen(
             },
             onClick = {
                 viewModel.submitPin(context, uiState.pinStep)
-                validationInProgress = uiState.pinStep == PinStep.PinConfirm
+                enrollmentInProgress = uiState.pinStep == PinStep.PinConfirm
             },
             paddingValues = PaddingValues(),
-            isProcessing = false
+            isProcessing = enrollmentInProgress || authInProgress
         )
     }
 }

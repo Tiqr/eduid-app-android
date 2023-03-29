@@ -18,7 +18,7 @@ retrofit = "2.9.0"
 moshi = "1.14.0"
 
 [libraries]
-android-gradle = "com.android.tools.build:gradle:7.4.0"
+android-gradle = "com.android.tools.build:gradle:7.4.2"
 
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
