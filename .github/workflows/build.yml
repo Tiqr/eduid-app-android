@@ -28,7 +28,7 @@ jobs:
       - name: Restore testing keystore required for redesign app deep linking to work
         run: |
           echo "${{ secrets.ANDROID_TESTING_KEYSTORE }}" > testing.keystore.asc
-          mkdir app/keystore
+          mkdir -p app/keystore
           gpg -d --passphrase "${{ secrets.ANDROID_GPG_PASSPHRASE }}" --batch testing.keystore.asc > ./app/keystore/testing.keystore
           rm testing.keystore.asc
 
