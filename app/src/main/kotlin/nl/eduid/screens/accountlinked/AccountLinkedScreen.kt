@@ -71,9 +71,9 @@ private fun AccountLinkedContent(
         Spacer(Modifier.height(12.dp))
 
         InfoTab(
-            header = "Email",
-            title = personalInfo.email,
-            subtitle = "Provided by ${personalInfo.emailProvider}",
+            header = "Name",
+            title = personalInfo.name,
+            subtitle = "Provided by ${personalInfo.nameProvider}",
             onClick = { },
             endIcon = R.drawable.shield_tick_blue
         )

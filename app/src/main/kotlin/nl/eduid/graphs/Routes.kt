@@ -24,7 +24,7 @@ object OAuth {
 
 object RequestEduIdCreated {
     const val route = "request_edu_id_created"
-    const val uriPatternHttps = "https://client/mobile/created"
+    const val uriPatternHttps = "https://login.test2.eduid.nl/client/mobile/created"
     const val uriPatternCustomScheme = "eduid:///client/mobile/created"
 }
 
