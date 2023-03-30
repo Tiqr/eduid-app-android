@@ -45,14 +45,10 @@ class HomePageViewModel @Inject constructor(
             val showSplashForMinimum = async(start = CoroutineStart.LAZY) {
                 delay(SplashWaitTime)
             }
-            val allIdentities = db.getAllIdentities()
             val authState = repository.authState.firstOrNull()
             authState?.idToken?.let {
                 jwt = JWT(it)
             }
-            Timber.e(
-                "All identities: $allIdentities. Token: $jwt"
-            )
 
             joinAll(haveDbEntry, showSplashForMinimum)
             val isEnrolled = if (haveDbEntry.await()) IsEnrolled.Yes else IsEnrolled.No
