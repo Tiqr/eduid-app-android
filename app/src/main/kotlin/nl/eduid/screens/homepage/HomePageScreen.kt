@@ -23,7 +23,8 @@ fun HomePageScreen(
         IsEnrolled.Unknown -> SplashScreen()
         IsEnrolled.No -> HomePageNoAccountContent(
             onScan = onEnrollWithQR,
-            onRequestEduId = onCreateEduIdAccount
+            onRequestEduId = onCreateEduIdAccount,
+            onSignIn = launchOAuth
         )
         IsEnrolled.Yes -> HomePageWithAccountContent(
             isAuthorizedForDataAccess = isAuthorizedForDataAccess,
