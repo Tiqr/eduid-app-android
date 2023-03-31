@@ -4,6 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -22,11 +24,21 @@ import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
-fun StartScreen(
-    onNext: () -> Unit,
+fun WelcomeStartScreen(
+    viewModel: WelcomeStartViewModel,
+    onNext: (Boolean) -> Unit,
 ) = EduIdTopAppBar(
     withBackIcon = false
 ) {
+    val uiState by viewModel.uiState.observeAsState(UiState())
+
+    WelcomeStartContent(uiState) {
+        onNext(uiState.isAccountLinked)
+    }
+}
+
+@Composable
+private fun WelcomeStartContent(uiState: UiState, onNext: () -> Unit = {}) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -34,8 +46,7 @@ fun StartScreen(
     ) {
         val (bottomButton, bottomSpacer) = createRefs()
         Column(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
             Text(
                 text = stringResource(R.string.start_title),
@@ -44,30 +55,32 @@ fun StartScreen(
                 modifier = Modifier.fillMaxWidth(),
             )
 
+            if (uiState.isLoading) {
+                LinearProgressIndicator(
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
             Spacer(Modifier.height(40.dp))
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start,
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Image(
                     painter = painterResource(R.drawable.green1icon),
                     contentDescription = "",
-                    modifier = Modifier
-                        .size(width = 32.dp, height = 32.dp),
+                    modifier = Modifier.size(width = 32.dp, height = 32.dp),
                 )
                 Text(
-                    style = MaterialTheme.typography.bodyLarge,
-                    text = buildAnnotatedString {
+                    style = MaterialTheme.typography.bodyLarge, text = buildAnnotatedString {
                         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
                             append(stringResource(R.string.start_item_one_bold))
                         }
                         append(" ")
                         append(stringResource(R.string.start_item_one_regular))
-                    },
-                    modifier = Modifier.padding(start = 8.dp)
+                    }, modifier = Modifier.padding(start = 8.dp)
                 )
             }
 
@@ -76,25 +89,21 @@ fun StartScreen(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start,
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Image(
                     painter = painterResource(R.drawable.green2icon),
                     contentDescription = "",
-                    modifier = Modifier
-                        .size(width = 32.dp, height = 32.dp),
+                    modifier = Modifier.size(width = 32.dp, height = 32.dp),
                 )
                 Text(
-                    style = MaterialTheme.typography.bodyLarge,
-                    text = buildAnnotatedString {
+                    style = MaterialTheme.typography.bodyLarge, text = buildAnnotatedString {
                         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
                             append(stringResource(R.string.start_item_two_bold))
                         }
                         append(" ")
                         append(stringResource(R.string.start_item_two_regular))
-                    },
-                    modifier = Modifier.padding(start = 8.dp)
+                    }, modifier = Modifier.padding(start = 8.dp)
                 )
             }
 
@@ -103,25 +112,21 @@ fun StartScreen(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start,
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Image(
                     painter = painterResource(R.drawable.green3icon),
                     contentDescription = "",
-                    modifier = Modifier
-                        .size(width = 32.dp, height = 32.dp),
+                    modifier = Modifier.size(width = 32.dp, height = 32.dp),
                 )
                 Text(
-                    style = MaterialTheme.typography.bodyLarge,
-                    text = buildAnnotatedString {
+                    style = MaterialTheme.typography.bodyLarge, text = buildAnnotatedString {
                         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
                             append(stringResource(R.string.start_item_three_bold))
                         }
                         append(" ")
                         append(stringResource(R.string.start_item_three_regular))
-                    },
-                    modifier = Modifier.padding(start = 8.dp)
+                    }, modifier = Modifier.padding(start = 8.dp)
                 )
             }
 
@@ -138,6 +143,7 @@ fun StartScreen(
 
         PrimaryButton(
             text = stringResource(R.string.start_button),
+            enabled = !uiState.isLoading,
             onClick = onNext,
             modifier = Modifier
                 .fillMaxWidth()
@@ -159,6 +165,6 @@ fun StartScreen(
 @Composable
 private fun PreviewStartScreen() {
     EduidAppAndroidTheme {
-        StartScreen({})
+        WelcomeStartContent(UiState(true, false)) {}
     }
 }

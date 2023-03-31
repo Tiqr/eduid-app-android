@@ -36,7 +36,8 @@ import nl.eduid.screens.requestidrecovery.PhoneRequestCodeViewModel
 import nl.eduid.screens.requestidstart.RequestEduIdStartScreen
 import nl.eduid.screens.scan.ScanScreen
 import nl.eduid.screens.scan.StatelessScanViewModel
-import nl.eduid.screens.start.StartScreen
+import nl.eduid.screens.start.WelcomeStartScreen
+import nl.eduid.screens.start.WelcomeStartViewModel
 import org.tiqr.data.model.EnrollmentChallenge
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -89,8 +90,7 @@ fun MainGraph(
         arguments = Account.EnrollPinSetup.arguments,
     ) { entry ->
         val viewModel = hiltViewModel<RegistrationPinSetupViewModel>(entry)
-        RegistrationPinSetupScreen(
-            viewModel = viewModel,
+        RegistrationPinSetupScreen(viewModel = viewModel,
             closePinSetupFlow = { navController.popBackStack() },
             goToNextStep = { nextStep ->
                 when (nextStep) {
@@ -102,6 +102,7 @@ fun MainGraph(
                             }
                         }
                     }
+
                     is NextStep.PromptBiometric -> {
                         navController.navigate(
                             WithChallenge.EnableBiometric.buildRouteForEnrolment(
@@ -111,8 +112,8 @@ fun MainGraph(
                         ) {
                             popUpTo(Graph.HOME_PAGE)
                         }
-
                     }
+
                     NextStep.Recovery -> navController.navigate(PhoneNumberRecovery.RequestCode.route) {
                         popUpTo(Graph.HOME_PAGE)
                     }
@@ -171,7 +172,9 @@ fun MainGraph(
     }
     //endregion
     //region OAuth-Conditional
-    composable(route = Graph.OAUTH) { entry ->
+    composable(
+        route = OAuth.route,
+    ) { entry ->
         val viewModel = hiltViewModel<OAuthViewModel>(entry)
         ExampleAnimation {
             OAuthScreen(viewModel = viewModel) {
@@ -201,14 +204,16 @@ fun MainGraph(
         )
     }
     composable(
-        route = RequestEduIdCreated.routeWithArgs, deepLinks = listOf(navDeepLink {
-            uriPattern = RequestEduIdCreated.uriPattern
-        })
+        route = RequestEduIdCreated.route, deepLinks = listOf(
+            navDeepLink {
+                uriPattern = RequestEduIdCreated.uriPatternHttps
+            }, navDeepLink {
+                uriPattern = RequestEduIdCreated.uriPatternCustomScheme
+            })
     ) { entry ->
         val viewModel = hiltViewModel<HomePageViewModel>(entry)
-        val isCreated = RequestEduIdCreated.decodeFromEntry(entry)
         RequestEduIdCreatedScreen(
-            justCreated = isCreated,
+            justCreated = true,
             viewModel = viewModel,
             goToOAuth = { navController.navigate(Graph.OAUTH) },
             goToRegistrationPinSetup = { challenge ->
@@ -252,7 +257,7 @@ fun MainGraph(
         ConfirmCodeScreen(viewModel = viewModel,
             phoneNumber = PhoneNumberRecovery.ConfirmCode.decodeFromEntry(entry),
             goToStartScreen = {
-                navController.navigate(Graph.START) {
+                navController.navigate(Graph.WELCOME_START) {
                     //Flow for phone number recovery completed, remove from stack entirely
                     popUpTo(PhoneNumberRecovery.RequestCode.route) { inclusive = true }
                 }
@@ -261,19 +266,47 @@ fun MainGraph(
     //endregion
 
     //region Welcome-FirstTime
-    composable(Graph.START) {
-        StartScreen(
-            onNext = { navController.goToWithPopCurrent(Graph.FIRST_TIME_DIALOG) },
-        )
+    composable(Graph.WELCOME_START) { entry ->
+        val viewModel = hiltViewModel<WelcomeStartViewModel>(entry)
+        WelcomeStartScreen(
+            viewModel,
+        ) { accountIsAlreadyLinked ->
+            if (accountIsAlreadyLinked) {
+                navController.goToWithPopCurrent(Graph.HOME_PAGE)
+            } else {
+                navController.goToWithPopCurrent(Graph.FIRST_TIME_DIALOG)
+            }
+        }
     }
-
     composable(Graph.FIRST_TIME_DIALOG) { entry ->
         val viewModel = hiltViewModel<LinkAccountViewModel>(entry)
         FirstTimeDialogScreen(viewModel = viewModel,
             goToAccountLinked = { navController.goToWithPopCurrent(AccountLinked.route) },
             skipThis = { navController.goToWithPopCurrent(Graph.HOME_PAGE) })
     }
+    //region Account Linked
+    composable(
+        route = AccountLinked.route, deepLinks = listOf(
+            navDeepLink {
+                uriPattern = AccountLinked.uriPatternOK
+            },
+            navDeepLink {
+                uriPattern = AccountLinked.uriPatternFailed
+            },
+            navDeepLink {
+                uriPattern = AccountLinked.uriPatternExpired
+            },
+        )
+    ) {
+        val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
+        AccountLinkedScreen(
+            viewModel = viewModel,
+            continueToHome = { navController.goToWithPopCurrent(Graph.HOME_PAGE) },
+        )
+    }
     //endregion
+    //endregion
+    //region Personal Info
     composable(Graph.PERSONAL_INFO) {
         val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
         PersonalInfoScreen(
@@ -285,19 +318,7 @@ fun MainGraph(
             goBack = { navController.popBackStack() },
         )
     }
-    composable(
-        route = AccountLinked.route,
-        deepLinks = listOf(navDeepLink {
-            uriPattern = AccountLinked.uriPattern
-            action = Intent.ACTION_VIEW
-        })
-    ) {
-        val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
-        AccountLinkedScreen(
-            viewModel = viewModel,
-            continueToHome = { navController.goToWithPopCurrent(Graph.HOME_PAGE) },
-        )
-    }
+    //endregion
 }
 
 private fun NavController.goToEmailSent(email: String) = navigate(

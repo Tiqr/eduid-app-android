@@ -22,6 +22,14 @@ fun String.runCommand(workingDir: File = file("./")): String {
     return proc.inputStream.bufferedReader().readText().trim()
 }
 
+val devKeystorePassFile = File("${projectDir}/keystore/keystorepass.txt")
+val keystorePass = if (devKeystorePassFile.exists()) {
+    devKeystorePassFile.readText().trim()
+} else {
+    //Used by the github action
+    System.getenv("ANDROID_KEYSTORE_PASSWORD")
+}
+
 android {
     compileSdk = libs.versions.android.sdk.compile.get().toInt()
     buildToolsVersion = libs.versions.android.buildTools.get()
@@ -41,7 +49,7 @@ android {
             "tiqr_config_enroll_scheme" to "eduidenroll",
             "tiqr_config_auth_scheme" to "eduidauth",
             "tiqr_config_token_exchange_enabled" to "false",
-            "appAuthRedirectScheme" to "login.test2.eduid.nl"
+            "appAuthRedirectScheme" to "eduid"
         )
         applicationId = "nl.eduid"
         versionCode = gitTagCount
@@ -58,7 +66,15 @@ android {
             useSupportLibrary = true
         }
     }
-
+    signingConfigs {
+        //Must use a unified debug signing certificate, otherwise deep linking verification will fail on Android>=12
+        getByName("debug") {
+            storeFile = file("keystore/testing.keystore")
+            storePassword = keystorePass
+            keyAlias = "androiddebugkey"
+            keyPassword = keystorePass
+        }
+    }
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
@@ -108,6 +124,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    namespace = "nl.eduid"
 }
 
 dependencies {
@@ -156,6 +173,7 @@ dependencies {
     implementation(libs.google.mlkit.barcode)
     implementation(libs.google.firebase.messaging)
     implementation(libs.appauth)
+    implementation(libs.jwtdecode)
 
     implementation(libs.dagger.hilt.android)
     implementation(libs.dagger.hilt.fragment)
