@@ -9,27 +9,35 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        submodules: recursive
-    - uses: actions/setup-java@v2
-      with:
-        java-version: 11
-        distribution: 'temurin'
-        cache: 'gradle'
-    - name: Build nl.eduid Release APK
-      run: bash ./gradlew assembleRelease --stacktrace
-    - name: Upload nl.eduid Release APK
-      uses: actions/upload-artifact@v1
-      with:
-        name: eduID-${{ github.sha }}.apk
-        path: app/build/outputs/apk/release/app-release-unsigned.apk
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - uses: actions/setup-java@v2
+        with:
+          java-version: 11
+          distribution: 'temurin'
+          cache: 'gradle'
+      - name: Build nl.eduid Release APK
+        run: bash ./gradlew assembleRelease --stacktrace
+      - name: Upload nl.eduid Release APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: eduID-${{ github.sha }}.apk
+          path: app/build/outputs/apk/release/app-release-unsigned.apk
+      - name: Restore testing keystore required for redesign app deep linking to work
+        run: |
+          echo "${{ secrets.ANDROID_TESTING_KEYSTORE }}" > testing.keystore.asc
+          mkdir -p app/keystore
+          gpg -d --passphrase "${{ secrets.ANDROID_GPG_PASSPHRASE }}" --batch testing.keystore.asc > ./app/keystore/testing.keystore
+          rm testing.keystore.asc
 
-    - name: Build nl.eduid.testing Debug APK
-      run: bash ./gradlew assembleDebug --stacktrace
-    - name: Upload nl.eduid.testing Debug APK
-      uses: actions/upload-artifact@v1
-      with:
-        name: eduID-${{ github.sha }}-debug.apk
-        path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Build nl.eduid.testing Debug APK
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_TESTING_KEYSTORE_PASSPHRASE }}
+        run: bash ./gradlew assembleDebug --stacktrace
+      - name: Upload nl.eduid.testing Debug APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: eduID-${{ github.sha }}-debug.apk
+          path: app/build/outputs/apk/debug/app-debug.apk

@@ -78,6 +78,7 @@ androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "
 androidx-camera-extensions = "androidx.camera:camera-extensions:1.0.0-alpha30"
 
 appauth = "net.openid:appauth:0.11.1"
+jwtdecode = "com.auth0.android:jwtdecode:2.0.0"
 google-gms-gradle = "com.google.gms:google-services:4.3.14"
 google-android-material = "com.google.android.material:material:1.7.0"
 google-mlkit-barcode = "com.google.mlkit:barcode-scanning:17.0.2"

@@ -77,13 +77,6 @@ private fun AccountLinkedContent(
             onClick = { },
             endIcon = R.drawable.shield_tick_blue
         )
-        InfoTab(
-            header = "Email",
-            title = personalInfo.email,
-            subtitle = "Provided by ${personalInfo.emailProvider}",
-            onClick = { },
-            endIcon = R.drawable.shield_tick_blue
-        )
 
         personalInfo.institutionAccounts.forEach {
             InfoTab(

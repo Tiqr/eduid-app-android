@@ -12,7 +12,7 @@ object Graph {
     const val REQUEST_EDU_ID_ACCOUNT = "request_edu_id_account"
     const val REQUEST_EDU_ID_FORM = "request_edu_id_details"
 
-    const val START = "start"
+    const val WELCOME_START = "start"
     const val FIRST_TIME_DIALOG = "first_time_dialog"
     const val PERSONAL_INFO = "personal_info"
     const val DATA_AND_ACTIVITY = "data_and_activity"
@@ -23,20 +23,21 @@ object Graph {
     const val TWO_FA_DETAIL = "2fa_detail"
 }
 
-object RequestEduIdCreated {
-    private const val route = "request_edu_id_created"
-    private const val isCreatedArg = "new"
-    const val routeWithArgs = "${route}/{${isCreatedArg}}"
-    const val uriPattern = "eduid:///client/mobile/created?new={${isCreatedArg}}"
+object OAuth {
+    const val route = "oauth_mobile_eduid"
+}
 
-    fun decodeFromEntry(entry: NavBackStackEntry): Boolean =
-        (entry.arguments?.getString(isCreatedArg, "true") ?: "false").toBoolean()
+object RequestEduIdCreated {
+    const val route = "request_edu_id_created"
+    const val uriPatternHttps = "https://login.test2.eduid.nl/client/mobile/created"
+    const val uriPatternCustomScheme = "eduid:///client/mobile/created"
 }
 
 object AccountLinked {
     const val route = "account_linked"
-    const val uriPattern = "eduid:///client/mobile/account-linked"
-
+    const val uriPatternOK = "https://login.test2.eduid.nl/client/mobile/account-linked"
+    const val uriPatternFailed = "https://login.test2.eduid.nl/client/mobile/eppn-already-linked"
+    const val uriPatternExpired = "https://login.test2.eduid.nl/client/mobile/expired"
 }
 
 object RequestEduIdLinkSent {
@@ -114,8 +115,9 @@ sealed class Account(val route: String) {
         })
     }
 
+    //https://eduid.nl/tiqrenroll/?metadata=https%3A%2F%2Flogin.test2.eduid.nl%2Ftiqr%2Fmetadata%3Fenrollment_key%3Dd47fa31400084edc043f8c547c5ed3f6b18d69f5a71f422519911f034b865f96153c8fc1507d81bc05aba95d095489a8d0400909f8aab348e2ac1786b28db572
     object DeepLink : Account("deeplinks") {
-        const val enrollPattern = "https://eduid.nl/tiqrenroll/"
+        const val enrollPattern = "https://eduid.nl/tiqrenroll/?metadata="
         const val authPattern = "https://eduid.nl/tiqrauth/"
     }
 }
