@@ -113,3 +113,9 @@ data class InstitutionNameResponse(
     val displayNameNl: String,
 
 ) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class EmailChangeRequest(
+    val email: String,
+) : Parcelable

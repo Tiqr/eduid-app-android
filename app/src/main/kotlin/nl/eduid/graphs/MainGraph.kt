@@ -320,7 +320,7 @@ fun MainGraph(
         PersonalInfoScreen(
             viewModel = viewModel,
             onNameClicked = { },
-            onEmailClicked = { },
+            onEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
             onRoleClicked = { },
             onInstitutionClicked = { },
             goBack = { navController.popBackStack() },
@@ -358,7 +358,7 @@ fun MainGraph(
         EditEmailScreen(
             viewModel = viewModel,
             goBack = { navController.popBackStack() },
-            onSaveNewEmailClicked = { },
+            onSaveNewEmailRequested = { email -> navController.goToEmailSent(email) },
         )
     }
 }

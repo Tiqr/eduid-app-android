@@ -132,7 +132,7 @@ fun PersonalInfoScreenContent(
                     header = "Email",
                     title = personalInfo.email,
                     subtitle = "Provided by ${personalInfo.emailProvider}",
-                    onClick = { },
+                    onClick = onEmailClicked,
                     endIcon = R.drawable.edit_icon
                 )
 
