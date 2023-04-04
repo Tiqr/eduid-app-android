@@ -105,3 +105,17 @@ data class Registration(
     //FINALIZED - is completed
     val status: String?,
 ) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class InstitutionNameResponse(
+    val displayNameEn: String,
+    val displayNameNl: String,
+
+) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class EmailChangeRequest(
+    val email: String,
+) : Parcelable

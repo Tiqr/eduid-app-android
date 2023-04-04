@@ -77,3 +77,8 @@ val AlertWarningBackground = Color(0xFFFEF8D3)
 val BlueButton = Color(0xFF004C97)
 val TextGrayScale = Color(0xFF5E6873)
 val BlueText = Color(0xFF173552)
+val ButtonRed = Color(0xFFDA362D)
+val InfoTabDarkFill = Color(0xFFF4F6F8)
+val ButtonBlue = Color(0xFF0077C8)
+val ButtonBorderGrey = Color(0xFF5E6873)
+

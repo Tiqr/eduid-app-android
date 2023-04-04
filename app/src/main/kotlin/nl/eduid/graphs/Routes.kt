@@ -15,7 +15,12 @@ object Graph {
     const val WELCOME_START = "start"
     const val FIRST_TIME_DIALOG = "first_time_dialog"
     const val PERSONAL_INFO = "personal_info"
+    const val DATA_AND_ACTIVITY = "data_and_activity"
+    const val SECURITY = "security"
     const val OAUTH = "oauth_mobile_eduid"
+    const val RESET_PASSWORD = "reset_password"
+    const val EDIT_EMAIL = "edit_email"
+    const val TWO_FA_DETAIL = "2fa_detail"
 }
 
 object OAuth {

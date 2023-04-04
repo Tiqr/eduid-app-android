@@ -1,4 +1,4 @@
-package nl.eduid.screens.personalinfo
+package nl.eduid.screens.security
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -13,41 +13,37 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import nl.eduid.R
 import nl.eduid.ui.InfoTab
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
-fun PersonalInfoScreen(
-    viewModel: PersonalInfoViewModel,
-    onNameClicked: () -> Unit,
-    onEmailClicked: () -> Unit,
-    onRoleClicked: () -> Unit,
-    onInstitutionClicked: () -> Unit,
+fun SecurityScreen(
+    viewModel: SecurityViewModel,
+    onResetPasswordClicked: () -> Unit,
+    onEditEmailClicked: () -> Unit,
+    on2FaClicked: () -> Unit,
     goBack: () -> Unit,
 ) {
-    val personalInfo by viewModel.personalInfo.observeAsState(PersonalInfo())
-    PersonalInfoScreenContent(
-        onNameClicked = onNameClicked,
-        onEmailClicked = onEmailClicked,
-        onRoleClicked = onRoleClicked,
-        onInstitutionClicked = onInstitutionClicked,
+    val securityInfo by viewModel.securityInfo.observeAsState(SecurityScreenData())
+    SecurityScreenContent(
+        onResetPasswordClicked = onResetPasswordClicked,
+        onEditEmailClicked = onEditEmailClicked,
+        on2FaClicked = on2FaClicked,
         goBack = goBack,
-        personalInfo = personalInfo,
+        securityInfo = securityInfo,
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PersonalInfoScreenContent(
-    onNameClicked: () -> Unit,
-    onEmailClicked: () -> Unit,
-    onRoleClicked: () -> Unit,
-    onInstitutionClicked: () -> Unit,
+fun SecurityScreenContent(
+    onResetPasswordClicked: () -> Unit,
+    onEditEmailClicked: () -> Unit,
+    on2FaClicked: () -> Unit,
     goBack: () -> Unit,
-    personalInfo: PersonalInfo,
+    securityInfo: SecurityScreenData,
 ) {
     Scaffold(
         topBar = {
@@ -84,35 +80,25 @@ fun PersonalInfoScreenContent(
                 .verticalScroll(rememberScrollState())
         ) {
             Spacer(Modifier.height(36.dp))
+
             Text(
                 style = MaterialTheme.typography.titleLarge.copy(
                     textAlign = TextAlign.Start,
                     color = ButtonGreen
                 ),
-                text = stringResource(R.string.personal_info_title),
+                text = stringResource(R.string.security_title),
                 modifier = Modifier
                     .fillMaxWidth()
             )
             Spacer(Modifier.height(12.dp))
             Text(
                 style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-                text = stringResource(R.string.personal_info_subtitle),
+                text = stringResource(R.string.security_subtitle),
                 modifier = Modifier
                     .fillMaxWidth()
             )
-            Spacer(Modifier.height(12.dp))
-            Text(
-                style = MaterialTheme.typography.titleLarge.copy(
-                    textAlign = TextAlign.Start,
-                    color = ButtonGreen,
-                    fontSize = 20.sp
-                ),
-                text = stringResource(R.string.personal_info_info_header),
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-            Spacer(Modifier.height(12.dp))
-            if (personalInfo.name.isBlank()) {
+            Spacer(Modifier.height(36.dp))
+            if (securityInfo.email.isBlank()) {
                 Spacer(Modifier.height(24.dp))
                 CircularProgressIndicator(
                     modifier = Modifier
@@ -122,32 +108,25 @@ fun PersonalInfoScreenContent(
                 )
             } else {
                 InfoTab(
-                    header = "Name",
-                    title = personalInfo.name,
-                    subtitle = "Provided by ${personalInfo.nameProvider}",
-                    onClick = { },
+                    header = "Sign-in methods",
+                    title = "2FA key",
+                    subtitle = "Provided by eduID",
+                    onClick = on2FaClicked,
                     endIcon = R.drawable.shield_tick_blue
                 )
                 InfoTab(
-                    header = "Email",
-                    title = personalInfo.email,
-                    subtitle = "Provided by ${personalInfo.emailProvider}",
-                    onClick = onEmailClicked,
+                    title = "Send a magic link to",
+                    subtitle = securityInfo.email,
+                    onClick = onEditEmailClicked,
                     endIcon = R.drawable.edit_icon
                 )
-
-                personalInfo.institutionAccounts.forEachIndexed {index, it ->
-                    InfoTab(
-                        header = if (index < 1) "Role & institution" else "",
-                        title =  it.role,
-                        subtitle = "At ${it.roleProvider}",
-                        institutionInfo = it,
-                        onClick = { },
-                        endIcon = R.drawable.chevron_down,
-                    )
-                }
+                InfoTab(
+                    title = "Use a password",
+                    subtitle = "********",
+                    onClick = onResetPasswordClicked,
+                    endIcon = R.drawable.edit_icon
+                )
             }
-            Spacer(Modifier.height(24.dp))
         }
     }
 }
@@ -155,13 +134,12 @@ fun PersonalInfoScreenContent(
 
 @Preview
 @Composable
-private fun PreviewPersonalInfoScreenContent() = EduidAppAndroidTheme {
-    PersonalInfoScreenContent(
-        onNameClicked = {},
-        onEmailClicked = {},
-        onRoleClicked = {},
-        onInstitutionClicked = {},
-        goBack = {},
-        personalInfo = PersonalInfo.demoData()
+private fun PreviewSecurityScreenContent() = EduidAppAndroidTheme {
+    SecurityScreenContent(
+        onResetPasswordClicked = { },
+        onEditEmailClicked= { },
+        on2FaClicked= { },
+        goBack = { },
+        securityInfo = SecurityScreenData(),
     )
 }

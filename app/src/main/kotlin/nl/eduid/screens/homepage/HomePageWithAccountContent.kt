@@ -100,6 +100,7 @@ fun HomePageWithAccountContent(
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .offset(y = 1.dp)
             )
 
             Column(

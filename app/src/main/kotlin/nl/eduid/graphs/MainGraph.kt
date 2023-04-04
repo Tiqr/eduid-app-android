@@ -13,8 +13,12 @@ import nl.eduid.screens.accountlinked.AccountLinkedScreen
 import nl.eduid.screens.biometric.EnableBiometricScreen
 import nl.eduid.screens.biometric.EnableBiometricViewModel
 import nl.eduid.screens.created.RequestEduIdCreatedScreen
+import nl.eduid.screens.dataactivity.DataAndActivityScreen
+import nl.eduid.screens.dataactivity.DataAndActivityViewModel
 import nl.eduid.screens.deeplinks.DeepLinkScreen
 import nl.eduid.screens.deeplinks.DeepLinkViewModel
+import nl.eduid.screens.editemail.EditEmailScreen
+import nl.eduid.screens.editemail.EditEmailViewModel
 import nl.eduid.screens.firsttimedialog.LinkAccountViewModel
 import nl.eduid.screens.firsttimedialog.FirstTimeDialogScreen
 import nl.eduid.screens.homepage.HomePageScreen
@@ -34,10 +38,14 @@ import nl.eduid.screens.requestidpin.ConfirmCodeViewModel
 import nl.eduid.screens.requestidrecovery.PhoneRequestCodeScreen
 import nl.eduid.screens.requestidrecovery.PhoneRequestCodeViewModel
 import nl.eduid.screens.requestidstart.RequestEduIdStartScreen
+import nl.eduid.screens.resetpassword.ResetPasswordScreen
+import nl.eduid.screens.resetpassword.ResetPasswordViewModel
 import nl.eduid.screens.scan.ScanScreen
 import nl.eduid.screens.scan.StatelessScanViewModel
 import nl.eduid.screens.start.WelcomeStartScreen
 import nl.eduid.screens.start.WelcomeStartViewModel
+import nl.eduid.screens.security.SecurityScreen
+import nl.eduid.screens.security.SecurityViewModel
 import org.tiqr.data.model.EnrollmentChallenge
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -53,9 +61,9 @@ fun MainGraph(
         val viewModel = hiltViewModel<HomePageViewModel>(it)
         HomePageScreen(viewModel = viewModel,
             onScanForAuthorization = { /*QR authorization for 3rd party*/ },
-            onActivityClicked = { },
+            onActivityClicked = { navController.navigate(Graph.DATA_AND_ACTIVITY) },
             onPersonalInfoClicked = { navController.navigate(Graph.PERSONAL_INFO) },
-            onSecurityClicked = {},
+            onSecurityClicked = { navController.navigate(Graph.SECURITY) },
             onEnrollWithQR = { navController.navigate(Account.ScanQR.route) },
             launchOAuth = { navController.navigate(Graph.OAUTH) }) {
             navController.navigate(
@@ -312,13 +320,47 @@ fun MainGraph(
         PersonalInfoScreen(
             viewModel = viewModel,
             onNameClicked = { },
-            onEmailClicked = { },
+            onEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
             onRoleClicked = { },
             onInstitutionClicked = { },
             goBack = { navController.popBackStack() },
         )
     }
     //endregion
+    composable(Graph.DATA_AND_ACTIVITY) {
+        val viewModel = hiltViewModel<DataAndActivityViewModel>(it)
+        DataAndActivityScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
+            onDeleteLoginClicked = {},
+        )
+    }
+    composable(Graph.SECURITY) {
+        val viewModel = hiltViewModel<SecurityViewModel>(it)
+        SecurityScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
+            onResetPasswordClicked = { navController.navigate(Graph.RESET_PASSWORD) },
+            onEditEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
+            on2FaClicked = {},
+        )
+    }
+    composable(Graph.RESET_PASSWORD) {
+        val viewModel = hiltViewModel<ResetPasswordViewModel>(it)
+        ResetPasswordScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
+            onResetPasswordClicked = { },
+        )
+    }
+    composable(Graph.EDIT_EMAIL) {
+        val viewModel = hiltViewModel<EditEmailViewModel>(it)
+        EditEmailScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
+            onSaveNewEmailRequested = { email -> navController.goToEmailSent(email) },
+        )
+    }
 }
 
 private fun NavController.goToEmailSent(email: String) = navigate(

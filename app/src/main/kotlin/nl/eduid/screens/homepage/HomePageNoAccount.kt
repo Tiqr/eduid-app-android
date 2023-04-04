@@ -1,14 +1,11 @@
 package nl.eduid.screens.homepage
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -26,10 +23,8 @@ import java.util.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePageNoAccountContent(
-    onScan: () -> Unit, onRequestEduId: () -> Unit
+    onScan: () -> Unit, onRequestEduId: () -> Unit, onSignIn: () -> Unit,
 ) = Scaffold { paddingValues ->
-
-    val context = LocalContext.current
 
     ConstraintLayout(
         modifier = Modifier
@@ -95,13 +90,7 @@ fun HomePageNoAccountContent(
 
             PrimaryButton(
                 text = stringResource(R.string.enroll_screen_sign_in_button),
-                onClick = {
-                    val intent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://mijn.test2.eduid.nl/enroll-app/")
-                    )
-                    context.startActivity(intent)
-                },
+                onClick = onSignIn,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
@@ -140,7 +129,7 @@ fun HomePageNoAccountContent(
 @Composable
 private fun PreviewEnroll() {
     EduidAppAndroidTheme {
-        HomePageNoAccountContent({}) {}
+        HomePageNoAccountContent({}, {}) {}
     }
 }
 

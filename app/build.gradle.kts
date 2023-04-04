@@ -181,6 +181,7 @@ dependencies {
 
     implementation(libs.permission)
     implementation(libs.coil)
+    implementation(libs.coilCompose)
     implementation(libs.betterLink)
 
     api(libs.moshi.moshi)
