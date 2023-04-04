@@ -17,6 +17,7 @@ import nl.eduid.screens.dataactivity.DataAndActivityScreen
 import nl.eduid.screens.dataactivity.DataAndActivityViewModel
 import nl.eduid.screens.deeplinks.DeepLinkScreen
 import nl.eduid.screens.deeplinks.DeepLinkViewModel
+import nl.eduid.screens.deleteaccountfirstconfirm.DeleteAccountFirstConfirmScreen
 import nl.eduid.screens.editemail.EditEmailScreen
 import nl.eduid.screens.editemail.EditEmailViewModel
 import nl.eduid.screens.firsttimedialog.LinkAccountViewModel
@@ -214,17 +215,6 @@ fun MainGraph(
         )
     }
     composable(
-        route = ManageAccountRoute.routeWithArgs, arguments = ManageAccountRoute.arguments
-    ) { entry ->
-        val viewModel = hiltViewModel<ManageAccountViewModel>(entry)
-        ManageAccountScreen(
-            viewModel = viewModel,
-            goBack = { navController.popBackStack() },
-            onDeleteAccountPressed = { },
-            dateString = ManageAccountRoute.decodeDateFromEntry(entry),
-        )
-    }
-    composable(
         route = RequestEduIdCreated.route, deepLinks = listOf(
             navDeepLink {
                 uriPattern = RequestEduIdCreated.uriPatternHttps
@@ -373,6 +363,25 @@ fun MainGraph(
             viewModel = viewModel,
             goBack = { navController.popBackStack() },
             onSaveNewEmailRequested = { email -> navController.goToEmailSent(email) },
+        )
+    }
+
+    composable(
+        route = ManageAccountRoute.routeWithArgs, arguments = ManageAccountRoute.arguments
+    ) { entry ->
+        val viewModel = hiltViewModel<ManageAccountViewModel>(entry)
+        ManageAccountScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
+            onDeleteAccountPressed = { navController.navigate(Graph.DELETE_ACCOUNT_FIRST_CONFIRM) },
+            dateString = ManageAccountRoute.decodeDateFromEntry(entry),
+        )
+    }
+
+    composable(Graph.DELETE_ACCOUNT_FIRST_CONFIRM) {
+        DeleteAccountFirstConfirmScreen(
+            goBack = { navController.popBackStack() },
+            onDeleteAccountPressed = {  },
         )
     }
 }

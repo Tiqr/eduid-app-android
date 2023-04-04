@@ -23,6 +23,8 @@ object Graph {
     const val EDIT_EMAIL = "edit_email"
     const val TWO_FA_DETAIL = "2fa_detail"
     const val MANAGE_ACCOUNT = "manage_account"
+    const val DELETE_ACCOUNT_FIRST_CONFIRM = "delete_account_first_confirm"
+    const val DELETE_ACCOUNT_SECOND_CONFIRM = "delete_account_second_confirm"
 }
 
 object OAuth {

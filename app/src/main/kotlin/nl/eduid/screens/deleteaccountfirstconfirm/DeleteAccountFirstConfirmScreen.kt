@@ -1,4 +1,4 @@
-package nl.eduid.screens.manageaccount
+package nl.eduid.screens.deleteaccountfirstconfirm
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -15,6 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import nl.eduid.R
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.AlertWarningBackground
@@ -25,11 +27,9 @@ import nl.eduid.ui.theme.TextGreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ManageAccountScreen(
-    viewModel: ManageAccountViewModel,
+fun DeleteAccountFirstConfirmScreen(
     goBack: () -> Unit,
     onDeleteAccountPressed: () -> Unit,
-    dateString: String,
 ) = Scaffold(
     topBar = {
         CenterAlignedTopAppBar(
@@ -57,18 +57,16 @@ fun ManageAccountScreen(
         )
     },
 ) { paddingValues ->
-    ManageAccountScreenContent(
+    DeleteAccountFirstConfirmScreenContent(
         paddingValues = paddingValues,
         onDeleteAccountPressed = onDeleteAccountPressed,
-        dateString = dateString,
     )
 }
 
 @Composable
-private fun ManageAccountScreenContent(
+private fun DeleteAccountFirstConfirmScreenContent(
     paddingValues: PaddingValues = PaddingValues(),
-    onDeleteAccountPressed: () -> Unit,
-    dateString: String,
+    onDeleteAccountPressed: () -> Unit = {},
 ) {
     Column(
         modifier = Modifier
@@ -84,34 +82,45 @@ private fun ManageAccountScreenContent(
                 .weight(1f)
         ) {
             Text(
-                text = stringResource(R.string.manage_account_title),
+                text = stringResource(R.string.delete_account_one_title),
                 style = MaterialTheme.typography.titleLarge.copy(color = TextGreen, textAlign = TextAlign.Start),
                 modifier = Modifier.fillMaxWidth(),
             )
-            Spacer(Modifier.height(12.dp))
-            Text(
-                text = "${stringResource(R.string.manage_account_subtitle)} $dateString",
-                style = MaterialTheme.typography.bodyLarge.copy(color = TextBlack, textAlign = TextAlign.Start),
-                modifier = Modifier.fillMaxWidth(),
-            )
-            Spacer(Modifier.height(12.dp))
-            Box(Modifier
-                .background(color = AlertWarningBackground)
-                .padding(12.dp)
-            ) {
-                Column {
+            Spacer(Modifier.height(18.dp))
+            ConstraintLayout(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = AlertWarningBackground)
+                ) {
+                    val (image, text) = createRefs()
+                    Image(
+                        painter = painterResource(R.drawable.warning_icon),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .constrainAs(image) {
+                                top.linkTo(parent.top, margin = 12.dp)
+                                start.linkTo(parent.start, margin = 12.dp)
+                                end.linkTo(text.start, margin = 12.dp)
+                            }
+                    )
                     Text(
-                        style = MaterialTheme.typography.bodyLarge,
-                        text = stringResource(R.string.manage_account_info_block),
-                        modifier = Modifier.fillMaxWidth()
+                        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
+                        text = stringResource(R.string.delete_account_one_subtitle),
+                        modifier = Modifier
+                            .constrainAs(text) {
+                                start.linkTo(image.end)
+                                end.linkTo(parent.end, margin = 12.dp)
+                                top.linkTo(parent.top, margin = 12.dp)
+                                bottom.linkTo(parent.bottom, margin = 12.dp)
+                                width = Dimension.fillToConstraints
+                            }
                     )
                 }
-            }
-            Spacer(Modifier.height(20.dp))
-            PrimaryButton(
-                text = "Download my data",
-                onClick = { },
-                modifier = Modifier.fillMaxWidth()
+            Spacer(Modifier.height(18.dp))
+            Text(
+                text = stringResource(R.string.delete_account_description),
+                style = MaterialTheme.typography.bodyLarge.copy(color = TextBlack, textAlign = TextAlign.Start),
+                modifier = Modifier.fillMaxWidth(),
             )
         }
         Column(
@@ -142,8 +151,8 @@ private fun ManageAccountScreenContent(
 
 @Preview()
 @Composable
-private fun PreviewManageAccountScreen() {
+private fun PreviewDeleteAccountFirstConfirmScreenScreen() {
     EduidAppAndroidTheme {
-        ManageAccountScreenContent(PaddingValues(),{},"15 March 2004")
+        DeleteAccountFirstConfirmScreenContent()
     }
 }
