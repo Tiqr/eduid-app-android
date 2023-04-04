@@ -20,6 +20,7 @@ object Graph {
     const val SECURITY = "security"
     const val OAUTH = "oauth_mobile_eduid"
     const val RESET_PASSWORD = "reset_password"
+    const val RESET_PASSWORD_CONFIRM = "reset_password_confirm"
     const val EDIT_EMAIL = "edit_email"
     const val TWO_FA_DETAIL = "2fa_detail"
     const val MANAGE_ACCOUNT = "manage_account"

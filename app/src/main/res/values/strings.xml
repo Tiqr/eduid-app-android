@@ -135,6 +135,11 @@
     <string name="reset_password_cancel_button">Cancel</string>
     <string name="reset_password_confirm_button">Send email</string>
 
+    <string name="reset_password_confirm_title">Change password</string>
+    <string name="reset_password_confirm_subtitle">Make sure your new password is at least 15 characters OR at least 8 characters including a number and a uppercase letter.</string>
+    <string name="reset_password_confirm_second_title">Want to delete your password entirely?</string>
+    <string name="reset_password_confirm_second_subtitle">When you prefer other methods than a password, you can delete your current one.</string>
+
     <string name="edit_email_title">Email</string>
     <string name="edit_email_subtitle">Please enter your new email address. A verification mail will be sent to this address.</string>
     <string name="edit_email_cancel_button">Cancel</string>

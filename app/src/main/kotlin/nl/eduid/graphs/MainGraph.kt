@@ -45,6 +45,8 @@ import nl.eduid.screens.requestidrecovery.PhoneRequestCodeViewModel
 import nl.eduid.screens.requestidstart.RequestEduIdStartScreen
 import nl.eduid.screens.resetpassword.ResetPasswordScreen
 import nl.eduid.screens.resetpassword.ResetPasswordViewModel
+import nl.eduid.screens.resetpasswordconfirm.ResetPasswordConfirmScreen
+import nl.eduid.screens.resetpasswordconfirm.ResetPasswordConfirmViewModel
 import nl.eduid.screens.scan.ScanScreen
 import nl.eduid.screens.scan.StatelessScanViewModel
 import nl.eduid.screens.start.WelcomeStartScreen
@@ -356,7 +358,14 @@ fun MainGraph(
         ResetPasswordScreen(
             viewModel = viewModel,
             goBack = { navController.popBackStack() },
-            onResetPasswordClicked = { },
+            onResetPasswordClicked = { navController.navigate(Graph.RESET_PASSWORD_CONFIRM) },
+        )
+    }
+    composable(Graph.RESET_PASSWORD_CONFIRM) {
+        val viewModel = hiltViewModel<ResetPasswordConfirmViewModel>(it)
+        ResetPasswordConfirmScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
         )
     }
     composable(Graph.EDIT_EMAIL) {
