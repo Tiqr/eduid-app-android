@@ -3,6 +3,7 @@ package nl.eduid.graphs
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import nl.eduid.graphs.Graph.MANAGE_ACCOUNT
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 import java.net.URLEncoder
@@ -21,6 +22,7 @@ object Graph {
     const val RESET_PASSWORD = "reset_password"
     const val EDIT_EMAIL = "edit_email"
     const val TWO_FA_DETAIL = "2fa_detail"
+    const val MANAGE_ACCOUNT = "manage_account"
 }
 
 object OAuth {
@@ -152,5 +154,29 @@ sealed class WithChallenge(val route: String) {
         fun buildRouteForAuthentication(encodedChallenge: String, pin: String): String =
             "$route/$encodedChallenge/$pin/false"
 
+    }
+}
+
+object ManageAccountRoute {
+    private const val route = MANAGE_ACCOUNT
+    const val dateArg = "date_arg"
+    const val routeWithArgs = "$route/{$dateArg}"
+    val arguments = listOf(
+        navArgument(dateArg) {
+        type = NavType.StringType
+        nullable = false
+        defaultValue = ""
+    })
+
+    fun routeWithArgs(dateString: String) =
+        "$route/${URLEncoder.encode(dateString, Charsets.UTF_8.toString())}"
+
+    fun decodeDateFromEntry(entry: NavBackStackEntry): String {
+        val date = entry.arguments?.getString(dateArg) ?: ""
+        return try {
+            URLDecoder.decode(date, Charsets.UTF_8.name())
+        } catch (e: UnsupportedEncodingException) {
+            ""
+        }
     }
 }

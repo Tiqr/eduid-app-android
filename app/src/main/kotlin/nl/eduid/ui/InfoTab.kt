@@ -389,26 +389,6 @@ private fun serviceProviderBlock(
         }
     }
 
-@SuppressLint("SimpleDateFormat")
-fun Long.getDateString(): String {
-    return try {
-        val sdf = SimpleDateFormat("EEEE, MMMM dd, yyyy")
-        val netDate = Date(this)
-        sdf.format(netDate)
-    } catch (e: Exception) {
-        e.toString()
-    }
-}
-@SuppressLint("SimpleDateFormat")
-fun Long.getDateTimeString(): String {
-    return try {
-        val sdf = SimpleDateFormat("EEE dd MMM yyyy - HH:MM")
-        val netDate = Date(this)
-        sdf.format(netDate)
-    } catch (e: Exception) {
-        e.toString()
-    }
-}
 
 @Preview
 @Composable

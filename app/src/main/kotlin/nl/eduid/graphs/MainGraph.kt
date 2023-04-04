@@ -23,6 +23,8 @@ import nl.eduid.screens.firsttimedialog.LinkAccountViewModel
 import nl.eduid.screens.firsttimedialog.FirstTimeDialogScreen
 import nl.eduid.screens.homepage.HomePageScreen
 import nl.eduid.screens.homepage.HomePageViewModel
+import nl.eduid.screens.manageaccount.ManageAccountScreen
+import nl.eduid.screens.manageaccount.ManageAccountViewModel
 import nl.eduid.screens.oauth.OAuthScreen
 import nl.eduid.screens.oauth.OAuthViewModel
 import nl.eduid.screens.personalinfo.PersonalInfoScreen
@@ -212,6 +214,17 @@ fun MainGraph(
         )
     }
     composable(
+        route = ManageAccountRoute.routeWithArgs, arguments = ManageAccountRoute.arguments
+    ) { entry ->
+        val viewModel = hiltViewModel<ManageAccountViewModel>(entry)
+        ManageAccountScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
+            onDeleteAccountPressed = { },
+            dateString = ManageAccountRoute.decodeDateFromEntry(entry),
+        )
+    }
+    composable(
         route = RequestEduIdCreated.route, deepLinks = listOf(
             navDeepLink {
                 uriPattern = RequestEduIdCreated.uriPatternHttps
@@ -323,6 +336,7 @@ fun MainGraph(
             onEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
             onRoleClicked = { },
             onInstitutionClicked = { },
+            onManageAccountClicked = { dateString -> navController.navigate(ManageAccountRoute.routeWithArgs(dateString)) },
             goBack = { navController.popBackStack() },
         )
     }

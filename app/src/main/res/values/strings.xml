@@ -169,4 +169,9 @@
     <string name="home_with_account_personal_info">Your Info</string>
     <string name="home_with_account_security">Security</string>
     <string name="home_with_account_activity">Activity</string>
+
+    <string name="manage_account_title">Your account</string>
+    <string name="manage_account_subtitle">Your account was created on</string>
+    <string name="manage_account_info_block">All of your personal data from your eduID is yours and can be either downloaded or deleted. This data also contains technical keys and references.</string>
+
 </resources>
