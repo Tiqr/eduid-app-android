@@ -178,4 +178,8 @@
     <string name="delete_account_one_subtitle">Proceed with care, as you will lose the unique eduID number currently associated with your email address.</string>
     <string name="delete_account_description">You can delete your eduID whenever you want.\n\nWhen you re-register for a new eduID with that same email address, you will receive a new eduID number. Some services use this unique number to identify you, so for those services you will be treated as a new user. Please note that deleting your eduID account does not mean all services you accessed with that eduID account will also have your data removed.</string>
 
+    <string name="delete_account_two_title">Delete your account for all eternity?</string>
+    <string name="delete_account_two_subtitle">There is no way to undo this action</string>
+    <string name="delete_account_two_description">If you wish to proceed, please type in your full name for confirmation.</string>
+
 </resources>

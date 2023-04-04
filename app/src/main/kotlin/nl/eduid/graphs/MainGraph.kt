@@ -18,6 +18,8 @@ import nl.eduid.screens.dataactivity.DataAndActivityViewModel
 import nl.eduid.screens.deeplinks.DeepLinkScreen
 import nl.eduid.screens.deeplinks.DeepLinkViewModel
 import nl.eduid.screens.deleteaccountfirstconfirm.DeleteAccountFirstConfirmScreen
+import nl.eduid.screens.deleteaccountsecondconfirm.DeleteAccountSecondConfirmScreen
+import nl.eduid.screens.deleteaccountsecondconfirm.DeleteAccountSecondConfirmViewModel
 import nl.eduid.screens.editemail.EditEmailScreen
 import nl.eduid.screens.editemail.EditEmailViewModel
 import nl.eduid.screens.firsttimedialog.LinkAccountViewModel
@@ -381,7 +383,15 @@ fun MainGraph(
     composable(Graph.DELETE_ACCOUNT_FIRST_CONFIRM) {
         DeleteAccountFirstConfirmScreen(
             goBack = { navController.popBackStack() },
-            onDeleteAccountPressed = {  },
+            onDeleteAccountPressed = { navController.navigate(Graph.DELETE_ACCOUNT_SECOND_CONFIRM) },
+        )
+    }
+
+    composable(Graph.DELETE_ACCOUNT_SECOND_CONFIRM) {
+        val viewModel = hiltViewModel<DeleteAccountSecondConfirmViewModel>(it)
+        DeleteAccountSecondConfirmScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
         )
     }
 }
