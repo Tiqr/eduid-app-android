@@ -8,6 +8,7 @@ data class PersonalInfo(
     val emailProvider: String = "",
     val emailStatus: InfoStatus = InfoStatus.Final,
     val institutionAccounts: List<InstitutionAccount> = emptyList(),
+    val dateCreated: Long = 0,
 ) {
     companion object {
         data class InstitutionAccount(

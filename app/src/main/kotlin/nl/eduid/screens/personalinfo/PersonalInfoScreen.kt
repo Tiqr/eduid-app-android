@@ -2,22 +2,27 @@ package nl.eduid.screens.personalinfo
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import nl.eduid.R
 import nl.eduid.ui.InfoTab
+import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.TextGrayScale
 
 @Composable
 fun PersonalInfoScreen(
@@ -26,6 +31,7 @@ fun PersonalInfoScreen(
     onEmailClicked: () -> Unit,
     onRoleClicked: () -> Unit,
     onInstitutionClicked: () -> Unit,
+    onManageAccountClicked: (dateString: String) -> Unit,
     goBack: () -> Unit,
 ) {
     val personalInfo by viewModel.personalInfo.observeAsState(PersonalInfo())
@@ -34,6 +40,7 @@ fun PersonalInfoScreen(
         onEmailClicked = onEmailClicked,
         onRoleClicked = onRoleClicked,
         onInstitutionClicked = onInstitutionClicked,
+        onManageAccountClicked = onManageAccountClicked,
         goBack = goBack,
         personalInfo = personalInfo,
     )
@@ -46,6 +53,7 @@ fun PersonalInfoScreenContent(
     onEmailClicked: () -> Unit,
     onRoleClicked: () -> Unit,
     onInstitutionClicked: () -> Unit,
+    onManageAccountClicked: (dateString: String) -> Unit,
     goBack: () -> Unit,
     personalInfo: PersonalInfo,
 ) {
@@ -146,8 +154,41 @@ fun PersonalInfoScreenContent(
                         endIcon = R.drawable.chevron_down,
                     )
                 }
+
+                Spacer(Modifier.height(42.dp))
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(6.dp))
+                        .border(
+                            width = 1.dp,
+                            color = TextGrayScale
+                        )
+                        .sizeIn(minHeight = 48.dp)
+                        .fillMaxWidth()
+                        .clickable {
+                            onManageAccountClicked(personalInfo.dateCreated.getDateTimeString("EEEE, dd MMMM yyyy 'at' HH:MM"))
+                        }
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.cog_icon),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .align(Alignment.CenterStart)
+                            .padding(start = 12.dp)
+                    )
+                    Text(
+                        modifier = Modifier
+                            .align(Alignment.Center),
+                        text = "Manage your account",
+                        style = MaterialTheme.typography.bodyLarge.copy(
+                            textAlign = TextAlign.Start,
+                            color = TextGrayScale,
+                            fontWeight = FontWeight.SemiBold,
+                        ),
+                    )
+                }
             }
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(42.dp))
         }
     }
 }
@@ -162,6 +203,7 @@ private fun PreviewPersonalInfoScreenContent() = EduidAppAndroidTheme {
         onRoleClicked = {},
         onInstitutionClicked = {},
         goBack = {},
-        personalInfo = PersonalInfo.demoData()
+        personalInfo = PersonalInfo.demoData(),
+        onManageAccountClicked = {},
     )
 }

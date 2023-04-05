@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.di.model.UserDetails
+import nl.eduid.ui.getDateTimeString
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,6 +42,7 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
     }
 
     private fun convertToUiData(userDetails: UserDetails): PersonalInfo {
+        val dateCreated = userDetails.created
         val linkedAccounts = userDetails.linkedAccounts
 
         //Not sure if we should use the eduPersonAffiliations or the schacHomeOrganisation to get the institution name
@@ -75,6 +77,7 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
             emailProvider = emailProvider,
             emailStatus = PersonalInfo.InfoStatus.Editable,
             institutionAccounts = institutionAccounts,
+            dateCreated = dateCreated,
         )
     }
 }

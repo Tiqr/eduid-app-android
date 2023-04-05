@@ -135,6 +135,11 @@
     <string name="reset_password_cancel_button">Cancel</string>
     <string name="reset_password_confirm_button">Send email</string>
 
+    <string name="reset_password_confirm_title">Change password</string>
+    <string name="reset_password_confirm_subtitle">Make sure your new password is at least 15 characters OR at least 8 characters including a number and a uppercase letter.</string>
+    <string name="reset_password_confirm_second_title">Want to delete your password entirely?</string>
+    <string name="reset_password_confirm_second_subtitle">When you prefer other methods than a password, you can delete your current one.</string>
+
     <string name="edit_email_title">Email</string>
     <string name="edit_email_subtitle">Please enter your new email address. A verification mail will be sent to this address.</string>
     <string name="edit_email_cancel_button">Cancel</string>
@@ -169,4 +174,17 @@
     <string name="home_with_account_personal_info">Your Info</string>
     <string name="home_with_account_security">Security</string>
     <string name="home_with_account_activity">Activity</string>
+
+    <string name="manage_account_title">Your account</string>
+    <string name="manage_account_subtitle">Your account was created on</string>
+    <string name="manage_account_info_block">All of your personal data from your eduID is yours and can be either downloaded or deleted. This data also contains technical keys and references.</string>
+
+    <string name="delete_account_one_title">Delete your account</string>
+    <string name="delete_account_one_subtitle">Proceed with care, as you will lose the unique eduID number currently associated with your email address.</string>
+    <string name="delete_account_description">You can delete your eduID whenever you want.\n\nWhen you re-register for a new eduID with that same email address, you will receive a new eduID number. Some services use this unique number to identify you, so for those services you will be treated as a new user. Please note that deleting your eduID account does not mean all services you accessed with that eduID account will also have your data removed.</string>
+
+    <string name="delete_account_two_title">Delete your account for all eternity?</string>
+    <string name="delete_account_two_subtitle">There is no way to undo this action</string>
+    <string name="delete_account_two_description">If you wish to proceed, please type in your full name for confirmation.</string>
+
 </resources>

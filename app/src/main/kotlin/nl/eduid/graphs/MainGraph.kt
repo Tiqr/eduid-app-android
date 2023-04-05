@@ -17,12 +17,17 @@ import nl.eduid.screens.dataactivity.DataAndActivityScreen
 import nl.eduid.screens.dataactivity.DataAndActivityViewModel
 import nl.eduid.screens.deeplinks.DeepLinkScreen
 import nl.eduid.screens.deeplinks.DeepLinkViewModel
+import nl.eduid.screens.deleteaccountfirstconfirm.DeleteAccountFirstConfirmScreen
+import nl.eduid.screens.deleteaccountsecondconfirm.DeleteAccountSecondConfirmScreen
+import nl.eduid.screens.deleteaccountsecondconfirm.DeleteAccountSecondConfirmViewModel
 import nl.eduid.screens.editemail.EditEmailScreen
 import nl.eduid.screens.editemail.EditEmailViewModel
 import nl.eduid.screens.firsttimedialog.LinkAccountViewModel
 import nl.eduid.screens.firsttimedialog.FirstTimeDialogScreen
 import nl.eduid.screens.homepage.HomePageScreen
 import nl.eduid.screens.homepage.HomePageViewModel
+import nl.eduid.screens.manageaccount.ManageAccountScreen
+import nl.eduid.screens.manageaccount.ManageAccountViewModel
 import nl.eduid.screens.oauth.OAuthScreen
 import nl.eduid.screens.oauth.OAuthViewModel
 import nl.eduid.screens.personalinfo.PersonalInfoScreen
@@ -40,6 +45,8 @@ import nl.eduid.screens.requestidrecovery.PhoneRequestCodeViewModel
 import nl.eduid.screens.requestidstart.RequestEduIdStartScreen
 import nl.eduid.screens.resetpassword.ResetPasswordScreen
 import nl.eduid.screens.resetpassword.ResetPasswordViewModel
+import nl.eduid.screens.resetpasswordconfirm.ResetPasswordConfirmScreen
+import nl.eduid.screens.resetpasswordconfirm.ResetPasswordConfirmViewModel
 import nl.eduid.screens.scan.ScanScreen
 import nl.eduid.screens.scan.StatelessScanViewModel
 import nl.eduid.screens.start.WelcomeStartScreen
@@ -323,6 +330,7 @@ fun MainGraph(
             onEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
             onRoleClicked = { },
             onInstitutionClicked = { },
+            onManageAccountClicked = { dateString -> navController.navigate(ManageAccountRoute.routeWithArgs(dateString)) },
             goBack = { navController.popBackStack() },
         )
     }
@@ -350,7 +358,14 @@ fun MainGraph(
         ResetPasswordScreen(
             viewModel = viewModel,
             goBack = { navController.popBackStack() },
-            onResetPasswordClicked = { },
+            onResetPasswordClicked = { navController.navigate(Graph.RESET_PASSWORD_CONFIRM) },
+        )
+    }
+    composable(Graph.RESET_PASSWORD_CONFIRM) {
+        val viewModel = hiltViewModel<ResetPasswordConfirmViewModel>(it)
+        ResetPasswordConfirmScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
         )
     }
     composable(Graph.EDIT_EMAIL) {
@@ -359,6 +374,33 @@ fun MainGraph(
             viewModel = viewModel,
             goBack = { navController.popBackStack() },
             onSaveNewEmailRequested = { email -> navController.goToEmailSent(email) },
+        )
+    }
+
+    composable(
+        route = ManageAccountRoute.routeWithArgs, arguments = ManageAccountRoute.arguments
+    ) { entry ->
+        val viewModel = hiltViewModel<ManageAccountViewModel>(entry)
+        ManageAccountScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
+            onDeleteAccountPressed = { navController.navigate(Graph.DELETE_ACCOUNT_FIRST_CONFIRM) },
+            dateString = ManageAccountRoute.decodeDateFromEntry(entry),
+        )
+    }
+
+    composable(Graph.DELETE_ACCOUNT_FIRST_CONFIRM) {
+        DeleteAccountFirstConfirmScreen(
+            goBack = { navController.popBackStack() },
+            onDeleteAccountPressed = { navController.navigate(Graph.DELETE_ACCOUNT_SECOND_CONFIRM) },
+        )
+    }
+
+    composable(Graph.DELETE_ACCOUNT_SECOND_CONFIRM) {
+        val viewModel = hiltViewModel<DeleteAccountSecondConfirmViewModel>(it)
+        DeleteAccountSecondConfirmScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
         )
     }
 }
