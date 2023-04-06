@@ -173,8 +173,7 @@ fun MainGraph(
                         )
                     )
                 }
-            },
-            goHome = { navController.goToWithPopCurrent(Graph.HOME_PAGE) }) { navController.popBackStack() }
+            }) { navController.popBackStack() }
     }
     composable(
         route = Account.AuthenticationCompleted.routeWithArgs,

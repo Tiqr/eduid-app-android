@@ -49,7 +49,6 @@ import timber.log.Timber
 fun AuthenticationPinBiometricScreen(
     viewModel: EduIdAuthenticationViewModel,
     goToAuthenticationComplete: (AuthenticationChallenge?, String) -> Unit,
-    goHome: () -> Unit,
     onCancel: () -> Unit,
 ) = EduIdTopAppBar(
     withBackIcon = false
@@ -72,7 +71,7 @@ fun AuthenticationPinBiometricScreen(
             goToAuthenticationComplete(authChallenge, pin)
         },
         clearCompleteChallenge = viewModel::clearCompleteChallenge,
-        goHome = goHome
+        goHomeOnFail = onCancel
     )
 }
 
@@ -86,7 +85,7 @@ private fun AuthenticationPinBiometricContent(
     onCancel: () -> Unit = {},
     goToAuthenticationComplete: (String) -> Unit = {},
     clearCompleteChallenge: () -> Unit = {},
-    goHome: () -> Unit = {},
+    goHomeOnFail: () -> Unit = {},
 ) {
     var isCheckingSecret by rememberSaveable { mutableStateOf(false) }
     var pinValue by rememberSaveable { mutableStateOf("") }
@@ -100,7 +99,6 @@ private fun AuthenticationPinBiometricContent(
                 } else {
                     return
                 }
-                isCheckingSecret = false
                 when (failure.reason) {
                     AuthenticationCompleteFailure.Reason.UNKNOWN,
                     AuthenticationCompleteFailure.Reason.CONNECTION,
@@ -119,9 +117,10 @@ private fun AuthenticationPinBiometricContent(
                             buttonLabel = stringResource(R.string.button_ok),
                             onDismiss = {
                                 if (remaining != null && remaining == 0) {
-                                    goHome()
+                                    goHomeOnFail()
                                 }
-                                clearCompleteChallenge.invoke()
+                                isCheckingSecret = false
+                                clearCompleteChallenge()
                             })
                     }
 
@@ -130,7 +129,10 @@ private fun AuthenticationPinBiometricContent(
                             title = failure.title,
                             explanation = failure.message,
                             buttonLabel = stringResource(R.string.button_ok),
-                            onDismiss = clearCompleteChallenge
+                            onDismiss = {
+                                isCheckingSecret = false
+                                clearCompleteChallenge()
+                            }
                         )
                     }
                 }
