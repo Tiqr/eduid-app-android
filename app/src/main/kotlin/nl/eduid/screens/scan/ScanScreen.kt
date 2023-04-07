@@ -36,7 +36,7 @@ import androidx.camera.core.Preview as CameraPreview
 @Composable
 fun ScanScreen(
     viewModel: StatelessScanViewModel,
-    isRegistration: Boolean,
+    isEnrolment: Boolean,
     goBack: () -> Unit,
     goToNext: (Challenge) -> Unit,
     state: ScanState = rememberScanState(
@@ -91,7 +91,7 @@ fun ScanScreen(
     },
 ) { paddingValues ->
     ScanContent(
-        isRegistration = isRegistration,
+        isEnrolment = isEnrolment,
         hasCamPermission = state.hasCamPermission,
         camPermissionUpdated = { state.camPermissionUpdated(it) },
         errorData = state.errorData,
@@ -106,7 +106,7 @@ fun ScanScreen(
 
 @Composable
 private fun ScanContent(
-    isRegistration: Boolean,
+    isEnrolment: Boolean,
     hasCamPermission: Boolean,
     camPermissionUpdated: (Boolean) -> Unit,
     errorData: ErrorData?,
@@ -193,7 +193,7 @@ private fun ScanContent(
                             top.linkTo(contentTopSpacing)
                         })
             }
-            if (!isRegistration) {
+            if (!isEnrolment) {
                 Text(text = stringResource(R.string.scan_title),
                     style = MaterialTheme.typography.titleLarge.copy(
                         textAlign = TextAlign.Center, color = Color.White
@@ -205,7 +205,7 @@ private fun ScanContent(
                         })
             }
 
-            if (isRegistration) {
+            if (isEnrolment) {
                 RegistrationExplanation(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -222,7 +222,7 @@ private fun ScanContent(
 @Composable
 private fun Preview_ScanScreen_Registration() {
     EduidAppAndroidTheme {
-        ScanContent(isRegistration = true,
+        ScanContent(isEnrolment = true,
             hasCamPermission = true,
             camPermissionUpdated = {},
             errorData = null,
@@ -237,7 +237,7 @@ private fun Preview_ScanScreen_Registration() {
 @Composable
 private fun Preview_ScanScreen_MissingCamPermission() {
     EduidAppAndroidTheme {
-        ScanContent(isRegistration = true,
+        ScanContent(isEnrolment = true,
             hasCamPermission = false,
             camPermissionUpdated = {},
             errorData = null,
@@ -252,7 +252,7 @@ private fun Preview_ScanScreen_MissingCamPermission() {
 @Composable
 private fun Preview_ScanScreen_Authentication() {
     EduidAppAndroidTheme {
-        ScanContent(isRegistration = false,
+        ScanContent(isEnrolment = false,
             hasCamPermission = true,
             camPermissionUpdated = {},
             errorData = null,

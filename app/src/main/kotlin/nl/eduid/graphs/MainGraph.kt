@@ -10,6 +10,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import nl.eduid.screens.accountlinked.AccountLinkedScreen
+import nl.eduid.screens.authorize.AuthenticationCompletedScreen
+import nl.eduid.screens.authorize.AuthenticationPinBiometricScreen
+import nl.eduid.screens.authorize.EduIdAuthenticationViewModel
+import nl.eduid.screens.authorize.RequestAuthenticationScreen
 import nl.eduid.screens.biometric.EnableBiometricScreen
 import nl.eduid.screens.biometric.EnableBiometricViewModel
 import nl.eduid.screens.created.RequestEduIdCreatedScreen
@@ -67,11 +71,11 @@ fun MainGraph(
     composable(Graph.HOME_PAGE) {
         val viewModel = hiltViewModel<HomePageViewModel>(it)
         HomePageScreen(viewModel = viewModel,
-            onScanForAuthorization = { /*QR authorization for 3rd party*/ },
+            onScanForAuthorization = { navController.navigate(Account.ScanQR.routeForAuth) },
             onActivityClicked = { navController.navigate(Graph.DATA_AND_ACTIVITY) },
             onPersonalInfoClicked = { navController.navigate(Graph.PERSONAL_INFO) },
             onSecurityClicked = { navController.navigate(Graph.SECURITY) },
-            onEnrollWithQR = { navController.navigate(Account.ScanQR.route) },
+            onEnrollWithQR = { navController.navigate(Account.ScanQR.routeForEnrol) },
             launchOAuth = { navController.navigate(Graph.OAUTH) }) {
             navController.navigate(
                 Graph.REQUEST_EDU_ID_ACCOUNT
@@ -80,10 +84,13 @@ fun MainGraph(
     }
     //endregion
     //region Scan
-    composable(Account.ScanQR.route) {
-        val viewModel = hiltViewModel<StatelessScanViewModel>(it)
+    composable(
+        route = Account.ScanQR.routeWithArgs, arguments = Account.ScanQR.arguments
+    ) { entry ->
+        val viewModel = hiltViewModel<StatelessScanViewModel>(entry)
+        val isEnrolment = entry.arguments?.getBoolean(Account.ScanQR.isEnrolment, false) ?: false
         ScanScreen(viewModel = viewModel,
-            isRegistration = true,
+            isEnrolment = isEnrolment,
             goBack = { navController.popBackStack() },
             goToNext = { challenge ->
                 val encodedChallenge = viewModel.encodeChallenge(challenge)
@@ -93,7 +100,7 @@ fun MainGraph(
                     )
                 } else {
                     navController.goToWithPopCurrent(
-                        "${Account.Authorize.route}/$encodedChallenge"
+                        "${Account.RequestAuthentication.route}/$encodedChallenge"
                     )
                 }
             })
@@ -137,11 +144,42 @@ fun MainGraph(
             promptAuth = { navController.navigate(Graph.OAUTH) })
     }
     //endregion
-    //region Authorize
+
+    //region Authentication
     composable(
-        route = Account.Authorize.routeWithArgs,
-        arguments = Account.Authorize.arguments,
+        route = Account.RequestAuthentication.routeWithArgs,
+        arguments = Account.RequestAuthentication.arguments,
     ) { entry ->
+        val viewModel = hiltViewModel<EduIdAuthenticationViewModel>(entry)
+        RequestAuthenticationScreen(viewModel = viewModel, onLogin = { challenge ->
+            if (challenge != null) {
+                val encodedChallenge = viewModel.encodeChallenge(challenge)
+                navController.goToWithPopCurrent("${Account.AuthenticationCheckSecret.route}/$encodedChallenge")
+            }
+        }) { navController.popBackStack() }
+    }
+    composable(
+        route = Account.AuthenticationCheckSecret.routeWithArgs,
+        arguments = Account.AuthenticationCheckSecret.arguments,
+    ) { entry ->
+        val viewModel = hiltViewModel<EduIdAuthenticationViewModel>(entry)
+        AuthenticationPinBiometricScreen(viewModel = viewModel,
+            goToAuthenticationComplete = { challenge, pin ->
+                if (challenge != null) {
+                    val encodedChallenge = viewModel.encodeChallenge(challenge)
+                    navController.goToWithPopCurrent(
+                        Account.AuthenticationCompleted.buildRoute(
+                            encodedChallenge = encodedChallenge, pin = pin
+                        )
+                    )
+                }
+            }) { navController.popBackStack() }
+    }
+    composable(
+        route = Account.AuthenticationCompleted.routeWithArgs,
+        arguments = Account.AuthenticationCompleted.arguments,
+    ) { _ ->
+        AuthenticationCompletedScreen { navController.goToWithPopCurrent(Graph.HOME_PAGE) }
     }
     //endregion
 
@@ -162,7 +200,7 @@ fun MainGraph(
                 navController.goToWithPopCurrent("${Account.EnrollPinSetup.route}/$encodedChallenge")
             } else {
                 navController.goToWithPopCurrent(
-                    "${Account.Authorize.route}/$encodedChallenge"
+                    "${Account.RequestAuthentication.route}/$encodedChallenge"
                 )
             }
         })
@@ -219,12 +257,11 @@ fun MainGraph(
         )
     }
     composable(
-        route = RequestEduIdCreated.route, deepLinks = listOf(
-            navDeepLink {
-                uriPattern = RequestEduIdCreated.uriPatternHttps
-            }, navDeepLink {
-                uriPattern = RequestEduIdCreated.uriPatternCustomScheme
-            })
+        route = RequestEduIdCreated.route, deepLinks = listOf(navDeepLink {
+            uriPattern = RequestEduIdCreated.uriPatternHttps
+        }, navDeepLink {
+            uriPattern = RequestEduIdCreated.uriPatternCustomScheme
+        })
     ) { entry ->
         val viewModel = hiltViewModel<HomePageViewModel>(entry)
         RequestEduIdCreatedScreen(
@@ -330,7 +367,13 @@ fun MainGraph(
             onEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
             onRoleClicked = { },
             onInstitutionClicked = { },
-            onManageAccountClicked = { dateString -> navController.navigate(ManageAccountRoute.routeWithArgs(dateString)) },
+            onManageAccountClicked = { dateString ->
+                navController.navigate(
+                    ManageAccountRoute.routeWithArgs(
+                        dateString
+                    )
+                )
+            },
             goBack = { navController.popBackStack() },
         )
     }

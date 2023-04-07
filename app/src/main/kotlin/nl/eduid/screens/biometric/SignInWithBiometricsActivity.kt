@@ -58,7 +58,7 @@ class SignInWithBiometricsActivity : AppCompatActivity() {
 
     private fun createPromptInfo(): BiometricPrompt.PromptInfo =
         BiometricPrompt.PromptInfo.Builder().apply {
-            setTitle(getString(R.string.auth_biometric_title))
+            setTitle(getString(R.string.auth_biometric_dialog_title))
             setConfirmationRequired(false)
             setNegativeButtonText(getString(R.string.auth_biometric_dialog_cancel))
         }.build()

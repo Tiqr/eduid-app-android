@@ -74,6 +74,12 @@
     <string name="account_linked_subtitle">was contacted successfully</string>
     <string name="account_linked_description">The following information has been added to your eduID and can now be shared.</string>
 
+    <string name="authorize_title">Request to log on</string>
+    <string name="authorize_subtitle01">Do you want to login to</string>
+    <string name="authorize_subtitle02">%s?</string>
+    <string name="authorize_login_button">Login</string>
+    <string name="authorize_confirmed_subtitle">You are logged on</string>
+
     <string name="deeplink_processing">Checking request…</string>
 
     <string name="button_back">Back</string>

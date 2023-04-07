@@ -3,7 +3,6 @@ package nl.eduid.graphs
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import nl.eduid.graphs.Graph.MANAGE_ACCOUNT
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 import java.net.URLEncoder
@@ -23,7 +22,6 @@ object Graph {
     const val RESET_PASSWORD_CONFIRM = "reset_password_confirm"
     const val EDIT_EMAIL = "edit_email"
     const val TWO_FA_DETAIL = "2fa_detail"
-    const val MANAGE_ACCOUNT = "manage_account"
     const val DELETE_ACCOUNT_FIRST_CONFIRM = "delete_account_first_confirm"
     const val DELETE_ACCOUNT_SECOND_CONFIRM = "delete_account_second_confirm"
 }
@@ -97,7 +95,19 @@ sealed class PhoneNumberRecovery(val route: String) {
 
 sealed class Account(val route: String) {
 
-    object ScanQR : Account("scan")
+    object ScanQR : Account("scan") {
+        const val isEnrolment = "is_enrolment"
+        val routeWithArgs = "$route/{${isEnrolment}}"
+        val routeForEnrol = "$route/true"
+        val routeForAuth = "$route/false"
+        val arguments = listOf(navArgument(isEnrolment) {
+            type = NavType.BoolType
+            nullable = false
+            defaultValue = true
+        })
+
+    }
+
     object EnrollPinSetup : Account("enroll_pin_setup") {
         const val enrollChallenge = "enroll_challenge_arg"
 
@@ -109,7 +119,7 @@ sealed class Account(val route: String) {
         })
     }
 
-    object Authorize : Account("authorization") {
+    object RequestAuthentication : Account("authentication") {
         const val challengeArg = "challenge_arg"
 
         val routeWithArgs = "$route/{$challengeArg}"
@@ -118,6 +128,39 @@ sealed class Account(val route: String) {
             nullable = false
             defaultValue = ""
         })
+    }
+
+    object AuthenticationCheckSecret : Account("authentication_checksecret") {
+        private const val challengeArg = "challenge_arg"
+
+        val routeWithArgs = "$route/{$challengeArg}"
+        val arguments = listOf(navArgument(challengeArg) {
+            type = NavType.StringType
+            nullable = false
+            defaultValue = ""
+        })
+    }
+
+    object AuthenticationCompleted : Account("authentication_completed") {
+        private const val challengeArg = "challenge_arg"
+        private const val pinArg = "pin_arg"
+
+        val routeWithArgs = "$route/{$challengeArg}?pin={$pinArg}"
+        val arguments = listOf(navArgument(challengeArg) {
+            type = NavType.StringType
+            nullable = false
+            defaultValue = ""
+        }, navArgument(pinArg) {
+            type = NavType.StringType
+            nullable = true
+        })
+
+        fun buildRoute(encodedChallenge: String, pin: String?): String = if (pin.isNullOrEmpty()) {
+            "${route}/$encodedChallenge"
+        } else {
+            "${route}/$encodedChallenge?pin=$pin"
+        }
+
     }
 
     //https://eduid.nl/tiqrenroll/?metadata=https%3A%2F%2Flogin.test2.eduid.nl%2Ftiqr%2Fmetadata%3Fenrollment_key%3Dd47fa31400084edc043f8c547c5ed3f6b18d69f5a71f422519911f034b865f96153c8fc1507d81bc05aba95d095489a8d0400909f8aab348e2ac1786b28db572
@@ -161,11 +204,10 @@ sealed class WithChallenge(val route: String) {
 }
 
 object ManageAccountRoute {
-    private const val route = MANAGE_ACCOUNT
+    private const val route = "manage_account"
     const val dateArg = "date_arg"
     const val routeWithArgs = "$route/{$dateArg}"
-    val arguments = listOf(
-        navArgument(dateArg) {
+    val arguments = listOf(navArgument(dateArg) {
         type = NavType.StringType
         nullable = false
         defaultValue = ""
