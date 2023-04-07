@@ -143,6 +143,6 @@ class RegistrationPinSetupViewModel @Inject constructor(
     }
 
     fun dismissError() {
-        uiState.value = uiState.value?.copy(errorData = null)
+        uiState.value = uiState.value?.copy(errorData = null, )
     }
 }
