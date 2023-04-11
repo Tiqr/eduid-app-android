@@ -35,4 +35,7 @@ interface EduIdApi {
 
     @PUT("/mobile/api/sp/email")
     suspend fun requestEmailChange(@Body email: EmailChangeRequest): Response<UserDetails>
+
+    @PUT("/mobile/api/sp/institution")
+    suspend fun removeConnection(@Body account: LinkedAccount): Response<UserDetails>
 }

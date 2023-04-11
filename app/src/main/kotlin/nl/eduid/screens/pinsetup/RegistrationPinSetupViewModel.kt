@@ -13,7 +13,7 @@ import nl.eduid.BaseViewModel
 import nl.eduid.di.repository.StorageRepository
 import nl.eduid.graphs.Account
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
-import nl.eduid.screens.scan.ErrorData
+import nl.eduid.ErrorData
 import nl.eduid.ui.PIN_MAX_LENGTH
 import org.tiqr.core.util.extensions.biometricUsable
 import org.tiqr.data.model.ChallengeCompleteResult

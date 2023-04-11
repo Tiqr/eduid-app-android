@@ -16,7 +16,7 @@ import nl.eduid.di.model.EMAIL_DOMAIN_FORBIDDEN
 import nl.eduid.di.model.FAIL_EMAIL_IN_USE
 import nl.eduid.di.model.RequestEduIdAccount
 import nl.eduid.di.repository.EduIdRepository
-import nl.eduid.screens.scan.ErrorData
+import nl.eduid.ErrorData
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException

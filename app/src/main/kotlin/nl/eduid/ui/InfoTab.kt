@@ -1,6 +1,5 @@
 package nl.eduid.ui
 
-import android.annotation.SuppressLint
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
@@ -36,7 +35,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.capitalize
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
@@ -46,7 +44,6 @@ import nl.eduid.ui.theme.BlueText
 import nl.eduid.ui.theme.ButtonRed
 import nl.eduid.ui.theme.InfoTabDarkFill
 import nl.eduid.ui.theme.TextBlack
-import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
@@ -61,7 +58,6 @@ fun InfoTab(
     twoFactorData: TwoFactorData? = null,
     onDeleteButtonClicked: (id: String) -> Unit = { },
     startIconLargeUrl: String = "",
-    @DrawableRes startIconSmall: Int = 0,
     @DrawableRes endIcon: Int = 0,
 ) {
     val isOpen = remember { mutableStateOf(false) }
@@ -302,7 +298,7 @@ private fun InstitutionInfoBlock(
             .fillMaxWidth(),
     ) {
         Text(
-            text = "Remove connection",
+            text = stringResource(R.string.infotab_remove_connection),
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = ButtonRed, fontWeight = FontWeight.SemiBold
             )
@@ -317,7 +313,7 @@ private fun serviceProviderBlock(
 ): @Composable() (ColumnScope.() -> Unit) =
     {
         Text(
-            text = "Login Details",
+            text = stringResource(R.string.infotab_login_details),
             style = MaterialTheme.typography.bodyMedium.copy(
                 textAlign = TextAlign.Start,
                 color = BlueText,

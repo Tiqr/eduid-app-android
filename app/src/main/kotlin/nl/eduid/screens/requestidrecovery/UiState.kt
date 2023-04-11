@@ -1,6 +1,6 @@
 package nl.eduid.screens.requestidrecovery
 
-import nl.eduid.screens.scan.ErrorData
+import nl.eduid.ErrorData
 
 data class UiState(
     val input: String = "",

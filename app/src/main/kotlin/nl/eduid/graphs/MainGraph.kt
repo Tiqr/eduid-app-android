@@ -373,10 +373,7 @@ fun MainGraph(
         val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
         PersonalInfoScreen(
             viewModel = viewModel,
-            onNameClicked = { },
-            onEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
-            onRoleClicked = { },
-            onInstitutionClicked = { },
+            onEmailClicked = { navController.goToWithPopCurrent(Graph.EDIT_EMAIL) },
             onManageAccountClicked = { dateString ->
                 navController.navigate(
                     ManageAccountRoute.routeWithArgs(
@@ -384,8 +381,7 @@ fun MainGraph(
                     )
                 )
             },
-            goBack = { navController.popBackStack() },
-        )
+        ) { navController.popBackStack() }
     }
     //endregion
     composable(Graph.DATA_AND_ACTIVITY) {

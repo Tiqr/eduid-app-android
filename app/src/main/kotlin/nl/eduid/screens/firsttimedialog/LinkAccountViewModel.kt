@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.di.api.EduIdApi
-import nl.eduid.screens.scan.ErrorData
+import nl.eduid.ErrorData
 import timber.log.Timber
 import javax.inject.Inject
 

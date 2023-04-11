@@ -89,6 +89,7 @@ data class LinkedAccount(
     val institutionIdentifier: String,
     val schacHomeOrganization: String,
     val eduPersonPrincipalName: String,
+    val subjectId: String?,
     val givenName: String,
     val familyName: String,
     val eduPersonAffiliations: List<String>,

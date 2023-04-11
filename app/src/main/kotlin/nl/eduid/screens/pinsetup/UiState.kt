@@ -1,6 +1,6 @@
 package nl.eduid.screens.pinsetup
 
-import nl.eduid.screens.scan.ErrorData
+import nl.eduid.ErrorData
 import org.tiqr.data.model.Challenge
 
 data class UiState(
