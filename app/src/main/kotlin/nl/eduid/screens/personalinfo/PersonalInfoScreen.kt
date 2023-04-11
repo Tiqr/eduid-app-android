@@ -125,7 +125,11 @@ fun PersonalInfoScreenContent(
             )
         },
         onClick = { },
-        endIcon = R.drawable.shield_tick_blue
+        endIcon = if (personalInfo.nameProvider == null) {
+            R.drawable.edit_icon
+        } else {
+            R.drawable.shield_tick_blue
+        }
     )
     InfoTab(
         header = stringResource(R.string.infotab_email),
