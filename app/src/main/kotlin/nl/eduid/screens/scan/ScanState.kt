@@ -12,6 +12,7 @@ import androidx.lifecycle.LifecycleOwner
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import nl.eduid.ErrorData
 import org.tiqr.core.scan.ScanComponent
 import org.tiqr.data.model.Challenge
 import org.tiqr.data.model.ChallengeParseResult
@@ -25,7 +26,7 @@ fun rememberScanState(
     goToNext: (Challenge) -> Unit,
     lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
     context: Context = LocalContext.current,
-    coroutineScope: CoroutineScope = rememberCoroutineScope()
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
 ): ScanState {
     val currentGoBack by rememberUpdatedState(newValue = goBack)
     val currentGoToNext by rememberUpdatedState(newValue = goToNext)
@@ -74,6 +75,7 @@ class ScanState(
                 delay(200L) // delay a bit, otherwise beep sound is cutoff
                 goToNext(parseResult.value)
             }
+
             is ChallengeParseResult.Failure -> {
                 errorData = ErrorData(parseResult.failure.title, parseResult.failure.message)
             }
@@ -99,5 +101,3 @@ class ScanState(
         scanComponent = component
     }
 }
-
-data class ErrorData(val title: String, val message: String)

@@ -20,6 +20,7 @@ data class PersonalInfo(
             val createdStamp: Long,
             val expiryStamp: Long,
         )
+
         fun demoData(): PersonalInfo {
             return PersonalInfo(
                 name = "R. van Hamersdonksveer",

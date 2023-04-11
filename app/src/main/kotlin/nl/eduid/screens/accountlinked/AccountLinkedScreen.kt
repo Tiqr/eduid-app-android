@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import nl.eduid.R
 import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.screens.personalinfo.PersonalInfoViewModel
+import nl.eduid.screens.personalinfo.UiState
+import nl.eduid.ErrorData
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.InfoTab
 import nl.eduid.ui.PrimaryButton
@@ -31,9 +33,11 @@ fun AccountLinkedScreen(
     viewModel: PersonalInfoViewModel,
     continueToHome: () -> Unit,
 ) {
-    val personalInfo by viewModel.personalInfo.observeAsState(PersonalInfo())
+    val uiState by viewModel.uiState.observeAsState(UiState())
     AccountLinkedContent(
-        personalInfo = personalInfo,
+        personalInfo = uiState.personalInfo,
+        isLoading = uiState.isLoading,
+        errorData = uiState.errorData,
         continueToHome = continueToHome,
     )
 }
@@ -41,6 +45,8 @@ fun AccountLinkedScreen(
 @Composable
 private fun AccountLinkedContent(
     personalInfo: PersonalInfo,
+    isLoading: Boolean = false,
+    errorData: ErrorData? = null,
     continueToHome: () -> Unit = {},
 ) = EduIdTopAppBar(
     withBackIcon = false

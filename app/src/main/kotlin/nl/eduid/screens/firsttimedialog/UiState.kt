@@ -1,7 +1,7 @@
 package nl.eduid.screens.firsttimedialog
 
 import android.content.Intent
-import nl.eduid.screens.scan.ErrorData
+import nl.eduid.ErrorData
 
 data class UiState(
     val linkUrl: Intent? = null,

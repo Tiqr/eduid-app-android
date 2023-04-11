@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import nl.eduid.ErrorData
 import nl.eduid.di.model.UserDetails
 import javax.inject.Inject
 

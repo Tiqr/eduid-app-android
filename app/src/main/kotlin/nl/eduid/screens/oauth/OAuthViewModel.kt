@@ -19,7 +19,7 @@ import net.openid.appauth.ClientAuthentication.UnsupportedAuthenticationMethod
 import nl.eduid.R
 import nl.eduid.di.assist.AuthenticationAssistant
 import nl.eduid.di.repository.StorageRepository
-import nl.eduid.screens.scan.ErrorData
+import nl.eduid.ErrorData
 import org.tiqr.data.service.DatabaseService
 import timber.log.Timber
 import java.io.IOException
