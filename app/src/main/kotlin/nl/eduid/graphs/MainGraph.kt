@@ -372,7 +372,6 @@ fun MainGraph(
             onNameClicked = { },
             onEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
             onRoleClicked = { },
-            onInstitutionClicked = { },
             onManageAccountClicked = { dateString ->
                 navController.navigate(
                     ManageAccountRoute.routeWithArgs(
@@ -380,8 +379,7 @@ fun MainGraph(
                     )
                 )
             },
-            goBack = { navController.popBackStack() },
-        )
+        ) { navController.popBackStack() }
     }
     //endregion
     composable(Graph.DATA_AND_ACTIVITY) {

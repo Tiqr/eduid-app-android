@@ -43,167 +43,125 @@ fun PersonalInfoScreen(
     onNameClicked: () -> Unit,
     onEmailClicked: () -> Unit,
     onRoleClicked: () -> Unit,
-    onInstitutionClicked: () -> Unit,
     onManageAccountClicked: (dateString: String) -> Unit,
     goBack: () -> Unit,
+) = EduIdTopAppBar(
+    onBackClicked = goBack,
 ) {
-    val personalInfo by viewModel.personalInfo.observeAsState(PersonalInfo())
+    val uiState by viewModel.uiState.observeAsState(UiState())
     PersonalInfoScreenContent(
+        personalInfo = uiState.personalInfo,
+        isLoading = uiState.isLoading,
+        errorData = uiState.errorData,
         onNameClicked = onNameClicked,
         onEmailClicked = onEmailClicked,
         onRoleClicked = onRoleClicked,
-        onInstitutionClicked = onInstitutionClicked,
+        removeConnection = { index -> viewModel.removeConnection(index) },
         onManageAccountClicked = onManageAccountClicked,
-        goBack = goBack,
-        personalInfo = personalInfo,
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PersonalInfoScreenContent(
+    personalInfo: PersonalInfo,
+    isLoading: Boolean = false,
+    errorData: ErrorData? = null,
     onNameClicked: () -> Unit,
     onEmailClicked: () -> Unit,
     onRoleClicked: () -> Unit,
-    onInstitutionClicked: () -> Unit,
+    removeConnection: (Int) -> Unit,
     onManageAccountClicked: (dateString: String) -> Unit,
-    goBack: () -> Unit,
-    personalInfo: PersonalInfo,
+) = Column(
+    verticalArrangement = Arrangement.Bottom,
+    modifier = Modifier
+        .verticalScroll(rememberScrollState())
 ) {
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                modifier = Modifier.padding(top = 42.dp, start = 26.dp, end = 26.dp),
-                navigationIcon = {
-                    Image(
-                        painter = painterResource(R.drawable.back_button_icon),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(width = 46.dp, height = 46.dp)
-                            .clickable {
-                                goBack.invoke()
-                            },
-                        alignment = Alignment.Center
-                    )
-                },
-                title = {
-                    Image(
-                        painter = painterResource(R.drawable.ic_top_logo),
-                        contentDescription = "",
-                        modifier = Modifier.size(width = 122.dp, height = 46.dp),
-                        alignment = Alignment.Center
-                    )
-                },
-            )
-        },
-    ) { paddingValues ->
-        Column(
-            verticalArrangement = Arrangement.Bottom,
-            modifier = Modifier
-                .padding(paddingValues)
-                .padding(start = 26.dp, end = 26.dp)
-                .verticalScroll(rememberScrollState())
-        ) {
-            Spacer(Modifier.height(36.dp))
-            Text(
-                style = MaterialTheme.typography.titleLarge.copy(
-                    textAlign = TextAlign.Start,
-                    color = ButtonGreen
-                ),
-                text = stringResource(R.string.personal_info_title),
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-            Spacer(Modifier.height(12.dp))
-            Text(
-                style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-                text = stringResource(R.string.personal_info_subtitle),
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-            Spacer(Modifier.height(12.dp))
-            Text(
-                style = MaterialTheme.typography.titleLarge.copy(
-                    textAlign = TextAlign.Start,
-                    color = ButtonGreen,
-                    fontSize = 20.sp
-                ),
-                text = stringResource(R.string.personal_info_info_header),
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-            Spacer(Modifier.height(12.dp))
-            if (personalInfo.name.isBlank()) {
-                Spacer(Modifier.height(24.dp))
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .height(80.dp)
-                        .width(80.dp)
-                        .align(alignment = Alignment.CenterHorizontally)
-                )
-            } else {
-                InfoTab(
-                    header = "Name",
-                    title = personalInfo.name,
-                    subtitle = "Provided by ${personalInfo.nameProvider}",
-                    onClick = { },
-                    endIcon = R.drawable.shield_tick_blue
-                )
-                InfoTab(
-                    header = "Email",
-                    title = personalInfo.email,
-                    subtitle = "Provided by ${personalInfo.emailProvider}",
-                    onClick = onEmailClicked,
-                    endIcon = R.drawable.edit_icon
-                )
-
-                personalInfo.institutionAccounts.forEachIndexed {index, it ->
-                    InfoTab(
-                        header = if (index < 1) "Role & institution" else "",
-                        title =  it.role,
-                        subtitle = "At ${it.roleProvider}",
-                        institutionInfo = it,
-                        onClick = { },
-                        endIcon = R.drawable.chevron_down,
-                    )
-                }
-
-                Spacer(Modifier.height(42.dp))
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(6.dp))
-                        .border(
-                            width = 1.dp,
-                            color = TextGrayScale
-                        )
-                        .sizeIn(minHeight = 48.dp)
-                        .fillMaxWidth()
-                        .clickable {
-                            onManageAccountClicked(personalInfo.dateCreated.getDateTimeString("EEEE, dd MMMM yyyy 'at' HH:MM"))
-                        }
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.cog_icon),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .align(Alignment.CenterStart)
-                            .padding(start = 12.dp)
-                    )
-                    Text(
-                        modifier = Modifier
-                            .align(Alignment.Center),
-                        text = "Manage your account",
-                        style = MaterialTheme.typography.bodyLarge.copy(
-                            textAlign = TextAlign.Start,
-                            color = TextGrayScale,
-                            fontWeight = FontWeight.SemiBold,
-                        ),
-                    )
-                }
-            }
-            Spacer(Modifier.height(42.dp))
-        }
+    Spacer(Modifier.height(36.dp))
+    Text(
+        style = MaterialTheme.typography.titleLarge.copy(
+            textAlign = TextAlign.Start, color = ButtonGreen
+        ),
+        text = stringResource(R.string.personal_info_title),
+        modifier = Modifier.fillMaxWidth()
+    )
+    Spacer(Modifier.height(12.dp))
+    Text(
+        style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
+        text = stringResource(R.string.personal_info_subtitle),
+        modifier = Modifier.fillMaxWidth()
+    )
+    Spacer(Modifier.height(12.dp))
+    Text(
+        style = MaterialTheme.typography.titleLarge.copy(
+            textAlign = TextAlign.Start, color = ButtonGreen, fontSize = 20.sp
+        ),
+        text = stringResource(R.string.personal_info_info_header),
+        modifier = Modifier.fillMaxWidth()
+    )
+    if (isLoading) {
+        Spacer(modifier = Modifier.height(16.dp))
+        LinearProgressIndicator(
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(16.dp))
     }
+    Spacer(Modifier.height(12.dp))
+    InfoTab(
+        header = stringResource(R.string.infotab_name),
+        title = personalInfo.name,
+        subtitle = stringResource(
+            R.string.infotab_providedby, personalInfo.nameProvider
+        ),
+        onClick = { },
+        endIcon = R.drawable.shield_tick_blue
+    )
+    InfoTab(
+        header = stringResource(R.string.infotab_email),
+        title = personalInfo.email,
+        subtitle = stringResource(
+            R.string.infotab_providedby, personalInfo.emailProvider
+        ),
+        onClick = onEmailClicked,
+        endIcon = R.drawable.edit_icon
+    )
+
+    personalInfo.institutionAccounts.forEachIndexed { index, account ->
+        InfoTab(
+            header = if (index < 1) stringResource(R.string.infotab_role_institution) else "",
+            title = account.role,
+            subtitle = stringResource(R.string.infotab_at, account.roleProvider),
+            institutionInfo = account,
+            onClick = {},
+            onDeleteButtonClicked = { removeConnection(index) },
+            endIcon = R.drawable.chevron_down,
+        )
+    }
+
+    Spacer(Modifier.height(42.dp))
+    OutlinedButton(
+        onClick = { onManageAccountClicked(personalInfo.dateCreated.getDateTimeString("EEEE, dd MMMM yyyy 'at' HH:MM")) },
+        shape = RoundedCornerShape(CornerSize(6.dp)),
+        modifier = Modifier
+            .sizeIn(minHeight = 48.dp)
+            .fillMaxWidth()
+    ) {
+        Image(
+            painter = painterResource(R.drawable.cog_icon),
+            alignment = CenterStart,
+            contentDescription = "",
+            modifier = Modifier
+                .padding(end = 48.dp)
+        )
+        Text(
+            text = stringResource(R.string.personalinfo_manage_your_account),
+            style = MaterialTheme.typography.bodyLarge.copy(
+                textAlign = TextAlign.Start,
+                color = ButtonTextGrey,
+                fontWeight = FontWeight.SemiBold,
+            ),
+        )
+    }
+    Spacer(Modifier.height(42.dp))
 }
 
 
@@ -211,12 +169,10 @@ fun PersonalInfoScreenContent(
 @Composable
 private fun PreviewPersonalInfoScreenContent() = EduidAppAndroidTheme {
     PersonalInfoScreenContent(
+        personalInfo = PersonalInfo.demoData(),
         onNameClicked = {},
         onEmailClicked = {},
         onRoleClicked = {},
-        onInstitutionClicked = {},
-        goBack = {},
-        personalInfo = PersonalInfo.demoData(),
-        onManageAccountClicked = {},
-    )
+        removeConnection = {},
+    ) {}
 }
