@@ -369,7 +369,7 @@ fun MainGraph(
         val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
         PersonalInfoScreen(
             viewModel = viewModel,
-            onEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
+            onEmailClicked = { navController.goToWithPopCurrent(Graph.EDIT_EMAIL) },
             onManageAccountClicked = { dateString ->
                 navController.navigate(
                     ManageAccountRoute.routeWithArgs(
