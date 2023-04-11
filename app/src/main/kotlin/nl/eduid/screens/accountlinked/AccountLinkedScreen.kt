@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +23,7 @@ import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.screens.personalinfo.PersonalInfoViewModel
 import nl.eduid.screens.personalinfo.UiState
 import nl.eduid.ErrorData
+import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.InfoTab
 import nl.eduid.ui.PrimaryButton
@@ -38,7 +40,9 @@ fun AccountLinkedScreen(
         personalInfo = uiState.personalInfo,
         isLoading = uiState.isLoading,
         errorData = uiState.errorData,
+        dismissError = viewModel::clearErrorData,
         continueToHome = continueToHome,
+        removeConnection = { index -> viewModel.removeConnection(index) },
     )
 }
 
@@ -47,13 +51,23 @@ private fun AccountLinkedContent(
     personalInfo: PersonalInfo,
     isLoading: Boolean = false,
     errorData: ErrorData? = null,
+    dismissError: () -> Unit = {},
     continueToHome: () -> Unit = {},
+    removeConnection: (Int) -> Unit = {},
 ) = EduIdTopAppBar(
     withBackIcon = false
 ) {
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
+        if (errorData != null) {
+            AlertDialogWithSingleButton(
+                title = errorData.title,
+                explanation = errorData.message,
+                buttonLabel = stringResource(R.string.button_ok),
+                onDismiss = dismissError
+            )
+        }
         Spacer(Modifier.height(36.dp))
         Text(
             style = MaterialTheme.typography.titleLarge.copy(
@@ -74,23 +88,40 @@ private fun AccountLinkedContent(
             text = stringResource(R.string.account_linked_description),
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(Modifier.height(12.dp))
-
+        if (isLoading) {
+            Spacer(modifier = Modifier.height(16.dp))
+            LinearProgressIndicator(
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+        } else {
+            Spacer(Modifier.height(12.dp))
+        }
         InfoTab(
-            header = "Name",
+            header = stringResource(R.string.infotab_fullname),
             title = personalInfo.name,
-            subtitle = "Provided by ${personalInfo.nameProvider}",
+            subtitle = if (personalInfo.nameProvider == null) {
+                stringResource(
+                    R.string.infotab_providedby_you
+                )
+            } else {
+                stringResource(
+                    R.string.infotab_providedby, personalInfo.nameProvider
+                )
+            },
             onClick = { },
             endIcon = R.drawable.shield_tick_blue
         )
 
-        personalInfo.institutionAccounts.forEach {
+        personalInfo.institutionAccounts.forEachIndexed { index, account ->
             InfoTab(
-                header = "Role & institution",
-                title = it.role,
-                subtitle = it.institution,
-                onClick = { },
-                endIcon = R.drawable.shield_tick_blue,
+                header = if (index < 1) stringResource(R.string.infotab_role_institution) else "",
+                title = account.role,
+                subtitle = stringResource(R.string.infotab_at, account.roleProvider),
+                institutionInfo = account,
+                onClick = {},
+                onDeleteButtonClicked = { removeConnection(index) },
+                endIcon = R.drawable.chevron_down,
             )
         }
         PrimaryButton(

@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import nl.eduid.ErrorData
 import nl.eduid.R
+import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.InfoTab
 import nl.eduid.ui.getDateTimeString
@@ -40,9 +41,7 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 @Composable
 fun PersonalInfoScreen(
     viewModel: PersonalInfoViewModel,
-    onNameClicked: () -> Unit,
     onEmailClicked: () -> Unit,
-    onRoleClicked: () -> Unit,
     onManageAccountClicked: (dateString: String) -> Unit,
     goBack: () -> Unit,
 ) = EduIdTopAppBar(
@@ -53,9 +52,8 @@ fun PersonalInfoScreen(
         personalInfo = uiState.personalInfo,
         isLoading = uiState.isLoading,
         errorData = uiState.errorData,
-        onNameClicked = onNameClicked,
+        dismissError = viewModel::clearErrorData,
         onEmailClicked = onEmailClicked,
-        onRoleClicked = onRoleClicked,
         removeConnection = { index -> viewModel.removeConnection(index) },
         onManageAccountClicked = onManageAccountClicked,
     )
@@ -66,16 +64,24 @@ fun PersonalInfoScreenContent(
     personalInfo: PersonalInfo,
     isLoading: Boolean = false,
     errorData: ErrorData? = null,
-    onNameClicked: () -> Unit,
-    onEmailClicked: () -> Unit,
-    onRoleClicked: () -> Unit,
-    removeConnection: (Int) -> Unit,
-    onManageAccountClicked: (dateString: String) -> Unit,
+    dismissError: () -> Unit = {},
+    onEmailClicked: () -> Unit = {},
+    removeConnection: (Int) -> Unit = {},
+    onManageAccountClicked: (dateString: String) -> Unit = {},
 ) = Column(
     verticalArrangement = Arrangement.Bottom,
     modifier = Modifier
         .verticalScroll(rememberScrollState())
 ) {
+    if (errorData != null) {
+        AlertDialogWithSingleButton(
+            title = errorData.title,
+            explanation = errorData.message,
+            buttonLabel = stringResource(R.string.button_ok),
+            onDismiss = dismissError
+        )
+    }
+
     Spacer(Modifier.height(36.dp))
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
@@ -109,18 +115,22 @@ fun PersonalInfoScreenContent(
     InfoTab(
         header = stringResource(R.string.infotab_name),
         title = personalInfo.name,
-        subtitle = stringResource(
-            R.string.infotab_providedby, personalInfo.nameProvider
-        ),
+        subtitle = if (personalInfo.nameProvider == null) {
+            stringResource(
+                R.string.infotab_providedby_you
+            )
+        } else {
+            stringResource(
+                R.string.infotab_providedby, personalInfo.nameProvider
+            )
+        },
         onClick = { },
         endIcon = R.drawable.shield_tick_blue
     )
     InfoTab(
         header = stringResource(R.string.infotab_email),
         title = personalInfo.email,
-        subtitle = stringResource(
-            R.string.infotab_providedby, personalInfo.emailProvider
-        ),
+        subtitle = stringResource(R.string.infotab_providedby_you),
         onClick = onEmailClicked,
         endIcon = R.drawable.edit_icon
     )
@@ -170,9 +180,5 @@ fun PersonalInfoScreenContent(
 private fun PreviewPersonalInfoScreenContent() = EduidAppAndroidTheme {
     PersonalInfoScreenContent(
         personalInfo = PersonalInfo.demoData(),
-        onNameClicked = {},
-        onEmailClicked = {},
-        onRoleClicked = {},
-        removeConnection = {},
-    ) {}
+    )
 }

@@ -7,7 +7,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.di.model.UserDetails
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -61,10 +60,12 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
         return personalInfo
     }
 
+    fun clearErrorData() {
+        uiState.value = uiState.value?.copy(errorData = null)
+    }
+
     fun removeConnection(index: Int) = viewModelScope.launch {
-        Timber.e("Launching remove for index $index")
         val details = cachedUserDetails ?: return@launch
-        Timber.e("Cached details are non-null")
         val currentUiState = uiState.value ?: UiState()
         uiState.postValue(currentUiState.copy(isLoading = true))
         val linkedAccount = details.linkedAccounts[index]
@@ -88,12 +89,11 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
         //Not sure if we should use the eduPersonAffiliations or the schacHomeOrganisation to get the institution name
         //val affiliation = linkedAccounts.firstOrNull()?.eduPersonAffiliations?.firstOrNull()
         //val nameProvider = affiliation?.substring(affiliation.indexOf("@"),affiliation.length) ?: "You"
-        val nameProvider = linkedAccounts.firstOrNull()?.schacHomeOrganization ?: "You"
+        val nameProvider = linkedAccounts.firstOrNull()?.schacHomeOrganization
         val name: String = linkedAccounts.firstOrNull()?.let {
             "${it.givenName} ${it.familyName}"
         } ?: "${userDetails.givenName} ${userDetails.familyName}"
 
-        val emailProvider = "You"
         val email: String = userDetails.email
 
         val institutionAccounts = linkedAccounts.mapNotNull { account ->
@@ -120,7 +120,6 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
             nameProvider = nameProvider,
             nameStatus = PersonalInfo.InfoStatus.Final,
             email = email,
-            emailProvider = emailProvider,
             emailStatus = PersonalInfo.InfoStatus.Editable,
             institutionAccounts = institutionAccounts,
             dateCreated = dateCreated,
