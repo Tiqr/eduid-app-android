@@ -5,46 +5,81 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import nl.eduid.ErrorData
 import nl.eduid.di.model.UserDetails
 import javax.inject.Inject
 
 @HiltViewModel
 class PersonalInfoViewModel @Inject constructor(private val repository: PersonalInfoRepository) :
     ViewModel() {
-    val personalInfo = MutableLiveData<PersonalInfo>()
+    private var cachedUserDetails: UserDetails? = null
+    val uiState = MutableLiveData<UiState>()
 
     init {
         viewModelScope.launch {
-            val userDetails = repository.getUserDetails()
-            if (userDetails != null) {
-                var uiData = convertToUiData(userDetails)
-                val nameMap = mutableMapOf<String, String>()
-                for (account in userDetails.linkedAccounts) {
-                    val mappedName = repository.getInstitutionName(account.schacHomeOrganization)
-                    mappedName?.let {
-                        //If name found, add to list of mapped names
-                        nameMap[account.schacHomeOrganization] = mappedName
-                        //Get name provider from FIRST linked account
-                        if (account.schacHomeOrganization == userDetails.linkedAccounts.firstOrNull()?.schacHomeOrganization) {
-                            uiData = uiData.copy(
-                                nameProvider = nameMap[account.schacHomeOrganization]
-                                    ?: uiData.nameProvider
-                            )
-                        }
-                        //Update UI data to include mapped institution names
-                        uiData =
-                            uiData.copy(institutionAccounts = uiData.institutionAccounts.map { institution ->
-                                institution.copy(
-                                    roleProvider = nameMap[institution.roleProvider]
-                                        ?: institution.roleProvider
-                                )
-                            })
-                        personalInfo.postValue(uiData)
-                    }
+            uiState.postValue(UiState(isLoading = true))
+            cachedUserDetails = repository.getUserDetails()
+            cachedUserDetails?.let { details ->
+                val personalInfo = mapUserDetailsToPersonalInfo(details)
+                uiState.postValue(UiState(isLoading = false, personalInfo = personalInfo))
+            } ?: uiState.postValue(
+                UiState(
+                    isLoading = false, errorData = ErrorData(
+                        "Failed to load data", "Could not load personal details."
+                    )
+                )
+            )
+        }
+    }
+
+    private suspend fun mapUserDetailsToPersonalInfo(userDetails: UserDetails): PersonalInfo {
+        var personalInfo = convertToUiData(userDetails)
+        val nameMap = mutableMapOf<String, String>()
+        for (account in userDetails.linkedAccounts) {
+            val mappedName = repository.getInstitutionName(account.schacHomeOrganization)
+            mappedName?.let {
+                //If name found, add to list of mapped names
+                nameMap[account.schacHomeOrganization] = mappedName
+                //Get name provider from FIRST linked account
+                if (account.schacHomeOrganization == userDetails.linkedAccounts.firstOrNull()?.schacHomeOrganization) {
+                    personalInfo = personalInfo.copy(
+                        nameProvider = nameMap[account.schacHomeOrganization]
+                            ?: personalInfo.nameProvider
+                    )
                 }
-                personalInfo.postValue(uiData)
+                //Update UI data to include mapped institution names
+                personalInfo =
+                    personalInfo.copy(institutionAccounts = personalInfo.institutionAccounts.map { institution ->
+                        institution.copy(
+                            roleProvider = nameMap[institution.roleProvider]
+                                ?: institution.roleProvider
+                        )
+                    })
             }
         }
+        return personalInfo
+    }
+
+    fun clearErrorData() {
+        uiState.value = uiState.value?.copy(errorData = null)
+    }
+
+    fun removeConnection(index: Int) = viewModelScope.launch {
+        val details = cachedUserDetails ?: return@launch
+        val currentUiState = uiState.value ?: UiState()
+        uiState.postValue(currentUiState.copy(isLoading = true))
+        val linkedAccount = details.linkedAccounts[index]
+        val newDetails = repository.removeConnection(linkedAccount)
+        newDetails?.let { updatedDetails ->
+            cachedUserDetails = updatedDetails
+            val personalInfo = mapUserDetailsToPersonalInfo(updatedDetails)
+            uiState.postValue(currentUiState.copy(isLoading = false, personalInfo = personalInfo))
+        } ?: uiState.postValue(
+            currentUiState.copy(
+                isLoading = false,
+                errorData = ErrorData("Failed to remove connection", "Could not remove connection")
+            )
+        )
     }
 
     private fun convertToUiData(userDetails: UserDetails): PersonalInfo {
@@ -54,12 +89,11 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
         //Not sure if we should use the eduPersonAffiliations or the schacHomeOrganisation to get the institution name
         //val affiliation = linkedAccounts.firstOrNull()?.eduPersonAffiliations?.firstOrNull()
         //val nameProvider = affiliation?.substring(affiliation.indexOf("@"),affiliation.length) ?: "You"
-        val nameProvider = linkedAccounts.firstOrNull()?.schacHomeOrganization ?: "You"
+        val nameProvider = linkedAccounts.firstOrNull()?.schacHomeOrganization
         val name: String = linkedAccounts.firstOrNull()?.let {
             "${it.givenName} ${it.familyName}"
         } ?: "${userDetails.givenName} ${userDetails.familyName}"
 
-        val emailProvider = "You"
         val email: String = userDetails.email
 
         val institutionAccounts = linkedAccounts.mapNotNull { account ->
@@ -86,7 +120,6 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
             nameProvider = nameProvider,
             nameStatus = PersonalInfo.InfoStatus.Final,
             email = email,
-            emailProvider = emailProvider,
             emailStatus = PersonalInfo.InfoStatus.Editable,
             institutionAccounts = institutionAccounts,
             dateCreated = dateCreated,

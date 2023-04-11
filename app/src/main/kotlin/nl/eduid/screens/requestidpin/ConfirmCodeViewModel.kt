@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.screens.requestidrecovery.RecoveryRepository
 import nl.eduid.screens.requestidrecovery.UiState
-import nl.eduid.screens.scan.ErrorData
+import nl.eduid.ErrorData
 import javax.inject.Inject
 
 @HiltViewModel

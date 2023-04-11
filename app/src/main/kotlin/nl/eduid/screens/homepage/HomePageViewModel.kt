@@ -11,7 +11,7 @@ import nl.eduid.BaseViewModel
 import nl.eduid.R
 import nl.eduid.di.api.EduIdApi
 import nl.eduid.di.repository.StorageRepository
-import nl.eduid.screens.scan.ErrorData
+import nl.eduid.ErrorData
 import nl.eduid.screens.splash.SplashWaitTime
 import org.tiqr.data.model.*
 import org.tiqr.data.repository.AuthenticationRepository

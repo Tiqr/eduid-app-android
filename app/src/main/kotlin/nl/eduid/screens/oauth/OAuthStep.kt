@@ -1,7 +1,7 @@
 package nl.eduid.screens.oauth
 
 import android.content.Intent
-import nl.eduid.screens.scan.ErrorData
+import nl.eduid.ErrorData
 
 /**
  * Loading

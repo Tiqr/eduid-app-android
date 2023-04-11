@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.LifecycleOwner
+import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithTwoButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme

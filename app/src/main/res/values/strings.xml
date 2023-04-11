@@ -192,5 +192,15 @@
     <string name="delete_account_two_title">Delete your account for all eternity?</string>
     <string name="delete_account_two_subtitle">There is no way to undo this action</string>
     <string name="delete_account_two_description">If you wish to proceed, please type in your full name for confirmation.</string>
+    <string name="infotab_remove_connection">Remove connection</string>
+    <string name="infotab_login_details">Login Details</string>
+    <string name="infotab_name">Name</string>
+    <string name="infotab_fullname">Full Name</string>
+    <string name="infotab_email">Email</string>
+    <string name="infotab_providedby">Provided by %s</string>
+    <string name="infotab_providedby_you">Provided by you</string>
+    <string name="infotab_at">At %s</string>
+    <string name="infotab_role_institution">Role &amp; institution</string>
+    <string name="personalinfo_manage_your_account">Manage your account</string>
 
 </resources>

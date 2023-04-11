@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import nl.eduid.screens.scan.ErrorData
+import nl.eduid.ErrorData
 import javax.inject.Inject
 
 @HiltViewModel
