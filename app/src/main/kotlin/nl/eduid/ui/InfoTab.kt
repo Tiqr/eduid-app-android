@@ -16,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Switch
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,6 +41,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import nl.eduid.screens.dataactivity.DataAndActivityData
+import nl.eduid.screens.twofactorkey.TwoFactorData
 import nl.eduid.ui.theme.BlueText
 import nl.eduid.ui.theme.ButtonRed
 import nl.eduid.ui.theme.InfoTabDarkFill
@@ -56,7 +58,8 @@ fun InfoTab(
     enabled: Boolean = true,
     institutionInfo: PersonalInfo.Companion.InstitutionAccount? = null,
     serviceProviderInfo: DataAndActivityData.Companion.Provider? = null,
-    onDeleteButtonClicked: () -> Unit = { },
+    twoFactorData: TwoFactorData? = null,
+    onDeleteButtonClicked: (id: String) -> Unit = { },
     startIconLargeUrl: String = "",
     @DrawableRes startIconSmall: Int = 0,
     @DrawableRes endIcon: Int = 0,
@@ -82,13 +85,13 @@ fun InfoTab(
             .sizeIn(minHeight = 72.dp)
             .fillMaxWidth()
             .clickable {
-                if (institutionInfo != null || serviceProviderInfo != null) {
+                if (institutionInfo != null || serviceProviderInfo != null || twoFactorData != null) {
                     isOpen.value = !isOpen.value
                 } else {
                     onClick.invoke()
                 }
             }
-            .background(if (serviceProviderInfo != null) InfoTabDarkFill else Color.Transparent)
+            .background(if (serviceProviderInfo != null || twoFactorData != null) InfoTabDarkFill else Color.Transparent)
             .animateContentSize()
     ) {
         ConstraintLayout(
@@ -172,6 +175,18 @@ fun InfoTab(
                     content = serviceProviderBlock(serviceProviderInfo, onDeleteButtonClicked)
                 )
             }
+            if (isOpen.value && twoFactorData != null) {
+                Column(
+                    horizontalAlignment = Alignment.Start,
+                    modifier = Modifier
+                        .constrainAs(expandedArea) {
+                            top.linkTo(titleArea.bottom, margin = 24.dp)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        },
+                    content = twoFaBlock(twoFactorData, onDeleteButtonClicked)
+                )
+            }
             Image(
                 painter = painterResource(endIcon),
                 contentDescription = "",
@@ -190,7 +205,7 @@ fun InfoTab(
 @Composable
 private fun InstitutionInfoBlock(
     institutionInfo: PersonalInfo.Companion.InstitutionAccount,
-    onDeleteButtonClicked: () -> Unit
+    onDeleteButtonClicked: (id: String) -> Unit
 ) {
     Text(
         text = "Verified by ${institutionInfo.institution} on ${institutionInfo.createdStamp.getDateString()}",
@@ -279,7 +294,7 @@ private fun InstitutionInfoBlock(
     }
     Button(
         shape = RoundedCornerShape(CornerSize(6.dp)),
-        onClick = onDeleteButtonClicked,
+        onClick = { onDeleteButtonClicked(institutionInfo.id) },
         border = BorderStroke(1.dp, Color.Red),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
         modifier = Modifier
@@ -298,7 +313,7 @@ private fun InstitutionInfoBlock(
 @Composable
 private fun serviceProviderBlock(
     serviceProviderInfo: DataAndActivityData.Companion.Provider,
-    onDeleteButtonClicked: () -> Unit
+    onDeleteButtonClicked: (id: String) -> Unit
 ): @Composable() (ColumnScope.() -> Unit) =
     {
         Text(
@@ -363,7 +378,7 @@ private fun serviceProviderBlock(
             Spacer(Modifier.height(12.dp))
             Button(
                 shape = RoundedCornerShape(CornerSize(6.dp)),
-                onClick = onDeleteButtonClicked,
+                onClick = { onDeleteButtonClicked(serviceProviderInfo.uniqueId) },
                 border = BorderStroke(1.dp, Color.Red),
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
                 modifier = Modifier
@@ -389,6 +404,98 @@ private fun serviceProviderBlock(
         }
     }
 
+@Composable
+private fun twoFaBlock(
+    twoFactorData: TwoFactorData,
+    onDeleteButtonClicked: (id: String) -> Unit
+): @Composable() (ColumnScope.() -> Unit) =
+    {
+        val biometricsCheckState = remember { mutableStateOf(true) }
+        Spacer(Modifier.height(12.dp))
+        Column(
+            Modifier
+                .fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = "Account",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        textAlign = TextAlign.Start,
+                        color = BlueText,
+                    ),
+                )
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = twoFactorData.account,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        textAlign = TextAlign.Start,
+                        color = BlueText,
+                    ),
+                )
+            }
+            Spacer(Modifier.height(12.dp))
+            Divider(color = TextBlack, thickness = 1.dp)
+            Spacer(Modifier.height(12.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = "Unique KeyID",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        textAlign = TextAlign.Start,
+                        color = BlueText,
+                    ),
+                )
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = twoFactorData.uniqueKey,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        textAlign = TextAlign.Start,
+                        color = BlueText,
+                    ),
+                )
+            }
+            Spacer(Modifier.height(12.dp))
+            Divider(color = TextBlack, thickness = 1.dp)
+            Spacer(Modifier.height(12.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = "Use Biometrics",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        textAlign = TextAlign.Start,
+                        color = BlueText,
+                    ),
+                )
+                Switch(checked = biometricsCheckState.value, onCheckedChange = {biometricsCheckState.value = it})
+            }
+            Spacer(Modifier.height(24.dp))
+            Button(
+                shape = RoundedCornerShape(CornerSize(6.dp)),
+                onClick = { onDeleteButtonClicked(twoFactorData.uniqueKey) },
+                border = BorderStroke(1.dp, Color.Red),
+                colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
+                modifier = Modifier
+                    .sizeIn(minHeight = 48.dp)
+                    .fillMaxWidth(),
+            ) {
+                Text(
+                    text = "Delete Key",
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        color = ButtonRed, fontWeight = FontWeight.SemiBold
+                    )
+                )
+            }
+            Spacer(Modifier.height(32.dp))
+        }
+    }
+
 
 @Preview
 @Composable
@@ -408,6 +515,7 @@ private fun PreviewInfoTab() {
                 affiliationString = "Long string here",
                 createdStamp = 1231321321321,
                 expiryStamp = 12313213131313,
+                id = "123",
             ),
             startIconLargeUrl = "https://static.surfconext.nl/media/sp/eduid.png"
         )

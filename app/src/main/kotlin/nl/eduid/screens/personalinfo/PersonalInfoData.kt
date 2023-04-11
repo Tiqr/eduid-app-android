@@ -12,6 +12,7 @@ data class PersonalInfo(
 ) {
     companion object {
         data class InstitutionAccount(
+            val id: String,
             val role: String,
             val roleProvider: String,
             val institution: String,

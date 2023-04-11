@@ -136,6 +136,9 @@
     <string name="security_title">Security settings</string>
     <string name="security_subtitle">We provide different methods to sign in to your eduID account.</string>
 
+    <string name="two_fa_key_title">2FA key(s)</string>
+    <string name="two_fa_key_subtitle">Keys to securely sign in without passwords or accessing your email.</string>
+
     <string name="reset_password_title">Change or delete password</string>
     <string name="reset_password_subtitle">We will send you an email instantly with a link to change or delete your current password.</string>
     <string name="reset_password_cancel_button">Cancel</string>
@@ -192,5 +195,9 @@
     <string name="delete_account_two_title">Delete your account for all eternity?</string>
     <string name="delete_account_two_subtitle">There is no way to undo this action</string>
     <string name="delete_account_two_description">If you wish to proceed, please type in your full name for confirmation.</string>
+
+    <string name="delete_two_key_title">Delete key</string>
+    <string name="delete_two_key_subtitle">There is no way to undo this action</string>
+    <string name="delete_two_key_description">Are you sure you want to delete your key?</string>
 
 </resources>

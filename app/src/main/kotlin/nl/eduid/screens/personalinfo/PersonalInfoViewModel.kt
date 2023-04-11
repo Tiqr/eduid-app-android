@@ -71,6 +71,7 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
                     affiliation
                 }
                 PersonalInfo.Companion.InstitutionAccount(
+                    id = account.institutionIdentifier,
                     role = role,
                     roleProvider = account.schacHomeOrganization,
                     institution = account.schacHomeOrganization,
