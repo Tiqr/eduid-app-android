@@ -76,7 +76,13 @@ fun MainGraph(
             onPersonalInfoClicked = { navController.navigate(Graph.PERSONAL_INFO) },
             onSecurityClicked = { navController.navigate(Graph.SECURITY) },
             onEnrollWithQR = { navController.navigate(Account.ScanQR.routeForEnrol) },
-            launchOAuth = { navController.navigate(Graph.OAUTH) }) {
+            launchOAuth = { navController.navigate(Graph.OAUTH) },
+            goToRegistrationPinSetup = { challenge ->
+                val encodeChallenge = viewModel.encodeChallenge(challenge)
+                navController.navigate(
+                    "${Account.EnrollPinSetup.route}/$encodeChallenge"
+                )
+            }) {
             navController.navigate(
                 Graph.REQUEST_EDU_ID_ACCOUNT
             )

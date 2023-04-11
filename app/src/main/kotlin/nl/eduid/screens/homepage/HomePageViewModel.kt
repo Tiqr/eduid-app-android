@@ -33,7 +33,7 @@ class HomePageViewModel @Inject constructor(
 
     val isAuthorizedForDataAccess = repository.isAuthorized.asLiveData()
     val uiState = MutableLiveData(UiState())
-    var jwt: JWT? = null
+    private var jwt: JWT? = null
 
     init {
         viewModelScope.launch {
@@ -64,54 +64,67 @@ class HomePageViewModel @Inject constructor(
         uiState.value = uiState.value?.copy(promptForAuth = null)
     }
 
-    fun dismissError() {
-        uiState.value = uiState.value?.copy(errorData = null)
+    fun clearCurrentChallenge() {
+        uiState.value = uiState.value?.copy(currentChallenge = null)
     }
 
-    fun startEnrollment() = viewModelScope.launch {
+    fun dismissError() {
+        uiState.value = uiState.value?.copy(inProgress = false, errorData = null)
+    }
+
+    fun startEnrollmentAfterAccountCreation() = viewModelScope.launch {
         uiState.postValue(uiState.value?.copy(inProgress = true))
         val requireAuth = repository.isAuthorized.firstOrNull()
         if (requireAuth == false) {
             uiState.postValue(uiState.value?.copy(inProgress = false, promptForAuth = Unit))
         } else {
-            try {
-                val enrollResponse = eduIdApi.startEnrollment()
-                val response = enrollResponse.body()
-                if (enrollResponse.isSuccessful && response != null) {
-                    val challenge = parseChallenge(response.url)
-                    if (challenge is ChallengeParseResult.Success && challenge.value is EnrollmentChallenge) {
-                        uiState.postValue(
-                            uiState.value?.copy(
-                                inProgress = false,
-                                currentChallenge = challenge.value,
-                                errorData = null
-                            )
-                        )
+            startEnrollmentWithoutOAuthCheck()
+        }
+    }
 
-                    }
-                } else {
+    fun startEnrollmentAfterSignIn() = viewModelScope.launch {
+        uiState.postValue(uiState.value?.copy(inProgress = true))
+        startEnrollmentWithoutOAuthCheck()
+    }
+
+    private suspend fun startEnrollmentWithoutOAuthCheck() {
+        try {
+            val enrollResponse = eduIdApi.startEnrollment()
+            val response = enrollResponse.body()
+            if (enrollResponse.isSuccessful && response != null) {
+                val challenge = parseChallenge(response.url)
+                if (challenge is ChallengeParseResult.Success && challenge.value is EnrollmentChallenge) {
                     uiState.postValue(
                         uiState.value?.copy(
-                            inProgress = false, currentChallenge = null, errorData = ErrorData(
-                                title = "Invalid enroll request",
-                                message = "Cannot parse enroll request"
-                            )
+                            inProgress = false,
+                            currentChallenge = challenge.value,
+                            errorData = null
                         )
                     )
+
                 }
-            } catch (e: Exception) {
+            } else {
+                val errorMessage = enrollResponse.errorBody()?.string()
                 uiState.postValue(
                     uiState.value?.copy(
                         inProgress = false, currentChallenge = null, errorData = ErrorData(
-                            title = "Failed to start enrollment",
-                            message = "Could not request enrollment. Check your connection and try again"
+                            title = "Invalid enroll request",
+                            message = errorMessage ?: "Cannot parse enroll challenge"
                         )
                     )
                 )
-                Timber.e(e, "Failed to start enrollment on newly created account")
             }
+        } catch (e: Exception) {
+            uiState.postValue(
+                uiState.value?.copy(
+                    inProgress = false, currentChallenge = null, errorData = ErrorData(
+                        title = "Failed to start enrollment",
+                        message = "Could not request enrollment. Check your connection and try again"
+                    )
+                )
+            )
+            Timber.e(e, "Failed to start enrollment on newly created account")
         }
-
     }
 
     private suspend fun parseChallenge(rawChallenge: String): ChallengeParseResult<*, ChallengeParseFailure> =
@@ -125,9 +138,4 @@ class HomePageViewModel @Inject constructor(
                 )
             )
         }
-
-    fun clearLaunchOAuth() {
-        uiState.value = uiState.value?.copy(promptForAuth = null)
-    }
-
 }

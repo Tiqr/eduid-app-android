@@ -4,8 +4,17 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -15,17 +24,53 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import nl.eduid.R
+import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.util.LogCompositions
+import org.tiqr.data.model.EnrollmentChallenge
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePageNoAccountContent(
-    onScan: () -> Unit, onRequestEduId: () -> Unit, onSignIn: () -> Unit,
+    isAuthorizedForDataAccess: Boolean,
+    uiState: UiState,
+    onScan: () -> Unit = {},
+    onRequestEduId: () -> Unit = {},
+    onSignIn: () -> Unit = {},
+    onStartEnrolment: () -> Unit = {},
+    goToRegistrationPinSetup: (EnrollmentChallenge) -> Unit = {},
+    dismissError: () -> Unit = {},
 ) = Scaffold { paddingValues ->
+    var waitingForVmEvent by rememberSaveable { mutableStateOf(false) }
+    val working by remember { derivedStateOf { uiState.inProgress || waitingForVmEvent } }
+    val owner = LocalLifecycleOwner.current
 
+    if (uiState.errorData != null) {
+        AlertDialogWithSingleButton(
+            title = uiState.errorData.title,
+            explanation = uiState.errorData.message,
+            buttonLabel = stringResource(R.string.button_ok),
+            onDismiss = dismissError
+        )
+    }
+
+    LogCompositions(msg = "HomePageNoAccount.\nWait for VM event?: $waitingForVmEvent. \nUI State: $uiState")
+    if (isAuthorizedForDataAccess && waitingForVmEvent) {
+        val currentOnStartEnrolment by rememberUpdatedState(onStartEnrolment)
+        LaunchedEffect(owner) {
+            currentOnStartEnrolment()
+        }
+    }
+    if (waitingForVmEvent && uiState.haveValidChallenge()) {
+        val currentGoToRegistrationPinSetup by rememberUpdatedState(goToRegistrationPinSetup)
+        LaunchedEffect(owner) {
+            currentGoToRegistrationPinSetup(uiState.currentChallenge as EnrollmentChallenge)
+            waitingForVmEvent = false
+        }
+    }
     ConstraintLayout(
         modifier = Modifier
             .padding(paddingValues)
@@ -88,10 +133,21 @@ fun HomePageNoAccountContent(
                 }
                 .fillMaxWidth()) {
 
+            if (working) {
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                )
+            }
+
             PrimaryButton(
                 text = stringResource(R.string.enroll_screen_sign_in_button),
-                onClick = onSignIn,
-                modifier = Modifier
+                enabled = !working,
+                onClick = {
+                    waitingForVmEvent = true
+                    onSignIn()
+                }, modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
             )
@@ -100,6 +156,7 @@ fun HomePageNoAccountContent(
 
             PrimaryButton(
                 text = stringResource(R.string.scan_button),
+                enabled = !working,
                 onClick = onScan,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -129,7 +186,10 @@ fun HomePageNoAccountContent(
 @Composable
 private fun PreviewEnroll() {
     EduidAppAndroidTheme {
-        HomePageNoAccountContent({}, {}) {}
+        HomePageNoAccountContent(isAuthorizedForDataAccess = false,
+            uiState = UiState(),
+            onScan = {},
+            onRequestEduId = {}) {}
     }
 }
 

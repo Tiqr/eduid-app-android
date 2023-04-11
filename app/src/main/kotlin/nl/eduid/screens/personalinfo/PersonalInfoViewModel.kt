@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.di.model.UserDetails
-import nl.eduid.ui.getDateTimeString
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,11 +26,18 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
                         nameMap[account.schacHomeOrganization] = mappedName
                         //Get name provider from FIRST linked account
                         if (account.schacHomeOrganization == userDetails.linkedAccounts.firstOrNull()?.schacHomeOrganization) {
-                            uiData = uiData.copy(nameProvider = nameMap[account.schacHomeOrganization] ?: uiData.nameProvider)
+                            uiData = uiData.copy(
+                                nameProvider = nameMap[account.schacHomeOrganization]
+                                    ?: uiData.nameProvider
+                            )
                         }
                         //Update UI data to include mapped institution names
-                        uiData = uiData.copy(institutionAccounts = uiData.institutionAccounts.map { institution ->
-                                institution.copy(roleProvider = nameMap[institution.roleProvider] ?: institution.roleProvider)
+                        uiData =
+                            uiData.copy(institutionAccounts = uiData.institutionAccounts.map { institution ->
+                                institution.copy(
+                                    roleProvider = nameMap[institution.roleProvider]
+                                        ?: institution.roleProvider
+                                )
                             })
                         personalInfo.postValue(uiData)
                     }
@@ -56,10 +62,16 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
         val emailProvider = "You"
         val email: String = userDetails.email
 
-        val institutionAccounts = linkedAccounts.mapNotNull {account ->
-            account.eduPersonAffiliations.firstOrNull()?.let {affiliation ->
+        val institutionAccounts = linkedAccounts.mapNotNull { account ->
+            account.eduPersonAffiliations.firstOrNull()?.let { affiliation ->
+                //Just in case affiliation is not in the email format
+                val role = if (affiliation.indexOf("@") > 0) {
+                    affiliation.substring(0, affiliation.indexOf("@"))
+                } else {
+                    affiliation
+                }
                 PersonalInfo.Companion.InstitutionAccount(
-                    role = affiliation.substring(0,affiliation.indexOf("@")),
+                    role = role,
                     roleProvider = account.schacHomeOrganization,
                     institution = account.schacHomeOrganization,
                     affiliationString = affiliation,

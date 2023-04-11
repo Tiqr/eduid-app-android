@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import nl.eduid.screens.splash.SplashScreen
+import org.tiqr.data.model.EnrollmentChallenge
 
 @Composable
 fun HomePageScreen(
@@ -14,6 +15,7 @@ fun HomePageScreen(
     onSecurityClicked: () -> Unit,
     onEnrollWithQR: () -> Unit,
     launchOAuth: () -> Unit,
+    goToRegistrationPinSetup: (EnrollmentChallenge) -> Unit,
     onCreateEduIdAccount: () -> Unit,
 ) {
     val isAuthorizedForDataAccess by viewModel.isAuthorizedForDataAccess.observeAsState(false)
@@ -22,10 +24,19 @@ fun HomePageScreen(
     when (uiState.isEnrolled) {
         IsEnrolled.Unknown -> SplashScreen()
         IsEnrolled.No -> HomePageNoAccountContent(
+            isAuthorizedForDataAccess = isAuthorizedForDataAccess,
+            uiState = uiState,
             onScan = onEnrollWithQR,
             onRequestEduId = onCreateEduIdAccount,
-            onSignIn = launchOAuth
+            onSignIn = launchOAuth,
+            onStartEnrolment = viewModel::startEnrollmentAfterSignIn,
+            goToRegistrationPinSetup = { challenge ->
+                goToRegistrationPinSetup(challenge)
+                viewModel.clearCurrentChallenge()
+            },
+            dismissError = viewModel::dismissError
         )
+
         IsEnrolled.Yes -> HomePageWithAccountContent(
             isAuthorizedForDataAccess = isAuthorizedForDataAccess,
             shouldPromptAuthorization = uiState.promptForAuth,
