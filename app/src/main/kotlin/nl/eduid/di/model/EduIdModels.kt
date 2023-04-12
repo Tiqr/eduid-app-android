@@ -42,8 +42,7 @@ const val EMAIL_DOMAIN_FORBIDDEN = 412
 data class EnrollResponse(
     val url: String,
     val enrollmentKey: String,
-    @Json(name = "qrcode")
-    val qrCode: String,
+    @Json(name = "qrcode") val qrCode: String,
 ) : Parcelable
 
 @Parcelize
@@ -66,7 +65,7 @@ data class UserDetails(
     val eduIdPerServiceProvider: Map<String, EduIdPerServiceProvider>,
 
     val loginOptions: List<String>,
-    val registration: Registration?
+    val registration: Registration?,
 ) : Parcelable {
 
     fun isRecoveryRequired(): Boolean = registration?.status != "FINALIZED"
@@ -80,7 +79,7 @@ data class EduIdPerServiceProvider(
     val serviceName: String,
     val serviceNameNl: String,
     val serviceLogoUrl: String,
-    val createdAt: Long
+    val createdAt: Long,
 ) : Parcelable
 
 @Parcelize
@@ -94,7 +93,7 @@ data class LinkedAccount(
     val familyName: String,
     val eduPersonAffiliations: List<String>,
     val createdAt: Long,
-    val expiresAt: Long
+    val expiresAt: Long,
 ) : Parcelable
 
 @Parcelize
@@ -113,10 +112,16 @@ data class InstitutionNameResponse(
     val displayNameEn: String,
     val displayNameNl: String,
 
-) : Parcelable
+    ) : Parcelable
 
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class EmailChangeRequest(
     val email: String,
+) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class DeleteServiceRequest(
+    val serviceId: String,
 ) : Parcelable

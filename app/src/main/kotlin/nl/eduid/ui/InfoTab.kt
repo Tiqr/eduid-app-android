@@ -52,7 +52,7 @@ fun InfoTab(
     onClick: () -> Unit,
     enabled: Boolean = true,
     institutionInfo: PersonalInfo.Companion.InstitutionAccount? = null,
-    serviceProviderInfo: DataAndActivityData.Companion.Provider? = null,
+    serviceProviderInfo: DataAndActivityData.Provider? = null,
     onDeleteButtonClicked: () -> Unit = { },
     startIconLargeUrl: String = "",
     @DrawableRes endIcon: Int = 0,
@@ -293,7 +293,7 @@ private fun InstitutionInfoBlock(
 
 @Composable
 private fun serviceProviderBlock(
-    serviceProviderInfo: DataAndActivityData.Companion.Provider,
+    serviceProviderInfo: DataAndActivityData.Provider,
     onDeleteButtonClicked: () -> Unit
 ): @Composable() (ColumnScope.() -> Unit) =
     {
@@ -367,7 +367,7 @@ private fun serviceProviderBlock(
                     .fillMaxWidth(),
             ) {
                 Text(
-                    text = "Delete login details *",
+                    text = stringResource(R.string.infotab_delete_login_details),
                     style = MaterialTheme.typography.bodyLarge.copy(
                         color = ButtonRed, fontWeight = FontWeight.SemiBold
                     )

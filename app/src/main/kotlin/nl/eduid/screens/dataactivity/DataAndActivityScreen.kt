@@ -8,14 +8,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import nl.eduid.ErrorData
 import nl.eduid.R
+import nl.eduid.ui.AlertDialogWithSingleButton
+import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.InfoTab
-import nl.eduid.ui.getDateString
 import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
@@ -23,96 +24,81 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 @Composable
 fun DataAndActivityScreen(
     viewModel: DataAndActivityViewModel,
-    onDeleteLoginClicked: () -> Unit,
+    goToConfirmDeleteService: (Int) -> Unit,
     goBack: () -> Unit,
+) = EduIdTopAppBar(
+    onBackClicked = goBack,
 ) {
-    val dataAndActivity by viewModel.dataAndActivity.observeAsState(DataAndActivityData())
+    val uiState by viewModel.uiState.observeAsState(UiState())
     DataAndActivityScreenContent(
-        onDeleteLoginClicked = { },
-        goBack = goBack,
-        dataAndActivity = dataAndActivity,
+        dataAndActivity = uiState.data,
+        isLoading = uiState.isLoading,
+        errorData = uiState.errorData,
+        dismissError = viewModel::clearErrorData,
+        goToConfirmDeleteService = goToConfirmDeleteService,
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DataAndActivityScreenContent(
-    onDeleteLoginClicked: () -> Unit,
-    goBack: () -> Unit,
     dataAndActivity: DataAndActivityData,
+    isLoading: Boolean = false,
+    errorData: ErrorData? = null,
+    dismissError: () -> Unit = {},
+    goToConfirmDeleteService: (Int) -> Unit = {},
+) = Column(
+    verticalArrangement = Arrangement.Bottom,
+    modifier = Modifier
+        .verticalScroll(rememberScrollState())
 ) {
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                modifier = Modifier.padding(top = 42.dp, start = 26.dp, end = 26.dp),
-                navigationIcon = {
-                    Image(
-                        painter = painterResource(R.drawable.back_button_icon),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(width = 46.dp, height = 46.dp)
-                            .clickable {
-                                goBack.invoke()
-                            },
-                        alignment = Alignment.Center
-                    )
-                },
-                title = {
-                    Image(
-                        painter = painterResource(R.drawable.ic_top_logo),
-                        contentDescription = "",
-                        modifier = Modifier.size(width = 122.dp, height = 46.dp),
-                        alignment = Alignment.Center
-                    )
-                },
-            )
-        },
-    ) { paddingValues ->
-        Column(
-            verticalArrangement = Arrangement.Bottom,
+    if (errorData != null) {
+        AlertDialogWithSingleButton(
+            title = errorData.title,
+            explanation = errorData.message,
+            buttonLabel = stringResource(R.string.button_ok),
+            onDismiss = dismissError
+        )
+    }
+    Spacer(Modifier.height(36.dp))
+    Text(
+        style = MaterialTheme.typography.titleLarge.copy(
+            textAlign = TextAlign.Start,
+            color = ButtonGreen
+        ),
+        text = stringResource(R.string.data_info_title),
+        modifier = Modifier
+            .fillMaxWidth()
+    )
+    Spacer(Modifier.height(12.dp))
+    Text(
+        style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
+        text = stringResource(R.string.data_info_subtitle),
+        modifier = Modifier
+            .fillMaxWidth()
+    )
+    Spacer(Modifier.height(12.dp))
+    if (isLoading) {
+        Spacer(Modifier.height(24.dp))
+        CircularProgressIndicator(
             modifier = Modifier
-                .padding(paddingValues)
-                .padding(start = 26.dp, end = 26.dp)
-                .verticalScroll(rememberScrollState())
-        ) {
-            Spacer(Modifier.height(36.dp))
-            Text(
-                style = MaterialTheme.typography.titleLarge.copy(
-                    textAlign = TextAlign.Start,
-                    color = ButtonGreen
+                .height(80.dp)
+                .width(80.dp)
+                .align(alignment = Alignment.CenterHorizontally)
+        )
+    } else {
+        dataAndActivity.providerList?.forEachIndexed { index, provider ->
+            InfoTab(
+                startIconLargeUrl = provider.providerLogoUrl,
+                title = provider.providerName,
+                subtitle = stringResource(
+                    R.string.data_info_on_date,
+                    provider.firstLoginStamp.getDateTimeString()
                 ),
-                text = stringResource(R.string.data_info_title),
-                modifier = Modifier
-                    .fillMaxWidth()
+                onClick = { },
+                onDeleteButtonClicked = { goToConfirmDeleteService(index) },
+                endIcon = R.drawable.chevron_down,
+                serviceProviderInfo = provider,
             )
-            Spacer(Modifier.height(12.dp))
-            Text(
-                style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-                text = stringResource(R.string.data_info_subtitle),
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-            Spacer(Modifier.height(12.dp))
-            if (dataAndActivity.providerList == null) {
-                Spacer(Modifier.height(24.dp))
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .height(80.dp)
-                        .width(80.dp)
-                        .align(alignment = Alignment.CenterHorizontally)
-                )
-            } else {
-                dataAndActivity.providerList.forEach { provider ->
-                    InfoTab(
-                        startIconLargeUrl = provider.providerLogoUrl,
-                        title = provider.providerName,
-                        subtitle = "on ${provider.firstLoginStamp.getDateTimeString()}",
-                        onClick = { },
-                        endIcon = R.drawable.chevron_down,
-                        serviceProviderInfo = provider,
-                    )
-                }
-            }
         }
     }
 }
@@ -122,8 +108,6 @@ fun DataAndActivityScreenContent(
 @Composable
 private fun PreviewDataAndActivityScreenContent() = EduidAppAndroidTheme {
     DataAndActivityScreenContent(
-        onDeleteLoginClicked = { },
-        goBack = { },
         dataAndActivity = DataAndActivityData(),
     )
 }

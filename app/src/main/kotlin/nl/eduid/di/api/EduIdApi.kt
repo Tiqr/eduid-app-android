@@ -38,4 +38,7 @@ interface EduIdApi {
 
     @PUT("/mobile/api/sp/institution")
     suspend fun removeConnection(@Body account: LinkedAccount): Response<UserDetails>
+
+    @PUT("/mobile/api/sp/service")
+    suspend fun removeService(@Body serviceId: DeleteServiceRequest): Response<UserDetails>
 }

@@ -1,6 +1,7 @@
 package nl.eduid.screens.personalinfo
 
 import nl.eduid.di.api.EduIdApi
+import nl.eduid.di.model.DeleteServiceRequest
 import nl.eduid.di.model.LinkedAccount
 import nl.eduid.di.model.UserDetails
 import timber.log.Timber
@@ -21,6 +22,23 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
         }
     } catch (e: Exception) {
         Timber.e(e, "Failed to retrieve user details")
+        null
+    }
+
+    suspend fun removeService(serviceId: String): UserDetails? = try {
+        val response = eduIdApi.removeService(DeleteServiceRequest(serviceId = serviceId))
+        if (response.isSuccessful) {
+            response.body()
+        } else {
+            Timber.w(
+                "Failed to remove connection for [${response.code()}/${response.message()}]${
+                    response.errorBody()?.string()
+                }"
+            )
+            null
+        }
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to remove service with id $serviceId")
         null
     }
 
