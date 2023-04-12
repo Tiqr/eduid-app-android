@@ -123,5 +123,5 @@ data class EmailChangeRequest(
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class DeleteServiceRequest(
-    val serviceId: String,
+    val serviceProviderEntityId: String,
 ) : Parcelable

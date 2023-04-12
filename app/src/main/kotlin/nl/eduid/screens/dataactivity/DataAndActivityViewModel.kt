@@ -74,6 +74,7 @@ class DataAndActivityViewModel @Inject constructor(private val repository: Perso
                 createdStamp = it.createdAt,
                 firstLoginStamp = it.createdAt,
                 uniqueId = it.value,
+                serviceProviderEntityId = it.serviceProviderEntityId,
                 providerLogoUrl = it.serviceLogoUrl,
             )
         }

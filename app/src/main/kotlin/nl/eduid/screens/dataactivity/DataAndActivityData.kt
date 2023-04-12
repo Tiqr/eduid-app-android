@@ -8,6 +8,7 @@ data class DataAndActivityData(
         val createdStamp: Long,
         val firstLoginStamp: Long,
         val uniqueId: String,
+        val serviceProviderEntityId: String,
         val providerLogoUrl: String,
     )
 }

@@ -26,7 +26,7 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
     }
 
     suspend fun removeService(serviceId: String): UserDetails? = try {
-        val response = eduIdApi.removeService(DeleteServiceRequest(serviceId = serviceId))
+        val response = eduIdApi.removeService(DeleteServiceRequest(serviceProviderEntityId = serviceId))
         if (response.isSuccessful) {
             response.body()
         } else {

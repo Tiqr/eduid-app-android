@@ -62,7 +62,7 @@ fun DeleteServiceScreen(
     DeleteServiceContent(
         providerName = provider?.providerName.orEmpty(),
         inProgress = uiState.isLoading,
-        removeService = { viewModel.removeService(provider?.uniqueId) },
+        removeService = { viewModel.removeService(provider?.serviceProviderEntityId) },
         goBack = goBack
     )
 }
@@ -80,7 +80,7 @@ private fun DeleteServiceContent(
     if (isProcessing && isComplete != null) {
         val currentGoBack by rememberUpdatedState(goBack)
         LaunchedEffect(owner) {
-            isProcessing = true
+            isProcessing = false
             currentGoBack()
         }
     }
