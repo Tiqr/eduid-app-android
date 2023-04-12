@@ -12,6 +12,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
@@ -20,7 +22,9 @@ import nl.eduid.ui.InfoTab
 import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.util.LogCompositions
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun DataAndActivityScreen(
     viewModel: DataAndActivityViewModel,
@@ -41,7 +45,7 @@ fun DataAndActivityScreen(
 
 @Composable
 fun DataAndActivityScreenContent(
-    dataAndActivity: DataAndActivityData,
+    data: List<ServiceProvider>,
     isLoading: Boolean = false,
     errorData: ErrorData? = null,
     dismissError: () -> Unit = {},
@@ -71,10 +75,10 @@ fun DataAndActivityScreenContent(
     )
     Spacer(Modifier.height(12.dp))
     Text(
-        style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
+        style = MaterialTheme.typography.bodyLarge,
+        textAlign = TextAlign.Justify,
+        modifier = Modifier.fillMaxWidth(),
         text = stringResource(R.string.data_info_subtitle),
-        modifier = Modifier
-            .fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
     if (isLoading) {
@@ -86,7 +90,7 @@ fun DataAndActivityScreenContent(
                 .align(alignment = Alignment.CenterHorizontally)
         )
     } else {
-        dataAndActivity.providerList?.forEachIndexed { index, provider ->
+        data.forEachIndexed { index, provider ->
             InfoTab(
                 startIconLargeUrl = provider.providerLogoUrl,
                 title = provider.providerName,
@@ -108,6 +112,15 @@ fun DataAndActivityScreenContent(
 @Composable
 private fun PreviewDataAndActivityScreenContent() = EduidAppAndroidTheme {
     DataAndActivityScreenContent(
-        dataAndActivity = DataAndActivityData(),
+        data = listOf(
+            ServiceProvider(
+                providerName = "Service Provider Name",
+                createdStamp = 0L,
+                firstLoginStamp = 0L,
+                uniqueId = "uniqueId",
+                serviceProviderEntityId = "serviceprovideridurl",
+                providerLogoUrl = "dummyImageUrl"
+            )
+        ),
     )
 }

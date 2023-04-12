@@ -67,20 +67,15 @@ class DataAndActivityViewModel @Inject constructor(private val repository: Perso
         }
     }
 
-    private fun convertToUiData(userDetails: UserDetails): DataAndActivityData {
-        val providers = userDetails.eduIdPerServiceProvider.values.map {
-            DataAndActivityData.Provider(
-                providerName = it.serviceName,
-                createdStamp = it.createdAt,
-                firstLoginStamp = it.createdAt,
-                uniqueId = it.value,
-                serviceProviderEntityId = it.serviceProviderEntityId,
-                providerLogoUrl = it.serviceLogoUrl,
+    private fun convertToUiData(userDetails: UserDetails): List<ServiceProvider> =
+        userDetails.eduIdPerServiceProvider.values.map { service ->
+            ServiceProvider(
+                providerName = service.serviceName,
+                createdStamp = service.createdAt,
+                firstLoginStamp = service.createdAt,
+                uniqueId = service.value,
+                serviceProviderEntityId = service.serviceProviderEntityId,
+                providerLogoUrl = service.serviceLogoUrl,
             )
         }
-
-        return DataAndActivityData(
-            providerList = providers
-        )
-    }
 }

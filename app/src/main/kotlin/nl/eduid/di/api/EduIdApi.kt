@@ -30,6 +30,9 @@ interface EduIdApi {
     @GET("/mobile/tiqr/sp/start-enrollment")
     suspend fun startEnrollment(): Response<EnrollResponse>
 
+    @GET("/mobile/api/sp/tokens")
+    suspend fun getTokens(): Response<List<TokenResponse>>
+
     @GET("/mobile/api/sp/institution/names")
     suspend fun getInstitutionName(@Query("schac_home") schac_home: String): Response<InstitutionNameResponse>
 

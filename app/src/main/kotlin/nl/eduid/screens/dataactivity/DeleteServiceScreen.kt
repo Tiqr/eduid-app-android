@@ -56,11 +56,16 @@ fun DeleteServiceScreen(
     val uiState by viewModel.uiState.observeAsState(UiState())
     val provider by remember(index) {
         derivedStateOf {
-            uiState.data.providerList?.get(index)
+            if (uiState.data.isNotEmpty() && index < uiState.data.size) {
+                uiState.data[index]
+            } else {
+                null
+            }
         }
     }
     DeleteServiceContent(
         providerName = provider?.providerName.orEmpty(),
+        isComplete = uiState.isComplete,
         inProgress = uiState.isLoading,
         removeService = { viewModel.removeService(provider?.serviceProviderEntityId) },
         goBack = goBack
