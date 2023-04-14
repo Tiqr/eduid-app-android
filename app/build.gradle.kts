@@ -129,11 +129,6 @@ android {
 
 dependencies {
 
-    repositories {
-        google()
-        mavenCentral()
-    }
-    implementation(platform("androidx.compose:compose-bom:2022.12.00"))
     implementation(project(":data"))
     implementation(project(":core"))
 
@@ -148,6 +143,9 @@ dependencies {
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.view)
     implementation(libs.androidx.biometric)
+    val composeBom = platform(libs.androidx.compose.bom)
+    implementation(composeBom)
+
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -162,6 +160,8 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.concurrent)
     implementation(libs.androidx.datastore)
+    implementation(libs.androidx.lifecycle.runtimeCompose)
+    implementation(libs.androidx.lifecycle.viewModelCompose)
     implementation(libs.androidx.lifecycle.common)
     implementation(libs.androidx.lifecycle.livedata)
     implementation(libs.androidx.localBroadcastManager)

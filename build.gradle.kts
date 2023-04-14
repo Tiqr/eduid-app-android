@@ -1,26 +1,10 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath(libs.android.gradle)
-        classpath(libs.kotlin.gradle)
-        classpath(libs.dagger.hilt.gradle)
-        classpath(libs.androidx.navigation.gradle)
-        classpath(libs.google.gms.gradle)
-    }
-}
-
-subprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.android.nav.safeargs) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kapt) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.google.gms.gradle) apply false
 }
