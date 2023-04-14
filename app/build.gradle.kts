@@ -6,8 +6,8 @@ plugins {
     id("com.google.dagger.hilt.android")
 }
 
-if (JavaVersion.current() < JavaVersion.VERSION_11) {
-    throw GradleException("Please use JDK ${JavaVersion.VERSION_11} or above")
+if (JavaVersion.current() < JavaVersion.VERSION_17) {
+    throw GradleException("Please use JDK ${JavaVersion.VERSION_17} or above")
 }
 
 fun String.runCommand(workingDir: File = file("./")): String {
@@ -85,6 +85,8 @@ android {
         }
 
         getByName("debug") {
+            isMinifyEnabled = true
+            isShrinkResources = true
             applicationIdSuffix = ".testing"
             versionNameSuffix = " DEBUG"
             buildConfigField("String", "ENV_HOST", "\"https://login.test2.eduid.nl\"")
@@ -98,11 +100,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+
+    kotlin {
+        jvmToolchain(17)
     }
 
     kapt {
@@ -117,7 +120,7 @@ android {
         abortOnError = false
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.0"
+        kotlinCompilerExtensionVersion = "1.4.5"
     }
     packagingOptions {
         resources {
@@ -129,11 +132,6 @@ android {
 
 dependencies {
 
-    repositories {
-        google()
-        mavenCentral()
-    }
-    implementation(platform("androidx.compose:compose-bom:2022.12.00"))
     implementation(project(":data"))
     implementation(project(":core"))
 
@@ -148,6 +146,9 @@ dependencies {
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.view)
     implementation(libs.androidx.biometric)
+    val composeBom = platform(libs.androidx.compose.bom)
+    implementation(composeBom)
+
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -162,6 +163,8 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.concurrent)
     implementation(libs.androidx.datastore)
+    implementation(libs.androidx.lifecycle.runtimeCompose)
+    implementation(libs.androidx.lifecycle.viewModelCompose)
     implementation(libs.androidx.lifecycle.common)
     implementation(libs.androidx.lifecycle.livedata)
     implementation(libs.androidx.localBroadcastManager)

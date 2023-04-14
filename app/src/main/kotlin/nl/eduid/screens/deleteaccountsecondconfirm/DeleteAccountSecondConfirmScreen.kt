@@ -122,7 +122,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
                     )
                     Text(
                         style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
-                        text = stringResource(R.string.delete_account_two_subtitle),
+                        text = stringResource(R.string.delete_no_undo_warning),
                         modifier = Modifier
                             .constrainAs(text) {
                                 start.linkTo(image.end)

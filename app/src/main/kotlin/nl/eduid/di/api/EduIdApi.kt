@@ -30,6 +30,9 @@ interface EduIdApi {
     @GET("/mobile/tiqr/sp/start-enrollment")
     suspend fun startEnrollment(): Response<EnrollResponse>
 
+    @GET("/mobile/api/sp/tokens")
+    suspend fun getTokens(): Response<List<TokenResponse>>
+
     @GET("/mobile/api/sp/institution/names")
     suspend fun getInstitutionName(@Query("schac_home") schac_home: String): Response<InstitutionNameResponse>
 
@@ -38,4 +41,7 @@ interface EduIdApi {
 
     @PUT("/mobile/api/sp/institution")
     suspend fun removeConnection(@Body account: LinkedAccount): Response<UserDetails>
+
+    @PUT("/mobile/api/sp/service")
+    suspend fun removeService(@Body serviceId: DeleteServiceRequest): Response<UserDetails>
 }
