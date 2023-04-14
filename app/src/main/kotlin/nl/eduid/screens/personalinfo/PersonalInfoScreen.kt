@@ -44,6 +44,7 @@ import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.ButtonTextGrey
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.LinkAccountCard
 
 @Composable
 fun PersonalInfoScreen(
@@ -180,37 +181,11 @@ fun PersonalInfoScreenContent(
     }
 
     Spacer(Modifier.height(12.dp))
-    OutlinedButton(
-        onClick = addLinkToAccount,
-        shape = RoundedCornerShape(CornerSize(6.dp)),
-        modifier = Modifier
-            .fillMaxWidth()
-            .sizeIn(minHeight = 72.dp)
-    ) {
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = stringResource(R.string.personalinfo_add_role_institution),
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    textAlign = TextAlign.Start,
-                    color = ButtonTextGrey,
-                    fontWeight = FontWeight.Bold,
-                )
-            )
-            Text(
-                text = stringResource(R.string.personalinfo_add_via),
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    textAlign = TextAlign.Start,
-                    color = ButtonTextGrey,
-                    fontWeight = FontWeight.Light,
-                    fontStyle = FontStyle.Italic
-                )
-            )
-        }
-        Image(
-            painter = painterResource(R.drawable.ic_plus),
-            contentDescription = "",
-        )
-    }
+    LinkAccountCard(
+        R.string.personalinfo_add_role_institution,
+        R.string.personalinfo_add_via,
+        addLinkToAccount
+    )
     Spacer(Modifier.height(42.dp))
     OutlinedButton(
         onClick = { onManageAccountClicked(personalInfo.dateCreated.getDateTimeString("EEEE, dd MMMM yyyy 'at' HH:MM")) },
@@ -236,6 +211,7 @@ fun PersonalInfoScreenContent(
     }
     Spacer(Modifier.height(42.dp))
 }
+
 
 
 @Preview

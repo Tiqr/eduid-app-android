@@ -89,8 +89,8 @@ data class LinkedAccount(
     val schacHomeOrganization: String,
     val eduPersonPrincipalName: String,
     val subjectId: String?,
-    val givenName: String,
-    val familyName: String,
+    val givenName: String?,
+    val familyName: String?,
     val eduPersonAffiliations: List<String>,
     val createdAt: Long,
     val expiresAt: Long,
@@ -154,3 +154,8 @@ data class Scope(val name: String, val descriptions: Description?) : Parcelable 
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class Description(val en: String?, val nl: String?) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class SelfAssertedName(val familyName: String? = null, val givenName: String? = null) :
+    Parcelable
