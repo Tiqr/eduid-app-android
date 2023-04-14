@@ -7,4 +7,5 @@ data class UiState(
     val isLoading: Boolean = false,
     val errorData: ErrorData? = null,
     val isComplete: Unit? = null,
+    val deleteService: ServiceProvider? = null,
 )

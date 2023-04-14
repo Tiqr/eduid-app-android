@@ -66,19 +66,6 @@ object RequestEduIdLinkSent {
     }
 }
 
-object ConfirmDeleteService {
-    private const val route = "confirm_delete_service"
-    const val serviceIndexArg = "serviceIndexArg"
-    val routeWithArgs = "$route/{$serviceIndexArg}"
-    val arguments = listOf(navArgument(serviceIndexArg) {
-        type = NavType.IntType
-        nullable = false
-        defaultValue = 0
-    })
-
-    fun routeForIndex(index: Int) = "$route/$index"
-}
-
 sealed class PhoneNumberRecovery(val route: String) {
     object RequestCode : PhoneNumberRecovery("phone_number_recover")
     object ConfirmCode : PhoneNumberRecovery("phone_number_confirm_code") {

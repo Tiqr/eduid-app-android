@@ -19,7 +19,6 @@ import nl.eduid.screens.biometric.EnableBiometricViewModel
 import nl.eduid.screens.created.RequestEduIdCreatedScreen
 import nl.eduid.screens.dataactivity.DataAndActivityScreen
 import nl.eduid.screens.dataactivity.DataAndActivityViewModel
-import nl.eduid.screens.dataactivity.DeleteServiceScreen
 import nl.eduid.screens.deeplinks.DeepLinkScreen
 import nl.eduid.screens.deeplinks.DeepLinkViewModel
 import nl.eduid.screens.deleteaccountfirstconfirm.DeleteAccountFirstConfirmScreen
@@ -413,26 +412,7 @@ fun MainGraph(
         val viewModel = hiltViewModel<DataAndActivityViewModel>(it)
         DataAndActivityScreen(
             viewModel = viewModel,
-            goBack = { navController.popBackStack() },
-            goToConfirmDeleteService = {
-                navController.navigate(
-                    ConfirmDeleteService.routeForIndex(
-                        it
-                    )
-                )
-            },
-        )
-    }
-    composable(
-        route = ConfirmDeleteService.routeWithArgs, arguments = ConfirmDeleteService.arguments
-    ) { entry ->
-        val viewModel = hiltViewModel<DataAndActivityViewModel>(entry)
-        val index = entry.arguments?.getInt(ConfirmDeleteService.serviceIndexArg, 0) ?: 0
-        DeleteServiceScreen(
-            viewModel = viewModel,
-            goBack = { navController.popBackStack() },
-            index = index,
-        )
+        ) { navController.popBackStack() }
     }
 
     //endregion

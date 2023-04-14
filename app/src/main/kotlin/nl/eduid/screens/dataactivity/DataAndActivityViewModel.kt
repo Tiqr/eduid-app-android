@@ -25,10 +25,8 @@ class DataAndActivityViewModel @Inject constructor(private val repository: Perso
             } else {
                 uiState.postValue(
                     UiState(
-                        isLoading = false,
-                        errorData = ErrorData(
-                            "Failed to load data",
-                            "Could not load activity history"
+                        isLoading = false, errorData = ErrorData(
+                            "Failed to load data", "Could not load activity history"
                         )
                     )
                 )
@@ -48,10 +46,7 @@ class DataAndActivityViewModel @Inject constructor(private val repository: Perso
             val uiData = convertToUiData(userDetails)
             uiState.postValue(
                 UiState(
-                    isLoading = false,
-                    errorData = null,
-                    data = uiData,
-                    isComplete = Unit
+                    isLoading = false, errorData = null, data = uiData, isComplete = Unit
                 )
             )
         } else {
@@ -59,11 +54,27 @@ class DataAndActivityViewModel @Inject constructor(private val repository: Perso
                 UiState(
                     isLoading = false,
                     errorData = ErrorData(
-                        "Failed to load data",
-                        "Could not load activity history"
+                        "Failed to load data", "Could not load activity history"
                     ),
                 )
             )
+        }
+    }
+
+    fun goToDeleteService(provider: ServiceProvider) {
+        uiState.value = uiState.value?.copy(deleteService = provider)
+    }
+
+    fun cancelDeleteService() {
+        uiState.value = uiState.value?.copy(deleteService = null)
+    }
+
+    fun handleBackNavigation(goBack: () -> Unit) {
+        val isDeletingService = uiState.value?.deleteService != null
+        if (isDeletingService) {
+            cancelDeleteService()
+        } else {
+            goBack()
         }
     }
 

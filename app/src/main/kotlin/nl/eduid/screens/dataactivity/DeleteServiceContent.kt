@@ -17,19 +17,9 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -37,7 +27,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
-import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
 import nl.eduid.ui.theme.AlertRedBackground
@@ -46,50 +35,12 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextGreen
 
 @Composable
-fun DeleteServiceScreen(
-    viewModel: DataAndActivityViewModel,
-    index: Int,
-    goBack: () -> Unit = {},
-) = EduIdTopAppBar(
-    onBackClicked = goBack,
-) {
-    val uiState by viewModel.uiState.observeAsState(UiState())
-    val provider by remember(index) {
-        derivedStateOf {
-            if (uiState.data.isNotEmpty() && index < uiState.data.size) {
-                uiState.data[index]
-            } else {
-                null
-            }
-        }
-    }
-    DeleteServiceContent(
-        providerName = provider?.providerName.orEmpty(),
-        isComplete = uiState.isComplete,
-        inProgress = uiState.isLoading,
-        removeService = { viewModel.removeService(provider?.serviceProviderEntityId) },
-        goBack = goBack
-    )
-}
-
-@Composable
-private fun DeleteServiceContent(
+fun DeleteServiceContent(
     providerName: String,
-    isComplete: Unit? = null,
     inProgress: Boolean = false,
     removeService: () -> Unit = {},
     goBack: () -> Unit = {},
 ) {
-    var isProcessing by rememberSaveable { mutableStateOf(false) }
-    val owner = LocalLifecycleOwner.current
-    if (isProcessing && isComplete != null) {
-        val currentGoBack by rememberUpdatedState(goBack)
-        LaunchedEffect(owner) {
-            isProcessing = false
-            currentGoBack()
-        }
-    }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -148,17 +99,16 @@ private fun DeleteServiceContent(
             horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()
         ) {
             SecondaryButton(
-                modifier = Modifier.widthIn(min = 140.dp),
                 text = stringResource(R.string.button_cancel),
                 onClick = goBack,
+                enabled = !inProgress,
+                modifier = Modifier.widthIn(min = 140.dp),
             )
             PrimaryButton(
-                modifier = Modifier.widthIn(min = 140.dp),
                 text = stringResource(R.string.button_confirm),
-                onClick = {
-                    isProcessing = true
-                    removeService()
-                },
+                onClick = removeService,
+                enabled = !inProgress,
+                modifier = Modifier.widthIn(min = 140.dp),
                 buttonBackgroundColor = ButtonRed,
                 buttonTextColor = Color.White,
             )

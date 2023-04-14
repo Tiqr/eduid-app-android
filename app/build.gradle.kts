@@ -117,7 +117,7 @@ android {
         abortOnError = false
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.4.5"
     }
     packagingOptions {
         resources {

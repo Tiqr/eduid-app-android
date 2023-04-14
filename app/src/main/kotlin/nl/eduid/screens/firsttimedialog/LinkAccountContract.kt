@@ -12,7 +12,7 @@ class LinkAccountContract : ActivityResultContract<Intent, Intent?>() {
 
 
     override fun parseResult(resultCode: Int, intent: Intent?): Intent? {
-        Timber.e("Received callback from linked account: ${intent?.dataString}")
+        Timber.d("Received callback from linked account: ${intent?.dataString}")
         return if (resultCode == RESULT_CANCELED) {
             null
         } else {
