@@ -6,8 +6,8 @@ plugins {
     id("com.google.dagger.hilt.android")
 }
 
-if (JavaVersion.current() < JavaVersion.VERSION_11) {
-    throw GradleException("Please use JDK ${JavaVersion.VERSION_11} or above")
+if (JavaVersion.current() < JavaVersion.VERSION_17) {
+    throw GradleException("Please use JDK ${JavaVersion.VERSION_17} or above")
 }
 
 fun String.runCommand(workingDir: File = file("./")): String {
@@ -85,6 +85,8 @@ android {
         }
 
         getByName("debug") {
+            isMinifyEnabled = true
+            isShrinkResources = true
             applicationIdSuffix = ".testing"
             versionNameSuffix = " DEBUG"
             buildConfigField("String", "ENV_HOST", "\"https://login.test2.eduid.nl\"")
@@ -98,11 +100,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+
+    kotlin {
+        jvmToolchain(17)
     }
 
     kapt {
