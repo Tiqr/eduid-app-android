@@ -1,5 +1,6 @@
 package nl.eduid.screens.personalinfo
 
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,12 +18,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import nl.eduid.ErrorData
 import nl.eduid.R
+import nl.eduid.screens.firsttimedialog.LinkAccountContract
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.InfoTab
@@ -43,11 +50,30 @@ fun PersonalInfoScreen(
     viewModel: PersonalInfoViewModel,
     onEmailClicked: () -> Unit,
     onManageAccountClicked: (dateString: String) -> Unit,
+    goToAccountLinked: () -> Unit = {},
     goBack: () -> Unit,
 ) = EduIdTopAppBar(
     onBackClicked = goBack,
 ) {
     val uiState by viewModel.uiState.observeAsState(UiState())
+    var isGettingLinkUrl by rememberSaveable { mutableStateOf(false) }
+    var isLinkingStarted by rememberSaveable { mutableStateOf(false) }
+    val launcher =
+        rememberLauncherForActivityResult(contract = LinkAccountContract(), onResult = { _ ->
+            if (isLinkingStarted) {
+                isLinkingStarted = false
+                goToAccountLinked()
+            }
+        })
+
+    if (isGettingLinkUrl && uiState.haveValidLinkIntent()) {
+        LaunchedEffect(key1 = viewModel) {
+            isGettingLinkUrl = false
+            launcher.launch(uiState.linkUrl)
+            isLinkingStarted = true
+        }
+    }
+
     PersonalInfoScreenContent(
         personalInfo = uiState.personalInfo,
         isLoading = uiState.isLoading,
@@ -56,6 +82,10 @@ fun PersonalInfoScreen(
         onEmailClicked = onEmailClicked,
         removeConnection = { index -> viewModel.removeConnection(index) },
         onManageAccountClicked = onManageAccountClicked,
+        addLinkToAccount = {
+            isGettingLinkUrl = true
+            viewModel.requestLinkUrl()
+        },
     )
 }
 
@@ -68,10 +98,10 @@ fun PersonalInfoScreenContent(
     onEmailClicked: () -> Unit = {},
     removeConnection: (Int) -> Unit = {},
     onManageAccountClicked: (dateString: String) -> Unit = {},
+    addLinkToAccount: () -> Unit = {},
 ) = Column(
     verticalArrangement = Arrangement.Bottom,
-    modifier = Modifier
-        .verticalScroll(rememberScrollState())
+    modifier = Modifier.verticalScroll(rememberScrollState())
 ) {
     if (errorData != null) {
         AlertDialogWithSingleButton(
@@ -86,9 +116,7 @@ fun PersonalInfoScreenContent(
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
             textAlign = TextAlign.Start, color = ButtonGreen
-        ),
-        text = stringResource(R.string.personal_info_title),
-        modifier = Modifier.fillMaxWidth()
+        ), text = stringResource(R.string.personal_info_title), modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
     Text(
@@ -151,6 +179,38 @@ fun PersonalInfoScreenContent(
         )
     }
 
+    Spacer(Modifier.height(12.dp))
+    OutlinedButton(
+        onClick = addLinkToAccount,
+        shape = RoundedCornerShape(CornerSize(6.dp)),
+        modifier = Modifier
+            .fillMaxWidth()
+            .sizeIn(minHeight = 72.dp)
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = stringResource(R.string.personalinfo_add_role_institution),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    textAlign = TextAlign.Start,
+                    color = ButtonTextGrey,
+                    fontWeight = FontWeight.Bold,
+                )
+            )
+            Text(
+                text = stringResource(R.string.personalinfo_add_via),
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    textAlign = TextAlign.Start,
+                    color = ButtonTextGrey,
+                    fontWeight = FontWeight.Light,
+                    fontStyle = FontStyle.Italic
+                )
+            )
+        }
+        Image(
+            painter = painterResource(R.drawable.ic_plus),
+            contentDescription = "",
+        )
+    }
     Spacer(Modifier.height(42.dp))
     OutlinedButton(
         onClick = { onManageAccountClicked(personalInfo.dateCreated.getDateTimeString("EEEE, dd MMMM yyyy 'at' HH:MM")) },
@@ -163,8 +223,7 @@ fun PersonalInfoScreenContent(
             painter = painterResource(R.drawable.cog_icon),
             alignment = CenterStart,
             contentDescription = "",
-            modifier = Modifier
-                .padding(end = 48.dp)
+            modifier = Modifier.padding(start = 24.dp, end = 24.dp)
         )
         Text(
             text = stringResource(R.string.personalinfo_manage_your_account),

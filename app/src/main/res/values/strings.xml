@@ -203,6 +203,8 @@
     <string name="infotab_at">At %s</string>
     <string name="infotab_role_institution">Role &amp; institution</string>
     <string name="personalinfo_manage_your_account">Manage your account</string>
+    <string name="personalinfo_add_role_institution">Add role &amp; institution</string>
+    <string name="personalinfo_add_via">Proceed to add this via SURFConext</string>
     <string name="infotab_delete_login_details">Delete login details *</string>
 
     <string name="delete_service_confirm_title">Delete service</string>

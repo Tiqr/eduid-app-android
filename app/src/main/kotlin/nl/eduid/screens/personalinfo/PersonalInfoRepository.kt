@@ -108,4 +108,21 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
         Timber.e(e, "Failed to retrieve institution name")
         null
     }
+
+    suspend fun getStartLinkAccount(): String? = try {
+        val response = eduIdApi.getStartLinkAccount()
+        if (response.isSuccessful) {
+            response.body()?.url
+        } else {
+            Timber.w(
+                "Failed to retrieve start link account URL: [${response.code()}/${response.message()}]${
+                    response.errorBody()?.string()
+                }"
+            )
+            null
+        }
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to retrieve start link account URL")
+        null
+    }
 }
