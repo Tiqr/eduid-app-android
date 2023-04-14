@@ -1,5 +1,7 @@
 package nl.eduid.screens.personalinfo
 
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.di.model.UserDetails
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -80,6 +83,46 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
                 errorData = ErrorData("Failed to remove connection", "Could not remove connection")
             )
         )
+    }
+
+    fun requestLinkUrl() = viewModelScope.launch {
+        val currentUiState = uiState.value ?: UiState()
+        uiState.postValue(currentUiState.copy(isLoading = true, linkUrl = null))
+        try {
+            val response = repository.getStartLinkAccount()
+            if (response != null) {
+                uiState.postValue(
+                    currentUiState.copy(
+                        linkUrl = createLaunchIntent(response), isLoading = false
+                    )
+                )
+            } else {
+                uiState.postValue(
+                    currentUiState.copy(
+                        isLoading = false, errorData = ErrorData(
+                            "Failed to get link URL",
+                            "Could not retrieve URL to link your current account"
+                        )
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to get link account for current user")
+            uiState.postValue(
+                currentUiState.copy(
+                    isLoading = false, errorData = ErrorData(
+                        "Failed to get link URL",
+                        "Could not retrieve URL to link your current account"
+                    )
+                )
+            )
+        }
+    }
+
+    private fun createLaunchIntent(url: String): Intent {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        return intent
     }
 
     private fun convertToUiData(userDetails: UserDetails): PersonalInfo {
