@@ -12,6 +12,9 @@ interface EduIdApi {
     @POST("/mobile/api/idp/create")
     suspend fun createNewEduIdAccount(@Body request: RequestEduIdAccount): Response<Unit>
 
+    @DELETE("/mobile/api/sp/delete")
+    suspend fun deleteAccount(): Response<Unit>
+
     @POST("/mobile/tiqr/sp/send-phone-code")
     suspend fun requestPhoneCode(@Body request: RequestPhoneCode): Response<Unit>
 

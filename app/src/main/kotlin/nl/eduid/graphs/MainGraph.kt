@@ -419,6 +419,13 @@ fun MainGraph(
         val viewModel = hiltViewModel<DeleteAccountSecondConfirmViewModel>(it)
         DeleteAccountSecondConfirmScreen(
             viewModel = viewModel,
+            onAccountDeleted = {
+                navController.navigate(Graph.HOME_PAGE) {
+                    popUpTo(Graph.HOME_PAGE) {
+                        inclusive = true
+                    }
+                }
+            },
             goBack = { navController.popBackStack() },
         )
     }//endregion
