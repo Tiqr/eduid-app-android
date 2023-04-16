@@ -132,7 +132,7 @@ private fun EditNameContent(
         modifier = Modifier.height(24.dp)
     )
 
-    if (account != null) {
+    if (personalInfo.nameProvider != null) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
                 painter = painterResource(R.drawable.ic_verified_badge),
