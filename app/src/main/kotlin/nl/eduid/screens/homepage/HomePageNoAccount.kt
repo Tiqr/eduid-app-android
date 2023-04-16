@@ -28,7 +28,6 @@ import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.util.LogCompositions
 import org.tiqr.data.model.EnrollmentChallenge
 import java.util.*
 
@@ -45,7 +44,7 @@ fun HomePageNoAccountContent(
     dismissError: () -> Unit = {},
 ) = Scaffold { paddingValues ->
     var waitingForVmEvent by rememberSaveable { mutableStateOf(false) }
-    val working by remember { derivedStateOf { uiState.inProgress || waitingForVmEvent } }
+    val waitToComplete by remember { derivedStateOf { uiState.inProgress || waitingForVmEvent } }
     val owner = LocalLifecycleOwner.current
 
     if (uiState.errorData != null) {
@@ -53,12 +52,14 @@ fun HomePageNoAccountContent(
             title = uiState.errorData.title,
             explanation = uiState.errorData.message,
             buttonLabel = stringResource(R.string.button_ok),
-            onDismiss = dismissError
+            onDismiss = {
+                dismissError()
+                waitingForVmEvent = false
+            }
         )
     }
 
-    LogCompositions(msg = "HomePageNoAccount.\nWait for VM event?: $waitingForVmEvent. \nUI State: $uiState")
-    if (isAuthorizedForDataAccess && waitingForVmEvent) {
+    if (isAuthorizedForDataAccess && waitingForVmEvent && uiState.shouldTriggerAutomaticStartEnrollmentAfterOauth()) {
         val currentOnStartEnrolment by rememberUpdatedState(onStartEnrolment)
         LaunchedEffect(owner) {
             currentOnStartEnrolment()
@@ -133,7 +134,7 @@ fun HomePageNoAccountContent(
                 }
                 .fillMaxWidth()) {
 
-            if (working) {
+            if (waitToComplete) {
                 LinearProgressIndicator(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -143,10 +144,14 @@ fun HomePageNoAccountContent(
 
             PrimaryButton(
                 text = stringResource(R.string.enroll_screen_sign_in_button),
-                enabled = !working,
+                enabled = !waitToComplete,
                 onClick = {
                     waitingForVmEvent = true
-                    onSignIn()
+                    if (isAuthorizedForDataAccess) {
+                        onStartEnrolment()
+                    } else {
+                        onSignIn()
+                    }
                 }, modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
@@ -156,7 +161,7 @@ fun HomePageNoAccountContent(
 
             PrimaryButton(
                 text = stringResource(R.string.scan_button),
-                enabled = !working,
+                enabled = !waitToComplete,
                 onClick = onScan,
                 modifier = Modifier
                     .fillMaxWidth()
