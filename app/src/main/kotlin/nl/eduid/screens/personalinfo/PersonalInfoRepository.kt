@@ -3,6 +3,7 @@ package nl.eduid.screens.personalinfo
 import nl.eduid.di.api.EduIdApi
 import nl.eduid.di.model.DeleteServiceRequest
 import nl.eduid.di.model.LinkedAccount
+import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.di.model.Token
 import nl.eduid.di.model.TokenResponse
 import nl.eduid.di.model.UserDetails
@@ -89,6 +90,23 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
         }
     } catch (e: Exception) {
         Timber.e(e, "Failed to remove connection for ${linkedAccount.institutionIdentifier}")
+        null
+    }
+
+    suspend fun updateName(selfAssertedName: SelfAssertedName): UserDetails? = try {
+        val response = eduIdApi.updateName(selfAssertedName)
+        if (response.isSuccessful) {
+            response.body()
+        } else {
+            Timber.w(
+                "Failed to update name [${response.code()}/${response.message()}]${
+                    response.errorBody()?.string()
+                }"
+            )
+            null
+        }
+    } catch (e: Exception) {
+        Timber.e(e, "Failed update name")
         null
     }
 

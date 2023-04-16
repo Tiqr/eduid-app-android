@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
+import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.di.model.UserDetails
 import timber.log.Timber
 import javax.inject.Inject
@@ -119,6 +120,27 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
         }
     }
 
+    fun updateName(givenName: String, familyName: String) = viewModelScope.launch {
+        val currentDetails = cachedUserDetails ?: return@launch
+        val currentUiState = uiState.value ?: UiState()
+        uiState.postValue(currentUiState.copy(isLoading = true))
+
+        val validatedSelfName =
+            SelfAssertedName(familyName = givenName.ifEmpty { currentDetails.givenName },
+                givenName = familyName.ifEmpty { currentDetails.familyName })
+        val newDetails = repository.updateName(validatedSelfName)
+        newDetails?.let { updatedDetails ->
+            cachedUserDetails = updatedDetails
+            val personalInfo = mapUserDetailsToPersonalInfo(updatedDetails)
+            uiState.postValue(currentUiState.copy(isLoading = false, personalInfo = personalInfo))
+        } ?: uiState.postValue(
+            currentUiState.copy(
+                isLoading = false,
+                errorData = ErrorData("Failed to update name", "Could not update name")
+            )
+        )
+    }
+
     private fun createLaunchIntent(url: String): Intent {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(url)
@@ -147,7 +169,7 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
                 } else {
                     affiliation
                 }
-                PersonalInfo.Companion.InstitutionAccount(
+                PersonalInfo.InstitutionAccount(
                     role = role,
                     roleProvider = account.schacHomeOrganization,
                     institution = account.schacHomeOrganization,
@@ -160,6 +182,10 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
 
         return PersonalInfo(
             name = name,
+            seflAssertedName = SelfAssertedName(
+                familyName = userDetails.familyName,
+                givenName = userDetails.givenName
+            ),
             nameProvider = nameProvider,
             nameStatus = PersonalInfo.InfoStatus.Final,
             email = email,

@@ -51,7 +51,7 @@ fun InfoTab(
     subtitle: String,
     onClick: () -> Unit,
     enabled: Boolean = true,
-    institutionInfo: PersonalInfo.Companion.InstitutionAccount? = null,
+    institutionInfo: PersonalInfo.InstitutionAccount? = null,
     serviceProviderInfo: ServiceProvider? = null,
     onDeleteButtonClicked: () -> Unit = { },
     startIconLargeUrl: String = "",
@@ -111,7 +111,7 @@ fun InfoTab(
                             .padding(end = 12.dp)
                             .heightIn(max = 48.dp)
                             .widthIn(max = 48.dp),
-                        )
+                    )
                 }
             }
 
@@ -182,9 +182,10 @@ fun InfoTab(
     }
     Spacer(Modifier.height(16.dp))
 }
+
 @Composable
 private fun InstitutionInfoBlock(
-    institutionInfo: PersonalInfo.Companion.InstitutionAccount,
+    institutionInfo: PersonalInfo.InstitutionAccount,
     onDeleteButtonClicked: () -> Unit,
 ) {
     Text(
@@ -396,7 +397,7 @@ private fun PreviewInfoTab() {
             onClick = { },
             enabled = true,
             endIcon = R.drawable.shield_tick_blue,
-            institutionInfo = PersonalInfo.Companion.InstitutionAccount(
+            institutionInfo = PersonalInfo.InstitutionAccount(
                 role = "Long string here",
                 roleProvider = "Long string here",
                 institution = "Long string here",

@@ -26,6 +26,7 @@ import nl.eduid.screens.deleteaccountsecondconfirm.DeleteAccountSecondConfirmScr
 import nl.eduid.screens.deleteaccountsecondconfirm.DeleteAccountSecondConfirmViewModel
 import nl.eduid.screens.editemail.EditEmailScreen
 import nl.eduid.screens.editemail.EditEmailViewModel
+import nl.eduid.screens.editname.EditNameScreen
 import nl.eduid.screens.firsttimedialog.LinkAccountViewModel
 import nl.eduid.screens.firsttimedialog.FirstTimeDialogScreen
 import nl.eduid.screens.homepage.HomePageScreen
@@ -369,7 +370,8 @@ fun MainGraph(
         val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
         PersonalInfoScreen(
             viewModel = viewModel,
-            onEmailClicked = { navController.goToWithPopCurrent(Graph.EDIT_EMAIL) },
+            onEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
+            onNameClicked = { navController.navigate(Graph.EDIT_NAME) },
             onManageAccountClicked = { dateString ->
                 navController.navigate(
                     ManageAccountRoute.routeWithArgs(
@@ -379,6 +381,22 @@ fun MainGraph(
             },
         ) { navController.popBackStack() }
     }
+    composable(Graph.EDIT_EMAIL) {
+        val viewModel = hiltViewModel<EditEmailViewModel>(it)
+        EditEmailScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
+            onSaveNewEmailRequested = { email -> navController.goToEmailSent(email) },
+        )
+    }
+    composable(Graph.EDIT_NAME) {
+        val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
+        EditNameScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
+        )
+    }
+
     //region Delete Account
     composable(
         route = ManageAccountRoute.routeWithArgs, arguments = ManageAccountRoute.arguments
@@ -440,14 +458,6 @@ fun MainGraph(
         ResetPasswordConfirmScreen(
             viewModel = viewModel,
             goBack = { navController.popBackStack() },
-        )
-    }
-    composable(Graph.EDIT_EMAIL) {
-        val viewModel = hiltViewModel<EditEmailViewModel>(it)
-        EditEmailScreen(
-            viewModel = viewModel,
-            goBack = { navController.popBackStack() },
-            onSaveNewEmailRequested = { email -> navController.goToEmailSent(email) },
         )
     }
     //endregion
