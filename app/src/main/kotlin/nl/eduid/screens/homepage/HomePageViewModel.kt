@@ -83,7 +83,6 @@ class HomePageViewModel @Inject constructor(
     }
 
     fun startEnrollmentAfterSignIn() = viewModelScope.launch {
-        Timber.e(">>>>>>>>>>>>>>>>0 - START ENROLMENT NOW")
         uiState.postValue(uiState.value?.copy(inProgress = true))
         startEnrollmentWithoutOAuthCheck()
     }
@@ -95,7 +94,6 @@ class HomePageViewModel @Inject constructor(
             if (enrollResponse.isSuccessful && response != null) {
                 val challenge = parseChallenge(response.url)
                 if (challenge is ChallengeParseResult.Success && challenge.value is EnrollmentChallenge) {
-                    Timber.e(">>>>>>>>>>>>>>>>2 - NEW CHALLENGE HERE")
                     uiState.postValue(
                         uiState.value?.copy(
                             inProgress = false,
