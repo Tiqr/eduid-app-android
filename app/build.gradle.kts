@@ -85,8 +85,6 @@ android {
         }
 
         getByName("debug") {
-            isMinifyEnabled = true
-            isShrinkResources = true
             applicationIdSuffix = ".testing"
             versionNameSuffix = " DEBUG"
             buildConfigField("String", "ENV_HOST", "\"https://login.test2.eduid.nl\"")

@@ -405,9 +405,7 @@ fun MainGraph(
         ManageAccountScreen(
             viewModel = viewModel,
             goBack = { navController.popBackStack() },
-            onDeleteAccountPressed = { navController.navigate(Graph.DELETE_ACCOUNT_FIRST_CONFIRM) },
-            dateString = ManageAccountRoute.decodeDateFromEntry(entry),
-        )
+        ) { navController.navigate(Graph.DELETE_ACCOUNT_FIRST_CONFIRM) }
     }
 
     composable(Graph.DELETE_ACCOUNT_FIRST_CONFIRM) {

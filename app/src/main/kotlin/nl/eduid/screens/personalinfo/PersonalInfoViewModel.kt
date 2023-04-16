@@ -148,7 +148,7 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
     }
 
     private fun convertToUiData(userDetails: UserDetails): PersonalInfo {
-        val dateCreated = userDetails.created
+        val dateCreated = userDetails.created * 1000
         val linkedAccounts = userDetails.linkedAccounts
 
         //Not sure if we should use the eduPersonAffiliations or the schacHomeOrganisation to get the institution name
