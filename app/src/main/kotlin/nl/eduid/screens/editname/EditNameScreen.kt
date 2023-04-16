@@ -77,30 +77,29 @@ fun EditNameScreen(
     EditNameContent(
         isLoading = uiState.isLoading,
         personalInfo = uiState.personalInfo,
+        account = uiState.personalInfo.institutionAccounts.firstOrNull(),
         updateName = { givenName, familyName -> viewModel.updateName(givenName, familyName) },
         addLinkToAccount = {
             isGettingLinkUrl = true
             viewModel.requestLinkUrl()
-        }
+        },
+        removeConnection = { index -> viewModel.removeConnection(index) },
     )
 }
 
 @Composable
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 private fun EditNameContent(
     isLoading: Boolean,
     personalInfo: PersonalInfo,
+    account: PersonalInfo.InstitutionAccount? = null,
     updateName: (String, String) -> Unit = { _, _ -> },
     addLinkToAccount: () -> Unit = {},
+    removeConnection: (Int) -> Unit = {},
 ) = Column(
     modifier = Modifier
         .fillMaxWidth()
         .verticalScroll(rememberScrollState())
 ) {
-    val focusManager = LocalFocusManager.current
-    val keyboardController = LocalSoftwareKeyboardController.current
-    var givenName by rememberSaveable { mutableStateOf("") }
-    var familyName by rememberSaveable { mutableStateOf(personalInfo.seflAssertedName.familyName.orEmpty()) }
     LogCompositions(msg = "EditName content recomposing: $isLoading. Data: $personalInfo")
     Text(
         style = MaterialTheme.typography.titleLarge,
@@ -137,48 +136,17 @@ private fun EditNameContent(
             ),
         )
     }
-
-    OutlinedTextField(
-        value = givenName,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-        keyboardActions = KeyboardActions(onNext = {
-            focusManager.moveFocus(
-                FocusDirection.Down
-            )
-        }),
-        onValueChange = { givenName = it },
-        label = { Text(stringResource(R.string.request_id_details_screen_first_name_input_title)) },
-        placeholder = { Text(stringResource(R.string.request_id_details_screen_first_name_input_hint)) },
-        modifier = Modifier.fillMaxWidth()
-    )
-
-    Spacer(
-        modifier = Modifier.height(8.dp)
-    )
-
-    OutlinedTextField(
-        value = familyName,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
-        onValueChange = { familyName = it },
-        label = { Text(stringResource(R.string.request_id_details_screen_last_name_input_title)) },
-        placeholder = { Text(stringResource(R.string.request_id_details_screen_last_name_input_hint)) },
-        modifier = Modifier.fillMaxWidth()
+    InfoTab(
+        title = personalInfo.name,
+        subtitle = stringResource(R.string.infotab_providedby_you),
+        onClick = { /**Not going anywhere from here*/ },
+        endIcon = R.drawable.edit_icon
     )
 
     Spacer(
         modifier = Modifier.height(24.dp)
     )
 
-    PrimaryButton(
-        text = stringResource(id = R.string.button_update),
-        enabled = !(familyName.isEmpty() || givenName.isEmpty()) && !isLoading,
-        onClick = { updateName(givenName, familyName) },
-        modifier = Modifier.fillMaxWidth()
-    )
-    Spacer(
-        modifier = Modifier.height(24.dp)
-    )
     if (personalInfo.nameProvider != null) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
@@ -195,14 +163,18 @@ private fun EditNameContent(
                 ),
             )
         }
+
         InfoTab(
             title = personalInfo.name,
             subtitle = stringResource(
                 R.string.infotab_providedby, personalInfo.nameProvider
             ),
-            onClick = { /**Not going anywhere from here*/ },
-            endIcon = R.drawable.shield_tick_blue
+            institutionInfo = account,
+            onClick = {},
+            onDeleteButtonClicked = { removeConnection(0) },
+            endIcon = R.drawable.chevron_down,
         )
+
     }
 
     LinkAccountCard(
