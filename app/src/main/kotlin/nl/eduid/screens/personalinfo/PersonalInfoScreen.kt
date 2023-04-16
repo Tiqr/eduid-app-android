@@ -50,28 +50,24 @@ import nl.eduid.ui.theme.LinkAccountCard
 fun PersonalInfoScreen(
     viewModel: PersonalInfoViewModel,
     onEmailClicked: () -> Unit,
+    onNameClicked: () -> Unit = {},
     onManageAccountClicked: (dateString: String) -> Unit,
-    goToAccountLinked: () -> Unit = {},
     goBack: () -> Unit,
 ) = EduIdTopAppBar(
     onBackClicked = goBack,
 ) {
     val uiState by viewModel.uiState.observeAsState(UiState())
     var isGettingLinkUrl by rememberSaveable { mutableStateOf(false) }
-    var isLinkingStarted by rememberSaveable { mutableStateOf(false) }
     val launcher =
         rememberLauncherForActivityResult(contract = LinkAccountContract(), onResult = { _ ->
-            if (isLinkingStarted) {
-                isLinkingStarted = false
-                goToAccountLinked()
-            }
+            /**We don't have to explicitly handle the result intent. The deep linking will
+             * automatically open the [AccountLinkedScreen] and ensure the backstack is correct.*/
         })
 
     if (isGettingLinkUrl && uiState.haveValidLinkIntent()) {
         LaunchedEffect(key1 = viewModel) {
             isGettingLinkUrl = false
             launcher.launch(uiState.linkUrl)
-            isLinkingStarted = true
         }
     }
 
@@ -81,6 +77,7 @@ fun PersonalInfoScreen(
         errorData = uiState.errorData,
         dismissError = viewModel::clearErrorData,
         onEmailClicked = onEmailClicked,
+        onNameClicked = onNameClicked,
         removeConnection = { index -> viewModel.removeConnection(index) },
         onManageAccountClicked = onManageAccountClicked,
         addLinkToAccount = {
@@ -96,6 +93,7 @@ fun PersonalInfoScreenContent(
     isLoading: Boolean = false,
     errorData: ErrorData? = null,
     dismissError: () -> Unit = {},
+    onNameClicked: () -> Unit = {},
     onEmailClicked: () -> Unit = {},
     removeConnection: (Int) -> Unit = {},
     onManageAccountClicked: (dateString: String) -> Unit = {},
@@ -153,7 +151,7 @@ fun PersonalInfoScreenContent(
                 R.string.infotab_providedby, personalInfo.nameProvider
             )
         },
-        onClick = { },
+        onClick = onNameClicked,
         endIcon = if (personalInfo.nameProvider == null) {
             R.drawable.edit_icon
         } else {
@@ -182,9 +180,10 @@ fun PersonalInfoScreenContent(
 
     Spacer(Modifier.height(12.dp))
     LinkAccountCard(
-        R.string.personalinfo_add_role_institution,
-        R.string.personalinfo_add_via,
-        addLinkToAccount
+        title = R.string.personalinfo_add_role_institution,
+        subtitle = R.string.personalinfo_add_via,
+        enabled = !isLoading,
+        addLinkToAccount = addLinkToAccount
     )
     Spacer(Modifier.height(42.dp))
     OutlinedButton(
@@ -211,7 +210,6 @@ fun PersonalInfoScreenContent(
     }
     Spacer(Modifier.height(42.dp))
 }
-
 
 
 @Preview

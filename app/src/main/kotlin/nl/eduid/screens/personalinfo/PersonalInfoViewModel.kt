@@ -121,8 +121,24 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
     }
 
     fun updateName(givenName: String, familyName: String) = viewModelScope.launch {
+        val currentDetails = cachedUserDetails ?: return@launch
         val currentUiState = uiState.value ?: UiState()
         uiState.postValue(currentUiState.copy(isLoading = true))
+
+        val validatedSelfName =
+            SelfAssertedName(familyName = givenName.ifEmpty { currentDetails.givenName },
+                givenName = familyName.ifEmpty { currentDetails.familyName })
+        val newDetails = repository.updateName(validatedSelfName)
+        newDetails?.let { updatedDetails ->
+            cachedUserDetails = updatedDetails
+            val personalInfo = mapUserDetailsToPersonalInfo(updatedDetails)
+            uiState.postValue(currentUiState.copy(isLoading = false, personalInfo = personalInfo))
+        } ?: uiState.postValue(
+            currentUiState.copy(
+                isLoading = false,
+                errorData = ErrorData("Failed to update name", "Could not update name")
+            )
+        )
     }
 
     private fun createLaunchIntent(url: String): Intent {

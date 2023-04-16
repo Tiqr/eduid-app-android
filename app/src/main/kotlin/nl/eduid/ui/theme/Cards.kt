@@ -21,8 +21,14 @@ import androidx.compose.ui.unit.dp
 import nl.eduid.R
 
 @Composable
-fun LinkAccountCard(title: Int, subtitle: Int, addLinkToAccount: () -> Unit = {}) {
+fun LinkAccountCard(
+    title: Int,
+    subtitle: Int,
+    enabled: Boolean = true,
+    addLinkToAccount: () -> Unit = {},
+) {
     OutlinedButton(
+        enabled = enabled,
         onClick = addLinkToAccount,
         shape = RoundedCornerShape(CornerSize(6.dp)),
         modifier = Modifier
