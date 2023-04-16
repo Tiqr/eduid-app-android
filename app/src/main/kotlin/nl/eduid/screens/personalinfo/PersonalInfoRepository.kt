@@ -180,4 +180,12 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
         Timber.e(e, "Failed to download and save personal data.")
         false
     }
+
+    suspend fun deleteAccount() = try {
+        val response = eduIdApi.deleteAccount()
+        response.isSuccessful
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to delete account")
+        false
+    }
 }
