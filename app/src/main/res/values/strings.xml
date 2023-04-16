@@ -194,6 +194,10 @@
     <string name="manage_account_title">Your account</string>
     <string name="manage_account_subtitle">Your account was created on</string>
     <string name="manage_account_info_block">All of your personal data from your eduID is yours and can be either downloaded or deleted. This data also contains technical keys and references.</string>
+    <string name="manage_account_result_ok">Your data was downloaded in your downloads folder.</string>
+    <string name="manage_account_result_fail">Failed to download your data.</string>
+    <string name="manage_account_download_my_data">Download my data</string>
+    <string name="manage_account_delete_your_account">Delete your account</string>
 
     <string name="delete_account_one_title">Delete your account</string>
     <string name="delete_account_one_subtitle">Proceed with care, as you will lose the unique eduID number currently associated with your email address.</string>

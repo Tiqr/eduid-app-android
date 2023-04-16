@@ -45,6 +45,9 @@ interface EduIdApi {
     @PUT("/mobile/api/sp/service")
     suspend fun removeService(@Body serviceId: DeleteServiceRequest): Response<UserDetails>
 
+    @GET("/mobile/api/sp/personal")
+    suspend fun getPersonalData(): Response<String>
+
     @PUT("/mobile/api/sp/update")
     suspend fun updateName(@Body selfName: SelfAssertedName): Response<UserDetails>
 }

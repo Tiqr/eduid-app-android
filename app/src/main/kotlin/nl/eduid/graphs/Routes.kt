@@ -217,10 +217,10 @@ object ManageAccountRoute {
     fun routeWithArgs(dateString: String) =
         "$route/${URLEncoder.encode(dateString, Charsets.UTF_8.toString())}"
 
-    fun decodeDateFromEntry(entry: NavBackStackEntry): String {
-        val date = entry.arguments?.getString(dateArg) ?: ""
+
+    fun decodeDateFromBundle(bundleArg: String): String {
         return try {
-            URLDecoder.decode(date, Charsets.UTF_8.name())
+            URLDecoder.decode(bundleArg, Charsets.UTF_8.name())
         } catch (e: UnsupportedEncodingException) {
             ""
         }

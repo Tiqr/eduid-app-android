@@ -1,5 +1,9 @@
 package nl.eduid.screens.personalinfo
 
+import android.annotation.SuppressLint
+import android.os.Environment
+import android.util.AtomicFile
+import androidx.core.util.writeText
 import nl.eduid.di.api.EduIdApi
 import nl.eduid.di.model.DeleteServiceRequest
 import nl.eduid.di.model.LinkedAccount
@@ -8,6 +12,9 @@ import nl.eduid.di.model.Token
 import nl.eduid.di.model.TokenResponse
 import nl.eduid.di.model.UserDetails
 import timber.log.Timber
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
 
@@ -142,5 +149,35 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
     } catch (e: Exception) {
         Timber.e(e, "Failed to retrieve start link account URL")
         null
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    suspend fun downloadPersonalData(): Boolean = try {
+        val response = eduIdApi.getPersonalData()
+        if (response.isSuccessful) {
+            val personalDataJson = response.body()
+            if (personalDataJson != null) {
+                val downloadFolder =
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                val now = Calendar.getInstance().time
+                val format = SimpleDateFormat("dMy")
+                val timestamp = format.format(now)
+                val file = AtomicFile(File(downloadFolder, "eduid_export_${timestamp}.json"))
+                file.writeText(personalDataJson)
+                true
+            } else {
+                false
+            }
+        } else {
+            Timber.w(
+                "Failed to get personal data [${response.code()}/${response.message()}]${
+                    response.errorBody()?.string()
+                }"
+            )
+            false
+        }
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to download and save personal data.")
+        false
     }
 }
