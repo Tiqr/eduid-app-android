@@ -20,19 +20,26 @@ class ResetPasswordViewModel @Inject constructor(private val eduid: EduIdApi) : 
         try {
             val response = eduid.resetPasswordLink()
             if (response.isSuccessful) {
-                uiState.postValue(uiState.value?.copy(inProgress = false, errorData = null))
+                uiState.postValue(
+                    uiState.value?.copy(
+                        inProgress = false,
+                        errorData = null,
+                        requestCompleted = Unit
+                    )
+                )
             } else {
                 uiState.postValue(
                     uiState.value?.copy(
                         inProgress = false, errorData = ErrorData(
                             "Failed to request password link",
                             "Could not request reset password link"
-                        )
+                        ), requestCompleted = Unit
                     )
                 )
             }
 
         } catch (e: Exception) {
+            Timber.e(e, "Failed to reset password link")
             uiState.postValue(
                 uiState.value?.copy(
                     inProgress = false,
@@ -42,7 +49,6 @@ class ResetPasswordViewModel @Inject constructor(private val eduid: EduIdApi) : 
                     )
                 )
             )
-            Timber.e(e, "Failed to reset password link")
         }
     }
 

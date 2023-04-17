@@ -35,6 +35,7 @@ fun ResetPasswordScreen(
     ResetPasswordScreenContent(
         inProgress = uiState.inProgress,
         errorData = uiState.errorData,
+        requestCompleted = uiState.requestCompleted,
         dismissError = viewModel::clearErrorData,
         onResetPasswordClicked = viewModel::resetPasswordLink,
         goBack = goBack,
@@ -45,6 +46,7 @@ fun ResetPasswordScreen(
 fun ResetPasswordScreenContent(
     inProgress: Boolean,
     errorData: ErrorData? = null,
+    requestCompleted: Unit? = null,
     dismissError: () -> Unit = {},
     onResetPasswordClicked: () -> Unit = {},
     goBack: () -> Unit = {},
@@ -90,6 +92,15 @@ fun ResetPasswordScreenContent(
                     .fillMaxWidth()
             )
             Spacer(Modifier.height(36.dp))
+            if (requestCompleted != null) {
+                Text(
+                    style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
+                    text = stringResource(R.string.reset_password_subtitle2),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+                Spacer(Modifier.height(36.dp))
+            }
         }
         Column(
             verticalArrangement = Arrangement.Bottom,
@@ -117,7 +128,13 @@ fun ResetPasswordScreenContent(
                     PrimaryButton(
                         enabled = !inProgress,
                         modifier = Modifier.widthIn(min = 140.dp),
-                        text = stringResource(R.string.reset_password_confirm_button),
+                        text = if (requestCompleted == null) {
+                            stringResource(R.string.reset_password_confirm_button)
+                        } else {
+                            stringResource(
+                                R.string.reset_password_resend_confirm_button
+                            )
+                        },
                         onClick = onResetPasswordClicked,
                         buttonBackgroundColor = ButtonBlue,
                         buttonTextColor = Color.White,

@@ -139,8 +139,10 @@
 
     <string name="reset_password_title">Change or delete password</string>
     <string name="reset_password_subtitle">We will send you an email instantly with a link to change or delete your current password.</string>
+    <string name="reset_password_subtitle2">Email sent, click on the link to complete changing your password.</string>
     <string name="reset_password_cancel_button">Cancel</string>
     <string name="reset_password_confirm_button">Send email</string>
+    <string name="reset_password_resend_confirm_button">Resend email</string>
 
     <string name="reset_password_confirm_title">Change password</string>
     <string name="reset_password_confirm_subtitle">Make sure your new password is at least 15 characters OR at least 8 characters including a number and a uppercase letter.</string>
