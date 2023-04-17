@@ -38,7 +38,49 @@
                 <data android:path="/tiqrauth" />
                 <data android:path="/tiqrauth/" />
             </intent-filter>
+            <!--
+            Sent the user a mail with a link for the user to change their password.
+             Reset password: Link in the validation email is https://login.{environment}.eduid.nl/client/mobile/reset-password?h={{hash}} if the user already had a password.
+             Add password: https://login.{environment}.eduid.nl/client/mobile/add-password?h={{hash}}
+             If the URL is not properly intercepted by the eduID app, then the browser app redirects to eduid://client/mobile/reset-password?h={{hash}}
+             -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*.eduid.nl"
+                    android:pathPrefix="/client/mobile/reset-password"
+                    android:scheme="https" />
+
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*.eduid.nl"
+                    android:pathPrefix="/client/mobile/add-password"
+                    android:scheme="https" />
+
+            </intent-filter>
+            <!--            In case we need to support the custom scheme while on mobile?-->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*"
+                    android:path="/client/mobile/reset-password"
+                    android:scheme="eduid" />
+
+            </intent-filter>
             <!--
             Scheme for account created redirect
             Create an eduID account and sent a verification mail to the user to confirm the ownership of the
@@ -102,7 +144,6 @@
                     android:path="/client/mobile/expired"
                     android:scheme="https" />
             </intent-filter>
-
             <!-- The current test2 environment is using a custom scheme for the account created redirect -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
