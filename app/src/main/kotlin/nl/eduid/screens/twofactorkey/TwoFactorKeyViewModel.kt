@@ -1,33 +1,30 @@
 package nl.eduid.screens.twofactorkey
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import org.tiqr.data.model.IdentityWithProvider
+import org.tiqr.data.repository.IdentityRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class TwoFactorKeyViewModel @Inject constructor(): ViewModel()  {
+class TwoFactorKeyViewModel @Inject constructor(
+    identityRepository: IdentityRepository,
+): ViewModel()  {
 
-    val twoFaInfo = MutableLiveData<List<TwoFactorData>>()
-
-    init {
-        viewModelScope.launch {
-            val twoFaDetails = listOf("","")
-            twoFaInfo.postValue(convertToUiData(twoFaDetails))
-        }
+    val identities = identityRepository.allIdentities().asLiveData(viewModelScope.coroutineContext).map {
+        it.map { key -> convertToUiData(key) }
     }
 
-    private fun convertToUiData(twoFaDetails: List<String>): List<TwoFactorData> {
-        return twoFaDetails.map {
-            TwoFactorData(
-                uniqueKey = "98665f33-c43f-4f5a- 8a89-a350a10e3c36",
-                title = "René v. Hamersdonkveer",
-                subtitle = "acc.edu.nl",
-                account = "René van Hamersdonksveer",
-                biometricFlag = false,
-            )
-        }
+    private fun convertToUiData(twoFaDetails: IdentityWithProvider): TwoFactorData {
+        return TwoFactorData(
+            uniqueKey = twoFaDetails.identity.identifier,
+            title = twoFaDetails.identity.displayName,
+            subtitle = twoFaDetails.identityProvider.displayName,
+            account = twoFaDetails.identity.displayName,
+            biometricFlag = twoFaDetails.identity.biometricInUse,
+        )
     }
 }

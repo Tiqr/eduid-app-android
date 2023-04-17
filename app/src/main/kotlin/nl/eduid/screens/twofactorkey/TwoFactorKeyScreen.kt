@@ -25,7 +25,7 @@ fun TwoFactorKeyScreen(
     onDeleteKeyPressed: (id: String) -> Unit,
     goBack: () -> Unit,
 ) {
-    val uiState by viewModel.twoFaInfo.observeAsState(emptyList())
+    val uiState by viewModel.identities.observeAsState(emptyList())
     TwoFactorKeyScreenContent(
         uiState = uiState,
         onDeleteKeyPressed = onDeleteKeyPressed,
