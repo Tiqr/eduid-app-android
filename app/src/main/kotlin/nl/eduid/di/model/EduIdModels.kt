@@ -159,3 +159,8 @@ data class Description(val en: String?, val nl: String?) : Parcelable
 @JsonClass(generateAdapter = true)
 data class SelfAssertedName(val familyName: String? = null, val givenName: String? = null) :
     Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class UpdatePasswordRequest(val newPassword: String, val hash: String) :
+    Parcelable

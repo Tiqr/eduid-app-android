@@ -145,9 +145,14 @@
     <string name="reset_password_resend_confirm_button">Resend email</string>
 
     <string name="reset_password_confirm_title">Change password</string>
+    <string name="reset_password_completed">Completed</string>
+    <string name="reset_password_password_label">Your password</string>
+    <string name="reset_password_repeat_password_label">Repeat password</string>
     <string name="reset_password_confirm_subtitle">Make sure your new password is at least 15 characters OR at least 8 characters including a number and a uppercase letter.</string>
     <string name="reset_password_confirm_second_title">Want to delete your password entirely?</string>
     <string name="reset_password_confirm_second_subtitle">When you prefer other methods than a password, you can delete your current one.</string>
+    <string name="button_reset_password">Reset password</string>
+    <string name="button_delete_password">Delete my password</string>
 
     <string name="edit_email_title">Email</string>
     <string name="edit_email_subtitle">Please enter your new email address. A verification mail will be sent to this address.</string>
