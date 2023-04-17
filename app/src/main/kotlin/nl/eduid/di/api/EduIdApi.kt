@@ -53,4 +53,7 @@ interface EduIdApi {
 
     @PUT("/mobile/api/sp/update")
     suspend fun updateName(@Body selfName: SelfAssertedName): Response<UserDetails>
+
+    @PUT("/mobile/api/sp/reset-password-link")
+    suspend fun resetPasswordLink(): Response<UserDetails>
 }
