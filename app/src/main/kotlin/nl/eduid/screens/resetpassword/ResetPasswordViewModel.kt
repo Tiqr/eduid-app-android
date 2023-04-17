@@ -45,4 +45,8 @@ class ResetPasswordViewModel @Inject constructor(private val eduid: EduIdApi) : 
             Timber.e(e, "Failed to reset password link")
         }
     }
+
+    fun clearErrorData() {
+        uiState.value = uiState.value?.copy(errorData = null)
+    }
 }

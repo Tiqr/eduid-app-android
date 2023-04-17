@@ -13,8 +13,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import nl.eduid.ErrorData
 import nl.eduid.R
-import nl.eduid.screens.personalinfo.UiState
+import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.ButtonBlue
@@ -32,6 +33,9 @@ fun ResetPasswordScreen(
 ) {
     val uiState by viewModel.uiState.observeAsState(UiState())
     ResetPasswordScreenContent(
+        inProgress = uiState.inProgress,
+        errorData = uiState.errorData,
+        dismissError = viewModel::clearErrorData,
         onResetPasswordClicked = viewModel::resetPasswordLink,
         goBack = goBack,
     )
@@ -39,13 +43,25 @@ fun ResetPasswordScreen(
 
 @Composable
 fun ResetPasswordScreenContent(
-    onResetPasswordClicked: () -> Unit,
-    goBack: () -> Unit,
+    inProgress: Boolean,
+    errorData: ErrorData? = null,
+    dismissError: () -> Unit = {},
+    onResetPasswordClicked: () -> Unit = {},
+    goBack: () -> Unit = {},
 ) =
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
     ) {
+        if (errorData != null) {
+            AlertDialogWithSingleButton(
+                title = errorData.title,
+                explanation = errorData.message,
+                buttonLabel = stringResource(R.string.button_ok),
+                onDismiss = dismissError
+            )
+        }
+
         val (body, bottomColumn) = createRefs()
         Column(
             verticalArrangement = Arrangement.Top,
@@ -90,6 +106,7 @@ fun ResetPasswordScreenContent(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     PrimaryButton(
+                        enabled = !inProgress,
                         modifier = Modifier.widthIn(min = 140.dp),
                         text = stringResource(R.string.reset_password_cancel_button),
                         onClick = goBack,
@@ -98,6 +115,7 @@ fun ResetPasswordScreenContent(
                         buttonBorderColor = ButtonBorderGrey,
                     )
                     PrimaryButton(
+                        enabled = !inProgress,
                         modifier = Modifier.widthIn(min = 140.dp),
                         text = stringResource(R.string.reset_password_confirm_button),
                         onClick = onResetPasswordClicked,
@@ -113,7 +131,6 @@ fun ResetPasswordScreenContent(
 @Composable
 private fun PreviewResetPasswordScreenContent() = EduidAppAndroidTheme {
     ResetPasswordScreenContent(
-        onResetPasswordClicked = { },
-        goBack = { },
+        false
     )
 }
