@@ -479,11 +479,19 @@ fun MainGraph(
         val viewModel = hiltViewModel<ResetPasswordViewModel>(it)
         ResetPasswordScreen(
             viewModel = viewModel,
-            goBack = { navController.popBackStack() },
-            onResetPasswordClicked = { navController.navigate(Graph.RESET_PASSWORD_CONFIRM) },
-        )
+        ) { navController.popBackStack() }
     }
-    composable(Graph.RESET_PASSWORD_CONFIRM) {
+    composable(
+        ResetPasswordConfirm.routeWithArgs,
+        arguments = ResetPasswordConfirm.arguments,
+        deepLinks = listOf(navDeepLink {
+            uriPattern = ResetPasswordConfirm.resetPassword
+        }, navDeepLink {
+            uriPattern = ResetPasswordConfirm.addPassword
+        }, navDeepLink {
+            uriPattern = ResetPasswordConfirm.customSchemeResetPassword
+        })
+    ) {
         val viewModel = hiltViewModel<ResetPasswordConfirmViewModel>(it)
         ResetPasswordConfirmScreen(
             viewModel = viewModel,

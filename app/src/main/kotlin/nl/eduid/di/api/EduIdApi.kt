@@ -53,4 +53,13 @@ interface EduIdApi {
 
     @PUT("/mobile/api/sp/update")
     suspend fun updateName(@Body selfName: SelfAssertedName): Response<UserDetails>
+
+    @PUT("/mobile/api/sp/reset-password-link")
+    suspend fun resetPasswordLink(): Response<UserDetails>
+
+    @PUT("/mobile/api/sp/update-password")
+    suspend fun updatePassword(@Body updatePasswordRequest: UpdatePasswordRequest): Response<UserDetails>
+
+    @GET("/mobile/api/sp/password-reset-hash-valid")
+    suspend fun checkHashIsValid(@Query("hash") hash: String): Response<Boolean>
 }
