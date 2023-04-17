@@ -1,12 +1,16 @@
 package nl.eduid.screens.personalinfo
 
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
+import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.di.model.UserDetails
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -82,8 +86,69 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
         )
     }
 
+    fun requestLinkUrl() = viewModelScope.launch {
+        val currentUiState = uiState.value ?: UiState()
+        uiState.postValue(currentUiState.copy(isLoading = true, linkUrl = null))
+        try {
+            val response = repository.getStartLinkAccount()
+            if (response != null) {
+                uiState.postValue(
+                    currentUiState.copy(
+                        linkUrl = createLaunchIntent(response), isLoading = false
+                    )
+                )
+            } else {
+                uiState.postValue(
+                    currentUiState.copy(
+                        isLoading = false, errorData = ErrorData(
+                            "Failed to get link URL",
+                            "Could not retrieve URL to link your current account"
+                        )
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to get link account for current user")
+            uiState.postValue(
+                currentUiState.copy(
+                    isLoading = false, errorData = ErrorData(
+                        "Failed to get link URL",
+                        "Could not retrieve URL to link your current account"
+                    )
+                )
+            )
+        }
+    }
+
+    fun updateName(givenName: String, familyName: String) = viewModelScope.launch {
+        val currentDetails = cachedUserDetails ?: return@launch
+        val currentUiState = uiState.value ?: UiState()
+        uiState.postValue(currentUiState.copy(isLoading = true))
+
+        val validatedSelfName =
+            SelfAssertedName(familyName = givenName.ifEmpty { currentDetails.givenName },
+                givenName = familyName.ifEmpty { currentDetails.familyName })
+        val newDetails = repository.updateName(validatedSelfName)
+        newDetails?.let { updatedDetails ->
+            cachedUserDetails = updatedDetails
+            val personalInfo = mapUserDetailsToPersonalInfo(updatedDetails)
+            uiState.postValue(currentUiState.copy(isLoading = false, personalInfo = personalInfo))
+        } ?: uiState.postValue(
+            currentUiState.copy(
+                isLoading = false,
+                errorData = ErrorData("Failed to update name", "Could not update name")
+            )
+        )
+    }
+
+    private fun createLaunchIntent(url: String): Intent {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        return intent
+    }
+
     private fun convertToUiData(userDetails: UserDetails): PersonalInfo {
-        val dateCreated = userDetails.created
+        val dateCreated = userDetails.created * 1000
         val linkedAccounts = userDetails.linkedAccounts
 
         //Not sure if we should use the eduPersonAffiliations or the schacHomeOrganisation to get the institution name
@@ -104,7 +169,7 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
                 } else {
                     affiliation
                 }
-                PersonalInfo.Companion.InstitutionAccount(
+                PersonalInfo.InstitutionAccount(
                     id = account.institutionIdentifier,
                     role = role,
                     roleProvider = account.schacHomeOrganization,
@@ -118,6 +183,10 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
 
         return PersonalInfo(
             name = name,
+            seflAssertedName = SelfAssertedName(
+                familyName = userDetails.familyName,
+                givenName = userDetails.givenName
+            ),
             nameProvider = nameProvider,
             nameStatus = PersonalInfo.InfoStatus.Final,
             email = email,

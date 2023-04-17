@@ -21,6 +21,7 @@ object Graph {
     const val RESET_PASSWORD = "reset_password"
     const val RESET_PASSWORD_CONFIRM = "reset_password_confirm"
     const val EDIT_EMAIL = "edit_email"
+    const val EDIT_NAME = "edit_name"
     const val TWO_FA_DETAIL = "2fa_detail"
     const val TWO_FA_DELETE = "2fa_delete"
     const val DELETE_ACCOUNT_FIRST_CONFIRM = "delete_account_first_confirm"
@@ -217,10 +218,10 @@ object ManageAccountRoute {
     fun routeWithArgs(dateString: String) =
         "$route/${URLEncoder.encode(dateString, Charsets.UTF_8.toString())}"
 
-    fun decodeDateFromEntry(entry: NavBackStackEntry): String {
-        val date = entry.arguments?.getString(dateArg) ?: ""
+
+    fun decodeDateFromBundle(bundleArg: String): String {
         return try {
-            URLDecoder.decode(date, Charsets.UTF_8.name())
+            URLDecoder.decode(bundleArg, Charsets.UTF_8.name())
         } catch (e: UnsupportedEncodingException) {
             ""
         }

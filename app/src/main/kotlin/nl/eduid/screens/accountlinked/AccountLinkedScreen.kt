@@ -58,7 +58,9 @@ private fun AccountLinkedContent(
     withBackIcon = false
 ) {
     Column(
-        modifier = Modifier.verticalScroll(rememberScrollState())
+        modifier = Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
     ) {
         if (errorData != null) {
             AlertDialogWithSingleButton(

@@ -117,7 +117,7 @@ fun PinInputField(
     }
 }
 
-const val PIN_MAX_LENGTH = 5
+const val PIN_MAX_LENGTH = 4
 
 @ExperimentalMaterial3Api
 @Preview

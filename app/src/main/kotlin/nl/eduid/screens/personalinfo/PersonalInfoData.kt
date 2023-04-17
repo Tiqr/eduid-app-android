@@ -1,7 +1,10 @@
 package nl.eduid.screens.personalinfo
 
+import nl.eduid.di.model.SelfAssertedName
+
 data class PersonalInfo(
     val name: String = "",
+    val seflAssertedName: SelfAssertedName = SelfAssertedName(),
     val nameProvider: String? = null,
     val nameStatus: InfoStatus = InfoStatus.Final,
     val email: String = "",
@@ -9,18 +12,19 @@ data class PersonalInfo(
     val institutionAccounts: List<InstitutionAccount> = emptyList(),
     val dateCreated: Long = 0,
 ) {
-    companion object {
-        data class InstitutionAccount(
-            val id: String,
-            val role: String,
-            val roleProvider: String,
-            val institution: String,
-            val affiliationString: String,
-            val status: InfoStatus = InfoStatus.Final,
-            val createdStamp: Long,
-            val expiryStamp: Long,
-        )
 
+    data class InstitutionAccount(
+        val id: String,
+        val role: String,
+        val roleProvider: String,
+        val institution: String,
+        val affiliationString: String,
+        val status: InfoStatus = InfoStatus.Final,
+        val createdStamp: Long,
+        val expiryStamp: Long,
+    )
+
+    companion object {
         fun demoData(): PersonalInfo {
             return PersonalInfo(
                 name = "R. van Hamersdonksveer",

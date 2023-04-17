@@ -67,8 +67,7 @@
 
     <string name="request_id_link_title">Check your email</string>
     <string name="request_id_link_header_text">To sign in, click the link in the email we sent to </string>
-    <string name="request_id_link_open_gmail">Open Gmail</string>
-    <string name="request_id_link_open_outlook">Open Outlook</string>
+    <string name="request_id_link_open_email_client">Open email client</string>
     <string name="request_id_link_spam_text">Can’t find it? Check your spam folder.</string>
 
     <string name="request_id_recovery_title">Add a recovery phone number</string>

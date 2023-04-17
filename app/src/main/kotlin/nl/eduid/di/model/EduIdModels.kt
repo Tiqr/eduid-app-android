@@ -42,8 +42,7 @@ const val EMAIL_DOMAIN_FORBIDDEN = 412
 data class EnrollResponse(
     val url: String,
     val enrollmentKey: String,
-    @Json(name = "qrcode")
-    val qrCode: String,
+    @Json(name = "qrcode") val qrCode: String,
 ) : Parcelable
 
 @Parcelize
@@ -66,7 +65,7 @@ data class UserDetails(
     val eduIdPerServiceProvider: Map<String, EduIdPerServiceProvider>,
 
     val loginOptions: List<String>,
-    val registration: Registration?
+    val registration: Registration?,
 ) : Parcelable {
 
     fun isRecoveryRequired(): Boolean = registration?.status != "FINALIZED"
@@ -80,7 +79,7 @@ data class EduIdPerServiceProvider(
     val serviceName: String,
     val serviceNameNl: String,
     val serviceLogoUrl: String,
-    val createdAt: Long
+    val createdAt: Long,
 ) : Parcelable
 
 @Parcelize
@@ -90,11 +89,11 @@ data class LinkedAccount(
     val schacHomeOrganization: String,
     val eduPersonPrincipalName: String,
     val subjectId: String?,
-    val givenName: String,
-    val familyName: String,
+    val givenName: String?,
+    val familyName: String?,
     val eduPersonAffiliations: List<String>,
     val createdAt: Long,
-    val expiresAt: Long
+    val expiresAt: Long,
 ) : Parcelable
 
 @Parcelize
@@ -113,10 +112,50 @@ data class InstitutionNameResponse(
     val displayNameEn: String,
     val displayNameNl: String,
 
-) : Parcelable
+    ) : Parcelable
 
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class EmailChangeRequest(
     val email: String,
 ) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class DeleteServiceRequest(
+    val serviceProviderEntityId: String,
+    val tokens: List<Token>,
+) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class Token(
+    val id: String,
+    val type: String,
+) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class TokenResponse(
+    val id: String,
+    val clientName: String,
+    val clientId: String,
+    val type: String,
+    val scopes: List<Scope>?,
+) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class Scope(val name: String, val descriptions: Description?) : Parcelable {
+    fun hasValidDescription(): Boolean =
+        descriptions != null && (descriptions.en != null || descriptions.nl != null)
+}
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class Description(val en: String?, val nl: String?) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class SelfAssertedName(val familyName: String? = null, val givenName: String? = null) :
+    Parcelable

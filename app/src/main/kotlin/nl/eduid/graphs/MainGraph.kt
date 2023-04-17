@@ -26,6 +26,7 @@ import nl.eduid.screens.deleteaccountsecondconfirm.DeleteAccountSecondConfirmScr
 import nl.eduid.screens.deleteaccountsecondconfirm.DeleteAccountSecondConfirmViewModel
 import nl.eduid.screens.editemail.EditEmailScreen
 import nl.eduid.screens.editemail.EditEmailViewModel
+import nl.eduid.screens.editname.EditNameScreen
 import nl.eduid.screens.firsttimedialog.LinkAccountViewModel
 import nl.eduid.screens.firsttimedialog.FirstTimeDialogScreen
 import nl.eduid.screens.homepage.HomePageScreen
@@ -373,7 +374,8 @@ fun MainGraph(
         val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
         PersonalInfoScreen(
             viewModel = viewModel,
-            onEmailClicked = { navController.goToWithPopCurrent(Graph.EDIT_EMAIL) },
+            onEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
+            onNameClicked = { navController.navigate(Graph.EDIT_NAME) },
             onManageAccountClicked = { dateString ->
                 navController.navigate(
                     ManageAccountRoute.routeWithArgs(
@@ -383,15 +385,65 @@ fun MainGraph(
             },
         ) { navController.popBackStack() }
     }
+    composable(Graph.EDIT_EMAIL) {
+        val viewModel = hiltViewModel<EditEmailViewModel>(it)
+        EditEmailScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
+            onSaveNewEmailRequested = { email -> navController.goToEmailSent(email) },
+        )
+    }
+    composable(Graph.EDIT_NAME) {
+        val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
+        EditNameScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
+        )
+    }
+
+    //region Delete Account
+    composable(
+        route = ManageAccountRoute.routeWithArgs, arguments = ManageAccountRoute.arguments
+    ) { entry ->
+        val viewModel = hiltViewModel<ManageAccountViewModel>(entry)
+        ManageAccountScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
+        ) { navController.navigate(Graph.DELETE_ACCOUNT_FIRST_CONFIRM) }
+    }
+
+    composable(Graph.DELETE_ACCOUNT_FIRST_CONFIRM) {
+        DeleteAccountFirstConfirmScreen(
+            goBack = { navController.popBackStack() },
+            onDeleteAccountPressed = { navController.navigate(Graph.DELETE_ACCOUNT_SECOND_CONFIRM) },
+        )
+    }
+
+    composable(Graph.DELETE_ACCOUNT_SECOND_CONFIRM) {
+        val viewModel = hiltViewModel<DeleteAccountSecondConfirmViewModel>(it)
+        DeleteAccountSecondConfirmScreen(
+            viewModel = viewModel,
+            onAccountDeleted = {
+                navController.navigate(Graph.HOME_PAGE) {
+                    popUpTo(Graph.HOME_PAGE) {
+                        inclusive = true
+                    }
+                }
+            },
+            goBack = { navController.popBackStack() },
+        )
+    }//endregion
     //endregion
+    //region Data and activity
     composable(Graph.DATA_AND_ACTIVITY) {
         val viewModel = hiltViewModel<DataAndActivityViewModel>(it)
         DataAndActivityScreen(
             viewModel = viewModel,
-            goBack = { navController.popBackStack() },
-            onDeleteLoginClicked = {},
-        )
+        ) { navController.popBackStack() }
     }
+
+    //endregion
+    //region Security
     composable(Graph.SECURITY) {
         val viewModel = hiltViewModel<SecurityViewModel>(it)
         SecurityScreen(
@@ -438,41 +490,7 @@ fun MainGraph(
             goBack = { navController.popBackStack() },
         )
     }
-    composable(Graph.EDIT_EMAIL) {
-        val viewModel = hiltViewModel<EditEmailViewModel>(it)
-        EditEmailScreen(
-            viewModel = viewModel,
-            goBack = { navController.popBackStack() },
-            onSaveNewEmailRequested = { email -> navController.goToEmailSent(email) },
-        )
-    }
-
-    composable(
-        route = ManageAccountRoute.routeWithArgs, arguments = ManageAccountRoute.arguments
-    ) { entry ->
-        val viewModel = hiltViewModel<ManageAccountViewModel>(entry)
-        ManageAccountScreen(
-            viewModel = viewModel,
-            goBack = { navController.popBackStack() },
-            onDeleteAccountPressed = { navController.navigate(Graph.DELETE_ACCOUNT_FIRST_CONFIRM) },
-            dateString = ManageAccountRoute.decodeDateFromEntry(entry),
-        )
-    }
-
-    composable(Graph.DELETE_ACCOUNT_FIRST_CONFIRM) {
-        DeleteAccountFirstConfirmScreen(
-            goBack = { navController.popBackStack() },
-            onDeleteAccountPressed = { navController.navigate(Graph.DELETE_ACCOUNT_SECOND_CONFIRM) },
-        )
-    }
-
-    composable(Graph.DELETE_ACCOUNT_SECOND_CONFIRM) {
-        val viewModel = hiltViewModel<DeleteAccountSecondConfirmViewModel>(it)
-        DeleteAccountSecondConfirmScreen(
-            viewModel = viewModel,
-            goBack = { navController.popBackStack() },
-        )
-    }
+    //endregion
 }
 
 private fun NavController.goToEmailSent(email: String) = navigate(

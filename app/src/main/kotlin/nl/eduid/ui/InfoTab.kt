@@ -38,7 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
-import nl.eduid.screens.dataactivity.DataAndActivityData
+import nl.eduid.screens.dataactivity.ServiceProvider
 import nl.eduid.screens.twofactorkey.TwoFactorData
 import nl.eduid.ui.theme.BlueText
 import nl.eduid.ui.theme.ButtonRed
@@ -53,10 +53,10 @@ fun InfoTab(
     subtitle: String,
     onClick: () -> Unit,
     enabled: Boolean = true,
-    institutionInfo: PersonalInfo.Companion.InstitutionAccount? = null,
-    serviceProviderInfo: DataAndActivityData.Companion.Provider? = null,
     twoFactorData: TwoFactorData? = null,
     onDeleteButtonClicked: (id: String) -> Unit = { },
+    institutionInfo: PersonalInfo.InstitutionAccount? = null,
+    serviceProviderInfo: ServiceProvider? = null,
     startIconLargeUrl: String = "",
     @DrawableRes endIcon: Int = 0,
 ) {
@@ -114,7 +114,6 @@ fun InfoTab(
                             .padding(end = 12.dp)
                             .heightIn(max = 48.dp)
                             .widthIn(max = 48.dp),
-
                     )
                 }
             }
@@ -198,10 +197,11 @@ fun InfoTab(
     }
     Spacer(Modifier.height(16.dp))
 }
+
 @Composable
 private fun InstitutionInfoBlock(
-    institutionInfo: PersonalInfo.Companion.InstitutionAccount,
-    onDeleteButtonClicked: (id: String) -> Unit
+    institutionInfo: PersonalInfo.InstitutionAccount,
+    onDeleteButtonClicked: (id: String) -> Unit,
 ) {
     Text(
         text = "Verified by ${institutionInfo.institution} on ${institutionInfo.createdStamp.getDateString()}",
@@ -308,8 +308,8 @@ private fun InstitutionInfoBlock(
 
 @Composable
 private fun serviceProviderBlock(
-    serviceProviderInfo: DataAndActivityData.Companion.Provider,
-    onDeleteButtonClicked: (id: String) -> Unit
+    serviceProviderInfo: ServiceProvider,
+    onDeleteButtonClicked: (id: String) -> Unit,
 ): @Composable() (ColumnScope.() -> Unit) =
     {
         Text(
@@ -382,7 +382,7 @@ private fun serviceProviderBlock(
                     .fillMaxWidth(),
             ) {
                 Text(
-                    text = "Delete login details *",
+                    text = stringResource(R.string.infotab_delete_login_details),
                     style = MaterialTheme.typography.bodyLarge.copy(
                         color = ButtonRed, fontWeight = FontWeight.SemiBold
                     )
@@ -504,7 +504,7 @@ private fun PreviewInfoTab() {
             onClick = { },
             enabled = true,
             endIcon = R.drawable.shield_tick_blue,
-            institutionInfo = PersonalInfo.Companion.InstitutionAccount(
+            institutionInfo = PersonalInfo.InstitutionAccount(
                 role = "Long string here",
                 roleProvider = "Long string here",
                 institution = "Long string here",

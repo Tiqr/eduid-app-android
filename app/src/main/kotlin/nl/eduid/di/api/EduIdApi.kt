@@ -12,6 +12,9 @@ interface EduIdApi {
     @POST("/mobile/api/idp/create")
     suspend fun createNewEduIdAccount(@Body request: RequestEduIdAccount): Response<Unit>
 
+    @DELETE("/mobile/api/sp/delete")
+    suspend fun deleteAccount(): Response<Unit>
+
     @POST("/mobile/tiqr/sp/send-phone-code")
     suspend fun requestPhoneCode(@Body request: RequestPhoneCode): Response<Unit>
 
@@ -30,6 +33,9 @@ interface EduIdApi {
     @GET("/mobile/tiqr/sp/start-enrollment")
     suspend fun startEnrollment(): Response<EnrollResponse>
 
+    @GET("/mobile/api/sp/tokens")
+    suspend fun getTokens(): Response<List<TokenResponse>>
+
     @GET("/mobile/api/sp/institution/names")
     suspend fun getInstitutionName(@Query("schac_home") schac_home: String): Response<InstitutionNameResponse>
 
@@ -38,4 +44,13 @@ interface EduIdApi {
 
     @PUT("/mobile/api/sp/institution")
     suspend fun removeConnection(@Body account: LinkedAccount): Response<UserDetails>
+
+    @PUT("/mobile/api/sp/service")
+    suspend fun removeService(@Body serviceId: DeleteServiceRequest): Response<UserDetails>
+
+    @GET("/mobile/api/sp/personal")
+    suspend fun getPersonalData(): Response<String>
+
+    @PUT("/mobile/api/sp/update")
+    suspend fun updateName(@Body selfName: SelfAssertedName): Response<UserDetails>
 }

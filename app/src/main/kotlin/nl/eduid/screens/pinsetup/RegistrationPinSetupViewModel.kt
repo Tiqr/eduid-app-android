@@ -119,7 +119,7 @@ class RegistrationPinSetupViewModel @Inject constructor(
 
     private suspend fun calculateNextStep(
         context: Context,
-        currentChallenge: EnrollmentChallenge
+        currentChallenge: EnrollmentChallenge,
     ): NextStep {
         val userDetails = personal.getUserDetails()
         return if (context.biometricUsable() && currentChallenge.identity.biometricOfferUpgrade) {
@@ -143,6 +143,6 @@ class RegistrationPinSetupViewModel @Inject constructor(
     }
 
     fun dismissError() {
-        uiState.value = uiState.value?.copy(errorData = null, )
+        uiState.value = uiState.value?.copy(errorData = null)
     }
 }

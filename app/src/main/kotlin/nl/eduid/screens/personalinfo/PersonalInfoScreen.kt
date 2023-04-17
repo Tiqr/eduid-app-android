@@ -1,5 +1,6 @@
 package nl.eduid.screens.personalinfo
 
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,12 +18,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import nl.eduid.ErrorData
 import nl.eduid.R
+import nl.eduid.screens.firsttimedialog.LinkAccountContract
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.InfoTab
@@ -37,25 +44,46 @@ import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.ButtonTextGrey
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.LinkAccountCard
 
 @Composable
 fun PersonalInfoScreen(
     viewModel: PersonalInfoViewModel,
     onEmailClicked: () -> Unit,
+    onNameClicked: () -> Unit = {},
     onManageAccountClicked: (dateString: String) -> Unit,
     goBack: () -> Unit,
 ) = EduIdTopAppBar(
     onBackClicked = goBack,
 ) {
     val uiState by viewModel.uiState.observeAsState(UiState())
+    var isGettingLinkUrl by rememberSaveable { mutableStateOf(false) }
+    val launcher =
+        rememberLauncherForActivityResult(contract = LinkAccountContract(), onResult = { _ ->
+            /**We don't have to explicitly handle the result intent. The deep linking will
+             * automatically open the [AccountLinkedScreen] and ensure the backstack is correct.*/
+        })
+
+    if (isGettingLinkUrl && uiState.haveValidLinkIntent()) {
+        LaunchedEffect(key1 = viewModel) {
+            isGettingLinkUrl = false
+            launcher.launch(uiState.linkUrl)
+        }
+    }
+
     PersonalInfoScreenContent(
         personalInfo = uiState.personalInfo,
         isLoading = uiState.isLoading,
         errorData = uiState.errorData,
         dismissError = viewModel::clearErrorData,
         onEmailClicked = onEmailClicked,
+        onNameClicked = onNameClicked,
         removeConnection = { index -> viewModel.removeConnection(index) },
         onManageAccountClicked = onManageAccountClicked,
+        addLinkToAccount = {
+            isGettingLinkUrl = true
+            viewModel.requestLinkUrl()
+        },
     )
 }
 
@@ -65,13 +93,14 @@ fun PersonalInfoScreenContent(
     isLoading: Boolean = false,
     errorData: ErrorData? = null,
     dismissError: () -> Unit = {},
+    onNameClicked: () -> Unit = {},
     onEmailClicked: () -> Unit = {},
     removeConnection: (Int) -> Unit = {},
     onManageAccountClicked: (dateString: String) -> Unit = {},
+    addLinkToAccount: () -> Unit = {},
 ) = Column(
     verticalArrangement = Arrangement.Bottom,
-    modifier = Modifier
-        .verticalScroll(rememberScrollState())
+    modifier = Modifier.verticalScroll(rememberScrollState())
 ) {
     if (errorData != null) {
         AlertDialogWithSingleButton(
@@ -86,9 +115,7 @@ fun PersonalInfoScreenContent(
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
             textAlign = TextAlign.Start, color = ButtonGreen
-        ),
-        text = stringResource(R.string.personal_info_title),
-        modifier = Modifier.fillMaxWidth()
+        ), text = stringResource(R.string.personal_info_title), modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
     Text(
@@ -124,7 +151,7 @@ fun PersonalInfoScreenContent(
                 R.string.infotab_providedby, personalInfo.nameProvider
             )
         },
-        onClick = { },
+        onClick = onNameClicked,
         endIcon = if (personalInfo.nameProvider == null) {
             R.drawable.edit_icon
         } else {
@@ -151,6 +178,13 @@ fun PersonalInfoScreenContent(
         )
     }
 
+    Spacer(Modifier.height(12.dp))
+    LinkAccountCard(
+        title = R.string.personalinfo_add_role_institution,
+        subtitle = R.string.personalinfo_add_via,
+        enabled = !isLoading,
+        addLinkToAccount = addLinkToAccount
+    )
     Spacer(Modifier.height(42.dp))
     OutlinedButton(
         onClick = { onManageAccountClicked(personalInfo.dateCreated.getDateTimeString("EEEE, dd MMMM yyyy 'at' HH:MM")) },
@@ -163,8 +197,7 @@ fun PersonalInfoScreenContent(
             painter = painterResource(R.drawable.cog_icon),
             alignment = CenterStart,
             contentDescription = "",
-            modifier = Modifier
-                .padding(end = 48.dp)
+            modifier = Modifier.padding(start = 24.dp, end = 24.dp)
         )
         Text(
             text = stringResource(R.string.personalinfo_manage_your_account),

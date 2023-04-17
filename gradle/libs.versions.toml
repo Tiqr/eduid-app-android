@@ -4,21 +4,22 @@ android-sdk-target = "33"
 android-sdk-min = "24"
 android-buildTools = "33.0.0"
 
-kotlin = "1.8.0"
+androidGradlePlugin = "7.4.2"
+hilt = "2.45"
+kotlin = "1.8.20"
+ksp = "1.8.10-1.0.9"
+gmsServicePlugin = "4.3.14"
+androidxComposeBom = "2023.04.00"
 coroutines = "1.6.4"
-
-hilt = "2.44"
 navigation = "2.5.3"
 room = "2.5.0-beta01"
-lifecycle = "2.5.1"
-camera = "1.3.0-alpha03"
-
-okhttp = "4.9.2"
+lifecycle = "2.6.1"
+camera = "1.3.0-alpha05"
+okhttp = "4.10.0"
 retrofit = "2.9.0"
 moshi = "1.14.0"
 
 [libraries]
-android-gradle = "com.android.tools.build:gradle:7.4.2"
 
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -37,7 +38,10 @@ androidx-activity = "androidx.activity:activity-ktx:1.6.1"
 androidx-appcompat = "androidx.appcompat:appcompat:1.3.1"
 androidx-autofill = "androidx.autofill:autofill:1.1.0"
 androidx-biometric = "androidx.biometric:biometric-ktx:1.2.0-alpha05"
-androidx-compose-activity = "androidx.activity:activity-compose:1.5.1"
+#Compose BOM
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+androidx-compose-activity = "androidx.activity:activity-compose:1.7.0"
 androidx-compose-navigation = "androidx.navigation:navigation-compose:2.5.3"
 androidx-compose-hilt-navigation = "androidx.hilt:hilt-navigation-compose:1.0.0"
 androidx-concurrent = "androidx.concurrent:concurrent-futures-ktx:1.1.0"
@@ -60,6 +64,8 @@ androidx-lifecycle-compiler = { module = "androidx.lifecycle:lifecycle-compiler"
 androidx-lifecycle-extensions = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "lifecycle" }
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
+androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 
 androidx-navigation-gradle = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigation" }
 androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
@@ -79,7 +85,6 @@ androidx-camera-extensions = "androidx.camera:camera-extensions:1.0.0-alpha30"
 
 appauth = "net.openid:appauth:0.11.1"
 jwtdecode = "com.auth0.android:jwtdecode:2.0.0"
-google-gms-gradle = "com.google.gms:google-services:4.3.14"
 google-android-material = "com.google.android.material:material:1.7.0"
 google-mlkit-barcode = "com.google.mlkit:barcode-scanning:17.0.2"
 google-firebase-messaging = "com.google.firebase:firebase-messaging-ktx:23.1.0"
@@ -102,3 +107,19 @@ betterLink = "me.saket:better-link-movement-method:2.2.0"
 timber = "com.jakewharton.timber:timber:5.0.1"
 
 junit = "junit:junit:4.13.2"
+
+# Dependencies of the included build-logic
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+android-nav-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
+google-gms-gradle = { id = "com.google.gms.google-services", version.ref = "gmsServicePlugin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

@@ -50,7 +50,7 @@ fun FirstTimeDialogScreen(
     var isGettingLinkUrl by rememberSaveable { mutableStateOf(false) }
     var isLinkingStarted by rememberSaveable { mutableStateOf(false) }
     val launcher =
-        rememberLauncherForActivityResult(contract = LinkAccountContract(), onResult = { intent ->
+        rememberLauncherForActivityResult(contract = LinkAccountContract(), onResult = { _ ->
             if (isLinkingStarted) {
                 isLinkingStarted = false
                 goToAccountLinked()
