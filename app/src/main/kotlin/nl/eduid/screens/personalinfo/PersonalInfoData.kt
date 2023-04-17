@@ -12,7 +12,9 @@ data class PersonalInfo(
     val institutionAccounts: List<InstitutionAccount> = emptyList(),
     val dateCreated: Long = 0,
 ) {
+
     data class InstitutionAccount(
+        val id: String,
         val role: String,
         val roleProvider: String,
         val institution: String,

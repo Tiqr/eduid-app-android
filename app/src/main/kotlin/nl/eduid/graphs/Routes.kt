@@ -22,6 +22,7 @@ object Graph {
     const val EDIT_EMAIL = "edit_email"
     const val EDIT_NAME = "edit_name"
     const val TWO_FA_DETAIL = "2fa_detail"
+    const val TWO_FA_DELETE = "2fa_delete"
     const val DELETE_ACCOUNT_FIRST_CONFIRM = "delete_account_first_confirm"
     const val DELETE_ACCOUNT_SECOND_CONFIRM = "delete_account_second_confirm"
 }
@@ -237,6 +238,29 @@ object ManageAccountRoute {
     fun decodeDateFromBundle(bundleArg: String): String {
         return try {
             URLDecoder.decode(bundleArg, Charsets.UTF_8.name())
+        } catch (e: UnsupportedEncodingException) {
+            ""
+        }
+    }
+}
+
+object DeleteTwoFaRoute {
+    private const val route = "delete_two_fa"
+    const val idArg = "id_arg"
+    const val routeWithArgs = "$route/{$idArg}"
+    val arguments = listOf(navArgument(idArg) {
+        type = NavType.StringType
+        nullable = false
+        defaultValue = ""
+    })
+
+    fun routeWithArgs(idString: String) =
+        "$route/${URLEncoder.encode(idString, Charsets.UTF_8.toString())}"
+
+    fun decodeIdFromEntry(entry: NavBackStackEntry): String {
+        val date = entry.arguments?.getString(idArg) ?: ""
+        return try {
+            URLDecoder.decode(date, Charsets.UTF_8.name())
         } catch (e: UnsupportedEncodingException) {
             ""
         }

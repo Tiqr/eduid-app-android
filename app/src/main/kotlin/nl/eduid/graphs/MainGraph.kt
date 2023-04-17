@@ -58,6 +58,10 @@ import nl.eduid.screens.start.WelcomeStartScreen
 import nl.eduid.screens.start.WelcomeStartViewModel
 import nl.eduid.screens.security.SecurityScreen
 import nl.eduid.screens.security.SecurityViewModel
+import nl.eduid.screens.twofactorkey.TwoFactorKeyScreen
+import nl.eduid.screens.twofactorkey.TwoFactorKeyViewModel
+import nl.eduid.screens.twofactorkeydelete.TwoFactorKeyDeleteScreen
+import nl.eduid.screens.twofactorkeydelete.TwoFactorKeyDeleteViewModel
 import org.tiqr.data.model.EnrollmentChallenge
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -447,7 +451,28 @@ fun MainGraph(
             goBack = { navController.popBackStack() },
             onResetPasswordClicked = { navController.navigate(Graph.RESET_PASSWORD) },
             onEditEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
-            on2FaClicked = {},
+            on2FaClicked = { navController.navigate(Graph.TWO_FA_DETAIL) },
+        )
+    }
+    composable(Graph.TWO_FA_DETAIL) {
+        val viewModel = hiltViewModel<TwoFactorKeyViewModel>(it)
+        TwoFactorKeyScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
+            onDeleteKeyPressed = {id ->
+                navController.navigate(DeleteTwoFaRoute.routeWithArgs(id))
+            },
+        )
+    }
+    composable(
+            route = DeleteTwoFaRoute.routeWithArgs, arguments = DeleteTwoFaRoute.arguments
+        ) { entry ->
+        val viewModel = hiltViewModel<TwoFactorKeyDeleteViewModel>(entry)
+        TwoFactorKeyDeleteScreen(
+            viewModel = viewModel,
+            twoFaKeyId = DeleteTwoFaRoute.decodeIdFromEntry(entry),
+            goBack = { navController.popBackStack() },
+            onDeleteConfirmed = { },
         )
     }
     composable(Graph.RESET_PASSWORD) {

@@ -137,6 +137,9 @@
     <string name="security_title">Security settings</string>
     <string name="security_subtitle">We provide different methods to sign in to your eduID account.</string>
 
+    <string name="two_fa_key_title">2FA key(s)</string>
+    <string name="two_fa_key_subtitle">Keys to securely sign in without passwords or accessing your email.</string>
+
     <string name="reset_password_title">Change or delete password</string>
     <string name="reset_password_subtitle">We will send you an email instantly with a link to change or delete your current password.</string>
     <string name="reset_password_subtitle2">Email sent, click on the link to complete changing your password.</string>
@@ -229,6 +232,10 @@
     <string name="personalinfo_add_role_institution">Add role &amp; institution</string>
     <string name="personalinfo_add_via">Proceed to add this via SURFConext</string>
     <string name="infotab_delete_login_details">Delete login details *</string>
+
+    <string name="delete_two_key_title">Delete key</string>
+    <string name="delete_two_key_subtitle">There is no way to undo this action</string>
+    <string name="delete_two_key_description">Are you sure you want to delete your key?</string>
 
     <string name="delete_service_confirm_title">Delete service</string>
     <string name="delete_service_confirm_explanation">Are you sure you want to delete your unique pseudonymised eduID for %s and revoke access to your linked accounts? This service might not recognize you the next time you login and all your personal data within this service might be lost.</string>
