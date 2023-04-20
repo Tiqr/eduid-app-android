@@ -239,4 +239,9 @@
     <string name="delete_service_confirm_title">Delete service</string>
     <string name="delete_service_confirm_explanation">Are you sure you want to delete your unique pseudonymised eduID for %s and revoke access to your linked accounts? This service might not recognize you the next time you login and all your personal data within this service might be lost.</string>
     <string name="button_confirm">Confirm</string>
+    <string name="security_sign_in_methods">Sign-in methods</string>
+    <string name="security_2fa_key">2FA key</string>
+    <string name="security_provided_by_eduid">Provided by eduID</string>
+    <string name="security_send_a_magic_link_to">Send a magic link to</string>
+    <string name="security_use_a_password">Use a password</string>
 </resources>
