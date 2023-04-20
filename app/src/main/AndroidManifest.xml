@@ -106,9 +106,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <!--Using * to allow for the test domain-->
+                <!--All environments will use the same host for auth & enroll, not required to support subdomains-->
                 <data
-                    android:host="*.eduid.nl"
+                    android:host="eduid.nl"
                     android:scheme="https" />
 
                 <!-- We accept the path both with and without the slash -->
