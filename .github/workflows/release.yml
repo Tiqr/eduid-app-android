@@ -52,7 +52,7 @@ jobs:
       id: create_release
       with:
         draft: false
-        prerelease: false
+        prerelease: true
         release_name: Release ${{ github.ref }}
         tag_name: ${{ github.ref }}
         body: |
