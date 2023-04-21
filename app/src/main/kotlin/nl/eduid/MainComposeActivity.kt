@@ -16,6 +16,7 @@ class MainComposeActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Timber.i("onCreate ${this.hashCode()}")
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             EduidAppAndroidTheme {
@@ -27,7 +28,7 @@ class MainComposeActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         if (intent != null && intent.action == Intent.ACTION_VIEW) {
-            Timber.d("Intent captured by MainComposeActivity: Received: ${intent.dataString}. Category: ${intent.categories}")
+            Timber.d("Intent captured by MainComposeActivity ${this.hashCode()}: Received: ${intent.dataString}.")
         }
     }
 }

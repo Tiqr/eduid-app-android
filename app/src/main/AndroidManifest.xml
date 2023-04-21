@@ -10,6 +10,7 @@
     <!-- Permissions for QR code scanning -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <queries>
         <intent>
@@ -42,7 +43,7 @@
         </activity-alias>
 
         <service
-            android:name="org.tiqr.core.messaging.TiqrMessagingService"
+            android:name=".messaging.EduIdMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

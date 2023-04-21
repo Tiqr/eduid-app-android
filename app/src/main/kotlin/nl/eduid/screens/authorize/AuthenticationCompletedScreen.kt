@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -23,11 +24,13 @@ import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextGreen
+import nl.eduid.ui.theme.findActivity
 
 @Composable
 fun AuthenticationCompletedScreen(goHome: () -> Unit = {}) = EduIdTopAppBar(
     withBackIcon = false
 ) {
+    val activity = LocalContext.current.findActivity()
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
             style = MaterialTheme.typography.titleLarge.copy(
@@ -58,7 +61,10 @@ fun AuthenticationCompletedScreen(goHome: () -> Unit = {}) = EduIdTopAppBar(
         PrimaryButton(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.button_ok),
-            onClick = goHome,
+            onClick = {
+                goHome()
+                activity.finish()
+            },
         )
         Spacer(Modifier.height(24.dp))
     }
