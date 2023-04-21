@@ -25,6 +25,7 @@ object Graph {
     const val TWO_FA_DELETE = "2fa_delete"
     const val DELETE_ACCOUNT_FIRST_CONFIRM = "delete_account_first_confirm"
     const val DELETE_ACCOUNT_SECOND_CONFIRM = "delete_account_second_confirm"
+    const val AUTH_GRAPH = "auth_nestedgraph"
 }
 
 object OAuth {

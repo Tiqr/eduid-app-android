@@ -157,41 +157,7 @@ fun MainGraph(
     //endregion
 
     //region Authentication
-    composable(
-        route = Account.RequestAuthentication.routeWithArgs,
-        arguments = Account.RequestAuthentication.arguments,
-    ) { entry ->
-        val viewModel = hiltViewModel<EduIdAuthenticationViewModel>(entry)
-        RequestAuthenticationScreen(viewModel = viewModel, onLogin = { challenge ->
-            if (challenge != null) {
-                val encodedChallenge = viewModel.encodeChallenge(challenge)
-                navController.goToWithPopCurrent("${Account.AuthenticationCheckSecret.route}/$encodedChallenge")
-            }
-        }) { navController.popBackStack() }
-    }
-    composable(
-        route = Account.AuthenticationCheckSecret.routeWithArgs,
-        arguments = Account.AuthenticationCheckSecret.arguments,
-    ) { entry ->
-        val viewModel = hiltViewModel<EduIdAuthenticationViewModel>(entry)
-        AuthenticationPinBiometricScreen(viewModel = viewModel,
-            goToAuthenticationComplete = { challenge, pin ->
-                if (challenge != null) {
-                    val encodedChallenge = viewModel.encodeChallenge(challenge)
-                    navController.goToWithPopCurrent(
-                        Account.AuthenticationCompleted.buildRoute(
-                            encodedChallenge = encodedChallenge, pin = pin
-                        )
-                    )
-                }
-            }) { navController.popBackStack() }
-    }
-    composable(
-        route = Account.AuthenticationCompleted.routeWithArgs,
-        arguments = Account.AuthenticationCompleted.arguments,
-    ) { _ ->
-        AuthenticationCompletedScreen { navController.goToWithPopCurrent(Graph.HOME_PAGE) }
-    }
+    authenticationFlow(navController)
     //endregion
 
     //region DeepLinks
@@ -459,14 +425,14 @@ fun MainGraph(
         TwoFactorKeyScreen(
             viewModel = viewModel,
             goBack = { navController.popBackStack() },
-            onDeleteKeyPressed = {id ->
+            onDeleteKeyPressed = { id ->
                 navController.navigate(DeleteTwoFaRoute.routeWithArgs(id))
             },
         )
     }
     composable(
-            route = DeleteTwoFaRoute.routeWithArgs, arguments = DeleteTwoFaRoute.arguments
-        ) { entry ->
+        route = DeleteTwoFaRoute.routeWithArgs, arguments = DeleteTwoFaRoute.arguments
+    ) { entry ->
         val viewModel = hiltViewModel<TwoFactorKeyDeleteViewModel>(entry)
         TwoFactorKeyDeleteScreen(
             viewModel = viewModel,
@@ -505,7 +471,7 @@ private fun NavController.goToEmailSent(email: String) = navigate(
     RequestEduIdLinkSent.routeWithEmail(email)
 )
 
-private fun NavController.goToWithPopCurrent(destination: String) {
+fun NavController.goToWithPopCurrent(destination: String) {
     val currentRouteId = currentDestination?.id ?: 0
     navigate(destination) {
         popUpTo(currentRouteId) { inclusive = true }

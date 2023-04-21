@@ -25,6 +25,7 @@ import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextGreen
 import nl.eduid.ui.theme.findActivity
+import timber.log.Timber
 
 @Composable
 fun AuthenticationCompletedScreen(goHome: () -> Unit = {}) = EduIdTopAppBar(
@@ -62,6 +63,7 @@ fun AuthenticationCompletedScreen(goHome: () -> Unit = {}) = EduIdTopAppBar(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.button_ok),
             onClick = {
+                Timber.e("Finishing activity: ${activity.hashCode()}")
                 goHome()
                 activity.finish()
             },
