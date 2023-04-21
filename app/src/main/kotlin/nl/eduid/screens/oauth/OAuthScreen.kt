@@ -31,6 +31,7 @@ import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
+import timber.log.Timber
 
 /**
  * The OAuth flow has 2 sources of events: the UI screen and view model events.
@@ -60,6 +61,8 @@ fun OAuthScreen(
 ) {
     val uiState by viewModel.uiState.observeAsState(UiState(OAuthStep.Loading))
     var oAuthUiStages by rememberSaveable { mutableStateOf(OAuthUiStages()) }
+    val activity = LocalContext.current
+    Timber.e("Current activity is launching oauth: ${activity.hashCode()}")
 //    Timber.w("Started OAuthScreen with state: $uiState.\n\t IsAuthorizationLaunched: ${oAuthUiStages.isAuthorizationLaunched}.\n\t IsFetchingToken: ${oAuthUiStages.isFetchingToken}")
     val context = LocalContext.current
     val launcher =
