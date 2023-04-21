@@ -116,18 +116,11 @@ class AuthenticationAssistant {
             val builder = AppAuthConfiguration.Builder()
             builder.setBrowserMatcher(
                 BrowserAllowList(
-                    VersionedBrowserMatcher.CHROME_BROWSER,
-                    VersionedBrowserMatcher.SAMSUNG_BROWSER,
-                    VersionedBrowserMatcher.FIREFOX_BROWSER
+                    VersionedBrowserMatcher.CHROME_CUSTOM_TAB,
+                    VersionedBrowserMatcher.SAMSUNG_CUSTOM_TAB,
+                    VersionedBrowserMatcher.FIREFOX_CUSTOM_TAB
                 )
             )
-//            builder.setBrowserMatcher(
-//                BrowserAllowList(
-//                    VersionedBrowserMatcher.CHROME_CUSTOM_TAB,
-//                    VersionedBrowserMatcher.SAMSUNG_CUSTOM_TAB,
-//                    VersionedBrowserMatcher.FIREFOX_CUSTOM_TAB
-//                )
-//            )
             builder.setConnectionBuilder(DefaultConnectionBuilder.INSTANCE)
 
             return AuthorizationService(context, builder.build())
