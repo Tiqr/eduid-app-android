@@ -29,7 +29,7 @@
     <string name="error_auth_blocked">Try again in a moment.</string>
 
     <!--Compose strings-->
-    <string name="title_activity_main">Alpha eduId</string>
+    <string name="title_activity_main">eduId</string>
     <string name="splash_title">Personal account for Education and Research</string>
     <string name="enroll_screen_title">Personal account for Education and Research</string>
     <string name="enroll_screen_sign_in_button">Sign in</string>
