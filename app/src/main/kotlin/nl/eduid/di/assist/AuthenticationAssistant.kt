@@ -23,9 +23,11 @@ class AuthenticationAssistant {
                             Timber.e(ex, "Failed to retrieve discovery document")
                             continuation.resumeWith(Result.failure(ex))
                         }
+
                         config != null -> {
                             continuation.resumeWith(Result.success(config))
                         }
+
                         else -> {
                             continuation.resumeWith(Result.failure(RuntimeException("Could not complete discovery")))
                         }
@@ -36,7 +38,7 @@ class AuthenticationAssistant {
         }
 
     suspend fun performRegistrationRequest(
-        registrationRequest: RegistrationRequest, service: AuthorizationService
+        registrationRequest: RegistrationRequest, service: AuthorizationService,
     ): RegistrationResponse = suspendCoroutine { continuation ->
         service.performRegistrationRequest(
             registrationRequest
@@ -46,9 +48,11 @@ class AuthenticationAssistant {
                     Timber.e(ex, "Failed to dynamically register client")
                     continuation.resumeWith(Result.failure(ex))
                 }
+
                 response != null -> {
                     continuation.resumeWith(Result.success(response))
                 }
+
                 else -> {
                     continuation.resumeWith(Result.failure(RuntimeException("Could not complete client dynamic registration")))
                 }
@@ -60,7 +64,7 @@ class AuthenticationAssistant {
     suspend fun exchangeAuthorizationCode(
         response: AuthorizationResponse,
         clientAuthentication: ClientAuthentication,
-        service: AuthorizationService
+        service: AuthorizationService,
     ): TokenResponse = suspendCoroutine { continuation ->
         service.performTokenRequest(
             /* request = */
@@ -73,9 +77,11 @@ class AuthenticationAssistant {
                     Timber.e(ex, "Failed to exchange authorization code")
                     continuation.resumeWith(Result.failure(ex))
                 }
+
                 tokenResponse != null -> {
                     continuation.resumeWith(Result.success(tokenResponse))
                 }
+
                 else -> {
                     continuation.resumeWith(Result.failure(RuntimeException("Could not complete client dynamic registration")))
                 }
@@ -92,9 +98,11 @@ class AuthenticationAssistant {
                         Timber.e(ex, "Failed to refresh token")
                         continuation.resumeWith(Result.failure(ex))
                     }
+
                     tokenResponse != null -> {
                         continuation.resumeWith(Result.success(tokenResponse))
                     }
+
                     else -> {
                         continuation.resumeWith(Result.failure(RuntimeException("Could not complete token refresh")))
                     }
@@ -108,9 +116,9 @@ class AuthenticationAssistant {
             val builder = AppAuthConfiguration.Builder()
             builder.setBrowserMatcher(
                 BrowserAllowList(
-                    VersionedBrowserMatcher.CHROME_CUSTOM_TAB,
-                    VersionedBrowserMatcher.SAMSUNG_CUSTOM_TAB,
-                    VersionedBrowserMatcher.FIREFOX_CUSTOM_TAB
+                    VersionedBrowserMatcher.CHROME_BROWSER,
+                    VersionedBrowserMatcher.SAMSUNG_BROWSER,
+                    VersionedBrowserMatcher.FIREFOX_BROWSER
                 )
             )
             builder.setConnectionBuilder(DefaultConnectionBuilder.INSTANCE)
