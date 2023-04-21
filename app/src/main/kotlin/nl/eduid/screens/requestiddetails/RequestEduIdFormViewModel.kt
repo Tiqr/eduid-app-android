@@ -101,7 +101,7 @@ class RequestEduIdFormViewModel @Inject constructor(
 
     private fun getClientIdFromOAuthConfig(resources: Resources): String {
         val source =
-            resources.openRawResource(R.raw.auth_config).bufferedReader().use { it.readText() }
+            resources.openRawResource(R.raw.auth_config_test2).bufferedReader().use { it.readText() }
         return try {
             JSONObject(source).get("client_id").toString()
         } catch (e: IOException) {

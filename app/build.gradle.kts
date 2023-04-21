@@ -124,6 +124,9 @@ android {
         }
     }
     namespace = "nl.eduid"
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {

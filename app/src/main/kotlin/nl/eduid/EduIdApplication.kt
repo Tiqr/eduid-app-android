@@ -34,6 +34,7 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import coil.Coil
 import coil.ImageLoader
 import dagger.hilt.android.HiltAndroidApp
+import nl.eduid.flags.RuntimeBehavior
 import okhttp3.OkHttpClient
 import org.tiqr.data.model.TiqrConfig
 import timber.log.Timber
@@ -50,6 +51,7 @@ open class EduIdApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        RuntimeBehavior.initialize(this)
         TiqrConfig.initialize(this)
         // Setup Timber
         if (BuildConfig.DEBUG) {

@@ -209,7 +209,7 @@ class OAuthViewModel @Inject constructor(
 
     private fun loadConfigurationFromResources(resources: Resources): Configuration {
         val source =
-            resources.openRawResource(R.raw.auth_config).bufferedReader().use { it.readText() }
+            resources.openRawResource(R.raw.auth_config_test2).bufferedReader().use { it.readText() }
         return try {
             configAdapter.fromJson(source) ?: Configuration.EMPTY
         } catch (e: IOException) {

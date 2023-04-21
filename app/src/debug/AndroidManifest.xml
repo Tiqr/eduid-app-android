@@ -4,10 +4,21 @@
     tools:ignore="UnusedAttribute">
 
     <application
-        android:name="nl.eduid.DebugEduIdApplication"
+        android:name=".DebugEduIdApplication"
         android:allowBackup="false"
         tools:ignore="DataExtractionRules"
         tools:replace="android:allowBackup, android:name">
-
+        <activity
+            android:name=".TestSettingsActivity"
+            android:exported="true"
+            android:label="@string/title_activity_test_settings"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
+
 </manifest>

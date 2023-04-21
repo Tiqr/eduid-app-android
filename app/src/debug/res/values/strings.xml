@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="app_name" translatable="false">eduID DEBUG</string>
+    <string name="app_name" translatable="false">eduID DEBUG</string>
+    <string name="title_activity_test_settings" translatable="false">Test Settings</string>
 
 </resources>
