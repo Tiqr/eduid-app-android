@@ -50,10 +50,6 @@ import nl.eduid.screens.requestidpin.ConfirmCodeViewModel
 import nl.eduid.screens.requestidrecovery.PhoneRequestCodeScreen
 import nl.eduid.screens.requestidrecovery.PhoneRequestCodeViewModel
 import nl.eduid.screens.requestidstart.RequestEduIdStartScreen
-import nl.eduid.screens.resetpassword.ResetPasswordScreen
-import nl.eduid.screens.resetpassword.ResetPasswordViewModel
-import nl.eduid.screens.resetpasswordconfirm.ResetPasswordConfirmScreen
-import nl.eduid.screens.resetpasswordconfirm.ResetPasswordConfirmViewModel
 import nl.eduid.screens.scan.ScanScreen
 import nl.eduid.screens.scan.StatelessScanViewModel
 import nl.eduid.screens.start.WelcomeStartScreen
@@ -403,7 +399,7 @@ fun MainGraph(
         SecurityScreen(
             viewModel = viewModel,
             goBack = { navController.popBackStack() },
-            onResetPasswordClicked = { navController.navigate(Graph.RESET_PASSWORD) },
+            onResetPasswordClicked = { navController.navigate(Graph.CONFIGURE_PASSWORD) },
             onEditEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
             on2FaClicked = { navController.navigate(Graph.TWO_FA_DETAIL) },
         )
@@ -429,34 +425,12 @@ fun MainGraph(
             onDeleteConfirmed = { },
         )
     }
-    composable(Graph.RESET_PASSWORD) {//region Reset password
-        val viewModel = hiltViewModel<ResetPasswordViewModel>(it)
-        ResetPasswordScreen(
-            viewModel = viewModel,
-            goToEmailSent = { email, reason -> navController.goToEmailSent(email, reason) },
-        ) { navController.popBackStack() }
-    }
-    composable(
-        ResetPasswordConfirm.routeWithArgs,
-        arguments = ResetPasswordConfirm.arguments,
-        deepLinks = listOf(navDeepLink {
-            uriPattern = ResetPasswordConfirm.resetPassword
-        }, navDeepLink {
-            uriPattern = ResetPasswordConfirm.addPassword
-        }, navDeepLink {
-            uriPattern = ResetPasswordConfirm.customSchemeResetPassword
-        })
-    ) {
-        val viewModel = hiltViewModel<ResetPasswordConfirmViewModel>(it)
-        ResetPasswordConfirmScreen(
-            viewModel = viewModel,
-            goBack = { navController.popBackStack() },
-        )
-    }//endregion
+    //region Configure Password: add, change or remove
+    configurePasswordFlow(navController)
     //endregion
 }
 
-private fun NavController.goToEmailSent(email: String, reason: String = LOGIN_REASON) = navigate(
+fun NavController.goToEmailSent(email: String, reason: String = LOGIN_REASON) = navigate(
     RequestEduIdLinkSent.routeWithEmail(email, reason)
 )
 

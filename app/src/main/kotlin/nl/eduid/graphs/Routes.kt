@@ -19,7 +19,7 @@ object Graph {
     const val DATA_AND_ACTIVITY = "data_and_activity"
     const val SECURITY = "security"
     const val OAUTH = "oauth_mobile_eduid"
-    const val RESET_PASSWORD = "reset_password"
+    const val CONFIGURE_PASSWORD = "configure_password_subgraph"
     const val EDIT_EMAIL = "edit_email"
     const val EDIT_NAME = "edit_name"
     const val TWO_FA_DETAIL = "2fa_detail"
@@ -44,23 +44,6 @@ object AccountLinked {
     const val uriPatternOK = "https://login.test2.eduid.nl/client/mobile/account-linked"
     const val uriPatternFailed = "https://login.test2.eduid.nl/client/mobile/eppn-already-linked"
     const val uriPatternExpired = "https://login.test2.eduid.nl/client/mobile/expired"
-}
-
-object ResetPasswordConfirm {
-    private const val route = "reset_password_confirm"
-    const val passwordHashArg = "h"
-    val routeWithArgs = "${route}?$passwordHashArg={$passwordHashArg}"
-    val arguments = listOf(navArgument(passwordHashArg) {
-        type = NavType.StringType
-        nullable = false
-        defaultValue = ""
-    })
-    const val resetPassword =
-        "https://login.test2.eduid.nl/client/mobile/reset-password?$passwordHashArg={$passwordHashArg}"
-    const val addPassword =
-        "https://login.test2.eduid.nl/client/mobile/add-password?$passwordHashArg={$passwordHashArg}"
-    const val customSchemeResetPassword =
-        "eduid://client/mobile/reset-password?$passwordHashArg={$passwordHashArg}"
 }
 
 object RequestEduIdLinkSent {
