@@ -9,6 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
+import nl.eduid.graphs.RequestEduIdLinkSent.LOGIN_REASON
+import nl.eduid.graphs.RequestEduIdLinkSent.reasonArg
 import nl.eduid.screens.accountlinked.AccountLinkedScreen
 import nl.eduid.screens.authorize.AuthenticationCompletedScreen
 import nl.eduid.screens.authorize.AuthenticationPinBiometricScreen
@@ -217,14 +219,14 @@ fun MainGraph(
             onBackClicked = { navController.popBackStack() })
     }
 
-    composable(
+    composable(//region MagicLink sent
         route = RequestEduIdLinkSent.routeWithArgs, arguments = RequestEduIdLinkSent.arguments
     ) { entry ->
         RequestEduIdEmailSentScreen(
-            onBackClicked = { navController.popBackStack() },
-            userEmail = RequestEduIdLinkSent.decodeFromEntry(entry)
-        )
-    }
+            userEmail = RequestEduIdLinkSent.decodeEmailFromEntry(entry),
+            reason = entry.arguments?.getString(reasonArg) ?: ""
+        ) { navController.popBackStack() }
+    }//endregion
     composable(//region Account-Created
         route = RequestEduIdCreated.route, deepLinks = listOf(navDeepLink {
             uriPattern = RequestEduIdCreated.uriPatternHttps
@@ -431,6 +433,7 @@ fun MainGraph(
         val viewModel = hiltViewModel<ResetPasswordViewModel>(it)
         ResetPasswordScreen(
             viewModel = viewModel,
+            goToEmailSent = { email, reason -> navController.goToEmailSent(email, reason) },
         ) { navController.popBackStack() }
     }
     composable(
@@ -453,8 +456,8 @@ fun MainGraph(
     //endregion
 }
 
-private fun NavController.goToEmailSent(email: String) = navigate(
-    RequestEduIdLinkSent.routeWithEmail(email)
+private fun NavController.goToEmailSent(email: String, reason: String = LOGIN_REASON) = navigate(
+    RequestEduIdLinkSent.routeWithEmail(email, reason)
 )
 
 fun NavController.goToWithPopCurrent(destination: String) {

@@ -139,12 +139,14 @@
     <string name="two_fa_key_title">2FA sleutel(s)</string>
     <string name="two_fa_key_subtitle">Sleutels om veilig in te loggen zonder wachtwoord of link.</string>
 
-    <string name="reset_password_title">Wijzig of verwijder je wachtwoord</string>
-    <string name="reset_password_subtitle">We sturen je een email om je huidige wachtwoord opnieuw in te stellen of te verwijderen.</string>
-    <string name="reset_password_subtitle2">Email verstuurd, klik op de link om het wijzigen van je wachtwoord af te ronden.</string>
+    <string name="add_password_title">Voeg een wachtwoord toe</string>
+    <string name="change_password_title">Wachtwoord wijzigen of verwijderen</string>
+    <string name="add_password_subtitle">We sturen je een email om een wachtwoord in te stellen.</string>
+    <string name="change_password_subtitle">We sturen je een email om je huidige wachtwoord opnieuw in te stellen of te verwijderen.</string>
+    <string name="reset_password_add_pass_email_sent">Om een wachtwoord toe te voegen, klikt u op de link in de e-mail die we hebben verzonden</string>
+    <string name="reset_password_change_pass_email_sent">Om uw wachtwoord te wijzigen of vervijden, klikt u op de link in de e-mail die we u hebben gestuurd</string>
     <string name="reset_password_cancel_button">Annuleer</string>
     <string name="reset_password_confirm_button">Stuur email</string>
-    <string name="reset_password_resend_confirm_button">Stuur email opnieuw</string>
 
     <string name="reset_password_confirm_title">Wijzig wachtwoord</string>
     <string name="reset_password_completed">Voltooid</string>

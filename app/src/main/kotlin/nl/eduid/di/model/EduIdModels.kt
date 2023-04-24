@@ -61,14 +61,14 @@ data class UserDetails(
     val uid: String,
     val rememberMe: Boolean,
     val created: Long,
-
     val eduIdPerServiceProvider: Map<String, EduIdPerServiceProvider>,
-
     val loginOptions: List<String>,
     val registration: Registration?,
 ) : Parcelable {
 
     fun isRecoveryRequired(): Boolean = registration?.status != "FINALIZED"
+
+    fun hasPasswordSet(): Boolean = loginOptions.contains("usePassword")
 }
 
 @Parcelize

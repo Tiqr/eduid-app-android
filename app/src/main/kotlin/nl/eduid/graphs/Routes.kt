@@ -1,5 +1,6 @@
 package nl.eduid.graphs
 
+import android.net.Uri
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -64,24 +65,28 @@ object ResetPasswordConfirm {
 
 object RequestEduIdLinkSent {
     private const val route = "request_edu_id_link_sent"
-    const val emailArg = "email_arg"
-    val routeWithArgs = "$route/{$emailArg}"
+    const val LOGIN_REASON = "magiclink_for_login"
+    const val ADD_PASSWORD_REASON = "magiclink_for_add_password"
+    const val CHANGE_PASSWORD_REASON = "magiclink_for_change_password"
+    private const val emailArg = "email_arg"
+    const val reasonArg = "reason_arg"
+    const val routeWithArgs = "$route/{$emailArg}/{$reasonArg}"
     val arguments = listOf(navArgument(emailArg) {
         type = NavType.StringType
         nullable = false
         defaultValue = ""
+    }, navArgument(reasonArg) {
+        type = NavType.StringType
+        nullable = false
+        defaultValue = LOGIN_REASON
     })
 
-    fun routeWithEmail(email: String) =
-        "$route/${URLEncoder.encode(email, Charsets.UTF_8.toString())}"
+    fun routeWithEmail(email: String, reason: String = LOGIN_REASON) =
+        "$route/${Uri.encode(email)}/$reason"
 
-    fun decodeFromEntry(entry: NavBackStackEntry): String {
+    fun decodeEmailFromEntry(entry: NavBackStackEntry): String {
         val email = entry.arguments?.getString(emailArg) ?: ""
-        return try {
-            URLDecoder.decode(email, Charsets.UTF_8.name())
-        } catch (e: UnsupportedEncodingException) {
-            ""
-        }
+        return Uri.decode(email)
     }
 }
 

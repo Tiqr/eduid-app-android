@@ -139,12 +139,14 @@
     <string name="two_fa_key_title">2FA key(s)</string>
     <string name="two_fa_key_subtitle">Keys to securely sign in without passwords or accessing your email.</string>
 
-    <string name="reset_password_title">Change or delete password</string>
-    <string name="reset_password_subtitle">We will send you an email instantly with a link to change or delete your current password.</string>
-    <string name="reset_password_subtitle2">Email sent, click on the link to complete changing your password.</string>
+    <string name="add_password_title">Add password</string>
+    <string name="change_password_title">Change or delete password</string>
+    <string name="add_password_subtitle">We will send you an email instantly with a link to add a password.</string>
+    <string name="change_password_subtitle">We will send you an email instantly with a link to change or delete your current password.</string>
+    <string name="reset_password_add_pass_email_sent">To add a password, click on the link in the email we sent to </string>
+    <string name="reset_password_change_pass_email_sent">To change or remove your password, click on the link in the email we sent to </string>
     <string name="reset_password_cancel_button">Cancel</string>
     <string name="reset_password_confirm_button">Send email</string>
-    <string name="reset_password_resend_confirm_button">Resend email</string>
 
     <string name="reset_password_confirm_title">Change password</string>
     <string name="reset_password_completed">Completed</string>
