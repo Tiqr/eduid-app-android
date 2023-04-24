@@ -18,13 +18,6 @@ fun NavGraphBuilder.configurePasswordFlow(navController: NavHostController) {
     navigation(
         startDestination = Request.route,
         route = Graph.CONFIGURE_PASSWORD,
-        deepLinks = listOf(navDeepLink {
-            uriPattern = Form.resetPassword
-        }, navDeepLink {
-            uriPattern = Form.addPassword
-        }, navDeepLink {
-            uriPattern = Form.customSchemeResetPassword
-        })
     ) {
         composable(Request.route) {//region Reset password
             val viewModel = hiltViewModel<ResetPasswordViewModel>(it)
