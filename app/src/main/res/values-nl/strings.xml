@@ -245,5 +245,6 @@
     <string name="security_2fa_key">2FA key</string>
     <string name="security_provided_by_eduid">Gelevered door</string>
     <string name="security_send_a_magic_link_to">Stuur een magiche link naar</string>
-    <string name="security_use_a_password">Gebruik wachtwoord</string>
+    <string name="security_add_a_password">Wachtwoord toevoegen</string>
+    <string name="security_change_password">Wijzig uw wachtwoord</string>
 </resources>

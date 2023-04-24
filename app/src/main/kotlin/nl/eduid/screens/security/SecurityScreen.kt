@@ -90,8 +90,12 @@ fun SecurityScreenContent(
             endIcon = R.drawable.edit_icon
         )
         InfoTab(
-            title = stringResource(R.string.security_use_a_password),
-            subtitle = "********",
+            title = if (securityInfo.hasPassword) {
+                stringResource(R.string.security_change_password)
+            } else {
+                stringResource(R.string.security_add_a_password)
+            },
+            subtitle = "",
             onClick = onResetPasswordClicked,
             endIcon = R.drawable.edit_icon
         )
