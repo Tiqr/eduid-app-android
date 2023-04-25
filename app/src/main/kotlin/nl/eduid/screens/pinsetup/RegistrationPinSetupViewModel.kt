@@ -106,6 +106,7 @@ class RegistrationPinSetupViewModel @Inject constructor(
                     )
                 )
             }
+
             ChallengeCompleteResult.Success -> {
                 val nextStep = calculateNextStep(context, currentChallenge)
                 uiState.value =
@@ -125,7 +126,7 @@ class RegistrationPinSetupViewModel @Inject constructor(
         return if (context.biometricUsable() && currentChallenge.identity.biometricOfferUpgrade) {
             NextStep.PromptBiometric(currentChallenge, uiState.value?.pinConfirmValue.orEmpty())
         } else {
-            if (userDetails != null && userDetails.isRecoveryRequired()) {
+            if (userDetails != null) {
                 NextStep.Recovery
             } else {
                 NextStep.Home
