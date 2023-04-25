@@ -156,6 +156,7 @@
     <string name="reset_password_confirm_second_title">Want to delete your password entirely?</string>
     <string name="reset_password_confirm_second_subtitle">When you prefer other methods than a password, you can delete your current one.</string>
     <string name="button_reset_password">Reset password</string>
+    <string name="button_add_password">Reset password</string>
     <string name="button_delete_password">Delete my password</string>
 
     <string name="edit_email_title">Email</string>

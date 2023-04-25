@@ -156,6 +156,7 @@
     <string name="reset_password_confirm_second_title">Weet je zeker dat je je wachtwoord wilt verwijderen? Het is hierna niet meer mogelijk om in te loggen met dit wachtwoord</string>
     <string name="reset_password_confirm_second_subtitle">Als je liever op een andere manier inlogt, kun je het huidige wachtwoord verwijderen.</string>
     <string name="button_reset_password">Reset wachtwoord</string>
+    <string name="button_add_password">Wachtwoord toevoegen</string>
     <string name="button_delete_password">Verwijder mijn wachtwoord</string>
 
     <string name="edit_email_title">E-mail</string>

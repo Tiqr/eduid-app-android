@@ -187,7 +187,11 @@ fun ResetPasswordConfirmScreenContent(
             )
             Spacer(Modifier.height(24.dp))
             PrimaryButton(
-                text = stringResource(R.string.button_reset_password),
+                text = if (isAddPassword) {
+                    stringResource(R.string.button_add_password)
+                } else {
+                    stringResource(R.string.button_reset_password)
+                },
                 enabled = !inProgress,
                 onClick = {
                     processing = true
