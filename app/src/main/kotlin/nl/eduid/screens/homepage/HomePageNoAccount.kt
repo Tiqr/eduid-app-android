@@ -60,9 +60,7 @@ fun HomePageNoAccountContent(
                 waitingForVmEvent = false
             }
         )
-    }
-
-    if (waitingForVmEvent && uiState.preEnrollCheck != null) {
+    } else if (waitingForVmEvent && uiState.preEnrollCheck != null) {
         when (uiState.preEnrollCheck) {
             PreEnrollCheck.AlreadyCompleted -> AlertDialogWithSingleButton(
                 title = stringResource(R.string.preenroll_check_completed_title),
@@ -99,14 +97,12 @@ fun HomePageNoAccountContent(
                 }
             )
         }
-    }
-    if (isAuthorizedForDataAccess && waitingForVmEvent && uiState.shouldTriggerAutomaticStartEnrollmentAfterOauth()) {
+    } else if (waitingForVmEvent && isAuthorizedForDataAccess && uiState.shouldTriggerAutomaticStartEnrollmentAfterOauth()) {
         val currentOnStartEnrolment by rememberUpdatedState(onStartEnrolment)
         LaunchedEffect(owner) {
             currentOnStartEnrolment()
         }
-    }
-    if (waitingForVmEvent && uiState.haveValidChallenge()) {
+    } else if (waitingForVmEvent && uiState.haveValidChallenge()) {
         val currentGoToRegistrationPinSetup by rememberUpdatedState(goToRegistrationPinSetup)
         LaunchedEffect(owner) {
             currentGoToRegistrationPinSetup(uiState.currentChallenge as EnrollmentChallenge)

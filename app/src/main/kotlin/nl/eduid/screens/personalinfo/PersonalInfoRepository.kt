@@ -5,6 +5,7 @@ import android.os.Environment
 import android.util.AtomicFile
 import androidx.core.util.writeText
 import nl.eduid.di.api.EduIdApi
+import nl.eduid.di.model.ConfirmDeactivationCode
 import nl.eduid.di.model.ConfirmPhoneCode
 import nl.eduid.di.model.DeleteServiceRequest
 import nl.eduid.di.model.EnrollResponse
@@ -251,7 +252,7 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
     }
 
     suspend fun deactivateApp(phoneCode: String) = try {
-        val response = eduIdApi.deactivateApp(ConfirmPhoneCode(phoneCode))
+        val response = eduIdApi.deactivateApp(ConfirmDeactivationCode(phoneCode))
         response.isSuccessful
     } catch (e: Exception) {
         Timber.e(e, "Failed to deactivate app")

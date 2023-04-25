@@ -18,8 +18,8 @@ interface EduIdApi {
     @POST("/mobile/tiqr/sp/send-phone-code")
     suspend fun requestPhoneCode(@Body request: RequestPhoneCode): Response<Unit>
 
-    @POST("/ /mobile/tiqr/sp/deactivate-app")
-    suspend fun deactivateApp(@Body request: ConfirmPhoneCode): Response<Unit>
+    @POST("/mobile/tiqr/sp/deactivate-app")
+    suspend fun deactivateApp(@Body request: ConfirmDeactivationCode): Response<Unit>
 
     @POST("/mobile/tiqr/sp/verify-phone-code")
     suspend fun confirmPhoneCode(@Body request: ConfirmPhoneCode): Response<Unit>
@@ -36,7 +36,7 @@ interface EduIdApi {
     @GET("/mobile/tiqr/sp/start-enrollment")
     suspend fun startEnrollment(): Response<EnrollResponse>
 
-    @GET("//mobile/tiqr/sp/send-deactivation-phone-code")
+    @GET("/mobile/tiqr/sp/send-deactivation-phone-code")
     suspend fun requestDeactivationForKnownPhone(): Response<Unit>
 
     @GET("/mobile/api/sp/tokens")

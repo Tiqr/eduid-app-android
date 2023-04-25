@@ -26,6 +26,12 @@ data class ConfirmPhoneCode(
     val phoneVerification: String,
 ) : Parcelable
 
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class ConfirmDeactivationCode(
+    val verificationCode: String,
+) : Parcelable
+
 
 @Parcelize
 @JsonClass(generateAdapter = true)
