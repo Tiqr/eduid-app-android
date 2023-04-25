@@ -33,7 +33,7 @@ fun HomePageWithAccountContent(
     onScanForAuthorization: () -> Unit,
     launchOAuth: () -> Unit,
     promptAuthorization: () -> Unit = {},
-    clearAuth: () -> Unit = {}
+    clearAuth: () -> Unit = {},
 ) = Scaffold(
     topBar = {
         CenterAlignedTopAppBar(
@@ -115,7 +115,8 @@ fun HomePageWithAccountContent(
                     PrimaryButtonWithIcon(
                         text = stringResource(R.string.home_with_account_scan), onClick = {
                             onScanForAuthorization()
-                        }, icon = R.drawable.homepage_scan_icon
+                        }, icon = R.drawable.homepage_scan_icon,
+                        modifier = Modifier.weight(1f)
                     )
                     PrimaryButtonWithIcon(
                         text = stringResource(R.string.home_with_account_personal_info), onClick = {
@@ -124,7 +125,8 @@ fun HomePageWithAccountContent(
                             } else {
                                 promptAuthorization()
                             }
-                        }, icon = R.drawable.homepage_info_icon
+                        }, icon = R.drawable.homepage_info_icon,
+                        modifier = Modifier.weight(1f)
                     )
 
                     PrimaryButtonWithIcon(
@@ -134,7 +136,8 @@ fun HomePageWithAccountContent(
                             } else {
                                 promptAuthorization()
                             }
-                        }, icon = R.drawable.homepage_security_icon
+                        }, icon = R.drawable.homepage_security_icon,
+                        modifier = Modifier.weight(1f)
                     )
                     PrimaryButtonWithIcon(
                         text = stringResource(R.string.home_with_account_activity), onClick = {
@@ -143,7 +146,8 @@ fun HomePageWithAccountContent(
                             } else {
                                 promptAuthorization()
                             }
-                        }, icon = R.drawable.homepage_activity_icon
+                        }, icon = R.drawable.homepage_activity_icon,
+                        modifier = Modifier.weight(1f)
                     )
                 }
                 Spacer(Modifier.height(40.dp))
