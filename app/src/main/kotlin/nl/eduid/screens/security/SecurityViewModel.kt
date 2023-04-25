@@ -29,7 +29,7 @@ class SecurityViewModel @Inject constructor(private val repository: PersonalInfo
             SecurityScreenData(
                 twoFactorEnabled = false,
                 email = userDetails.email,
-                passwordEnabled = false,
+                hasPassword = userDetails.hasPasswordSet(),
             )
         }.first()
     }

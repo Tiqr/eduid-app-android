@@ -139,21 +139,24 @@
     <string name="two_fa_key_title">2FA sleutel(s)</string>
     <string name="two_fa_key_subtitle">Sleutels om veilig in te loggen zonder wachtwoord of link.</string>
 
-    <string name="reset_password_title">Wijzig of verwijder je wachtwoord</string>
-    <string name="reset_password_subtitle">We sturen je een email om je huidige wachtwoord opnieuw in te stellen of te verwijderen.</string>
-    <string name="reset_password_subtitle2">Email verstuurd, klik op de link om het wijzigen van je wachtwoord af te ronden.</string>
+    <string name="add_password_title">Voeg een wachtwoord toe</string>
+    <string name="change_password_title">Wachtwoord wijzigen of verwijderen</string>
+    <string name="add_password_subtitle">We sturen je een email om een wachtwoord in te stellen.</string>
+    <string name="change_password_subtitle">We sturen je een email om je huidige wachtwoord opnieuw in te stellen of te verwijderen.</string>
+    <string name="reset_password_add_pass_email_sent">Om een wachtwoord toe te voegen, klikt u op de link in de e-mail die we hebben verzonden</string>
+    <string name="reset_password_change_pass_email_sent">Om uw wachtwoord te wijzigen of vervijden, klikt u op de link in de e-mail die we u hebben gestuurd</string>
     <string name="reset_password_cancel_button">Annuleer</string>
     <string name="reset_password_confirm_button">Stuur email</string>
-    <string name="reset_password_resend_confirm_button">Stuur email opnieuw</string>
 
-    <string name="reset_password_confirm_title">Wijzig wachtwoord</string>
-    <string name="reset_password_completed">Voltooid</string>
+    <string name="reset_password_change_title">Wijzig wachtwoord</string>
+    <string name="reset_password_add_title">Wachtwoord toevoegen</string>
     <string name="reset_password_password_label">Jouw wachtwoord</string>
     <string name="reset_password_repeat_password_label">Herhaal wachtwoord</string>
     <string name="reset_password_confirm_subtitle">Kies een wachtwoord van tenminste 8 karakters lang met minimaal een hoofdletter en een cijfer. Een langer wachtwoord van minimaal 15 karakters mag ook.</string>
     <string name="reset_password_confirm_second_title">Weet je zeker dat je je wachtwoord wilt verwijderen? Het is hierna niet meer mogelijk om in te loggen met dit wachtwoord</string>
     <string name="reset_password_confirm_second_subtitle">Als je liever op een andere manier inlogt, kun je het huidige wachtwoord verwijderen.</string>
     <string name="button_reset_password">Reset wachtwoord</string>
+    <string name="button_add_password">Wachtwoord toevoegen</string>
     <string name="button_delete_password">Verwijder mijn wachtwoord</string>
 
     <string name="edit_email_title">E-mail</string>
@@ -239,4 +242,10 @@
     <string name="delete_service_confirm_title">Verwijder dienst</string>
     <string name="delete_service_confirm_explanation">Weet je zeker dat je het unieke gepseudonimiseerde eduID voor %s wil verwijderen? Deze dienst herkent je wellicht niet meer de volgende keer dat je inlogt en je persoonlijke gegevens bij deze dienst zijn daardoor mogelijk niet meer toegankelijk.</string>
     <string name="button_confirm">Bevestigen</string>
+    <string name="security_sign_in_methods">Aanmeldmethoden</string>
+    <string name="security_2fa_key">2FA key</string>
+    <string name="security_provided_by_eduid">Gelevered door</string>
+    <string name="security_send_a_magic_link_to">Stuur een magiche link naar</string>
+    <string name="security_add_a_password">Wachtwoord toevoegen</string>
+    <string name="security_change_password">Wijzig uw wachtwoord</string>
 </resources>

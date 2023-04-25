@@ -9,11 +9,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
+import nl.eduid.graphs.RequestEduIdLinkSent.LOGIN_REASON
+import nl.eduid.graphs.RequestEduIdLinkSent.reasonArg
 import nl.eduid.screens.accountlinked.AccountLinkedScreen
-import nl.eduid.screens.authorize.AuthenticationCompletedScreen
-import nl.eduid.screens.authorize.AuthenticationPinBiometricScreen
-import nl.eduid.screens.authorize.EduIdAuthenticationViewModel
-import nl.eduid.screens.authorize.RequestAuthenticationScreen
 import nl.eduid.screens.biometric.EnableBiometricScreen
 import nl.eduid.screens.biometric.EnableBiometricViewModel
 import nl.eduid.screens.created.RequestEduIdCreatedScreen
@@ -48,10 +46,6 @@ import nl.eduid.screens.requestidpin.ConfirmCodeViewModel
 import nl.eduid.screens.requestidrecovery.PhoneRequestCodeScreen
 import nl.eduid.screens.requestidrecovery.PhoneRequestCodeViewModel
 import nl.eduid.screens.requestidstart.RequestEduIdStartScreen
-import nl.eduid.screens.resetpassword.ResetPasswordScreen
-import nl.eduid.screens.resetpassword.ResetPasswordViewModel
-import nl.eduid.screens.resetpasswordconfirm.ResetPasswordConfirmScreen
-import nl.eduid.screens.resetpasswordconfirm.ResetPasswordConfirmViewModel
 import nl.eduid.screens.scan.ScanScreen
 import nl.eduid.screens.scan.StatelessScanViewModel
 import nl.eduid.screens.start.WelcomeStartScreen
@@ -71,9 +65,7 @@ fun MainGraph(
 ) = NavHost(
     navController = navController, startDestination = Graph.HOME_PAGE
 ) {
-
-    //region HomePage
-    composable(Graph.HOME_PAGE) {
+    composable(Graph.HOME_PAGE) {//region Home
         val viewModel = hiltViewModel<HomePageViewModel>(it)
         HomePageScreen(viewModel = viewModel,
             onScanForAuthorization = { navController.navigate(Account.ScanQR.routeForAuth) },
@@ -92,10 +84,9 @@ fun MainGraph(
                 Graph.REQUEST_EDU_ID_ACCOUNT
             )
         }
-    }
-    //endregion
-    //region Scan
-    composable(
+    }//endregion
+
+    composable(//region Scan
         route = Account.ScanQR.routeWithArgs, arguments = Account.ScanQR.arguments
     ) { entry ->
         val viewModel = hiltViewModel<StatelessScanViewModel>(entry)
@@ -115,10 +106,10 @@ fun MainGraph(
                     )
                 }
             })
-    }
-    //endregion
-    //region PinSetup
+    }//endregion
+
     composable(
+//region PinSetup
         route = Account.EnrollPinSetup.routeWithArgs,
         arguments = Account.EnrollPinSetup.arguments,
     ) { entry ->
@@ -153,15 +144,13 @@ fun MainGraph(
                 }
             },
             promptAuth = { navController.navigate(Graph.OAUTH) })
-    }
-    //endregion
+    }//endregion
 
     //region Authentication
     authenticationFlow(navController)
     //endregion
 
-    //region DeepLinks
-    composable(
+    composable(//region Notification Deep linking
         route = Account.DeepLink.route, deepLinks = listOf(navDeepLink {
             uriPattern = Account.DeepLink.enrollPattern
             action = Intent.ACTION_VIEW
@@ -181,11 +170,9 @@ fun MainGraph(
                 )
             }
         })
-    }
+    }//endregion
 
-    //endregion
-    //region EnableBiometric-Conditional
-    composable(
+    composable(//region EnableBiometric-Conditional
         route = WithChallenge.EnableBiometric.routeWithArgs, arguments = WithChallenge.arguments
     ) { entry ->
         val viewModel = hiltViewModel<EnableBiometricViewModel>(entry)
@@ -199,8 +186,8 @@ fun MainGraph(
                 navController.navigate(Graph.HOME_PAGE)
             }
         }) { navController.popBackStack() }
-    }
-    //endregion
+    }//endregion
+
     //region OAuth-Conditional
     composable(
         route = OAuth.route,
@@ -211,10 +198,9 @@ fun MainGraph(
                 navController.popBackStack()
             }
         }
-    }
-    //endregion
-    //region CreateAccount
-    composable(Graph.REQUEST_EDU_ID_ACCOUNT) {
+    }//endregion
+
+    composable(Graph.REQUEST_EDU_ID_ACCOUNT) {//region CreateAccount
         RequestEduIdStartScreen(requestId = { navController.navigate(Graph.REQUEST_EDU_ID_FORM) },
             onBackClicked = { navController.popBackStack() })
     }
@@ -225,15 +211,15 @@ fun MainGraph(
             onBackClicked = { navController.popBackStack() })
     }
 
-    composable(
+    composable(//region MagicLink sent
         route = RequestEduIdLinkSent.routeWithArgs, arguments = RequestEduIdLinkSent.arguments
     ) { entry ->
         RequestEduIdEmailSentScreen(
-            onBackClicked = { navController.popBackStack() },
-            userEmail = RequestEduIdLinkSent.decodeFromEntry(entry)
-        )
-    }
-    composable(
+            userEmail = RequestEduIdLinkSent.decodeEmailFromEntry(entry),
+            reason = entry.arguments?.getString(reasonArg) ?: ""
+        ) { navController.popBackStack() }
+    }//endregion
+    composable(//region Account-Created
         route = RequestEduIdCreated.route, deepLinks = listOf(navDeepLink {
             uriPattern = RequestEduIdCreated.uriPatternHttps
         }, navDeepLink {
@@ -259,12 +245,11 @@ fun MainGraph(
                     }
                 }
             },
-        )
-    }
-    //endregion
+        )//endregion
+    }//endregion
 
-    //region VerifyPhone-Recovery
     composable(
+//region VerifyPhone-Recovery
         PhoneNumberRecovery.RequestCode.route,
     ) {
         val viewModel = hiltViewModel<PhoneRequestCodeViewModel>(it)
@@ -313,8 +298,7 @@ fun MainGraph(
             goToAccountLinked = { navController.goToWithPopCurrent(AccountLinked.route) },
             skipThis = { navController.goToWithPopCurrent(Graph.HOME_PAGE) })
     }
-    //region Account Linked
-    composable(
+    composable(//region Account Linked
         route = AccountLinked.route, deepLinks = listOf(
             navDeepLink {
                 uriPattern = AccountLinked.uriPatternOK
@@ -332,11 +316,10 @@ fun MainGraph(
             viewModel = viewModel,
             continueToHome = { navController.goToWithPopCurrent(Graph.HOME_PAGE) },
         )
-    }
+    }//endregion
     //endregion
-    //endregion
-    //region Personal Info
-    composable(Graph.PERSONAL_INFO) {
+
+    composable(Graph.PERSONAL_INFO) {//region Home - Your Info
         val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
         PersonalInfoScreen(
             viewModel = viewModel,
@@ -351,24 +334,23 @@ fun MainGraph(
             },
         ) { navController.popBackStack() }
     }
-    composable(Graph.EDIT_EMAIL) {
+    composable(Graph.EDIT_EMAIL) {//region Edit email
         val viewModel = hiltViewModel<EditEmailViewModel>(it)
         EditEmailScreen(
             viewModel = viewModel,
             goBack = { navController.popBackStack() },
             onSaveNewEmailRequested = { email -> navController.goToEmailSent(email) },
         )
-    }
-    composable(Graph.EDIT_NAME) {
+    }//endregion
+    composable(Graph.EDIT_NAME) {//region Edit name
         val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
         EditNameScreen(
             viewModel = viewModel,
             goBack = { navController.popBackStack() },
         )
-    }
+    }//endregion
 
-    //region Delete Account
-    composable(
+    composable(//region Manage Account
         route = ManageAccountRoute.routeWithArgs, arguments = ManageAccountRoute.arguments
     ) { entry ->
         val viewModel = hiltViewModel<ManageAccountViewModel>(entry)
@@ -400,22 +382,20 @@ fun MainGraph(
         )
     }//endregion
     //endregion
-    //region Data and activity
-    composable(Graph.DATA_AND_ACTIVITY) {
+
+    composable(Graph.DATA_AND_ACTIVITY) {//region Home - Activity
         val viewModel = hiltViewModel<DataAndActivityViewModel>(it)
         DataAndActivityScreen(
             viewModel = viewModel,
         ) { navController.popBackStack() }
-    }
+    }//endregion
 
-    //endregion
-    //region Security
-    composable(Graph.SECURITY) {
+    composable(Graph.SECURITY) {//region Home - Security
         val viewModel = hiltViewModel<SecurityViewModel>(it)
         SecurityScreen(
             viewModel = viewModel,
             goBack = { navController.popBackStack() },
-            onResetPasswordClicked = { navController.navigate(Graph.RESET_PASSWORD) },
+            onConfigurePasswordClick = { navController.navigate(Graph.CONFIGURE_PASSWORD) },
             onEditEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
             on2FaClicked = { navController.navigate(Graph.TWO_FA_DETAIL) },
         )
@@ -441,34 +421,13 @@ fun MainGraph(
             onDeleteConfirmed = { },
         )
     }
-    composable(Graph.RESET_PASSWORD) {
-        val viewModel = hiltViewModel<ResetPasswordViewModel>(it)
-        ResetPasswordScreen(
-            viewModel = viewModel,
-        ) { navController.popBackStack() }
-    }
-    composable(
-        ResetPasswordConfirm.routeWithArgs,
-        arguments = ResetPasswordConfirm.arguments,
-        deepLinks = listOf(navDeepLink {
-            uriPattern = ResetPasswordConfirm.resetPassword
-        }, navDeepLink {
-            uriPattern = ResetPasswordConfirm.addPassword
-        }, navDeepLink {
-            uriPattern = ResetPasswordConfirm.customSchemeResetPassword
-        })
-    ) {
-        val viewModel = hiltViewModel<ResetPasswordConfirmViewModel>(it)
-        ResetPasswordConfirmScreen(
-            viewModel = viewModel,
-            goBack = { navController.popBackStack() },
-        )
-    }
+    //region Configure Password: add, change or remove
+    configurePasswordFlow(navController)
     //endregion
 }
 
-private fun NavController.goToEmailSent(email: String) = navigate(
-    RequestEduIdLinkSent.routeWithEmail(email)
+fun NavController.goToEmailSent(email: String, reason: String = LOGIN_REASON) = navigate(
+    RequestEduIdLinkSent.routeWithEmail(email, reason)
 )
 
 fun NavController.goToWithPopCurrent(destination: String) {

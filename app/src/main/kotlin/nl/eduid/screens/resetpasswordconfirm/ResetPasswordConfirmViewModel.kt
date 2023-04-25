@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.di.api.EduIdApi
 import nl.eduid.di.model.UpdatePasswordRequest
-import nl.eduid.graphs.ResetPasswordConfirm
+import nl.eduid.graphs.ConfigurePassword
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -23,7 +23,7 @@ class ResetPasswordConfirmViewModel @Inject constructor(
     val uiState = MutableLiveData(UiState())
 
     init {
-        passwordHash = savedStateHandle.get<String>(ResetPasswordConfirm.passwordHashArg) ?: ""
+        passwordHash = savedStateHandle.get<String>(ConfigurePassword.Form.passwordHashArg) ?: ""
     }
 
     fun onNewPasswordInput(newValue: String) {
@@ -35,7 +35,7 @@ class ResetPasswordConfirmViewModel @Inject constructor(
     }
 
     fun clearErrorState() {
-        uiState.value = uiState.value?.copy(errorData = null)
+        uiState.value = uiState.value?.copy(errorData = null, isCompleted = null)
     }
 
 

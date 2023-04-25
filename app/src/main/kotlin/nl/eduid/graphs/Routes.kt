@@ -1,5 +1,6 @@
 package nl.eduid.graphs
 
+import android.net.Uri
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -18,7 +19,7 @@ object Graph {
     const val DATA_AND_ACTIVITY = "data_and_activity"
     const val SECURITY = "security"
     const val OAUTH = "oauth_mobile_eduid"
-    const val RESET_PASSWORD = "reset_password"
+    const val CONFIGURE_PASSWORD = "configure_password_subgraph"
     const val EDIT_EMAIL = "edit_email"
     const val EDIT_NAME = "edit_name"
     const val TWO_FA_DETAIL = "2fa_detail"
@@ -45,43 +46,30 @@ object AccountLinked {
     const val uriPatternExpired = "https://login.test2.eduid.nl/client/mobile/expired"
 }
 
-object ResetPasswordConfirm {
-    private const val route = "reset_password_confirm"
-    const val passwordHashArg = "h"
-    val routeWithArgs = "${route}?$passwordHashArg={$passwordHashArg}"
-    val arguments = listOf(navArgument(passwordHashArg) {
-        type = NavType.StringType
-        nullable = false
-        defaultValue = ""
-    })
-    const val resetPassword =
-        "https://login.test2.eduid.nl/client/mobile/reset-password?$passwordHashArg={$passwordHashArg}"
-    const val addPassword =
-        "https://login.test2.eduid.nl/client/mobile/add-password?$passwordHashArg={$passwordHashArg}"
-    const val customSchemeResetPassword =
-        "eduid://client/mobile/reset-password?$passwordHashArg={$passwordHashArg}"
-}
-
 object RequestEduIdLinkSent {
     private const val route = "request_edu_id_link_sent"
-    const val emailArg = "email_arg"
-    val routeWithArgs = "$route/{$emailArg}"
+    const val LOGIN_REASON = "magiclink_for_login"
+    const val ADD_PASSWORD_REASON = "magiclink_for_add_password"
+    const val CHANGE_PASSWORD_REASON = "magiclink_for_change_password"
+    private const val emailArg = "email_arg"
+    const val reasonArg = "reason_arg"
+    const val routeWithArgs = "$route/{$emailArg}/{$reasonArg}"
     val arguments = listOf(navArgument(emailArg) {
         type = NavType.StringType
         nullable = false
         defaultValue = ""
+    }, navArgument(reasonArg) {
+        type = NavType.StringType
+        nullable = false
+        defaultValue = LOGIN_REASON
     })
 
-    fun routeWithEmail(email: String) =
-        "$route/${URLEncoder.encode(email, Charsets.UTF_8.toString())}"
+    fun routeWithEmail(email: String, reason: String = LOGIN_REASON) =
+        "$route/${Uri.encode(email)}/$reason"
 
-    fun decodeFromEntry(entry: NavBackStackEntry): String {
+    fun decodeEmailFromEntry(entry: NavBackStackEntry): String {
         val email = entry.arguments?.getString(emailArg) ?: ""
-        return try {
-            URLDecoder.decode(email, Charsets.UTF_8.name())
-        } catch (e: UnsupportedEncodingException) {
-            ""
-        }
+        return Uri.decode(email)
     }
 }
 

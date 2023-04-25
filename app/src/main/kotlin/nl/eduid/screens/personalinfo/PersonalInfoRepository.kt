@@ -188,4 +188,22 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
         Timber.e(e, "Failed to delete account")
         false
     }
+
+    suspend fun resetPasswordLink(): UserDetails? = try {
+        val response = eduIdApi.resetPasswordLink()
+        if (response.isSuccessful) {
+            response.body()
+        } else {
+            Timber.w(
+                "Failed to send password link: [${response.code()}/${response.message()}]${
+                    response.errorBody()?.string()
+                }"
+            )
+            null
+        }
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to send password link")
+        null
+    }
+
 }
