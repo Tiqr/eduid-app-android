@@ -138,6 +138,7 @@
 
     <string name="two_fa_key_title">2FA sleutel(s)</string>
     <string name="two_fa_key_subtitle">Sleutels om veilig in te loggen zonder wachtwoord of link.</string>
+    <string name="two_fa_key_empty">Geen sleutels.</string>
 
     <string name="add_password_title">Voeg een wachtwoord toe</string>
     <string name="change_password_title">Wachtwoord wijzigen of verwijderen</string>
@@ -248,4 +249,16 @@
     <string name="security_send_a_magic_link_to">Stuur een magiche link naar</string>
     <string name="security_add_a_password">Wachtwoord toevoegen</string>
     <string name="security_change_password">Wijzig uw wachtwoord</string>
+
+    <string name="preenroll_check_blocked_title">Already enrolled on a different device</string>
+    <string name="preenroll_check_blocked_explanation">This account already has a device setup for 2FA. Would you like to deactivate existing enrollment to enroll on this device?</string>
+    <string name="preenroll_button_deactivate">Deactivate</string>
+    <string name="preenroll_button_cancel">Cancel</string>
+
+    <string name="preenroll_check_completed_title">Already enrolled!</string>
+    <string name="preenroll_check_completed_explanation">Enrollment was already completed.</string>
+
+    <string name="preenroll_check_incompleted_title">Enrollment incomplete</string>
+    <string name="preenroll_check_incompleted_explanation">Enrollment is incomplete, either recovery was not complete or access was revoked</string>
+
 </resources>

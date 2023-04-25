@@ -23,7 +23,6 @@ object Graph {
     const val EDIT_EMAIL = "edit_email"
     const val EDIT_NAME = "edit_name"
     const val TWO_FA_DETAIL = "2fa_detail"
-    const val TWO_FA_DELETE = "2fa_delete"
     const val DELETE_ACCOUNT_FIRST_CONFIRM = "delete_account_first_confirm"
     const val DELETE_ACCOUNT_SECOND_CONFIRM = "delete_account_second_confirm"
     const val AUTH_GRAPH = "auth_nestedgraph"
@@ -77,26 +76,25 @@ sealed class PhoneNumberRecovery(val route: String) {
     object RequestCode : PhoneNumberRecovery("phone_number_recover")
     object ConfirmCode : PhoneNumberRecovery("phone_number_confirm_code") {
         private const val phoneNumberArg = "phone_number_arg"
-
-        val routeWithArgs = "${route}/{$phoneNumberArg}"
+        const val isDeactivationArg = "is_deactivation_arg"
+        val routeWithArgs = "${route}/{$phoneNumberArg}/{$isDeactivationArg}"
         val arguments = listOf(navArgument(phoneNumberArg) {
             type = NavType.StringType
             nullable = false
             defaultValue = ""
+        }, navArgument(isDeactivationArg) {
+            type = NavType.BoolType
+            nullable = false
+            defaultValue = false
         })
 
-        fun routeWithPhoneNumber(phoneNumber: String) =
-            "${route}/${URLEncoder.encode(phoneNumber, Charsets.UTF_8.toString())}"
+        fun routeWithPhoneNumber(phoneNumber: String, isDeactivation: Boolean = false) =
+            "${route}/${Uri.encode(phoneNumber)}/$isDeactivation"
 
         fun decodeFromEntry(entry: NavBackStackEntry): String {
             val phoneNumberArg = entry.arguments?.getString(phoneNumberArg) ?: ""
-            return try {
-                URLDecoder.decode(phoneNumberArg, Charsets.UTF_8.name())
-            } catch (e: UnsupportedEncodingException) {
-                ""
-            }
+            return Uri.decode(phoneNumberArg)
         }
-
     }
 }
 
@@ -204,6 +202,7 @@ sealed class WithChallenge(val route: String) {
         fun buildRouteForEnrolment(encodedChallenge: String, pin: String): String =
             "$route/$encodedChallenge/$pin/true"
 
+        @SuppressWarnings("unused")
         fun buildRouteForAuthentication(encodedChallenge: String, pin: String): String =
             "$route/$encodedChallenge/$pin/false"
 
@@ -244,14 +243,10 @@ object DeleteTwoFaRoute {
     })
 
     fun routeWithArgs(idString: String) =
-        "$route/${URLEncoder.encode(idString, Charsets.UTF_8.toString())}"
+        "$route/${Uri.encode(idString)}"
 
     fun decodeIdFromEntry(entry: NavBackStackEntry): String {
         val date = entry.arguments?.getString(idArg) ?: ""
-        return try {
-            URLDecoder.decode(date, Charsets.UTF_8.name())
-        } catch (e: UnsupportedEncodingException) {
-            ""
-        }
+        return Uri.decode(date)
     }
 }

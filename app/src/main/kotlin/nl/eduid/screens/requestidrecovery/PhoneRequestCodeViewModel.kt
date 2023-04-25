@@ -6,10 +6,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
+import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class PhoneRequestCodeViewModel @Inject constructor(private val repository: RecoveryRepository) :
+class PhoneRequestCodeViewModel @Inject constructor(private val repository: PersonalInfoRepository) :
     ViewModel() {
     val uiState = MutableLiveData(UiState())
 

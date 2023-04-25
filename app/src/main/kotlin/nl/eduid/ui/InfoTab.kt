@@ -7,44 +7,54 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
-import androidx.compose.runtime.*
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import nl.eduid.R
-import nl.eduid.screens.personalinfo.PersonalInfo
-import nl.eduid.ui.theme.BlueButton
-import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextGrayScale
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
+import nl.eduid.R
 import nl.eduid.screens.dataactivity.ServiceProvider
-import nl.eduid.screens.twofactorkey.TwoFactorData
+import nl.eduid.screens.personalinfo.PersonalInfo
+import nl.eduid.screens.twofactorkey.IdentityData
+import nl.eduid.ui.theme.BlueButton
 import nl.eduid.ui.theme.BlueText
 import nl.eduid.ui.theme.ButtonRed
+import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.InfoTabDarkFill
 import nl.eduid.ui.theme.TextBlack
-import java.util.*
+import nl.eduid.ui.theme.TextGrayScale
+import java.util.Locale
 
 @Composable
 fun InfoTab(
@@ -53,7 +63,7 @@ fun InfoTab(
     subtitle: String,
     onClick: () -> Unit,
     enabled: Boolean = true,
-    twoFactorData: TwoFactorData? = null,
+    twoFactorData: IdentityData? = null,
     onDeleteButtonClicked: (id: String) -> Unit = { },
     institutionInfo: PersonalInfo.InstitutionAccount? = null,
     serviceProviderInfo: ServiceProvider? = null,
@@ -402,8 +412,8 @@ private fun serviceProviderBlock(
 
 @Composable
 private fun twoFaBlock(
-    twoFactorData: TwoFactorData,
-    onDeleteButtonClicked: (id: String) -> Unit
+    twoFactorData: IdentityData,
+    onDeleteButtonClicked: (id: String) -> Unit,
 ): @Composable() (ColumnScope.() -> Unit) =
     {
         val biometricsCheckState = remember { mutableStateOf(true) }
@@ -469,7 +479,9 @@ private fun twoFaBlock(
                         color = BlueText,
                     ),
                 )
-                Switch(checked = biometricsCheckState.value, onCheckedChange = {biometricsCheckState.value = it})
+                Switch(
+                    checked = biometricsCheckState.value,
+                    onCheckedChange = { biometricsCheckState.value = it })
             }
             Spacer(Modifier.height(24.dp))
             Button(

@@ -26,6 +26,12 @@ data class ConfirmPhoneCode(
     val phoneVerification: String,
 ) : Parcelable
 
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class ConfirmDeactivationCode(
+    val verificationCode: String,
+) : Parcelable
+
 
 @Parcelize
 @JsonClass(generateAdapter = true)
@@ -69,6 +75,7 @@ data class UserDetails(
     fun isRecoveryRequired(): Boolean = registration?.status != "FINALIZED"
 
     fun hasPasswordSet(): Boolean = loginOptions.contains("usePassword")
+    fun hasAppRegistered(): Boolean = loginOptions.contains("useApp")
 }
 
 @Parcelize

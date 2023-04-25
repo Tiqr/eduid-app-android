@@ -9,13 +9,14 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.firstOrNull
 import nl.eduid.BaseViewModel
 import nl.eduid.R
-import nl.eduid.di.api.EduIdApi
 import nl.eduid.di.repository.StorageRepository
 import nl.eduid.ErrorData
+import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import nl.eduid.screens.splash.SplashWaitTime
 import org.tiqr.data.model.*
 import org.tiqr.data.repository.AuthenticationRepository
 import org.tiqr.data.repository.EnrollmentRepository
+import org.tiqr.data.repository.IdentityRepository
 import org.tiqr.data.service.DatabaseService
 import timber.log.Timber
 import javax.inject.Inject
@@ -28,7 +29,8 @@ class HomePageViewModel @Inject constructor(
     private val enroll: EnrollmentRepository,
     private val auth: AuthenticationRepository,
     private val repository: StorageRepository,
-    private val eduIdApi: EduIdApi,
+    private val personalRepository: PersonalInfoRepository,
+    private val identityRepository: IdentityRepository,
 ) : BaseViewModel(moshi) {
 
     val isAuthorizedForDataAccess = repository.isAuthorized.asLiveData()
@@ -84,46 +86,96 @@ class HomePageViewModel @Inject constructor(
 
     fun startEnrollmentAfterSignIn() = viewModelScope.launch {
         uiState.postValue(uiState.value?.copy(inProgress = true))
-        startEnrollmentWithoutOAuthCheck()
-    }
-
-    private suspend fun startEnrollmentWithoutOAuthCheck() {
-        try {
-            val enrollResponse = eduIdApi.startEnrollment()
-            val response = enrollResponse.body()
-            if (enrollResponse.isSuccessful && response != null) {
-                val challenge = parseChallenge(response.url)
-                if (challenge is ChallengeParseResult.Success && challenge.value is EnrollmentChallenge) {
+        val userDetails = personalRepository.getUserDetails()
+        if (userDetails != null) {
+            val existingTiqrKey = identityRepository.identity(userDetails.id).firstOrNull()
+            if (userDetails.hasAppRegistered()) {
+                if (existingTiqrKey == null) {
+                    Timber.i("Cannot continue enrolment. Must first deactivate current app")
                     uiState.postValue(
                         uiState.value?.copy(
                             inProgress = false,
-                            currentChallenge = challenge.value,
-                            errorData = null
+                            preEnrollCheck = PreEnrollCheck.DeactivateExisting
                         )
                     )
-
+                } else {
+                    Timber.i("Local enrolment was completed previously. This should not be possible: Login button is not accessible while there is a local key.")
+                    uiState.postValue(
+                        uiState.value?.copy(
+                            inProgress = false,
+                            preEnrollCheck = PreEnrollCheck.AlreadyCompleted
+                        )
+                    )
                 }
             } else {
-                val errorMessage = enrollResponse.errorBody()?.string()
-                uiState.postValue(
-                    uiState.value?.copy(
-                        inProgress = false, currentChallenge = null, errorData = ErrorData(
-                            title = "Invalid enroll request",
-                            message = errorMessage ?: "Cannot parse enroll challenge"
+                if (existingTiqrKey == null) {
+                    startEnrollmentWithoutOAuthCheck()
+                } else {
+                    uiState.postValue(
+                        uiState.value?.copy(
+                            inProgress = false,
+                            preEnrollCheck = PreEnrollCheck.Incomplete
                         )
                     )
-                )
+                    Timber.i("Local enrolment is invalid/expired. Offer to remove current key? This should not be possible: Login button is not accessible while there is a local key.")
+                }
             }
-        } catch (e: Exception) {
+        }
+    }
+
+    fun clearPreEnrollCheck() {
+        uiState.value = uiState.value?.copy(preEnrollCheck = null)
+    }
+
+    fun clearDeactivation() {
+        uiState.value = uiState.value?.copy(deactivateFor = null)
+    }
+
+    fun handleDeactivationRequest() = viewModelScope.launch {
+        uiState.postValue(uiState.value?.copy(inProgress = true))
+        val userDetails = personalRepository.getUserDetails()
+        val knownPhoneNumber = userDetails?.registration?.phoneNumber ?: "N/A"
+        val codeRequested = personalRepository.requestDeactivationForKnownPhone()
+        if (codeRequested) {
             uiState.postValue(
                 uiState.value?.copy(
-                    inProgress = false, currentChallenge = null, errorData = ErrorData(
-                        title = "Failed to start enrollment",
-                        message = "Could not request enrollment. Check your connection and try again"
+                    inProgress = false,
+                    deactivateFor = DeactivateFor(knownPhoneNumber)
+                )
+            )
+        } else {
+            uiState.postValue(
+                uiState.value?.copy(
+                    inProgress = false,
+                    errorData = ErrorData(
+                        "Failed to request deactivation code",
+                        "Could not receive deactivation code on phone number: $knownPhoneNumber"
                     )
                 )
             )
-            Timber.e(e, "Failed to start enrollment on newly created account")
+        }
+    }
+
+    private suspend fun startEnrollmentWithoutOAuthCheck() {
+        val response = personalRepository.startEnrollment()
+        if (response != null) {
+            val challenge = parseChallenge(response.url)
+            if (challenge is ChallengeParseResult.Success && challenge.value is EnrollmentChallenge) {
+                uiState.postValue(
+                    uiState.value?.copy(
+                        inProgress = false, currentChallenge = challenge.value, errorData = null
+                    )
+                )
+
+            }
+        } else {
+            uiState.postValue(
+                uiState.value?.copy(
+                    inProgress = false, currentChallenge = null, errorData = ErrorData(
+                        title = "Invalid enroll request", message = "Cannot parse enroll challenge"
+                    )
+                )
+            )
         }
     }
 

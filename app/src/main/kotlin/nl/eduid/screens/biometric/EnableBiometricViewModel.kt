@@ -56,16 +56,17 @@ class EnableBiometricViewModel @Inject constructor(
                 repository.upgradeBiometric(it, challenge.identityProvider, pin)
             }
         }
-        nextStep.postValue(checkRecoveryRequired())
+        nextStep.postValue(true)
     }
 
     fun stopOfferBiometric() = viewModelScope.launch {
         challenge?.identity?.let {
             repository.stopOfferBiometric(it)
         }
-        nextStep.postValue(checkRecoveryRequired())
+        nextStep.postValue(true)
     }
 
+    @SuppressWarnings("unused")
     private suspend fun checkRecoveryRequired(): Boolean {
         val userDetails = personal.getUserDetails()
         return userDetails?.isRecoveryRequired() == true
