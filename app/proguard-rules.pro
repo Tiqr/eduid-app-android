@@ -28,13 +28,3 @@
 # keep names for any Parcelabe & Serializable
 -keepnames class * extends android.os.Parcelable
 -keepnames class * extends java.io.Serializable
-
--keep com.google.firebase.analytics.connector.AnalyticsConnector
--keep org.bouncycastle.jsse.BCSSLParameters
--keep org.bouncycastle.jsse.BCSSLSocket
--keep org.bouncycastle.jsse.provider.BouncyCastleJsseProvider
--keep org.conscrypt.Conscrypt
--keep org.conscrypt.ConscryptHostnameVerifier
--keep org.openjsse.javax.net.ssl.SSLParameters
--keep org.openjsse.javax.net.ssl.SSLSocket
--keep org.openjsse.net.ssl.OpenJSSE
