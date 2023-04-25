@@ -16,6 +16,25 @@
 # debugging stack traces.
 #-keepattributes SourceFile,LineNumberTable
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+-keep public class * extends androidx.lifecycle.ViewModel
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class nl.eduid.MainComposeActivity
+
+-keepattributes *Annotation*
+-keepclassmembers class * implements android.os.Parcelable {
+    static ** CREATOR;
+}
+# keep names for any Parcelabe & Serializable
+-keepnames class * extends android.os.Parcelable
+-keepnames class * extends java.io.Serializable
+
+-keep com.google.firebase.analytics.connector.AnalyticsConnector
+-keep org.bouncycastle.jsse.BCSSLParameters
+-keep org.bouncycastle.jsse.BCSSLSocket
+-keep org.bouncycastle.jsse.provider.BouncyCastleJsseProvider
+-keep org.conscrypt.Conscrypt
+-keep org.conscrypt.ConscryptHostnameVerifier
+-keep org.openjsse.javax.net.ssl.SSLParameters
+-keep org.openjsse.javax.net.ssl.SSLSocket
+-keep org.openjsse.net.ssl.OpenJSSE
