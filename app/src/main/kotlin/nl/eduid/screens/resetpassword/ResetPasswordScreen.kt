@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -108,15 +109,19 @@ fun ResetPasswordScreenContent(
 
     ) {
         Spacer(Modifier.height(36.dp))
-        Text(
-            style = MaterialTheme.typography.titleLarge.copy(
-                textAlign = TextAlign.Start, color = ButtonGreen
-            ), text = if (password == Password.Add) {
-                stringResource(R.string.add_password_title)
-            } else {
-                stringResource(R.string.change_password_title)
-            }, modifier = Modifier.fillMaxWidth()
-        )
+        if (inProgress) {
+            LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+        } else {
+            Text(
+                style = MaterialTheme.typography.titleLarge.copy(
+                    textAlign = TextAlign.Start, color = ButtonGreen
+                ), text = if (password == Password.Add) {
+                    stringResource(R.string.add_password_title)
+                } else {
+                    stringResource(R.string.change_password_title)
+                }, modifier = Modifier.fillMaxWidth()
+            )
+        }
         Spacer(Modifier.height(12.dp))
         Text(
             style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),

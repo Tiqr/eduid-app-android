@@ -1,6 +1,10 @@
 package nl.eduid.graphs
 
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -8,7 +12,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import nl.eduid.graphs.ConfigurePassword.*
+import nl.eduid.graphs.ConfigurePassword.Form
+import nl.eduid.graphs.ConfigurePassword.Request
 import nl.eduid.screens.resetpassword.ResetPasswordScreen
 import nl.eduid.screens.resetpassword.ResetPasswordViewModel
 import nl.eduid.screens.resetpasswordconfirm.ResetPasswordConfirmScreen
@@ -23,7 +28,14 @@ fun NavGraphBuilder.configurePasswordFlow(navController: NavHostController) {
             val viewModel = hiltViewModel<ResetPasswordViewModel>(it)
             ResetPasswordScreen(
                 viewModel = viewModel,
-                goToEmailSent = { email, reason -> navController.goToEmailSent(email, reason) },
+                goToEmailSent = { email, reason ->
+                    val currentRouteId = navController.currentDestination?.id ?: 0
+                    navController.navigate(
+                        RequestEduIdLinkSent.routeWithEmail(email, reason)
+                    ) {
+                        popUpTo(currentRouteId) { inclusive = true }
+                    }
+                },
             ) { navController.popBackStack() }
         }
         composable(
@@ -34,10 +46,24 @@ fun NavGraphBuilder.configurePasswordFlow(navController: NavHostController) {
             }, navDeepLink {
                 uriPattern = Form.customSchemeResetPassword
             })
-        ) {
-            val viewModel = hiltViewModel<ResetPasswordConfirmViewModel>(it)
+        ) { entry ->
+            val deepLinkIntent: Intent? =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    entry.arguments?.getParcelable(
+                        NavController.KEY_DEEP_LINK_INTENT,
+                        Intent::class.java
+                    )
+                } else {
+                    entry.arguments?.getParcelable(
+                        NavController.KEY_DEEP_LINK_INTENT
+                    )
+                }
+            val fullUri = deepLinkIntent?.data ?: Uri.EMPTY
+            val isAddPassword = fullUri.path?.contains("add-password") ?: false
+            val viewModel = hiltViewModel<ResetPasswordConfirmViewModel>(entry)
             ResetPasswordConfirmScreen(
                 viewModel = viewModel,
+                isAddPassword = isAddPassword,
                 goBack = { navController.popBackStack() },
             )
         }//endregion

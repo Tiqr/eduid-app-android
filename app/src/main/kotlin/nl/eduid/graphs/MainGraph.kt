@@ -12,10 +12,6 @@ import androidx.navigation.navDeepLink
 import nl.eduid.graphs.RequestEduIdLinkSent.LOGIN_REASON
 import nl.eduid.graphs.RequestEduIdLinkSent.reasonArg
 import nl.eduid.screens.accountlinked.AccountLinkedScreen
-import nl.eduid.screens.authorize.AuthenticationCompletedScreen
-import nl.eduid.screens.authorize.AuthenticationPinBiometricScreen
-import nl.eduid.screens.authorize.EduIdAuthenticationViewModel
-import nl.eduid.screens.authorize.RequestAuthenticationScreen
 import nl.eduid.screens.biometric.EnableBiometricScreen
 import nl.eduid.screens.biometric.EnableBiometricViewModel
 import nl.eduid.screens.created.RequestEduIdCreatedScreen
@@ -399,7 +395,7 @@ fun MainGraph(
         SecurityScreen(
             viewModel = viewModel,
             goBack = { navController.popBackStack() },
-            onResetPasswordClicked = { navController.navigate(Graph.CONFIGURE_PASSWORD) },
+            onConfigurePasswordClick = { navController.navigate(Graph.CONFIGURE_PASSWORD) },
             onEditEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
             on2FaClicked = { navController.navigate(Graph.TWO_FA_DETAIL) },
         )

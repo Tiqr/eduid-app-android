@@ -21,7 +21,7 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 @Composable
 fun SecurityScreen(
     viewModel: SecurityViewModel,
-    onResetPasswordClicked: () -> Unit,
+    onConfigurePasswordClick: () -> Unit,
     onEditEmailClicked: () -> Unit,
     on2FaClicked: () -> Unit,
     goBack: () -> Unit,
@@ -31,7 +31,7 @@ fun SecurityScreen(
     val securityInfo by viewModel.securityInfo.observeAsState(SecurityScreenData())
     SecurityScreenContent(
         securityInfo = securityInfo,
-        onResetPasswordClicked = onResetPasswordClicked,
+        onConfigurePasswordClicked = onConfigurePasswordClick,
         onEditEmailClicked = onEditEmailClicked,
         on2FaClicked = on2FaClicked,
     )
@@ -40,7 +40,7 @@ fun SecurityScreen(
 @Composable
 fun SecurityScreenContent(
     securityInfo: SecurityScreenData,
-    onResetPasswordClicked: () -> Unit = {},
+    onConfigurePasswordClicked: () -> Unit = {},
     onEditEmailClicked: () -> Unit = {},
     on2FaClicked: () -> Unit = {},
 ) = Column(
@@ -96,7 +96,7 @@ fun SecurityScreenContent(
                 stringResource(R.string.security_add_a_password)
             },
             subtitle = "",
-            onClick = onResetPasswordClicked,
+            onClick = onConfigurePasswordClicked,
             endIcon = R.drawable.edit_icon
         )
     }

@@ -1,20 +1,34 @@
 package nl.eduid.screens.resetpasswordconfirm
 
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -38,30 +52,30 @@ import nl.eduid.ui.theme.TextGrey
 @Composable
 fun ResetPasswordConfirmScreen(
     viewModel: ResetPasswordConfirmViewModel,
-    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
+    isAddPassword: Boolean,
     goBack: () -> Unit,
 ) = EduIdTopAppBar(
     onBackClicked = goBack,
-    snackbarHostState = snackbarHostState,
 ) {
     val uiState by viewModel.uiState.observeAsState(UiState())
-    uiState.isCompleted?.let {
-        val snackbarText = stringResource(R.string.reset_password_completed)
-        LaunchedEffect(snackbarHostState, viewModel, snackbarText) {
-            snackbarHostState.showSnackbar(snackbarText)
-            viewModel.completedShown()
-        }
-    }
 
     ResetPasswordConfirmScreenContent(
         newPasswordInput = uiState.newPasswordInput,
         confirmPasswordInput = uiState.confirmPasswordInput,
+        isAddPassword = isAddPassword,
         inProgress = uiState.inProgress,
         errorData = uiState.errorData,
         dismissError = viewModel::clearErrorState,
+        isCompleted = uiState.isCompleted,
+        onComplete = {
+            viewModel.completedShown()
+            goBack()
+        },
         onNewPasswordChange = { viewModel.onNewPasswordInput(it) },
-        onConfirmPasswordChange = { viewModel.onConfirmPasswordInput(it) },
-        onResetPasswordClicked = { viewModel.onResetPasswordClicked() },
+        onConfirmPasswordChange = {
+            viewModel.onConfirmPasswordInput(it)
+        },
+        onResetPasswordClicked = viewModel::onResetPasswordClicked,
     ) { viewModel.onDeletePasswordClicked() }
 }
 
@@ -70,9 +84,12 @@ fun ResetPasswordConfirmScreen(
 fun ResetPasswordConfirmScreenContent(
     newPasswordInput: String = "",
     confirmPasswordInput: String = "",
+    isAddPassword: Boolean = false,
     inProgress: Boolean = false,
     errorData: ErrorData? = null,
-    dismissError:()->Unit = {},
+    dismissError: () -> Unit = {},
+    isCompleted: Unit? = null,
+    onComplete: () -> Unit = {},
     onNewPasswordChange: (newValue: String) -> Unit = {},
     onConfirmPasswordChange: (newValue: String) -> Unit = {},
     onResetPasswordClicked: () -> Unit = {},
@@ -80,15 +97,26 @@ fun ResetPasswordConfirmScreenContent(
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
+    var processing by rememberSaveable { mutableStateOf(false) }
+    val owner = LocalLifecycleOwner.current
+    if (processing && isCompleted != null && errorData == null) {
+        LaunchedEffect(owner) {
+            processing = false
+            onComplete()
+        }
+    }
+
     if (errorData != null) {
         AlertDialogWithSingleButton(
             title = errorData.title,
             explanation = errorData.message,
             buttonLabel = stringResource(R.string.button_ok),
-            onDismiss = dismissError
+            onDismiss = {
+                processing = false
+                dismissError()
+            }
         )
     }
-
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -109,7 +137,11 @@ fun ResetPasswordConfirmScreenContent(
                     textAlign = TextAlign.Start,
                     color = ButtonGreen
                 ),
-                text = stringResource(R.string.reset_password_confirm_title),
+                text = if (isAddPassword) {
+                    stringResource(R.string.reset_password_add_title)
+                } else {
+                    stringResource(R.string.reset_password_change_title)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -157,39 +189,47 @@ fun ResetPasswordConfirmScreenContent(
             PrimaryButton(
                 text = stringResource(R.string.button_reset_password),
                 enabled = !inProgress,
-                onClick = onResetPasswordClicked,
+                onClick = {
+                    processing = true
+                    onResetPasswordClicked()
+                },
                 modifier = Modifier
                     .fillMaxWidth()
             )
             Spacer(Modifier.height(30.dp))
-            Divider(color = TextBlack, thickness = 1.dp)
-            Spacer(Modifier.height(16.dp))
-            Text(
-                style = MaterialTheme.typography.titleLarge.copy(
-                    textAlign = TextAlign.Start,
-                    color = ButtonGreen
-                ),
-                text = stringResource(R.string.reset_password_confirm_second_title),
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-            Spacer(Modifier.height(6.dp))
-            Text(
-                style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-                text = stringResource(R.string.reset_password_confirm_subtitle),
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-            Spacer(Modifier.height(12.dp))
-            PrimaryButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.button_delete_password),
-                enabled = !inProgress,
-                onClick = onDeletePasswordClicked,
-                buttonBackgroundColor = Color.Transparent,
-                buttonTextColor = TextGrey,
-                buttonBorderColor = ButtonBorderGrey,
-            )
+            if (!isAddPassword) {
+                Divider(color = TextBlack, thickness = 1.dp)
+                Spacer(Modifier.height(16.dp))
+                Text(
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        textAlign = TextAlign.Start,
+                        color = ButtonGreen
+                    ),
+                    text = stringResource(R.string.reset_password_confirm_second_title),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
+                    text = stringResource(R.string.reset_password_confirm_second_subtitle),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+                Spacer(Modifier.height(12.dp))
+                PrimaryButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(R.string.button_delete_password),
+                    enabled = !inProgress,
+                    onClick = {
+                        processing = true
+                        onDeletePasswordClicked()
+                    },
+                    buttonBackgroundColor = Color.Transparent,
+                    buttonTextColor = TextGrey,
+                    buttonBorderColor = ButtonBorderGrey,
+                )
+            }
         }
     }
 }
@@ -198,6 +238,5 @@ fun ResetPasswordConfirmScreenContent(
 @Composable
 private fun PreviewResetPasswordConfirmScreenContent() = EduidAppAndroidTheme {
     ResetPasswordConfirmScreenContent(
-        onResetPasswordClicked = { },
     )
 }

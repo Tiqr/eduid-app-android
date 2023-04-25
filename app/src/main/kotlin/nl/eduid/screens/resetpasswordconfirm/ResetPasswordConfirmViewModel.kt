@@ -35,7 +35,7 @@ class ResetPasswordConfirmViewModel @Inject constructor(
     }
 
     fun clearErrorState() {
-        uiState.value = uiState.value?.copy(errorData = null)
+        uiState.value = uiState.value?.copy(errorData = null, isCompleted = null)
     }
 
 

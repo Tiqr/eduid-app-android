@@ -148,8 +148,8 @@
     <string name="reset_password_cancel_button">Annuleer</string>
     <string name="reset_password_confirm_button">Stuur email</string>
 
-    <string name="reset_password_confirm_title">Wijzig wachtwoord</string>
-    <string name="reset_password_completed">Voltooid</string>
+    <string name="reset_password_change_title">Wijzig wachtwoord</string>
+    <string name="reset_password_add_title">Wachtwoord toevoegen</string>
     <string name="reset_password_password_label">Jouw wachtwoord</string>
     <string name="reset_password_repeat_password_label">Herhaal wachtwoord</string>
     <string name="reset_password_confirm_subtitle">Kies een wachtwoord van tenminste 8 karakters lang met minimaal een hoofdletter en een cijfer. Een langer wachtwoord van minimaal 15 karakters mag ook.</string>
