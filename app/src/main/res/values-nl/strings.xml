@@ -29,7 +29,6 @@
     <string name="error_auth_blocked">Probeer het over een ogenblik opnieuw.</string>
 
     <!--Compose strings-->
-    <string name="title_activity_main">eduId</string>
     <string name="splash_title">Persoonlijke login voor Onderwijs en Onderzoek</string>
     <string name="enroll_screen_title">Persoonlijke login voor Onderwijs en Onderzoek</string>
     <string name="enroll_screen_sign_in_button">Log in</string>
