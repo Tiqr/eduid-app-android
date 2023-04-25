@@ -77,26 +77,25 @@ sealed class PhoneNumberRecovery(val route: String) {
     object RequestCode : PhoneNumberRecovery("phone_number_recover")
     object ConfirmCode : PhoneNumberRecovery("phone_number_confirm_code") {
         private const val phoneNumberArg = "phone_number_arg"
-
-        val routeWithArgs = "${route}/{$phoneNumberArg}"
+        const val isDeactivationArg = "is_deactivation_arg"
+        val routeWithArgs = "${route}/{$phoneNumberArg}/{$isDeactivationArg}"
         val arguments = listOf(navArgument(phoneNumberArg) {
             type = NavType.StringType
             nullable = false
             defaultValue = ""
+        }, navArgument(isDeactivationArg) {
+            type = NavType.BoolType
+            nullable = false
+            defaultValue = false
         })
 
-        fun routeWithPhoneNumber(phoneNumber: String) =
-            "${route}/${URLEncoder.encode(phoneNumber, Charsets.UTF_8.toString())}"
+        fun routeWithPhoneNumber(phoneNumber: String, isDeactivation: Boolean = false) =
+            "${route}/${Uri.encode(phoneNumber)}/$isDeactivation"
 
         fun decodeFromEntry(entry: NavBackStackEntry): String {
             val phoneNumberArg = entry.arguments?.getString(phoneNumberArg) ?: ""
-            return try {
-                URLDecoder.decode(phoneNumberArg, Charsets.UTF_8.name())
-            } catch (e: UnsupportedEncodingException) {
-                ""
-            }
+            return Uri.decode(phoneNumberArg)
         }
-
     }
 }
 

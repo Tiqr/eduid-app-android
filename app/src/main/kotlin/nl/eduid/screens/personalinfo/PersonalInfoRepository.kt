@@ -5,8 +5,11 @@ import android.os.Environment
 import android.util.AtomicFile
 import androidx.core.util.writeText
 import nl.eduid.di.api.EduIdApi
+import nl.eduid.di.model.ConfirmPhoneCode
 import nl.eduid.di.model.DeleteServiceRequest
+import nl.eduid.di.model.EnrollResponse
 import nl.eduid.di.model.LinkedAccount
+import nl.eduid.di.model.RequestPhoneCode
 import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.di.model.Token
 import nl.eduid.di.model.TokenResponse
@@ -32,6 +35,23 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
         }
     } catch (e: Exception) {
         Timber.e(e, "Failed to retrieve user details")
+        null
+    }
+
+    suspend fun startEnrollment(): EnrollResponse? = try {
+        val response = eduIdApi.startEnrollment()
+        if (response.isSuccessful) {
+            response.body()
+        } else {
+            Timber.w(
+                "Failed to start enrollment [${response.code()}/${response.message()}]${
+                    response.errorBody()?.string()
+                }"
+            )
+            null
+        }
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to start enrollment")
         null
     }
 
@@ -206,4 +226,35 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
         null
     }
 
+    suspend fun requestDeactivationForKnownPhone() = try {
+        val response = eduIdApi.requestDeactivationForKnownPhone()
+        response.isSuccessful
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to request deactivation phone code")
+        false
+    }
+
+    suspend fun requestPhoneCode(phoneNumber: String) = try {
+        val response = eduIdApi.requestPhoneCode(RequestPhoneCode(phoneNumber))
+        response.isSuccessful
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to request phone code")
+        false
+    }
+
+    suspend fun confirmPhoneCode(phoneCode: String) = try {
+        val response = eduIdApi.confirmPhoneCode(ConfirmPhoneCode(phoneCode))
+        response.isSuccessful
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to verify phone code")
+        false
+    }
+
+    suspend fun deactivateApp(phoneCode: String) = try {
+        val response = eduIdApi.deactivateApp(ConfirmPhoneCode(phoneCode))
+        response.isSuccessful
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to deactivate app")
+        false
+    }
 }

@@ -79,7 +79,13 @@ fun MainGraph(
                 navController.navigate(
                     "${Account.EnrollPinSetup.route}/$encodeChallenge"
                 )
-            }) {
+            },
+            confirmDeactivation = { phoneNumber ->
+                navController.navigate(
+                    PhoneNumberRecovery.ConfirmCode.routeWithPhoneNumber(phoneNumber, true)
+                )
+            }
+        ) {
             navController.navigate(
                 Graph.REQUEST_EDU_ID_ACCOUNT
             )
@@ -268,12 +274,19 @@ fun MainGraph(
         arguments = PhoneNumberRecovery.ConfirmCode.arguments
     ) { entry ->
         val viewModel = hiltViewModel<ConfirmCodeViewModel>(entry)
+        val isDeactivation =
+            entry.arguments?.getBoolean(PhoneNumberRecovery.ConfirmCode.isDeactivationArg, false)
+                ?: false
         ConfirmCodeScreen(viewModel = viewModel,
             phoneNumber = PhoneNumberRecovery.ConfirmCode.decodeFromEntry(entry),
             goToStartScreen = {
-                navController.navigate(Graph.WELCOME_START) {
-                    //Flow for phone number recovery completed, remove from stack entirely
-                    popUpTo(PhoneNumberRecovery.RequestCode.route) { inclusive = true }
+                if (isDeactivation) {
+                    navController.popBackStack()
+                } else {
+                    navController.navigate(Graph.WELCOME_START) {
+                        //Flow for phone number recovery completed, remove from stack entirely
+                        popUpTo(PhoneNumberRecovery.RequestCode.route) { inclusive = true }
+                    }
                 }
             }) { navController.popBackStack() }
     }

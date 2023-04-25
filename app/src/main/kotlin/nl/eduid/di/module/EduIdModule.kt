@@ -18,7 +18,6 @@ import nl.eduid.di.auth.TokenProvider
 import nl.eduid.di.repository.EduIdRepository
 import nl.eduid.di.repository.StorageRepository
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
-import nl.eduid.screens.requestidrecovery.RecoveryRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.tiqr.data.api.response.ApiResponseAdapterFactory
@@ -54,12 +53,6 @@ internal object RepositoryModule {
 
     @Provides
     @Singleton
-    internal fun providesRecoveryRepository(
-        api: EduIdApi,
-    ) = RecoveryRepository(api)
-
-    @Provides
-    @Singleton
     internal fun providesStorageRepository(
         @ApplicationContext context: Context,
     ) = StorageRepository(context)
@@ -78,7 +71,7 @@ internal object RepositoryModule {
         tokenAuthenticator: TokenAuthenticator,
         tokenInterceptor: TokenInterceptor,
         loggingInterceptor: HttpLoggingInterceptor,
-        okHttpClient: OkHttpClient
+        okHttpClient: OkHttpClient,
     ): OkHttpClient {
         val builder = okHttpClient.newBuilder()
         if (BuildConfig.DEBUG) {
@@ -99,7 +92,7 @@ internal object RepositoryModule {
     @Singleton
     @EduIdScope
     internal fun provideEduIdRetrofit(
-        @EduIdScope client: Lazy<OkHttpClient>, moshi: Moshi
+        @EduIdScope client: Lazy<OkHttpClient>, moshi: Moshi,
     ): Retrofit {
         return Retrofit.Builder().callFactory { client.get().newCall(it) }
             .addCallAdapterFactory(ApiResponseAdapterFactory.create())

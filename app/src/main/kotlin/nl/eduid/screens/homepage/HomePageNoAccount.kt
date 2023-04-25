@@ -25,6 +25,7 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
+import nl.eduid.ui.AlertDialogWithTwoButton
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
@@ -42,6 +43,8 @@ fun HomePageNoAccountContent(
     onStartEnrolment: () -> Unit = {},
     goToRegistrationPinSetup: (EnrollmentChallenge) -> Unit = {},
     dismissError: () -> Unit = {},
+    clearPreEnrollCheck: () -> Unit = {},
+    handlePreEnrollCheck: (PreEnrollCheck) -> Unit = { _ -> },
 ) = Scaffold { paddingValues ->
     var waitingForVmEvent by rememberSaveable { mutableStateOf(false) }
     val waitToComplete by remember { derivedStateOf { uiState.inProgress || waitingForVmEvent } }
@@ -59,6 +62,44 @@ fun HomePageNoAccountContent(
         )
     }
 
+    if (waitingForVmEvent && uiState.preEnrollCheck != null) {
+        when (uiState.preEnrollCheck) {
+            PreEnrollCheck.AlreadyCompleted -> AlertDialogWithSingleButton(
+                title = stringResource(R.string.preenroll_check_completed_title),
+                explanation = stringResource(R.string.preenroll_check_completed_explanation),
+                buttonLabel = stringResource(R.string.button_ok),
+                onDismiss = {
+                    handlePreEnrollCheck(uiState.preEnrollCheck)
+                    waitingForVmEvent = false
+                }
+            )
+
+            PreEnrollCheck.DeactivateExisting -> AlertDialogWithTwoButton(
+                title = stringResource(R.string.preenroll_check_blocked_title),
+                explanation = stringResource(id = R.string.preenroll_check_blocked_explanation),
+                dismissButtonLabel = stringResource(R.string.preenroll_button_cancel),
+                confirmButtonLabel = stringResource(R.string.preenroll_button_deactivate),
+                onDismiss = {
+                    clearPreEnrollCheck()
+                    waitingForVmEvent = false
+                },
+                onConfirm = {
+                    handlePreEnrollCheck(uiState.preEnrollCheck)
+                    waitingForVmEvent = false
+                }
+            )
+
+            PreEnrollCheck.Incomplete -> AlertDialogWithSingleButton(
+                title = stringResource(R.string.preenroll_check_incompleted_title),
+                explanation = stringResource(R.string.preenroll_check_incompleted_explanation),
+                buttonLabel = stringResource(R.string.button_ok),
+                onDismiss = {
+                    handlePreEnrollCheck(uiState.preEnrollCheck)
+                    waitingForVmEvent = false
+                }
+            )
+        }
+    }
     if (isAuthorizedForDataAccess && waitingForVmEvent && uiState.shouldTriggerAutomaticStartEnrollmentAfterOauth()) {
         val currentOnStartEnrolment by rememberUpdatedState(onStartEnrolment)
         LaunchedEffect(owner) {

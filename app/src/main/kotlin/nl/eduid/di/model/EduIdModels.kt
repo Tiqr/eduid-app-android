@@ -69,6 +69,7 @@ data class UserDetails(
     fun isRecoveryRequired(): Boolean = registration?.status != "FINALIZED"
 
     fun hasPasswordSet(): Boolean = loginOptions.contains("usePassword")
+    fun hasAppRegistered(): Boolean = loginOptions.contains("useApp")
 }
 
 @Parcelize
