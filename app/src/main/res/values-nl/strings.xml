@@ -138,6 +138,7 @@
 
     <string name="two_fa_key_title">2FA sleutel(s)</string>
     <string name="two_fa_key_subtitle">Sleutels om veilig in te loggen zonder wachtwoord of link.</string>
+    <string name="two_fa_key_empty">Geen sleutels.</string>
 
     <string name="add_password_title">Voeg een wachtwoord toe</string>
     <string name="change_password_title">Wachtwoord wijzigen of verwijderen</string>

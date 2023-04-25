@@ -138,6 +138,7 @@
 
     <string name="two_fa_key_title">2FA key(s)</string>
     <string name="two_fa_key_subtitle">Keys to securely sign in without passwords or accessing your email.</string>
+    <string name="two_fa_key_empty">You have no local keys</string>
 
     <string name="add_password_title">Add password</string>
     <string name="change_password_title">Change or delete password</string>
