@@ -16,6 +16,6 @@ inline fun LogCompositions(msg: String) {
     if (BuildConfig.DEBUG) {
         val ref = remember { Ref(0) }
         SideEffect { ref.value++ }
-        Timber.d("\n$msg\n \trecomp count: ${ref.value}")
+        Timber.e("\n$msg\n \trecomp count: ${ref.value}")
     }
 }

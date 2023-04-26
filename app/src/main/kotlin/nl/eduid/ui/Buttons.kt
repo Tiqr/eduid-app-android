@@ -14,8 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
@@ -52,7 +54,7 @@ fun PrimaryButtonWithIcon(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) = Column(
-    modifier = Modifier
+    modifier = modifier
         .clickable {
             onClick()
         },
@@ -63,7 +65,7 @@ fun PrimaryButtonWithIcon(
         shape = RoundedCornerShape(CornerSize(6.dp)),
         colors = ButtonDefaults.buttonColors(containerColor = ButtonGreen),
         contentPadding = PaddingValues(16.dp),
-        modifier = modifier
+        modifier = Modifier
             .size(height = 60.dp, width = 60.dp)
     ) {
         Image(
@@ -78,14 +80,17 @@ fun PrimaryButtonWithIcon(
     Spacer(Modifier.height(12.dp))
     Text(
         text = text,
-        textAlign = TextAlign.Justify,
+        textAlign = TextAlign.Center,
+        maxLines = 2,
+        softWrap = true,
+        overflow = TextOverflow.Ellipsis,
         style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSecondary),
     )
 }
 
 @Composable
 fun SecondaryButton(
-    text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true
+    text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true,
 ) = OutlinedButton(
     onClick = onClick,
     enabled = enabled,
@@ -108,14 +113,14 @@ private fun Preview_PrimaryButton() {
     }
 }
 
-@Preview
+@Preview(locale = "nl")
 @Composable
 private fun Preview_PrimaryButtonWithIcon() {
     EduidAppAndroidTheme {
         PrimaryButtonWithIcon(
-            text = "Scan QR",
+            text = stringResource(R.string.home_with_account_personal_info),
             icon = R.drawable.homepage_scan_icon,
-            onClick = {  })
+            onClick = { })
     }
 }
 

@@ -87,6 +87,9 @@ android {
         getByName("debug") {
             applicationIdSuffix = ".testing"
             versionNameSuffix = " DEBUG"
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             buildConfigField("String", "ENV_HOST", "\"https://login.test2.eduid.nl\"")
             buildConfigField("String", "CLIENT_ID", "\"dev.egeniq.nl\"")
         }

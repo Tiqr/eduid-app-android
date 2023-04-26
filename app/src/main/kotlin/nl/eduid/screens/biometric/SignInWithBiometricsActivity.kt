@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
-import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 import nl.eduid.R
 import nl.eduid.screens.biometric.SignInWithBiometricsContract.Companion.BIOMETRIC_CANCELED
@@ -48,7 +47,6 @@ class SignInWithBiometricsActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         val executor = ContextCompat.getMainExecutor(this)
         biometricPrompt = BiometricPrompt(this, executor, authenticationCallback)

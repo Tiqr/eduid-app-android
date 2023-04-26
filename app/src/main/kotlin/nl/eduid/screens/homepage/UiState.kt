@@ -9,7 +9,6 @@ data class UiState(
     val currentChallenge: Challenge? = null,
     val promptForAuth: Unit? = null,
     val errorData: ErrorData? = null,
-    val isEnrolled: IsEnrolled = IsEnrolled.Unknown,
     val preEnrollCheck: PreEnrollCheck? = null,
     val deactivateFor: DeactivateFor? = null,
 ) {
@@ -20,10 +19,10 @@ data class UiState(
      * 4 - The app did not prompt for an OAuth flow
      * */
     fun haveValidChallenge() =
-        !inProgress && errorData == null && currentChallenge != null && promptForAuth == null
+        currentChallenge != null && !inProgress && errorData == null && promptForAuth == null && preEnrollCheck == null && deactivateFor == null
 
-    fun shouldTriggerAutomaticStartEnrollmentAfterOauth() =
-        promptForAuth == null && !inProgress && errorData == null && currentChallenge == null
+    fun canAutomaticallyTriggerEnroll() =
+        !inProgress && errorData == null && promptForAuth == null && preEnrollCheck == null && deactivateFor == null && currentChallenge == null
 }
 
 sealed class IsEnrolled {
@@ -61,4 +60,5 @@ sealed class PreEnrollCheck {
      * trigger because the login button is not accessible while there is a local key
      * */
     object Incomplete : PreEnrollCheck()
+    object MissingAccount : PreEnrollCheck()
 }

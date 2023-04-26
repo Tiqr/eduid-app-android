@@ -29,7 +29,6 @@
     <string name="error_auth_blocked">Probeer het over een ogenblik opnieuw.</string>
 
     <!--Compose strings-->
-    <string name="title_activity_main">eduId</string>
     <string name="splash_title">Persoonlijke login voor Onderwijs en Onderzoek</string>
     <string name="enroll_screen_title">Persoonlijke login voor Onderwijs en Onderzoek</string>
     <string name="enroll_screen_sign_in_button">Log in</string>
@@ -104,13 +103,13 @@
     <string name="request_id_link_spam_text">Kun je de mail niet vinden? Kijk ook in de spam folder.</string>
 
     <string name="request_id_recovery_title">Voeg een telefoonnummer voor herstel toe</string>
-    <string name="request_id_recovery_text_code">Als je niet in kun loggen op eduID met de app of de link,kun je dit gebruiken om toegang te krijgen tot je account.</string>
+    <string name="request_id_recovery_text_code">Als je niet in kun loggen op eduID met de app of de link, kun je dit gebruiken om toegang te krijgen tot je account.</string>
     <string name="request_id_recovery_button">Controleer dit telefoonnummer</string>
     <string name="request_id_recovery_input_hint">We sturen een SMS om het nummer te controleren.</string>
 
     <string name="confirm_sms_code_title">Controleer je berichten!</string>
     <string name="confirm_sms_code_subtitle">Geef het 6 cijferige nummer dat verstuurd is aan (%s) om door te gaan</string>
-    <string name="confirm_sms_code_button">controleer dit telefoonnummer</string>
+    <string name="confirm_sms_code_button">Controleer dit telefoonnummer</string>
 
     <string name="start_button">Oke, begrepen!</string>
     <string name="start_title">Welkom! Gebruik deze app om</string>
@@ -257,6 +256,9 @@
 
     <string name="preenroll_check_completed_title">Already enrolled!</string>
     <string name="preenroll_check_completed_explanation">Enrollment was already completed.</string>
+
+    <string name="preenroll_check_missing_title">Missing account details</string>
+    <string name="preenroll_check_missing_explanation">Could not retrieve the account details.</string>
 
     <string name="preenroll_check_incompleted_title">Enrollment incomplete</string>
     <string name="preenroll_check_incompleted_explanation">Enrollment is incomplete, either recovery was not complete or access was revoked</string>

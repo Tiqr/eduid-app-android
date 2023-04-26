@@ -78,12 +78,13 @@
             android:name="tiqr_config_enforce_challenge_hosts"
             android:value="${tiqr_config_enforce_challenge_hosts}" />
 
-
         <activity
             android:name=".MainComposeActivity"
             android:exported="true"
-            android:label="@string/title_activity_main"
-            android:theme="@style/ComposeAppTheme">
+            android:screenOrientation="portrait"
+            android:theme="@style/ComposeAppTheme"
+            android:windowSoftInputMode="adjustPan"
+            tools:ignore="LockedOrientationActivity">
             <!--            Launcher is declared via the alias-->
             <intent-filter>
                 <action android:name="authorize_response" />

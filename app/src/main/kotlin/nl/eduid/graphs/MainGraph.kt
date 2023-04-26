@@ -80,7 +80,7 @@ fun MainGraph(
                     "${Account.EnrollPinSetup.route}/$encodeChallenge"
                 )
             },
-            confirmDeactivation = { phoneNumber ->
+            goToConfirmDeactivation = { phoneNumber ->
                 navController.navigate(
                     PhoneNumberRecovery.ConfirmCode.routeWithPhoneNumber(phoneNumber, true)
                 )
@@ -299,7 +299,12 @@ fun MainGraph(
             viewModel,
         ) { accountIsAlreadyLinked ->
             if (accountIsAlreadyLinked) {
-                navController.goToWithPopCurrent(Graph.HOME_PAGE)
+                navController.navigate(Graph.HOME_PAGE) {
+                    //Clear existing home page that has no account
+                    popUpTo(Graph.HOME_PAGE) {
+                        inclusive = true
+                    }
+                }
             } else {
                 navController.goToWithPopCurrent(Graph.FIRST_TIME_DIALOG)
             }
@@ -309,7 +314,14 @@ fun MainGraph(
         val viewModel = hiltViewModel<LinkAccountViewModel>(entry)
         FirstTimeDialogScreen(viewModel = viewModel,
             goToAccountLinked = { navController.goToWithPopCurrent(AccountLinked.route) },
-            skipThis = { navController.goToWithPopCurrent(Graph.HOME_PAGE) })
+            skipThis = {
+                navController.navigate(Graph.HOME_PAGE) {
+                    //Clear existing home page that has no account
+                    popUpTo(Graph.HOME_PAGE) {
+                        inclusive = true
+                    }
+                }
+            })
     }
     composable(//region Account Linked
         route = AccountLinked.route, deepLinks = listOf(

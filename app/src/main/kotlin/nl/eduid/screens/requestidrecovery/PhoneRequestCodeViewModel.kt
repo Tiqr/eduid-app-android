@@ -1,6 +1,8 @@
 package nl.eduid.screens.requestidrecovery
 
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,25 +14,30 @@ import javax.inject.Inject
 @HiltViewModel
 class PhoneRequestCodeViewModel @Inject constructor(private val repository: PersonalInfoRepository) :
     ViewModel() {
-    val uiState = MutableLiveData(UiState())
+    var uiState: UiState by mutableStateOf(UiState())
+        private set
 
     fun onPhoneNumberChange(newValue: String) {
-        uiState.value = uiState.value?.copy(input = newValue)
+        uiState = uiState.copy(input = newValue)
     }
 
     fun requestPhoneCode() = viewModelScope.launch {
-        val currentState = uiState.value ?: return@launch
-        uiState.postValue(currentState.copy(inProgress = true))
-        val success = repository.requestPhoneCode(currentState.input)
-        val errorData = if (success) {
-            null
+        uiState = uiState.copy(inProgress = true)
+        val success = repository.requestPhoneCode(uiState.input)
+        uiState = if (success) {
+            uiState.copy(
+                inProgress = false, errorData = null, isCompleted = Unit
+            )
         } else {
-            ErrorData("Failed", "Could not request phone code, please retry")
+            uiState.copy(
+                inProgress = false,
+                errorData = ErrorData("Failed", "Could not request phone code, please retry"),
+                isCompleted = null
+            )
         }
-        uiState.postValue(currentState.copy(inProgress = false, errorData = errorData))
     }
 
     fun dismissError() {
-        uiState.value = uiState.value?.copy(errorData = null)
+        uiState = uiState.copy(errorData = null)
     }
 }

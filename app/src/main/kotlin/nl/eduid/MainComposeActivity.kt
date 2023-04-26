@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import nl.eduid.graphs.MainGraph
@@ -16,8 +15,6 @@ class MainComposeActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Timber.i("onCreate ${this.hashCode()}")
-        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             EduidAppAndroidTheme {
                 MainGraph(navController = rememberNavController())

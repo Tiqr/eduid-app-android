@@ -5,6 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -25,15 +27,12 @@ import nl.eduid.ui.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePageWithAccountContent(
-    isAuthorizedForDataAccess: Boolean,
-    shouldPromptAuthorization: Unit?,
-    onActivityClicked: () -> Unit,
-    onPersonalInfoClicked: () -> Unit,
-    onSecurityClicked: () -> Unit,
-    onScanForAuthorization: () -> Unit,
-    launchOAuth: () -> Unit,
-    promptAuthorization: () -> Unit = {},
-    clearAuth: () -> Unit = {}
+    viewModel: HomePageViewModel,
+    onActivityClicked: () -> Unit = {},
+    onPersonalInfoClicked: () -> Unit = {},
+    onSecurityClicked: () -> Unit = {},
+    onScanForAuthorization: () -> Unit = {},
+    launchOAuth: () -> Unit = {},
 ) = Scaffold(
     topBar = {
         CenterAlignedTopAppBar(
@@ -49,19 +48,40 @@ fun HomePageWithAccountContent(
         )
     },
 ) { paddingValues ->
-    if (shouldPromptAuthorization != null) {
-        AlertDialogWithTwoButton(
-            title = stringResource(R.string.app_not_authorized),
+    val isAuthorizedForDataAccess by viewModel.isAuthorizedForDataAccess.observeAsState(false)
+    val uiState by viewModel.uiState.observeAsState(UiState())
+    uiState.promptForAuth?.let {
+        AlertDialogWithTwoButton(title = stringResource(R.string.app_not_authorized),
             explanation = stringResource(id = R.string.app_not_authorized_explanation),
             dismissButtonLabel = stringResource(R.string.button_cancel),
             confirmButtonLabel = stringResource(R.string.button_allow),
-            onDismiss = clearAuth,
+            onDismiss = viewModel::clearPromptForAuthTrigger,
             onConfirm = {
-                clearAuth()
+                viewModel.clearPromptForAuthTrigger()
                 launchOAuth()
-            }
-        )
+            })
     }
+    AccountContent(
+        paddingValues = paddingValues,
+        isAuthorizedForDataAccess = isAuthorizedForDataAccess,
+        onScanForAuthorization = onScanForAuthorization,
+        onPersonalInfoClicked = onPersonalInfoClicked,
+        promptAuthorization = viewModel::triggerPromptForAuth,
+        onSecurityClicked = onSecurityClicked,
+        onActivityClicked = onActivityClicked
+    )
+}
+
+@Composable
+private fun AccountContent(
+    paddingValues: PaddingValues,
+    isAuthorizedForDataAccess: Boolean,
+    onScanForAuthorization: () -> Unit = {},
+    onPersonalInfoClicked: () -> Unit = {},
+    promptAuthorization: () -> Unit = {},
+    onSecurityClicked: () -> Unit = {},
+    onActivityClicked: () -> Unit = {},
+) {
     ConstraintLayout(
         modifier = Modifier
             .padding(paddingValues)
@@ -115,7 +135,7 @@ fun HomePageWithAccountContent(
                     PrimaryButtonWithIcon(
                         text = stringResource(R.string.home_with_account_scan), onClick = {
                             onScanForAuthorization()
-                        }, icon = R.drawable.homepage_scan_icon
+                        }, icon = R.drawable.homepage_scan_icon, modifier = Modifier.weight(1f)
                     )
                     PrimaryButtonWithIcon(
                         text = stringResource(R.string.home_with_account_personal_info), onClick = {
@@ -124,7 +144,7 @@ fun HomePageWithAccountContent(
                             } else {
                                 promptAuthorization()
                             }
-                        }, icon = R.drawable.homepage_info_icon
+                        }, icon = R.drawable.homepage_info_icon, modifier = Modifier.weight(1f)
                     )
 
                     PrimaryButtonWithIcon(
@@ -134,7 +154,7 @@ fun HomePageWithAccountContent(
                             } else {
                                 promptAuthorization()
                             }
-                        }, icon = R.drawable.homepage_security_icon
+                        }, icon = R.drawable.homepage_security_icon, modifier = Modifier.weight(1f)
                     )
                     PrimaryButtonWithIcon(
                         text = stringResource(R.string.home_with_account_activity), onClick = {
@@ -143,7 +163,7 @@ fun HomePageWithAccountContent(
                             } else {
                                 promptAuthorization()
                             }
-                        }, icon = R.drawable.homepage_activity_icon
+                        }, icon = R.drawable.homepage_activity_icon, modifier = Modifier.weight(1f)
                     )
                 }
                 Spacer(Modifier.height(40.dp))
@@ -155,13 +175,5 @@ fun HomePageWithAccountContent(
 @Preview
 @Composable
 private fun PreviewHomePageScreen() = EduidAppAndroidTheme {
-    HomePageWithAccountContent(isAuthorizedForDataAccess = true,
-        shouldPromptAuthorization = null,
-        onActivityClicked = {},
-        onPersonalInfoClicked = {},
-        onSecurityClicked = {},
-        onScanForAuthorization = {},
-        launchOAuth = {},
-        promptAuthorization = {},
-        clearAuth = {})
+    AccountContent(paddingValues = PaddingValues(), isAuthorizedForDataAccess = true)
 }

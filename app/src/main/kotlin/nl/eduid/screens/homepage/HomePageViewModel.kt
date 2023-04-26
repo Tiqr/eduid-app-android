@@ -1,19 +1,31 @@
 package nl.eduid.screens.homepage
 
 import android.content.res.Resources
-import androidx.lifecycle.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.auth0.android.jwt.JWT
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
 import nl.eduid.BaseViewModel
+import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.di.repository.StorageRepository
-import nl.eduid.ErrorData
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import nl.eduid.screens.splash.SplashWaitTime
-import org.tiqr.data.model.*
+import org.tiqr.data.model.ChallengeParseFailure
+import org.tiqr.data.model.ChallengeParseResult
+import org.tiqr.data.model.EnrollmentChallenge
+import org.tiqr.data.model.ParseFailure
 import org.tiqr.data.repository.AuthenticationRepository
 import org.tiqr.data.repository.EnrollmentRepository
 import org.tiqr.data.repository.IdentityRepository
@@ -35,11 +47,13 @@ class HomePageViewModel @Inject constructor(
 
     val isAuthorizedForDataAccess = repository.isAuthorized.asLiveData()
     val uiState = MutableLiveData(UiState())
+    var isEnrolledState: IsEnrolled by mutableStateOf(IsEnrolled.Unknown)
+        private set
+
     private var jwt: JWT? = null
 
     init {
         viewModelScope.launch {
-            uiState.postValue(uiState.value?.copy(isEnrolled = IsEnrolled.Unknown))
             val haveDbEntry = async {
                 val totalCount = db.identityCount().firstOrNull()
                 totalCount != 0
@@ -54,7 +68,7 @@ class HomePageViewModel @Inject constructor(
 
             joinAll(haveDbEntry, showSplashForMinimum)
             val isEnrolled = if (haveDbEntry.await()) IsEnrolled.Yes else IsEnrolled.No
-            uiState.postValue(uiState.value?.copy(isEnrolled = isEnrolled))
+            isEnrolledState = isEnrolled
         }
     }
 
@@ -94,16 +108,14 @@ class HomePageViewModel @Inject constructor(
                     Timber.i("Cannot continue enrolment. Must first deactivate current app")
                     uiState.postValue(
                         uiState.value?.copy(
-                            inProgress = false,
-                            preEnrollCheck = PreEnrollCheck.DeactivateExisting
+                            inProgress = false, preEnrollCheck = PreEnrollCheck.DeactivateExisting
                         )
                     )
                 } else {
                     Timber.i("Local enrolment was completed previously. This should not be possible: Login button is not accessible while there is a local key.")
                     uiState.postValue(
                         uiState.value?.copy(
-                            inProgress = false,
-                            preEnrollCheck = PreEnrollCheck.AlreadyCompleted
+                            inProgress = false, preEnrollCheck = PreEnrollCheck.AlreadyCompleted
                         )
                     )
                 }
@@ -113,13 +125,20 @@ class HomePageViewModel @Inject constructor(
                 } else {
                     uiState.postValue(
                         uiState.value?.copy(
-                            inProgress = false,
-                            preEnrollCheck = PreEnrollCheck.Incomplete
+                            inProgress = false, preEnrollCheck = PreEnrollCheck.Incomplete
                         )
                     )
                     Timber.i("Local enrolment is invalid/expired. Offer to remove current key? This should not be possible: Login button is not accessible while there is a local key.")
                 }
             }
+        } else {
+            Timber.i("Local enrolment was completed previously. This should not be possible: Login button is not accessible while there is a local key.")
+            uiState.postValue(
+                uiState.value?.copy(
+                    inProgress = false, preEnrollCheck = PreEnrollCheck.MissingAccount
+                )
+            )
+
         }
     }
 
@@ -131,23 +150,21 @@ class HomePageViewModel @Inject constructor(
         uiState.value = uiState.value?.copy(deactivateFor = null)
     }
 
-    fun handleDeactivationRequest() = viewModelScope.launch {
-        uiState.postValue(uiState.value?.copy(inProgress = true))
+    fun requestDeactivationCode() = viewModelScope.launch {
+        uiState.postValue(uiState.value?.copy(inProgress = true, preEnrollCheck = null))
         val userDetails = personalRepository.getUserDetails()
-        val knownPhoneNumber = userDetails?.registration?.phoneNumber ?: "N/A"
+        val knownPhoneNumber = "*${userDetails?.registration?.phoneNumber}"
         val codeRequested = personalRepository.requestDeactivationForKnownPhone()
         if (codeRequested) {
             uiState.postValue(
                 uiState.value?.copy(
-                    inProgress = false,
-                    deactivateFor = DeactivateFor(knownPhoneNumber)
+                    inProgress = false, deactivateFor = DeactivateFor(knownPhoneNumber)
                 )
             )
         } else {
             uiState.postValue(
                 uiState.value?.copy(
-                    inProgress = false,
-                    errorData = ErrorData(
+                    inProgress = false, errorData = ErrorData(
                         "Failed to request deactivation code",
                         "Could not receive deactivation code on phone number: $knownPhoneNumber"
                     )
