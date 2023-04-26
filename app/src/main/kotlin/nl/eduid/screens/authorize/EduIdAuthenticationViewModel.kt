@@ -1,5 +1,6 @@
 package nl.eduid.screens.authorize
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
@@ -16,7 +17,6 @@ import org.tiqr.data.model.ChallengeCompleteResult
 import org.tiqr.data.model.SecretCredential
 import org.tiqr.data.repository.AuthenticationRepository
 import timber.log.Timber
-import java.net.URLDecoder
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,7 +33,7 @@ class EduIdAuthenticationViewModel @Inject constructor(
     init {
         val authorizeChallenge =
             savedStateHandle.get<String>(Account.RequestAuthentication.challengeArg) ?: ""
-        val challengeUrl = URLDecoder.decode(authorizeChallenge, Charsets.UTF_8.name())
+        val challengeUrl = Uri.decode(authorizeChallenge)
         val adapter = moshi.adapter(AuthenticationChallenge::class.java)
         challenge.value = try {
             adapter.fromJson(challengeUrl)

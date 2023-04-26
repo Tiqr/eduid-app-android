@@ -1,6 +1,7 @@
 package nl.eduid.screens.pinsetup
 
 import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
@@ -21,7 +22,6 @@ import org.tiqr.data.model.EnrollmentChallenge
 import org.tiqr.data.model.EnrollmentCompleteRequest
 import org.tiqr.data.repository.EnrollmentRepository
 import timber.log.Timber
-import java.net.URLDecoder
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,7 +42,7 @@ class RegistrationPinSetupViewModel @Inject constructor(
         val enrolChallenge =
             savedStateHandle.get<String>(Account.EnrollPinSetup.enrollChallenge)
                 ?: ""
-        val challengeUrl = URLDecoder.decode(enrolChallenge, Charsets.UTF_8.name())
+        val challengeUrl = Uri.decode(enrolChallenge)
         val adapter = moshi.adapter(EnrollmentChallenge::class.java)
         challenge = try {
             adapter.fromJson(challengeUrl)
