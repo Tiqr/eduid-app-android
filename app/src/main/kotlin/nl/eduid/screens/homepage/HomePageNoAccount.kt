@@ -17,6 +17,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -51,8 +52,9 @@ fun HomePageNoAccountContent(
 
     if (waitingForVmEvent) {
         uiState.errorData?.let { errorData ->
-            AlertDialogWithSingleButton(title = errorData.title,
-                explanation = errorData.message,
+            val context = LocalContext.current
+            AlertDialogWithSingleButton(title = errorData.title(context),
+                explanation = errorData.message(context),
                 buttonLabel = stringResource(R.string.button_ok),
                 onDismiss = {
                     waitingForVmEvent = false

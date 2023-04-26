@@ -1,5 +1,6 @@
 package nl.eduid.screens.deeplinks
 
+import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -48,7 +49,8 @@ fun DeepLinkScreen(
 
     DeepLinkContent(
         inProgress = isParsingLinkPayload,
-        errorData = errorData
+        errorData = errorData,
+        context = context,
     ) {
         errorData = null
     }
@@ -58,13 +60,14 @@ fun DeepLinkScreen(
 private fun DeepLinkContent(
     inProgress: Boolean,
     errorData: ErrorData?,
-    dismissError: () -> Unit
+    context: Context = LocalContext.current,
+    dismissError: () -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         if (errorData != null) {
             AlertDialogWithSingleButton(
-                title = errorData.title,
-                explanation = errorData.message,
+                title = errorData.title(context),
+                explanation = errorData.message(context),
                 buttonLabel = stringResource(R.string.button_ok),
                 onDismiss = dismissError
             )

@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -63,9 +64,10 @@ private fun AccountLinkedContent(
             .verticalScroll(rememberScrollState())
     ) {
         if (errorData != null) {
+            val context = LocalContext.current
             AlertDialogWithSingleButton(
-                title = errorData.title,
-                explanation = errorData.message,
+                title = errorData.title(context),
+                explanation = errorData.message(context),
                 buttonLabel = stringResource(R.string.button_ok),
                 onDismiss = dismissError
             )

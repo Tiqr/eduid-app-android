@@ -10,6 +10,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -67,9 +68,10 @@ private fun RequestEduIdCreatedContent(
     dismissError: () -> Unit = {},
 ) = Column(modifier = Modifier.fillMaxSize()) {
     if (uiState.errorData != null) {
+        val context = LocalContext.current
         AlertDialogWithSingleButton(
-            title = uiState.errorData.title,
-            explanation = uiState.errorData.message,
+            title = uiState.errorData.title(context),
+            explanation = uiState.errorData.message(context),
             buttonLabel = stringResource(R.string.button_ok),
             onDismiss = dismissError
         )
