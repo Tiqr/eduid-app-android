@@ -29,7 +29,6 @@ import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.AlertDialogWithTwoButton
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.ButtonGreen
-import nl.eduid.util.LogCompositions
 import org.tiqr.data.model.EnrollmentChallenge
 import timber.log.Timber
 import java.util.*
@@ -50,7 +49,6 @@ fun HomePageNoAccountContent(
     var wasOAuthTriggered by rememberSaveable { mutableStateOf(false) }
     val waitToComplete by remember { derivedStateOf { uiState.inProgress || waitingForVmEvent } }
 
-    LogCompositions(msg = "HomePageNoAccountContent waitForVmEvent: $waitingForVmEvent waitToComplete: $waitToComplete \n$uiState")
     if (waitingForVmEvent) {
         uiState.errorData?.let { errorData ->
             AlertDialogWithSingleButton(title = errorData.title,
@@ -94,6 +92,16 @@ fun HomePageNoAccountContent(
                     R.string.preenroll_check_incompleted_title
                 ),
                     explanation = stringResource(R.string.preenroll_check_incompleted_explanation),
+                    buttonLabel = stringResource(R.string.button_ok),
+                    onDismiss = {
+                        waitingForVmEvent = false
+                        viewModel.clearPreEnrollCheck()
+                    })
+
+                PreEnrollCheck.MissingAccount -> AlertDialogWithSingleButton(title = stringResource(
+                    R.string.preenroll_check_missing_title
+                ),
+                    explanation = stringResource(R.string.preenroll_check_missing_explanation),
                     buttonLabel = stringResource(R.string.button_ok),
                     onDismiss = {
                         waitingForVmEvent = false
@@ -248,14 +256,3 @@ fun HomePageNoAccountContent(
         }
     }
 }
-//
-//@Preview()
-//@Composable
-//private fun PreviewEnroll() {
-//    EduidAppAndroidTheme {
-//        HomePageNoAccountContent(isAuthorizedForDataAccess = false,
-//            uiState = UiState(),
-//            onGoToScan = {},
-//            onGoToRequestEduId = {}) {}
-//    }
-//}

@@ -60,4 +60,5 @@ sealed class PreEnrollCheck {
      * trigger because the login button is not accessible while there is a local key
      * */
     object Incomplete : PreEnrollCheck()
+    object MissingAccount : PreEnrollCheck()
 }

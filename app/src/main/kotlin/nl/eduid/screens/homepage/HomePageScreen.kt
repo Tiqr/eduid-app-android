@@ -1,8 +1,6 @@
 package nl.eduid.screens.homepage
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import nl.eduid.screens.splash.SplashScreen
 import org.tiqr.data.model.EnrollmentChallenge
 
@@ -19,9 +17,7 @@ fun HomePageScreen(
     goToConfirmDeactivation: (String) -> Unit,
     onGoToRequestEduIdAccount: () -> Unit,
 ) {
-    val isEnrolled by viewModel.isEnrolledState.observeAsState(IsEnrolled.Unknown)
-
-    when (isEnrolled) {
+    when (viewModel.isEnrolledState) {
         IsEnrolled.Unknown -> SplashScreen()
         IsEnrolled.No -> HomePageNoAccountContent(
             viewModel = viewModel,

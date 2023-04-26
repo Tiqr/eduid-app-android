@@ -1,6 +1,9 @@
 package nl.eduid.screens.homepage
 
 import android.content.res.Resources
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -44,7 +47,8 @@ class HomePageViewModel @Inject constructor(
 
     val isAuthorizedForDataAccess = repository.isAuthorized.asLiveData()
     val uiState = MutableLiveData(UiState())
-    val isEnrolledState: MutableLiveData<IsEnrolled> = MutableLiveData(IsEnrolled.Unknown)
+    var isEnrolledState: IsEnrolled by mutableStateOf(IsEnrolled.Unknown)
+        private set
 
     private var jwt: JWT? = null
 
@@ -64,7 +68,7 @@ class HomePageViewModel @Inject constructor(
 
             joinAll(haveDbEntry, showSplashForMinimum)
             val isEnrolled = if (haveDbEntry.await()) IsEnrolled.Yes else IsEnrolled.No
-            isEnrolledState.postValue(isEnrolled)
+            isEnrolledState = isEnrolled
         }
     }
 
@@ -85,7 +89,6 @@ class HomePageViewModel @Inject constructor(
     }
 
     fun startEnrollmentAfterAccountCreation() = viewModelScope.launch {
-        Timber.i("startEnrollmentAfterAccountCreation START")
         uiState.postValue(uiState.value?.copy(inProgress = true))
         val requireAuth = repository.isAuthorized.firstOrNull()
         if (requireAuth == false) {
@@ -96,7 +99,6 @@ class HomePageViewModel @Inject constructor(
     }
 
     fun startEnrollmentAfterSignIn() = viewModelScope.launch {
-        Timber.i("startEnrollmentAfterSignIn START")
         uiState.postValue(uiState.value?.copy(inProgress = true))
         val userDetails = personalRepository.getUserDetails()
         if (userDetails != null) {
@@ -129,21 +131,26 @@ class HomePageViewModel @Inject constructor(
                     Timber.i("Local enrolment is invalid/expired. Offer to remove current key? This should not be possible: Login button is not accessible while there is a local key.")
                 }
             }
+        } else {
+            Timber.i("Local enrolment was completed previously. This should not be possible: Login button is not accessible while there is a local key.")
+            uiState.postValue(
+                uiState.value?.copy(
+                    inProgress = false, preEnrollCheck = PreEnrollCheck.MissingAccount
+                )
+            )
+
         }
     }
 
     fun clearPreEnrollCheck() {
-        Timber.e("Clearing preEnrollcheck")
         uiState.value = uiState.value?.copy(preEnrollCheck = null)
     }
 
     fun clearDeactivation() {
-        Timber.e("Clearing deactivationFor")
         uiState.value = uiState.value?.copy(deactivateFor = null)
     }
 
     fun requestDeactivationCode() = viewModelScope.launch {
-        Timber.i("handleDeactivationRequest START")
         uiState.postValue(uiState.value?.copy(inProgress = true, preEnrollCheck = null))
         val userDetails = personalRepository.getUserDetails()
         val knownPhoneNumber = "*${userDetails?.registration?.phoneNumber}"
@@ -167,12 +174,10 @@ class HomePageViewModel @Inject constructor(
     }
 
     private suspend fun startEnrollmentWithoutOAuthCheck() {
-        Timber.i("\tstartEnrollmentWithoutOAuthCheck START")
         val response = personalRepository.startEnrollment()
         if (response != null) {
             val challenge = parseChallenge(response.url)
             if (challenge is ChallengeParseResult.Success && challenge.value is EnrollmentChallenge) {
-                Timber.i("\tstartEnrollmentWithoutOAuthCheck OK END")
                 uiState.postValue(
                     uiState.value?.copy(
                         inProgress = false, currentChallenge = challenge.value, errorData = null
@@ -181,7 +186,6 @@ class HomePageViewModel @Inject constructor(
 
             }
         } else {
-            Timber.i("\tstartEnrollmentWithoutOAuthCheck FAIL END")
             uiState.postValue(
                 uiState.value?.copy(
                     inProgress = false, currentChallenge = null, errorData = ErrorData(
