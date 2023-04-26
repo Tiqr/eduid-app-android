@@ -44,11 +44,12 @@ class HomePageViewModel @Inject constructor(
 
     val isAuthorizedForDataAccess = repository.isAuthorized.asLiveData()
     val uiState = MutableLiveData(UiState())
+    val isEnrolledState: MutableLiveData<IsEnrolled> = MutableLiveData(IsEnrolled.Unknown)
+
     private var jwt: JWT? = null
 
     init {
         viewModelScope.launch {
-            uiState.postValue(uiState.value?.copy(isEnrolled = IsEnrolled.Unknown))
             val haveDbEntry = async {
                 val totalCount = db.identityCount().firstOrNull()
                 totalCount != 0
@@ -63,7 +64,7 @@ class HomePageViewModel @Inject constructor(
 
             joinAll(haveDbEntry, showSplashForMinimum)
             val isEnrolled = if (haveDbEntry.await()) IsEnrolled.Yes else IsEnrolled.No
-            uiState.postValue(uiState.value?.copy(isEnrolled = isEnrolled))
+            isEnrolledState.postValue(isEnrolled)
         }
     }
 
@@ -105,16 +106,14 @@ class HomePageViewModel @Inject constructor(
                     Timber.i("Cannot continue enrolment. Must first deactivate current app")
                     uiState.postValue(
                         uiState.value?.copy(
-                            inProgress = false,
-                            preEnrollCheck = PreEnrollCheck.DeactivateExisting
+                            inProgress = false, preEnrollCheck = PreEnrollCheck.DeactivateExisting
                         )
                     )
                 } else {
                     Timber.i("Local enrolment was completed previously. This should not be possible: Login button is not accessible while there is a local key.")
                     uiState.postValue(
                         uiState.value?.copy(
-                            inProgress = false,
-                            preEnrollCheck = PreEnrollCheck.AlreadyCompleted
+                            inProgress = false, preEnrollCheck = PreEnrollCheck.AlreadyCompleted
                         )
                     )
                 }
@@ -124,8 +123,7 @@ class HomePageViewModel @Inject constructor(
                 } else {
                     uiState.postValue(
                         uiState.value?.copy(
-                            inProgress = false,
-                            preEnrollCheck = PreEnrollCheck.Incomplete
+                            inProgress = false, preEnrollCheck = PreEnrollCheck.Incomplete
                         )
                     )
                     Timber.i("Local enrolment is invalid/expired. Offer to remove current key? This should not be possible: Login button is not accessible while there is a local key.")
@@ -146,22 +144,20 @@ class HomePageViewModel @Inject constructor(
 
     fun requestDeactivationCode() = viewModelScope.launch {
         Timber.i("handleDeactivationRequest START")
-        uiState.postValue(uiState.value?.copy(inProgress = true))
+        uiState.postValue(uiState.value?.copy(inProgress = true, preEnrollCheck = null))
         val userDetails = personalRepository.getUserDetails()
         val knownPhoneNumber = "*${userDetails?.registration?.phoneNumber}"
         val codeRequested = personalRepository.requestDeactivationForKnownPhone()
         if (codeRequested) {
             uiState.postValue(
                 uiState.value?.copy(
-                    inProgress = false,
-                    deactivateFor = DeactivateFor(knownPhoneNumber)
+                    inProgress = false, deactivateFor = DeactivateFor(knownPhoneNumber)
                 )
             )
         } else {
             uiState.postValue(
                 uiState.value?.copy(
-                    inProgress = false,
-                    errorData = ErrorData(
+                    inProgress = false, errorData = ErrorData(
                         "Failed to request deactivation code",
                         "Could not receive deactivation code on phone number: $knownPhoneNumber"
                     )

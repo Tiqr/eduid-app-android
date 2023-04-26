@@ -19,10 +19,9 @@ fun HomePageScreen(
     goToConfirmDeactivation: (String) -> Unit,
     onGoToRequestEduIdAccount: () -> Unit,
 ) {
-    val isAuthorizedForDataAccess by viewModel.isAuthorizedForDataAccess.observeAsState(false)
-    val uiState by viewModel.uiState.observeAsState(UiState())
+    val isEnrolled by viewModel.isEnrolledState.observeAsState(IsEnrolled.Unknown)
 
-    when (uiState.isEnrolled) {
+    when (isEnrolled) {
         IsEnrolled.Unknown -> SplashScreen()
         IsEnrolled.No -> HomePageNoAccountContent(
             viewModel = viewModel,
@@ -34,15 +33,12 @@ fun HomePageScreen(
         )
 
         IsEnrolled.Yes -> HomePageWithAccountContent(
-            isAuthorizedForDataAccess = isAuthorizedForDataAccess,
-            shouldPromptAuthorization = uiState.promptForAuth,
+            viewModel = viewModel,
             onActivityClicked = onActivityClicked,
             onPersonalInfoClicked = onPersonalInfoClicked,
             onSecurityClicked = onSecurityClicked,
             onScanForAuthorization = onScanForAuthorization,
-            launchOAuth = launchOAuth,
-            promptAuthorization = viewModel::triggerPromptForAuth,
-            clearAuth = viewModel::clearPromptForAuthTrigger
+            launchOAuth = launchOAuth
         )
     }
 }

@@ -46,8 +46,8 @@ fun HomePageNoAccountContent(
     val isAuthorizedForDataAccess by viewModel.isAuthorizedForDataAccess.observeAsState(false)
     val uiState by viewModel.uiState.observeAsState(UiState())
     var waitingForVmEvent by rememberSaveable { mutableStateOf(false) }
+    var wasOAuthTriggered by rememberSaveable { mutableStateOf(false) }
     val waitToComplete by remember { derivedStateOf { uiState.inProgress || waitingForVmEvent } }
-    val owner = LocalLifecycleOwner.current
 
     LogCompositions(msg = "HomePageNoAccountContent waitForVmEvent: $waitingForVmEvent waitToComplete: $waitToComplete \n$uiState")
     if (waitingForVmEvent) {
@@ -85,8 +85,8 @@ fun HomePageNoAccountContent(
                     onConfirm = {
                         //Continue to wait for the the VM event
                         //sent when the request for the deactivation code was requested successfully.
+                        //Clearing the pre-enroll check is handled in the VM coroutine
                         viewModel.requestDeactivationCode()
-                        viewModel.clearPreEnrollCheck()
                     })
 
                 PreEnrollCheck.Incomplete -> AlertDialogWithSingleButton(title = stringResource(
@@ -110,16 +110,18 @@ fun HomePageNoAccountContent(
             }
         }
 
-        if (isAuthorizedForDataAccess && uiState.shouldTriggerAutomaticStartEnrollmentAfterOauth()) {
-            LaunchedEffect(owner) {
-                if (uiState.shouldTriggerAutomaticStartEnrollmentAfterOauth()) {
+        if (isAuthorizedForDataAccess && wasOAuthTriggered) {
+            LaunchedEffect(uiState) {
+                if (uiState.canAutomaticallyTriggerEnroll()) {
                     Timber.e("Automatically starting enrollment now")
                     viewModel.startEnrollmentAfterSignIn()
+                    wasOAuthTriggered = false
                 }
             }
-        } else if (uiState.haveValidChallenge()) {
+        }
+        if (uiState.haveValidChallenge()) {
             val currentGoToRegistrationPinSetup by rememberUpdatedState(onGoToRegistrationPinSetup)
-            LaunchedEffect(owner) {
+            LaunchedEffect(uiState) {
                 currentGoToRegistrationPinSetup(uiState.currentChallenge as EnrollmentChallenge)
                 viewModel.clearCurrentChallenge()
                 waitingForVmEvent = false
@@ -203,6 +205,7 @@ fun HomePageNoAccountContent(
                     if (isAuthorizedForDataAccess) {
                         viewModel.startEnrollmentAfterSignIn()
                     } else {
+                        wasOAuthTriggered = true
                         onGoToSignIn()
                     }
                     waitingForVmEvent = true

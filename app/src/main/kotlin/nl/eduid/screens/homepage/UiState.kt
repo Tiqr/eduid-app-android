@@ -9,7 +9,6 @@ data class UiState(
     val currentChallenge: Challenge? = null,
     val promptForAuth: Unit? = null,
     val errorData: ErrorData? = null,
-    val isEnrolled: IsEnrolled = IsEnrolled.Unknown,
     val preEnrollCheck: PreEnrollCheck? = null,
     val deactivateFor: DeactivateFor? = null,
 ) {
@@ -22,7 +21,7 @@ data class UiState(
     fun haveValidChallenge() =
         currentChallenge != null && !inProgress && errorData == null && promptForAuth == null && preEnrollCheck == null && deactivateFor == null
 
-    fun shouldTriggerAutomaticStartEnrollmentAfterOauth() =
+    fun canAutomaticallyTriggerEnroll() =
         !inProgress && errorData == null && promptForAuth == null && preEnrollCheck == null && deactivateFor == null && currentChallenge == null
 }
 
