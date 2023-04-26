@@ -1,19 +1,28 @@
 package nl.eduid.screens.homepage
 
 import android.content.res.Resources
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.auth0.android.jwt.JWT
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
 import nl.eduid.BaseViewModel
+import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.di.repository.StorageRepository
-import nl.eduid.ErrorData
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import nl.eduid.screens.splash.SplashWaitTime
-import org.tiqr.data.model.*
+import org.tiqr.data.model.ChallengeParseFailure
+import org.tiqr.data.model.ChallengeParseResult
+import org.tiqr.data.model.EnrollmentChallenge
+import org.tiqr.data.model.ParseFailure
 import org.tiqr.data.repository.AuthenticationRepository
 import org.tiqr.data.repository.EnrollmentRepository
 import org.tiqr.data.repository.IdentityRepository
@@ -75,6 +84,7 @@ class HomePageViewModel @Inject constructor(
     }
 
     fun startEnrollmentAfterAccountCreation() = viewModelScope.launch {
+        Timber.i("startEnrollmentAfterAccountCreation START")
         uiState.postValue(uiState.value?.copy(inProgress = true))
         val requireAuth = repository.isAuthorized.firstOrNull()
         if (requireAuth == false) {
@@ -85,6 +95,7 @@ class HomePageViewModel @Inject constructor(
     }
 
     fun startEnrollmentAfterSignIn() = viewModelScope.launch {
+        Timber.i("startEnrollmentAfterSignIn START")
         uiState.postValue(uiState.value?.copy(inProgress = true))
         val userDetails = personalRepository.getUserDetails()
         if (userDetails != null) {
@@ -124,17 +135,20 @@ class HomePageViewModel @Inject constructor(
     }
 
     fun clearPreEnrollCheck() {
+        Timber.e("Clearing preEnrollcheck")
         uiState.value = uiState.value?.copy(preEnrollCheck = null)
     }
 
     fun clearDeactivation() {
+        Timber.e("Clearing deactivationFor")
         uiState.value = uiState.value?.copy(deactivateFor = null)
     }
 
-    fun handleDeactivationRequest() = viewModelScope.launch {
+    fun requestDeactivationCode() = viewModelScope.launch {
+        Timber.i("handleDeactivationRequest START")
         uiState.postValue(uiState.value?.copy(inProgress = true))
         val userDetails = personalRepository.getUserDetails()
-        val knownPhoneNumber = userDetails?.registration?.phoneNumber ?: "N/A"
+        val knownPhoneNumber = "*${userDetails?.registration?.phoneNumber}"
         val codeRequested = personalRepository.requestDeactivationForKnownPhone()
         if (codeRequested) {
             uiState.postValue(
@@ -157,10 +171,12 @@ class HomePageViewModel @Inject constructor(
     }
 
     private suspend fun startEnrollmentWithoutOAuthCheck() {
+        Timber.i("\tstartEnrollmentWithoutOAuthCheck START")
         val response = personalRepository.startEnrollment()
         if (response != null) {
             val challenge = parseChallenge(response.url)
             if (challenge is ChallengeParseResult.Success && challenge.value is EnrollmentChallenge) {
+                Timber.i("\tstartEnrollmentWithoutOAuthCheck OK END")
                 uiState.postValue(
                     uiState.value?.copy(
                         inProgress = false, currentChallenge = challenge.value, errorData = null
@@ -169,6 +185,7 @@ class HomePageViewModel @Inject constructor(
 
             }
         } else {
+            Timber.i("\tstartEnrollmentWithoutOAuthCheck FAIL END")
             uiState.postValue(
                 uiState.value?.copy(
                     inProgress = false, currentChallenge = null, errorData = ErrorData(

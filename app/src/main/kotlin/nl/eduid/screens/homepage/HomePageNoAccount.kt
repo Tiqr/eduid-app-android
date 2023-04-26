@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
@@ -19,7 +20,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -28,85 +28,102 @@ import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.AlertDialogWithTwoButton
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.ButtonGreen
-import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.util.LogCompositions
 import org.tiqr.data.model.EnrollmentChallenge
+import timber.log.Timber
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePageNoAccountContent(
-    isAuthorizedForDataAccess: Boolean,
-    uiState: UiState,
-    onScan: () -> Unit = {},
-    onRequestEduId: () -> Unit = {},
-    onSignIn: () -> Unit = {},
-    onStartEnrolment: () -> Unit = {},
-    goToRegistrationPinSetup: (EnrollmentChallenge) -> Unit = {},
-    dismissError: () -> Unit = {},
-    clearPreEnrollCheck: () -> Unit = {},
-    handlePreEnrollCheck: (PreEnrollCheck) -> Unit = { _ -> },
+    viewModel: HomePageViewModel,
+    onGoToScan: () -> Unit = {},
+    onGoToRequestEduId: () -> Unit = {},
+    onGoToSignIn: () -> Unit = {},
+    onGoToRegistrationPinSetup: (EnrollmentChallenge) -> Unit = {},
+    onGoToConfirmDeactivation: (String) -> Unit,
 ) = Scaffold { paddingValues ->
+    val isAuthorizedForDataAccess by viewModel.isAuthorizedForDataAccess.observeAsState(false)
+    val uiState by viewModel.uiState.observeAsState(UiState())
     var waitingForVmEvent by rememberSaveable { mutableStateOf(false) }
     val waitToComplete by remember { derivedStateOf { uiState.inProgress || waitingForVmEvent } }
     val owner = LocalLifecycleOwner.current
 
-    if (uiState.errorData != null) {
-        AlertDialogWithSingleButton(
-            title = uiState.errorData.title,
-            explanation = uiState.errorData.message,
-            buttonLabel = stringResource(R.string.button_ok),
-            onDismiss = {
-                dismissError()
+    LogCompositions(msg = "HomePageNoAccountContent waitForVmEvent: $waitingForVmEvent waitToComplete: $waitToComplete \n$uiState")
+    if (waitingForVmEvent) {
+        uiState.errorData?.let { errorData ->
+            AlertDialogWithSingleButton(title = errorData.title,
+                explanation = errorData.message,
+                buttonLabel = stringResource(R.string.button_ok),
+                onDismiss = {
+                    waitingForVmEvent = false
+                    viewModel.dismissError()
+                })
+        }
+        uiState.preEnrollCheck?.let { preEnrollCheck ->
+            when (preEnrollCheck) {
+                PreEnrollCheck.AlreadyCompleted -> AlertDialogWithSingleButton(title = stringResource(
+                    R.string.preenroll_check_completed_title
+                ),
+                    explanation = stringResource(R.string.preenroll_check_completed_explanation),
+                    buttonLabel = stringResource(R.string.button_ok),
+                    onDismiss = {
+                        waitingForVmEvent = false
+                        viewModel.clearPreEnrollCheck()
+                    })
+
+                PreEnrollCheck.DeactivateExisting -> AlertDialogWithTwoButton(title = stringResource(
+                    R.string.preenroll_check_blocked_title
+                ),
+                    explanation = stringResource(id = R.string.preenroll_check_blocked_explanation),
+                    dismissButtonLabel = stringResource(R.string.preenroll_button_cancel),
+                    confirmButtonLabel = stringResource(R.string.preenroll_button_deactivate),
+                    onDismiss = {
+                        waitingForVmEvent = false
+                        viewModel.clearPreEnrollCheck()
+                    },
+                    onConfirm = {
+                        //Continue to wait for the the VM event
+                        //sent when the request for the deactivation code was requested successfully.
+                        viewModel.requestDeactivationCode()
+                        viewModel.clearPreEnrollCheck()
+                    })
+
+                PreEnrollCheck.Incomplete -> AlertDialogWithSingleButton(title = stringResource(
+                    R.string.preenroll_check_incompleted_title
+                ),
+                    explanation = stringResource(R.string.preenroll_check_incompleted_explanation),
+                    buttonLabel = stringResource(R.string.button_ok),
+                    onDismiss = {
+                        waitingForVmEvent = false
+                        viewModel.clearPreEnrollCheck()
+                    })
+            }
+        }
+
+        uiState.deactivateFor?.let {
+            val currentConfirmDeactivation by rememberUpdatedState(onGoToConfirmDeactivation)
+            LaunchedEffect(viewModel.uiState) {
+                currentConfirmDeactivation(it.phoneNumber)
+                viewModel.clearDeactivation()
                 waitingForVmEvent = false
             }
-        )
-    } else if (waitingForVmEvent && uiState.preEnrollCheck != null) {
-        when (uiState.preEnrollCheck) {
-            PreEnrollCheck.AlreadyCompleted -> AlertDialogWithSingleButton(
-                title = stringResource(R.string.preenroll_check_completed_title),
-                explanation = stringResource(R.string.preenroll_check_completed_explanation),
-                buttonLabel = stringResource(R.string.button_ok),
-                onDismiss = {
-                    handlePreEnrollCheck(uiState.preEnrollCheck)
-                    waitingForVmEvent = false
-                }
-            )
-
-            PreEnrollCheck.DeactivateExisting -> AlertDialogWithTwoButton(
-                title = stringResource(R.string.preenroll_check_blocked_title),
-                explanation = stringResource(id = R.string.preenroll_check_blocked_explanation),
-                dismissButtonLabel = stringResource(R.string.preenroll_button_cancel),
-                confirmButtonLabel = stringResource(R.string.preenroll_button_deactivate),
-                onDismiss = {
-                    clearPreEnrollCheck()
-                    waitingForVmEvent = false
-                },
-                onConfirm = {
-                    handlePreEnrollCheck(uiState.preEnrollCheck)
-                    waitingForVmEvent = false
-                }
-            )
-
-            PreEnrollCheck.Incomplete -> AlertDialogWithSingleButton(
-                title = stringResource(R.string.preenroll_check_incompleted_title),
-                explanation = stringResource(R.string.preenroll_check_incompleted_explanation),
-                buttonLabel = stringResource(R.string.button_ok),
-                onDismiss = {
-                    handlePreEnrollCheck(uiState.preEnrollCheck)
-                    waitingForVmEvent = false
-                }
-            )
         }
-    } else if (waitingForVmEvent && isAuthorizedForDataAccess && uiState.shouldTriggerAutomaticStartEnrollmentAfterOauth()) {
-        val currentOnStartEnrolment by rememberUpdatedState(onStartEnrolment)
-        LaunchedEffect(owner) {
-            currentOnStartEnrolment()
-        }
-    } else if (waitingForVmEvent && uiState.haveValidChallenge()) {
-        val currentGoToRegistrationPinSetup by rememberUpdatedState(goToRegistrationPinSetup)
-        LaunchedEffect(owner) {
-            currentGoToRegistrationPinSetup(uiState.currentChallenge as EnrollmentChallenge)
-            waitingForVmEvent = false
+
+        if (isAuthorizedForDataAccess && uiState.shouldTriggerAutomaticStartEnrollmentAfterOauth()) {
+            LaunchedEffect(owner) {
+                if (uiState.shouldTriggerAutomaticStartEnrollmentAfterOauth()) {
+                    Timber.e("Automatically starting enrollment now")
+                    viewModel.startEnrollmentAfterSignIn()
+                }
+            }
+        } else if (uiState.haveValidChallenge()) {
+            val currentGoToRegistrationPinSetup by rememberUpdatedState(onGoToRegistrationPinSetup)
+            LaunchedEffect(owner) {
+                currentGoToRegistrationPinSetup(uiState.currentChallenge as EnrollmentChallenge)
+                viewModel.clearCurrentChallenge()
+                waitingForVmEvent = false
+            }
         }
     }
     ConstraintLayout(
@@ -183,13 +200,14 @@ fun HomePageNoAccountContent(
                 text = stringResource(R.string.enroll_screen_sign_in_button),
                 enabled = !waitToComplete,
                 onClick = {
-                    waitingForVmEvent = true
                     if (isAuthorizedForDataAccess) {
-                        onStartEnrolment()
+                        viewModel.startEnrollmentAfterSignIn()
                     } else {
-                        onSignIn()
+                        onGoToSignIn()
                     }
-                }, modifier = Modifier
+                    waitingForVmEvent = true
+                },
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
             )
@@ -199,7 +217,7 @@ fun HomePageNoAccountContent(
             PrimaryButton(
                 text = stringResource(R.string.scan_button),
                 enabled = !waitToComplete,
-                onClick = onScan,
+                onClick = onGoToScan,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
@@ -207,7 +225,7 @@ fun HomePageNoAccountContent(
         }
 
         TextButton(
-            onClick = onRequestEduId,
+            onClick = onGoToRequestEduId,
             modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(requestEduIdButton) {
@@ -223,18 +241,14 @@ fun HomePageNoAccountContent(
         }
     }
 }
-
-@Preview()
-@Composable
-private fun PreviewEnroll() {
-    EduidAppAndroidTheme {
-        HomePageNoAccountContent(isAuthorizedForDataAccess = false,
-            uiState = UiState(),
-            onScan = {},
-            onRequestEduId = {}) {}
-    }
-}
-
-
-
-
+//
+//@Preview()
+//@Composable
+//private fun PreviewEnroll() {
+//    EduidAppAndroidTheme {
+//        HomePageNoAccountContent(isAuthorizedForDataAccess = false,
+//            uiState = UiState(),
+//            onGoToScan = {},
+//            onGoToRequestEduId = {}) {}
+//    }
+//}

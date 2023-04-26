@@ -80,7 +80,7 @@ fun MainGraph(
                     "${Account.EnrollPinSetup.route}/$encodeChallenge"
                 )
             },
-            confirmDeactivation = { phoneNumber ->
+            goToConfirmDeactivation = { phoneNumber ->
                 navController.navigate(
                     PhoneNumberRecovery.ConfirmCode.routeWithPhoneNumber(phoneNumber, true)
                 )

@@ -20,10 +20,10 @@ data class UiState(
      * 4 - The app did not prompt for an OAuth flow
      * */
     fun haveValidChallenge() =
-        !inProgress && errorData == null && currentChallenge != null && promptForAuth == null
+        currentChallenge != null && !inProgress && errorData == null && promptForAuth == null && preEnrollCheck == null && deactivateFor == null
 
     fun shouldTriggerAutomaticStartEnrollmentAfterOauth() =
-        promptForAuth == null && !inProgress && errorData == null && currentChallenge == null
+        !inProgress && errorData == null && promptForAuth == null && preEnrollCheck == null && deactivateFor == null && currentChallenge == null
 }
 
 sealed class IsEnrolled {
