@@ -103,7 +103,7 @@
     <string name="request_id_link_spam_text">Kun je de mail niet vinden? Kijk ook in de spam folder.</string>
 
     <string name="request_id_recovery_title">Voeg een telefoonnummer voor herstel toe</string>
-    <string name="request_id_recovery_text_code">Als je niet in kun loggen op eduID met de app of de link,kun je dit gebruiken om toegang te krijgen tot je account.</string>
+    <string name="request_id_recovery_text_code">Als je niet in kun loggen op eduID met de app of de link, kun je dit gebruiken om toegang te krijgen tot je account.</string>
     <string name="request_id_recovery_button">Controleer dit telefoonnummer</string>
     <string name="request_id_recovery_input_hint">We sturen een SMS om het nummer te controleren.</string>
 

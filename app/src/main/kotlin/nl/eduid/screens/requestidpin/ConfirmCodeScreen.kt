@@ -84,8 +84,6 @@ private fun ConfirmCodeContent(
         Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .systemBarsPadding()
-            .padding(horizontal = 8.dp)
     ) {
         Column(
             modifier = Modifier
@@ -117,15 +115,13 @@ private fun ConfirmCodeContent(
                 onValueChange = onValueChange,
                 modifier = Modifier.fillMaxWidth()
             )
-
-            Spacer(modifier = Modifier.height(52.dp))
         }
         PrimaryButton(
             text = stringResource(R.string.confirm_sms_code_button),
             onClick = onClick,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 40.dp),
+                .padding(bottom = 24.dp),
         )
     }
 }

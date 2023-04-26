@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,14 +24,17 @@ fun EduIdTopAppBar(
     withBackIcon: Boolean = true,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     content: @Composable () -> Unit,
-) =
-    Scaffold(modifier = Modifier.systemBarsPadding(),
+) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    Scaffold(modifier = Modifier
+        .systemBarsPadding()
+        .imePadding()
+        .nestedScroll(scrollBehavior.nestedScrollConnection),
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             CenterAlignedTopAppBar(
                 modifier = Modifier
-                    .padding(top = 52.dp, bottom = 40.dp)
-                    .padding(horizontal = 10.dp),
+                    .padding(top = 16.dp, bottom = 16.dp, start = 15.dp, end = 30.dp),
                 navigationIcon = {
                     if (withBackIcon) {
                         IconButton(onClick = onBackClicked) {
@@ -38,12 +42,12 @@ fun EduIdTopAppBar(
                                 imageVector = Icons.Filled.ArrowBack,
                                 contentDescription = stringResource(R.string.button_back),
                                 tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(width = 53.dp, height = 53.dp)
+                                modifier = Modifier
+                                    .size(width = 53.dp, height = 53.dp)
                             )
                         }
                     }
                 },
-
                 title = {
                     Image(
                         painter = painterResource(R.drawable.logo_eduid_big),
@@ -51,7 +55,8 @@ fun EduIdTopAppBar(
                         modifier = Modifier.size(width = 122.dp, height = 46.dp),
                         alignment = Alignment.Center
                     )
-                }
+                },
+                scrollBehavior = scrollBehavior
             )
         }) { paddingValues ->
         Row(
@@ -63,7 +68,7 @@ fun EduIdTopAppBar(
             content()
         }
     }
-
+}
 
 @Preview
 @Composable

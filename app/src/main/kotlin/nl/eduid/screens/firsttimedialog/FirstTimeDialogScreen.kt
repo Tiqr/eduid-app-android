@@ -150,7 +150,7 @@ private fun FirstTimeDialogContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 40.dp)
+                .padding(bottom = 24.dp)
         ) {
             val text = buildAnnotatedString {
                 withStyle(style = SpanStyle(fontWeight = FontWeight.SemiBold)) {
