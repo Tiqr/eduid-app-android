@@ -72,6 +72,11 @@ class StorageRepository(private val context: Context) {
         preferences[PreferencesKeys.LAST_KNOWN_CONFIG_HASH]
     }
 
+    suspend fun clearInvalidAuth() = context.dataStore.edit { settings ->
+        settings.remove(PreferencesKeys.CURRENT_AUTHREQUEST)
+        settings.remove(PreferencesKeys.CURRENT_AUTHSTATE)
+    }
+
     suspend fun saveCurrentAuthState(authState: AuthState?) = context.dataStore.edit { settings ->
         settings[PreferencesKeys.CURRENT_AUTHSTATE] =
             authState?.jsonSerializeString() ?: settings.remove(PreferencesKeys.CURRENT_AUTHSTATE)

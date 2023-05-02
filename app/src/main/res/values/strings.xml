@@ -262,4 +262,9 @@
 
     <string name="preenroll_check_incompleted_title">Enrollment incomplete</string>
     <string name="preenroll_check_incompleted_explanation">Enrollment is incomplete, either recovery was not complete or access was revoked</string>
+
+    <string name="err_title_fail">Cannot load data</string>
+    <string name="error_msg_data_history_fail">Could not load activity history.</string>
+    <string name="error_msg_unauthenticated_fail">Authentication expired or was removed.</string>
+
 </resources>

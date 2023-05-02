@@ -14,8 +14,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -23,7 +21,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
@@ -43,21 +40,28 @@ fun DataAndActivityScreen(
     EduIdTopAppBar(
         onBackClicked = dispatcher::onBackPressed,
     ) {
-        val uiState by viewModel.uiState.observeAsState(UiState())
+        viewModel.uiState.errorData?.let { errorData ->
+            val context = LocalContext.current
+            AlertDialogWithSingleButton(
+                title = errorData.title(context),
+                explanation = errorData.message(context),
+                buttonLabel = stringResource(R.string.button_ok),
+                onDismiss = viewModel::clearErrorData
+            )
+        }
 
-        if (uiState.deleteService != null) {
+        if (viewModel.uiState.deleteService != null) {
             DeleteServiceContent(
-                providerName = uiState.deleteService?.providerName.orEmpty(),
-                inProgress = uiState.isLoading,
-                removeService = { viewModel.removeService(uiState.deleteService?.serviceProviderEntityId) },
+                providerName = viewModel.uiState.deleteService?.providerName.orEmpty(),
+                inProgress = viewModel.uiState.isLoading,
+                removeService = { viewModel.removeService(viewModel.uiState.deleteService?.serviceProviderEntityId) },
                 goBack = viewModel::cancelDeleteService
             )
         } else {
-            DataAndActivityScreenContent(data = uiState.data,
-                isLoading = uiState.isLoading,
-                errorData = uiState.errorData,
-                dismissError = viewModel::clearErrorData,
-                goToConfirmDeleteService = { viewModel.goToDeleteService(it) })
+            DataAndActivityScreenContent(
+                data = viewModel.uiState.data,
+                isLoading = viewModel.uiState.isLoading
+            ) { viewModel.goToDeleteService(it) }
         }
     }
 }
@@ -66,22 +70,11 @@ fun DataAndActivityScreen(
 fun DataAndActivityScreenContent(
     data: List<ServiceProvider>,
     isLoading: Boolean = false,
-    errorData: ErrorData? = null,
-    dismissError: () -> Unit = {},
     goToConfirmDeleteService: (ServiceProvider) -> Unit = {},
 ) = Column(
     verticalArrangement = Arrangement.Bottom,
     modifier = Modifier.verticalScroll(rememberScrollState())
 ) {
-    if (errorData != null) {
-        val context = LocalContext.current
-        AlertDialogWithSingleButton(
-            title = errorData.title(context),
-            explanation = errorData.message(context),
-            buttonLabel = stringResource(R.string.button_ok),
-            onDismiss = dismissError
-        )
-    }
     Spacer(Modifier.height(36.dp))
     Text(
         style = MaterialTheme.typography.titleLarge.copy(

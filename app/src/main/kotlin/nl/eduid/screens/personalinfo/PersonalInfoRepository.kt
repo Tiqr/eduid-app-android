@@ -14,6 +14,7 @@ import nl.eduid.di.model.RequestPhoneCode
 import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.di.model.Token
 import nl.eduid.di.model.TokenResponse
+import nl.eduid.di.model.UnauthorizedException
 import nl.eduid.di.model.UserDetails
 import timber.log.Timber
 import java.io.File
@@ -33,6 +34,27 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
                 }"
             )
             null
+        }
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to retrieve user details")
+        null
+    }
+
+    suspend fun getErringUserDetails(): UserDetails? = try {
+        val response = eduIdApi.getUserDetails()
+        if (response.isSuccessful) {
+            response.body()
+        } else {
+            if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
+                throw UnauthorizedException("Unauthorized request to mobile/api/sp/me", null)
+            } else {
+                Timber.w(
+                    "User details not available [${response.code()}/${response.message()}]${
+                        response.errorBody()?.string()
+                    }"
+                )
+                null
+            }
         }
     } catch (e: Exception) {
         Timber.e(e, "Failed to retrieve user details")
