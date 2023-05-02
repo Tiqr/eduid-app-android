@@ -260,7 +260,7 @@
     <string name="preenroll_check_missing_title">Missing account details</string>
     <string name="preenroll_check_missing_explanation">Could not retrieve the account details.</string>
 
-    <string name="preenroll_check_incompleted_title">Enrollment incomplete</string>
+    <string name="preenroll_check_incompleted_title">Enrollment fout</string>
     <string name="preenroll_check_incompleted_explanation">Enrollment is incomplete, either recovery was not complete or access was revoked</string>
 
 </resources>
