@@ -31,7 +31,7 @@ class DataAndActivityViewModel @Inject constructor(private val assistant: DataAs
                 } else {
                     uiState.copy(
                         isLoading = false, errorData = ErrorData(
-                            titleId = R.string.err_title_fail,
+                            titleId = R.string.err_title_load_fail,
                             messageId = R.string.error_msg_data_history_fail
                         )
                     )
@@ -39,7 +39,7 @@ class DataAndActivityViewModel @Inject constructor(private val assistant: DataAs
             } catch (e: UnauthorizedException) {
                 uiState = uiState.copy(
                     isLoading = false, errorData = ErrorData(
-                        titleId = R.string.err_title_fail,
+                        titleId = R.string.err_title_load_fail,
                         messageId = R.string.error_msg_unauthenticated_fail
                     )
                 )
@@ -64,7 +64,7 @@ class DataAndActivityViewModel @Inject constructor(private val assistant: DataAs
             UiState(
                 isLoading = false,
                 errorData = ErrorData(
-                    titleId = R.string.err_title_fail,
+                    titleId = R.string.err_title_load_fail,
                     messageId = R.string.error_msg_data_history_fail
                 ),
             )

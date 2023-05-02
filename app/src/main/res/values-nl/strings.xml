@@ -263,8 +263,11 @@
     <string name="preenroll_check_incompleted_title">Enrollment incomplete</string>
     <string name="preenroll_check_incompleted_explanation">Enrollment is incomplete, either recovery was not complete or access was revoked</string>
 
-    <string name="err_title_fail">Gegevens kunnen niet laden</string>
+    <string name="err_title_load_fail">Gegevens kunnen niet laden</string>
     <string name="error_msg_data_history_fail">Activiteitsgeschiedenis kan niet laden.</string>
     <string name="error_msg_unauthenticated_fail">Verificatie is verlopen of verwijderd.</string>
+    <string name="err_title_delete_fail">Kan niet verwijderen</string>
+    <string name="error_msg_delete_fail">Account kan niet verwijderd worden</string>
+    <string name="error_msg_delete_name_missmatch">De getypte naam is niet dezelfde als de bestaande naam.</string>
 
 </resources>
