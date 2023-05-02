@@ -17,9 +17,9 @@
 
     <string name="enroll_pin_title">Kies een unieke PIN voor eduID</string>
 
-    <string name="account_id">eduID account id</string>
+    <string name="account_id">eduID account id hello world</string>
 
-    <string name="auth_pin_title">Voer je eduID PIN in</string>
+    <string name="auth_pin_title">Voer je eduID PIN in Goodbye world</string>
 
     <string name="notification_channel_description">Notificaties voor berichten van eduID</string>
 
