@@ -270,4 +270,8 @@
     <string name="err_title_delete_fail">Cannot delete</string>
     <string name="error_msg_delete_fail">Could not delete account.</string>
     <string name="error_msg_delete_name_missmatch">Typed name does not match known name.</string>
+
+    <string name="err_title_request_fail">Cannot complete request</string>
+    <string name="err_title_link_account_fail_reason">Could not retrieve URL for linking your current account: %s</string>
+    <string name="err_title_link_account_fail">Could not retrieve URL for linking your current account.</string>
 </resources>

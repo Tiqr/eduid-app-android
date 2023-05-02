@@ -269,5 +269,8 @@
     <string name="err_title_delete_fail">Kan niet verwijderen</string>
     <string name="error_msg_delete_fail">Account kan niet verwijderd worden</string>
     <string name="error_msg_delete_name_missmatch">De getypte naam is niet dezelfde als de bestaande naam.</string>
+    <string name="err_title_request_fail">Het verzoek kan niet worden voltooid</string>
+    <string name="err_title_link_account_fail_reason">De URL kon niet worden opgehaald voor het koppelen van uw huidige account: %s</string>
+    <string name="err_title_link_account_fail">De URL kon niet worden opgehaald voor het koppelen van uw huidige account.</string>
 
 </resources>
