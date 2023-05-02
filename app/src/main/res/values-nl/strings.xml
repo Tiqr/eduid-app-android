@@ -3,7 +3,7 @@
 
     <!--    Strings below override strings from core module that are app-specific-->
 
-    <string name="scan_permission_required_message">Voor het scannen van een QR code, heeft eduID toegang nodig tot de camera.</string>
+    <string name="scan_permission_required_message">Om een QR code te scannen, heeft eduID toegang nodig tot de camera.</string>
 
     <!-- Start -->
     <string name="start_welcome"><![CDATA[<b>Met de eduID app kun je veilig en vertrouwd inloggen bij verschillende webdiensten.</b><br/> <br/> Ga naar <a href=\"https://mijn.eduid.nl\">eduid.nl</a> om je eduID app te activeren<br/> <br/>Tijdens het activatieproces moet je een QR code scannen. Druk op <b>Scan</> als hierom gevraagd wordt.]]></string>
