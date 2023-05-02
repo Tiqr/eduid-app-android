@@ -6,7 +6,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -44,11 +43,10 @@ fun DeleteAccountSecondConfirmScreen(
 ) = EduIdTopAppBar(
     onBackClicked = goBack,
 ) {
-    val uiState by viewModel.uiState.observeAsState(UiState())
     var waitingForVmEvent by rememberSaveable { mutableStateOf(false) }
     val owner = LocalLifecycleOwner.current
 
-    if (waitingForVmEvent && uiState.isDeleted != null) {
+    if (waitingForVmEvent && viewModel.uiState.isDeleted != null) {
         val currentOnAccountDeleted by rememberUpdatedState(onAccountDeleted)
         LaunchedEffect(owner) {
             currentOnAccountDeleted()
@@ -57,11 +55,11 @@ fun DeleteAccountSecondConfirmScreen(
     }
 
     DeleteAccountSecondConfirmScreenContent(
-        fullNameInput = uiState.fullName,
+        fullNameInput =  viewModel.uiState.fullName,
         onInputChange = { viewModel.onInputChange(it) },
-        errorData = uiState.errorData,
+        errorData =  viewModel.uiState.errorData,
         dismissError = viewModel::clearErrorData,
-        inProgress = uiState.inProgress,
+        inProgress =  viewModel.uiState.inProgress,
         onDeleteAccountPressed = {
             viewModel.onDeleteAccountPressed()
             waitingForVmEvent = true
