@@ -48,3 +48,12 @@ jobs:
         with:
           name: eduID-${{ github.sha }}-debug.apk
           path: app/build/outputs/apk/debug/app-debug.apk
+  check-tranlations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - name: Check for missing or untranslated strings
+        run: ./app/src/main/res/check-trans.sh
