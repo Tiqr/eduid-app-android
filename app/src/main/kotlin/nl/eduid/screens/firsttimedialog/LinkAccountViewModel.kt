@@ -11,12 +11,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.R
-import nl.eduid.di.api.EduIdApi
-import timber.log.Timber
+import nl.eduid.di.assist.DataAssistant
+import nl.eduid.di.model.UnauthorizedException
 import javax.inject.Inject
 
 @HiltViewModel
-class LinkAccountViewModel @Inject constructor(private val eduIdApi: EduIdApi) : ViewModel() {
+class LinkAccountViewModel @Inject constructor(private val assistant: DataAssistant) : ViewModel() {
 
     var uiState by mutableStateOf(UiState())
         private set
@@ -28,32 +28,26 @@ class LinkAccountViewModel @Inject constructor(private val eduIdApi: EduIdApi) :
     fun requestLinkUrl() = viewModelScope.launch {
         uiState = uiState.copy(inProgress = true, linkUrl = null)
         try {
-            val response = eduIdApi.getStartLinkAccount()
-            val body = response.body()
-            if (response.isSuccessful && body != null) {
+            val response = assistant.getStartLinkAccount()
+            if (response != null) {
                 uiState =
-                    uiState.copy(linkUrl = createLaunchIntent(body.url), inProgress = false)
+                    uiState.copy(linkUrl = createLaunchIntent(response), inProgress = false)
             } else {
-                val argument =
-                    "[${response.code()}/${response.message()}]${response.errorBody()?.string()}"
                 uiState =
                     uiState.copy(
                         inProgress = false, errorData = ErrorData(
                             titleId = R.string.err_title_request_fail,
-                            messageId = R.string.err_title_link_account_fail_reason,
-                            messageArg = argument
+                            messageId = R.string.err_msg_request_fail
                         )
                     )
             }
-        } catch (e: Exception) {
-            Timber.e(e, "Failed to get link account for current user")
-            uiState =
-                uiState.copy(
-                    inProgress = false, errorData = ErrorData(
-                        titleId = R.string.err_title_request_fail,
-                        messageId = R.string.err_title_link_account_fail
-                    )
+        } catch (e: UnauthorizedException) {
+            uiState = uiState.copy(
+                inProgress = false, errorData = ErrorData(
+                    titleId = R.string.err_title_request_fail,
+                    messageId = R.string.error_msg_unauthenticated_fail
                 )
+            )
         }
     }
 
