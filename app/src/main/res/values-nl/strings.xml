@@ -271,7 +271,6 @@
     <string name="error_msg_delete_fail">Account kan niet verwijderd worden</string>
     <string name="error_msg_delete_name_missmatch">De getypte naam is niet dezelfde als de bestaande naam.</string>
     <string name="err_title_request_fail">Het verzoek kan niet worden voltooid</string>
-    <string name="err_title_link_account_fail_reason">De URL kon niet worden opgehaald voor het koppelen van uw huidige account: %s</string>
     <string name="err_title_link_account_fail">De URL kon niet worden opgehaald voor het koppelen van uw huidige account.</string>
     <string name="err_title_auth_unexpected_fail">Onverwachte fout</string>
     <string name="err_msg_auth_init_fail">AppData kan niet worden geïnitialiseerd. Probeer het opnieuw.</string>

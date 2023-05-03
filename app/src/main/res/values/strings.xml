@@ -274,7 +274,6 @@
 
     <string name="err_title_request_fail">Cannot complete request</string>
     <string name="err_msg_request_fail">Request cannot be completed at this moment. Please retry later.</string>
-    <string name="err_title_link_account_fail_reason">Could not retrieve URL for linking your current account: %s</string>
     <string name="err_title_link_account_fail">Could not retrieve URL for linking your current account.</string>
 
     <string name="err_title_auth_unexpected_fail">Unexpected error</string>
