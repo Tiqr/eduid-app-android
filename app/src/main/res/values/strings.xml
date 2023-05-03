@@ -274,4 +274,16 @@
     <string name="err_title_request_fail">Cannot complete request</string>
     <string name="err_title_link_account_fail_reason">Could not retrieve URL for linking your current account: %s</string>
     <string name="err_title_link_account_fail">Could not retrieve URL for linking your current account.</string>
+
+    <string name="err_title_auth_unexpected_fail">Unexpected error</string>
+    <string name="err_msg_auth_init_fail">Failed to initialize AppData. Please retry.</string>
+    <string name="err_msg_auth_init_fail_arg">Failed to initialize AppData. Reason: %s</string>
+
+    <string name="err_title_auth_invalid">Authorization invalid</string>
+    <string name="err_msg_auth_invalid">Did not receive valid authentication.</string>
+    <string name="err_title_auth_failed">Authorization failed</string>
+    <string name="err_msg_auth_failed">No authorization state retained - reauthorization required.</string>
+    <string name="err_msg_auth_token_failed">Authorization token code exchange failed.</string>
+    <string name="err_msg_auth_code_failed_arg">Authorization code exchange failed: %s.</string>
+    <string name="err_msg_auth_unexpected_arg">Unexpected error: %s, please retry.</string>
 </resources>

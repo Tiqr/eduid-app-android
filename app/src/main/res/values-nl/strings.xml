@@ -272,5 +272,15 @@
     <string name="err_title_request_fail">Het verzoek kan niet worden voltooid</string>
     <string name="err_title_link_account_fail_reason">De URL kon niet worden opgehaald voor het koppelen van uw huidige account: %s</string>
     <string name="err_title_link_account_fail">De URL kon niet worden opgehaald voor het koppelen van uw huidige account.</string>
+    <string name="err_title_auth_unexpected_fail">Onverwachte fout</string>
+    <string name="err_msg_auth_init_fail">AppData kan niet worden geïnitialiseerd. Probeer het opnieuw.</string>
+    <string name="err_msg_auth_init_fail_arg">AppData kan niet worden geïnitialiseerd. Reden: %s</string>
+    <string name="err_title_auth_invalid">Autorisatie ongeldig</string>
+    <string name="err_msg_auth_invalid">Verificatie ontvangen is ongeldig.</string>
+    <string name="err_title_auth_failed">Autorisatie mislukt</string>
+    <string name="err_msg_auth_failed">Geen autorisatietoestand opgeslagen.</string>
+    <string name="err_msg_auth_token_failed">Token Exchange is mislukt.</string>
+    <string name="err_msg_auth_code_failed_arg">Autorisatiecode - uitwisseling mislukt: %s.</string>
+    <string name="err_msg_auth_unexpected_arg">Onverwachte fout: %s, probeer het opnieuw.</string>
 
 </resources>

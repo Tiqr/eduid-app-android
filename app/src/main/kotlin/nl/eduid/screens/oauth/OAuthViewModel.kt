@@ -5,7 +5,9 @@ import android.content.Intent
 import android.content.res.Resources
 import android.util.Base64
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.squareup.moshi.JsonAdapter
@@ -29,7 +31,6 @@ import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.di.assist.AuthenticationAssistant
 import nl.eduid.di.repository.StorageRepository
-import org.tiqr.data.service.DatabaseService
 import timber.log.Timber
 import java.io.IOException
 import java.security.MessageDigest
@@ -42,10 +43,10 @@ class OAuthViewModel @Inject constructor(
     private val repository: StorageRepository,
     private val assistant: AuthenticationAssistant,
     moshi: Moshi,
-    private val db: DatabaseService,
     @ApplicationContext context: Context,
 ) : ViewModel() {
-    val uiState: MutableLiveData<UiState> = MutableLiveData(UiState(OAuthStep.Loading))
+    var uiState by mutableStateOf(UiState(OAuthStep.Loading))
+        private set
     private val usePKCE = true
     private var service: AuthorizationService? = null
     private val configAdapter: JsonAdapter<Configuration>
@@ -57,16 +58,21 @@ class OAuthViewModel @Inject constructor(
     }
 
     fun prepareAppAuth(context: Context) = viewModelScope.launch {
-        uiState.postValue(UiState(OAuthStep.Loading))
+        uiState = UiState(OAuthStep.Loading)
         try {
             configuration = loadConfigurationFromResources(context.resources)
             checkIfConfigurationChanged()
             initializeAppAuth(context)
             val authorizationIntent = createAuthorizationIntent()
-            uiState.postValue(UiState(OAuthStep.Initialized(authorizationIntent)))
+            uiState = UiState(OAuthStep.Initialized(authorizationIntent))
         } catch (e: Exception) {
-            setError(
-                title = "Unexpected error", message = "Failed to initialize AppData. Please retry"
+            val argument = e.message ?: e.localizedMessage
+            uiState = UiState(
+                OAuthStep.Error, ErrorData(
+                    titleId = R.string.err_title_auth_unexpected_fail,
+                    messageId = if (argument == null) R.string.err_msg_auth_init_fail else R.string.err_msg_auth_init_fail_arg,
+                    messageArg = argument
+                )
             )
             Timber.e(e, "Failed to prepare AppAuth")
         }
@@ -86,27 +92,30 @@ class OAuthViewModel @Inject constructor(
         val currentAuthState = repository.authState.first()
         when {
             intent == null -> {
-                setError(
-                    title = "Authorization invalid",
-                    message = "Did not receive valid authentication."
+                uiState = UiState(
+                    OAuthStep.Error, ErrorData(
+                        titleId = R.string.err_title_auth_invalid,
+                        messageId = R.string.err_msg_auth_invalid,
+                    )
                 )
             }
 
             currentAuthState == null -> {
-                setError(
-                    title = "Authorization failed",
-                    message = "No authorization state retained - reauthorization required."
+                uiState = UiState(
+                    OAuthStep.Error, ErrorData(
+                        titleId = R.string.err_title_auth_failed,
+                        messageId = R.string.err_msg_auth_failed,
+                    )
                 )
             }
 
             currentAuthState.isAuthorized -> {
                 Timber.d("Current state is already authorized.")
-                uiState.postValue(
+                uiState =
                     UiState(
                         oauthStep = OAuthStep.Authorized,
                         error = null,
                     )
-                )
             }
 
             else -> {
@@ -119,48 +128,55 @@ class OAuthViewModel @Inject constructor(
                 }
                 if (response?.authorizationCode != null) {
                     try {
-                        uiState.postValue(UiState(OAuthStep.ExchangingTokenRequest))
+                        uiState = UiState(OAuthStep.ExchangingTokenRequest)
                         val tokenResponse = exchangeAuthorizationCode(response)
                         currentAuthState.update(tokenResponse, ex)
                         repository.saveCurrentAuthState(currentAuthState)
                         if (currentAuthState.isAuthorized) {
-                            uiState.postValue(
+                            uiState =
                                 UiState(
                                     oauthStep = OAuthStep.Authorized,
                                     error = null,
                                 )
-                            )
                         } else {
-                            setError(
-                                title = "Authorization failed",
-                                message = "Authorization code exchange failed"
+                            uiState = UiState(
+                                OAuthStep.Error, ErrorData(
+                                    titleId = R.string.err_title_auth_failed,
+                                    messageId = R.string.err_msg_auth_token_failed,
+                                )
                             )
                         }
                     } catch (e: Exception) {
                         Timber.e(e, "Failed to exchange authorization code.")
-                        setError(
-                            title = "Authorization failed",
-                            message = "Failed to exchange authorization code."
+                        val arg = "${e.javaClass.simpleName}: ${e.message}"
+                        uiState = UiState(
+                            OAuthStep.Error, ErrorData(
+                                titleId = R.string.err_title_auth_failed,
+                                messageId = R.string.err_msg_auth_code_failed_arg,
+                                messageArg = arg
+                            )
                         )
                     }
                 } else if (ex != null) {
-                    setError(
-                        title = "Authorization failed",
-                        message = ex.message ?: "Unexpected error, please retry"
+                    val arg = "${ex.javaClass.simpleName}: ${ex.message}"
+                    uiState = UiState(
+                        OAuthStep.Error, ErrorData(
+                            titleId = R.string.err_title_auth_failed,
+                            messageId = R.string.err_msg_auth_unexpected_arg,
+                            messageArg = arg
+                        )
                     )
                 } else {
-                    setError(
-                        title = "Authorization failed",
-                        message = "No Authorization state retained - reauthorization required."
+                    uiState = UiState(
+                        OAuthStep.Error, ErrorData(
+                            titleId = R.string.err_title_auth_failed,
+                            messageId = R.string.err_msg_auth_failed,
+                        )
                     )
                 }
             }
         }
     }
-
-    private fun setError(title: String, message: String) = uiState.postValue(
-        UiState(OAuthStep.Error, ErrorData(title, message))
-    )
 
     private suspend fun checkIfConfigurationChanged() {
         val lastKnownHash = repository.lastKnownConfigHash.first()
@@ -188,8 +204,7 @@ class OAuthViewModel @Inject constructor(
     }
 
     fun dismissError() {
-        val currentUiState = uiState.value ?: return
-        uiState.value = currentUiState.copy(error = null)
+        uiState = uiState.copy(error = null)
     }
 
     private fun loadConfigurationFromResources(resources: Resources): Configuration {
@@ -341,6 +356,6 @@ class OAuthViewModel @Inject constructor(
     }
 
     fun authorizationLaunched() {
-        uiState.value = uiState.value?.copy(oauthStep = OAuthStep.Launched)
+        uiState = uiState.copy(oauthStep = OAuthStep.Launched)
     }
 }
