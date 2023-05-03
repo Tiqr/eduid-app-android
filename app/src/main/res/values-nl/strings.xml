@@ -283,5 +283,10 @@
     <string name="err_msg_auth_code_failed_arg">Autorisatiecode - uitwisseling mislukt: %s.</string>
     <string name="err_msg_auth_unexpected_arg">Onverwachte fout: %s, probeer het opnieuw.</string>
     <string name="err_msg_request_fail">Verzoek kan op dit moment niet worden voltooid. Probeer het later opnieuw.</string>
+    <string name="err_title_email_in_use">Email is al in gebruik</string>
+    <string name="err_msg_email_in_use">Er is al een account geregistreerd voor de e-mail %s.</string>
+    <string name="err_title_email_domain_forbidden">E-maildomein is verboden</string>
+    <string name="err_msg_email_domain_forbidden">Het e-maildomein gebruikt in %s is niet toegestaan.</string>
+    <string name="err_msg_create_unknown_fail">Kan geen eduid-account maken voor e-mail %s.</string>
 
 </resources>

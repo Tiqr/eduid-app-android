@@ -3,20 +3,22 @@ package nl.eduid.screens.requestiddetails
 import android.content.Context
 import android.content.res.Resources
 import android.util.Patterns
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import nl.eduid.BuildConfig
+import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.di.model.CREATE_EMAIL_SENT
 import nl.eduid.di.model.EMAIL_DOMAIN_FORBIDDEN
 import nl.eduid.di.model.FAIL_EMAIL_IN_USE
 import nl.eduid.di.model.RequestEduIdAccount
 import nl.eduid.di.repository.EduIdRepository
-import nl.eduid.ErrorData
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
@@ -26,72 +28,78 @@ import javax.inject.Inject
 class RequestEduIdFormViewModel @Inject constructor(
     private val eduIdRepo: EduIdRepository,
 ) : ViewModel() {
-    val inputForm = MutableLiveData(InputForm())
+    var inputForm by mutableStateOf(InputForm())
+        private set
 
     fun onEmailChange(newValue: String) {
-        inputForm.value = inputForm.value?.copy(email = newValue)
+        inputForm = inputForm.copy(email = newValue)
     }
 
     fun onFirstNameChange(newValue: String) {
-        inputForm.value = inputForm.value?.copy(firstName = newValue)
+        inputForm = inputForm.copy(firstName = newValue)
     }
 
     fun onLastNameChange(newValue: String) {
-        inputForm.value = inputForm.value?.copy(lastName = newValue)
+        inputForm = inputForm.copy(lastName = newValue)
     }
 
     fun onTermsAccepted(newValue: Boolean) {
-        inputForm.value = inputForm.value?.copy(termsAccepted = newValue)
+        inputForm = inputForm.copy(termsAccepted = newValue)
     }
 
     fun dismissError() {
-        inputForm.value = inputForm.value?.copy(errorData = null)
+        inputForm = inputForm.copy(errorData = null)
     }
 
     fun requestNewEduIdAccount(context: Context): Job {
         return viewModelScope.launch {
-            val inputData = inputForm.value ?: return@launch
             val relyingPartClientId = getClientIdFromOAuthConfig(context.resources)
-            inputForm.postValue(inputData.copy(isProcessing = true, requestComplete = false))
+            inputForm = inputForm.copy(isProcessing = true, requestComplete = false)
             val responseStatus = eduIdRepo.requestEnroll(
                 RequestEduIdAccount(
-                    email = inputData.email,
-                    givenName = inputData.firstName,
-                    familyName = inputData.lastName,
+                    email = inputForm.email,
+                    givenName = inputForm.firstName,
+                    familyName = inputForm.lastName,
                     relyingPartClientId = relyingPartClientId
                 )
             )
             val newData = when (responseStatus) {
                 CREATE_EMAIL_SENT -> {
-                    inputData.copy(isProcessing = false, requestComplete = true)
+                    inputForm.copy(isProcessing = false, requestComplete = true)
                 }
+
                 FAIL_EMAIL_IN_USE -> {
-                    inputData.copy(
+                    inputForm.copy(
                         isProcessing = false, errorData = ErrorData(
-                            title = "Email in use",
-                            message = "There already is an account registered for the email ${inputData.email}."
+                            titleId = R.string.err_title_email_in_use,
+                            messageId = R.string.err_msg_email_in_use,
+                            messageArg = inputForm.email
                         )
                     )
                 }
+
                 EMAIL_DOMAIN_FORBIDDEN -> {
-                    inputData.copy(
+                    inputForm.copy(
                         isProcessing = false, errorData = ErrorData(
-                            title = "Email domain forbidden",
-                            message = "The email domain used in ${inputData.email} is not allowed."
+                            titleId = R.string.err_title_email_domain_forbidden,
+                            messageId = R.string.err_msg_email_domain_forbidden,
+                            messageArg = inputForm.email
                         )
                     )
                 }
+
                 else -> {
-                    inputData.copy(
+                    inputForm.copy(
                         isProcessing = false, errorData = ErrorData(
-                            title = "Unknown status",
-                            message = "Could not create eduid account for email ${inputData.email}"
+                            titleId = R.string.err_title_auth_unexpected_fail,
+                            messageId = R.string.err_msg_create_unknown_fail,
+                            messageArg = inputForm.email
                         )
                     )
                 }
             }
 
-            inputForm.postValue(newData)
+            inputForm = newData
         }
     }
 

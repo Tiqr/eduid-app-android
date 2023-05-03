@@ -287,4 +287,11 @@
     <string name="err_msg_auth_token_failed">Authorization token code exchange failed.</string>
     <string name="err_msg_auth_code_failed_arg">Authorization code exchange failed: %s.</string>
     <string name="err_msg_auth_unexpected_arg">Unexpected error: %s, please retry.</string>
+
+    <string name="err_title_email_in_use">Email in use</string>
+    <string name="err_msg_email_in_use">There already is an account registered for the email %s.</string>
+    <string name="err_title_email_domain_forbidden">Email domain is forbidden</string>
+    <string name="err_msg_email_domain_forbidden">The email domain used in %s is not allowed.</string>
+    <string name="err_msg_create_unknown_fail">Could not create eduid account for email %s.</string>
+
 </resources>
