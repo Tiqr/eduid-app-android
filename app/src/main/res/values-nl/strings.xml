@@ -288,5 +288,7 @@
     <string name="err_title_email_domain_forbidden">E-maildomein is verboden</string>
     <string name="err_msg_email_domain_forbidden">Het e-maildomein gebruikt in %s is niet toegestaan.</string>
     <string name="err_msg_create_unknown_fail">Kan geen eduid-account maken voor e-mail %s.</string>
+    <string name="err_title_invalid_challenge">Inschrijvingsuitdaging is ongeldig</string>
+    <string name="err_msg_invalid_challenge">Kan de inschrijvingsuitdaging niet parseren, de uitdaging is ongeldig.</string>
 
 </resources>
