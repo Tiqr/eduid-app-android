@@ -1,4 +1,4 @@
-package nl.eduid.screens.requestidrecovery
+package nl.eduid.screens.recovery.requestsms
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
+import nl.eduid.R
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
+import nl.eduid.screens.recovery.UiState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,7 +33,10 @@ class PhoneRequestCodeViewModel @Inject constructor(private val repository: Pers
         } else {
             uiState.copy(
                 inProgress = false,
-                errorData = ErrorData("Failed", "Could not request phone code, please retry"),
+                errorData = ErrorData(
+                    titleId = R.string.err_title_request_fail,
+                    messageId = R.string.err_msg_request_sms_validation_fail,
+                ),
                 isCompleted = null
             )
         }
@@ -39,5 +44,9 @@ class PhoneRequestCodeViewModel @Inject constructor(private val repository: Pers
 
     fun dismissError() {
         uiState = uiState.copy(errorData = null)
+    }
+
+    fun clearCompleted() {
+        uiState = uiState.copy(isCompleted = null)
     }
 }

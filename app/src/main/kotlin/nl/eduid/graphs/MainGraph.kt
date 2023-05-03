@@ -41,10 +41,10 @@ import nl.eduid.screens.pinsetup.RegistrationPinSetupViewModel
 import nl.eduid.screens.requestiddetails.RequestEduIdFormScreen
 import nl.eduid.screens.requestiddetails.RequestEduIdFormViewModel
 import nl.eduid.screens.requestidlinksent.RequestEduIdEmailSentScreen
-import nl.eduid.screens.requestidpin.ConfirmCodeScreen
-import nl.eduid.screens.requestidpin.ConfirmCodeViewModel
-import nl.eduid.screens.requestidrecovery.PhoneRequestCodeScreen
-import nl.eduid.screens.requestidrecovery.PhoneRequestCodeViewModel
+import nl.eduid.screens.recovery.confirmsms.ConfirmCodeScreen
+import nl.eduid.screens.recovery.confirmsms.ConfirmCodeViewModel
+import nl.eduid.screens.recovery.requestsms.PhoneRequestCodeScreen
+import nl.eduid.screens.recovery.requestsms.PhoneRequestCodeViewModel
 import nl.eduid.screens.requestidstart.RequestEduIdStartScreen
 import nl.eduid.screens.scan.ScanScreen
 import nl.eduid.screens.scan.StatelessScanViewModel

@@ -1,4 +1,4 @@
-package nl.eduid.screens.requestidpin
+package nl.eduid.screens.recovery.confirmsms
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,7 +12,7 @@ import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.graphs.PhoneNumberRecovery
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
-import nl.eduid.screens.requestidrecovery.UiState
+import nl.eduid.screens.recovery.UiState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,18 +43,25 @@ class ConfirmCodeViewModel @Inject constructor(
             repository.confirmPhoneCode(uiState.input)
         }
 
-        val errorData = if (success) {
-            null
+        val newState = if (success) {
+            uiState.copy(inProgress = false, errorData = null, isCompleted = Unit)
         } else {
-            ErrorData(
-                titleId = R.string.err_title_request_fail,
-                messageId = R.string.err_msg_request_sms_validation_fail,
+            uiState.copy(
+                inProgress = false, errorData =
+                ErrorData(
+                    titleId = R.string.err_title_request_fail,
+                    messageId = R.string.err_msg_confirm_sms_validation_fail,
+                )
             )
         }
-        uiState = uiState.copy(inProgress = false, errorData = errorData)
+        uiState = newState
     }
 
     fun dismissError() {
         uiState = uiState.copy(errorData = null)
+    }
+
+    fun clearCompleted() {
+        uiState = uiState.copy(isCompleted = null)
     }
 }

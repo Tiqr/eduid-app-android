@@ -1,4 +1,4 @@
-package nl.eduid.screens.requestidpin
+package nl.eduid.screens.recovery.confirmsms
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,9 +21,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -31,8 +33,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.flowWithLifecycle
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import nl.eduid.R
-import nl.eduid.screens.requestidrecovery.UiState
+import nl.eduid.screens.recovery.UiState
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
@@ -47,13 +52,18 @@ fun ConfirmCodeScreen(
 ) = EduIdTopAppBar(
     onBackClicked = goBack
 ) {
-    var canContinue by rememberSaveable { mutableStateOf(false) }
+    var waitForVmEvent by rememberSaveable { mutableStateOf(false) }
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
 
-    if (canContinue && !viewModel.uiState.inProgress && viewModel.uiState.errorData == null) {
+    if (waitForVmEvent) {
         val currentGoToStartScreen by rememberUpdatedState(newValue = goToStartScreen)
-        LaunchedEffect(key1 = viewModel) {
-            canContinue = false
-            currentGoToStartScreen()
+        LaunchedEffect(viewModel, lifecycle) {
+            snapshotFlow { viewModel.uiState }.distinctUntilChanged()
+                .filter { it.isCompleted != null }.flowWithLifecycle(lifecycle).collect {
+                    waitForVmEvent = false
+                    currentGoToStartScreen()
+                    viewModel.clearCompleted()
+                }
         }
     }
 
@@ -61,7 +71,7 @@ fun ConfirmCodeScreen(
         uiState = viewModel.uiState,
         phoneNumber = phoneNumber,
         onClick = {
-            canContinue = true
+            waitForVmEvent = true
             viewModel.confirmPhoneCode()
         },
         dismissError = viewModel::dismissError,

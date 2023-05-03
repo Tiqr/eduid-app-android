@@ -297,4 +297,5 @@
     <string name="err_title_invalid_challenge">Enrollment challenge is invalid</string>
     <string name="err_msg_invalid_challenge">Cannot parse enrollment challenge, challenge is invalid.</string>
     <string name="err_msg_request_sms_validation_fail">Could not request SMS code, please retry.</string>
+    <string name="err_msg_confirm_sms_validation_fail">SMS code not confirmed, please retry.</string>
 </resources>
