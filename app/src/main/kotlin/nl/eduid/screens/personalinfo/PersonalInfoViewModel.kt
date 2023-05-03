@@ -2,37 +2,52 @@ package nl.eduid.screens.personalinfo
 
 import android.content.Intent
 import android.net.Uri
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
+import nl.eduid.R
+import nl.eduid.di.assist.DataAssistant
 import nl.eduid.di.model.SelfAssertedName
+import nl.eduid.di.model.UnauthorizedException
 import nl.eduid.di.model.UserDetails
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class PersonalInfoViewModel @Inject constructor(private val repository: PersonalInfoRepository) :
-    ViewModel() {
+class PersonalInfoViewModel @Inject constructor(
+    private val assistant: DataAssistant
+) : ViewModel() {
     private var cachedUserDetails: UserDetails? = null
-    val uiState = MutableLiveData<UiState>()
+    var uiState by mutableStateOf(UiState())
+        private set
 
     init {
         viewModelScope.launch {
-            uiState.postValue(UiState(isLoading = true))
-            cachedUserDetails = repository.getUserDetails()
-            cachedUserDetails?.let { details ->
-                val personalInfo = mapUserDetailsToPersonalInfo(details)
-                uiState.postValue(UiState(isLoading = false, personalInfo = personalInfo))
-            } ?: uiState.postValue(
-                UiState(
+            uiState = UiState(isLoading = true)
+            try {
+                cachedUserDetails = assistant.getErringUserDetails()
+                uiState = cachedUserDetails?.let { details ->
+                    val personalInfo = mapUserDetailsToPersonalInfo(details)
+                    UiState(isLoading = false, personalInfo = personalInfo)
+                } ?: UiState(
                     isLoading = false, errorData = ErrorData(
-                        "Failed to load data", "Could not load personal details."
+                        titleId = R.string.err_title_load_fail,
+                        messageId = R.string.error_msg_personal_fail
                     )
                 )
-            )
+            } catch (e: UnauthorizedException) {
+                uiState = uiState.copy(
+                    isLoading = false, errorData = ErrorData(
+                        titleId = R.string.err_title_load_fail,
+                        messageId = R.string.error_msg_unauthenticated_fail
+                    )
+                )
+            }
+
         }
     }
 
@@ -40,7 +55,7 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
         var personalInfo = convertToUiData(userDetails)
         val nameMap = mutableMapOf<String, String>()
         for (account in userDetails.linkedAccounts) {
-            val mappedName = repository.getInstitutionName(account.schacHomeOrganization)
+            val mappedName = assistant.getInstitutionName(account.schacHomeOrganization)
             mappedName?.let {
                 //If name found, add to list of mapped names
                 nameMap[account.schacHomeOrganization] = mappedName
@@ -65,56 +80,57 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
     }
 
     fun clearErrorData() {
-        uiState.value = uiState.value?.copy(errorData = null)
+        uiState = uiState.copy(errorData = null)
     }
 
     fun removeConnection(index: Int) = viewModelScope.launch {
         val details = cachedUserDetails ?: return@launch
-        val currentUiState = uiState.value ?: UiState()
-        uiState.postValue(currentUiState.copy(isLoading = true))
-        val linkedAccount = details.linkedAccounts[index]
-        val newDetails = repository.removeConnection(linkedAccount)
-        newDetails?.let { updatedDetails ->
-            cachedUserDetails = updatedDetails
-            val personalInfo = mapUserDetailsToPersonalInfo(updatedDetails)
-            uiState.postValue(currentUiState.copy(isLoading = false, personalInfo = personalInfo))
-        } ?: uiState.postValue(
-            currentUiState.copy(
+        uiState = uiState.copy(isLoading = true)
+        try {
+            val linkedAccount = details.linkedAccounts[index]
+            val newDetails = assistant.removeConnection(linkedAccount)
+            uiState = newDetails?.let { updatedDetails ->
+                cachedUserDetails = updatedDetails
+                val personalInfo = mapUserDetailsToPersonalInfo(updatedDetails)
+                uiState.copy(isLoading = false, personalInfo = personalInfo)
+            } ?: uiState.copy(
                 isLoading = false,
-                errorData = ErrorData("Failed to remove connection", "Could not remove connection")
+                errorData = ErrorData(
+                    titleId = R.string.err_title_request_fail,
+                    messageId = R.string.err_msg_request_fail,
+                )
             )
-        )
+        } catch (e: UnauthorizedException) {
+            uiState = uiState.copy(
+                isLoading = false, errorData = ErrorData(
+                    titleId = R.string.err_title_request_fail,
+                    messageId = R.string.error_msg_unauthenticated_fail
+                )
+            )
+        }
     }
 
     fun requestLinkUrl() = viewModelScope.launch {
-        val currentUiState = uiState.value ?: UiState()
-        uiState.postValue(currentUiState.copy(isLoading = true, linkUrl = null))
+        uiState = uiState.copy(isLoading = true, linkUrl = null)
         try {
-            val response = repository.getStartLinkAccount()
-            if (response != null) {
-                uiState.postValue(
-                    currentUiState.copy(
-                        linkUrl = createLaunchIntent(response), isLoading = false
-                    )
+            val response = assistant.getStartLinkAccount()
+            uiState = if (response != null) {
+                uiState.copy(
+                    linkUrl = createLaunchIntent(response), isLoading = false
                 )
             } else {
-                uiState.postValue(
-                    currentUiState.copy(
-                        isLoading = false, errorData = ErrorData(
-                            "Failed to get link URL",
-                            "Could not retrieve URL to link your current account"
-                        )
+                uiState.copy(
+                    isLoading = false, errorData = ErrorData(
+                        titleId = R.string.err_title_request_fail,
+                        messageId = R.string.err_msg_request_fail
                     )
                 )
             }
-        } catch (e: Exception) {
-            Timber.e(e, "Failed to get link account for current user")
-            uiState.postValue(
-                currentUiState.copy(
-                    isLoading = false, errorData = ErrorData(
-                        "Failed to get link URL",
-                        "Could not retrieve URL to link your current account"
-                    )
+        } catch (e: UnauthorizedException) {
+            uiState = uiState.copy(
+                isLoading = false, errorData = ErrorData(
+                    titleId = R.string.err_title_request_fail,
+                    messageId = R.string.error_msg_unauthenticated_fail
                 )
             )
         }
@@ -122,23 +138,31 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
 
     fun updateName(givenName: String, familyName: String) = viewModelScope.launch {
         val currentDetails = cachedUserDetails ?: return@launch
-        val currentUiState = uiState.value ?: UiState()
-        uiState.postValue(currentUiState.copy(isLoading = true))
-
-        val validatedSelfName =
-            SelfAssertedName(familyName = givenName.ifEmpty { currentDetails.givenName },
-                givenName = familyName.ifEmpty { currentDetails.familyName })
-        val newDetails = repository.updateName(validatedSelfName)
-        newDetails?.let { updatedDetails ->
-            cachedUserDetails = updatedDetails
-            val personalInfo = mapUserDetailsToPersonalInfo(updatedDetails)
-            uiState.postValue(currentUiState.copy(isLoading = false, personalInfo = personalInfo))
-        } ?: uiState.postValue(
-            currentUiState.copy(
+        uiState = uiState.copy(isLoading = true)
+        try {
+            val validatedSelfName =
+                SelfAssertedName(familyName = givenName.ifEmpty { currentDetails.givenName },
+                    givenName = familyName.ifEmpty { currentDetails.familyName })
+            val newDetails = assistant.updateName(validatedSelfName)
+            uiState = newDetails?.let { updatedDetails ->
+                cachedUserDetails = updatedDetails
+                val personalInfo = mapUserDetailsToPersonalInfo(updatedDetails)
+                uiState.copy(isLoading = false, personalInfo = personalInfo)
+            } ?: uiState.copy(
                 isLoading = false,
-                errorData = ErrorData("Failed to update name", "Could not update name")
+                errorData = ErrorData(
+                    titleId = R.string.err_title_request_fail,
+                    messageId = R.string.err_msg_request_fail
+                )
             )
-        )
+        } catch (e: UnauthorizedException) {
+            uiState = uiState.copy(
+                isLoading = false, errorData = ErrorData(
+                    titleId = R.string.err_title_request_fail,
+                    messageId = R.string.error_msg_unauthenticated_fail
+                )
+            )
+        }
     }
 
     private fun createLaunchIntent(url: String): Intent {
@@ -184,8 +208,7 @@ class PersonalInfoViewModel @Inject constructor(private val repository: Personal
         return PersonalInfo(
             name = name,
             seflAssertedName = SelfAssertedName(
-                familyName = userDetails.familyName,
-                givenName = userDetails.givenName
+                familyName = userDetails.familyName, givenName = userDetails.givenName
             ),
             nameProvider = nameProvider,
             nameStatus = PersonalInfo.InfoStatus.Final,

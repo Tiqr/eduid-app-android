@@ -1,6 +1,7 @@
 package nl.eduid.di.assist
 
 import nl.eduid.di.model.LinkedAccount
+import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.di.model.UnauthorizedException
 import nl.eduid.di.model.UserDetails
 import nl.eduid.di.repository.StorageRepository
@@ -34,6 +35,20 @@ class DataAssistant @Inject constructor(
 
     suspend fun removeConnection(linkedAccount: LinkedAccount): UserDetails? = try {
         infoRepository.removeConnection(linkedAccount)
+    } catch (e: UnauthorizedException) {
+        storageRepository.clearInvalidAuth()
+        throw e
+    }
+
+    suspend fun getStartLinkAccount(): String? = try {
+        infoRepository.getStartLinkAccount()
+    } catch (e: UnauthorizedException) {
+        storageRepository.clearInvalidAuth()
+        throw e
+    }
+
+    suspend fun updateName(selfAssertedName: SelfAssertedName): UserDetails? = try {
+        infoRepository.updateName(selfAssertedName)
     } catch (e: UnauthorizedException) {
         storageRepository.clearInvalidAuth()
         throw e
