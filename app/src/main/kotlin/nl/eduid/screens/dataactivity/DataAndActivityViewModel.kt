@@ -54,19 +54,28 @@ class DataAndActivityViewModel @Inject constructor(private val assistant: DataAs
     fun removeService(service: String?) = viewModelScope.launch {
         val serviceId = service ?: return@launch
         uiState = UiState(isLoading = true, errorData = null)
-        val userDetails = assistant.removeService(serviceId)
-        uiState = if (userDetails != null) {
-            val uiData = convertToUiData(userDetails)
-            UiState(
-                isLoading = false, errorData = null, data = uiData, isComplete = Unit
-            )
-        } else {
-            UiState(
-                isLoading = false,
-                errorData = ErrorData(
-                    titleId = R.string.err_title_load_fail,
-                    messageId = R.string.error_msg_data_history_fail
-                ),
+        try {
+            val userDetails = assistant.removeService(serviceId)
+            uiState = if (userDetails != null) {
+                val uiData = convertToUiData(userDetails)
+                UiState(
+                    isLoading = false, errorData = null, data = uiData, isComplete = Unit
+                )
+            } else {
+                UiState(
+                    isLoading = false,
+                    errorData = ErrorData(
+                        titleId = R.string.err_title_load_fail,
+                        messageId = R.string.error_msg_data_history_fail
+                    ),
+                )
+            }
+        } catch (e: UnauthorizedException) {
+            uiState = uiState.copy(
+                isLoading = false, errorData = ErrorData(
+                    titleId = R.string.err_title_request_fail,
+                    messageId = R.string.error_msg_unauthenticated_fail
+                )
             )
         }
     }

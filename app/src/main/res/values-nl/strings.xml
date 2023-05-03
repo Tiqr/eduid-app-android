@@ -265,6 +265,7 @@
 
     <string name="err_title_load_fail">Gegevens kunnen niet laden</string>
     <string name="error_msg_data_history_fail">Activiteitsgeschiedenis kan niet laden.</string>
+    <string name="error_msg_personal_fail">Personelijkegegevens kunnen niet laden.</string>
     <string name="error_msg_unauthenticated_fail">Verificatie is verlopen of verwijderd.</string>
     <string name="err_title_delete_fail">Kan niet verwijderen</string>
     <string name="error_msg_delete_fail">Account kan niet verwijderd worden</string>
@@ -282,5 +283,6 @@
     <string name="err_msg_auth_token_failed">Token Exchange is mislukt.</string>
     <string name="err_msg_auth_code_failed_arg">Autorisatiecode - uitwisseling mislukt: %s.</string>
     <string name="err_msg_auth_unexpected_arg">Onverwachte fout: %s, probeer het opnieuw.</string>
+    <string name="err_msg_request_fail">Verzoek kan op dit moment niet worden voltooid. Probeer het later opnieuw.</string>
 
 </resources>
