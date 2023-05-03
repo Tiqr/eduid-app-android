@@ -290,5 +290,6 @@
     <string name="err_msg_create_unknown_fail">Kan geen eduid-account maken voor e-mail %s.</string>
     <string name="err_title_invalid_challenge">Inschrijvingsuitdaging is ongeldig</string>
     <string name="err_msg_invalid_challenge">Kan de inschrijvingsuitdaging niet parseren, de uitdaging is ongeldig.</string>
+    <string name="err_msg_request_sms_validation_fail">Kan geen sms-code aanvragen, probeer het opnieuw.</string>
 
 </resources>

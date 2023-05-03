@@ -1,12 +1,15 @@
 package nl.eduid.screens.requestidpin
 
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
+import nl.eduid.R
 import nl.eduid.graphs.PhoneNumberRecovery
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import nl.eduid.screens.requestidrecovery.UiState
@@ -18,38 +21,40 @@ class ConfirmCodeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    val uiState = MutableLiveData(UiState())
+    var uiState by mutableStateOf(UiState())
+        private set
     private val isDeactivation: Boolean
 
     init {
         isDeactivation =
             savedStateHandle.get<Boolean>(PhoneNumberRecovery.ConfirmCode.isDeactivationArg)
                 ?: false
-
     }
 
     fun onCodeChange(newValue: String) {
-        uiState.value = uiState.value?.copy(input = newValue)
+        uiState = uiState.copy(input = newValue)
     }
 
     fun confirmPhoneCode() = viewModelScope.launch {
-        val currentState = uiState.value ?: return@launch
-        uiState.postValue(currentState.copy(inProgress = true))
+        uiState = uiState.copy(inProgress = true)
         val success = if (isDeactivation) {
-            repository.deactivateApp(currentState.input)
+            repository.deactivateApp(uiState.input)
         } else {
-            repository.confirmPhoneCode(currentState.input)
+            repository.confirmPhoneCode(uiState.input)
         }
 
         val errorData = if (success) {
             null
         } else {
-            ErrorData("Failed", "Could not request phone code, please retry")
+            ErrorData(
+                titleId = R.string.err_title_request_fail,
+                messageId = R.string.err_msg_request_sms_validation_fail,
+            )
         }
-        uiState.postValue(currentState.copy(inProgress = false, errorData = errorData))
+        uiState = uiState.copy(inProgress = false, errorData = errorData)
     }
 
     fun dismissError() {
-        uiState.value = uiState.value?.copy(errorData = null)
+        uiState = uiState.copy(errorData = null)
     }
 }
