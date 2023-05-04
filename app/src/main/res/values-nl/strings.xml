@@ -141,6 +141,8 @@
     <string name="two_fa_key_empty">Geen sleutels.</string>
     <string name="two_fa_use_biometric">Gebruik biometrie</string>
     <string name="two_fa_delete">Sleutel vervijderen</string>
+    <string name="two_fa_account">Account</string>
+    <string name="two_fa_unieque_keyid">Uniek SleutelID</string>
 
     <string name="add_password_title">Voeg een wachtwoord toe</string>
     <string name="change_password_title">Wachtwoord wijzigen of verwijderen</string>
@@ -309,7 +311,8 @@
     <string name="err_msg_pass_do_not_match">Wachtwoorden zijn niet hetzelfde</string>
     <string name="err_msg_pass_invalid_hash">Ongeldige wachtwoord-hash, stuur de e-maillink opnieuw.</string>
     <string name="err_msg_pass_missing_hash">Ontbrekende wachtwoord-hash, stuur de e-maillink opnieuw.</string>
-    <string name="err_msg_delete_key_lost">De sleutel die u wilt verwijderen, kan is niet gevonden.</string>
+    <string name="err_msg_delete_key_lost">De sleutel die u wilt verwijderen, is niet gevonden.</string>
+    <string name="err_msg_change_key_lost">De sleutel die u wilt wijzigen, kan niet worden gevonden.</string>
     <string name="err_title_deactivate_request_fail">Kan deactiveringscode niet aanvragen</string>
     <string name="err_msg_deactivate_request_fail">Kon geen deactiveringscode aanvragen voor bekend telefoonnummer: %s.</string>
     <string name="err_title_enroll_fail">Ongeldig inschrijvingsverzoek</string>

@@ -141,6 +141,8 @@
     <string name="two_fa_key_empty">You have no local keys</string>
     <string name="two_fa_use_biometric">Use Biometrics</string>
     <string name="two_fa_delete">Delete key</string>
+    <string name="two_fa_account">Account</string>
+    <string name="two_fa_unieque_keyid">Unique KeyID</string>
 
     <string name="add_password_title">Add password</string>
     <string name="change_password_title">Change or delete password</string>
@@ -316,6 +318,7 @@
     <string name="err_msg_pass_invalid_hash">Invalid password hash, please resend email link.</string>
     <string name="err_msg_pass_missing_hash">Missing password hash, please resend email link.</string>
     <string name="err_msg_delete_key_lost">Cannot find key for deletion.</string>
+    <string name="err_msg_change_key_lost">The key you want to change cannot be found.</string>
 
     <string name="err_title_deactivate_request_fail">Failed to request deactivation code</string>
     <string name="err_msg_deactivate_request_fail">Could not request deactivation code for known phone number: %s.</string>

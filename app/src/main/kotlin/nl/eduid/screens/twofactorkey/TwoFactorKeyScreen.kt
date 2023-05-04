@@ -5,24 +5,21 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
 import nl.eduid.ui.EduIdTopAppBar
-import nl.eduid.ui.InfoTab
+import nl.eduid.ui.KeyInfoCard
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
@@ -34,23 +31,28 @@ fun TwoFactorKeyScreen(
 ) = EduIdTopAppBar(
     onBackClicked = goBack
 ) {
-    val uiState by viewModel.uiState.observeAsState(TwoFactorData())
-    if (uiState.keys.isEmpty()) {
+    if (viewModel.uiState.keys.isEmpty()) {
         TwoFactorKeyScreenNoContent()
     } else {
-        TwoFactorKeyScreenContent(
-            uiState = uiState.keys,
-            isLoading = uiState.isLoading,
+        TwoFactorKeyScreenContent(keyList = viewModel.uiState.keys,
+            isLoading = viewModel.uiState.isLoading,
             onDeleteKeyPressed = onDeleteKeyPressed,
-        )
+            onChangeBiometric = { key, biometricFlag ->
+                viewModel.changeBiometric(
+                    key = key, biometricFlag = biometricFlag
+                )
+            },
+            onExpand = { it -> viewModel.onExpand(it) })
     }
 }
 
 @Composable
 fun TwoFactorKeyScreenContent(
-    uiState: List<IdentityData>,
+    keyList: List<IdentityData>,
     isLoading: Boolean = false,
-    onDeleteKeyPressed: (id: String) -> Unit,
+    onDeleteKeyPressed: (id: String) -> Unit = {},
+    onChangeBiometric: (IdentityData, Boolean) -> Unit = { _, _ -> },
+    onExpand: (IdentityData?) -> Unit = { _ -> }
 ) = Column(
     verticalArrangement = Arrangement.Bottom,
     modifier = Modifier.verticalScroll(rememberScrollState())
@@ -70,26 +72,29 @@ fun TwoFactorKeyScreenContent(
     )
     Spacer(Modifier.height(36.dp))
     if (isLoading) {
-        Spacer(Modifier.height(24.dp))
-        CircularProgressIndicator(
-            modifier = Modifier
-                .height(80.dp)
-                .width(80.dp)
-                .align(alignment = Alignment.CenterHorizontally)
+        LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+    }
+    if (keyList.isNotEmpty()) {
+        Spacer(Modifier.height(6.dp))
+        Text(
+            text = stringResource(R.string.two_fa_key_list_title),
+            style = MaterialTheme.typography.bodyLarge.copy(
+                textAlign = TextAlign.Start,
+                fontWeight = FontWeight.SemiBold,
+            ),
         )
-    } else {
-        uiState.forEachIndexed { id, twoFaInfo ->
-            InfoTab(
-                header = if (id < 1) stringResource(R.string.two_fa_key_list_title) else "",
-                startIconLargeUrl = twoFaInfo.providerLogoUrl,
-                title = twoFaInfo.title,
-                subtitle = twoFaInfo.subtitle,
-                onClick = { },
-                onDeleteButtonClicked = { onDeleteKeyPressed(twoFaInfo.uniqueKey) },
-                endIcon = R.drawable.chevron_down,
-                twoFactorData = twoFaInfo,
-            )
-        }
+        Spacer(Modifier.height(6.dp))
+    }
+
+    keyList.forEach { twoFaInfo ->
+        KeyInfoCard(
+            title = twoFaInfo.title,
+            subtitle = twoFaInfo.subtitle,
+            keyData = twoFaInfo,
+            onDeleteButtonClicked = { onDeleteKeyPressed(twoFaInfo.uniqueKey) },
+            onChangeBiometric = onChangeBiometric,
+            onExpand = onExpand
+        )
     }
 }
 
@@ -119,6 +124,6 @@ fun TwoFactorKeyScreenNoContent(
 @Composable
 private fun PreviewSecurityScreenContent() = EduidAppAndroidTheme {
     TwoFactorKeyScreenContent(
-        uiState = listOf(),
-    ) {}
+        keyList = listOf(),
+    )
 }
