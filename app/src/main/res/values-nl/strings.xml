@@ -236,6 +236,11 @@
     <string name="personalinfo_manage_your_account">Beheer jouw gegevens</string>
     <string name="personalinfo_add_role_institution">Voeg een rol &amp; instelling toe</string>
     <string name="personalinfo_add_via">Voeg dit toe via SURFConext</string>
+    <string name="personalinfo_verified_by_on">Geverifieerd door %1$s op %2$s.</string>
+    <string name="personalinfo_institution">Instelling</string>
+    <string name="personalinfo_affiliations">Aansluiting(en)</string>
+    <string name="personalinfo_expires">Link verloopt</string>
+
     <string name="infotab_delete_login_details">Verwijder inloggegevens *</string>
 
     <string name="delete_two_key_title">Verwijder sleutel</string>

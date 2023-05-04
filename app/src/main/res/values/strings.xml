@@ -236,6 +236,10 @@
     <string name="personalinfo_manage_your_account">Manage your account</string>
     <string name="personalinfo_add_role_institution">Add role &amp; institution</string>
     <string name="personalinfo_add_via">Proceed to add this via SURFConext</string>
+    <string name="personalinfo_verified_by_on">Verified by %1$s on %2$s.</string>
+    <string name="personalinfo_institution">Institution</string>
+    <string name="personalinfo_affiliations">Affiliation(s)</string>
+    <string name="personalinfo_expires">Link expires</string>
     <string name="infotab_delete_login_details">Delete login details *</string>
 
     <string name="delete_two_key_title">Delete key</string>
