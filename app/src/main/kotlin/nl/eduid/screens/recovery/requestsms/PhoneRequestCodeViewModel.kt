@@ -34,7 +34,7 @@ class PhoneRequestCodeViewModel @Inject constructor(private val repository: Pers
             uiState.copy(
                 inProgress = false,
                 errorData = ErrorData(
-                    titleId = R.string.err_title_request_fail,
+                    titleId = R.string.err_title_generic_fail,
                     messageId = R.string.err_msg_request_sms_validation_fail,
                 ),
                 isCompleted = null

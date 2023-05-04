@@ -281,7 +281,6 @@
     <string name="err_msg_delete_fail">Could not delete account.</string>
     <string name="err_msg_delete_name_missmatch">Typed name does not match known name.</string>
 
-    <string name="err_title_request_fail">Cannot complete request</string>
     <string name="err_msg_request_fail">Request cannot be completed at this moment. Please retry later.</string>
     <string name="err_title_link_account_fail">Could not retrieve URL for linking your current account.</string>
 
@@ -295,7 +294,9 @@
     <string name="err_msg_auth_failed">No authorization state retained - reauthorization required.</string>
     <string name="err_msg_auth_token_failed">Authorization token code exchange failed.</string>
     <string name="err_msg_auth_code_failed_arg">Authorization code exchange failed: %s.</string>
-    <string name="err_msg_auth_unexpected_arg">Unexpected error: %s, please retry.</string>
+
+    <string name="err_title_generic_fail">Cannot complete request</string>
+    <string name="err_msg_generic_unexpected_with_arg">Unexpected error: %s, please retry.</string>
 
     <string name="err_title_email_in_use">Email in use</string>
     <string name="err_msg_email_in_use">There already is an account registered for the email %s.</string>

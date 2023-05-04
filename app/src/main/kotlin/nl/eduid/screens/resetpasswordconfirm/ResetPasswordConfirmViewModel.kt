@@ -88,7 +88,7 @@ class ResetPasswordConfirmViewModel @Inject constructor(
                     uiState = currentState.copy(
                         inProgress = false, isCompleted = null, errorData = ErrorData(
                             titleId = R.string.err_title_cannot_update_pass,
-                            messageId = R.string.err_msg_auth_unexpected_arg,
+                            messageId = R.string.err_msg_generic_unexpected_with_arg,
                             messageArg = "[${response.code()}/${response.message()}]${
                                 response.errorBody()?.string()
                             }",
@@ -107,7 +107,7 @@ class ResetPasswordConfirmViewModel @Inject constructor(
             uiState = currentState.copy(
                 inProgress = false, errorData = ErrorData(
                     titleId = R.string.err_title_cannot_update_pass,
-                    messageId = R.string.err_msg_auth_unexpected_arg,
+                    messageId = R.string.err_msg_generic_unexpected_with_arg,
                     messageArg = e.message ?: e.javaClass.simpleName,
                 )
             )

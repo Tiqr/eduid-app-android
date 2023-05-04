@@ -162,7 +162,7 @@ class OAuthViewModel @Inject constructor(
                     uiState = UiState(
                         OAuthStep.Error, ErrorData(
                             titleId = R.string.err_title_auth_failed,
-                            messageId = R.string.err_msg_auth_unexpected_arg,
+                            messageId = R.string.err_msg_generic_unexpected_with_arg,
                             messageArg = arg
                         )
                     )
