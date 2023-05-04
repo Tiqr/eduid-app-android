@@ -61,39 +61,58 @@ fun InfoField(
     title: String,
     subtitle: String,
     onClick: () -> Unit = {},
-    @DrawableRes endIcon: Int = 0,
-) = Row(modifier = Modifier
-    .clip(RoundedCornerShape(6.dp))
-    .border(
-        width = 3.dp, color = BlueButton
-    )
-    .sizeIn(minHeight = 72.dp)
-    .padding(start = 18.dp, end = 18.dp, top = 12.dp, bottom = 12.dp)
-    .fillMaxWidth()
-    .clickable {
-        onClick()
-    }) {
-    Column {
+    label: String = "",
+    @DrawableRes endIcon: Int = R.drawable.edit_icon,
+) = Column(modifier = Modifier.fillMaxWidth()) {
+    if (label.isNotBlank()) {
         Text(
-            text = title.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
+            text = label,
             style = MaterialTheme.typography.bodyLarge.copy(
-                textAlign = TextAlign.Start, fontWeight = FontWeight.Bold, lineHeight = 20.sp
+                textAlign = TextAlign.Start,
+                fontWeight = FontWeight.SemiBold,
             ),
         )
-        Spacer(Modifier.height(4.dp))
-        Text(
-            text = subtitle,
-            style = MaterialTheme.typography.bodySmall.copy(
-                textAlign = TextAlign.Start,
-                color = TextGrayScale,
-            ),
+        Spacer(Modifier.height(6.dp))
+    }
+    Row(verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .clip(RoundedCornerShape(6.dp))
+            .border(
+                width = 3.dp, color = BlueButton
+            )
+            .sizeIn(minHeight = 72.dp)
+            .padding(start = 18.dp, end = 18.dp, top = 12.dp, bottom = 12.dp)
+            .fillMaxWidth()
+            .clickable {
+                onClick()
+            }) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        ) {
+            Text(
+                text = title.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    textAlign = TextAlign.Start, fontWeight = FontWeight.Bold, lineHeight = 20.sp
+                ),
+            )
+            Spacer(Modifier.height(4.dp))
+            Text(
+                text = subtitle,
+                style = MaterialTheme.typography.bodySmall.copy(
+                    textAlign = TextAlign.Start,
+                    color = TextGrayScale,
+                ),
+            )
+        }
+        Image(
+            painter = painterResource(endIcon),
+            contentDescription = "",
+            modifier = Modifier.padding(start = 12.dp),
+            alignment = Alignment.Center
         )
     }
-    Image(
-        painter = painterResource(endIcon),
-        contentDescription = "",
-        modifier = Modifier.padding(start = 12.dp)
-    )
 }
 
 @Composable
@@ -523,35 +542,10 @@ private fun twoFaBlock(
     }
 }
 
-
-@Preview
-@Composable
-private fun PreviewInfoTab() {
-    EduidAppAndroidTheme {
-        InfoTab(
-            header = "Header",
-            title = "OK a very long long long long long long long long long long",
-            subtitle = "OK long long long long long long long long long long long long",
-            onClick = { },
-            endIcon = R.drawable.shield_tick_blue,
-            institutionInfo = PersonalInfo.InstitutionAccount(
-                role = "Long string here",
-                roleProvider = "Long string here",
-                institution = "Long string here",
-                affiliationString = "Long string here",
-                createdStamp = 1231321321321,
-                expiryStamp = 12313213131313,
-                id = "123",
-            ),
-            startIconLargeUrl = "https://static.surfconext.nl/media/sp/eduid.png"
-        )
-    }
-}
-
 @Preview
 @Composable
 private fun PreviewInfoField() = EduidAppAndroidTheme {
     InfoField(
-        title = "Vetinari", subtitle = "Lord"
+        title = "Vetinari", subtitle = "Lord", label = "Full Name"
     )
 }

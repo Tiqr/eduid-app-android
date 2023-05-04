@@ -6,6 +6,8 @@ import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
+import org.tiqr.data.model.Identity
 import org.tiqr.data.model.IdentityWithProvider
 import org.tiqr.data.repository.IdentityRepository
 import javax.inject.Inject
@@ -30,5 +32,9 @@ class TwoFactorKeyViewModel @Inject constructor(
             account = twoFaDetails.identity.displayName,
             biometricFlag = twoFaDetails.identity.biometricInUse,
         )
+    }
+
+    fun upgradeBiometric(identity: Identity, use: Boolean) = viewModelScope.launch {
+
     }
 }

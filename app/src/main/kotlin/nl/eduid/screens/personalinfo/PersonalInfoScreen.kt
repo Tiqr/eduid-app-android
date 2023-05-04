@@ -38,6 +38,7 @@ import nl.eduid.R
 import nl.eduid.screens.firsttimedialog.LinkAccountContract
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
+import nl.eduid.ui.InfoField
 import nl.eduid.ui.InfoTab
 import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.theme.ButtonGreen
@@ -138,33 +139,30 @@ fun PersonalInfoScreenContent(
         Spacer(modifier = Modifier.height(16.dp))
     }
     Spacer(Modifier.height(12.dp))
-    InfoTab(
-        header = stringResource(R.string.infotab_name),
+    InfoField(
         title = personalInfo.name,
         subtitle = if (personalInfo.nameProvider == null) {
-            stringResource(
-                R.string.infotab_providedby_you
-            )
+            stringResource(R.string.infotab_providedby_you)
         } else {
-            stringResource(
-                R.string.infotab_providedby, personalInfo.nameProvider
-            )
+            stringResource(R.string.infotab_providedby, personalInfo.nameProvider)
         },
         onClick = onNameClicked,
         endIcon = if (personalInfo.nameProvider == null) {
             R.drawable.edit_icon
         } else {
             R.drawable.shield_tick_blue
-        }
+        },
+        label = stringResource(R.string.infotab_name)
     )
-    InfoTab(
-        header = stringResource(R.string.infotab_email),
+    Spacer(Modifier.height(16.dp))
+    InfoField(
         title = personalInfo.email,
         subtitle = stringResource(R.string.infotab_providedby_you),
         onClick = onEmailClicked,
-        endIcon = R.drawable.edit_icon
+        endIcon = R.drawable.edit_icon,
+        label = stringResource(R.string.infotab_email),
     )
-
+    Spacer(Modifier.height(16.dp))
     personalInfo.institutionAccounts.forEachIndexed { index, account ->
         InfoTab(
             header = if (index < 1) stringResource(R.string.infotab_role_institution) else "",

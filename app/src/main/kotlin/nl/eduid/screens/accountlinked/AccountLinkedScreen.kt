@@ -23,6 +23,7 @@ import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.screens.personalinfo.PersonalInfoViewModel
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
+import nl.eduid.ui.InfoField
 import nl.eduid.ui.InfoTab
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
@@ -97,22 +98,17 @@ private fun AccountLinkedContent(
         } else {
             Spacer(Modifier.height(12.dp))
         }
-        InfoTab(
-            header = stringResource(R.string.infotab_fullname),
+        InfoField(
             title = personalInfo.name,
             subtitle = if (personalInfo.nameProvider == null) {
-                stringResource(
-                    R.string.infotab_providedby_you
-                )
+                stringResource(R.string.infotab_providedby_you)
             } else {
-                stringResource(
-                    R.string.infotab_providedby, personalInfo.nameProvider
-                )
+                stringResource(R.string.infotab_providedby, personalInfo.nameProvider)
             },
-            onClick = { },
-            endIcon = R.drawable.shield_tick_blue
+            endIcon = R.drawable.shield_tick_blue,
+            label = stringResource(R.string.infotab_fullname)
         )
-
+        Spacer(Modifier.height(16.dp))
         personalInfo.institutionAccounts.forEachIndexed { index, account ->
             InfoTab(
                 header = if (index < 1) stringResource(R.string.infotab_role_institution) else "",

@@ -31,6 +31,7 @@ import nl.eduid.screens.firsttimedialog.LinkAccountContract
 import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.screens.personalinfo.PersonalInfoViewModel
 import nl.eduid.ui.EduIdTopAppBar
+import nl.eduid.ui.InfoField
 import nl.eduid.ui.InfoTab
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
@@ -44,11 +45,10 @@ fun EditNameScreen(
     onBackClicked = goBack,
 ) {
     var isGettingLinkUrl by rememberSaveable { mutableStateOf(false) }
-    val launcher =
-        rememberLauncherForActivityResult(contract = LinkAccountContract(), onResult = {
-            /**We don't have to explicitly handle the result intent. The deep linking will
-             * automatically open the [AccountLinkedScreen()] and ensure the backstack is correct.*/
-        })
+    val launcher = rememberLauncherForActivityResult(contract = LinkAccountContract(), onResult = {
+        /**We don't have to explicitly handle the result intent. The deep linking will
+         * automatically open the [AccountLinkedScreen()] and ensure the backstack is correct.*/
+    })
 
     if (isGettingLinkUrl && viewModel.uiState.haveValidLinkIntent()) {
         LaunchedEffect(key1 = viewModel) {
@@ -91,9 +91,7 @@ private fun EditNameContent(
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
             color = ButtonGreen
-        ),
-        text = stringResource(R.string.edit_name_subtitle),
-        modifier = Modifier.fillMaxWidth()
+        ), text = stringResource(R.string.edit_name_subtitle), modifier = Modifier.fillMaxWidth()
     )
     if (isLoading) {
         Spacer(modifier = Modifier.height(8.dp))
@@ -118,10 +116,9 @@ private fun EditNameContent(
             ),
         )
     }
-    InfoTab(
+    InfoField(
         title = personalInfo.name,
         subtitle = stringResource(R.string.infotab_providedby_you),
-        onClick = { /**Not going anywhere from here*/ },
         endIcon = R.drawable.edit_icon
     )
 
@@ -132,8 +129,7 @@ private fun EditNameContent(
     if (personalInfo.nameProvider != null) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
-                painter = painterResource(R.drawable.ic_verified_badge),
-                contentDescription = null
+                painter = painterResource(R.drawable.ic_verified_badge), contentDescription = null
             )
             Spacer(
                 modifier = Modifier.width(8.dp)
@@ -177,8 +173,7 @@ private fun EditNameContent(
 private fun Preview_LinkAccountCard() {
     EduidAppAndroidTheme {
         EditNameContent(
-            isLoading = false,
-            personalInfo = PersonalInfo.demoData()
+            isLoading = false, personalInfo = PersonalInfo.demoData()
         )
     }
 }
