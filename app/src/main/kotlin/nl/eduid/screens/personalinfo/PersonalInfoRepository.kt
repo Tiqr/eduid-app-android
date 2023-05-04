@@ -46,7 +46,8 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
             response.body()
         } else {
             if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
-                throw UnauthorizedException("Unauthorized getUserDetails to mobile/api/sp/me", null)
+                Timber.e("Unauthorized getUserDetails call")
+                throw UnauthorizedException("Unauthorized getUserDetails call")
             } else {
                 Timber.w(
                     "User details not available [${response.code()}/${response.message()}]${
@@ -101,7 +102,8 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
             response.body()
         } else {
             if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
-                throw UnauthorizedException("Unauthorized removeService to mobile/api/sp/me", null)
+                Timber.e("Unauthorized removeService call")
+                throw UnauthorizedException("Unauthorized removeService call")
             } else {
                 Timber.w(
                     "Failed to remove connection for [${response.code()}/${response.message()}]${
@@ -142,10 +144,8 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
             response.body()
         } else {
             if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
-                throw UnauthorizedException(
-                    "Unauthorized removeConnection to /mobile/api/sp/institution",
-                    null
-                )
+                Timber.e("Unauthorized removeConnection call")
+                throw UnauthorizedException("Unauthorized removeConnection call")
             } else {
                 Timber.w(
                     "Failed to remove connection for [${response.code()}/${response.message()}]${
@@ -169,7 +169,8 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
             response.body()
         } else {
             if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
-                throw UnauthorizedException("Unauthorized updateName to /mobile/api/sp/update", null)
+                Timber.e("Unauthorized updateName call")
+                throw UnauthorizedException("Unauthorized updateName call")
             } else {
                 Timber.w(
                     "Failed to update name [${response.code()}/${response.message()}]${
@@ -193,9 +194,8 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
             response.body()?.displayNameEn
         } else {
             if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
-                throw UnauthorizedException(
-                    "Unauthorized getInstitutionName to /mobile/api/sp/institution/names", null
-                )
+                Timber.e("Unauthorized getInstutitionName call")
+                throw UnauthorizedException("Unauthorized getInstitutionName call")
             } else {
                 Timber.w(
                     "Institution name lookup failed. [${response.code()}/${response.message()}]${
@@ -219,9 +219,8 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
             response.body()?.url
         } else {
             if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
-                throw UnauthorizedException(
-                    "Unauthorized getStartLinkAccount to /mobile/api/sp/oidc/link", null
-                )
+                Timber.e("Unauthorized getStartLinkAccount call")
+                throw UnauthorizedException("Unauthorized getStartLinkAccount call")
             } else {
                 Timber.w(
                     "Failed to retrieve start link account URL: [${response.code()}/${response.message()}]${

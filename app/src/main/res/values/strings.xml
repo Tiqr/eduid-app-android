@@ -264,13 +264,13 @@
     <string name="preenroll_check_incompleted_explanation">Enrollment is incomplete, either recovery was not complete or access was revoked</string>
 
     <string name="err_title_load_fail">Cannot load data</string>
-    <string name="error_msg_data_history_fail">Could not load activity history.</string>
-    <string name="error_msg_personal_fail">Could not personal details.</string>
-    <string name="error_msg_unauthenticated_fail">Authentication expired or was removed.</string>
+    <string name="err_msg_data_history_fail">Could not load activity history.</string>
+    <string name="err_msg_personal_fail">Could not personal details.</string>
+    <string name="err_msg_unauthorized_request_fail">Cannot complete request, please sign in and grant access.</string>
 
     <string name="err_title_delete_fail">Cannot delete</string>
-    <string name="error_msg_delete_fail">Could not delete account.</string>
-    <string name="error_msg_delete_name_missmatch">Typed name does not match known name.</string>
+    <string name="err_msg_delete_fail">Could not delete account.</string>
+    <string name="err_msg_delete_name_missmatch">Typed name does not match known name.</string>
 
     <string name="err_title_request_fail">Cannot complete request</string>
     <string name="err_msg_request_fail">Request cannot be completed at this moment. Please retry later.</string>

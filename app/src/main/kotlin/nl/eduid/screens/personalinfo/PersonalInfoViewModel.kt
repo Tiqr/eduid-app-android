@@ -36,14 +36,14 @@ class PersonalInfoViewModel @Inject constructor(
                 } ?: UiState(
                     isLoading = false, errorData = ErrorData(
                         titleId = R.string.err_title_load_fail,
-                        messageId = R.string.error_msg_personal_fail
+                        messageId = R.string.err_msg_personal_fail
                     )
                 )
             } catch (e: UnauthorizedException) {
                 uiState = uiState.copy(
                     isLoading = false, errorData = ErrorData(
                         titleId = R.string.err_title_load_fail,
-                        messageId = R.string.error_msg_unauthenticated_fail
+                        messageId = R.string.err_msg_unauthorized_request_fail
                     )
                 )
             }
@@ -104,7 +104,7 @@ class PersonalInfoViewModel @Inject constructor(
             uiState = uiState.copy(
                 isLoading = false, errorData = ErrorData(
                     titleId = R.string.err_title_request_fail,
-                    messageId = R.string.error_msg_unauthenticated_fail
+                    messageId = R.string.err_msg_unauthorized_request_fail
                 )
             )
         }
@@ -130,7 +130,7 @@ class PersonalInfoViewModel @Inject constructor(
             uiState = uiState.copy(
                 isLoading = false, errorData = ErrorData(
                     titleId = R.string.err_title_request_fail,
-                    messageId = R.string.error_msg_unauthenticated_fail
+                    messageId = R.string.err_msg_unauthorized_request_fail
                 )
             )
         }
@@ -159,7 +159,7 @@ class PersonalInfoViewModel @Inject constructor(
             uiState = uiState.copy(
                 isLoading = false, errorData = ErrorData(
                     titleId = R.string.err_title_request_fail,
-                    messageId = R.string.error_msg_unauthenticated_fail
+                    messageId = R.string.err_msg_unauthorized_request_fail
                 )
             )
         }

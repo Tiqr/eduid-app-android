@@ -32,7 +32,7 @@ class DataAndActivityViewModel @Inject constructor(private val assistant: DataAs
                     uiState.copy(
                         isLoading = false, errorData = ErrorData(
                             titleId = R.string.err_title_load_fail,
-                            messageId = R.string.error_msg_data_history_fail
+                            messageId = R.string.err_msg_data_history_fail
                         )
                     )
                 }
@@ -40,7 +40,7 @@ class DataAndActivityViewModel @Inject constructor(private val assistant: DataAs
                 uiState = uiState.copy(
                     isLoading = false, errorData = ErrorData(
                         titleId = R.string.err_title_load_fail,
-                        messageId = R.string.error_msg_unauthenticated_fail
+                        messageId = R.string.err_msg_unauthorized_request_fail
                     )
                 )
             }
@@ -66,7 +66,7 @@ class DataAndActivityViewModel @Inject constructor(private val assistant: DataAs
                     isLoading = false,
                     errorData = ErrorData(
                         titleId = R.string.err_title_load_fail,
-                        messageId = R.string.error_msg_data_history_fail
+                        messageId = R.string.err_msg_data_history_fail
                     ),
                 )
             }
@@ -74,7 +74,7 @@ class DataAndActivityViewModel @Inject constructor(private val assistant: DataAs
             uiState = uiState.copy(
                 isLoading = false, errorData = ErrorData(
                     titleId = R.string.err_title_request_fail,
-                    messageId = R.string.error_msg_unauthenticated_fail
+                    messageId = R.string.err_msg_unauthorized_request_fail
                 )
             )
         }

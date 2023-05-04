@@ -56,7 +56,7 @@ class DeleteAccountSecondConfirmViewModel @Inject constructor(
                             isDeleted = if (deleteOk) Unit else null,
                             errorData = if (deleteOk) null else ErrorData(
                                 titleId = R.string.err_title_delete_fail,
-                                messageId = R.string.error_msg_delete_fail
+                                messageId = R.string.err_msg_delete_fail
                             ),
                         )
                 } else {
@@ -65,7 +65,7 @@ class DeleteAccountSecondConfirmViewModel @Inject constructor(
                             inProgress = false,
                             errorData = ErrorData(
                                 titleId = R.string.err_title_delete_fail,
-                                messageId = R.string.error_msg_delete_name_missmatch
+                                messageId = R.string.err_msg_delete_name_missmatch
                             )
                         )
                 }
@@ -74,7 +74,7 @@ class DeleteAccountSecondConfirmViewModel @Inject constructor(
             uiState = uiState.copy(
                 inProgress = false, errorData = ErrorData(
                     titleId = R.string.err_title_delete_fail,
-                    messageId = R.string.error_msg_unauthenticated_fail
+                    messageId = R.string.err_msg_unauthorized_request_fail
                 )
             )
         }
