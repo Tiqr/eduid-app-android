@@ -30,9 +30,9 @@ import nl.eduid.R
 import nl.eduid.screens.firsttimedialog.LinkAccountContract
 import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.screens.personalinfo.PersonalInfoViewModel
+import nl.eduid.ui.ConnectionCard
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.InfoField
-import nl.eduid.ui.InfoTab
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.LinkAccountCard
@@ -141,18 +141,12 @@ private fun EditNameContent(
                 ),
             )
         }
-
-        InfoTab(
+        ConnectionCard(
             title = personalInfo.name,
-            subtitle = stringResource(
-                R.string.infotab_providedby, personalInfo.nameProvider
-            ),
+            subtitle = stringResource(R.string.infotab_providedby, personalInfo.nameProvider),
             institutionInfo = account,
-            onClick = {},
-            onDeleteButtonClicked = { removeConnection(0) },
-            endIcon = R.drawable.chevron_down,
+            onRemoveConnection = { removeConnection(0) },
         )
-
     }
 
     LinkAccountCard(
