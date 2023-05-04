@@ -10,19 +10,17 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.screens.personalinfo.PersonalInfoViewModel
-import nl.eduid.screens.personalinfo.UiState
-import nl.eduid.ErrorData
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.InfoTab
@@ -35,11 +33,10 @@ fun AccountLinkedScreen(
     viewModel: PersonalInfoViewModel,
     continueToHome: () -> Unit,
 ) {
-    val uiState by viewModel.uiState.observeAsState(UiState())
     AccountLinkedContent(
-        personalInfo = uiState.personalInfo,
-        isLoading = uiState.isLoading,
-        errorData = uiState.errorData,
+        personalInfo = viewModel.uiState.personalInfo,
+        isLoading = viewModel.uiState.isLoading,
+        errorData = viewModel.uiState.errorData,
         dismissError = viewModel::clearErrorData,
         continueToHome = continueToHome,
         removeConnection = { index -> viewModel.removeConnection(index) },
@@ -63,9 +60,10 @@ private fun AccountLinkedContent(
             .verticalScroll(rememberScrollState())
     ) {
         if (errorData != null) {
+            val context = LocalContext.current
             AlertDialogWithSingleButton(
-                title = errorData.title,
-                explanation = errorData.message,
+                title = errorData.title(context),
+                explanation = errorData.message(context),
                 buttonLabel = stringResource(R.string.button_ok),
                 onDismiss = dismissError
             )

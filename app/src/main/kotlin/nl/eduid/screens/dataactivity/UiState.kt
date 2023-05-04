@@ -8,4 +8,5 @@ data class UiState(
     val errorData: ErrorData? = null,
     val isComplete: Unit? = null,
     val deleteService: ServiceProvider? = null,
+    val promptAuth: Unit? = null,
 )

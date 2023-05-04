@@ -25,6 +25,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -98,9 +99,10 @@ private fun TwoFactorKeyDeleteScreenContent(
         .verticalScroll(rememberScrollState())
 ) {
     if (errorData != null) {
+        val context = LocalContext.current
         AlertDialogWithSingleButton(
-            title = errorData.title,
-            explanation = errorData.message,
+            title = errorData.title(context),
+            explanation = errorData.message(context),
             buttonLabel = stringResource(R.string.button_ok),
             onDismiss = onDismiss
         )
@@ -129,19 +131,19 @@ private fun TwoFactorKeyDeleteScreenContent(
             Image(painter = painterResource(R.drawable.warning_icon_red),
                 contentDescription = "",
                 modifier = Modifier.constrainAs(image) {
-                        top.linkTo(parent.top, margin = 12.dp)
-                        start.linkTo(parent.start, margin = 12.dp)
-                        end.linkTo(text.start, margin = 12.dp)
-                    })
+                    top.linkTo(parent.top, margin = 12.dp)
+                    start.linkTo(parent.start, margin = 12.dp)
+                    end.linkTo(text.start, margin = 12.dp)
+                })
             Text(style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
                 text = stringResource(R.string.delete_two_key_subtitle),
                 modifier = Modifier.constrainAs(text) {
-                        start.linkTo(image.end)
-                        end.linkTo(parent.end, margin = 12.dp)
-                        top.linkTo(parent.top, margin = 12.dp)
-                        bottom.linkTo(parent.bottom, margin = 12.dp)
-                        width = Dimension.fillToConstraints
-                    })
+                    start.linkTo(image.end)
+                    end.linkTo(parent.end, margin = 12.dp)
+                    top.linkTo(parent.top, margin = 12.dp)
+                    bottom.linkTo(parent.bottom, margin = 12.dp)
+                    width = Dimension.fillToConstraints
+                })
         }
         Spacer(Modifier.height(18.dp))
         if (inProgress) {

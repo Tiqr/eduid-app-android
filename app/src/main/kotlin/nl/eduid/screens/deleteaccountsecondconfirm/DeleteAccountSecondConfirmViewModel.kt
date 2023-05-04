@@ -1,11 +1,16 @@
 package nl.eduid.screens.deleteaccountsecondconfirm
 
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
+import nl.eduid.R
+import nl.eduid.di.model.UnauthorizedException
+import nl.eduid.di.repository.StorageRepository
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import org.tiqr.data.repository.IdentityRepository
 import org.tiqr.data.service.DatabaseService
@@ -18,56 +23,64 @@ class DeleteAccountSecondConfirmViewModel @Inject constructor(
     private val repository: PersonalInfoRepository,
     private val db: DatabaseService,
     private val identity: IdentityRepository,
-) :
-    ViewModel() {
-    val uiState = MutableLiveData(UiState())
+    private val storage: StorageRepository
+) : ViewModel() {
+    var uiState by mutableStateOf(UiState())
+        private set
 
     fun onInputChange(newValue: String) {
-        uiState.value = uiState.value?.copy(fullName = newValue)
+        uiState = uiState.copy(fullName = newValue)
     }
 
     fun onDeleteAccountPressed() = viewModelScope.launch {
-        uiState.postValue(uiState.value?.copy(inProgress = true))
-        val userDetails = repository.getUserDetails()
-        if (userDetails != null) {
-            val knownFullName = "${userDetails.givenName} ${userDetails.familyName}"
-            val typedFullName = uiState.value?.fullName
-            if (knownFullName == typedFullName) {
-                val deleteOk = repository.deleteAccount()
-                val allIdentities = db.getAllIdentities()
-
-                try {
-                    allIdentities.forEach {
-                        identity.delete(it)
+        uiState = uiState.copy(inProgress = true)
+        try {
+            val userDetails = repository.getErringUserDetails()
+            if (userDetails != null) {
+                val knownFullName = "${userDetails.givenName} ${userDetails.familyName}"
+                val typedFullName = uiState.fullName
+                if (knownFullName == typedFullName) {
+                    val deleteOk = repository.deleteAccount()
+                    val allIdentities = db.getAllIdentities()
+                    storage.clearAll()
+                    try {
+                        allIdentities.forEach {
+                            identity.delete(it)
+                        }
+                    } catch (e: Exception) {
+                        Timber.e(e, "Failed to cleanup existing identities when deleting account")
                     }
-                } catch (e: Exception) {
-                    Timber.e(e, "Failed to cleanup existing identities when deleting account")
-                }
-                uiState.postValue(
-                    uiState.value?.copy(
-                        inProgress = false,
-                        isDeleted = if (deleteOk) Unit else null,
-                        errorData = if (deleteOk) null else ErrorData(
-                            "Failed to delete account",
-                            "Could not delete account"
-                        ),
-                    )
-                )
-            } else {
-                uiState.postValue(
-                    uiState.value?.copy(
-                        inProgress = false,
-                        errorData = ErrorData(
-                            "Cannot delete account",
-                            "Name does not match known name"
+                    uiState =
+                        uiState.copy(
+                            inProgress = false,
+                            isDeleted = if (deleteOk) Unit else null,
+                            errorData = if (deleteOk) null else ErrorData(
+                                titleId = R.string.err_title_delete_fail,
+                                messageId = R.string.err_msg_delete_fail
+                            ),
                         )
-                    )
-                )
+                } else {
+                    uiState =
+                        uiState.copy(
+                            inProgress = false,
+                            errorData = ErrorData(
+                                titleId = R.string.err_title_delete_fail,
+                                messageId = R.string.err_msg_delete_name_missmatch
+                            )
+                        )
+                }
             }
+        } catch (e: UnauthorizedException) {
+            uiState = uiState.copy(
+                inProgress = false, errorData = ErrorData(
+                    titleId = R.string.err_title_delete_fail,
+                    messageId = R.string.err_msg_unauthorized_request_fail
+                )
+            )
         }
     }
 
     fun clearErrorData() {
-        uiState.value = uiState.value?.copy(errorData = null)
+        uiState = uiState.copy(errorData = null)
     }
 }

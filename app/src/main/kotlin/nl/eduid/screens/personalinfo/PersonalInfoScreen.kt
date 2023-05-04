@@ -20,15 +20,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,25 +55,24 @@ fun PersonalInfoScreen(
 ) = EduIdTopAppBar(
     onBackClicked = goBack,
 ) {
-    val uiState by viewModel.uiState.observeAsState(UiState())
     var isGettingLinkUrl by rememberSaveable { mutableStateOf(false) }
     val launcher =
         rememberLauncherForActivityResult(contract = LinkAccountContract(), onResult = { _ ->
             /**We don't have to explicitly handle the result intent. The deep linking will
-             * automatically open the [AccountLinkedScreen] and ensure the backstack is correct.*/
+             * automatically open the [AccountLinkedScreen()] and ensure the backstack is correct.*/
         })
 
-    if (isGettingLinkUrl && uiState.haveValidLinkIntent()) {
+    if (isGettingLinkUrl && viewModel.uiState.haveValidLinkIntent()) {
         LaunchedEffect(key1 = viewModel) {
             isGettingLinkUrl = false
-            launcher.launch(uiState.linkUrl)
+            launcher.launch(viewModel.uiState.linkUrl)
         }
     }
 
     PersonalInfoScreenContent(
-        personalInfo = uiState.personalInfo,
-        isLoading = uiState.isLoading,
-        errorData = uiState.errorData,
+        personalInfo = viewModel.uiState.personalInfo,
+        isLoading = viewModel.uiState.isLoading,
+        errorData = viewModel.uiState.errorData,
         dismissError = viewModel::clearErrorData,
         onEmailClicked = onEmailClicked,
         onNameClicked = onNameClicked,
@@ -103,9 +101,10 @@ fun PersonalInfoScreenContent(
     modifier = Modifier.verticalScroll(rememberScrollState())
 ) {
     if (errorData != null) {
+        val context = LocalContext.current
         AlertDialogWithSingleButton(
-            title = errorData.title,
-            explanation = errorData.message,
+            title = errorData.title(context),
+            explanation = errorData.message(context),
             buttonLabel = stringResource(R.string.button_ok),
             onDismiss = dismissError
         )

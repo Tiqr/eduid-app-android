@@ -263,4 +263,25 @@
     <string name="preenroll_check_incompleted_title">Toevoegen incompleet</string>
     <string name="preenroll_check_incompleted_explanation">Toevoegen is incompleet, recovery was niet compleet of toegang is uitgeschakeld</string>
 
+    <string name="err_title_load_fail">Gegevens kunnen niet laden</string>
+    <string name="err_msg_data_history_fail">Activiteitsgeschiedenis kan niet laden.</string>
+    <string name="err_msg_personal_fail">Personelijkegegevens kunnen niet laden.</string>
+    <string name="err_msg_unauthorized_request_fail">Verzoek kan niet worden voltooid, log in en geef toegang.</string>
+    <string name="err_title_delete_fail">Kan niet verwijderen</string>
+    <string name="err_msg_delete_fail">Account kan niet verwijderd worden</string>
+    <string name="err_msg_delete_name_missmatch">De getypte naam is niet dezelfde als de bestaande naam.</string>
+    <string name="err_title_request_fail">Het verzoek kan niet worden voltooid</string>
+    <string name="err_title_link_account_fail">De URL kon niet worden opgehaald voor het koppelen van uw huidige account.</string>
+    <string name="err_title_auth_unexpected_fail">Onverwachte fout</string>
+    <string name="err_msg_auth_init_fail">AppData kan niet worden geïnitialiseerd. Probeer het opnieuw.</string>
+    <string name="err_msg_auth_init_fail_arg">AppData kan niet worden geïnitialiseerd. Reden: %s</string>
+    <string name="err_title_auth_invalid">Autorisatie ongeldig</string>
+    <string name="err_msg_auth_invalid">Verificatie ontvangen is ongeldig.</string>
+    <string name="err_title_auth_failed">Autorisatie mislukt</string>
+    <string name="err_msg_auth_failed">Geen autorisatietoestand opgeslagen.</string>
+    <string name="err_msg_auth_token_failed">Token Exchange is mislukt.</string>
+    <string name="err_msg_auth_code_failed_arg">Autorisatiecode - uitwisseling mislukt: %s.</string>
+    <string name="err_msg_auth_unexpected_arg">Onverwachte fout: %s, probeer het opnieuw.</string>
+    <string name="err_msg_request_fail">Verzoek kan op dit moment niet worden voltooid. Probeer het later opnieuw.</string>
+
 </resources>

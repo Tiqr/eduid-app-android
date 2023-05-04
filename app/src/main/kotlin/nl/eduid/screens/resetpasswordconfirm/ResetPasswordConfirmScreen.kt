@@ -27,6 +27,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -107,9 +108,10 @@ fun ResetPasswordConfirmScreenContent(
     }
 
     if (errorData != null) {
+        val context = LocalContext.current
         AlertDialogWithSingleButton(
-            title = errorData.title,
-            explanation = errorData.message,
+            title = errorData.title(context),
+            explanation = errorData.message(context),
             buttonLabel = stringResource(R.string.button_ok),
             onDismiss = {
                 processing = false

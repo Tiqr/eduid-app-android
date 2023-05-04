@@ -1,5 +1,6 @@
 package nl.eduid.screens.biometric
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
@@ -14,7 +15,6 @@ import org.tiqr.data.model.Challenge
 import org.tiqr.data.model.EnrollmentChallenge
 import org.tiqr.data.repository.EnrollmentRepository
 import timber.log.Timber
-import java.net.URLDecoder
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,7 +32,7 @@ class EnableBiometricViewModel @Inject constructor(
         val isEnrolment = savedStateHandle.get<Boolean>(WithChallenge.isEnrolmentArg) ?: true
         val challengeArg = savedStateHandle.get<String>(WithChallenge.challengeArg) ?: ""
         val decoded = try {
-            URLDecoder.decode(challengeArg, Charsets.UTF_8.name())
+            Uri.decode(challengeArg)
         } catch (e: Exception) {
             ""
         }

@@ -16,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -31,7 +30,6 @@ import nl.eduid.R
 import nl.eduid.screens.firsttimedialog.LinkAccountContract
 import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.screens.personalinfo.PersonalInfoViewModel
-import nl.eduid.screens.personalinfo.UiState
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.InfoTab
 import nl.eduid.ui.theme.ButtonGreen
@@ -45,25 +43,24 @@ fun EditNameScreen(
 ) = EduIdTopAppBar(
     onBackClicked = goBack,
 ) {
-    val uiState by viewModel.uiState.observeAsState(UiState())
     var isGettingLinkUrl by rememberSaveable { mutableStateOf(false) }
     val launcher =
         rememberLauncherForActivityResult(contract = LinkAccountContract(), onResult = {
             /**We don't have to explicitly handle the result intent. The deep linking will
-             * automatically open the [AccountLinkedScreen] and ensure the backstack is correct.*/
+             * automatically open the [AccountLinkedScreen()] and ensure the backstack is correct.*/
         })
 
-    if (isGettingLinkUrl && uiState.haveValidLinkIntent()) {
+    if (isGettingLinkUrl && viewModel.uiState.haveValidLinkIntent()) {
         LaunchedEffect(key1 = viewModel) {
             isGettingLinkUrl = false
-            launcher.launch(uiState.linkUrl)
+            launcher.launch(viewModel.uiState.linkUrl)
         }
     }
 
     EditNameContent(
-        isLoading = uiState.isLoading,
-        personalInfo = uiState.personalInfo,
-        account = uiState.personalInfo.institutionAccounts.firstOrNull(),
+        isLoading = viewModel.uiState.isLoading,
+        personalInfo = viewModel.uiState.personalInfo,
+        account = viewModel.uiState.personalInfo.institutionAccounts.firstOrNull(),
         updateName = { givenName, familyName -> viewModel.updateName(givenName, familyName) },
         addLinkToAccount = {
             isGettingLinkUrl = true

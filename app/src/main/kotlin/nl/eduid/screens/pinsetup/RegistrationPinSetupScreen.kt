@@ -84,8 +84,8 @@ private fun RegistrationPinSetupContent(
     Column(modifier = Modifier.fillMaxSize()) {
         if (uiState.errorData != null) {
             AlertDialogWithSingleButton(
-                title = uiState.errorData.title,
-                explanation = uiState.errorData.message,
+                title = uiState.errorData.title(context),
+                explanation = uiState.errorData.message(context),
                 buttonLabel = stringResource(R.string.button_ok),
                 onDismiss = {
                     viewModel.dismissError()

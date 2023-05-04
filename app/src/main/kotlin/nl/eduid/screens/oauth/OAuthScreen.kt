@@ -16,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -59,7 +58,6 @@ fun OAuthScreen(
 ) = EduIdTopAppBar(
     onBackClicked = goToPrevious,
 ) {
-    val uiState by viewModel.uiState.observeAsState(UiState(OAuthStep.Loading))
     var oAuthUiStages by rememberSaveable { mutableStateOf(OAuthUiStages()) }
     val activity = LocalContext.current
     Timber.e("Current activity is launching oauth: ${activity.hashCode()}")
@@ -75,7 +73,7 @@ fun OAuthScreen(
             )
         })
 
-    if (oAuthUiStages.isFetchingToken && uiState.oauthStep is OAuthStep.Authorized) {
+    if (oAuthUiStages.isFetchingToken && viewModel.uiState.oauthStep is OAuthStep.Authorized) {
         val currentGoToPrevious by rememberUpdatedState(newValue = goToPrevious)
         LaunchedEffect(viewModel) {
             //Clear the uistages to prevent any back stack navigation issues.
@@ -84,7 +82,7 @@ fun OAuthScreen(
         }
     }
     OAuthContent(
-        uiState = uiState,
+        uiState = viewModel.uiState,
         isAuthorizationLaunched = oAuthUiStages.isAuthorizationLaunched,
         launchAuthorization = { intentAvailable ->
 //            Timber.e("0 - AppAuth intent available. Launching OAuth")

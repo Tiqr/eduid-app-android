@@ -14,6 +14,7 @@ import nl.eduid.di.model.RequestPhoneCode
 import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.di.model.Token
 import nl.eduid.di.model.TokenResponse
+import nl.eduid.di.model.UnauthorizedException
 import nl.eduid.di.model.UserDetails
 import timber.log.Timber
 import java.io.File
@@ -34,6 +35,31 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
             )
             null
         }
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to retrieve user details")
+        null
+    }
+
+    suspend fun getErringUserDetails(): UserDetails? = try {
+        val response = eduIdApi.getUserDetails()
+        if (response.isSuccessful) {
+            response.body()
+        } else {
+            if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
+                Timber.e("Unauthorized getUserDetails call")
+                throw UnauthorizedException("Unauthorized getUserDetails call")
+            } else {
+                Timber.w(
+                    "User details not available [${response.code()}/${response.message()}]${
+                        response.errorBody()?.string()
+                    }"
+                )
+                null
+            }
+        }
+    } catch (e: UnauthorizedException) {
+        //propagate unauthorized exception, capture everything else.
+        throw e
     } catch (e: Exception) {
         Timber.e(e, "Failed to retrieve user details")
         null
@@ -75,13 +101,21 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
         if (response.isSuccessful) {
             response.body()
         } else {
-            Timber.w(
-                "Failed to remove connection for [${response.code()}/${response.message()}]${
-                    response.errorBody()?.string()
-                }"
-            )
-            null
+            if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
+                Timber.e("Unauthorized removeService call")
+                throw UnauthorizedException("Unauthorized removeService call")
+            } else {
+                Timber.w(
+                    "Failed to remove connection for [${response.code()}/${response.message()}]${
+                        response.errorBody()?.string()
+                    }"
+                )
+                null
+            }
         }
+    } catch (e: UnauthorizedException) {
+        //propagate unauthorized exception, capture everything else.
+        throw e
     } catch (e: Exception) {
         Timber.e(e, "Failed to remove service with id $serviceId")
         null
@@ -109,13 +143,21 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
         if (response.isSuccessful) {
             response.body()
         } else {
-            Timber.w(
-                "Failed to remove connection for [${response.code()}/${response.message()}]${
-                    response.errorBody()?.string()
-                }"
-            )
-            null
+            if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
+                Timber.e("Unauthorized removeConnection call")
+                throw UnauthorizedException("Unauthorized removeConnection call")
+            } else {
+                Timber.w(
+                    "Failed to remove connection for [${response.code()}/${response.message()}]${
+                        response.errorBody()?.string()
+                    }"
+                )
+                null
+            }
         }
+    } catch (e: UnauthorizedException) {
+        //propagate unauthorized exception, capture everything else.
+        throw e
     } catch (e: Exception) {
         Timber.e(e, "Failed to remove connection for ${linkedAccount.institutionIdentifier}")
         null
@@ -126,47 +168,71 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
         if (response.isSuccessful) {
             response.body()
         } else {
-            Timber.w(
-                "Failed to update name [${response.code()}/${response.message()}]${
-                    response.errorBody()?.string()
-                }"
-            )
-            null
+            if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
+                Timber.e("Unauthorized updateName call")
+                throw UnauthorizedException("Unauthorized updateName call")
+            } else {
+                Timber.w(
+                    "Failed to update name [${response.code()}/${response.message()}]${
+                        response.errorBody()?.string()
+                    }"
+                )
+                null
+            }
         }
+    } catch (e: UnauthorizedException) {
+        //propagate unauthorized exception, capture everything else.
+        throw e
     } catch (e: Exception) {
         Timber.e(e, "Failed update name")
         null
     }
 
-    suspend fun getInstitutionName(schac_home: String): String? = try {
-        val response = eduIdApi.getInstitutionName(schac_home)
+    suspend fun getInstitutionName(schacHome: String): String? = try {
+        val response = eduIdApi.getInstitutionName(schacHome)
         if (response.isSuccessful) {
             response.body()?.displayNameEn
         } else {
-            Timber.w(
-                "Institution name lookup failed. [${response.code()}/${response.message()}]${
-                    response.errorBody()?.string()
-                }"
-            )
-            null
+            if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
+                Timber.e("Unauthorized getInstutitionName call")
+                throw UnauthorizedException("Unauthorized getInstitutionName call")
+            } else {
+                Timber.w(
+                    "Institution name lookup failed. [${response.code()}/${response.message()}]${
+                        response.errorBody()?.string()
+                    }"
+                )
+                null
+            }
         }
+    } catch (e: UnauthorizedException) {
+        throw e
     } catch (e: Exception) {
         Timber.e(e, "Failed to retrieve institution name")
         null
     }
+
 
     suspend fun getStartLinkAccount(): String? = try {
         val response = eduIdApi.getStartLinkAccount()
         if (response.isSuccessful) {
             response.body()?.url
         } else {
-            Timber.w(
-                "Failed to retrieve start link account URL: [${response.code()}/${response.message()}]${
-                    response.errorBody()?.string()
-                }"
-            )
-            null
+            if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
+                Timber.e("Unauthorized getStartLinkAccount call")
+                throw UnauthorizedException("Unauthorized getStartLinkAccount call")
+            } else {
+                Timber.w(
+                    "Failed to retrieve start link account URL: [${response.code()}/${response.message()}]${
+                        response.errorBody()?.string()
+                    }"
+                )
+                null
+            }
+
         }
+    } catch (e: UnauthorizedException) {
+        throw e
     } catch (e: Exception) {
         Timber.e(e, "Failed to retrieve start link account URL")
         null
