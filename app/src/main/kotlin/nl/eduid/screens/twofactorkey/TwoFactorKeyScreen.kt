@@ -12,12 +12,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
+import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.KeyInfoCard
 import nl.eduid.ui.theme.ButtonGreen
@@ -31,6 +33,16 @@ fun TwoFactorKeyScreen(
 ) = EduIdTopAppBar(
     onBackClicked = goBack
 ) {
+    viewModel.uiState.errorData?.let { errorData ->
+        val context = LocalContext.current
+        AlertDialogWithSingleButton(
+            title = errorData.title(context),
+            explanation = errorData.message(context),
+            buttonLabel = stringResource(R.string.button_ok),
+            onDismiss = viewModel::dismissError
+        )
+    }
+
     if (viewModel.uiState.keys.isEmpty()) {
         TwoFactorKeyScreenNoContent()
     } else {

@@ -83,4 +83,8 @@ class TwoFactorKeyViewModel @Inject constructor(
             uiState.keys.map { if (it == key) key.copy(isExpanded = !key.isExpanded) else it }
         uiState = uiState.copy(keys = newKeyList)
     }
+
+    fun dismissError() {
+        uiState = uiState.copy(errorData = null)
+    }
 }
