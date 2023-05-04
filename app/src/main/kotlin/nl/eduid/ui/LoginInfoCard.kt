@@ -3,6 +3,7 @@ package nl.eduid.ui
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -10,8 +11,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -34,21 +37,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import coil.compose.AsyncImage
 import nl.eduid.R
-import nl.eduid.screens.personalinfo.PersonalInfo
+import nl.eduid.screens.dataactivity.ServiceProvider
 import nl.eduid.ui.theme.BlueButton
 import nl.eduid.ui.theme.ButtonRed
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.InfoTabDarkFill
+import nl.eduid.ui.theme.TextBlack
 import nl.eduid.ui.theme.TextGrayScale
 import java.util.Locale
 
 @Composable
-fun ConnectionCard(
+fun LoginInfoCard(
     title: String,
     subtitle: String,
-    institutionInfo: PersonalInfo.InstitutionAccount? = null,
+    serviceProviderInfo: ServiceProvider? = null,
     isExpanded: Boolean = false,
-    onRemoveConnection: (id: String) -> Unit = { },
+    onDeleteButtonClicked: (id: String) -> Unit = { },
+    startIconLargeUrl: String = "",
 ) {
     val isOpen = remember { mutableStateOf(isExpanded) }
     Spacer(Modifier.height(6.dp))
@@ -60,22 +67,42 @@ fun ConnectionCard(
         .sizeIn(minHeight = 72.dp)
         .fillMaxWidth()
         .clickable {
-            if (institutionInfo != null) {
+            if (serviceProviderInfo != null) {
                 isOpen.value = !isOpen.value
             }
         }
+        .background(InfoTabDarkFill)
         .animateContentSize()) {
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 18.dp, end = 18.dp, top = 12.dp, bottom = 12.dp)
         ) {
-            val (titleArea, endImage, expandedArea) = createRefs()
+            val (startImage, titleArea, endImage, expandedArea) = createRefs()
+            Box(modifier = Modifier
+                .constrainAs(startImage) {
+                    top.linkTo(titleArea.top)
+                    bottom.linkTo(titleArea.bottom)
+                    start.linkTo(parent.start)
+                }
+                .height(48.dp)) {
+                if (startIconLargeUrl.isNotBlank()) {
+                    AsyncImage(
+                        model = startIconLargeUrl,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(end = 12.dp)
+                            .heightIn(max = 48.dp)
+                            .widthIn(max = 48.dp),
+                    )
+                }
+            }
 
             Column(horizontalAlignment = Alignment.Start,
                 modifier = Modifier.constrainAs(titleArea) {
                     top.linkTo(parent.top)
-                    start.linkTo(parent.start)
+                    start.linkTo(startImage.end)
                     end.linkTo(endImage.start)
                     width = Dimension.fillToConstraints
                 }) {
@@ -96,15 +123,18 @@ fun ConnectionCard(
                     ),
                 )
             }
-            if (isOpen.value && institutionInfo != null) {
-                Column(horizontalAlignment = Alignment.Start,
+            if (isOpen.value && serviceProviderInfo != null) {
+                Column(
+                    horizontalAlignment = Alignment.Start,
                     modifier = Modifier.constrainAs(expandedArea) {
                         top.linkTo(titleArea.bottom, margin = 24.dp)
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
-                    }) {
-                    InstitutionInfoBlock(institutionInfo, onRemoveConnection)
+                    },
+                ) {
+                    ServiceProviderBlock(serviceProviderInfo, onDeleteButtonClicked)
                 }
+
             }
             Image(painter = painterResource(R.drawable.chevron_down),
                 contentDescription = "",
@@ -121,34 +151,24 @@ fun ConnectionCard(
 }
 
 @Composable
-private fun InstitutionInfoBlock(
-    institutionInfo: PersonalInfo.InstitutionAccount,
+private fun ServiceProviderBlock(
+    serviceProviderInfo: ServiceProvider,
     onDeleteButtonClicked: (id: String) -> Unit,
 ) = Column(
     Modifier.fillMaxWidth()
 ) {
+    InfoRow(label = stringResource(R.string.infotab_login_details))
     InfoRow(
-        label = stringResource(
-            R.string.personalinfo_verified_by_on,
-            institutionInfo.institution,
-            institutionInfo.createdStamp.getDateString()
-        )
+        label = stringResource(R.string.infotab_login_first),
+        value = serviceProviderInfo.firstLoginStamp.getDateString()
     )
     InfoRow(
-        label = stringResource(R.string.personalinfo_institution),
-        value = institutionInfo.institution
-    )
-    InfoRow(
-        label = stringResource(R.string.personalinfo_affiliations),
-        value = institutionInfo.affiliationString
-    )
-    InfoRow(
-        label = stringResource(R.string.personalinfo_expires),
-        value = institutionInfo.expiryStamp.getDateString()
+        label = stringResource(R.string.infotab_login_unique_eduid),
+        value = serviceProviderInfo.uniqueId
     )
     Button(
         shape = RoundedCornerShape(CornerSize(6.dp)),
-        onClick = { onDeleteButtonClicked(institutionInfo.id) },
+        onClick = { onDeleteButtonClicked(serviceProviderInfo.uniqueId) },
         border = BorderStroke(1.dp, Color.Red),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
         modifier = Modifier
@@ -156,29 +176,35 @@ private fun InstitutionInfoBlock(
             .fillMaxWidth(),
     ) {
         Text(
-            text = stringResource(R.string.infotab_remove_connection),
+            text = stringResource(R.string.infotab_delete_login_details),
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = ButtonRed, fontWeight = FontWeight.SemiBold
             )
         )
     }
+    Spacer(Modifier.height(24.dp))
+    Text(
+        text = stringResource(R.string.data_info_delete_disclaimer),
+        style = MaterialTheme.typography.bodySmall.copy(
+            textAlign = TextAlign.Start,
+            color = TextBlack,
+        ),
+    )
+    Spacer(Modifier.height(32.dp))
 }
+
 
 @Preview
 @Composable
-private fun PreviewConnectionCard() = EduidAppAndroidTheme {
-    ConnectionCard(
-        title = "Librarian",
-        subtitle = "Urangutan",
-        institutionInfo = PersonalInfo.InstitutionAccount(
-            id = "id",
-            role = "Librarian",
-            roleProvider = "Library",
-            institution = "Unseen University",
-            affiliationString = "Librarian",
+private fun PreviewLoginInfoCard() = EduidAppAndroidTheme {
+    LoginInfoCard(
+        title = "My eduid", subtitle = "on Date", serviceProviderInfo = ServiceProvider(
+            providerName = "Provider name",
             createdStamp = 0L,
-            expiryStamp = 0L
-        ),
-        isExpanded = true
+            firstLoginStamp = 0L,
+            uniqueId = "uniqueId",
+            serviceProviderEntityId = "service provider id",
+            providerLogoUrl = ""
+        ), isExpanded = true
     )
 }

@@ -226,6 +226,9 @@
     <string name="delete_account_two_description">Als je wilt doorgaan, typ dan je volledige naam zoals bekend in je eduID account ter bevestiging.</string>
     <string name="infotab_remove_connection">Verwijder koppeling</string>
     <string name="infotab_login_details">inlog gegevens</string>
+    <string name="infotab_login_first">Eerste keer inloggen</string>
+    <string name="infotab_login_unique_eduid">Unieke eduid</string>
+
     <string name="infotab_name">Naam</string>
     <string name="infotab_fullname">Volledige naam</string>
     <string name="infotab_email">E-mail</string>

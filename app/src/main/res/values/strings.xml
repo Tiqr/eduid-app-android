@@ -226,6 +226,8 @@
     <string name="delete_account_two_description">If you wish to proceed, please type in your full name for confirmation.</string>
     <string name="infotab_remove_connection">Remove connection</string>
     <string name="infotab_login_details">Login Details</string>
+    <string name="infotab_login_first">First Login</string>
+    <string name="infotab_login_unique_eduid">Unique eduid</string>
     <string name="infotab_name">Name</string>
     <string name="infotab_fullname">Full Name</string>
     <string name="infotab_email">Email</string>

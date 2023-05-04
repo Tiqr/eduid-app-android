@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
-import nl.eduid.ui.InfoTab
+import nl.eduid.ui.LoginInfoCard
 import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
@@ -99,15 +99,13 @@ fun DataAndActivityScreenContent(
         )
     } else {
         data.forEach { provider ->
-            InfoTab(
+            LoginInfoCard(
                 startIconLargeUrl = provider.providerLogoUrl,
                 title = provider.providerName,
                 subtitle = stringResource(
                     R.string.data_info_on_date, provider.firstLoginStamp.getDateTimeString()
                 ),
-                onClick = { },
                 onDeleteButtonClicked = { goToConfirmDeleteService(provider) },
-                endIcon = R.drawable.chevron_down,
                 serviceProviderInfo = provider,
             )
         }
