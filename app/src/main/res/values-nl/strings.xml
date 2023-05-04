@@ -298,4 +298,5 @@
     <string name="err_msg_pass_do_not_match">Wachtwoorden zijn niet hetzelfde</string>
     <string name="err_msg_pass_invalid_hash">Ongeldige wachtwoord-hash, stuur de e-maillink opnieuw.</string>
     <string name="err_msg_pass_missing_hash">Ontbrekende wachtwoord-hash, stuur de e-maillink opnieuw.</string>
+    <string name="err_msg_delete_key_lost">De sleutel die u wilt verwijderen, kan is niet gevonden.</string>
 </resources>

@@ -305,4 +305,5 @@
     <string name="err_msg_pass_do_not_match">Passwords do not match</string>
     <string name="err_msg_pass_invalid_hash">Invalid password hash, please resend email link.</string>
     <string name="err_msg_pass_missing_hash">Missing password hash, please resend email link.</string>
+    <string name="err_msg_delete_key_lost">Cannot find key for deletion.</string>
 </resources>
