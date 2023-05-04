@@ -4,7 +4,6 @@ import android.content.res.Resources
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.auth0.android.jwt.JWT
@@ -46,7 +45,8 @@ class HomePageViewModel @Inject constructor(
 ) : BaseViewModel(moshi) {
 
     val isAuthorizedForDataAccess = repository.isAuthorized.asLiveData()
-    val uiState = MutableLiveData(UiState())
+    var uiState by mutableStateOf(UiState())
+        private set
     var isEnrolledState: IsEnrolled by mutableStateOf(IsEnrolled.Unknown)
         private set
 
@@ -73,101 +73,89 @@ class HomePageViewModel @Inject constructor(
     }
 
     fun triggerPromptForAuth() {
-        uiState.value = uiState.value?.copy(promptForAuth = Unit)
+        uiState = uiState.copy(promptForAuth = Unit)
     }
 
     fun clearPromptForAuthTrigger() {
-        uiState.value = uiState.value?.copy(promptForAuth = null)
+        uiState = uiState.copy(promptForAuth = null)
     }
 
     fun clearCurrentChallenge() {
-        uiState.value = uiState.value?.copy(currentChallenge = null)
+        uiState = uiState.copy(currentChallenge = null)
     }
 
     fun dismissError() {
-        uiState.value = uiState.value?.copy(inProgress = false, errorData = null)
+        uiState = uiState.copy(inProgress = false, errorData = null)
     }
 
     fun startEnrollmentAfterAccountCreation() = viewModelScope.launch {
-        uiState.postValue(uiState.value?.copy(inProgress = true))
+        uiState = uiState.copy(inProgress = true)
         val requireAuth = repository.isAuthorized.firstOrNull()
         if (requireAuth == false) {
-            uiState.postValue(uiState.value?.copy(inProgress = false, promptForAuth = Unit))
+            uiState = uiState.copy(inProgress = false, promptForAuth = Unit)
         } else {
             startEnrollmentWithoutOAuthCheck()
         }
     }
 
     fun startEnrollmentAfterSignIn() = viewModelScope.launch {
-        uiState.postValue(uiState.value?.copy(inProgress = true))
+        uiState = uiState.copy(inProgress = true)
         val userDetails = personalRepository.getUserDetails()
         if (userDetails != null) {
             val existingTiqrKey = identityRepository.identity(userDetails.id).firstOrNull()
             if (userDetails.hasAppRegistered()) {
                 if (existingTiqrKey == null) {
                     Timber.i("Cannot continue enrolment. Must first deactivate current app")
-                    uiState.postValue(
-                        uiState.value?.copy(
-                            inProgress = false, preEnrollCheck = PreEnrollCheck.DeactivateExisting
-                        )
+                    uiState = uiState.copy(
+                        inProgress = false, preEnrollCheck = PreEnrollCheck.DeactivateExisting
                     )
                 } else {
                     Timber.i("Local enrolment was completed previously. This should not be possible: Login button is not accessible while there is a local key.")
-                    uiState.postValue(
-                        uiState.value?.copy(
-                            inProgress = false, preEnrollCheck = PreEnrollCheck.AlreadyCompleted
-                        )
+                    uiState = uiState.copy(
+                        inProgress = false, preEnrollCheck = PreEnrollCheck.AlreadyCompleted
                     )
                 }
             } else {
                 if (existingTiqrKey == null) {
                     startEnrollmentWithoutOAuthCheck()
                 } else {
-                    uiState.postValue(
-                        uiState.value?.copy(
-                            inProgress = false, preEnrollCheck = PreEnrollCheck.Incomplete
-                        )
+                    uiState = uiState.copy(
+                        inProgress = false, preEnrollCheck = PreEnrollCheck.Incomplete
                     )
                     Timber.i("Local enrolment is invalid/expired. Offer to remove current key? This should not be possible: Login button is not accessible while there is a local key.")
                 }
             }
         } else {
             Timber.i("Local enrolment was completed previously. This should not be possible: Login button is not accessible while there is a local key.")
-            uiState.postValue(
-                uiState.value?.copy(
-                    inProgress = false, preEnrollCheck = PreEnrollCheck.MissingAccount
-                )
+            uiState = uiState.copy(
+                inProgress = false, preEnrollCheck = PreEnrollCheck.MissingAccount
             )
-
         }
     }
 
     fun clearPreEnrollCheck() {
-        uiState.value = uiState.value?.copy(preEnrollCheck = null)
+        uiState = uiState.copy(preEnrollCheck = null)
     }
 
     fun clearDeactivation() {
-        uiState.value = uiState.value?.copy(deactivateFor = null)
+        uiState = uiState.copy(deactivateFor = null)
     }
 
     fun requestDeactivationCode() = viewModelScope.launch {
-        uiState.postValue(uiState.value?.copy(inProgress = true, preEnrollCheck = null))
+        uiState = uiState.copy(inProgress = true, preEnrollCheck = null)
         val userDetails = personalRepository.getUserDetails()
         val knownPhoneNumber = "*${userDetails?.registration?.phoneNumber}"
         val codeRequested = personalRepository.requestDeactivationForKnownPhone()
         if (codeRequested) {
-            uiState.postValue(
-                uiState.value?.copy(
-                    inProgress = false, deactivateFor = DeactivateFor(knownPhoneNumber)
-                )
+            uiState = uiState.copy(
+                inProgress = false, deactivateFor = DeactivateFor(knownPhoneNumber)
             )
         } else {
-            uiState.postValue(
-                uiState.value?.copy(
-                    inProgress = false, errorData = ErrorData(
-                        "Failed to request deactivation code",
-                        "Could not receive deactivation code on phone number: $knownPhoneNumber"
-                    )
+            uiState = uiState.copy(
+                inProgress = false, errorData = ErrorData(
+                    titleId = R.string.err_title_deactivate_request_fail,
+                    messageId = R.string.err_msg_deactivate_request_fail,
+                    messageArg = knownPhoneNumber
                 )
             )
         }
@@ -178,19 +166,15 @@ class HomePageViewModel @Inject constructor(
         if (response != null) {
             val challenge = parseChallenge(response.url)
             if (challenge is ChallengeParseResult.Success && challenge.value is EnrollmentChallenge) {
-                uiState.postValue(
-                    uiState.value?.copy(
-                        inProgress = false, currentChallenge = challenge.value, errorData = null
-                    )
+                uiState = uiState.copy(
+                    inProgress = false, currentChallenge = challenge.value, errorData = null
                 )
-
             }
         } else {
-            uiState.postValue(
-                uiState.value?.copy(
-                    inProgress = false, currentChallenge = null, errorData = ErrorData(
-                        title = "Invalid enroll request", message = "Cannot parse enroll challenge"
-                    )
+            uiState = uiState.copy(
+                inProgress = false, currentChallenge = null, errorData = ErrorData(
+                    titleId = R.string.err_title_enroll_fail,
+                    messageId = R.string.err_msg_enroll_parse_fail,
                 )
             )
         }

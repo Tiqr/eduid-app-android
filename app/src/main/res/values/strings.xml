@@ -306,4 +306,10 @@
     <string name="err_msg_pass_invalid_hash">Invalid password hash, please resend email link.</string>
     <string name="err_msg_pass_missing_hash">Missing password hash, please resend email link.</string>
     <string name="err_msg_delete_key_lost">Cannot find key for deletion.</string>
+
+    <string name="err_title_deactivate_request_fail">Failed to request deactivation code</string>
+    <string name="err_msg_deactivate_request_fail">Could not request deactivation code for known phone number: %s.</string>
+
+    <string name="err_title_enroll_fail">Invalid enroll request</string>
+    <string name="err_msg_enroll_parse_fail">Cannot parse enroll challenge.</string>
 </resources>

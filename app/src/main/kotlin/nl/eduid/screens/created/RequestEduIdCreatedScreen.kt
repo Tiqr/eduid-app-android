@@ -1,13 +1,22 @@
 package nl.eduid.screens.created
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -24,7 +33,6 @@ import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.util.LogCompositions
 import org.tiqr.data.model.EnrollmentChallenge
 
 @Composable
@@ -33,28 +41,32 @@ fun RequestEduIdCreatedScreen(
     viewModel: HomePageViewModel,
     goToOAuth: () -> Unit,
     goToRegistrationPinSetup: (EnrollmentChallenge) -> Unit,
+) = EduIdTopAppBar(
+    withBackIcon = false,
 ) {
-    EduIdTopAppBar(
-        withBackIcon = false,
-    ) {
-        val uiState by viewModel.uiState.observeAsState(initial = UiState())
+    viewModel.uiState.errorData?.let { errorData ->
+        val context = LocalContext.current
+        AlertDialogWithSingleButton(
+            title = errorData.title(context),
+            explanation = errorData.message(context),
+            buttonLabel = stringResource(R.string.button_ok),
+            onDismiss = viewModel::dismissError
+        )
+    }
 
-        if (!justCreated) {
-            RequestEduIdFailedCreationContent()
-        } else {
-            RequestEduIdCreatedContent(
-                uiState = uiState,
-                goToOAuth = {
-                    goToOAuth()
-                    viewModel.clearPromptForAuthTrigger()
-                },
-                startEnrollment = viewModel::startEnrollmentAfterAccountCreation,
-                goToRegistrationPinSetup = { challenge ->
-                    goToRegistrationPinSetup(challenge)
-                    viewModel.clearCurrentChallenge()
-                },
-                dismissError = viewModel::dismissError
-            )
+    if (!justCreated) {
+        RequestEduIdFailedCreationContent()
+    } else {
+        RequestEduIdCreatedContent(
+            uiState = viewModel.uiState,
+            goToOAuth = {
+                goToOAuth()
+                viewModel.clearPromptForAuthTrigger()
+            },
+            startEnrollment = viewModel::startEnrollmentAfterAccountCreation
+        ) { challenge ->
+            goToRegistrationPinSetup(challenge)
+            viewModel.clearCurrentChallenge()
         }
     }
 }
@@ -65,20 +77,10 @@ private fun RequestEduIdCreatedContent(
     goToOAuth: () -> Unit = {},
     startEnrollment: () -> Unit = {},
     goToRegistrationPinSetup: (EnrollmentChallenge) -> Unit = { _ -> },
-    dismissError: () -> Unit = {},
 ) = Column(modifier = Modifier.fillMaxSize()) {
-    if (uiState.errorData != null) {
-        val context = LocalContext.current
-        AlertDialogWithSingleButton(
-            title = uiState.errorData.title(context),
-            explanation = uiState.errorData.message(context),
-            buttonLabel = stringResource(R.string.button_ok),
-            onDismiss = dismissError
-        )
-    }
+
     var waitingForVmEvent by rememberSaveable { mutableStateOf(false) }
     val owner = LocalLifecycleOwner.current
-    LogCompositions(msg = "Account created.\nWait for VM event?: $waitingForVmEvent. \nUI State: $uiState")
     if (waitingForVmEvent && uiState.promptForAuth != null) {
         val currentGoToAuth by rememberUpdatedState(newValue = goToOAuth)
         LaunchedEffect(key1 = owner) {
