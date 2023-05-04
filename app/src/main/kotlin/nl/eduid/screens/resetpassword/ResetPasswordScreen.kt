@@ -16,10 +16,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -29,7 +30,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import nl.eduid.ErrorData
+import androidx.lifecycle.flowWithLifecycle
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import nl.eduid.R
 import nl.eduid.graphs.RequestEduIdLinkSent.ADD_PASSWORD_REASON
 import nl.eduid.graphs.RequestEduIdLinkSent.CHANGE_PASSWORD_REASON
@@ -50,17 +53,41 @@ fun ResetPasswordScreen(
 ) = EduIdTopAppBar(
     onBackClicked = goBack,
 ) {
-    val uiState by viewModel.uiState.observeAsState(UiState())
+    var waitForVmEvent by rememberSaveable { mutableStateOf(false) }
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+
+    viewModel.uiState.errorData?.let { errorData ->
+        val context = LocalContext.current
+        AlertDialogWithSingleButton(
+            title = errorData.title(context),
+            explanation = errorData.message(context),
+            buttonLabel = stringResource(R.string.button_ok),
+            onDismiss = viewModel::dismissError
+        )
+    }
+
+    if (waitForVmEvent) {
+        val currentGoToEmailSent by rememberUpdatedState(newValue = goToEmailSent)
+        LaunchedEffect(viewModel, lifecycle) {
+            snapshotFlow { viewModel.uiState }.distinctUntilChanged()
+                .filter { it.isCompleted != null }.flowWithLifecycle(lifecycle).collect {
+                    waitForVmEvent = false
+                    currentGoToEmailSent(
+                        viewModel.uiState.emailUsed,
+                        if (viewModel.uiState.password == Password.Add) ADD_PASSWORD_REASON else CHANGE_PASSWORD_REASON
+                    )
+                    viewModel.clearCompleted()
+                }
+        }
+    }
+
     ResetPasswordScreenContent(
-        password = uiState.password,
-        emailUsed = uiState.emailUsed,
-        inProgress = uiState.inProgress,
-        errorData = uiState.errorData,
-        requestCompleted = uiState.requestCompleted,
-        dismissError = viewModel::clearErrorData,
-        onResetPasswordClicked = viewModel::resetPasswordLink,
-        clearCompleted = viewModel::clearCompleted,
-        goToEmailSent = goToEmailSent,
+        password = viewModel.uiState.password,
+        inProgress = viewModel.uiState.inProgress,
+        onResetPasswordClicked = {
+            viewModel.resetPasswordLink()
+            waitForVmEvent = true
+        },
         goBack = goBack,
     )
 }
@@ -68,39 +95,12 @@ fun ResetPasswordScreen(
 @Composable
 fun ResetPasswordScreenContent(
     password: Password = Password.Add,
-    emailUsed: String = "",
     inProgress: Boolean,
-    errorData: ErrorData? = null,
-    requestCompleted: Unit? = null,
-    dismissError: () -> Unit = {},
     onResetPasswordClicked: () -> Unit = {},
-    goToEmailSent: (String, String) -> Unit = { _, _ -> },
-    clearCompleted: () -> Unit = {},
     goBack: () -> Unit = {},
 ) = ConstraintLayout(
     modifier = Modifier.fillMaxSize()
 ) {
-    var processing by rememberSaveable { mutableStateOf(false) }
-    val owner = LocalLifecycleOwner.current
-    if (errorData != null) {
-        val context = LocalContext.current
-        AlertDialogWithSingleButton(
-            title = errorData.title(context),
-            explanation = errorData.message(context),
-            buttonLabel = stringResource(R.string.button_ok),
-            onDismiss = dismissError
-        )
-    }
-    if (processing && requestCompleted != null) {
-        LaunchedEffect(owner) {
-            processing = false
-            goToEmailSent(
-                emailUsed,
-                if (password == Password.Add) ADD_PASSWORD_REASON else CHANGE_PASSWORD_REASON
-            )
-            clearCompleted()
-        }
-    }
 
     val (body, bottomColumn) = createRefs()
     Column(verticalArrangement = Arrangement.Top, modifier = Modifier
@@ -161,10 +161,7 @@ fun ResetPasswordScreenContent(
                     enabled = !inProgress,
                     modifier = Modifier.widthIn(min = 140.dp),
                     text = stringResource(R.string.reset_password_confirm_button),
-                    onClick = {
-                        onResetPasswordClicked()
-                        processing = true
-                    },
+                    onClick = onResetPasswordClicked,
                     buttonBackgroundColor = ButtonBlue,
                     buttonTextColor = Color.White,
                 )
@@ -177,6 +174,6 @@ fun ResetPasswordScreenContent(
 @Composable
 private fun PreviewResetPasswordScreenContent() = EduidAppAndroidTheme {
     ResetPasswordScreenContent(
-        password = Password.Add, emailUsed = "vetinary@discworld.com", inProgress = false
+        password = Password.Add, inProgress = false
     )
 }

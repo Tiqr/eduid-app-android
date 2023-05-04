@@ -298,4 +298,11 @@
     <string name="err_msg_invalid_challenge">Cannot parse enrollment challenge, challenge is invalid.</string>
     <string name="err_msg_request_sms_validation_fail">Could not request SMS code, please retry.</string>
     <string name="err_msg_confirm_sms_validation_fail">SMS code not confirmed, please retry.</string>
+    <string name="err_msg_cannot_request_reset_pass">Could not request reset password link.</string>
+
+    <string name="err_title_cannot_update_pass">Cannot update password</string>
+    <string name="err_msg_pass_is_invalid">Chosen password is invalid.</string>
+    <string name="err_msg_pass_do_not_match">Passwords do not match</string>
+    <string name="err_msg_pass_invalid_hash">Invalid password hash, please resend email link.</string>
+    <string name="err_msg_pass_missing_hash">Missing password hash, please resend email link.</string>
 </resources>

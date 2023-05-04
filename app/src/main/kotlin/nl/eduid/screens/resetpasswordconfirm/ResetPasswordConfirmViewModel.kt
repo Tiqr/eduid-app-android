@@ -1,12 +1,15 @@
 package nl.eduid.screens.resetpasswordconfirm
 
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
+import nl.eduid.R
 import nl.eduid.di.api.EduIdApi
 import nl.eduid.di.model.UpdatePasswordRequest
 import nl.eduid.graphs.ConfigurePassword
@@ -20,95 +23,95 @@ class ResetPasswordConfirmViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val passwordHash: String
-    val uiState = MutableLiveData(UiState())
+    var uiState by mutableStateOf(UiState())
+        private set
 
     init {
         passwordHash = savedStateHandle.get<String>(ConfigurePassword.Form.passwordHashArg) ?: ""
     }
 
     fun onNewPasswordInput(newValue: String) {
-        uiState.value = uiState.value?.copy(newPasswordInput = newValue)
+        uiState = uiState.copy(newPasswordInput = newValue)
     }
 
     fun onConfirmPasswordInput(newValue: String) {
-        uiState.value = uiState.value?.copy(confirmPasswordInput = newValue)
+        uiState = uiState.copy(confirmPasswordInput = newValue)
     }
 
-    fun clearErrorState() {
-        uiState.value = uiState.value?.copy(errorData = null, isCompleted = null)
+    fun dismissError() {
+        uiState = uiState.copy(errorData = null, isCompleted = null)
     }
 
 
     fun onResetPasswordClicked() {
-        val currentState = uiState.value ?: UiState()
-        if (currentState.passwordIsValid() && passwordHash.isNotEmpty()) {
-            uiState.value = currentState.copy(inProgress = true)
-            changePassword(currentState, newPassword = currentState.newPasswordInput)
+        if (uiState.passwordIsValid() && passwordHash.isNotEmpty()) {
+            uiState = uiState.copy(inProgress = true)
+            changePassword(uiState, newPassword = uiState.newPasswordInput)
         } else {
-            val detailMessage =
-                if (!currentState.passwordIsValid()) "Passwords do not match." else "No valid password has was received."
-            uiState.value = currentState.copy(
+            val detailMessage = if (uiState.newPasswordInput.isNullOrEmpty()) {
+                R.string.err_msg_pass_is_invalid
+            } else if (uiState.newPasswordInput != uiState.confirmPasswordInput) {
+                R.string.err_msg_pass_do_not_match
+            } else {
+                R.string.err_msg_pass_missing_hash
+            }
+            uiState = uiState.copy(
                 errorData = ErrorData(
-                    "Cannot update password", detailMessage
+                    titleId = R.string.err_title_cannot_update_pass,
+                    messageId = detailMessage
                 )
             )
         }
     }
 
     fun onDeletePasswordClicked() {
-        val currentState = uiState.value ?: UiState()
-        uiState.value = currentState.copy(inProgress = true)
-        changePassword(currentState, newPassword = "")
+        uiState = uiState.copy(inProgress = true)
+        changePassword(uiState, newPassword = "")
     }
 
-    fun completedShown() {
-        uiState.value = uiState.value?.copy(isCompleted = null)
+    fun clearCompleted() {
+        uiState = uiState.copy(isCompleted = null)
     }
 
-    private fun changePassword(currentState: UiState, newPassword: String) {
-        viewModelScope.launch {
-            try {
-                val hashIsValidResponse = eduIdApi.checkHashIsValid(passwordHash)
-                if (hashIsValidResponse.isSuccessful && hashIsValidResponse.body() == true) {
-                    val response = eduIdApi.updatePassword(
-                        UpdatePasswordRequest(
-                            newPassword = newPassword, hash = passwordHash
-                        )
+    private fun changePassword(currentState: UiState, newPassword: String) = viewModelScope.launch {
+        try {
+            val hashIsValidResponse = eduIdApi.checkHashIsValid(passwordHash)
+            if (hashIsValidResponse.isSuccessful && hashIsValidResponse.body() == true) {
+                val response = eduIdApi.updatePassword(
+                    UpdatePasswordRequest(newPassword = newPassword, hash = passwordHash)
+                )
+                if (response.isSuccessful) {
+                    uiState = currentState.copy(
+                        inProgress = false, isCompleted = Unit, errorData = null
                     )
-                    if (response.isSuccessful) {
-                        uiState.postValue(
-                            currentState.copy(
-                                inProgress = false, isCompleted = Unit, errorData = null
-                            )
-                        )
-                    } else {
-                        uiState.postValue(
-                            currentState.copy(
-                                inProgress = false, isCompleted = null, errorData = ErrorData(
-                                    title = "Failed to update password",
-                                    message = "Cannot update password"
-                                )
-                            )
-                        )
-                    }
                 } else {
-                    uiState.postValue(
-                        currentState.copy(
-                            inProgress = false, isCompleted = null, errorData = ErrorData(
-                                title = "Failed to update password",
-                                message = "Invalid password hash, resend email link."
-                            )
+                    uiState = currentState.copy(
+                        inProgress = false, isCompleted = null, errorData = ErrorData(
+                            titleId = R.string.err_title_cannot_update_pass,
+                            messageId = R.string.err_msg_auth_unexpected_arg,
+                            messageArg = "[${response.code()}/${response.message()}]${
+                                response.errorBody()?.string()
+                            }",
                         )
                     )
                 }
-            } catch (e: Exception) {
-                uiState.postValue(
-                    currentState.copy(
-                        inProgress = false, errorData = ErrorData("Failed to update password", "")
+            } else {
+                uiState = currentState.copy(
+                    inProgress = false, isCompleted = null, errorData = ErrorData(
+                        titleId = R.string.err_title_cannot_update_pass,
+                        messageId = R.string.err_msg_pass_invalid_hash,
                     )
                 )
-                Timber.e(e, "Failed to update password")
             }
+        } catch (e: Exception) {
+            uiState = currentState.copy(
+                inProgress = false, errorData = ErrorData(
+                    titleId = R.string.err_title_cannot_update_pass,
+                    messageId = R.string.err_msg_auth_unexpected_arg,
+                    messageArg = e.message ?: e.javaClass.simpleName,
+                )
+            )
+            Timber.e(e, "Failed to update password")
         }
     }
 }

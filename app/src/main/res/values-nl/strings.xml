@@ -292,4 +292,10 @@
     <string name="err_msg_invalid_challenge">Kan de inschrijvingsuitdaging niet parseren, de uitdaging is ongeldig.</string>
     <string name="err_msg_request_sms_validation_fail">Kan geen sms-code aanvragen, probeer het opnieuw.</string>
     <string name="err_msg_confirm_sms_validation_fail">SMS-code niet bevestigd, probeer het opnieuw.</string>
+    <string name="err_msg_cannot_request_reset_pass">Kan de link voor het opnieuw instellen van het wachtwoord niet aanvragen.</string>
+    <string name="err_title_cannot_update_pass">Wachtwoord kan niet worden bijgewerkt</string>
+    <string name="err_msg_pass_is_invalid">Het gekozen wachtwoord is ongeldig.</string>
+    <string name="err_msg_pass_do_not_match">Wachtwoorden zijn niet hetzelfde</string>
+    <string name="err_msg_pass_invalid_hash">Ongeldige wachtwoord-hash, stuur de e-maillink opnieuw.</string>
+    <string name="err_msg_pass_missing_hash">Ontbrekende wachtwoord-hash, stuur de e-maillink opnieuw.</string>
 </resources>
