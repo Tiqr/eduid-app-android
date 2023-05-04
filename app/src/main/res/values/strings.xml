@@ -136,8 +136,11 @@
     <string name="security_subtitle">We provide different methods to sign in to your eduID account.</string>
 
     <string name="two_fa_key_title">2FA key(s)</string>
+    <string name="two_fa_key_list_title">Your key(s)</string>
     <string name="two_fa_key_subtitle">Keys to securely sign in without passwords or accessing your email.</string>
     <string name="two_fa_key_empty">You have no local keys</string>
+    <string name="two_fa_use_biometric">Use Biometrics</string>
+    <string name="two_fa_delete">Delete key</string>
 
     <string name="add_password_title">Add password</string>
     <string name="change_password_title">Change or delete password</string>

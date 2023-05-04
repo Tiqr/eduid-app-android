@@ -57,12 +57,51 @@ import nl.eduid.ui.theme.TextGrayScale
 import java.util.Locale
 
 @Composable
+fun InfoField(
+    title: String,
+    subtitle: String,
+    onClick: () -> Unit = {},
+    @DrawableRes endIcon: Int = 0,
+) = Row(modifier = Modifier
+    .clip(RoundedCornerShape(6.dp))
+    .border(
+        width = 3.dp, color = BlueButton
+    )
+    .sizeIn(minHeight = 72.dp)
+    .padding(start = 18.dp, end = 18.dp, top = 12.dp, bottom = 12.dp)
+    .fillMaxWidth()
+    .clickable {
+        onClick()
+    }) {
+    Column {
+        Text(
+            text = title.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
+            style = MaterialTheme.typography.bodyLarge.copy(
+                textAlign = TextAlign.Start, fontWeight = FontWeight.Bold, lineHeight = 20.sp
+            ),
+        )
+        Spacer(Modifier.height(4.dp))
+        Text(
+            text = subtitle,
+            style = MaterialTheme.typography.bodySmall.copy(
+                textAlign = TextAlign.Start,
+                color = TextGrayScale,
+            ),
+        )
+    }
+    Image(
+        painter = painterResource(endIcon),
+        contentDescription = "",
+        modifier = Modifier.padding(start = 12.dp)
+    )
+}
+
+@Composable
 fun InfoTab(
     header: String = "",
     title: String,
     subtitle: String,
     onClick: () -> Unit,
-    enabled: Boolean = true,
     twoFactorData: IdentityData? = null,
     onDeleteButtonClicked: (id: String) -> Unit = { },
     institutionInfo: PersonalInfo.InstitutionAccount? = null,
@@ -81,40 +120,35 @@ fun InfoTab(
         )
     }
     Spacer(Modifier.height(6.dp))
-    Box(
-        modifier = Modifier
-            .clip(RoundedCornerShape(6.dp))
-            .border(
-                width = (if (enabled) 3.dp else 1.dp),
-                color = (if (enabled) BlueButton else TextGrayScale)
-            )
-            .sizeIn(minHeight = 72.dp)
-            .fillMaxWidth()
-            .clickable {
-                if (institutionInfo != null || serviceProviderInfo != null || twoFactorData != null) {
-                    isOpen.value = !isOpen.value
-                } else {
-                    onClick.invoke()
-                }
+    Box(modifier = Modifier
+        .clip(RoundedCornerShape(6.dp))
+        .border(
+            width = 3.dp, color = BlueButton
+        )
+        .sizeIn(minHeight = 72.dp)
+        .fillMaxWidth()
+        .clickable {
+            if (institutionInfo != null || serviceProviderInfo != null || twoFactorData != null) {
+                isOpen.value = !isOpen.value
+            } else {
+                onClick.invoke()
             }
-            .background(if (serviceProviderInfo != null || twoFactorData != null) InfoTabDarkFill else Color.Transparent)
-            .animateContentSize()
-    ) {
+        }
+        .background(if (serviceProviderInfo != null || twoFactorData != null) InfoTabDarkFill else Color.Transparent)
+        .animateContentSize()) {
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 18.dp, end = 18.dp, top = 12.dp, bottom = 12.dp)
         ) {
             val (startImage, titleArea, endImage, expandedArea) = createRefs()
-            Box(
-                modifier = Modifier
-                    .constrainAs(startImage) {
-                        top.linkTo(titleArea.top)
-                        bottom.linkTo(titleArea.bottom)
-                        start.linkTo(parent.start)
-                    }
-                    .height(48.dp)
-            ) {
+            Box(modifier = Modifier
+                .constrainAs(startImage) {
+                    top.linkTo(titleArea.top)
+                    bottom.linkTo(titleArea.bottom)
+                    start.linkTo(parent.start)
+                }
+                .height(48.dp)) {
                 if (startIconLargeUrl.isNotBlank()) {
                     AsyncImage(
                         model = startIconLargeUrl,
@@ -130,14 +164,12 @@ fun InfoTab(
 
             Column(
                 horizontalAlignment = Alignment.Start,
-                modifier = Modifier
-                    .constrainAs(titleArea) {
-                        top.linkTo(parent.top)
-                        start.linkTo(startImage.end)
-                        end.linkTo(endImage.start)
-                        width = Dimension.fillToConstraints
-                    }
-            ) {
+                modifier = Modifier.constrainAs(titleArea) {
+                    top.linkTo(parent.top)
+                    start.linkTo(startImage.end)
+                    end.linkTo(endImage.start)
+                    width = Dimension.fillToConstraints
+                }) {
                 Text(
                     text = title.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
                     style = MaterialTheme.typography.bodyLarge.copy(
@@ -156,44 +188,38 @@ fun InfoTab(
                 )
             }
             if (isOpen.value && institutionInfo != null) {
-                Column(
-                    horizontalAlignment = Alignment.Start,
-                    modifier = Modifier
-                        .constrainAs(expandedArea) {
-                            top.linkTo(titleArea.bottom, margin = 24.dp)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                        }
-                ) {
+                Column(horizontalAlignment = Alignment.Start,
+                    modifier = Modifier.constrainAs(expandedArea) {
+                        top.linkTo(titleArea.bottom, margin = 24.dp)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }) {
                     InstitutionInfoBlock(institutionInfo, onDeleteButtonClicked)
                 }
             }
             if (isOpen.value && serviceProviderInfo != null) {
                 Column(
                     horizontalAlignment = Alignment.Start,
-                    modifier = Modifier
-                        .constrainAs(expandedArea) {
-                            top.linkTo(titleArea.bottom, margin = 24.dp)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                        },
+                    modifier = Modifier.constrainAs(expandedArea) {
+                        top.linkTo(titleArea.bottom, margin = 24.dp)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    },
                     content = serviceProviderBlock(serviceProviderInfo, onDeleteButtonClicked)
                 )
             }
             if (isOpen.value && twoFactorData != null) {
                 Column(
                     horizontalAlignment = Alignment.Start,
-                    modifier = Modifier
-                        .constrainAs(expandedArea) {
-                            top.linkTo(titleArea.bottom, margin = 24.dp)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                        },
+                    modifier = Modifier.constrainAs(expandedArea) {
+                        top.linkTo(titleArea.bottom, margin = 24.dp)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    },
                     content = twoFaBlock(twoFactorData, onDeleteButtonClicked)
                 )
             }
-            Image(
-                painter = painterResource(endIcon),
+            Image(painter = painterResource(endIcon),
                 contentDescription = "",
                 modifier = Modifier
                     .constrainAs(endImage) {
@@ -201,8 +227,7 @@ fun InfoTab(
                         bottom.linkTo(titleArea.bottom)
                         end.linkTo(parent.end)
                     }
-                    .padding(start = 12.dp)
-            )
+                    .padding(start = 12.dp))
         }
     }
     Spacer(Modifier.height(16.dp))
@@ -225,8 +250,7 @@ private fun InstitutionInfoBlock(
     Spacer(Modifier.height(12.dp))
 
     Column(
-        Modifier
-            .fillMaxWidth()
+        Modifier.fillMaxWidth()
     ) {
         Row(
             modifier = Modifier.fillMaxWidth()
@@ -320,189 +344,184 @@ private fun InstitutionInfoBlock(
 private fun serviceProviderBlock(
     serviceProviderInfo: ServiceProvider,
     onDeleteButtonClicked: (id: String) -> Unit,
-): @Composable() (ColumnScope.() -> Unit) =
-    {
-        Text(
-            text = stringResource(R.string.infotab_login_details),
-            style = MaterialTheme.typography.bodyMedium.copy(
-                textAlign = TextAlign.Start,
-                color = BlueText,
-            ),
-        )
+): @Composable() (ColumnScope.() -> Unit) = {
+    Text(
+        text = stringResource(R.string.infotab_login_details),
+        style = MaterialTheme.typography.bodyMedium.copy(
+            textAlign = TextAlign.Start,
+            color = BlueText,
+        ),
+    )
+    Spacer(Modifier.height(12.dp))
+    Divider(color = TextBlack, thickness = 1.dp)
+    Spacer(Modifier.height(12.dp))
+    Column(
+        Modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                modifier = Modifier.weight(1f),
+                text = "First Login",
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    textAlign = TextAlign.Start,
+                    color = BlueText,
+                ),
+            )
+            Text(
+                modifier = Modifier.weight(1f),
+                text = serviceProviderInfo.firstLoginStamp.getDateString(),
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    textAlign = TextAlign.Start,
+                    color = BlueText,
+                ),
+            )
+        }
         Spacer(Modifier.height(12.dp))
         Divider(color = TextBlack, thickness = 1.dp)
         Spacer(Modifier.height(12.dp))
-        Column(
-            Modifier
-                .fillMaxWidth()
+        Row(
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = "First Login",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        textAlign = TextAlign.Start,
-                        color = BlueText,
-                    ),
-                )
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = serviceProviderInfo.firstLoginStamp.getDateString(),
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        textAlign = TextAlign.Start,
-                        color = BlueText,
-                    ),
-                )
-            }
-            Spacer(Modifier.height(12.dp))
-            Divider(color = TextBlack, thickness = 1.dp)
-            Spacer(Modifier.height(12.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = "Unique eduID",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        textAlign = TextAlign.Start,
-                        color = BlueText,
-                    ),
-                )
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = serviceProviderInfo.uniqueId,
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        textAlign = TextAlign.Start,
-                        color = BlueText,
-                    ),
-                )
-            }
-            Spacer(Modifier.height(12.dp))
-            Divider(color = TextBlack, thickness = 1.dp)
-            Spacer(Modifier.height(12.dp))
-            Button(
-                shape = RoundedCornerShape(CornerSize(6.dp)),
-                onClick = { onDeleteButtonClicked(serviceProviderInfo.uniqueId) },
-                border = BorderStroke(1.dp, Color.Red),
-                colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
-                modifier = Modifier
-                    .sizeIn(minHeight = 48.dp)
-                    .fillMaxWidth(),
-            ) {
-                Text(
-                    text = stringResource(R.string.infotab_delete_login_details),
-                    style = MaterialTheme.typography.bodyLarge.copy(
-                        color = ButtonRed, fontWeight = FontWeight.SemiBold
-                    )
-                )
-            }
-            Spacer(Modifier.height(24.dp))
             Text(
-                text = stringResource(R.string.data_info_delete_disclaimer),
-                style = MaterialTheme.typography.bodySmall.copy(
+                modifier = Modifier.weight(1f),
+                text = "Unique eduID",
+                style = MaterialTheme.typography.bodyMedium.copy(
                     textAlign = TextAlign.Start,
-                    color = TextBlack,
+                    color = BlueText,
                 ),
             )
-            Spacer(Modifier.height(32.dp))
+            Text(
+                modifier = Modifier.weight(1f),
+                text = serviceProviderInfo.uniqueId,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    textAlign = TextAlign.Start,
+                    color = BlueText,
+                ),
+            )
         }
+        Spacer(Modifier.height(12.dp))
+        Divider(color = TextBlack, thickness = 1.dp)
+        Spacer(Modifier.height(12.dp))
+        Button(
+            shape = RoundedCornerShape(CornerSize(6.dp)),
+            onClick = { onDeleteButtonClicked(serviceProviderInfo.uniqueId) },
+            border = BorderStroke(1.dp, Color.Red),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
+            modifier = Modifier
+                .sizeIn(minHeight = 48.dp)
+                .fillMaxWidth(),
+        ) {
+            Text(
+                text = stringResource(R.string.infotab_delete_login_details),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = ButtonRed, fontWeight = FontWeight.SemiBold
+                )
+            )
+        }
+        Spacer(Modifier.height(24.dp))
+        Text(
+            text = stringResource(R.string.data_info_delete_disclaimer),
+            style = MaterialTheme.typography.bodySmall.copy(
+                textAlign = TextAlign.Start,
+                color = TextBlack,
+            ),
+        )
+        Spacer(Modifier.height(32.dp))
     }
+}
 
 @Composable
 private fun twoFaBlock(
     twoFactorData: IdentityData,
     onDeleteButtonClicked: (id: String) -> Unit,
-): @Composable() (ColumnScope.() -> Unit) =
-    {
-        val biometricsCheckState = remember { mutableStateOf(true) }
-        Spacer(Modifier.height(12.dp))
-        Column(
-            Modifier
-                .fillMaxWidth()
+): @Composable() (ColumnScope.() -> Unit) = {
+    val biometricsCheckState = remember { mutableStateOf(true) }
+    Spacer(Modifier.height(12.dp))
+    Column(
+        Modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = "Account",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        textAlign = TextAlign.Start,
-                        color = BlueText,
-                    ),
-                )
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = twoFactorData.account,
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        textAlign = TextAlign.Start,
-                        color = BlueText,
-                    ),
-                )
-            }
-            Spacer(Modifier.height(12.dp))
-            Divider(color = TextBlack, thickness = 1.dp)
-            Spacer(Modifier.height(12.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = "Unique KeyID",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        textAlign = TextAlign.Start,
-                        color = BlueText,
-                    ),
-                )
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = twoFactorData.uniqueKey,
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        textAlign = TextAlign.Start,
-                        color = BlueText,
-                    ),
-                )
-            }
-            Spacer(Modifier.height(12.dp))
-            Divider(color = TextBlack, thickness = 1.dp)
-            Spacer(Modifier.height(12.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = "Use Biometrics",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        textAlign = TextAlign.Start,
-                        color = BlueText,
-                    ),
-                )
-                Switch(
-                    checked = biometricsCheckState.value,
-                    onCheckedChange = { biometricsCheckState.value = it })
-            }
-            Spacer(Modifier.height(24.dp))
-            Button(
-                shape = RoundedCornerShape(CornerSize(6.dp)),
-                onClick = { onDeleteButtonClicked(twoFactorData.uniqueKey) },
-                border = BorderStroke(1.dp, Color.Red),
-                colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
-                modifier = Modifier
-                    .sizeIn(minHeight = 48.dp)
-                    .fillMaxWidth(),
-            ) {
-                Text(
-                    text = "Delete Key",
-                    style = MaterialTheme.typography.bodyLarge.copy(
-                        color = ButtonRed, fontWeight = FontWeight.SemiBold
-                    )
-                )
-            }
-            Spacer(Modifier.height(32.dp))
+            Text(
+                modifier = Modifier.weight(1f),
+                text = "Account",
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    textAlign = TextAlign.Start,
+                    color = BlueText,
+                ),
+            )
+            Text(
+                modifier = Modifier.weight(1f),
+                text = twoFactorData.account,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    textAlign = TextAlign.Start,
+                    color = BlueText,
+                ),
+            )
         }
+        Spacer(Modifier.height(12.dp))
+        Divider(color = TextBlack, thickness = 1.dp)
+        Spacer(Modifier.height(12.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                modifier = Modifier.weight(1f),
+                text = "Unique KeyID",
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    textAlign = TextAlign.Start,
+                    color = BlueText,
+                ),
+            )
+            Text(
+                modifier = Modifier.weight(1f),
+                text = twoFactorData.uniqueKey,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    textAlign = TextAlign.Start,
+                    color = BlueText,
+                ),
+            )
+        }
+        Spacer(Modifier.height(12.dp))
+        Divider(color = TextBlack, thickness = 1.dp)
+        Spacer(Modifier.height(12.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                modifier = Modifier.weight(1f),
+                text = stringResource(R.string.two_fa_use_biometric),
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    textAlign = TextAlign.Start,
+                    color = BlueText,
+                ),
+            )
+            Switch(checked = biometricsCheckState.value,
+                onCheckedChange = { biometricsCheckState.value = it })
+        }
+        Spacer(Modifier.height(24.dp))
+        Button(
+            shape = RoundedCornerShape(CornerSize(6.dp)),
+            onClick = { onDeleteButtonClicked(twoFactorData.uniqueKey) },
+            border = BorderStroke(1.dp, Color.Red),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
+            modifier = Modifier
+                .sizeIn(minHeight = 48.dp)
+                .fillMaxWidth(),
+        ) {
+            Text(
+                text = stringResource(R.string.two_fa_delete),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = ButtonRed, fontWeight = FontWeight.SemiBold
+                )
+            )
+        }
+        Spacer(Modifier.height(32.dp))
     }
+}
 
 
 @Preview
@@ -514,7 +533,6 @@ private fun PreviewInfoTab() {
             title = "OK a very long long long long long long long long long long",
             subtitle = "OK long long long long long long long long long long long long",
             onClick = { },
-            enabled = true,
             endIcon = R.drawable.shield_tick_blue,
             institutionInfo = PersonalInfo.InstitutionAccount(
                 role = "Long string here",
@@ -528,4 +546,12 @@ private fun PreviewInfoTab() {
             startIconLargeUrl = "https://static.surfconext.nl/media/sp/eduid.png"
         )
     }
+}
+
+@Preview
+@Composable
+private fun PreviewInfoField() = EduidAppAndroidTheme {
+    InfoField(
+        title = "Vetinari", subtitle = "Lord"
+    )
 }

@@ -136,8 +136,11 @@
     <string name="security_subtitle">We bieden verschillende methoden om in te loggen met je eduID.</string>
 
     <string name="two_fa_key_title">2FA sleutel(s)</string>
+    <string name="two_fa_key_list_title">Jouw sleutel(s)</string>
     <string name="two_fa_key_subtitle">Sleutels om veilig in te loggen zonder wachtwoord of link.</string>
     <string name="two_fa_key_empty">Geen sleutels.</string>
+    <string name="two_fa_use_biometric">Gebruik biometrie</string>
+    <string name="two_fa_delete">Sleutel vervijderen</string>
 
     <string name="add_password_title">Voeg een wachtwoord toe</string>
     <string name="change_password_title">Wachtwoord wijzigen of verwijderen</string>
