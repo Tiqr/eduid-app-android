@@ -1,8 +1,11 @@
 package nl.eduid.screens.twofactorkey
 
+import nl.eduid.ErrorData
+
 data class TwoFactorData(
     val isLoading: Boolean = false,
     val keys: List<IdentityData> = emptyList(),
+    val errorData: ErrorData? = null
 )
 
 data class IdentityData(
@@ -10,7 +13,7 @@ data class IdentityData(
     val title: String = "",
     val subtitle: String = "",
     val account: String = "",
-    val providerLogoUrl: String = "",
     val biometricFlag: Boolean = false,
+    val isExpanded: Boolean = false,
 )
 

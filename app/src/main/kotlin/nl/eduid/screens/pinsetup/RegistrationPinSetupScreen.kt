@@ -36,11 +36,10 @@ fun RegistrationPinSetupScreen(
     EduIdTopAppBar(
         onBackClicked = dispatcher::onBackPressed,
     ) {
-        val uiState by viewModel.uiState.observeAsState(initial = UiState())
         val isAuthorized by viewModel.isAuthorized.observeAsState(initial = null)
 
         RegistrationPinSetupContent(
-            uiState = uiState,
+            uiState = viewModel.uiState,
             isAuthorized = isAuthorized,
             goToNextStep = goToNextStep,
             promptAuth = promptAuth,
@@ -83,15 +82,13 @@ private fun RegistrationPinSetupContent(
 
     Column(modifier = Modifier.fillMaxSize()) {
         if (uiState.errorData != null) {
-            AlertDialogWithSingleButton(
-                title = uiState.errorData.title(context),
+            AlertDialogWithSingleButton(title = uiState.errorData.title(context),
                 explanation = uiState.errorData.message(context),
                 buttonLabel = stringResource(R.string.button_ok),
                 onDismiss = {
                     viewModel.dismissError()
                     enrollmentInProgress = false
-                }
-            )
+                })
         }
         PinContent(
             pinCode = if (uiState.pinStep is PinStep.PinCreate) {

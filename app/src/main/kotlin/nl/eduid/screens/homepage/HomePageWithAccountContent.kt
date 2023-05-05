@@ -49,8 +49,7 @@ fun HomePageWithAccountContent(
     },
 ) { paddingValues ->
     val isAuthorizedForDataAccess by viewModel.isAuthorizedForDataAccess.observeAsState(false)
-    val uiState by viewModel.uiState.observeAsState(UiState())
-    uiState.promptForAuth?.let {
+    viewModel.uiState.promptForAuth?.let {
         AlertDialogWithTwoButton(title = stringResource(R.string.app_not_authorized),
             explanation = stringResource(id = R.string.app_not_authorized_explanation),
             dismissButtonLabel = stringResource(R.string.button_cancel),

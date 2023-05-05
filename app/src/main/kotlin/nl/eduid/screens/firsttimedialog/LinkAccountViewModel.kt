@@ -36,7 +36,7 @@ class LinkAccountViewModel @Inject constructor(private val assistant: DataAssist
                 uiState =
                     uiState.copy(
                         inProgress = false, errorData = ErrorData(
-                            titleId = R.string.err_title_request_fail,
+                            titleId = R.string.err_title_generic_fail,
                             messageId = R.string.err_msg_request_fail
                         )
                     )
@@ -44,7 +44,7 @@ class LinkAccountViewModel @Inject constructor(private val assistant: DataAssist
         } catch (e: UnauthorizedException) {
             uiState = uiState.copy(
                 inProgress = false, errorData = ErrorData(
-                    titleId = R.string.err_title_request_fail,
+                    titleId = R.string.err_title_generic_fail,
                     messageId = R.string.err_msg_unauthorized_request_fail
                 )
             )

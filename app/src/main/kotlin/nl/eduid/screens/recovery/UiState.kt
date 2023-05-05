@@ -1,4 +1,4 @@
-package nl.eduid.screens.requestidrecovery
+package nl.eduid.screens.recovery
 
 import nl.eduid.ErrorData
 

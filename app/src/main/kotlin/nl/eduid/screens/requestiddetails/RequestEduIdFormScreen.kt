@@ -5,7 +5,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -24,8 +23,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.CheckToSAndPrivacyPolicy
-import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.EduIdTopAppBar
+import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -36,25 +35,24 @@ fun RequestEduIdFormScreen(
 ) = EduIdTopAppBar(
     onBackClicked = onBackClicked
 ) {
-    val inputFormData by viewModel.inputForm.observeAsState(InputForm())
     var processingRequest by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
-    if (inputFormData.errorData != null) {
+    if (viewModel.inputForm.errorData != null) {
         AlertDialogWithSingleButton(
-            title = inputFormData.errorData!!.title,
-            explanation = inputFormData.errorData!!.message,
+            title = viewModel.inputForm.errorData!!.title,
+            explanation = viewModel.inputForm.errorData!!.message,
             buttonLabel = stringResource(R.string.button_ok),
             onDismiss = viewModel::dismissError
         )
     }
-    if (processingRequest && inputFormData.requestComplete) {
+    if (processingRequest && viewModel.inputForm.requestComplete) {
         val currentRequest by rememberUpdatedState(goToEmailLinkSent)
         LaunchedEffect(viewModel) {
             processingRequest = false
-            currentRequest(inputFormData.email)
+            currentRequest(viewModel.inputForm.email)
         }
     }
-    RequestEduIdFormContent(inputFormData = inputFormData,
+    RequestEduIdFormContent(inputFormData = viewModel.inputForm,
         onEmailChange = { viewModel.onEmailChange(it) },
         onFirstNameChange = { viewModel.onFirstNameChange(it) },
         onLastNameChange = { viewModel.onLastNameChange(it) },

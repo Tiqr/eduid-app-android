@@ -2,7 +2,9 @@ package nl.eduid.screens.pinsetup
 
 import android.content.Context
 import android.net.Uri
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -11,10 +13,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import nl.eduid.BaseViewModel
+import nl.eduid.ErrorData
+import nl.eduid.R
 import nl.eduid.di.repository.StorageRepository
 import nl.eduid.graphs.Account
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
-import nl.eduid.ErrorData
 import nl.eduid.ui.PIN_MAX_LENGTH
 import org.tiqr.core.util.extensions.biometricUsable
 import org.tiqr.data.model.ChallengeCompleteResult
@@ -32,11 +35,11 @@ class RegistrationPinSetupViewModel @Inject constructor(
     private val personal: PersonalInfoRepository,
     private val storage: StorageRepository,
 ) : BaseViewModel(moshi) {
-    val uiState: MutableLiveData<UiState> = MutableLiveData(
-        UiState()
-    )
+    var uiState by mutableStateOf(UiState())
+        private set
+
     val isAuthorized = storage.isAuthorized.asLiveData()
-    val challenge: EnrollmentChallenge?
+    private val challenge: EnrollmentChallenge?
 
     init {
         val enrolChallenge =
@@ -48,10 +51,10 @@ class RegistrationPinSetupViewModel @Inject constructor(
             adapter.fromJson(challengeUrl)
         } catch (e: Exception) {
             Timber.e(e, "Failed to parse enrollment challenge")
-            uiState.value = uiState.value?.copy(
+            uiState = uiState.copy(
                 errorData = ErrorData(
-                    title = "Failed to parse challenge",
-                    message = "Could not parse enrollment challenge"
+                    titleId = R.string.err_title_invalid_challenge,
+                    messageId = R.string.err_msg_invalid_challenge,
                 )
             )
             null
@@ -61,26 +64,25 @@ class RegistrationPinSetupViewModel @Inject constructor(
 
     fun onPinChange(inputCode: String, pinStep: PinStep) {
         if (pinStep is PinStep.PinCreate) {
-            uiState.value = uiState.value?.copy(pinValue = inputCode, isPinInvalid = false)
+            uiState = uiState.copy(pinValue = inputCode, isPinInvalid = false)
         } else {
-            uiState.value = uiState.value?.copy(pinConfirmValue = inputCode, isPinInvalid = false)
+            uiState = uiState.copy(pinConfirmValue = inputCode, isPinInvalid = false)
         }
     }
 
     fun submitPin(context: Context, currentStep: PinStep) {
         if (currentStep is PinStep.PinCreate) {
-            val createdPin = uiState.value?.pinValue ?: ""
+            val createdPin = uiState.pinValue
             val isInvalid = createdPin.length != PIN_MAX_LENGTH
-            uiState.value = uiState.value?.copy(isPinInvalid = isInvalid)
+            uiState = uiState.copy(isPinInvalid = isInvalid)
             if (createdPin.length == PIN_MAX_LENGTH) {
-                uiState.value =
-                    uiState.value?.copy(pinStep = PinStep.PinConfirm, isPinInvalid = false)
+                uiState = uiState.copy(pinStep = PinStep.PinConfirm, isPinInvalid = false)
             }
         } else {
-            val confirmPin = uiState.value?.pinConfirmValue ?: ""
-            val createdPin = uiState.value?.pinValue ?: ""
+            val confirmPin = uiState.pinConfirmValue
+            val createdPin = uiState.pinValue
             val pinConfirmed = confirmPin == createdPin
-            uiState.value = uiState.value?.copy(isPinInvalid = !pinConfirmed)
+            uiState = uiState.copy(isPinInvalid = !pinConfirmed)
             if (pinConfirmed) {
                 enroll(context, createdPin)
             }
@@ -98,19 +100,17 @@ class RegistrationPinSetupViewModel @Inject constructor(
             )
         when (result) {
             is ChallengeCompleteResult.Failure -> {
-                uiState.postValue(
-                    uiState.value?.copy(
-                        errorData = ErrorData(
-                            result.failure.title, result.failure.message
-                        )
+                uiState = uiState.copy(
+                    errorData = ErrorData(
+                        result.failure.title, result.failure.message
                     )
                 )
             }
 
             ChallengeCompleteResult.Success -> {
                 val nextStep = calculateNextStep(context, currentChallenge)
-                uiState.value =
-                    uiState.value?.copy(
+                uiState =
+                    uiState.copy(
                         promptAuth = storage.isAuthorized.firstOrNull(),
                         nextStep = nextStep
                     )
@@ -124,7 +124,7 @@ class RegistrationPinSetupViewModel @Inject constructor(
     ): NextStep {
         val userDetails = personal.getUserDetails()
         return if (context.biometricUsable() && currentChallenge.identity.biometricOfferUpgrade) {
-            NextStep.PromptBiometric(currentChallenge, uiState.value?.pinConfirmValue.orEmpty())
+            NextStep.PromptBiometric(currentChallenge, uiState.pinConfirmValue)
         } else {
             if (userDetails != null) {
                 NextStep.Recovery
@@ -135,15 +135,15 @@ class RegistrationPinSetupViewModel @Inject constructor(
     }
 
     fun handleBackNavigation(closePinSetupFlow: () -> Unit) {
-        val currentStep = uiState.value?.pinStep ?: PinStep.PinCreate
+        val currentStep = uiState.pinStep
         if (currentStep is PinStep.PinCreate) {
             closePinSetupFlow()
         } else {
-            uiState.value = UiState()
+            uiState = UiState()
         }
     }
 
     fun dismissError() {
-        uiState.value = uiState.value?.copy(errorData = null)
+        uiState = uiState.copy(errorData = null)
     }
 }

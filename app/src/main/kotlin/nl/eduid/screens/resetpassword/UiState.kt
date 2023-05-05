@@ -7,7 +7,7 @@ data class UiState(
     val emailUsed: String = "",
     val inProgress: Boolean = false,
     val errorData: ErrorData? = null,
-    val requestCompleted: Unit? = null,
+    val isCompleted: Unit? = null,
 )
 
 sealed class Password {

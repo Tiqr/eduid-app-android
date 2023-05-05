@@ -1,8 +1,16 @@
 package nl.eduid.screens.security
 
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -14,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
 import nl.eduid.ui.EduIdTopAppBar
-import nl.eduid.ui.InfoTab
+import nl.eduid.ui.InfoField
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
@@ -76,29 +84,36 @@ fun SecurityScreenContent(
                 .align(alignment = Alignment.CenterHorizontally)
         )
     } else {
-        InfoTab(
-            header = stringResource(R.string.security_sign_in_methods),
+        InfoField(
             title = stringResource(R.string.security_2fa_key),
             subtitle = stringResource(R.string.security_provided_by_eduid),
             onClick = on2FaClicked,
-            endIcon = R.drawable.shield_tick_blue
+            endIcon = R.drawable.shield_tick_blue,
+            label = stringResource(R.string.security_sign_in_methods)
         )
-        InfoTab(
+        Spacer(Modifier.height(16.dp))
+        InfoField(
             title = stringResource(R.string.security_send_a_magic_link_to),
             subtitle = securityInfo.email,
             onClick = onEditEmailClicked,
             endIcon = R.drawable.edit_icon
         )
-        InfoTab(
+        Spacer(Modifier.height(16.dp))
+        InfoField(
             title = if (securityInfo.hasPassword) {
                 stringResource(R.string.security_change_password)
             } else {
                 stringResource(R.string.security_add_a_password)
             },
-            subtitle = "",
+            subtitle = if (securityInfo.hasPassword) {
+                "****"
+            } else {
+                ""
+            },
             onClick = onConfigurePasswordClicked,
             endIcon = R.drawable.edit_icon
         )
+        Spacer(Modifier.height(16.dp))
     }
 }
 

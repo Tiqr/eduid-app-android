@@ -37,8 +37,9 @@ import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.screens.firsttimedialog.LinkAccountContract
 import nl.eduid.ui.AlertDialogWithSingleButton
+import nl.eduid.ui.ConnectionCard
 import nl.eduid.ui.EduIdTopAppBar
-import nl.eduid.ui.InfoTab
+import nl.eduid.ui.InfoField
 import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.ButtonTextGrey
@@ -138,42 +139,42 @@ fun PersonalInfoScreenContent(
         Spacer(modifier = Modifier.height(16.dp))
     }
     Spacer(Modifier.height(12.dp))
-    InfoTab(
-        header = stringResource(R.string.infotab_name),
-        title = personalInfo.name,
-        subtitle = if (personalInfo.nameProvider == null) {
-            stringResource(
-                R.string.infotab_providedby_you
-            )
+    InfoField(
+        title = personalInfo.name, subtitle = if (personalInfo.nameProvider == null) {
+            stringResource(R.string.infotab_providedby_you)
         } else {
-            stringResource(
-                R.string.infotab_providedby, personalInfo.nameProvider
-            )
-        },
-        onClick = onNameClicked,
-        endIcon = if (personalInfo.nameProvider == null) {
+            stringResource(R.string.infotab_providedby, personalInfo.nameProvider)
+        }, onClick = onNameClicked, endIcon = if (personalInfo.nameProvider == null) {
             R.drawable.edit_icon
         } else {
             R.drawable.shield_tick_blue
-        }
+        }, label = stringResource(R.string.infotab_name)
     )
-    InfoTab(
-        header = stringResource(R.string.infotab_email),
+    Spacer(Modifier.height(16.dp))
+    InfoField(
         title = personalInfo.email,
         subtitle = stringResource(R.string.infotab_providedby_you),
         onClick = onEmailClicked,
-        endIcon = R.drawable.edit_icon
+        endIcon = R.drawable.edit_icon,
+        label = stringResource(R.string.infotab_email),
     )
-
+    Spacer(Modifier.height(16.dp))
+    if (personalInfo.institutionAccounts.isNotEmpty()) {
+        Text(
+            text = stringResource(R.string.infotab_role_institution),
+            style = MaterialTheme.typography.bodyLarge.copy(
+                textAlign = TextAlign.Start,
+                fontWeight = FontWeight.SemiBold,
+            ),
+        )
+        Spacer(Modifier.height(6.dp))
+    }
     personalInfo.institutionAccounts.forEachIndexed { index, account ->
-        InfoTab(
-            header = if (index < 1) stringResource(R.string.infotab_role_institution) else "",
+        ConnectionCard(
             title = account.role,
             subtitle = stringResource(R.string.infotab_at, account.roleProvider),
             institutionInfo = account,
-            onClick = {},
-            onDeleteButtonClicked = { removeConnection(index) },
-            endIcon = R.drawable.chevron_down,
+            onRemoveConnection = { removeConnection(index) },
         )
     }
 

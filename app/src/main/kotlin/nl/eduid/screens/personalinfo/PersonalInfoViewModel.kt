@@ -96,14 +96,14 @@ class PersonalInfoViewModel @Inject constructor(
             } ?: uiState.copy(
                 isLoading = false,
                 errorData = ErrorData(
-                    titleId = R.string.err_title_request_fail,
+                    titleId = R.string.err_title_generic_fail,
                     messageId = R.string.err_msg_request_fail,
                 )
             )
         } catch (e: UnauthorizedException) {
             uiState = uiState.copy(
                 isLoading = false, errorData = ErrorData(
-                    titleId = R.string.err_title_request_fail,
+                    titleId = R.string.err_title_generic_fail,
                     messageId = R.string.err_msg_unauthorized_request_fail
                 )
             )
@@ -121,7 +121,7 @@ class PersonalInfoViewModel @Inject constructor(
             } else {
                 uiState.copy(
                     isLoading = false, errorData = ErrorData(
-                        titleId = R.string.err_title_request_fail,
+                        titleId = R.string.err_title_generic_fail,
                         messageId = R.string.err_msg_request_fail
                     )
                 )
@@ -129,7 +129,7 @@ class PersonalInfoViewModel @Inject constructor(
         } catch (e: UnauthorizedException) {
             uiState = uiState.copy(
                 isLoading = false, errorData = ErrorData(
-                    titleId = R.string.err_title_request_fail,
+                    titleId = R.string.err_title_generic_fail,
                     messageId = R.string.err_msg_unauthorized_request_fail
                 )
             )
@@ -151,14 +151,14 @@ class PersonalInfoViewModel @Inject constructor(
             } ?: uiState.copy(
                 isLoading = false,
                 errorData = ErrorData(
-                    titleId = R.string.err_title_request_fail,
+                    titleId = R.string.err_title_generic_fail,
                     messageId = R.string.err_msg_request_fail
                 )
             )
         } catch (e: UnauthorizedException) {
             uiState = uiState.copy(
                 isLoading = false, errorData = ErrorData(
-                    titleId = R.string.err_title_request_fail,
+                    titleId = R.string.err_title_generic_fail,
                     messageId = R.string.err_msg_unauthorized_request_fail
                 )
             )

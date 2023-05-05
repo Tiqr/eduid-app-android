@@ -19,7 +19,6 @@ data class PersonalInfo(
         val roleProvider: String,
         val institution: String,
         val affiliationString: String,
-        val status: InfoStatus = InfoStatus.Final,
         val createdStamp: Long,
         val expiryStamp: Long,
     )

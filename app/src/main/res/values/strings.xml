@@ -136,8 +136,13 @@
     <string name="security_subtitle">We provide different methods to sign in to your eduID account.</string>
 
     <string name="two_fa_key_title">2FA key(s)</string>
+    <string name="two_fa_key_list_title">Your key(s)</string>
     <string name="two_fa_key_subtitle">Keys to securely sign in without passwords or accessing your email.</string>
     <string name="two_fa_key_empty">You have no local keys</string>
+    <string name="two_fa_use_biometric">Use Biometrics</string>
+    <string name="two_fa_delete">Delete key</string>
+    <string name="two_fa_account">Account</string>
+    <string name="two_fa_unieque_keyid">Unique KeyID</string>
 
     <string name="add_password_title">Add password</string>
     <string name="change_password_title">Change or delete password</string>
@@ -223,6 +228,8 @@
     <string name="delete_account_two_description">If you wish to proceed, please type in your full name for confirmation.</string>
     <string name="infotab_remove_connection">Remove connection</string>
     <string name="infotab_login_details">Login Details</string>
+    <string name="infotab_login_first">First Login</string>
+    <string name="infotab_login_unique_eduid">Unique eduid</string>
     <string name="infotab_name">Name</string>
     <string name="infotab_fullname">Full Name</string>
     <string name="infotab_email">Email</string>
@@ -233,6 +240,10 @@
     <string name="personalinfo_manage_your_account">Manage your account</string>
     <string name="personalinfo_add_role_institution">Add role &amp; institution</string>
     <string name="personalinfo_add_via">Proceed to add this via SURFConext</string>
+    <string name="personalinfo_verified_by_on">Verified by %1$s on %2$s.</string>
+    <string name="personalinfo_institution">Institution</string>
+    <string name="personalinfo_affiliations">Affiliation(s)</string>
+    <string name="personalinfo_expires">Link expires</string>
     <string name="infotab_delete_login_details">Delete login details *</string>
 
     <string name="delete_two_key_title">Delete key</string>
@@ -272,7 +283,6 @@
     <string name="err_msg_delete_fail">Could not delete account.</string>
     <string name="err_msg_delete_name_missmatch">Typed name does not match known name.</string>
 
-    <string name="err_title_request_fail">Cannot complete request</string>
     <string name="err_msg_request_fail">Request cannot be completed at this moment. Please retry later.</string>
     <string name="err_title_link_account_fail">Could not retrieve URL for linking your current account.</string>
 
@@ -286,5 +296,33 @@
     <string name="err_msg_auth_failed">No authorization state retained - reauthorization required.</string>
     <string name="err_msg_auth_token_failed">Authorization token code exchange failed.</string>
     <string name="err_msg_auth_code_failed_arg">Authorization code exchange failed: %s.</string>
-    <string name="err_msg_auth_unexpected_arg">Unexpected error: %s, please retry.</string>
+
+    <string name="err_title_generic_fail">Cannot complete request</string>
+    <string name="err_msg_generic_unexpected_with_arg">Unexpected error: %s, please retry.</string>
+
+    <string name="err_title_email_in_use">Email in use</string>
+    <string name="err_msg_email_in_use">There already is an account registered for the email %s.</string>
+    <string name="err_title_email_domain_forbidden">Email domain is forbidden</string>
+    <string name="err_msg_email_domain_forbidden">The email domain used in %s is not allowed.</string>
+    <string name="err_msg_create_unknown_fail">Could not create eduid account for email %s.</string>
+
+    <string name="err_title_invalid_challenge">Enrollment challenge is invalid</string>
+    <string name="err_msg_invalid_challenge">Cannot parse enrollment challenge, challenge is invalid.</string>
+    <string name="err_msg_request_sms_validation_fail">Could not request SMS code, please retry.</string>
+    <string name="err_msg_confirm_sms_validation_fail">SMS code not confirmed, please retry.</string>
+    <string name="err_msg_cannot_request_reset_pass">Could not request reset password link.</string>
+
+    <string name="err_title_cannot_update_pass">Cannot update password</string>
+    <string name="err_msg_pass_is_invalid">Chosen password is invalid.</string>
+    <string name="err_msg_pass_do_not_match">Passwords do not match</string>
+    <string name="err_msg_pass_invalid_hash">Invalid password hash, please resend email link.</string>
+    <string name="err_msg_pass_missing_hash">Missing password hash, please resend email link.</string>
+    <string name="err_msg_delete_key_lost">Cannot find key for deletion.</string>
+    <string name="err_msg_change_key_lost">The key you want to change cannot be found.</string>
+
+    <string name="err_title_deactivate_request_fail">Failed to request deactivation code</string>
+    <string name="err_msg_deactivate_request_fail">Could not request deactivation code for known phone number: %s.</string>
+
+    <string name="err_title_enroll_fail">Invalid enroll request</string>
+    <string name="err_msg_enroll_parse_fail">Cannot parse enroll challenge.</string>
 </resources>
