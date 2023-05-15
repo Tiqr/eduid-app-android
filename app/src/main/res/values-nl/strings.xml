@@ -213,14 +213,14 @@
     <string name="manage_account_info_block">Alle informatie in jouw eduID account is van jou en kan worden gedownload of verwijderd. De download van je persoonlijke gegevens van je eduID-account bevat alle informatie die we over je hebben. Het bevat ook technische sleutels en referenties.</string>
     <string name="manage_account_result_ok">De informatie id opgeslagen in de downloads folder.</string>
     <string name="manage_account_result_fail">Downloaden mislukt.</string>
-    <string name="manage_account_download_my_data">Download my data</string>
+    <string name="manage_account_download_my_data">Download mijn data</string>
     <string name="manage_account_delete_your_account">Verwijder je account</string>
     <string name="button_manage_account_delete">Verwijder je account</string>
     <string name="managa_account_your_full_name">Jouw volledige naam</string>
     <string name="manage_account_full_name_explain">Jouw naam zoals opgeslagen in jouw eduID profiel</string>
 
     <string name="delete_account_one_title">Verwijder je eduID account</string>
-    <string name="delete_account_one_subtitle">Proceed with care, as you will lose the unique eduID number currently associated with your email address.</string>
+    <string name="delete_account_one_subtitle">Ga voorzichtig te werk, want je verliest de unieke eduID ID\'s die momenteel aan je e-mailadres zijn gekoppeld.</string>
     <string name="delete_account_description">Je kunt je eduID account verwijderen wanneer je maar wilt.\n\nLet op, je verliest de unieke eduID nummers die aan je e-mailadres zijn gekoppeld. Wanneer je je opnieuw registreert voor eduID met hetzelfde e-mailadres, krijg je een nieuwe eduID nummers. Sommige diensten gebruiken deze nummers om je uniek te identificeren, dus voor die diensten word je dan gezien als een nieuwe gebruiker. Houd er rekening mee dat het verwijderen van je eduID niet betekent dat alle diensten die je met je eduID hebt gebruikt, ook je gegevens zullen verwijderen.</string>
 
     <string name="delete_account_two_title">Je account voor alle eeuwigheid verwijderen?</string>
@@ -256,7 +256,7 @@
     <string name="delete_service_confirm_explanation">Weet je zeker dat je het unieke gepseudonimiseerde eduID voor %s wil verwijderen? Deze dienst herkent je wellicht niet meer de volgende keer dat je inlogt en je persoonlijke gegevens bij deze dienst zijn daardoor mogelijk niet meer toegankelijk.</string>
     <string name="button_confirm">Bevestigen</string>
     <string name="security_sign_in_methods">Aanmeldmethoden</string>
-    <string name="security_2fa_key">2FA key</string>
+    <string name="security_2fa_key">2FA sleutel</string>
     <string name="security_provided_by_eduid">Geleverd door</string>
     <string name="security_send_a_magic_link_to">Stuur een magiche link naar</string>
     <string name="security_add_a_password">Wachtwoord toevoegen</string>
