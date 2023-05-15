@@ -1,6 +1,11 @@
-package nl.eduid.screens.requestidpin
+package nl.eduid.screens.recovery.confirmsms
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -9,11 +14,18 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -21,11 +33,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.flowWithLifecycle
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import nl.eduid.R
-import nl.eduid.screens.requestidrecovery.UiState
+import nl.eduid.screens.recovery.UiState
 import nl.eduid.ui.AlertDialogWithSingleButton
-import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.EduIdTopAppBar
+import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -37,22 +52,26 @@ fun ConfirmCodeScreen(
 ) = EduIdTopAppBar(
     onBackClicked = goBack
 ) {
-    val uiState by viewModel.uiState.observeAsState(UiState())
-    var canContinue by rememberSaveable { mutableStateOf(false) }
+    var waitForVmEvent by rememberSaveable { mutableStateOf(false) }
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
 
-    if (canContinue && !uiState.inProgress && uiState.errorData == null) {
+    if (waitForVmEvent) {
         val currentGoToStartScreen by rememberUpdatedState(newValue = goToStartScreen)
-        LaunchedEffect(key1 = viewModel) {
-            canContinue = false
-            currentGoToStartScreen()
+        LaunchedEffect(viewModel, lifecycle) {
+            snapshotFlow { viewModel.uiState }.distinctUntilChanged()
+                .filter { it.isCompleted != null }.flowWithLifecycle(lifecycle).collect {
+                    waitForVmEvent = false
+                    currentGoToStartScreen()
+                    viewModel.clearCompleted()
+                }
         }
     }
 
     ConfirmCodeContent(
-        uiState = uiState,
+        uiState = viewModel.uiState,
         phoneNumber = phoneNumber,
         onClick = {
-            canContinue = true
+            waitForVmEvent = true
             viewModel.confirmPhoneCode()
         },
         dismissError = viewModel::dismissError,
@@ -72,9 +91,10 @@ private fun ConfirmCodeContent(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     if (uiState.errorData != null) {
+        val context = LocalContext.current
         AlertDialogWithSingleButton(
-            title = uiState.errorData.title,
-            explanation = uiState.errorData.message,
+            title = uiState.errorData.title(context),
+            explanation = uiState.errorData.message(context),
             buttonLabel = stringResource(R.string.button_ok),
             onDismiss = dismissError
         )

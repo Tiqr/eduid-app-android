@@ -10,22 +10,21 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.screens.personalinfo.PersonalInfoViewModel
-import nl.eduid.screens.personalinfo.UiState
-import nl.eduid.ErrorData
 import nl.eduid.ui.AlertDialogWithSingleButton
+import nl.eduid.ui.ConnectionCard
 import nl.eduid.ui.EduIdTopAppBar
-import nl.eduid.ui.InfoTab
+import nl.eduid.ui.InfoField
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextGreen
@@ -35,11 +34,10 @@ fun AccountLinkedScreen(
     viewModel: PersonalInfoViewModel,
     continueToHome: () -> Unit,
 ) {
-    val uiState by viewModel.uiState.observeAsState(UiState())
     AccountLinkedContent(
-        personalInfo = uiState.personalInfo,
-        isLoading = uiState.isLoading,
-        errorData = uiState.errorData,
+        personalInfo = viewModel.uiState.personalInfo,
+        isLoading = viewModel.uiState.isLoading,
+        errorData = viewModel.uiState.errorData,
         dismissError = viewModel::clearErrorData,
         continueToHome = continueToHome,
         removeConnection = { index -> viewModel.removeConnection(index) },
@@ -63,9 +61,10 @@ private fun AccountLinkedContent(
             .verticalScroll(rememberScrollState())
     ) {
         if (errorData != null) {
+            val context = LocalContext.current
             AlertDialogWithSingleButton(
-                title = errorData.title,
-                explanation = errorData.message,
+                title = errorData.title(context),
+                explanation = errorData.message(context),
                 buttonLabel = stringResource(R.string.button_ok),
                 onDismiss = dismissError
             )
@@ -99,31 +98,33 @@ private fun AccountLinkedContent(
         } else {
             Spacer(Modifier.height(12.dp))
         }
-        InfoTab(
-            header = stringResource(R.string.infotab_fullname),
+        InfoField(
             title = personalInfo.name,
             subtitle = if (personalInfo.nameProvider == null) {
-                stringResource(
-                    R.string.infotab_providedby_you
-                )
+                stringResource(R.string.infotab_providedby_you)
             } else {
-                stringResource(
-                    R.string.infotab_providedby, personalInfo.nameProvider
-                )
+                stringResource(R.string.infotab_providedby, personalInfo.nameProvider)
             },
-            onClick = { },
-            endIcon = R.drawable.shield_tick_blue
+            endIcon = R.drawable.shield_tick_blue,
+            label = stringResource(R.string.infotab_fullname)
         )
-
+        Spacer(Modifier.height(16.dp))
+        if (personalInfo.institutionAccounts.isNotEmpty()) {
+            Text(
+                text = stringResource(R.string.infotab_role_institution),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    textAlign = TextAlign.Start,
+                    fontWeight = FontWeight.SemiBold,
+                ),
+            )
+            Spacer(Modifier.height(6.dp))
+        }
         personalInfo.institutionAccounts.forEachIndexed { index, account ->
-            InfoTab(
-                header = if (index < 1) stringResource(R.string.infotab_role_institution) else "",
+            ConnectionCard(
                 title = account.role,
                 subtitle = stringResource(R.string.infotab_at, account.roleProvider),
                 institutionInfo = account,
-                onClick = {},
-                onDeleteButtonClicked = { removeConnection(index) },
-                endIcon = R.drawable.chevron_down,
+                onRemoveConnection = { removeConnection(index) },
             )
         }
         PrimaryButton(

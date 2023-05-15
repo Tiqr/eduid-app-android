@@ -12,6 +12,7 @@ import nl.eduid.BuildConfig
 import nl.eduid.di.EduIdScope
 import nl.eduid.di.api.EduIdApi
 import nl.eduid.di.assist.AuthenticationAssistant
+import nl.eduid.di.assist.DataAssistant
 import nl.eduid.di.auth.TokenAuthenticator
 import nl.eduid.di.auth.TokenInterceptor
 import nl.eduid.di.auth.TokenProvider
@@ -44,6 +45,13 @@ internal object RepositoryModule {
     internal fun providesEduIdRepository(
         api: EduIdApi,
     ) = EduIdRepository(api)
+
+    @Provides
+    @Singleton
+    internal fun providesDataAssistant(
+        personalInfoRepository: PersonalInfoRepository,
+        storageRepository: StorageRepository
+    ) = DataAssistant(personalInfoRepository, storageRepository)
 
     @Provides
     @Singleton

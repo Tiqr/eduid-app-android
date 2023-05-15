@@ -5,9 +5,9 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -46,27 +46,26 @@ fun FirstTimeDialogScreen(
         modifier = Modifier.padding(horizontal = 30.dp),
     )
 }) { paddingValues ->
-    val uiState by viewModel.uiState.observeAsState(UiState())
     var isGettingLinkUrl by rememberSaveable { mutableStateOf(false) }
     var isLinkingStarted by rememberSaveable { mutableStateOf(false) }
     val launcher =
         rememberLauncherForActivityResult(contract = LinkAccountContract(), onResult = { _ ->
             if (isLinkingStarted) {
-                isLinkingStarted = false
                 goToAccountLinked()
+                isLinkingStarted = false
             }
         })
 
-    if (isGettingLinkUrl && uiState.haveValidLinkIntent()) {
+    if (isGettingLinkUrl && viewModel.uiState.haveValidLinkIntent()) {
         LaunchedEffect(key1 = viewModel) {
             isGettingLinkUrl = false
-            launcher.launch(uiState.linkUrl)
+            launcher.launch(viewModel.uiState.linkUrl)
             isLinkingStarted = true
         }
     }
 
     FirstTimeDialogContent(
-        uiState = uiState, paddingValues = paddingValues, onClick = {
+        uiState = viewModel.uiState, paddingValues = paddingValues, onClick = {
             isGettingLinkUrl = true
             viewModel.requestLinkUrl()
         }, skipThis = skipThis, dismissError = viewModel::dismissError
@@ -82,9 +81,10 @@ private fun FirstTimeDialogContent(
     dismissError: () -> Unit = {},
 ) {
     if (uiState.errorData != null) {
+        val context = LocalContext.current
         AlertDialogWithSingleButton(
-            title = uiState.errorData.title,
-            explanation = uiState.errorData.message,
+            title = uiState.errorData.title(context),
+            explanation = uiState.errorData.message(context),
             buttonLabel = stringResource(R.string.button_ok),
             onDismiss = dismissError
         )

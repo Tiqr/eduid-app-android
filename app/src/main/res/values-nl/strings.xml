@@ -3,7 +3,7 @@
 
     <!--    Strings below override strings from core module that are app-specific-->
 
-    <string name="scan_permission_required_message">Voor het scannen van een QR code, heeft eduID toegang nodig tot de camera.</string>
+    <string name="scan_permission_required_message">Om een QR code te scannen, heeft eduID toegang nodig tot de camera.</string>
 
     <!-- Start -->
     <string name="start_welcome"><![CDATA[<b>Met de eduID app kun je veilig en vertrouwd inloggen bij verschillende webdiensten.</b><br/> <br/> Ga naar <a href=\"https://mijn.eduid.nl\">eduid.nl</a> om je eduID app te activeren<br/> <br/>Tijdens het activatieproces moet je een QR code scannen. Druk op <b>Scan</> als hierom gevraagd wordt.]]></string>
@@ -36,14 +36,14 @@
     <string name="enroll_screen_request_id_button">Ik heb nog geen eduID</string>
 
     <string name="request_id_screen_title">Heb je nog geen eduID?</string>
-    <string name="request_id_screen_header_text">eduID is een persoonlijke login voor gebruikers gerelateerd aan het nederlandse onderwijs en onderzoek. Het is van jezelf, en bestaat onafhankelijk van een onderwijsinstelling.</string>
-    <string name="request_id_screen_bullet_point_1">Gebruik het om in te loggen op diensten gekoppeld aan SURFconext.</string>
+    <string name="request_id_screen_header_text">eduID is een persoonlijke login voor gebruikers gerelateerd aan het Nederlandse onderwijs en onderzoek. Het is van jezelf, en bestaat onafhankelijk van een onderwijsinstelling.</string>
+    <string name="request_id_screen_bullet_point_1">Gebruik eduID om in te loggen op diensten gekoppeld aan SURFconext.</string>
     <string name="request_id_screen_bullet_point_2">Gebruikers zonder login bij een instelling kunnen ook een eduID aanvragen.</string>
     <string name="request_id_screen_bullet_point_3">eduID is een een levenslange login. Het blijft geldig na je afstuderen.</string>
     <string name="request_id_screen_create_id_button">Maak een nieuw eduID</string>
 
     <string name="request_id_details_screen_title">Vraag een eduID aan</string>
-    <string name="request_id_details_screen_email_input_title">Jouw emailaddres</string>
+    <string name="request_id_details_screen_email_input_title">Jouw emailadres</string>
     <string name="request_id_details_screen_email_input_hint">bijv. timbernerslee@gmail.com</string>
     <string name="request_id_details_screen_first_name_input_title">Voornaam</string>
     <string name="request_id_details_screen_first_name_input_hint">bijv. Tim</string>
@@ -51,38 +51,38 @@
     <string name="request_id_details_screen_last_name_input_hint">bijv. Berners-Lee</string>
     <string name="request_id_details_screen_request_id_button">Vraag jouw eduID aan</string>
 
-    <string name="request_id_created_title">Your eduID has been created!</string>
-    <string name="request_id_created_description">To safely use this app, we need you to set a pincode and provide a phone number in case you might forget it.</string>
+    <string name="request_id_created_title">Je eduID is aangemaakt!</string>
+    <string name="request_id_created_description">Om de app veilig te gebruiken moet je een pincode kiezen en je telefoonnummer toevoegen, mocht je de pincode vergeten.</string>
 
-    <string name="request_id_created_fail_title">Could not create your eduID account!</string>
-    <string name="request_id_created_fail_description">The account creation has failed. Please try again.</string>
+    <string name="request_id_created_fail_title">Je eduID aanmaken is niet gelukt!</string>
+    <string name="request_id_created_fail_description">Het account aanmaken is mislukt. Probeer het nogmaals.</string>
 
-    <string name="first_time_title">Are you studying in NL?</string>
-    <string name="first_time_subtitle">Connect your institution!</string>
-    <string name="first_time_description01">When you study in the Netherlands</string>
-    <string name="first_time_description02">and you want to use eduID to logon to an educational service, we need to be sure it\'s you and not someone impersonating you.</string>
-    <string name="first_time_description03">You must therefore add the following information to your eduID:</string>
-    <string name="first_time_required">&#x2022; Validation of your full name by a third party\n&#x2022; Proof of being a student\n&#x2022; Your current institution</string>
-    <string name="first_time_footer01">Add this information</string>
-    <string name="first_time_footer02">by connecting your school/institution via SURFconext.</string>
-    <string name="first_time_button_connect">Connect your school/institution</string>
-    <string name="first_time_button_skip">Skip this</string>
+    <string name="first_time_title">Studeer je in Nederland?</string>
+    <string name="first_time_subtitle">Voeg je instelling toe!</string>
+    <string name="first_time_description01">Als je in studeert in Nederland</string>
+    <string name="first_time_description02">en je eduID wil gebruiken om in te loggen op diensten van een instelling, moeten we zeker weten dat jij het bent. En niet iemand anders.</string>
+    <string name="first_time_description03">Je kunt daarom de volgende informatie toevoegen aan je eduID:</string>
+    <string name="first_time_required">&#x2022; Validatie van je volledige naam door een derde partij\n&#x2022; Bewijs dat je student bent\n&#x2022; Je huidige instelling</string>
+    <string name="first_time_footer01">Deze gegevens toevoegen</string>
+    <string name="first_time_footer02">door je school/instelling te koppelen via SURFconext.</string>
+    <string name="first_time_button_connect">Koppel je school/instelling</string>
+    <string name="first_time_button_skip">Overslaan</string>
 
-    <string name="account_linked_title">Your school/uni</string>
-    <string name="account_linked_subtitle">was contacted successfully</string>
-    <string name="account_linked_description">The following information has been added to your eduID and can now be shared.</string>
+    <string name="account_linked_title">Je school/instelling</string>
+    <string name="account_linked_subtitle">is nu gekoppeld</string>
+    <string name="account_linked_description">De volgende gegevens zijn toegevoegd aan je eduID en kan gedeeld worden.</string>
 
-    <string name="authorize_title">Request to log on</string>
-    <string name="authorize_subtitle01">Do you want to login to</string>
+    <string name="authorize_title">Verzoek om in te loggen</string>
+    <string name="authorize_subtitle01">Wil je inloggen bij</string>
     <string name="authorize_subtitle02">%s?</string>
     <string name="authorize_login_button">Login</string>
-    <string name="authorize_confirmed_subtitle">You are logged on</string>
+    <string name="authorize_confirmed_subtitle">Je bent ingelogd</string>
 
-    <string name="deeplink_processing">Checking request…</string>
+    <string name="deeplink_processing">Controleren verzoek…</string>
 
     <string name="button_back">Terug</string>
-    <string name="button_continue">Continue</string>
-    <string name="button_allow">Allow</string>
+    <string name="button_continue">Ga door</string>
+    <string name="button_allow">Toestaan</string>
     <string name="button_torch">Zet zaklamp aan</string>
     <string name="confirmpin_mismatch">PIN komt niet overeen.</string>
     <string name="button_scan">Scan</string>
@@ -108,7 +108,7 @@
     <string name="request_id_recovery_input_hint">We sturen een SMS om het nummer te controleren.</string>
 
     <string name="confirm_sms_code_title">Controleer je berichten!</string>
-    <string name="confirm_sms_code_subtitle">Geef het 6 cijferige nummer dat verstuurd is aan (%s) om door te gaan</string>
+    <string name="confirm_sms_code_subtitle">Voer het 6 cijferige nummer in dat verstuurd is aan (%s) om door te gaan</string>
     <string name="confirm_sms_code_button">Controleer dit telefoonnummer</string>
 
     <string name="start_button">Oke, begrepen!</string>
@@ -128,23 +128,28 @@
     <string name="personal_info_info_header">Deelbare informatie</string>
 
     <string name="data_info_title">Data &amp; activiteit</string>
-    <string name="data_info_subtitle">Elke dienst waarvoor je eduID gebruikt ontvangt bepaalde gegevens (attributen) vanuit jouw eduID account. Denk hierbij aan je naam, e-mailadres of aan een pseudoniem waarmee de dienst jou uniek kan identificeren.</string>
-    <string name="data_info_delete_disclaimer">Elke dienst waarvoor je eduID gebruikt ontvangt bepaalde gegevens (attributen) vanuit jouw eduID account. Denk hierbij aan je naam, e-mailadres of aan een pseudoniem waarmee de dienst jou uniek kan identificeren.</string>
+    <string name="data_info_subtitle">Elke dienst waarvoor je eduID gebruikt ontvangt bepaalde gegevens vanuit jouw eduID account. Denk hierbij aan je naam, e-mailadres of aan een pseudoniem waarmee de dienst jou uniek kan identificeren.</string>
+    <string name="data_info_delete_disclaimer">Elke dienst waarvoor je eduID gebruikt ontvangt bepaalde gegevens vanuit jouw eduID account. Denk hierbij aan je naam, e-mailadres of aan een pseudoniem waarmee de dienst jou uniek kan identificeren.</string>
     <string name="data_info_on_date">op %s</string>
 
     <string name="security_title">Beveiliging</string>
     <string name="security_subtitle">We bieden verschillende methoden om in te loggen met je eduID.</string>
 
     <string name="two_fa_key_title">2FA sleutel(s)</string>
+    <string name="two_fa_key_list_title">Jouw sleutel(s)</string>
     <string name="two_fa_key_subtitle">Sleutels om veilig in te loggen zonder wachtwoord of link.</string>
     <string name="two_fa_key_empty">Geen sleutels.</string>
+    <string name="two_fa_use_biometric">Gebruik biometrie</string>
+    <string name="two_fa_delete">Sleutel vervijderen</string>
+    <string name="two_fa_account">Account</string>
+    <string name="two_fa_unieque_keyid">Uniek SleutelID</string>
 
     <string name="add_password_title">Voeg een wachtwoord toe</string>
     <string name="change_password_title">Wachtwoord wijzigen of verwijderen</string>
     <string name="add_password_subtitle">We sturen je een email om een wachtwoord in te stellen.</string>
     <string name="change_password_subtitle">We sturen je een email om je huidige wachtwoord opnieuw in te stellen of te verwijderen.</string>
-    <string name="reset_password_add_pass_email_sent">Om een wachtwoord toe te voegen, klikt u op de link in de e-mail die we hebben verzonden</string>
-    <string name="reset_password_change_pass_email_sent">Om uw wachtwoord te wijzigen of vervijden, klikt u op de link in de e-mail die we u hebben gestuurd</string>
+    <string name="reset_password_add_pass_email_sent">Om een wachtwoord toe te voegen, klik je op de link in de e-mail die we hebben verzonden</string>
+    <string name="reset_password_change_pass_email_sent">Om je wachtwoord te wijzigen of verwijderen, klik je op de link in de e-mail die we hebben gestuurd</string>
     <string name="reset_password_cancel_button">Annuleer</string>
     <string name="reset_password_confirm_button">Stuur email</string>
 
@@ -163,11 +168,11 @@
     <string name="edit_email_subtitle">Voer je nieuwe e-mailadres in. Er wordt een verificatiemail naar dit adres gestuurd.</string>
     <string name="edit_email_cancel_button">Annuleer</string>
     <string name="edit_email_confirm_button">Opslaan</string>
-    <string name="edit_email_new_email_title">Je nieuwe email addres</string>
+    <string name="edit_email_new_email_title">Je nieuwe email adres</string>
 
     <string name="edit_name_title">Alle gegevens van</string>
     <string name="edit_name_subtitle">Voornaam</string>
-    <string name="edit_name_selfasserted">Zelf ingevukld</string>
+    <string name="edit_name_selfasserted">Zelf ingevuld</string>
     <string name="edit_name_verified">Gecontroleerd</string>
     <string name="button_update">Vernieuwen</string>
     <string name="edit_name_another_source">Andere bron…</string>
@@ -183,7 +188,7 @@
     <string name="scan_registration_explaination3" tools:ignore="ExtraTranslation">3. Scan het in de app.</string>
     <string name="scan_permission_explanation" tools:ignore="ExtraTranslation">Geef toestemming voor het gebruik van de camera.</string>
 
-    <string name="pinsetup_title" tools:ignore="ExtraTranslation">Kies een PIN code</string>
+    <string name="pinsetup_title" tools:ignore="ExtraTranslation">Kies een PINcode</string>
     <string name="pinsetup_description" tools:ignore="ExtraTranslation">Om de eduID app te gebruiken moet je een pincode instellen.</string>
     <string name="pinsetup_confirm_title" tools:ignore="ExtraTranslation">Herhaal de PINcode</string>
     <string name="pinsetup_confirm_description" tools:ignore="ExtraTranslation">Typ nogmaals de pincode.</string>
@@ -223,6 +228,9 @@
     <string name="delete_account_two_description">Als je wilt doorgaan, typ dan je volledige naam zoals bekend in je eduID account ter bevestiging.</string>
     <string name="infotab_remove_connection">Verwijder koppeling</string>
     <string name="infotab_login_details">inlog gegevens</string>
+    <string name="infotab_login_first">Eerste keer inloggen</string>
+    <string name="infotab_login_unique_eduid">Unieke eduid</string>
+
     <string name="infotab_name">Naam</string>
     <string name="infotab_fullname">Volledige naam</string>
     <string name="infotab_email">E-mail</string>
@@ -233,6 +241,11 @@
     <string name="personalinfo_manage_your_account">Beheer jouw gegevens</string>
     <string name="personalinfo_add_role_institution">Voeg een rol &amp; instelling toe</string>
     <string name="personalinfo_add_via">Voeg dit toe via SURFConext</string>
+    <string name="personalinfo_verified_by_on">Geverifieerd door %1$s op %2$s.</string>
+    <string name="personalinfo_institution">Instelling</string>
+    <string name="personalinfo_affiliations">Aansluiting(en)</string>
+    <string name="personalinfo_expires">Link verloopt</string>
+
     <string name="infotab_delete_login_details">Verwijder inloggegevens *</string>
 
     <string name="delete_two_key_title">Verwijder sleutel</string>
@@ -244,23 +257,64 @@
     <string name="button_confirm">Bevestigen</string>
     <string name="security_sign_in_methods">Aanmeldmethoden</string>
     <string name="security_2fa_key">2FA key</string>
-    <string name="security_provided_by_eduid">Gelevered door</string>
+    <string name="security_provided_by_eduid">Geleverd door</string>
     <string name="security_send_a_magic_link_to">Stuur een magiche link naar</string>
     <string name="security_add_a_password">Wachtwoord toevoegen</string>
     <string name="security_change_password">Wijzig uw wachtwoord</string>
 
-    <string name="preenroll_check_blocked_title">Already enrolled on a different device</string>
-    <string name="preenroll_check_blocked_explanation">This account already has a device setup for 2FA. Would you like to deactivate existing enrollment to enroll on this device?</string>
-    <string name="preenroll_button_deactivate">Deactivate</string>
-    <string name="preenroll_button_cancel">Cancel</string>
+    <string name="preenroll_check_blocked_title">Al toegevoegd aan een ander toestel</string>
+    <string name="preenroll_check_blocked_explanation">Dit account is al aan een toestel gekoppeld voor 2FA. Wil je 2FA op het bestaande toestel deactiveren en hier toevoegen?</string>
+    <string name="preenroll_button_deactivate">Deactiveren</string>
+    <string name="preenroll_button_cancel">Annuleer</string>
 
-    <string name="preenroll_check_completed_title">Already enrolled!</string>
-    <string name="preenroll_check_completed_explanation">Enrollment was already completed.</string>
+    <string name="preenroll_check_completed_title">Al toegevoegd!</string>
+    <string name="preenroll_check_completed_explanation">Toevoegen is al voltooid.</string>
 
-    <string name="preenroll_check_missing_title">Missing account details</string>
-    <string name="preenroll_check_missing_explanation">Could not retrieve the account details.</string>
+    <string name="preenroll_check_missing_title">Missende account gegevens</string>
+    <string name="preenroll_check_missing_explanation">Kon de benodigde gegevens niet ophalen.</string>
 
-    <string name="preenroll_check_incompleted_title">Enrollment incomplete</string>
-    <string name="preenroll_check_incompleted_explanation">Enrollment is incomplete, either recovery was not complete or access was revoked</string>
+    <string name="preenroll_check_incompleted_title">Toevoegen incompleet</string>
+    <string name="preenroll_check_incompleted_explanation">Toevoegen is incompleet, recovery was niet compleet of toegang is uitgeschakeld</string>
 
+    <string name="err_title_load_fail">Gegevens kunnen niet laden</string>
+    <string name="err_msg_data_history_fail">Activiteitsgeschiedenis kan niet laden.</string>
+    <string name="err_msg_personal_fail">Personelijkegegevens kunnen niet laden.</string>
+    <string name="err_msg_unauthorized_request_fail">Verzoek kan niet worden voltooid, log in en geef toegang.</string>
+    <string name="err_title_delete_fail">Kan niet verwijderen</string>
+    <string name="err_msg_delete_fail">Account kan niet verwijderd worden</string>
+    <string name="err_msg_delete_name_missmatch">De getypte naam is niet dezelfde als de bestaande naam.</string>
+    <string name="err_title_generic_fail">Het verzoek kan niet worden voltooid</string>
+    <string name="err_title_link_account_fail">De URL kon niet worden opgehaald voor het koppelen van uw huidige account.</string>
+    <string name="err_title_auth_unexpected_fail">Onverwachte fout</string>
+    <string name="err_msg_auth_init_fail">AppData kan niet worden geïnitialiseerd. Probeer het opnieuw.</string>
+    <string name="err_msg_auth_init_fail_arg">AppData kan niet worden geïnitialiseerd. Reden: %s</string>
+    <string name="err_title_auth_invalid">Autorisatie ongeldig</string>
+    <string name="err_msg_auth_invalid">Verificatie ontvangen is ongeldig.</string>
+    <string name="err_title_auth_failed">Autorisatie mislukt</string>
+    <string name="err_msg_auth_failed">Geen autorisatietoestand opgeslagen.</string>
+    <string name="err_msg_auth_token_failed">Token Exchange is mislukt.</string>
+    <string name="err_msg_auth_code_failed_arg">Autorisatiecode - uitwisseling mislukt: %s.</string>
+    <string name="err_msg_generic_unexpected_with_arg">Onverwachte fout: %s, probeer het opnieuw.</string>
+    <string name="err_msg_request_fail">Verzoek kan op dit moment niet worden voltooid. Probeer het later opnieuw.</string>
+    <string name="err_title_email_in_use">Email is al in gebruik</string>
+    <string name="err_msg_email_in_use">Er is al een account geregistreerd voor de e-mail %s.</string>
+    <string name="err_title_email_domain_forbidden">E-maildomein is verboden</string>
+    <string name="err_msg_email_domain_forbidden">Het e-maildomein gebruikt in %s is niet toegestaan.</string>
+    <string name="err_msg_create_unknown_fail">Kan geen eduid-account maken voor e-mail %s.</string>
+    <string name="err_title_invalid_challenge">Inschrijvingsuitdaging is ongeldig</string>
+    <string name="err_msg_invalid_challenge">Kan de inschrijvingsuitdaging niet parseren, de uitdaging is ongeldig.</string>
+    <string name="err_msg_request_sms_validation_fail">Kan geen sms-code aanvragen, probeer het opnieuw.</string>
+    <string name="err_msg_confirm_sms_validation_fail">SMS-code niet bevestigd, probeer het opnieuw.</string>
+    <string name="err_msg_cannot_request_reset_pass">Kan de link voor het opnieuw instellen van het wachtwoord niet aanvragen.</string>
+    <string name="err_title_cannot_update_pass">Wachtwoord kan niet worden bijgewerkt</string>
+    <string name="err_msg_pass_is_invalid">Het gekozen wachtwoord is ongeldig.</string>
+    <string name="err_msg_pass_do_not_match">Wachtwoorden zijn niet hetzelfde</string>
+    <string name="err_msg_pass_invalid_hash">Ongeldige wachtwoord-hash, stuur de e-maillink opnieuw.</string>
+    <string name="err_msg_pass_missing_hash">Ontbrekende wachtwoord-hash, stuur de e-maillink opnieuw.</string>
+    <string name="err_msg_delete_key_lost">De sleutel die u wilt verwijderen, is niet gevonden.</string>
+    <string name="err_msg_change_key_lost">De sleutel die u wilt wijzigen, kan niet worden gevonden.</string>
+    <string name="err_title_deactivate_request_fail">Kan deactiveringscode niet aanvragen</string>
+    <string name="err_msg_deactivate_request_fail">Kon geen deactiveringscode aanvragen voor bekend telefoonnummer: %s.</string>
+    <string name="err_title_enroll_fail">Ongeldig inschrijvingsverzoek</string>
+    <string name="err_msg_enroll_parse_fail">Kan inschrijvingsuitdaging niet parseren</string>
 </resources>

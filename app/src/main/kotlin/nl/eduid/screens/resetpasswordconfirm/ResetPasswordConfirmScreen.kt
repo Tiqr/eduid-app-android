@@ -19,14 +19,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -38,7 +40,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import nl.eduid.ErrorData
+import androidx.lifecycle.flowWithLifecycle
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
@@ -57,26 +61,48 @@ fun ResetPasswordConfirmScreen(
 ) = EduIdTopAppBar(
     onBackClicked = goBack,
 ) {
-    val uiState by viewModel.uiState.observeAsState(UiState())
+    var waitForVmEvent by rememberSaveable { mutableStateOf(false) }
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+
+    viewModel.uiState.errorData?.let { errorData ->
+        val context = LocalContext.current
+        AlertDialogWithSingleButton(
+            title = errorData.title(context),
+            explanation = errorData.message(context),
+            buttonLabel = stringResource(R.string.button_ok),
+            onDismiss = viewModel::dismissError
+        )
+    }
+
+    if (waitForVmEvent) {
+        val currentGoBack by rememberUpdatedState(newValue = goBack)
+        LaunchedEffect(viewModel, lifecycle) {
+            snapshotFlow { viewModel.uiState }.distinctUntilChanged()
+                .filter { it.isCompleted != null }.flowWithLifecycle(lifecycle).collect {
+                    waitForVmEvent = false
+                    currentGoBack()
+                    viewModel.clearCompleted()
+                }
+        }
+    }
 
     ResetPasswordConfirmScreenContent(
-        newPasswordInput = uiState.newPasswordInput,
-        confirmPasswordInput = uiState.confirmPasswordInput,
+        newPasswordInput = viewModel.uiState.newPasswordInput,
+        confirmPasswordInput = viewModel.uiState.confirmPasswordInput,
         isAddPassword = isAddPassword,
-        inProgress = uiState.inProgress,
-        errorData = uiState.errorData,
-        dismissError = viewModel::clearErrorState,
-        isCompleted = uiState.isCompleted,
-        onComplete = {
-            viewModel.completedShown()
-            goBack()
-        },
+        inProgress = viewModel.uiState.inProgress,
         onNewPasswordChange = { viewModel.onNewPasswordInput(it) },
         onConfirmPasswordChange = {
             viewModel.onConfirmPasswordInput(it)
         },
-        onResetPasswordClicked = viewModel::onResetPasswordClicked,
-    ) { viewModel.onDeletePasswordClicked() }
+        onResetPasswordClicked = {
+            viewModel.onResetPasswordClicked()
+            waitForVmEvent = true
+        },
+    ) {
+        viewModel.onDeletePasswordClicked()
+        waitForVmEvent = true
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
@@ -86,10 +112,6 @@ fun ResetPasswordConfirmScreenContent(
     confirmPasswordInput: String = "",
     isAddPassword: Boolean = false,
     inProgress: Boolean = false,
-    errorData: ErrorData? = null,
-    dismissError: () -> Unit = {},
-    isCompleted: Unit? = null,
-    onComplete: () -> Unit = {},
     onNewPasswordChange: (newValue: String) -> Unit = {},
     onConfirmPasswordChange: (newValue: String) -> Unit = {},
     onResetPasswordClicked: () -> Unit = {},
@@ -97,26 +119,7 @@ fun ResetPasswordConfirmScreenContent(
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
-    var processing by rememberSaveable { mutableStateOf(false) }
-    val owner = LocalLifecycleOwner.current
-    if (processing && isCompleted != null && errorData == null) {
-        LaunchedEffect(owner) {
-            processing = false
-            onComplete()
-        }
-    }
 
-    if (errorData != null) {
-        AlertDialogWithSingleButton(
-            title = errorData.title,
-            explanation = errorData.message,
-            buttonLabel = stringResource(R.string.button_ok),
-            onDismiss = {
-                processing = false
-                dismissError()
-            }
-        )
-    }
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -193,10 +196,7 @@ fun ResetPasswordConfirmScreenContent(
                     stringResource(R.string.button_reset_password)
                 },
                 enabled = !inProgress,
-                onClick = {
-                    processing = true
-                    onResetPasswordClicked()
-                },
+                onClick = onResetPasswordClicked,
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -225,10 +225,7 @@ fun ResetPasswordConfirmScreenContent(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(R.string.button_delete_password),
                     enabled = !inProgress,
-                    onClick = {
-                        processing = true
-                        onDeletePasswordClicked()
-                    },
+                    onClick = onDeletePasswordClicked,
                     buttonBackgroundColor = Color.Transparent,
                     buttonTextColor = TextGrey,
                     buttonBorderColor = ButtonBorderGrey,
@@ -241,6 +238,5 @@ fun ResetPasswordConfirmScreenContent(
 @Preview
 @Composable
 private fun PreviewResetPasswordConfirmScreenContent() = EduidAppAndroidTheme {
-    ResetPasswordConfirmScreenContent(
-    )
+    ResetPasswordConfirmScreenContent()
 }

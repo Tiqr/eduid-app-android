@@ -5,8 +5,6 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import java.io.UnsupportedEncodingException
-import java.net.URLDecoder
-import java.net.URLEncoder
 
 object Graph {
     const val HOME_PAGE = "home_page"
@@ -220,12 +218,12 @@ object ManageAccountRoute {
     })
 
     fun routeWithArgs(dateString: String) =
-        "$route/${URLEncoder.encode(dateString, Charsets.UTF_8.toString())}"
+        "$route/${Uri.encode(dateString)}"
 
 
     fun decodeDateFromBundle(bundleArg: String): String {
         return try {
-            URLDecoder.decode(bundleArg, Charsets.UTF_8.name())
+            Uri.decode(bundleArg)
         } catch (e: UnsupportedEncodingException) {
             ""
         }

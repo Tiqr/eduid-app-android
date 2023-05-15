@@ -1,12 +1,15 @@
 package nl.eduid.screens.twofactorkeydelete
 
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
+import nl.eduid.R
 import org.tiqr.data.repository.IdentityRepository
 import timber.log.Timber
 import javax.inject.Inject
@@ -15,35 +18,40 @@ import javax.inject.Inject
 class TwoFactorKeyDeleteViewModel @Inject constructor(val identityRepository: IdentityRepository) :
     ViewModel() {
 
-    val uiState = MutableLiveData(UiState())
+    var uiState by mutableStateOf(UiState())
+        private set
 
     fun deleteKey(keyId: String) = viewModelScope.launch {
-        uiState.postValue(uiState.value?.copy(inProgress = true))
+        uiState = uiState.copy(inProgress = true)
         val identity = identityRepository.identity(keyId).firstOrNull()
-        identity?.let {
+        uiState = identity?.let { it ->
             try {
                 identityRepository.delete(it.identity)
-                uiState.postValue(uiState.value?.copy(inProgress = false, completed = Unit))
+                uiState.copy(inProgress = false, isCompleted = Unit)
             } catch (e: Exception) {
                 Timber.e(e, "Failed to delete key")
-                val message = e.localizedMessage ?: e.message
-                uiState.value?.copy(
-                    inProgress = false,
-                    errorData = ErrorData("Failed to delete key", "Could not delete key: $message")
+                val message = "${e.javaClass.simpleName}: ${e.localizedMessage ?: e.message}"
+                uiState.copy(
+                    inProgress = false, errorData = ErrorData(
+                        titleId = R.string.err_title_generic_fail,
+                        messageId = R.string.err_msg_generic_unexpected_with_arg,
+                        messageArg = message
+                    )
                 )
             }
-        } ?: uiState.postValue(
-            uiState.value?.copy(
-                inProgress = false, errorData = ErrorData("Cannot find key", "Key not found")
+        } ?: uiState.copy(
+            inProgress = false, errorData = ErrorData(
+                titleId = R.string.err_title_generic_fail,
+                messageId = R.string.err_msg_delete_key_lost,
             )
         )
     }
 
-    fun clearErrorMessage() {
-        uiState.value = uiState.value?.copy(errorData = null)
+    fun dismissError() {
+        uiState = uiState.copy(errorData = null)
     }
 
     fun clearCompleted() {
-        uiState.value = uiState.value?.copy(completed = null)
+        uiState = uiState.copy(isCompleted = null)
     }
 }

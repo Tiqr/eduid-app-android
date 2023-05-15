@@ -2,54 +2,50 @@ package nl.eduid.screens.firsttimedialog
 
 import android.content.Intent
 import android.net.Uri
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import nl.eduid.di.api.EduIdApi
 import nl.eduid.ErrorData
-import timber.log.Timber
+import nl.eduid.R
+import nl.eduid.di.assist.DataAssistant
+import nl.eduid.di.model.UnauthorizedException
 import javax.inject.Inject
 
 @HiltViewModel
-class LinkAccountViewModel @Inject constructor(private val eduIdApi: EduIdApi) : ViewModel() {
+class LinkAccountViewModel @Inject constructor(private val assistant: DataAssistant) : ViewModel() {
 
-    val uiState = MutableLiveData(UiState())
+    var uiState by mutableStateOf(UiState())
+        private set
 
     fun dismissError() {
-        uiState.value = uiState.value?.copy(errorData = null)
+        uiState = uiState.copy(errorData = null)
     }
 
     fun requestLinkUrl() = viewModelScope.launch {
-        uiState.postValue(UiState(inProgress = true, linkUrl = null))
+        uiState = uiState.copy(inProgress = true, linkUrl = null)
         try {
-            val response = eduIdApi.getStartLinkAccount()
-            val body = response.body()
-            if (response.isSuccessful && body != null) {
-                uiState.postValue(
-                    UiState(
-                        linkUrl = createLaunchIntent(body.url), inProgress = false
-                    )
-                )
+            val response = assistant.getStartLinkAccount()
+            if (response != null) {
+                uiState =
+                    uiState.copy(linkUrl = createLaunchIntent(response), inProgress = false)
             } else {
-                uiState.postValue(
-                    UiState(
+                uiState =
+                    uiState.copy(
                         inProgress = false, errorData = ErrorData(
-                            "Failed to get link URL",
-                            "Could not retrieve URL to link your current account"
+                            titleId = R.string.err_title_generic_fail,
+                            messageId = R.string.err_msg_request_fail
                         )
                     )
-                )
             }
-        } catch (e: Exception) {
-            Timber.e(e, "Failed to get link account for current user")
-            uiState.postValue(
-                UiState(
-                    inProgress = false, errorData = ErrorData(
-                        "Failed to get link URL",
-                        "Could not retrieve URL to link your current account"
-                    )
+        } catch (e: UnauthorizedException) {
+            uiState = uiState.copy(
+                inProgress = false, errorData = ErrorData(
+                    titleId = R.string.err_title_generic_fail,
+                    messageId = R.string.err_msg_unauthorized_request_fail
                 )
             )
         }

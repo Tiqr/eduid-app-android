@@ -1,4 +1,4 @@
-package nl.eduid.screens.requestidrecovery
+package nl.eduid.screens.recovery.requestsms
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,6 +25,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -36,6 +37,7 @@ import androidx.lifecycle.flowWithLifecycle
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import nl.eduid.R
+import nl.eduid.screens.recovery.UiState
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
@@ -59,13 +61,15 @@ fun PhoneRequestCodeScreen(
                 .filter { it.isCompleted != null }.flowWithLifecycle(lifecycle).collect {
                     waitForVmEvent = false
                     currentGoToConfirmNumber(it.input)
+                    viewModel.clearCompleted()
                 }
         }
     }
     viewModel.uiState.errorData?.let { errorData ->
+        val context = LocalContext.current
         AlertDialogWithSingleButton(
-            title = errorData.title,
-            explanation = errorData.message,
+            title = errorData.title(context),
+            explanation = errorData.message(context),
             buttonLabel = stringResource(R.string.button_ok),
             onDismiss = viewModel::dismissError
         )

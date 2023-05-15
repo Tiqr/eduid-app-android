@@ -17,6 +17,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -44,22 +45,22 @@ fun HomePageNoAccountContent(
     onGoToConfirmDeactivation: (String) -> Unit,
 ) = Scaffold { paddingValues ->
     val isAuthorizedForDataAccess by viewModel.isAuthorizedForDataAccess.observeAsState(false)
-    val uiState by viewModel.uiState.observeAsState(UiState())
     var waitingForVmEvent by rememberSaveable { mutableStateOf(false) }
     var wasOAuthTriggered by rememberSaveable { mutableStateOf(false) }
-    val waitToComplete by remember { derivedStateOf { uiState.inProgress || waitingForVmEvent } }
+    val waitToComplete by remember { derivedStateOf { viewModel.uiState.inProgress || waitingForVmEvent } }
 
     if (waitingForVmEvent) {
-        uiState.errorData?.let { errorData ->
-            AlertDialogWithSingleButton(title = errorData.title,
-                explanation = errorData.message,
+        viewModel.uiState.errorData?.let { errorData ->
+            val context = LocalContext.current
+            AlertDialogWithSingleButton(title = errorData.title(context),
+                explanation = errorData.message(context),
                 buttonLabel = stringResource(R.string.button_ok),
                 onDismiss = {
                     waitingForVmEvent = false
                     viewModel.dismissError()
                 })
         }
-        uiState.preEnrollCheck?.let { preEnrollCheck ->
+        viewModel.uiState.preEnrollCheck?.let { preEnrollCheck ->
             when (preEnrollCheck) {
                 PreEnrollCheck.AlreadyCompleted -> AlertDialogWithSingleButton(title = stringResource(
                     R.string.preenroll_check_completed_title
@@ -110,7 +111,7 @@ fun HomePageNoAccountContent(
             }
         }
 
-        uiState.deactivateFor?.let {
+        viewModel.uiState.deactivateFor?.let {
             val currentConfirmDeactivation by rememberUpdatedState(onGoToConfirmDeactivation)
             LaunchedEffect(viewModel.uiState) {
                 currentConfirmDeactivation(it.phoneNumber)
@@ -120,18 +121,18 @@ fun HomePageNoAccountContent(
         }
 
         if (isAuthorizedForDataAccess && wasOAuthTriggered) {
-            LaunchedEffect(uiState) {
-                if (uiState.canAutomaticallyTriggerEnroll()) {
+            LaunchedEffect(viewModel.uiState) {
+                if (viewModel.uiState.canAutomaticallyTriggerEnroll()) {
                     Timber.e("Automatically starting enrollment now")
                     viewModel.startEnrollmentAfterSignIn()
                     wasOAuthTriggered = false
                 }
             }
         }
-        if (uiState.haveValidChallenge()) {
+        if (viewModel.uiState.haveValidChallenge()) {
             val currentGoToRegistrationPinSetup by rememberUpdatedState(onGoToRegistrationPinSetup)
-            LaunchedEffect(uiState) {
-                currentGoToRegistrationPinSetup(uiState.currentChallenge as EnrollmentChallenge)
+            LaunchedEffect(viewModel.uiState) {
+                currentGoToRegistrationPinSetup(viewModel.uiState.currentChallenge as EnrollmentChallenge)
                 viewModel.clearCurrentChallenge()
                 waitingForVmEvent = false
             }

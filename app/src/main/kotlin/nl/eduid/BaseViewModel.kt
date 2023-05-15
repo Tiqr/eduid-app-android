@@ -1,11 +1,11 @@
 package nl.eduid
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.squareup.moshi.Moshi
 import org.tiqr.data.model.AuthenticationChallenge
 import org.tiqr.data.model.Challenge
 import org.tiqr.data.model.EnrollmentChallenge
-import java.net.URLEncoder
 
 open class BaseViewModel(private val moshi: Moshi) : ViewModel() {
 
@@ -20,7 +20,7 @@ open class BaseViewModel(private val moshi: Moshi) : ViewModel() {
                 adapter.toJson(scanResult)
             }
         }
-        return URLEncoder.encode(asJson, Charsets.UTF_8.toString())
+        return Uri.encode(asJson)
     }
 
 }

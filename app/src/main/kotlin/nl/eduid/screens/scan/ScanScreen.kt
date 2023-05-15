@@ -133,9 +133,10 @@ private fun ScanContent(
         }
 
         if (errorData != null) {
+            val context = LocalContext.current
             AlertDialogWithTwoButton(
-                title = errorData.title,
-                explanation = errorData.message,
+                title = errorData.title(context),
+                explanation = errorData.message(context),
                 dismissButtonLabel = stringResource(R.string.button_cancel),
                 onDismiss = dismissErrorDialog,
                 confirmButtonLabel = stringResource(R.string.button_retry),
