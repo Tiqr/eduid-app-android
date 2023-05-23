@@ -255,7 +255,8 @@
     <string name="button_confirm">Confirm</string>
     <string name="security_sign_in_methods">Sign-in methods</string>
     <string name="security_2fa_key">2FA key</string>
-    <string name="security_provided_by_eduid">Provided by eduID</string>
+    <string name="security_provided_by_eduid">Provided by %s</string>
+    <string name="security_provided_by_na">Provided by n/a</string>
     <string name="security_send_a_magic_link_to">Send a magic link to</string>
     <string name="security_add_a_password">Add a password</string>
     <string name="security_change_password">Change your password</string>

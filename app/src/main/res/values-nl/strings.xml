@@ -257,7 +257,8 @@
     <string name="button_confirm">Bevestigen</string>
     <string name="security_sign_in_methods">Aanmeldmethoden</string>
     <string name="security_2fa_key">2FA sleutel</string>
-    <string name="security_provided_by_eduid">Geleverd door</string>
+    <string name="security_provided_by_eduid">Geleverd door %s</string>
+    <string name="security_provided_by_na">Geleverd door n.v.t.</string>
     <string name="security_send_a_magic_link_to">Stuur een magiche link naar</string>
     <string name="security_add_a_password">Wachtwoord toevoegen</string>
     <string name="security_change_password">Wijzig uw wachtwoord</string>

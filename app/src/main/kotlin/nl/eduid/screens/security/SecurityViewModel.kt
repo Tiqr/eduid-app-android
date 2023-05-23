@@ -1,36 +1,66 @@
 package nl.eduid.screens.security
 
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import nl.eduid.di.model.UserDetails
-import nl.eduid.screens.personalinfo.PersonalInfoRepository
+import nl.eduid.ErrorData
+import nl.eduid.R
+import nl.eduid.di.assist.DataAssistant
+import nl.eduid.di.model.UnauthorizedException
+import org.tiqr.data.repository.IdentityRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class SecurityViewModel @Inject constructor(private val repository: PersonalInfoRepository) :
-    ViewModel() {
-    val securityInfo = MutableLiveData<SecurityScreenData>()
+class SecurityViewModel @Inject constructor(
+    private val assistant: DataAssistant,
+    private val identity: IdentityRepository,
+) : ViewModel() {
+    var uiState: SecurityScreenData by mutableStateOf(SecurityScreenData())
+        private set
 
     init {
         viewModelScope.launch {
-            val userDetails = repository.getUserDetails()
-            if (userDetails != null) {
-                val uiData = convertToUiData(userDetails)
-                securityInfo.postValue(uiData)
+            uiState = uiState.copy(isLoading = true, errorData = null)
+            try {
+                val userDetails = assistant.getErringUserDetails()
+                uiState = if (userDetails != null) {
+                    val identity = identity.identity(userDetails.id).firstOrNull()
+                    val provider = if (identity != null) {
+                        identity.identityProvider.displayName
+                    } else {
+                        null
+                    }
+                    uiState.copy(
+                        isLoading = false, errorData = null, email = userDetails.email,
+                        twoFAProvider = provider,
+                        hasPassword = userDetails.hasPasswordSet(),
+                    )
+                } else {
+                    uiState.copy(
+                        isLoading = false, errorData = ErrorData(
+                            titleId = R.string.err_title_load_fail,
+                            messageId = R.string.err_msg_data_history_fail
+                        )
+                    )
+                }
+
+            } catch (e: UnauthorizedException) {
+                uiState = uiState.copy(
+                    isLoading = false, errorData = ErrorData(
+                        titleId = R.string.err_title_load_fail,
+                        messageId = R.string.err_msg_unauthorized_request_fail
+                    )
+                )
             }
         }
     }
 
-    private fun convertToUiData(userDetails: UserDetails): SecurityScreenData {
-        return userDetails.eduIdPerServiceProvider.values.map {
-            SecurityScreenData(
-                twoFactorEnabled = false,
-                email = userDetails.email,
-                hasPassword = userDetails.hasPasswordSet(),
-            )
-        }.first()
+    fun dismissError() {
+        uiState = uiState.copy(errorData = null)
     }
 }
