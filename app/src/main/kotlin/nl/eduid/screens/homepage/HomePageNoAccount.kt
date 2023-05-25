@@ -17,6 +17,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -156,10 +157,11 @@ fun HomePageNoAccountContent(
         )
 
         Image(
-            painter = painterResource(id = R.drawable.logo_eduid_big),
+            painter = painterResource(id = R.drawable.ic_correct_logo),
             contentDescription = "",
+            contentScale = ContentScale.Fit,
             modifier = Modifier
-                .size(width = 150.dp, height = 59.dp)
+                .height(64.dp)
                 .constrainAs(eduIdLogo) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)

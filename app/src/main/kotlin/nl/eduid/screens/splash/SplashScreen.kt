@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -46,11 +47,12 @@ private fun SplashContent(
             .weight(1f)
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logo_eduid_big),
+            painter = painterResource(id = R.drawable.ic_correct_logo),
             contentDescription = "",
+            contentScale = ContentScale.Fit,
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 32.dp),
+                .height(88.dp)
+                .fillMaxWidth(),
         )
 
         Spacer(Modifier.height(36.dp))
