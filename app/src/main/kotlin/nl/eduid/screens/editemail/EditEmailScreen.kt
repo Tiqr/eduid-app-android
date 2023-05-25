@@ -43,6 +43,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.flowWithLifecycle
+import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import nl.eduid.R
@@ -151,6 +152,10 @@ fun EditEmailScreenContent(
                 .focusRequester(focusRequester)
 
         )
+        LaunchedEffect(focusRequester) {
+            awaitFrame()
+            focusRequester.requestFocus()
+        }
     }
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,

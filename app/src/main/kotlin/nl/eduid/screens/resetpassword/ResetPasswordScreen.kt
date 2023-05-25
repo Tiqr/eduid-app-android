@@ -105,7 +105,8 @@ fun ResetPasswordScreenContent(
     modifier = Modifier
         .fillMaxSize()
         .padding(padding)
-        .padding(horizontal = 24.dp),
+        .navigationBarsPadding()
+        .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
     verticalArrangement = Arrangement.SpaceBetween
 ) {
     Column(
@@ -141,9 +142,7 @@ fun ResetPasswordScreenContent(
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
-            .fillMaxWidth()
-            .navigationBarsPadding()
-            .padding(bottom = 24.dp),
+            .fillMaxWidth(),
     ) {
         PrimaryButton(
             enabled = !inProgress,
