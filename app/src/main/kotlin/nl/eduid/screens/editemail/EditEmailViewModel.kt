@@ -15,7 +15,6 @@ import nl.eduid.di.assist.DataAssistant
 import nl.eduid.di.model.EMAIL_DOMAIN_FORBIDDEN
 import nl.eduid.di.model.FAIL_EMAIL_IN_USE
 import javax.inject.Inject
-import javax.net.ssl.HttpsURLConnection
 
 @HiltViewModel
 class EditEmailViewModel @Inject constructor(
@@ -40,7 +39,7 @@ class EditEmailViewModel @Inject constructor(
                 try {
                     uiState = uiState.copy(inProgress = true, isCompleted = null)
                     val response = dataAssistant.changeEmail(newEmail)
-                    if (HttpsURLConnection.HTTP_OK == response) {
+                    if (response in 200..299) {
                         uiState = uiState.copy(inProgress = false, isCompleted = Unit)
                     } else {
                         val newData = when (response) {
