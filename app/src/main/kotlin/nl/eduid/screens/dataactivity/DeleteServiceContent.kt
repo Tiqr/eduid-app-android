@@ -43,10 +43,12 @@ fun DeleteServiceContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 24.dp),
+            .navigationBarsPadding()
+            .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column(
+            horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .fillMaxSize()
         ) {
@@ -97,9 +99,7 @@ fun DeleteServiceContent(
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier
-                .fillMaxWidth()
-                .navigationBarsPadding()
-                .padding(bottom = 24.dp),
+                .fillMaxWidth(),
         ) {
             SecondaryButton(
                 text = stringResource(R.string.button_cancel),
