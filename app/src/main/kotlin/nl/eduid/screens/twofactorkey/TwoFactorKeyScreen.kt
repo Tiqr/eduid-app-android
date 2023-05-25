@@ -1,12 +1,15 @@
 package nl.eduid.screens.twofactorkey
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -32,7 +35,7 @@ fun TwoFactorKeyScreen(
     goBack: () -> Unit,
 ) = EduIdTopAppBar(
     onBackClicked = goBack
-) {
+) { padding ->
     viewModel.uiState.errorData?.let { errorData ->
         val context = LocalContext.current
         AlertDialogWithSingleButton(
@@ -48,6 +51,7 @@ fun TwoFactorKeyScreen(
     } else {
         TwoFactorKeyScreenContent(keyList = viewModel.uiState.keys,
             isLoading = viewModel.uiState.isLoading,
+            padding = padding,
             onDeleteKeyPressed = onDeleteKeyPressed,
             onChangeBiometric = { key, biometricFlag ->
                 viewModel.changeBiometric(
@@ -62,14 +66,16 @@ fun TwoFactorKeyScreen(
 fun TwoFactorKeyScreenContent(
     keyList: List<IdentityData>,
     isLoading: Boolean = false,
+    padding: PaddingValues = PaddingValues(),
     onDeleteKeyPressed: (id: String) -> Unit = {},
     onChangeBiometric: (IdentityData, Boolean) -> Unit = { _, _ -> },
-    onExpand: (IdentityData?) -> Unit = { _ -> }
+    onExpand: (IdentityData?) -> Unit = { _ -> },
 ) = Column(
-    verticalArrangement = Arrangement.Bottom,
-    modifier = Modifier.verticalScroll(rememberScrollState())
+    modifier = Modifier
+        .fillMaxSize()
+        .padding(padding)
+        .padding(horizontal = 24.dp),
 ) {
-    Spacer(Modifier.height(36.dp))
 
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
@@ -98,25 +104,28 @@ fun TwoFactorKeyScreenContent(
         Spacer(Modifier.height(6.dp))
     }
 
-    keyList.forEach { twoFaInfo ->
-        KeyInfoCard(
-            title = twoFaInfo.title,
-            subtitle = twoFaInfo.subtitle,
-            keyData = twoFaInfo,
-            onDeleteButtonClicked = { onDeleteKeyPressed(twoFaInfo.uniqueKey) },
-            onChangeBiometric = onChangeBiometric,
-            onExpand = onExpand
-        )
+    LazyColumn(
+        modifier = Modifier
+            .navigationBarsPadding()
+            .padding(bottom = 24.dp)
+    ) {
+        items(keyList) { twoFaInfo ->
+            KeyInfoCard(
+                title = twoFaInfo.title,
+                subtitle = twoFaInfo.subtitle,
+                keyData = twoFaInfo,
+                onDeleteButtonClicked = { onDeleteKeyPressed(twoFaInfo.uniqueKey) },
+                onChangeBiometric = onChangeBiometric,
+                onExpand = onExpand
+            )
+        }
     }
 }
 
 @Composable
 fun TwoFactorKeyScreenNoContent(
 ) = Column(
-    verticalArrangement = Arrangement.Bottom,
-    modifier = Modifier.verticalScroll(rememberScrollState())
 ) {
-    Spacer(Modifier.height(36.dp))
 
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
@@ -136,6 +145,15 @@ fun TwoFactorKeyScreenNoContent(
 @Composable
 private fun PreviewSecurityScreenContent() = EduidAppAndroidTheme {
     TwoFactorKeyScreenContent(
-        keyList = listOf(),
+        keyList = listOf(
+            IdentityData(
+                uniqueKey = "uniqueId",
+                title = "title",
+                subtitle = "subtitle",
+                account = "account",
+                biometricFlag = true,
+                isExpanded = true
+            )
+        ),
     )
 }

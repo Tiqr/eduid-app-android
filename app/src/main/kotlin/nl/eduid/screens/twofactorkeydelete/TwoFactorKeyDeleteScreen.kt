@@ -4,14 +4,15 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -23,6 +24,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -82,9 +84,9 @@ fun TwoFactorKeyDeleteScreen(
                 }
         }
     }
-
     TwoFactorKeyDeleteScreenContent(
         inProgress = viewModel.uiState.inProgress,
+        padding = it,
         onDeleteClicked = {
             waitForVmEvent = true
             viewModel.deleteKey(twoFaKeyId)
@@ -96,20 +98,18 @@ fun TwoFactorKeyDeleteScreen(
 @Composable
 private fun TwoFactorKeyDeleteScreenContent(
     inProgress: Boolean = false,
+    padding: PaddingValues = PaddingValues(),
     onDeleteClicked: () -> Unit = {},
     goBack: () -> Unit = {},
 ) = Column(
     modifier = Modifier
         .fillMaxSize()
-        .verticalScroll(rememberScrollState())
+        .padding(padding)
+        .navigationBarsPadding()
+        .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
+    verticalArrangement = Arrangement.SpaceBetween
 ) {
-
-    Spacer(Modifier.height(36.dp))
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .weight(1f)
-    ) {
+    Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.Start) {
         Text(
             text = stringResource(R.string.delete_two_key_title),
             style = MaterialTheme.typography.titleLarge.copy(
@@ -154,31 +154,28 @@ private fun TwoFactorKeyDeleteScreenContent(
             modifier = Modifier.fillMaxWidth(),
         )
     }
-    Column(
-        Modifier.fillMaxWidth()
+    Row(
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier
+            .fillMaxWidth(),
     ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()
-        ) {
-            PrimaryButton(
-                enabled = !inProgress,
-                text = stringResource(id = R.string.button_cancel),
-                modifier = Modifier.widthIn(min = 140.dp),
-                onClick = goBack,
-                buttonBackgroundColor = Color.Transparent,
-                buttonTextColor = TextGrey,
-                buttonBorderColor = ButtonBorderGrey,
-            )
-            PrimaryButton(
-                enabled = !inProgress,
-                text = stringResource(id = R.string.button_confirm),
-                modifier = Modifier.widthIn(min = 140.dp),
-                onClick = onDeleteClicked,
-                buttonBackgroundColor = ButtonRed,
-                buttonTextColor = Color.White,
-            )
-        }
-        Spacer(Modifier.height(24.dp))
+        PrimaryButton(
+            enabled = !inProgress,
+            text = stringResource(id = R.string.button_cancel),
+            modifier = Modifier.widthIn(min = 140.dp),
+            onClick = goBack,
+            buttonBackgroundColor = Color.Transparent,
+            buttonTextColor = TextGrey,
+            buttonBorderColor = ButtonBorderGrey,
+        )
+        PrimaryButton(
+            enabled = !inProgress,
+            text = stringResource(id = R.string.button_confirm),
+            modifier = Modifier.widthIn(min = 140.dp),
+            onClick = onDeleteClicked,
+            buttonBackgroundColor = ButtonRed,
+            buttonTextColor = Color.White,
+        )
     }
 }
 

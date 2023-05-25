@@ -1,12 +1,13 @@
 package nl.eduid.screens.security
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -36,6 +37,7 @@ fun SecurityScreen(
 ) {
     SecurityScreenContent(
         securityInfo = viewModel.uiState,
+        padding = it,
         onConfigurePasswordClicked = onConfigurePasswordClick,
         onEditEmailClicked = onEditEmailClicked,
         on2FaClicked = on2FaClicked,
@@ -46,15 +48,18 @@ fun SecurityScreen(
 @Composable
 fun SecurityScreenContent(
     securityInfo: SecurityScreenData,
+    padding: PaddingValues = PaddingValues(),
     onConfigurePasswordClicked: () -> Unit = {},
     onEditEmailClicked: () -> Unit = {},
     on2FaClicked: () -> Unit = {},
-    dismissError:()->Unit = {}
+    dismissError: () -> Unit = {},
 ) = Column(
-    verticalArrangement = Arrangement.Bottom,
-    modifier = Modifier.verticalScroll(rememberScrollState())
+    modifier = Modifier
+        .fillMaxSize()
+        .padding(padding)
+        .navigationBarsPadding()
+        .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
 ) {
-    Spacer(Modifier.height(36.dp))
     if (securityInfo.errorData != null) {
         val context = LocalContext.current
         AlertDialogWithSingleButton(
@@ -117,7 +122,6 @@ fun SecurityScreenContent(
             ""
         }, onClick = onConfigurePasswordClicked, endIcon = R.drawable.edit_icon
     )
-    Spacer(Modifier.height(16.dp))
 }
 
 

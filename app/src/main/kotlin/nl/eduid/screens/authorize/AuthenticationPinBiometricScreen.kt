@@ -3,11 +3,15 @@ package nl.eduid.screens.authorize
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -60,6 +65,7 @@ fun AuthenticationPinBiometricScreen(
     AuthenticationPinBiometricContent(
         shouldPromptBiometric = context.biometricUsable() && authChallenge?.identity?.biometricInUse == true,
         challengeComplete = challengeComplete,
+        padding = it,
         onBiometricResult = { biometricSignIn ->
             viewModel.authenticateWithBiometric(biometricSignIn)
         },
@@ -71,7 +77,7 @@ fun AuthenticationPinBiometricScreen(
             goToAuthenticationComplete(authChallenge, pin)
         },
         clearCompleteChallenge = viewModel::clearCompleteChallenge,
-        goHomeOnFail = onCancel
+        goHomeOnFail = onCancel,
     )
 }
 
@@ -80,6 +86,7 @@ private fun AuthenticationPinBiometricContent(
     shouldPromptBiometric: Boolean,
     challengeComplete: ChallengeCompleteResult<ChallengeCompleteFailure>? = null,
     isPinInvalid: Boolean = false,
+    padding: PaddingValues = PaddingValues(),
     onBiometricResult: (BiometricSignIn) -> Unit = {},
     submitPin: (String) -> Unit = {},
     onCancel: () -> Unit = {},
@@ -89,6 +96,7 @@ private fun AuthenticationPinBiometricContent(
 ) {
     var isCheckingSecret by rememberSaveable { mutableStateOf(false) }
     var pinValue by rememberSaveable { mutableStateOf("") }
+    var shouldShowKeyboard by remember { mutableStateOf(!shouldPromptBiometric) }
     val owner = LocalLifecycleOwner.current
 
     if (isCheckingSecret && challengeComplete != null) {
@@ -157,8 +165,13 @@ private fun AuthenticationPinBiometricContent(
         val launchBiometricSignIn = rememberLauncherForActivityResult(
             contract = SignInWithBiometricsContract(),
         ) { result ->
-            isCheckingSecret = true
-            onBiometricResult(result)
+            when (result) {
+                is BiometricSignIn.Failed -> shouldShowKeyboard = true
+                is BiometricSignIn.Success -> {
+                    isCheckingSecret = true
+                    onBiometricResult(result)
+                }
+            }
         }
         if (!hasAutoRequestedBiometrics) {
             SideEffect {
@@ -167,28 +180,46 @@ private fun AuthenticationPinBiometricContent(
             }
         }
     }
-    Column(modifier = Modifier.fillMaxSize()) {
-        Text(
-            style = MaterialTheme.typography.titleLarge.copy(
-                textAlign = TextAlign.Start, color = TextGreen
-            ), text = stringResource(R.string.auth_pin_title), modifier = Modifier.fillMaxWidth()
-        )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(padding)
+            .padding(horizontal = 24.dp),
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
         Column(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start,
+            modifier = Modifier
+                .fillMaxWidth()
         ) {
+            Text(
+                style = MaterialTheme.typography.titleLarge.copy(
+                    textAlign = TextAlign.Start, color = TextGreen
+                ),
+                text = stringResource(R.string.auth_pin_title),
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(36.dp))
             PinInputField(label = stringResource(R.string.auth_pin_subtitle),
                 pinCode = pinValue,
                 isPinInvalid = isPinInvalid,
+                shouldShowKeyboard = shouldShowKeyboard,
                 modifier = Modifier.fillMaxWidth(),
                 onPinChange = { newValue -> pinValue = newValue },
                 submitPin = {
                     isCheckingSecret = true
                     submitPin(pinValue)
                 })
+
         }
         Row(
-            horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier
+                .fillMaxWidth()
+                .imePadding()
+                .navigationBarsPadding()
+                .padding(bottom = 24.dp)
         ) {
             SecondaryButton(
                 modifier = Modifier.widthIn(min = 140.dp),
@@ -204,8 +235,6 @@ private fun AuthenticationPinBiometricContent(
                 },
             )
         }
-        Spacer(Modifier.height(24.dp))
-
     }
 }
 

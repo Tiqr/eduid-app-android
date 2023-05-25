@@ -23,27 +23,29 @@ fun EduIdTopAppBar(
     onBackClicked: () -> Unit = {},
     withBackIcon: Boolean = true,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
-    content: @Composable () -> Unit,
+    content: @Composable (PaddingValues) -> Unit,
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    Scaffold(modifier = Modifier
-        .systemBarsPadding()
-        .imePadding()
-        .nestedScroll(scrollBehavior.nestedScrollConnection),
+    val topBarState = rememberTopAppBarState()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(topBarState)
+    Scaffold(
+        modifier = Modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             CenterAlignedTopAppBar(
-                modifier = Modifier
-                    .padding(top = 16.dp, bottom = 16.dp, start = 15.dp, end = 30.dp),
+                modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
                 navigationIcon = {
                     if (withBackIcon) {
-                        IconButton(onClick = onBackClicked) {
+                        IconButton(
+                            onClick = onBackClicked,
+                            modifier = Modifier.padding(start = 8.dp)
+                        ) {
                             Icon(
                                 imageVector = Icons.Filled.ArrowBack,
                                 contentDescription = stringResource(R.string.button_back),
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier
-                                    .size(width = 53.dp, height = 53.dp)
+                                    .size(width = 48.dp, height = 48.dp)
                             )
                         }
                     }
@@ -52,21 +54,20 @@ fun EduIdTopAppBar(
                     Image(
                         painter = painterResource(R.drawable.logo_eduid_big),
                         contentDescription = "",
-                        modifier = Modifier.size(width = 122.dp, height = 46.dp),
+                        modifier = Modifier
+                            .size(width = 122.dp, height = 48.dp),
                         alignment = Alignment.Center
                     )
                 },
                 scrollBehavior = scrollBehavior
             )
-        }) { paddingValues ->
-        Row(
-            modifier = Modifier
-                .padding(paddingValues)
-                .padding(horizontal = 30.dp)
-                .fillMaxSize()
-        ) {
-            content()
-        }
+        },
+        contentWindowInsets = ScaffoldDefaults
+            .contentWindowInsets
+            .exclude(WindowInsets.navigationBars)
+            .exclude(WindowInsets.ime),
+    ) { paddingValues ->
+        content(paddingValues)
     }
 }
 

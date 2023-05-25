@@ -92,9 +92,9 @@ private fun FirstTimeDialogContent(
 
     Column(
         modifier = Modifier
-            .padding(paddingValues)
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
+            .padding(paddingValues)
             .padding(horizontal = 30.dp)
     ) {
         Column(

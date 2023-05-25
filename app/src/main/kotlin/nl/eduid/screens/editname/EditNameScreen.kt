@@ -3,10 +3,14 @@ package nl.eduid.screens.editname
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -61,6 +65,7 @@ fun EditNameScreen(
         isLoading = viewModel.uiState.isLoading,
         personalInfo = viewModel.uiState.personalInfo,
         account = viewModel.uiState.personalInfo.institutionAccounts.firstOrNull(),
+        padding = it,
         updateName = { givenName, familyName -> viewModel.updateName(givenName, familyName) },
         addLinkToAccount = {
             isGettingLinkUrl = true
@@ -75,13 +80,17 @@ private fun EditNameContent(
     isLoading: Boolean,
     personalInfo: PersonalInfo,
     account: PersonalInfo.InstitutionAccount? = null,
+    padding: PaddingValues = PaddingValues(),
     updateName: (String, String) -> Unit = { _, _ -> },
     addLinkToAccount: () -> Unit = {},
     removeConnection: (Int) -> Unit = {},
 ) = Column(
     modifier = Modifier
-        .fillMaxWidth()
+        .fillMaxSize()
         .verticalScroll(rememberScrollState())
+        .padding(padding)
+        .navigationBarsPadding()
+        .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
 ) {
     Text(
         style = MaterialTheme.typography.titleLarge,
@@ -154,10 +163,6 @@ private fun EditNameContent(
         subtitle = R.string.edit_name_add_link_via,
         enabled = !isLoading,
         addLinkToAccount = addLinkToAccount
-    )
-
-    Spacer(
-        modifier = Modifier.height(24.dp)
     )
 }
 

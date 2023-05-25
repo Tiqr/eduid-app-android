@@ -2,11 +2,13 @@ package nl.eduid.screens.authorize
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -39,22 +41,29 @@ fun RequestAuthenticationScreen(
     val authChallenge by viewModel.challenge.observeAsState(null)
     RequestAuthenticationContent(
         loginToService = authChallenge?.serviceProviderDisplayName,
+        padding = it,
         onLogin = { onLogin(authChallenge) },
-        onCancel = onCancel
+        onCancel = onCancel,
     )
 }
 
 @Composable
 private fun RequestAuthenticationContent(
     loginToService: String?,
+    padding: PaddingValues = PaddingValues(),
     onLogin: () -> Unit = {},
     onCancel: () -> Unit = {},
 ) {
     if (loginToService == null) {
 
-
     } else {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(horizontal = 24.dp),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
             Text(
                 style = MaterialTheme.typography.titleLarge.copy(
                     textAlign = TextAlign.Start, color = TextGreen
@@ -62,41 +71,41 @@ private fun RequestAuthenticationContent(
                 text = stringResource(R.string.authorize_title),
                 modifier = Modifier.fillMaxWidth()
             )
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.Center,
-            ) {
-                val loginQuestion = buildAnnotatedString {
-                    pushStyle(
-                        MaterialTheme.typography.titleLarge.copy(
-                            color = TextGreen
-                        ).toSpanStyle()
+            val loginQuestion = buildAnnotatedString {
+                pushStyle(
+                    MaterialTheme.typography.titleLarge.copy(
+                        color = TextGreen
+                    ).toSpanStyle()
+                )
+                append(stringResource(R.string.authorize_subtitle01))
+                pop()
+                append("\n")
+                pushStyle(
+                    MaterialTheme.typography.titleLarge.copy(
+                        textAlign = TextAlign.Center
+                    ).toSpanStyle()
+                )
+                append(
+                    stringResource(
+                        R.string.authorize_subtitle02, loginToService
                     )
-                    append(stringResource(R.string.authorize_subtitle01))
-                    pop()
-                    append("\n")
-                    pushStyle(
-                        MaterialTheme.typography.titleLarge.copy(
-                            textAlign = TextAlign.Center
-                        ).toSpanStyle()
-                    )
-                    append(
-                        stringResource(
-                            R.string.authorize_subtitle02, loginToService
-                        )
-                    )
-                }
-
-                Text(
-                    text = loginQuestion,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally),
-                    textAlign = TextAlign.Center
                 )
             }
+
+            Text(
+                text = loginQuestion,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally),
+                textAlign = TextAlign.Center
+            )
             Row(
-                horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .navigationBarsPadding()
+                    .weight(1f, false)
+                    .padding(bottom = 24.dp)
             ) {
                 SecondaryButton(
                     modifier = Modifier.widthIn(min = 140.dp),
@@ -109,7 +118,6 @@ private fun RequestAuthenticationContent(
                     onClick = onLogin,
                 )
             }
-            Spacer(Modifier.height(24.dp))
         }
     }
 }

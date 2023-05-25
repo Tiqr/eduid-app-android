@@ -2,11 +2,12 @@ package nl.eduid.screens.personalinfo
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.rememberScrollState
@@ -69,21 +70,26 @@ fun PersonalInfoScreen(
             launcher.launch(viewModel.uiState.linkUrl)
         }
     }
-
-    PersonalInfoScreenContent(
-        personalInfo = viewModel.uiState.personalInfo,
-        isLoading = viewModel.uiState.isLoading,
-        errorData = viewModel.uiState.errorData,
-        dismissError = viewModel::clearErrorData,
-        onEmailClicked = onEmailClicked,
-        onNameClicked = onNameClicked,
-        removeConnection = { index -> viewModel.removeConnection(index) },
-        onManageAccountClicked = onManageAccountClicked,
-        addLinkToAccount = {
-            isGettingLinkUrl = true
-            viewModel.requestLinkUrl()
-        },
-    )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(it)
+    ) {
+        PersonalInfoScreenContent(
+            personalInfo = viewModel.uiState.personalInfo,
+            isLoading = viewModel.uiState.isLoading,
+            errorData = viewModel.uiState.errorData,
+            dismissError = viewModel::clearErrorData,
+            onEmailClicked = onEmailClicked,
+            onNameClicked = onNameClicked,
+            removeConnection = { index -> viewModel.removeConnection(index) },
+            onManageAccountClicked = onManageAccountClicked,
+            addLinkToAccount = {
+                isGettingLinkUrl = true
+                viewModel.requestLinkUrl()
+            },
+        )
+    }
 }
 
 @Composable
@@ -98,8 +104,10 @@ fun PersonalInfoScreenContent(
     onManageAccountClicked: (dateString: String) -> Unit = {},
     addLinkToAccount: () -> Unit = {},
 ) = Column(
-    verticalArrangement = Arrangement.Bottom,
-    modifier = Modifier.verticalScroll(rememberScrollState())
+    modifier = Modifier
+        .verticalScroll(rememberScrollState())
+        .navigationBarsPadding()
+        .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
 ) {
     if (errorData != null) {
         val context = LocalContext.current
@@ -111,7 +119,6 @@ fun PersonalInfoScreenContent(
         )
     }
 
-    Spacer(Modifier.height(36.dp))
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
             textAlign = TextAlign.Start, color = ButtonGreen
@@ -156,6 +163,7 @@ fun PersonalInfoScreenContent(
         subtitle = stringResource(R.string.infotab_providedby_you),
         onClick = onEmailClicked,
         endIcon = R.drawable.edit_icon,
+        capitalizeTitle = false,
         label = stringResource(R.string.infotab_email),
     )
     Spacer(Modifier.height(16.dp))
@@ -208,7 +216,6 @@ fun PersonalInfoScreenContent(
             ),
         )
     }
-    Spacer(Modifier.height(42.dp))
 }
 
 

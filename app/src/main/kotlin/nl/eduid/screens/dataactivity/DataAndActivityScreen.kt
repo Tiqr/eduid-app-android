@@ -2,11 +2,12 @@ package nl.eduid.screens.dataactivity
 
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -49,19 +50,23 @@ fun DataAndActivityScreen(
                 onDismiss = viewModel::clearErrorData
             )
         }
-
-        if (viewModel.uiState.deleteService != null) {
-            DeleteServiceContent(
-                providerName = viewModel.uiState.deleteService?.providerName.orEmpty(),
-                inProgress = viewModel.uiState.isLoading,
-                removeService = { viewModel.removeService(viewModel.uiState.deleteService?.serviceProviderEntityId) },
-                goBack = viewModel::cancelDeleteService
-            )
-        } else {
-            DataAndActivityScreenContent(
-                data = viewModel.uiState.data,
-                isLoading = viewModel.uiState.isLoading
-            ) { viewModel.goToDeleteService(it) }
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
+        ) {
+            if (viewModel.uiState.deleteService != null) {
+                DeleteServiceContent(
+                    providerName = viewModel.uiState.deleteService?.providerName.orEmpty(),
+                    inProgress = viewModel.uiState.isLoading,
+                    removeService = { viewModel.removeService(viewModel.uiState.deleteService?.serviceProviderEntityId) },
+                    goBack = viewModel::cancelDeleteService
+                )
+            } else {
+                DataAndActivityScreenContent(
+                    data = viewModel.uiState.data, isLoading = viewModel.uiState.isLoading
+                ) { viewModel.goToDeleteService(it) }
+            }
         }
     }
 }
@@ -72,10 +77,10 @@ fun DataAndActivityScreenContent(
     isLoading: Boolean = false,
     goToConfirmDeleteService: (ServiceProvider) -> Unit = {},
 ) = Column(
-    verticalArrangement = Arrangement.Bottom,
-    modifier = Modifier.verticalScroll(rememberScrollState())
+    modifier = Modifier
+        .verticalScroll(rememberScrollState())
+        .padding(horizontal = 24.dp)
 ) {
-    Spacer(Modifier.height(36.dp))
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
             textAlign = TextAlign.Start, color = ButtonGreen

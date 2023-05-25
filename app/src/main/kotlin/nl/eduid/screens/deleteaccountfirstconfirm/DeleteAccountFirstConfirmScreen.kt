@@ -1,11 +1,27 @@
 package nl.eduid.screens.deleteaccountfirstconfirm
 
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,22 +49,27 @@ fun DeleteAccountFirstConfirmScreen(
     onBackClicked = goBack,
 ) {
     DeleteAccountFirstConfirmScreenContent(
+        padding = it,
         onDeleteAccountPressed = onDeleteAccountPressed,
     )
 }
 
 @Composable
 private fun DeleteAccountFirstConfirmScreenContent(
+    padding: PaddingValues = PaddingValues(),
     onDeleteAccountPressed: () -> Unit = {},
 ) = Column(
     modifier = Modifier
         .fillMaxSize()
+        .padding(padding)
+        .navigationBarsPadding()
+        .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
+    verticalArrangement = Arrangement.SpaceBetween
 ) {
     Column(
+        horizontalAlignment = Alignment.Start,
         modifier = Modifier
-            .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .weight(1f)
     ) {
         Text(
             text = stringResource(R.string.delete_account_one_title),
@@ -105,9 +126,8 @@ private fun DeleteAccountFirstConfirmScreenContent(
         border = BorderStroke(1.dp, Color.Red),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
         modifier = Modifier
-            .sizeIn(minHeight = 56.dp)
-            .padding(bottom = 24.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .sizeIn(minHeight = 56.dp),
     ) {
         Text(
             text = stringResource(R.string.button_manage_account_delete),

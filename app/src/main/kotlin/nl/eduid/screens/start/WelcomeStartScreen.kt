@@ -1,8 +1,20 @@
 package nl.eduid.screens.start
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -32,19 +44,25 @@ fun WelcomeStartScreen(
 ) {
     val uiState by viewModel.uiState.observeAsState(UiState())
 
-    WelcomeStartContent(uiState) {
+    WelcomeStartContent(uiState, padding = it) {
         onNext(uiState.isAccountLinked)
     }
 }
 
 @Composable
-private fun WelcomeStartContent(uiState: UiState, onNext: () -> Unit = {}) {
+private fun WelcomeStartContent(
+    uiState: UiState,
+    padding: PaddingValues = PaddingValues(),
+    onNext: () -> Unit = {},
+) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 30.dp)
+            .padding(padding)
+            .navigationBarsPadding()
+            .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
     ) {
-        val (bottomButton, bottomSpacer) = createRefs()
+        val (bottomButton) = createRefs()
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -148,13 +166,6 @@ private fun WelcomeStartContent(uiState: UiState, onNext: () -> Unit = {}) {
             modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(bottomButton) {
-                    bottom.linkTo(bottomSpacer.top)
-                },
-        )
-        Spacer(
-            Modifier
-                .height(40.dp)
-                .constrainAs(bottomSpacer) {
                     bottom.linkTo(parent.bottom)
                 },
         )
