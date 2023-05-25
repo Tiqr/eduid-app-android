@@ -15,7 +15,6 @@ object Graph {
     const val FIRST_TIME_DIALOG = "first_time_dialog"
     const val PERSONAL_INFO = "personal_info"
     const val DATA_AND_ACTIVITY = "data_and_activity"
-    const val SECURITY = "security"
     const val OAUTH = "oauth_mobile_eduid"
     const val CONFIGURE_PASSWORD = "configure_password_subgraph"
     const val EDIT_EMAIL = "edit_email"
