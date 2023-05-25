@@ -217,8 +217,7 @@ object ManageAccountRoute {
         defaultValue = ""
     })
 
-    fun routeWithArgs(dateString: String) =
-        "$route/${Uri.encode(dateString)}"
+    fun routeWithArgs(dateString: String) = "$route/${Uri.encode(dateString)}"
 
 
     fun decodeDateFromBundle(bundleArg: String): String {
@@ -240,11 +239,29 @@ object DeleteTwoFaRoute {
         defaultValue = ""
     })
 
-    fun routeWithArgs(idString: String) =
-        "$route/${Uri.encode(idString)}"
+    fun routeWithArgs(idString: String) = "$route/${Uri.encode(idString)}"
 
     fun decodeIdFromEntry(entry: NavBackStackEntry): String {
         val date = entry.arguments?.getString(idArg) ?: ""
         return Uri.decode(date)
+    }
+}
+
+sealed class Security(val route: String) {
+    object Settings : Security("security")
+
+    object ConfirmEmail : Security("confirm_email") {
+        const val confirmEmailHash = "h"
+        val routeWithArgs = "$route?$confirmEmailHash={$confirmEmailHash}"
+        val arguments = listOf(navArgument(confirmEmailHash) {
+            type = NavType.StringType
+            nullable = false
+            defaultValue = ""
+        })
+        const val confirmEmail =
+            "https://login.test2.eduid.nl/client/mobile/update-email?$confirmEmailHash={$confirmEmailHash}"
+        const val customSchemeConfirmEmail =
+            "eduid://client/mobile/update-email?$confirmEmailHash={$confirmEmailHash}"
+
     }
 }

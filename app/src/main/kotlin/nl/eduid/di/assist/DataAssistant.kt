@@ -10,10 +10,25 @@ import javax.inject.Inject
 
 class DataAssistant @Inject constructor(
     private val infoRepository: PersonalInfoRepository,
-    private val storageRepository: StorageRepository
+    private val storageRepository: StorageRepository,
 ) {
     suspend fun getErringUserDetails(): UserDetails? = try {
         infoRepository.getErringUserDetails()
+    } catch (e: UnauthorizedException) {
+        storageRepository.clearInvalidAuth()
+        throw e
+    }
+
+    suspend fun changeEmail(newEmail: String): Int? = try {
+        infoRepository.changeEmail(newEmail)
+    } catch (e: UnauthorizedException) {
+        storageRepository.clearInvalidAuth()
+        throw e
+    }
+
+
+    suspend fun confirmEmail(confirmEmailHash: String): UserDetails? = try {
+        infoRepository.confirmEmailUpdate(confirmEmailHash)
     } catch (e: UnauthorizedException) {
         storageRepository.clearInvalidAuth()
         throw e

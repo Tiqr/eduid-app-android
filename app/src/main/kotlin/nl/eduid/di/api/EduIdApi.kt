@@ -45,6 +45,9 @@ interface EduIdApi {
     @GET("/mobile/api/sp/institution/names")
     suspend fun getInstitutionName(@Query("schac_home") schac_home: String): Response<InstitutionNameResponse>
 
+    @GET("/mobile/api/sp/confirm-email")
+    suspend fun confirmEmail(@Query("h") hash: String): Response<UserDetails>
+
     @PUT("/mobile/api/sp/email")
     suspend fun requestEmailChange(@Body email: EmailChangeRequest): Response<UserDetails>
 
