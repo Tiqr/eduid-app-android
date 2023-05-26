@@ -89,7 +89,6 @@ private fun ConfirmCodeContent(
     onValueChange: (String) -> Unit = {},
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-
     if (uiState.errorData != null) {
         val context = LocalContext.current
         AlertDialogWithSingleButton(
@@ -138,6 +137,7 @@ private fun ConfirmCodeContent(
         }
         PrimaryButton(
             text = stringResource(R.string.confirm_sms_code_button),
+            enabled = uiState.input.isNotEmpty(),
             onClick = onClick,
             modifier = Modifier
                 .fillMaxWidth()
