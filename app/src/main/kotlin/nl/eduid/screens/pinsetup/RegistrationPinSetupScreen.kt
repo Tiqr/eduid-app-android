@@ -2,9 +2,11 @@ package nl.eduid.screens.pinsetup
 
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -17,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
@@ -41,6 +44,7 @@ fun RegistrationPinSetupScreen(
         RegistrationPinSetupContent(
             uiState = viewModel.uiState,
             isAuthorized = isAuthorized,
+            padding = it,
             goToNextStep = goToNextStep,
             promptAuth = promptAuth,
             viewModel = viewModel,
@@ -52,6 +56,7 @@ fun RegistrationPinSetupScreen(
 private fun RegistrationPinSetupContent(
     uiState: UiState,
     isAuthorized: Boolean? = null,
+    padding: PaddingValues = PaddingValues(),
     goToNextStep: (NextStep) -> Unit = {},
     promptAuth: () -> Unit = {},
     viewModel: RegistrationPinSetupViewModel,
@@ -80,7 +85,13 @@ private fun RegistrationPinSetupContent(
         }
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(padding)
+            .padding(horizontal = 24.dp),
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
         if (uiState.errorData != null) {
             AlertDialogWithSingleButton(title = uiState.errorData.title(context),
                 explanation = uiState.errorData.message(context),
@@ -116,7 +127,6 @@ private fun RegistrationPinSetupContent(
                 viewModel.submitPin(context, uiState.pinStep)
                 enrollmentInProgress = uiState.pinStep == PinStep.PinConfirm
             },
-            paddingValues = PaddingValues(),
             isProcessing = enrollmentInProgress || authInProgress
         )
     }

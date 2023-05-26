@@ -36,6 +36,7 @@ fun InfoField(
     subtitle: String,
     onClick: () -> Unit = {},
     label: String = "",
+    capitalizeTitle: Boolean = true,
     @DrawableRes endIcon: Int = R.drawable.edit_icon,
 ) = Column(modifier = Modifier.fillMaxWidth()) {
     if (label.isNotBlank()) {
@@ -66,7 +67,11 @@ fun InfoField(
                 .weight(1f)
         ) {
             Text(
-                text = title.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
+                text = if (capitalizeTitle) {
+                    title.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+                } else {
+                    title
+                },
                 style = MaterialTheme.typography.bodyLarge.copy(
                     textAlign = TextAlign.Start, fontWeight = FontWeight.Bold, lineHeight = 20.sp
                 ),

@@ -1,11 +1,14 @@
 package nl.eduid.screens.created
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -54,19 +57,27 @@ fun RequestEduIdCreatedScreen(
         )
     }
 
-    if (!justCreated) {
-        RequestEduIdFailedCreationContent()
-    } else {
-        RequestEduIdCreatedContent(
-            uiState = viewModel.uiState,
-            goToOAuth = {
-                goToOAuth()
-                viewModel.clearPromptForAuthTrigger()
-            },
-            startEnrollment = viewModel::startEnrollmentAfterAccountCreation
-        ) { challenge ->
-            goToRegistrationPinSetup(challenge)
-            viewModel.clearCurrentChallenge()
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(it)
+            .navigationBarsPadding()
+            .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
+    ) {
+        if (!justCreated) {
+            RequestEduIdFailedCreationContent()
+        } else {
+            RequestEduIdCreatedContent(
+                uiState = viewModel.uiState,
+                goToOAuth = {
+                    goToOAuth()
+                    viewModel.clearPromptForAuthTrigger()
+                },
+                startEnrollment = viewModel::startEnrollmentAfterAccountCreation
+            ) { challenge ->
+                goToRegistrationPinSetup(challenge)
+                viewModel.clearCurrentChallenge()
+            }
         }
     }
 }
@@ -77,8 +88,11 @@ private fun RequestEduIdCreatedContent(
     goToOAuth: () -> Unit = {},
     startEnrollment: () -> Unit = {},
     goToRegistrationPinSetup: (EnrollmentChallenge) -> Unit = { _ -> },
-) = Column(modifier = Modifier.fillMaxSize()) {
-
+) = Column(
+    modifier = Modifier
+        .fillMaxSize(),
+    verticalArrangement = Arrangement.SpaceBetween
+) {
     var waitingForVmEvent by rememberSaveable { mutableStateOf(false) }
     val owner = LocalLifecycleOwner.current
     if (waitingForVmEvent && uiState.promptForAuth != null) {
@@ -99,9 +113,9 @@ private fun RequestEduIdCreatedContent(
     }
 
     Column(
+        horizontalAlignment = Alignment.Start,
         modifier = Modifier
-            .fillMaxSize()
-            .weight(1f)
+            .fillMaxWidth()
     ) {
         Text(
             text = stringResource(R.string.request_id_created_title),
@@ -144,26 +158,29 @@ private fun RequestEduIdCreatedContent(
         },
         modifier = Modifier.fillMaxWidth()
     )
-    Spacer(Modifier.height(40.dp))
 }
 
 @Composable
-private fun RequestEduIdFailedCreationContent() = Column(modifier = Modifier.fillMaxSize()) {
-    Text(
-        text = stringResource(R.string.request_id_created_fail_title),
-        style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
-        modifier = Modifier.fillMaxWidth()
-    )
+private fun RequestEduIdFailedCreationContent() =
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        Text(
+            text = stringResource(R.string.request_id_created_fail_title),
+            style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
+            modifier = Modifier.fillMaxWidth()
+        )
 
-    Spacer(
-        modifier = Modifier.height(16.dp)
-    )
-    Text(
-        text = stringResource(R.string.request_id_created_fail_description),
-        style = MaterialTheme.typography.bodyLarge,
-        modifier = Modifier.fillMaxWidth()
-    )
-}
+        Spacer(
+            modifier = Modifier.height(16.dp)
+        )
+        Text(
+            text = stringResource(R.string.request_id_created_fail_description),
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
 
 
 @Preview

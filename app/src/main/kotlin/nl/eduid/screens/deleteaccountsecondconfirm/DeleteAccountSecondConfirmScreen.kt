@@ -1,12 +1,35 @@
 package nl.eduid.screens.deleteaccountsecondconfirm
 
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +50,7 @@ import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
+import nl.eduid.ui.keyboardAsState
 import nl.eduid.ui.theme.AlertRedBackground
 import nl.eduid.ui.theme.ButtonBorderGrey
 import nl.eduid.ui.theme.ButtonRed
@@ -55,11 +79,12 @@ fun DeleteAccountSecondConfirmScreen(
     }
 
     DeleteAccountSecondConfirmScreenContent(
-        fullNameInput =  viewModel.uiState.fullName,
+        fullNameInput = viewModel.uiState.fullName,
+        padding = it,
         onInputChange = { viewModel.onInputChange(it) },
-        errorData =  viewModel.uiState.errorData,
+        errorData = viewModel.uiState.errorData,
         dismissError = viewModel::clearErrorData,
-        inProgress =  viewModel.uiState.inProgress,
+        inProgress = viewModel.uiState.inProgress,
         onDeleteAccountPressed = {
             viewModel.onDeleteAccountPressed()
             waitingForVmEvent = true
@@ -72,6 +97,7 @@ fun DeleteAccountSecondConfirmScreen(
 @Composable
 private fun DeleteAccountSecondConfirmScreenContent(
     fullNameInput: String = "",
+    padding: PaddingValues = PaddingValues(),
     onInputChange: (String) -> Unit = {},
     inProgress: Boolean = false,
     errorData: ErrorData? = null,
@@ -81,7 +107,9 @@ private fun DeleteAccountSecondConfirmScreenContent(
 ) = Column(
     modifier = Modifier
         .fillMaxSize()
-        .verticalScroll(rememberScrollState())
+        .padding(padding)
+        .padding(horizontal = 24.dp),
+    verticalArrangement = Arrangement.SpaceBetween
 ) {
     if (errorData != null) {
         val context = LocalContext.current
@@ -92,22 +120,25 @@ private fun DeleteAccountSecondConfirmScreenContent(
             onDismiss = dismissError
         )
     }
-
-    val keyboardController = LocalSoftwareKeyboardController.current
-    Spacer(Modifier.height(36.dp))
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .weight(1f)
+        horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()
     ) {
-        Text(
-            text = stringResource(R.string.delete_account_two_title),
-            style = MaterialTheme.typography.titleLarge.copy(
-                color = TextGreen, textAlign = TextAlign.Start
-            ),
-            modifier = Modifier.fillMaxWidth(),
-        )
-        Spacer(Modifier.height(18.dp))
+        val keyboardController = LocalSoftwareKeyboardController.current
+        val isKeyboardOpen by keyboardAsState()
+        AnimatedVisibility(
+            !isKeyboardOpen, Modifier.fillMaxWidth()
+        ) {
+            Column() {
+                Text(
+                    text = stringResource(R.string.delete_account_two_title),
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        color = TextGreen, textAlign = TextAlign.Start
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Spacer(Modifier.height(18.dp))
+            }
+        }
         if (inProgress) {
             LinearProgressIndicator(
                 modifier = Modifier.fillMaxWidth()
@@ -138,15 +169,21 @@ private fun DeleteAccountSecondConfirmScreenContent(
                     width = Dimension.fillToConstraints
                 })
         }
-        Spacer(Modifier.height(18.dp))
-        Text(
-            text = stringResource(R.string.delete_account_two_description),
-            style = MaterialTheme.typography.bodyLarge.copy(
-                color = TextBlack, textAlign = TextAlign.Start
-            ),
-            modifier = Modifier.fillMaxWidth(),
-        )
-        Spacer(Modifier.height(36.dp))
+        AnimatedVisibility(
+            !isKeyboardOpen, Modifier.fillMaxWidth()
+        ) {
+            Column() {
+                Spacer(Modifier.height(18.dp))
+                Text(
+                    text = stringResource(R.string.delete_account_two_description),
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        color = TextBlack, textAlign = TextAlign.Start
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Spacer(Modifier.height(24.dp))
+            }
+        }
         OutlinedTextField(
             value = fullNameInput,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -154,33 +191,34 @@ private fun DeleteAccountSecondConfirmScreenContent(
             onValueChange = { onInputChange(it) },
             label = { Text(stringResource(R.string.managa_account_your_full_name)) },
             placeholder = { Text(stringResource(R.string.manage_account_full_name_explain)) },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
         )
     }
-    Column(
-        Modifier.fillMaxWidth()
+    Row(
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier
+            .fillMaxWidth()
+            .navigationBarsPadding()
+            .imePadding()
+            .padding(bottom = 24.dp),
     ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()
-        ) {
-            PrimaryButton(
-                modifier = Modifier.widthIn(min = 140.dp),
-                text = stringResource(R.string.button_cancel),
-                onClick = goBack,
-                buttonBackgroundColor = Color.Transparent,
-                buttonTextColor = TextGrey,
-                buttonBorderColor = ButtonBorderGrey,
-            )
-            PrimaryButton(
-                modifier = Modifier.widthIn(min = 140.dp),
-                text = stringResource(R.string.button_confirm),
-                onClick = onDeleteAccountPressed,
-                buttonBackgroundColor = ButtonRed,
-                buttonTextColor = Color.White,
-                enabled = fullNameInput.isNotBlank(),
-            )
-        }
-        Spacer(Modifier.height(24.dp))
+        PrimaryButton(
+            modifier = Modifier.widthIn(min = 140.dp),
+            text = stringResource(R.string.button_cancel),
+            onClick = goBack,
+            buttonBackgroundColor = Color.Transparent,
+            buttonTextColor = TextGrey,
+            buttonBorderColor = ButtonBorderGrey,
+        )
+        PrimaryButton(
+            modifier = Modifier.widthIn(min = 140.dp),
+            text = stringResource(R.string.button_confirm),
+            onClick = onDeleteAccountPressed,
+            buttonBackgroundColor = ButtonRed,
+            buttonTextColor = Color.White,
+            enabled = fullNameInput.isNotBlank(),
+        )
     }
 }
 

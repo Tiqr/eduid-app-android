@@ -2,14 +2,15 @@ package nl.eduid.screens.resetpassword
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,6 +22,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -29,7 +31,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.flowWithLifecycle
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
@@ -84,6 +85,7 @@ fun ResetPasswordScreen(
     ResetPasswordScreenContent(
         password = viewModel.uiState.password,
         inProgress = viewModel.uiState.inProgress,
+        padding = it,
         onResetPasswordClicked = {
             viewModel.resetPasswordLink()
             waitForVmEvent = true
@@ -96,21 +98,21 @@ fun ResetPasswordScreen(
 fun ResetPasswordScreenContent(
     password: Password = Password.Add,
     inProgress: Boolean,
+    padding: PaddingValues = PaddingValues(),
     onResetPasswordClicked: () -> Unit = {},
     goBack: () -> Unit = {},
-) = ConstraintLayout(
-    modifier = Modifier.fillMaxSize()
+) = Column(
+    modifier = Modifier
+        .fillMaxSize()
+        .padding(padding)
+        .padding(horizontal = 24.dp),
+    verticalArrangement = Arrangement.SpaceBetween
 ) {
-
-    val (body, bottomColumn) = createRefs()
-    Column(verticalArrangement = Arrangement.Top, modifier = Modifier
-        .constrainAs(body) {
-            linkTo(parent.top, bottomColumn.top, bias = 0F)
-        }
-        .verticalScroll(rememberScrollState())
-
+    Column(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.Start,
     ) {
-        Spacer(Modifier.height(36.dp))
         if (inProgress) {
             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
         } else {
@@ -136,38 +138,32 @@ fun ResetPasswordScreenContent(
         )
         Spacer(Modifier.height(36.dp))
     }
-    Column(
-        verticalArrangement = Arrangement.Bottom,
-        modifier = Modifier.constrainAs(bottomColumn) {
-            bottom.linkTo(parent.bottom, margin = 24.dp)
-        },
+    Row(
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier
+            .fillMaxWidth()
+            .navigationBarsPadding()
+            .padding(bottom = 24.dp),
     ) {
-        Column(
-            Modifier.fillMaxWidth()
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()
-            ) {
-                PrimaryButton(
-                    enabled = !inProgress,
-                    modifier = Modifier.widthIn(min = 140.dp),
-                    text = stringResource(R.string.reset_password_cancel_button),
-                    onClick = goBack,
-                    buttonBackgroundColor = Color.Transparent,
-                    buttonTextColor = TextGrey,
-                    buttonBorderColor = ButtonBorderGrey,
-                )
-                PrimaryButton(
-                    enabled = !inProgress,
-                    modifier = Modifier.widthIn(min = 140.dp),
-                    text = stringResource(R.string.reset_password_confirm_button),
-                    onClick = onResetPasswordClicked,
-                    buttonBackgroundColor = ButtonBlue,
-                    buttonTextColor = Color.White,
-                )
-            }
-        }
+        PrimaryButton(
+            enabled = !inProgress,
+            modifier = Modifier.widthIn(min = 140.dp),
+            text = stringResource(R.string.reset_password_cancel_button),
+            onClick = goBack,
+            buttonBackgroundColor = Color.Transparent,
+            buttonTextColor = TextGrey,
+            buttonBorderColor = ButtonBorderGrey,
+        )
+        PrimaryButton(
+            enabled = !inProgress,
+            modifier = Modifier.widthIn(min = 140.dp),
+            text = stringResource(R.string.reset_password_confirm_button),
+            onClick = onResetPasswordClicked,
+            buttonBackgroundColor = ButtonBlue,
+            buttonTextColor = Color.White,
+        )
     }
+
 }
 
 @Preview

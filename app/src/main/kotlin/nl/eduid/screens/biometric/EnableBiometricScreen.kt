@@ -3,12 +3,24 @@ package nl.eduid.screens.biometric
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -20,8 +32,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import nl.eduid.R
-import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.EduIdTopAppBar
+import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
@@ -44,6 +56,7 @@ fun EnableBiometricScreen(
     ) {
         EnableBiometricContent(
             nextStep = nextStep,
+            padding = it,
             goToNext = goToNext,
             enable = {
                 viewModel.upgradeBiometric()
@@ -57,6 +70,7 @@ fun EnableBiometricScreen(
 @Composable
 fun EnableBiometricContent(
     nextStep: Boolean?,
+    padding: PaddingValues = PaddingValues(),
     goToNext: (Boolean) -> Unit = {},
     enable: () -> Unit = {},
     skip: () -> Unit = {},
@@ -73,7 +87,11 @@ fun EnableBiometricContent(
     }
 
     ConstraintLayout(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(padding)
+            .navigationBarsPadding()
+            .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
     ) {
         val (title, bodySpacing, description, background, backgroundFront, buttons) = createRefs()
         val contentTopSpacing = createGuidelineFromTop(40.dp)
@@ -127,28 +145,22 @@ fun EnableBiometricContent(
                 .fillMaxWidth()
                 .constrainAs(buttons) {
                     top.linkTo(background.bottom)
-                    bottom.linkTo(parent.bottom, margin = 40.dp)
+                    bottom.linkTo(parent.bottom)
                 }) {
             PrimaryButton(
-                text = stringResource(R.string.biometric_enable_allow),
-                onClick = {
+                text = stringResource(R.string.biometric_enable_allow), onClick = {
                     enable()
                     inProgress = true
-                },
-                modifier = Modifier
+                }, modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 32.dp)
             )
             Spacer(Modifier.height(24.dp))
             SecondaryButton(
-                text = stringResource(R.string.biometric_enable_skip),
-                onClick = {
+                text = stringResource(R.string.biometric_enable_skip), onClick = {
                     skip()
                     inProgress = true
-                },
-                modifier = Modifier
+                }, modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 32.dp)
             )
         }
 

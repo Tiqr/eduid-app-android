@@ -3,10 +3,11 @@ package nl.eduid.screens.authorize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,21 +26,25 @@ import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextGreen
 import nl.eduid.ui.theme.findActivity
-import timber.log.Timber
 
 @Composable
 fun AuthenticationCompletedScreen(goHome: () -> Unit = {}) = EduIdTopAppBar(
     withBackIcon = false
 ) {
-    val activity = LocalContext.current.findActivity()
-    Column(modifier = Modifier.fillMaxSize()) {
+    val context = LocalContext.current
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(it)
+            .padding(horizontal = 24.dp),
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
         Text(
             style = MaterialTheme.typography.titleLarge.copy(
                 textAlign = TextAlign.Start, color = TextGreen
             ), text = stringResource(R.string.authorize_title), modifier = Modifier.fillMaxWidth()
         )
         Column(
-            modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -60,15 +65,17 @@ fun AuthenticationCompletedScreen(goHome: () -> Unit = {}) = EduIdTopAppBar(
             )
         }
         PrimaryButton(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f, false)
+                .navigationBarsPadding()
+                .padding(bottom = 24.dp),
             text = stringResource(R.string.button_ok),
             onClick = {
-                Timber.e("Finishing activity: ${activity.hashCode()}")
                 goHome()
-                activity.finish()
+                context.findActivity().finish()
             },
         )
-        Spacer(Modifier.height(24.dp))
     }
 }
 

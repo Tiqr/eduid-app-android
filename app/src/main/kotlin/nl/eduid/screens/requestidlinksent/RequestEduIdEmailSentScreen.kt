@@ -1,10 +1,13 @@
 package nl.eduid.screens.requestidlinksent
 
 import android.content.Intent
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator
@@ -52,7 +55,11 @@ fun RequestEduIdEmailSentScreen(
         }
     }
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(it)
+            .padding(horizontal = 24.dp),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
             text = stringResource(R.string.request_id_link_title),
@@ -93,26 +100,36 @@ fun RequestEduIdEmailSentScreen(
         Spacer(
             modifier = Modifier.height(32.dp)
         )
-        PrimaryButton(
-            text = stringResource(R.string.request_id_link_open_email_client), onClick = {
-                val intent =
-                    Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_EMAIL)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                context.startActivity(intent)
-            }, modifier = Modifier
+        Column(
+            modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 32.dp)
-        )
+                .weight(1f, false)
+                .navigationBarsPadding()
+                .padding(bottom = 24.dp),
+        ) {
+            PrimaryButton(
+                text = stringResource(R.string.request_id_link_open_email_client), onClick = {
+                    val intent =
+                        Intent.makeMainSelectorActivity(
+                            Intent.ACTION_MAIN,
+                            Intent.CATEGORY_APP_EMAIL
+                        )
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    context.startActivity(intent)
+                }, modifier = Modifier
+                    .fillMaxWidth()
+            )
 
-        Spacer(
-            modifier = Modifier.height(32.dp)
-        )
+            Spacer(
+                modifier = Modifier.height(32.dp)
+            )
 
-        Text(
-            text = stringResource(R.string.request_id_link_spam_text),
-            style = MaterialTheme.typography.bodyMedium.copy(color = TextGrey),
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
+            Text(
+                text = stringResource(R.string.request_id_link_spam_text),
+                style = MaterialTheme.typography.bodyMedium.copy(color = TextGrey),
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+        }
     }
 }
 

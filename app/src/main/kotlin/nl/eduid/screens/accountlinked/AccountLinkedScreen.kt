@@ -2,8 +2,11 @@ package nl.eduid.screens.accountlinked
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.LinearProgressIndicator
@@ -33,15 +36,23 @@ import nl.eduid.ui.theme.TextGreen
 fun AccountLinkedScreen(
     viewModel: PersonalInfoViewModel,
     continueToHome: () -> Unit,
+) = EduIdTopAppBar(
+    withBackIcon = false
 ) {
-    AccountLinkedContent(
-        personalInfo = viewModel.uiState.personalInfo,
-        isLoading = viewModel.uiState.isLoading,
-        errorData = viewModel.uiState.errorData,
-        dismissError = viewModel::clearErrorData,
-        continueToHome = continueToHome,
-        removeConnection = { index -> viewModel.removeConnection(index) },
-    )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(it)
+    ) {
+        AccountLinkedContent(
+            personalInfo = viewModel.uiState.personalInfo,
+            isLoading = viewModel.uiState.isLoading,
+            errorData = viewModel.uiState.errorData,
+            dismissError = viewModel::clearErrorData,
+            continueToHome = continueToHome,
+            removeConnection = { index -> viewModel.removeConnection(index) },
+        )
+    }
 }
 
 @Composable
@@ -52,88 +63,85 @@ private fun AccountLinkedContent(
     dismissError: () -> Unit = {},
     continueToHome: () -> Unit = {},
     removeConnection: (Int) -> Unit = {},
-) = EduIdTopAppBar(
-    withBackIcon = false
+) = Column(
+    modifier = Modifier
+        .verticalScroll(rememberScrollState())
+        .navigationBarsPadding()
+        .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
-    ) {
-        if (errorData != null) {
-            val context = LocalContext.current
-            AlertDialogWithSingleButton(
-                title = errorData.title(context),
-                explanation = errorData.message(context),
-                buttonLabel = stringResource(R.string.button_ok),
-                onDismiss = dismissError
-            )
-        }
-        Spacer(Modifier.height(36.dp))
-        Text(
-            style = MaterialTheme.typography.titleLarge.copy(
-                textAlign = TextAlign.Start, color = TextGreen
-            ),
-            text = stringResource(R.string.account_linked_title),
-            modifier = Modifier.fillMaxWidth()
+    if (errorData != null) {
+        val context = LocalContext.current
+        AlertDialogWithSingleButton(
+            title = errorData.title(context),
+            explanation = errorData.message(context),
+            buttonLabel = stringResource(R.string.button_ok),
+            onDismiss = dismissError
         )
-        Spacer(Modifier.height(12.dp))
-        Text(
-            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
-            text = stringResource(R.string.account_linked_subtitle),
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(Modifier.height(12.dp))
-        Text(
-            style = MaterialTheme.typography.bodyLarge,
-            text = stringResource(R.string.account_linked_description),
-            modifier = Modifier.fillMaxWidth()
-        )
-        if (isLoading) {
-            Spacer(modifier = Modifier.height(16.dp))
-            LinearProgressIndicator(
-                modifier = Modifier.fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-        } else {
-            Spacer(Modifier.height(12.dp))
-        }
-        InfoField(
-            title = personalInfo.name,
-            subtitle = if (personalInfo.nameProvider == null) {
-                stringResource(R.string.infotab_providedby_you)
-            } else {
-                stringResource(R.string.infotab_providedby, personalInfo.nameProvider)
-            },
-            endIcon = R.drawable.shield_tick_blue,
-            label = stringResource(R.string.infotab_fullname)
-        )
-        Spacer(Modifier.height(16.dp))
-        if (personalInfo.institutionAccounts.isNotEmpty()) {
-            Text(
-                text = stringResource(R.string.infotab_role_institution),
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    textAlign = TextAlign.Start,
-                    fontWeight = FontWeight.SemiBold,
-                ),
-            )
-            Spacer(Modifier.height(6.dp))
-        }
-        personalInfo.institutionAccounts.forEachIndexed { index, account ->
-            ConnectionCard(
-                title = account.role,
-                subtitle = stringResource(R.string.infotab_at, account.roleProvider),
-                institutionInfo = account,
-                onRemoveConnection = { removeConnection(index) },
-            )
-        }
-        PrimaryButton(
-            text = stringResource(R.string.button_continue),
-            onClick = continueToHome,
-            modifier = Modifier.fillMaxWidth(),
-        )
-        Spacer(Modifier.height(40.dp))
     }
+    Spacer(Modifier.height(36.dp))
+    Text(
+        style = MaterialTheme.typography.titleLarge.copy(
+            textAlign = TextAlign.Start, color = TextGreen
+        ),
+        text = stringResource(R.string.account_linked_title),
+        modifier = Modifier.fillMaxWidth()
+    )
+    Spacer(Modifier.height(12.dp))
+    Text(
+        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
+        text = stringResource(R.string.account_linked_subtitle),
+        modifier = Modifier.fillMaxWidth()
+    )
+    Spacer(Modifier.height(12.dp))
+    Text(
+        style = MaterialTheme.typography.bodyLarge,
+        text = stringResource(R.string.account_linked_description),
+        modifier = Modifier.fillMaxWidth()
+    )
+    if (isLoading) {
+        Spacer(modifier = Modifier.height(16.dp))
+        LinearProgressIndicator(
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+    } else {
+        Spacer(Modifier.height(12.dp))
+    }
+    InfoField(
+        title = personalInfo.name,
+        subtitle = if (personalInfo.nameProvider == null) {
+            stringResource(R.string.infotab_providedby_you)
+        } else {
+            stringResource(R.string.infotab_providedby, personalInfo.nameProvider)
+        },
+        endIcon = R.drawable.shield_tick_blue,
+        label = stringResource(R.string.infotab_fullname)
+    )
+    Spacer(Modifier.height(16.dp))
+    if (personalInfo.institutionAccounts.isNotEmpty()) {
+        Text(
+            text = stringResource(R.string.infotab_role_institution),
+            style = MaterialTheme.typography.bodyLarge.copy(
+                textAlign = TextAlign.Start,
+                fontWeight = FontWeight.SemiBold,
+            ),
+        )
+        Spacer(Modifier.height(6.dp))
+    }
+    personalInfo.institutionAccounts.forEachIndexed { index, account ->
+        ConnectionCard(
+            title = account.role,
+            subtitle = stringResource(R.string.infotab_at, account.roleProvider),
+            institutionInfo = account,
+            onRemoveConnection = { removeConnection(index) },
+        )
+    }
+    PrimaryButton(
+        text = stringResource(R.string.button_continue),
+        onClick = continueToHome,
+        modifier = Modifier
+            .fillMaxWidth() ,
+    )
 }
 
 

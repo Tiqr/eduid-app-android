@@ -1,14 +1,30 @@
 package nl.eduid.screens.manageaccount
 
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -50,6 +66,7 @@ fun ManageAccountScreen(
     ManageAccountScreenContent(
         dateString = viewModel.dateString,
         inProgress = inProgress,
+        padding = it,
         onDownloadData = viewModel::downloadAccountData,
         onDeleteAccountPressed = onDeleteAccountPressed,
     )
@@ -59,18 +76,19 @@ fun ManageAccountScreen(
 private fun ManageAccountScreenContent(
     dateString: String,
     inProgress: Boolean,
+    padding: PaddingValues = PaddingValues(),
     onDownloadData: () -> Unit = {},
     onDeleteAccountPressed: () -> Unit = {},
 ) = Column(
     modifier = Modifier
         .fillMaxSize()
-        .verticalScroll(rememberScrollState())
+        .padding(padding)
+        .navigationBarsPadding()
+        .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
+    verticalArrangement = Arrangement.SpaceBetween
 ) {
-    Spacer(Modifier.height(36.dp))
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .weight(1f)
+        horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()
     ) {
         Text(
             text = stringResource(R.string.manage_account_title),
@@ -109,15 +127,11 @@ private fun ManageAccountScreenContent(
             modifier = Modifier.fillMaxWidth()
         )
     }
-    Button(
+    OutlinedButton(
         shape = RoundedCornerShape(CornerSize(6.dp)),
         onClick = onDeleteAccountPressed,
-        border = BorderStroke(1.dp, Color.Red),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
-        modifier = Modifier
-            .sizeIn(minHeight = 48.dp)
-            .padding(bottom = 24.dp)
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth()
     ) {
         Text(
             text = stringResource(R.string.manage_account_delete_your_account),
