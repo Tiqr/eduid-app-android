@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,10 +53,11 @@ fun EduIdTopAppBar(
                 },
                 title = {
                     Image(
-                        painter = painterResource(R.drawable.logo_eduid_big),
+                        painter = painterResource(R.drawable.ic_correct_logo),
                         contentDescription = "",
+                        contentScale = ContentScale.Fit,
                         modifier = Modifier
-                            .size(width = 122.dp, height = 48.dp),
+                            .height(36.dp),
                         alignment = Alignment.Center
                     )
                 },

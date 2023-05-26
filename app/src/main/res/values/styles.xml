@@ -104,17 +104,8 @@
         <item name="android:src">@drawable/logo_power_by_surf</item>
     </style>
 
-    <style name="TopBarIconSmall">
-        <item name="android:src">@drawable/logo_eduid_big</item>
-    </style>
-
     <style name="AboutSurfIcon">
         <item name="android:src">@drawable/logo_surf_big</item>
     </style>
-
-    <style name="AboutAppIcon">
-        <item name="android:src">@drawable/logo_eduid_big</item>
-    </style>
-
 
 </resources>
