@@ -6,5 +6,5 @@ data class ServiceProvider(
     val firstLoginStamp: Long,
     val uniqueId: String,
     val serviceProviderEntityId: String,
-    val providerLogoUrl: String,
+    val providerLogoUrl: String?,
 )

@@ -85,7 +85,7 @@ data class EduIdPerServiceProvider(
     val value: String,
     val serviceName: String,
     val serviceNameNl: String,
-    val serviceLogoUrl: String,
+    val serviceLogoUrl: String?,
     val createdAt: Long,
 ) : Parcelable
 
