@@ -105,7 +105,7 @@ fun DataAndActivityScreenContent(
     } else {
         data.forEach { provider ->
             LoginInfoCard(
-                startIconLargeUrl = provider.providerLogoUrl,
+                startIconLargeUrl = provider.providerLogoUrl.orEmpty(),
                 title = provider.providerName,
                 subtitle = stringResource(
                     R.string.data_info_on_date, provider.firstLoginStamp.getDateTimeString()
