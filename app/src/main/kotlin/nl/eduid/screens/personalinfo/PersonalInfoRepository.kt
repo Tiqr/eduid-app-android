@@ -8,6 +8,7 @@ import nl.eduid.di.api.EduIdApi
 import nl.eduid.di.model.ConfirmDeactivationCode
 import nl.eduid.di.model.ConfirmPhoneCode
 import nl.eduid.di.model.DeleteServiceRequest
+import nl.eduid.di.model.EmailChangeRequest
 import nl.eduid.di.model.EnrollResponse
 import nl.eduid.di.model.LinkedAccount
 import nl.eduid.di.model.RequestPhoneCode
@@ -79,6 +80,56 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
         }
     } catch (e: Exception) {
         Timber.e(e, "Failed to start enrollment")
+        null
+    }
+
+    suspend fun changeEmail(email: String): Int? = try {
+        val response = eduIdApi.requestEmailChange(EmailChangeRequest(email))
+        if (response.isSuccessful) {
+            response.code()
+        } else {
+            if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
+                Timber.e("Unauthorized removeService call")
+                throw UnauthorizedException("Unauthorized removeService call")
+            } else {
+                Timber.w(
+                    "Failed to change email to $email: [${response.code()}/${response.message()}]${
+                        response.errorBody()?.string()
+                    }"
+                )
+                response.code()
+            }
+        }
+    } catch (e: UnauthorizedException) {
+        //propagate unauthorized exception, capture everything else.
+        throw e
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to change email")
+        null
+    }
+
+    suspend fun confirmEmailUpdate(hash: String): UserDetails? = try {
+        val response = eduIdApi.confirmEmail(hash)
+        if (response.isSuccessful) {
+            response.body()
+        } else {
+            if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
+                Timber.e("Unauthorized removeConnection call")
+                throw UnauthorizedException("Unauthorized removeConnection call")
+            } else {
+                Timber.w(
+                    "Failed to confirm email [${response.code()}/${response.message()}]${
+                        response.errorBody()?.string()
+                    }"
+                )
+                null
+            }
+        }
+    } catch (e: UnauthorizedException) {
+        //propagate unauthorized exception, capture everything else.
+        throw e
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to confirm email change")
         null
     }
 

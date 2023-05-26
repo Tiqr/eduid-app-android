@@ -1,49 +1,100 @@
 package nl.eduid.screens.editemail
 
 import android.util.Patterns
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import nl.eduid.ErrorData
+import nl.eduid.R
 import nl.eduid.di.api.EduIdApi
-import nl.eduid.di.model.EmailChangeRequest
+import nl.eduid.di.assist.DataAssistant
+import nl.eduid.di.model.EMAIL_DOMAIN_FORBIDDEN
+import nl.eduid.di.model.FAIL_EMAIL_IN_USE
 import javax.inject.Inject
 
 @HiltViewModel
-class EditEmailViewModel @Inject constructor(private val eduIdApi: EduIdApi) : ViewModel() {
-    val emailInput = MutableLiveData("")
-    val emailValid = MutableLiveData(false)
-    val uiState = MutableLiveData<UiState>(UiState.Idle)
-    val uiError = MutableLiveData("")
+class EditEmailViewModel @Inject constructor(
+    private val eduIdApi: EduIdApi,
+    private val dataAssistant: DataAssistant,
+) : ViewModel() {
+    var uiState by mutableStateOf(UiState())
+        private set
 
     fun onEmailChange(newValue: String) {
-        emailInput.value = newValue
-        emailValid.value = Patterns.EMAIL_ADDRESS.matcher(emailInput.value?.trim() ?: "").matches()
+        uiState = uiState.copy(email = newValue, isEmailValid = true)
     }
 
-    fun requestEmailChangeClicked(newEmail: String, onSuccess: (email: String) -> Unit) {
-        viewModelScope.launch {
-            try {
-                uiState.value = UiState.Loading
-                val enrollResponse = eduIdApi.requestEmailChange(EmailChangeRequest(newEmail))
-                val response = enrollResponse.body()
-                if (enrollResponse.isSuccessful && response != null) {
-                    uiState.value = UiState.Idle
-                    onSuccess.invoke(emailInput.value?.trim() ?: "")
-                } else {
-                    uiState.value = UiState.Idle
-                    uiError.value = "Failed to request email change"
+    fun dismissError() {
+        uiState = uiState.copy(errorData = null)
+    }
+
+    fun requestEmailChangeClicked(newEmail: String) {
+        val isEmailValid = Patterns.EMAIL_ADDRESS.matcher(uiState.email.trim()).matches()
+        if (isEmailValid) {
+            viewModelScope.launch {
+                try {
+                    uiState = uiState.copy(inProgress = true, isCompleted = null)
+                    val response = dataAssistant.changeEmail(newEmail)
+                    if (response in 200..299) {
+                        uiState = uiState.copy(inProgress = false, isCompleted = Unit)
+                    } else {
+                        val newData = when (response) {
+                            FAIL_EMAIL_IN_USE -> {
+                                uiState.copy(
+                                    inProgress = false, errorData = ErrorData(
+                                        titleId = R.string.err_title_email_in_use,
+                                        messageId = R.string.err_msg_email_in_use,
+                                        messageArg = uiState.email
+                                    )
+                                )
+                            }
+
+                            EMAIL_DOMAIN_FORBIDDEN -> {
+                                uiState.copy(
+                                    inProgress = false, errorData = ErrorData(
+                                        titleId = R.string.err_title_email_domain_forbidden,
+                                        messageId = R.string.err_msg_email_domain_forbidden,
+                                        messageArg = uiState.email
+                                    )
+                                )
+                            }
+
+                            else -> {
+                                uiState.copy(
+                                    inProgress = false, errorData = ErrorData(
+                                        titleId = R.string.err_title_generic_fail,
+                                        messageId = R.string.err_msg_generic_unexpected_with_arg,
+                                        messageArg = uiState.email
+                                    )
+                                )
+                            }
+                        }
+                        uiState = newData
+                    }
+                } catch (e: Exception) {
+                    uiState = uiState.copy(
+                        inProgress = false, errorData = ErrorData(
+                            titleId = R.string.err_title_cannot_update_pass,
+                            messageId = R.string.err_msg_generic_unexpected_with_arg,
+                            messageArg = e.message ?: e.javaClass.simpleName,
+                        )
+                    )
                 }
-            } catch (e: Exception) {
-                uiState.value = UiState.Idle
-                uiError.value = "Failed to request email change"
             }
+        } else {
+            uiState = uiState.copy(isEmailValid = false)
         }
     }
-
-    sealed class UiState {
-        object Idle : UiState()
-        object Loading : UiState()
-    }
 }
+
+data class UiState(
+    val email: String = "",
+    val isEmailValid: Boolean = true,
+    val inProgress: Boolean = false,
+    val errorData: ErrorData? = null,
+    val isCompleted: Unit? = null,
+)

@@ -1,71 +1,99 @@
 package nl.eduid.screens.editemail
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.ui.Alignment
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.flowWithLifecycle
+import kotlinx.coroutines.android.awaitFrame
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import nl.eduid.R
+import nl.eduid.ui.AlertDialogWithSingleButton
+import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
+import nl.eduid.ui.SecondaryButton
 import nl.eduid.ui.theme.ButtonBlue
-import nl.eduid.ui.theme.ButtonBorderGrey
 import nl.eduid.ui.theme.ButtonGreen
-import nl.eduid.ui.theme.ButtonRed
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextGrey
 
 @Composable
 fun EditEmailScreen(
     viewModel: EditEmailViewModel,
     onSaveNewEmailRequested: (newEmail: String) -> Unit,
     goBack: () -> Unit,
+) = EduIdTopAppBar(
+    onBackClicked = goBack
 ) {
-    val email by viewModel.emailInput.observeAsState("")
-    val emailValid by viewModel.emailValid.observeAsState(false)
-    val uiState by viewModel.uiState.observeAsState(EditEmailViewModel.UiState.Idle)
-    val uiError by viewModel.uiError.observeAsState("")
+    var waitForVmEvent by rememberSaveable { mutableStateOf(false) }
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+
+    if (waitForVmEvent) {
+        val currentGoToEmailSent by rememberUpdatedState(newValue = onSaveNewEmailRequested)
+        LaunchedEffect(viewModel, lifecycle) {
+            snapshotFlow { viewModel.uiState }.distinctUntilChanged()
+                .filter { it.isCompleted != null }.flowWithLifecycle(lifecycle).collect {
+                    waitForVmEvent = false
+                    currentGoToEmailSent(viewModel.uiState.email)
+                }
+        }
+    }
+    viewModel.uiState.errorData?.let { errorData ->
+        val context = LocalContext.current
+        AlertDialogWithSingleButton(
+            title = errorData.title(context),
+            explanation = errorData.message(context),
+            buttonLabel = stringResource(R.string.button_ok),
+            onDismiss = viewModel::dismissError
+        )
+    }
 
     EditEmailScreenContent(
-        onNewEmailRequestClicked = { viewModel.requestEmailChangeClicked(it, onSaveNewEmailRequested) },
-        email = email,
-        emailValid = emailValid,
-        onEmailTextChange = { viewModel.onEmailChange(it) },
-        uiState = uiState,
-        uiError = uiError,
+        uiState = viewModel.uiState,
+        padding = it,
+        onNewEmailRequestClicked = {
+            waitForVmEvent = true
+            viewModel.requestEmailChangeClicked(it)
+        },
+        onEmailTextChange = viewModel::onEmailChange,
         goBack = goBack,
     )
 }
@@ -73,145 +101,83 @@ fun EditEmailScreen(
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun EditEmailScreenContent(
-    onNewEmailRequestClicked: (newEmail: String) -> Unit = {},
-    email: String,
-    emailValid: Boolean,
+    uiState: UiState,
+    padding: PaddingValues = PaddingValues(),
     onEmailTextChange: (String) -> Unit = {},
-    uiState: EditEmailViewModel.UiState,
-    uiError: String,
+    onNewEmailRequestClicked: (newEmail: String) -> Unit = {},
     goBack: () -> Unit,
+) = Column(
+    modifier = Modifier
+        .fillMaxSize()
+        .padding(padding)
+        .padding(horizontal = 24.dp),
+    verticalArrangement = Arrangement.SpaceBetween
 ) {
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                modifier = Modifier.padding(top = 42.dp, start = 26.dp, end = 26.dp),
-                navigationIcon = {
-                    Image(
-                        painter = painterResource(R.drawable.back_button_icon),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(width = 46.dp, height = 46.dp)
-                            .clickable {
-                                goBack.invoke()
-                            },
-                        alignment = Alignment.Center
-                    )
-                },
-                title = {
-                    Image(
-                        painter = painterResource(R.drawable.ic_top_logo),
-                        contentDescription = "",
-                        modifier = Modifier.size(width = 122.dp, height = 46.dp),
-                        alignment = Alignment.Center
-                    )
-                },
+    Column(
+        horizontalAlignment = Alignment.Start,
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        val keyboardController = LocalSoftwareKeyboardController.current
+        val focusRequester = remember { FocusRequester() }
+        Text(
+            style = MaterialTheme.typography.titleLarge.copy(
+                textAlign = TextAlign.Start, color = ButtonGreen
+            ), text = stringResource(R.string.edit_email_title), modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(Modifier.height(12.dp))
+        if (uiState.inProgress) {
+            LinearProgressIndicator(
+                modifier = Modifier.fillMaxWidth()
             )
-        },
-    ) { paddingValues ->
-        ConstraintLayout(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(start = 26.dp, end = 26.dp)
-        ) {
-            val (body, bottomColumn, loader) = createRefs()
-            val keyboardController = LocalSoftwareKeyboardController.current
-
-            if (uiState == EditEmailViewModel.UiState.Loading) {
-                Spacer(Modifier.height(24.dp))
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .height(80.dp)
-                        .width(80.dp)
-                        .constrainAs(loader) {
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                            top.linkTo(parent.top, margin = 20.dp)
-                        }
-                )
-            } else {
-                Column(
-                    verticalArrangement = Arrangement.Top,
-                    modifier = Modifier
-                        .constrainAs(body) {
-                            linkTo(parent.top, bottomColumn.top, bias = 0F)
-                        }
-                        .verticalScroll(rememberScrollState())
-
-                ) {
-                    Spacer(Modifier.height(36.dp))
-                    Text(
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            textAlign = TextAlign.Start,
-                            color = ButtonGreen
-                        ),
-                        text = stringResource(R.string.edit_email_title),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    )
-                    Spacer(Modifier.height(12.dp))
-                    Text(
-                        style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-                        text = stringResource(R.string.edit_email_subtitle),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    )
-                    Spacer(Modifier.height(36.dp))
-                    OutlinedTextField(
-                        value = email,
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                        keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
-                        isError = (email.length > 2 && !emailValid),
-                        onValueChange = { onEmailTextChange(it) },
-                        label = { Text(stringResource(R.string.edit_email_new_email_title)) },
-                        placeholder = { Text(stringResource(R.string.request_id_details_screen_email_input_hint)) },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    if (uiError.isNotBlank()) {
-                        Text(
-                            style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start, color = ButtonRed),
-                            text = uiError,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 24.dp)
-                        )
-                    }
-                }
-                Column(
-                    verticalArrangement = Arrangement.Bottom,
-                    modifier = Modifier.constrainAs(bottomColumn) {
-                        bottom.linkTo(parent.bottom, margin = 24.dp)
-                    },
-                ) {
-                    Column(
-                        Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceEvenly,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            PrimaryButton(
-                                modifier = Modifier.widthIn(min = 140.dp),
-                                text = stringResource(R.string.edit_email_cancel_button),
-                                onClick = goBack,
-                                buttonBackgroundColor = Color.Transparent,
-                                buttonTextColor = TextGrey,
-                                buttonBorderColor = ButtonBorderGrey,
-                            )
-                            PrimaryButton(
-                                modifier = Modifier.widthIn(min = 140.dp),
-                                text = stringResource(R.string.edit_email_confirm_button),
-                                onClick = { onNewEmailRequestClicked(email) },
-                                buttonBackgroundColor = ButtonBlue,
-                                buttonTextColor = Color.White,
-                                enabled = emailValid,
-                            )
-                        }
-                    }
-                }
-            }
+            Spacer(Modifier.height(12.dp))
         }
+
+        Text(
+            style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
+            text = stringResource(R.string.edit_email_subtitle),
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(Modifier.height(12.dp))
+        OutlinedTextField(
+            value = uiState.email,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
+            isError = !uiState.isEmailValid,
+            onValueChange = { onEmailTextChange(it) },
+            label = { Text(stringResource(R.string.edit_email_new_email_title)) },
+            placeholder = { Text(stringResource(R.string.request_id_details_screen_email_input_hint)) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .focusRequester(focusRequester)
+
+        )
+        LaunchedEffect(focusRequester) {
+            awaitFrame()
+            focusRequester.requestFocus()
+        }
+    }
+    Row(
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier
+            .fillMaxWidth()
+            .imePadding()
+            .navigationBarsPadding()
+            .padding(bottom = 24.dp),
+    ) {
+        SecondaryButton(
+            modifier = Modifier.widthIn(min = 140.dp),
+            text = stringResource(R.string.edit_email_cancel_button),
+            onClick = goBack,
+        )
+        PrimaryButton(
+            modifier = Modifier.widthIn(min = 140.dp),
+            text = stringResource(R.string.edit_email_confirm_button),
+            onClick = { onNewEmailRequestClicked(uiState.email) },
+            buttonBackgroundColor = ButtonBlue,
+            buttonTextColor = Color.White,
+            enabled = uiState.isEmailValid,
+        )
     }
 }
 
@@ -220,11 +186,8 @@ fun EditEmailScreenContent(
 @Composable
 private fun PreviewEditEmailScreenContent() = EduidAppAndroidTheme {
     EditEmailScreenContent(
-        email = "",
-        emailValid = true,
+        uiState = UiState(),
         onEmailTextChange = {},
-        uiState = EditEmailViewModel.UiState.Idle,
         goBack = { },
-        uiError = "ERROR",
     )
 }

@@ -306,6 +306,7 @@
     <string name="err_title_email_domain_forbidden">Email domain is forbidden</string>
     <string name="err_msg_email_domain_forbidden">The email domain used in %s is not allowed.</string>
     <string name="err_msg_create_unknown_fail">Could not create eduid account for email %s.</string>
+    <string name="err_msg_change_email_fail">Could not confirm changing to your new email address.</string>
 
     <string name="err_title_invalid_challenge">Enrollment challenge is invalid</string>
     <string name="err_msg_invalid_challenge">Cannot parse enrollment challenge, challenge is invalid.</string>

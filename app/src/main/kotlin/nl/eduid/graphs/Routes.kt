@@ -15,7 +15,6 @@ object Graph {
     const val FIRST_TIME_DIALOG = "first_time_dialog"
     const val PERSONAL_INFO = "personal_info"
     const val DATA_AND_ACTIVITY = "data_and_activity"
-    const val SECURITY = "security"
     const val OAUTH = "oauth_mobile_eduid"
     const val CONFIGURE_PASSWORD = "configure_password_subgraph"
     const val EDIT_EMAIL = "edit_email"
@@ -217,8 +216,7 @@ object ManageAccountRoute {
         defaultValue = ""
     })
 
-    fun routeWithArgs(dateString: String) =
-        "$route/${Uri.encode(dateString)}"
+    fun routeWithArgs(dateString: String) = "$route/${Uri.encode(dateString)}"
 
 
     fun decodeDateFromBundle(bundleArg: String): String {
@@ -240,11 +238,29 @@ object DeleteTwoFaRoute {
         defaultValue = ""
     })
 
-    fun routeWithArgs(idString: String) =
-        "$route/${Uri.encode(idString)}"
+    fun routeWithArgs(idString: String) = "$route/${Uri.encode(idString)}"
 
     fun decodeIdFromEntry(entry: NavBackStackEntry): String {
         val date = entry.arguments?.getString(idArg) ?: ""
         return Uri.decode(date)
+    }
+}
+
+sealed class Security(val route: String) {
+    object Settings : Security("security")
+
+    object ConfirmEmail : Security("confirm_email") {
+        const val confirmEmailHash = "h"
+        val routeWithArgs = "$route?$confirmEmailHash={$confirmEmailHash}"
+        val arguments = listOf(navArgument(confirmEmailHash) {
+            type = NavType.StringType
+            nullable = false
+            defaultValue = ""
+        })
+        const val confirmEmail =
+            "https://login.test2.eduid.nl/client/mobile/update-email?$confirmEmailHash={$confirmEmailHash}"
+        const val customSchemeConfirmEmail =
+            "eduid://client/mobile/update-email?$confirmEmailHash={$confirmEmailHash}"
+
     }
 }

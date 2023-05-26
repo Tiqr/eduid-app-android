@@ -71,7 +71,7 @@ fun MainGraph(
             onScanForAuthorization = { navController.navigate(Account.ScanQR.routeForAuth) },
             onActivityClicked = { navController.navigate(Graph.DATA_AND_ACTIVITY) },
             onPersonalInfoClicked = { navController.navigate(Graph.PERSONAL_INFO) },
-            onSecurityClicked = { navController.navigate(Graph.SECURITY) },
+            onSecurityClicked = { navController.navigate(Security.Settings.route) },
             onEnrollWithQR = { navController.navigate(Account.ScanQR.routeForEnrol) },
             launchOAuth = { navController.navigate(Graph.OAUTH) },
             goToRegistrationPinSetup = { challenge ->
@@ -84,8 +84,7 @@ fun MainGraph(
                 navController.navigate(
                     PhoneNumberRecovery.ConfirmCode.routeWithPhoneNumber(phoneNumber, true)
                 )
-            }
-        ) {
+            }) {
             navController.navigate(
                 Graph.REQUEST_EDU_ID_ACCOUNT
             )
@@ -415,7 +414,13 @@ fun MainGraph(
         ) { navController.popBackStack() }
     }//endregion
 
-    composable(Graph.SECURITY) {//region Home - Security
+    composable(Security.Settings.route, deepLinks = listOf(navDeepLink {
+        uriPattern = Security.ConfirmEmail.confirmEmail
+        action = Intent.ACTION_VIEW
+    }, navDeepLink {
+        uriPattern = Security.ConfirmEmail.customSchemeConfirmEmail
+        action = Intent.ACTION_VIEW
+    })) {//region Home - Security
         val viewModel = hiltViewModel<SecurityViewModel>(it)
         SecurityScreen(
             viewModel = viewModel,
