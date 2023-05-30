@@ -16,11 +16,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -31,6 +31,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.flowWithLifecycle
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import nl.eduid.R
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
@@ -49,122 +52,114 @@ fun EnableBiometricScreen(
     }
     //If & when the user navigates back from this screen, we'll treat it as a Skip This action.
     val dispatcher = LocalOnBackPressedDispatcherOwner.current!!.onBackPressedDispatcher
-    val nextStep by viewModel.nextStep.observeAsState(initial = null)
+    var waitingForVmEvent by rememberSaveable { mutableStateOf(false) }
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
 
+    if (waitingForVmEvent) {
+        val currentGoToNextStep by rememberUpdatedState(goToNext)
+        LaunchedEffect(lifecycle) {
+            snapshotFlow { viewModel.isCompleted }.distinctUntilChanged().filterNotNull()
+                .flowWithLifecycle(lifecycle).collect {
+                    waitingForVmEvent = false
+                    currentGoToNextStep(it)
+                }
+        }
+    }
     EduIdTopAppBar(
         onBackClicked = dispatcher::onBackPressed,
     ) {
         EnableBiometricContent(
-            nextStep = nextStep,
             padding = it,
-            goToNext = goToNext,
             enable = {
                 viewModel.upgradeBiometric()
+                waitingForVmEvent = true
             },
         ) {
             viewModel.stopOfferBiometric()
+            waitingForVmEvent = true
         }
     }
 }
 
 @Composable
 fun EnableBiometricContent(
-    nextStep: Boolean?,
     padding: PaddingValues = PaddingValues(),
-    goToNext: (Boolean) -> Unit = {},
     enable: () -> Unit = {},
     skip: () -> Unit = {},
+) = ConstraintLayout(
+    modifier = Modifier
+        .fillMaxSize()
+        .padding(padding)
+        .navigationBarsPadding()
+        .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
 ) {
-    var inProgress by rememberSaveable { mutableStateOf(false) }
-    val lifecycleOwner = LocalLifecycleOwner.current
-
-    if (inProgress && nextStep != null) {
-        val currentGoToNextStep by rememberUpdatedState(goToNext)
-        LaunchedEffect(lifecycleOwner) {
-            inProgress = false
-            currentGoToNextStep(nextStep)
-        }
-    }
-
-    ConstraintLayout(
+    val (title, bodySpacing, description, background, backgroundFront, buttons) = createRefs()
+    val contentTopSpacing = createGuidelineFromTop(40.dp)
+    val backgroundAlign = createGuidelineFromEnd(0.3f)
+    Text(
+        text = stringResource(R.string.biometric_enable_title),
+        style = MaterialTheme.typography.titleLarge,
+        textAlign = TextAlign.Start,
         modifier = Modifier
-            .fillMaxSize()
-            .padding(padding)
-            .navigationBarsPadding()
-            .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
-    ) {
-        val (title, bodySpacing, description, background, backgroundFront, buttons) = createRefs()
-        val contentTopSpacing = createGuidelineFromTop(40.dp)
-        val backgroundAlign = createGuidelineFromEnd(0.3f)
-        Text(
-            text = stringResource(R.string.biometric_enable_title),
-            style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Start,
-            modifier = Modifier
-                .fillMaxWidth()
-                .constrainAs(title) {
-                    top.linkTo(contentTopSpacing)
-                },
-        )
-        Spacer(modifier = Modifier
-            .height(28.dp)
-            .constrainAs(bodySpacing) {
-                top.linkTo(title.bottom)
-            })
-        Text(
-            text = stringResource(R.string.biometric_enable_description),
-            style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Start,
-            modifier = Modifier
-                .fillMaxWidth()
-                .constrainAs(description) {
-                    top.linkTo(bodySpacing.bottom)
-                },
-        )
-        Image(painter = painterResource(id = R.drawable.ic_biometric_background),
-            contentDescription = "",
-            contentScale = ContentScale.Fit,
-            modifier = Modifier
-                .padding(vertical = 50.dp)
-                .constrainAs(background) {
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    top.linkTo(description.bottom)
-                })
-        Image(painter = painterResource(id = R.drawable.ic_biometric_background_front),
-            contentDescription = "",
-            contentScale = ContentScale.Fit,
-            modifier = Modifier.constrainAs(backgroundFront) {
-                start.linkTo(backgroundAlign)
+            .fillMaxWidth()
+            .constrainAs(title) {
+                top.linkTo(contentTopSpacing)
+            },
+    )
+    Spacer(modifier = Modifier
+        .height(28.dp)
+        .constrainAs(bodySpacing) {
+            top.linkTo(title.bottom)
+        })
+    Text(
+        text = stringResource(R.string.biometric_enable_description),
+        style = MaterialTheme.typography.bodyLarge,
+        textAlign = TextAlign.Start,
+        modifier = Modifier
+            .fillMaxWidth()
+            .constrainAs(description) {
+                top.linkTo(bodySpacing.bottom)
+            },
+    )
+    Image(painter = painterResource(id = R.drawable.ic_biometric_background),
+        contentDescription = "",
+        contentScale = ContentScale.Fit,
+        modifier = Modifier
+            .padding(vertical = 50.dp)
+            .constrainAs(background) {
+                start.linkTo(parent.start)
                 end.linkTo(parent.end)
                 top.linkTo(description.bottom)
             })
+    Image(painter = painterResource(id = R.drawable.ic_biometric_background_front),
+        contentDescription = "",
+        contentScale = ContentScale.Fit,
+        modifier = Modifier.constrainAs(backgroundFront) {
+            start.linkTo(backgroundAlign)
+            end.linkTo(parent.end)
+            top.linkTo(description.bottom)
+        })
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxWidth()
-                .constrainAs(buttons) {
-                    top.linkTo(background.bottom)
-                    bottom.linkTo(parent.bottom)
-                }) {
-            PrimaryButton(
-                text = stringResource(R.string.biometric_enable_allow), onClick = {
-                    enable()
-                    inProgress = true
-                }, modifier = Modifier
-                    .fillMaxWidth()
-            )
-            Spacer(Modifier.height(24.dp))
-            SecondaryButton(
-                text = stringResource(R.string.biometric_enable_skip), onClick = {
-                    skip()
-                    inProgress = true
-                }, modifier = Modifier
-                    .fillMaxWidth()
-            )
-        }
-
+    Column(horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+            .constrainAs(buttons) {
+                top.linkTo(background.bottom)
+                bottom.linkTo(parent.bottom)
+            }) {
+        PrimaryButton(
+            text = stringResource(R.string.biometric_enable_allow), onClick = {
+                enable()
+            }, modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(Modifier.height(24.dp))
+        SecondaryButton(
+            text = stringResource(R.string.biometric_enable_skip), onClick = {
+                skip()
+            }, modifier = Modifier.fillMaxWidth()
+        )
     }
+
 }
 
 
@@ -172,6 +167,6 @@ fun EnableBiometricContent(
 @Composable
 private fun Preview_EnableBiometricContent() {
     EduidAppAndroidTheme {
-        EnableBiometricContent(nextStep = null)
+        EnableBiometricContent()
     }
 }
