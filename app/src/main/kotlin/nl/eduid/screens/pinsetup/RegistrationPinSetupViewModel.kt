@@ -71,20 +71,26 @@ class RegistrationPinSetupViewModel @Inject constructor(
     }
 
     fun submitPin(context: Context, currentStep: PinStep) {
+        uiState = uiState.copy(isProcessing = true)
         if (currentStep is PinStep.PinCreate) {
             val createdPin = uiState.pinValue
-            val isInvalid = createdPin.length != PIN_MAX_LENGTH
-            uiState = uiState.copy(isPinInvalid = isInvalid)
             if (createdPin.length == PIN_MAX_LENGTH) {
-                uiState = uiState.copy(pinStep = PinStep.PinConfirm, isPinInvalid = false)
+                uiState = uiState.copy(
+                    pinStep = PinStep.PinConfirm,
+                    isPinInvalid = false,
+                    isProcessing = false
+                )
+            } else {
+                uiState = uiState.copy(isPinInvalid = true, isProcessing = false)
             }
         } else {
             val confirmPin = uiState.pinConfirmValue
             val createdPin = uiState.pinValue
             val pinConfirmed = confirmPin == createdPin
-            uiState = uiState.copy(isPinInvalid = !pinConfirmed)
             if (pinConfirmed) {
                 enroll(context, createdPin)
+            } else {
+                uiState = uiState.copy(isPinInvalid = true, isProcessing = false)
             }
         }
     }
@@ -103,7 +109,8 @@ class RegistrationPinSetupViewModel @Inject constructor(
                 uiState = uiState.copy(
                     errorData = ErrorData(
                         result.failure.title, result.failure.message
-                    )
+                    ),
+                    isProcessing = false
                 )
             }
 
@@ -112,7 +119,8 @@ class RegistrationPinSetupViewModel @Inject constructor(
                 uiState =
                     uiState.copy(
                         promptAuth = storage.isAuthorized.firstOrNull(),
-                        nextStep = nextStep
+                        nextStep = nextStep,
+                        isProcessing = false
                     )
             }
         }

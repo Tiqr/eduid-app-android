@@ -11,7 +11,7 @@ data class UiState(
     val promptAuth: Boolean? = null,
     val nextStep: NextStep? = null,
     val errorData: ErrorData? = null,
-    val isEnrolling: Boolean = false,
+    val isProcessing: Boolean = false,
 )
 
 sealed class NextStep {

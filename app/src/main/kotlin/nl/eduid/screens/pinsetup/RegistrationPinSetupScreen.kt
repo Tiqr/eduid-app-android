@@ -79,6 +79,22 @@ private fun RegistrationPinSetupContent(
 //            }
 //        }
 //    }
+    if (uiState.errorData != null) {
+        AlertDialogWithSingleButton(title = uiState.errorData.title(context),
+            explanation = uiState.errorData.message(context),
+            buttonLabel = stringResource(R.string.button_ok),
+            onDismiss = {
+                viewModel.dismissError()
+                enrollmentInProgress = false
+            })
+    }
+    if (uiState.isPinInvalid) {
+        LaunchedEffect(owner) {
+            enrollmentInProgress = false
+            authInProgress = false
+        }
+    }
+
     if ((enrollmentInProgress || authInProgress) && uiState.nextStep != null) {
         val currentGoToNextStep by rememberUpdatedState(goToNextStep)
         LaunchedEffect(owner) {
@@ -95,15 +111,6 @@ private fun RegistrationPinSetupContent(
             .padding(horizontal = 24.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        if (uiState.errorData != null) {
-            AlertDialogWithSingleButton(title = uiState.errorData.title(context),
-                explanation = uiState.errorData.message(context),
-                buttonLabel = stringResource(R.string.button_ok),
-                onDismiss = {
-                    viewModel.dismissError()
-                    enrollmentInProgress = false
-                })
-        }
         PinContent(
             pinCode = if (uiState.pinStep is PinStep.PinCreate) {
                 uiState.pinValue
@@ -130,7 +137,7 @@ private fun RegistrationPinSetupContent(
                 viewModel.submitPin(context, uiState.pinStep)
                 enrollmentInProgress = uiState.pinStep == PinStep.PinConfirm
             },
-            isProcessing = enrollmentInProgress || authInProgress
+            isProcessing = uiState.isProcessing
         )
     }
 }
