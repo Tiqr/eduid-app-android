@@ -95,12 +95,17 @@ fun PinInputField(
         }
         OutlinedTextField(
             value = pinCode,
-            onValueChange = onPinChange,
+            onValueChange = {
+                onPinChange(it)
+                if (it.length == PIN_MAX_LENGTH) {
+                    submitPin()
+                }
+            },
             singleLine = true,
             isError = isPinInvalid,
             keyboardOptions = options,
             keyboardActions = KeyboardActions(onDone = {
-                submitPin.invoke()
+                submitPin()
             }),
             modifier = Modifier
                 .fillMaxWidth()

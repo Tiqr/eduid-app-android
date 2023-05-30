@@ -65,17 +65,36 @@ private fun RegistrationPinSetupContent(
     var authInProgress by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
     val owner = LocalLifecycleOwner.current
+//    Disabling automatically prompting authentication for EDURED-102:
+//    When user will do only a TIQR enrollment for an existing account
+//    they must complete the recovery setup on web.
 
-    if (enrollmentInProgress && isAuthorized != null) {
-        val currentPromptAuth by rememberUpdatedState(promptAuth)
-        if (isAuthorized == false) {
-            LaunchedEffect(owner) {
-                authInProgress = true
+//    if (enrollmentInProgress && isAuthorized != null) {
+//        val currentPromptAuth by rememberUpdatedState(promptAuth)
+//        if (isAuthorized == false) {
+//            LaunchedEffect(owner) {
+//                authInProgress = true
+//                enrollmentInProgress = false
+//                currentPromptAuth()
+//            }
+//        }
+//    }
+    if (uiState.errorData != null) {
+        AlertDialogWithSingleButton(title = uiState.errorData.title(context),
+            explanation = uiState.errorData.message(context),
+            buttonLabel = stringResource(R.string.button_ok),
+            onDismiss = {
+                viewModel.dismissError()
                 enrollmentInProgress = false
-                currentPromptAuth()
-            }
+            })
+    }
+    if (uiState.isPinInvalid) {
+        LaunchedEffect(owner) {
+            enrollmentInProgress = false
+            authInProgress = false
         }
     }
+
     if ((enrollmentInProgress || authInProgress) && uiState.nextStep != null) {
         val currentGoToNextStep by rememberUpdatedState(goToNextStep)
         LaunchedEffect(owner) {
@@ -92,15 +111,6 @@ private fun RegistrationPinSetupContent(
             .padding(horizontal = 24.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        if (uiState.errorData != null) {
-            AlertDialogWithSingleButton(title = uiState.errorData.title(context),
-                explanation = uiState.errorData.message(context),
-                buttonLabel = stringResource(R.string.button_ok),
-                onDismiss = {
-                    viewModel.dismissError()
-                    enrollmentInProgress = false
-                })
-        }
         PinContent(
             pinCode = if (uiState.pinStep is PinStep.PinCreate) {
                 uiState.pinValue
@@ -127,7 +137,7 @@ private fun RegistrationPinSetupContent(
                 viewModel.submitPin(context, uiState.pinStep)
                 enrollmentInProgress = uiState.pinStep == PinStep.PinConfirm
             },
-            isProcessing = enrollmentInProgress || authInProgress
+            isProcessing = uiState.isProcessing
         )
     }
 }

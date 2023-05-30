@@ -1,13 +1,17 @@
 package nl.eduid.screens.biometric
 
 import android.net.Uri
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import nl.eduid.BaseViewModel
+import nl.eduid.di.repository.StorageRepository
 import nl.eduid.graphs.WithChallenge
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import org.tiqr.data.model.AuthenticationChallenge
@@ -23,10 +27,12 @@ class EnableBiometricViewModel @Inject constructor(
     moshi: Moshi,
     private val repository: EnrollmentRepository,
     private val personal: PersonalInfoRepository,
+    private val storageRepository: StorageRepository,
 ) : BaseViewModel(moshi) {
     private val challenge: Challenge?
     private val pin: String
-    val nextStep: MutableLiveData<Boolean?> = MutableLiveData(null)
+    var isCompleted: Boolean? by mutableStateOf(null)
+        private set
 
     init {
         val isEnrolment = savedStateHandle.get<Boolean>(WithChallenge.isEnrolmentArg) ?: true
@@ -56,14 +62,14 @@ class EnableBiometricViewModel @Inject constructor(
                 repository.upgradeBiometric(it, challenge.identityProvider, pin)
             }
         }
-        nextStep.postValue(true)
+        isCompleted = storageRepository.isAuthorized.firstOrNull() ?: false
     }
 
     fun stopOfferBiometric() = viewModelScope.launch {
         challenge?.identity?.let {
             repository.stopOfferBiometric(it)
         }
-        nextStep.postValue(true)
+        isCompleted = storageRepository.isAuthorized.firstOrNull() ?: false
     }
 
     @SuppressWarnings("unused")
