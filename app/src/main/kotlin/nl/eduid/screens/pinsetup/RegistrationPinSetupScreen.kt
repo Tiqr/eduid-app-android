@@ -65,17 +65,20 @@ private fun RegistrationPinSetupContent(
     var authInProgress by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
     val owner = LocalLifecycleOwner.current
+//    Disabling automatically prompting authentication for EDURED-102:
+//    When user will do only a TIQR enrollment for an existing account
+//    they must complete the recovery setup on web.
 
-    if (enrollmentInProgress && isAuthorized != null) {
-        val currentPromptAuth by rememberUpdatedState(promptAuth)
-        if (isAuthorized == false) {
-            LaunchedEffect(owner) {
-                authInProgress = true
-                enrollmentInProgress = false
-                currentPromptAuth()
-            }
-        }
-    }
+//    if (enrollmentInProgress && isAuthorized != null) {
+//        val currentPromptAuth by rememberUpdatedState(promptAuth)
+//        if (isAuthorized == false) {
+//            LaunchedEffect(owner) {
+//                authInProgress = true
+//                enrollmentInProgress = false
+//                currentPromptAuth()
+//            }
+//        }
+//    }
     if ((enrollmentInProgress || authInProgress) && uiState.nextStep != null) {
         val currentGoToNextStep by rememberUpdatedState(goToNextStep)
         LaunchedEffect(owner) {
