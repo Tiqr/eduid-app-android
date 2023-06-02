@@ -171,9 +171,11 @@
     <string name="edit_email_new_email_title">Your new email address</string>
 
     <string name="edit_name_title">All details of</string>
+    <string name="edit_name_form_title">Edit</string>
     <string name="edit_name_subtitle">Full name</string>
     <string name="edit_name_selfasserted">Self asserted</string>
     <string name="edit_name_verified">Verified</string>
+    <string name="edit_name_add_another_source">Another source...</string>
     <string name="button_update">Update</string>
     <string name="edit_name_another_source">Another source…</string>
     <string name="edit_name_add_link_not_available">Not available</string>

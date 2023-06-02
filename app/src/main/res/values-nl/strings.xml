@@ -171,9 +171,11 @@
     <string name="edit_email_new_email_title">Je nieuwe email adres</string>
 
     <string name="edit_name_title">Alle gegevens van</string>
-    <string name="edit_name_subtitle">Voornaam</string>
+    <string name="edit_name_form_title">Bewerken</string>
+    <string name="edit_name_subtitle">Volledige naam</string>
     <string name="edit_name_selfasserted">Zelf ingevuld</string>
     <string name="edit_name_verified">Gecontroleerd</string>
+    <string name="edit_name_add_another_source">Een andere bron...</string>
     <string name="button_update">Vernieuwen</string>
     <string name="edit_name_another_source">Andere bron…</string>
     <string name="edit_name_add_link_not_available">Niet beschikbaar</string>

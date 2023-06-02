@@ -31,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
+import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.screens.firsttimedialog.LinkAccountContract
 import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.screens.personalinfo.PersonalInfoViewModel
@@ -44,6 +45,7 @@ import nl.eduid.ui.theme.LinkAccountCard
 @Composable
 fun EditNameScreen(
     viewModel: PersonalInfoViewModel,
+    updateName: (SelfAssertedName) -> Unit = { _ -> },
     goBack: () -> Unit,
 ) = EduIdTopAppBar(
     onBackClicked = goBack,
@@ -66,7 +68,7 @@ fun EditNameScreen(
         personalInfo = viewModel.uiState.personalInfo,
         account = viewModel.uiState.personalInfo.institutionAccounts.firstOrNull(),
         padding = it,
-        updateName = { givenName, familyName -> viewModel.updateName(givenName, familyName) },
+        updateName = updateName,
         addLinkToAccount = {
             isGettingLinkUrl = true
             viewModel.requestLinkUrl()
@@ -81,7 +83,7 @@ private fun EditNameContent(
     personalInfo: PersonalInfo,
     account: PersonalInfo.InstitutionAccount? = null,
     padding: PaddingValues = PaddingValues(),
-    updateName: (String, String) -> Unit = { _, _ -> },
+    updateName: (SelfAssertedName) -> Unit = { _ -> },
     addLinkToAccount: () -> Unit = {},
     removeConnection: (Int) -> Unit = {},
 ) = Column(
@@ -128,7 +130,8 @@ private fun EditNameContent(
     InfoField(
         title = personalInfo.name,
         subtitle = stringResource(R.string.infotab_providedby_you),
-        endIcon = R.drawable.edit_icon
+        endIcon = R.drawable.edit_icon,
+        onClick = { updateName(personalInfo.seflAssertedName) },
     )
 
     Spacer(
@@ -156,20 +159,34 @@ private fun EditNameContent(
             institutionInfo = account,
             onRemoveConnection = { removeConnection(0) },
         )
+    } else {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Image(
+                painter = painterResource(R.drawable.ic_verified_badge), contentDescription = null
+            )
+            Spacer(
+                modifier = Modifier.width(8.dp)
+            )
+            Text(
+                text = stringResource(R.string.edit_name_add_another_source),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontWeight = FontWeight.SemiBold,
+                ),
+            )
+        }
+        LinkAccountCard(
+            title = R.string.edit_name_add_link_not_available,
+            subtitle = R.string.edit_name_add_link_via,
+            enabled = !isLoading,
+            addLinkToAccount = addLinkToAccount
+        )
     }
-
-    LinkAccountCard(
-        title = R.string.edit_name_add_link_not_available,
-        subtitle = R.string.edit_name_add_link_via,
-        enabled = !isLoading,
-        addLinkToAccount = addLinkToAccount
-    )
 }
 
 
 @Preview
 @Composable
-private fun Preview_LinkAccountCard() {
+private fun Preview_EditNameContent() {
     EduidAppAndroidTheme {
         EditNameContent(
             isLoading = false, personalInfo = PersonalInfo.demoData()
