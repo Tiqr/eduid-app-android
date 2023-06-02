@@ -19,7 +19,10 @@ import nl.eduid.screens.resetpassword.ResetPasswordViewModel
 import nl.eduid.screens.resetpasswordconfirm.ResetPasswordConfirmScreen
 import nl.eduid.screens.resetpasswordconfirm.ResetPasswordConfirmViewModel
 
-fun NavGraphBuilder.configurePasswordFlow(navController: NavHostController) {
+fun NavGraphBuilder.configurePasswordFlow(
+    navController: NavHostController,
+    onConfigDone: () -> Unit,
+) {
     navigation(
         startDestination = Request.route,
         route = Graph.CONFIGURE_PASSWORD,
@@ -64,7 +67,8 @@ fun NavGraphBuilder.configurePasswordFlow(navController: NavHostController) {
             ResetPasswordConfirmScreen(
                 viewModel = viewModel,
                 isAddPassword = isAddPassword,
-                goBack = { navController.popBackStack() },
+                goBack = navController::popBackStack,
+                onConfigDone = onConfigDone
             )
         }//endregion
 

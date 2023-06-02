@@ -69,6 +69,7 @@ fun ResetPasswordConfirmScreen(
     viewModel: ResetPasswordConfirmViewModel,
     isAddPassword: Boolean,
     goBack: () -> Unit,
+    onConfigDone: () -> Unit,
 ) = EduIdTopAppBar(
     onBackClicked = goBack,
 ) {
@@ -86,12 +87,12 @@ fun ResetPasswordConfirmScreen(
     }
 
     if (waitForVmEvent) {
-        val currentGoBack by rememberUpdatedState(newValue = goBack)
+        val currentOnConfigDone by rememberUpdatedState(newValue = onConfigDone)
         LaunchedEffect(viewModel, lifecycle) {
             snapshotFlow { viewModel.uiState }.distinctUntilChanged()
                 .filter { it.isCompleted != null }.flowWithLifecycle(lifecycle).collect {
                     waitForVmEvent = false
-                    currentGoBack()
+                    currentOnConfigDone()
                     viewModel.clearCompleted()
                 }
         }

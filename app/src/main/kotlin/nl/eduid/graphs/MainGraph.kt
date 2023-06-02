@@ -451,7 +451,7 @@ fun MainGraph(
         )
     }
     //region Configure Password: add, change or remove
-    configurePasswordFlow(navController)
+    configurePasswordFlow(navController) { navController.navigate(Security.Settings.route) }
     //endregion
 }
 
