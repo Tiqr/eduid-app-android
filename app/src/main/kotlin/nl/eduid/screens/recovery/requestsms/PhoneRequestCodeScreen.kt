@@ -1,5 +1,6 @@
 package nl.eduid.screens.recovery.requestsms
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -49,6 +50,7 @@ import nl.eduid.screens.recovery.UiState
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
+import nl.eduid.ui.keyboardAsState
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -117,25 +119,34 @@ private fun PhoneRequestCodeContent(
     ) {
         val keyboardController = LocalSoftwareKeyboardController.current
         val focusRequester = remember { FocusRequester() }
-        Text(
-            text = stringResource(R.string.request_id_recovery_title),
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.fillMaxWidth()
-        )
+        val isKeyboardOpen by keyboardAsState()
 
-        Spacer(
-            modifier = Modifier.height(32.dp)
-        )
+        AnimatedVisibility(
+            !isKeyboardOpen, Modifier.fillMaxWidth()
+        ) {
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    text = stringResource(R.string.request_id_recovery_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.fillMaxWidth()
+                )
 
-        Text(
-            text = stringResource(R.string.request_id_recovery_text_code),
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.fillMaxWidth()
-        )
+                Spacer(
+                    modifier = Modifier.height(24.dp)
+                )
 
-        Spacer(
-            modifier = Modifier.height(16.dp)
-        )
+                Text(
+                    text = stringResource(R.string.request_id_recovery_text_code),
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(
+                    modifier = Modifier.height(16.dp)
+                )
+            }
+        }
+
         Text(
             text = stringResource(R.string.request_id_recovery_input_hint),
             style = MaterialTheme.typography.bodyLarge,
