@@ -1,6 +1,7 @@
 package nl.eduid.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -24,29 +25,40 @@ fun EduIdTopAppBar(
     onBackClicked: () -> Unit = {},
     withBackIcon: Boolean = true,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
+    contentWindowInsets: WindowInsets = ScaffoldDefaults.contentWindowInsets
+        .exclude(WindowInsets.navigationBars)
+        .exclude(WindowInsets.ime),
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val topBarState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(topBarState)
     Scaffold(
-        modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState) { data ->
+                Snackbar(modifier = Modifier
+                    .padding(12.dp), action = {
+                    TextButton(
+                        onClick = data::performAction,
+                    ) { Text(data.visuals.actionLabel ?: "") }
+                }) {
+                    Text(data.visuals.message)
+                }
+            }
+        },
         topBar = {
             CenterAlignedTopAppBar(
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
                 navigationIcon = {
                     if (withBackIcon) {
                         IconButton(
-                            onClick = onBackClicked,
-                            modifier = Modifier.padding(start = 8.dp)
+                            onClick = onBackClicked, modifier = Modifier.padding(start = 8.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.ArrowBack,
                                 contentDescription = stringResource(R.string.button_back),
                                 tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier
-                                    .size(width = 48.dp, height = 48.dp)
+                                modifier = Modifier.size(width = 48.dp, height = 48.dp)
                             )
                         }
                     }
@@ -56,18 +68,14 @@ fun EduIdTopAppBar(
                         painter = painterResource(R.drawable.ic_correct_logo),
                         contentDescription = "",
                         contentScale = ContentScale.Fit,
-                        modifier = Modifier
-                            .height(36.dp),
+                        modifier = Modifier.height(36.dp),
                         alignment = Alignment.Center
                     )
                 },
                 scrollBehavior = scrollBehavior
             )
         },
-        contentWindowInsets = ScaffoldDefaults
-            .contentWindowInsets
-            .exclude(WindowInsets.navigationBars)
-            .exclude(WindowInsets.ime),
+        contentWindowInsets = contentWindowInsets,
     ) { paddingValues ->
         content(paddingValues)
     }
@@ -77,8 +85,6 @@ fun EduIdTopAppBar(
 @Composable
 private fun Preview_TopAppBarWithBackButton() {
     EduidAppAndroidTheme {
-        EduIdTopAppBar(
-            onBackClicked = { }
-        ) {}
+        EduIdTopAppBar(onBackClicked = { }) {}
     }
 }

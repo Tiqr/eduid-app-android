@@ -1,5 +1,7 @@
 package nl.eduid.screens.manageaccount
 
+import android.app.DownloadManager
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,7 +18,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.ScaffoldDefaults
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,6 +30,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -48,17 +54,29 @@ fun ManageAccountScreen(
 ) = EduIdTopAppBar(
     onBackClicked = goBack,
     snackbarHostState = snackbarHostState,
+    contentWindowInsets = ScaffoldDefaults.contentWindowInsets
 ) {
     val inProgress by viewModel.inProgress.observeAsState(false)
     val downloadResult by viewModel.downloadedResult.observeAsState(null)
+    val context = LocalContext.current
+
     downloadResult?.let { isOk ->
         val snackbarText = if (isOk) {
             stringResource(R.string.manage_account_result_ok)
         } else {
             stringResource(R.string.manage_account_result_fail)
         }
+        val okAction = stringResource(R.string.manage_account_opendownload)
         LaunchedEffect(snackbarHostState, viewModel, snackbarText) {
-            snackbarHostState.showSnackbar(snackbarText)
+            val snackbarResult = snackbarHostState.showSnackbar(
+                snackbarText,
+                actionLabel = okAction,
+                withDismissAction = true,
+                duration = SnackbarDuration.Long
+            )
+            if (snackbarResult == SnackbarResult.ActionPerformed) {
+                context.startActivity(Intent(DownloadManager.ACTION_VIEW_DOWNLOADS))
+            }
             viewModel.downloadResultShown()
         }
     }
