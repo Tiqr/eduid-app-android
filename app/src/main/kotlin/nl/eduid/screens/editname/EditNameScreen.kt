@@ -128,7 +128,7 @@ private fun EditNameContent(
         )
     }
     InfoField(
-        title = personalInfo.name,
+        title = "${personalInfo.seflAssertedName.givenName} ${personalInfo.seflAssertedName.familyName}",
         subtitle = stringResource(R.string.infotab_providedby_you),
         endIcon = R.drawable.edit_icon,
         onClick = { updateName(personalInfo.seflAssertedName) },
