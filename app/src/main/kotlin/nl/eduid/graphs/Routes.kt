@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import nl.eduid.di.model.SelfAssertedName
 import java.io.UnsupportedEncodingException
 
 object Graph {
@@ -262,5 +263,35 @@ sealed class Security(val route: String) {
         const val customSchemeConfirmEmail =
             "eduid://client/mobile/update-email?$confirmEmailHash={$confirmEmailHash}"
 
+    }
+}
+
+sealed class EditName(val route: String) {
+    object View : EditName("name_overview")
+
+    object Form : EditName("edit_name_form") {
+        const val givenName = "givenName"
+        const val familyName = "familyName"
+        val routeWithArgs = "${route}/{$givenName}/{$familyName}"
+        val arguments = listOf(navArgument(givenName) {
+            type = NavType.StringType
+            nullable = false
+            defaultValue = ""
+        }, navArgument(familyName) {
+            type = NavType.StringType
+            nullable = false
+            defaultValue = ""
+        })
+
+        fun routeWithArgs(selfAssertedName: SelfAssertedName) =
+            "${route}/${Uri.encode(selfAssertedName.givenName)}/${Uri.encode(selfAssertedName.familyName)}"
+
+        fun decodeIdFromEntry(entry: NavBackStackEntry): SelfAssertedName {
+            val givenName = entry.arguments?.getString(givenName) ?: ""
+            val familyName = entry.arguments?.getString(familyName) ?: ""
+            return SelfAssertedName(
+                familyName = Uri.decode(familyName), givenName = Uri.decode(givenName)
+            )
+        }
     }
 }

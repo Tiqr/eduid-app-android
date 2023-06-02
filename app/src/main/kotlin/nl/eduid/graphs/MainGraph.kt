@@ -24,6 +24,8 @@ import nl.eduid.screens.deleteaccountsecondconfirm.DeleteAccountSecondConfirmScr
 import nl.eduid.screens.deleteaccountsecondconfirm.DeleteAccountSecondConfirmViewModel
 import nl.eduid.screens.editemail.EditEmailScreen
 import nl.eduid.screens.editemail.EditEmailViewModel
+import nl.eduid.screens.editname.EditNameFormScreen
+import nl.eduid.screens.editname.EditNameFormViewModel
 import nl.eduid.screens.editname.EditNameScreen
 import nl.eduid.screens.firsttimedialog.FirstTimeDialogScreen
 import nl.eduid.screens.firsttimedialog.LinkAccountViewModel
@@ -348,7 +350,7 @@ fun MainGraph(
         PersonalInfoScreen(
             viewModel = viewModel,
             onEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
-            onNameClicked = { navController.navigate(Graph.EDIT_NAME) },
+            onNameClicked = { navController.navigate(EditName.View.route) },
             onManageAccountClicked = { dateString ->
                 navController.navigate(
                     ManageAccountRoute.routeWithArgs(
@@ -366,10 +368,25 @@ fun MainGraph(
             onSaveNewEmailRequested = { email -> navController.goToEmailSent(email) },
         )
     }//endregion
-    composable(Graph.EDIT_NAME) {//region Edit name
+    composable(EditName.View.route) {//region Edit name
         val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
         EditNameScreen(
             viewModel = viewModel,
+            updateName = { name -> navController.navigate(EditName.Form.routeWithArgs(name)) },
+            goBack = { navController.popBackStack() },
+        )
+    }
+    composable(route = EditName.Form.routeWithArgs, arguments = EditName.Form.arguments) {
+        val viewModel = hiltViewModel<EditNameFormViewModel>(it)
+        EditNameFormScreen(
+            viewModel = viewModel,
+            onNameChangeDone = {
+                navController.navigate(EditName.View.route) {
+                    popUpTo(EditName.View.route) {
+                        inclusive = true
+                    }
+                }
+            },
             goBack = { navController.popBackStack() },
         )
     }//endregion
