@@ -27,7 +27,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import nl.eduid.BuildConfig
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
@@ -110,15 +109,11 @@ private fun OAuthContent(
     onRetry: () -> Unit,
 ) {
 //    LogCompositions("Recomposition for OAuthContent")
-    val extraInfo = if (BuildConfig.DEBUG) {
-        "\n(State: $uiState. isAuthorizationLaunched: $isAuthorizationLaunched)"
-    } else {
-        ""
-    }
+    val context = LocalContext.current
     if (uiState.error != null) {
         AlertDialogWithSingleButton(
-            title = uiState.error.title,
-            explanation = uiState.error.message + extraInfo,
+            title = uiState.error.title(context),
+            explanation = uiState.error.message(context),
             buttonLabel = stringResource(R.string.button_ok),
             onDismiss = dismissError
         )
