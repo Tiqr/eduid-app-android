@@ -140,7 +140,7 @@
     <string name="two_fa_key_subtitle">Sleutels om veilig in te loggen zonder wachtwoord of link.</string>
     <string name="two_fa_key_empty">Geen sleutels.</string>
     <string name="two_fa_use_biometric">Gebruik biometrie</string>
-    <string name="two_fa_delete">Sleutel vervijderen</string>
+    <string name="two_fa_delete">Sleutel verwijderen</string>
     <string name="two_fa_account">Account</string>
     <string name="two_fa_unieque_keyid">Uniek SleutelID</string>
 
