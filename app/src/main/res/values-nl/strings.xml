@@ -211,6 +211,7 @@
     <string name="home_with_account_activity">Activiteit</string>
 
     <string name="manage_account_title">Je eduID account</string>
+    <string name="manage_account_opendownload">Tonen</string>
     <string name="manage_account_subtitle">Jouw account is gemaakt op</string>
     <string name="manage_account_info_block">Alle informatie in jouw eduID account is van jou en kan worden gedownload of verwijderd. De download van je persoonlijke gegevens van je eduID-account bevat alle informatie die we over je hebben. Het bevat ook technische sleutels en referenties.</string>
     <string name="manage_account_result_ok">De informatie id opgeslagen in de downloads folder.</string>
