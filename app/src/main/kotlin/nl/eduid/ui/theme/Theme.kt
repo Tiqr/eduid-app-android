@@ -40,7 +40,7 @@ private val LightColors = lightColorScheme(
     surfaceVariant = md_theme_light_surfaceVariant,
     onSurfaceVariant = md_theme_light_onSurfaceVariant,
     outline = md_theme_light_outline,
-    inverseOnSurface = md_theme_light_inverseOnSurface,
+    inverseOnSurface = md_theme_light_onSecondary,
     inverseSurface = md_theme_light_secondaryContainer,
     inversePrimary = md_theme_light_inversePrimary,
     surfaceTint = md_theme_light_surfaceTint,
@@ -85,7 +85,7 @@ private val DarkColors = darkColorScheme(
 fun EduidAppAndroidTheme(
     darkTheme: Boolean = false, //isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true, content: @Composable () -> Unit,
+    dynamicColor: Boolean = false, content: @Composable () -> Unit,
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
