@@ -39,7 +39,7 @@ fun HomePageWithAccountContent(
             modifier = Modifier.padding(top = 42.dp, start = 26.dp, end = 26.dp),
             title = {
                 Image(
-                    painter = painterResource(R.drawable.ic_top_logo),
+                    painter = painterResource(R.drawable.ic_correct_logo),
                     contentDescription = "",
                     modifier = Modifier.size(width = 122.dp, height = 46.dp),
                     alignment = Alignment.Center
