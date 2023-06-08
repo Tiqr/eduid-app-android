@@ -99,7 +99,11 @@ fun SecurityScreenContent(
                 R.string.security_provided_by_na,
             )
         },
-        onClick = on2FaClicked,
+        onClick = {
+            if (securityInfo.twoFAProvider != null) {
+                on2FaClicked()
+            }
+        },
         endIcon = R.drawable.shield_tick_blue,
         label = stringResource(R.string.security_sign_in_methods)
     )

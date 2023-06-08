@@ -57,6 +57,7 @@ fun TwoFactorKeyDeleteScreen(
     viewModel: TwoFactorKeyDeleteViewModel,
     twoFaKeyId: String,
     goBack: () -> Unit,
+    onDeleteDone: () -> Unit,
 ) = EduIdTopAppBar(
     onBackClicked = goBack
 ) {
@@ -74,12 +75,12 @@ fun TwoFactorKeyDeleteScreen(
     }
 
     if (waitForVmEvent) {
-        val currentGoBack by rememberUpdatedState(newValue = goBack)
+        val currentOnDeleteDone by rememberUpdatedState(newValue = onDeleteDone)
         LaunchedEffect(viewModel, lifecycle) {
             snapshotFlow { viewModel.uiState }.distinctUntilChanged()
                 .filter { it.isCompleted != null }.flowWithLifecycle(lifecycle).collect {
                     waitForVmEvent = false
-                    currentGoBack()
+                    currentOnDeleteDone()
                     viewModel.clearCompleted()
                 }
         }

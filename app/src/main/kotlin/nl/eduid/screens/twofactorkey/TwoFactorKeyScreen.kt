@@ -47,7 +47,7 @@ fun TwoFactorKeyScreen(
     }
 
     if (viewModel.uiState.keys.isEmpty()) {
-        TwoFactorKeyScreenNoContent()
+        TwoFactorKeyScreenNoContent(padding)
     } else {
         TwoFactorKeyScreenContent(keyList = viewModel.uiState.keys,
             isLoading = viewModel.uiState.isLoading,
@@ -124,9 +124,13 @@ fun TwoFactorKeyScreenContent(
 
 @Composable
 fun TwoFactorKeyScreenNoContent(
+    padding: PaddingValues = PaddingValues(),
 ) = Column(
-) {
-
+    modifier = Modifier
+        .fillMaxSize()
+        .padding(padding)
+        .padding(horizontal = 24.dp),
+    ) {
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
             textAlign = TextAlign.Start, color = ButtonGreen

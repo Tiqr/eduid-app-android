@@ -465,6 +465,11 @@ fun MainGraph(
             viewModel = viewModel,
             twoFaKeyId = DeleteTwoFaRoute.decodeIdFromEntry(entry),
             goBack = { navController.popBackStack() },
+            onDeleteDone = {
+                navController.navigate(Graph.TWO_FA_DETAIL) {
+                    popUpTo(Graph.TWO_FA_DETAIL) { inclusive = true }
+                }
+            }
         )
     }
     //region Configure Password: add, change or remove
