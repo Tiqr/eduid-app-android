@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -88,26 +89,25 @@ fun SecurityScreenContent(
             modifier = Modifier.fillMaxWidth()
         )
     }
-    InfoField(
-        title = stringResource(R.string.security_2fa_key),
-        subtitle = if (securityInfo.twoFAProvider != null) {
-            stringResource(
-                R.string.security_provided_by_eduid, securityInfo.twoFAProvider
-            )
-        } else {
-            stringResource(
-                R.string.security_provided_by_na,
-            )
-        },
-        onClick = {
-            if (securityInfo.twoFAProvider != null) {
-                on2FaClicked()
-            }
-        },
-        endIcon = R.drawable.shield_tick_blue,
-        label = stringResource(R.string.security_sign_in_methods)
-    )
-    Spacer(Modifier.height(16.dp))
+    securityInfo.twoFAProvider?.let { provider ->
+        InfoField(
+            title = stringResource(R.string.security_2fa_key),
+            subtitle = stringResource(R.string.security_provided_by_eduid, provider),
+            onClick = on2FaClicked,
+            endIcon = R.drawable.shield_tick_blue,
+            label = stringResource(R.string.security_sign_in_methods)
+        )
+        Spacer(Modifier.height(16.dp))
+    } ?: run {
+        Text(
+            text = stringResource(R.string.security_sign_in_methods),
+            style = MaterialTheme.typography.bodyLarge.copy(
+                textAlign = TextAlign.Start,
+                fontWeight = FontWeight.SemiBold,
+            ),
+        )
+        Spacer(Modifier.height(6.dp))
+    }
     InfoField(
         title = stringResource(R.string.security_send_a_magic_link_to),
         subtitle = securityInfo.email,
