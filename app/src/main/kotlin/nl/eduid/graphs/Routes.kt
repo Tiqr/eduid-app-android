@@ -5,6 +5,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import nl.eduid.di.model.SelfAssertedName
+import nl.eduid.env.EnvironmentProvider
 import java.io.UnsupportedEncodingException
 
 object Graph {
@@ -32,15 +33,16 @@ object OAuth {
 
 object RequestEduIdCreated {
     const val route = "request_edu_id_created"
-    const val uriPatternHttps = "https://login.test2.eduid.nl/client/mobile/created"
+    val uriPatternHttps = "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/created"
     const val uriPatternCustomScheme = "eduid:///client/mobile/created"
 }
 
 object AccountLinked {
     const val route = "account_linked"
-    const val uriPatternOK = "https://login.test2.eduid.nl/client/mobile/account-linked"
-    const val uriPatternFailed = "https://login.test2.eduid.nl/client/mobile/eppn-already-linked"
-    const val uriPatternExpired = "https://login.test2.eduid.nl/client/mobile/expired"
+    val uriPatternOK = "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/account-linked"
+    val uriPatternFailed =
+        "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/eppn-already-linked"
+    val uriPatternExpired = "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/expired"
 }
 
 object RequestEduIdLinkSent {
@@ -258,8 +260,8 @@ sealed class Security(val route: String) {
             nullable = false
             defaultValue = ""
         })
-        const val confirmEmail =
-            "https://login.test2.eduid.nl/client/mobile/update-email?$confirmEmailHash={$confirmEmailHash}"
+        val confirmEmail =
+            "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/update-email?$confirmEmailHash={$confirmEmailHash}"
         const val customSchemeConfirmEmail =
             "eduid://client/mobile/update-email?$confirmEmailHash={$confirmEmailHash}"
 

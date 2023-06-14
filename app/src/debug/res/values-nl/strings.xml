@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="editflags_app_must_restart">De app moet herstart worden</string>
+    <string name="editflags_app_restart_explained">App gegevens zijn verwijdered. Je moet de app geforceerd stoppen (Force stop).</string>
+    <string name="editflags_open_settings">Open de app instellingen</string>
+
+    <string name="editflags_edit_test_settings">Test Instellingen Bijwerken</string>
+    <string name="editflags_edit_feature_flags">Feature Flags Bijwerken</string>
+    <string name="editflags_environment_info">Werken met de %s-omgeving.</string>
+
+</resources>

@@ -18,6 +18,7 @@ import nl.eduid.di.model.EMAIL_DOMAIN_FORBIDDEN
 import nl.eduid.di.model.FAIL_EMAIL_IN_USE
 import nl.eduid.di.model.RequestEduIdAccount
 import nl.eduid.di.repository.EduIdRepository
+import nl.eduid.env.EnvironmentProvider
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
@@ -101,7 +102,8 @@ class RequestEduIdFormViewModel @Inject constructor(
 
     private fun getClientIdFromOAuthConfig(resources: Resources): String {
         val source =
-            resources.openRawResource(R.raw.auth_config_test2).bufferedReader().use { it.readText() }
+            resources.openRawResource(EnvironmentProvider.getCurrent().authConfig).bufferedReader()
+                .use { it.readText() }
         return try {
             JSONObject(source).get("client_id").toString()
         } catch (e: IOException) {
@@ -112,19 +114,19 @@ class RequestEduIdFormViewModel @Inject constructor(
 }
 
 
-    data class InputForm(
-        val email: String = "",
-        val firstName: String = "",
-        val lastName: String = "",
-        val termsAccepted: Boolean = false,
-        val isProcessing: Boolean = false,
-        val requestComplete: Boolean = false,
-        val errorData: ErrorData? = null,
-    ) {
-        val emailValid: Boolean
-            get() = Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()
+data class InputForm(
+    val email: String = "",
+    val firstName: String = "",
+    val lastName: String = "",
+    val termsAccepted: Boolean = false,
+    val isProcessing: Boolean = false,
+    val requestComplete: Boolean = false,
+    val errorData: ErrorData? = null,
+) {
+    val emailValid: Boolean
+        get() = Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()
 
-        val isFormValid: Boolean
-            get() = (emailValid && firstName.isNotEmpty() && lastName.isNotEmpty() && termsAccepted)
-    }
+    val isFormValid: Boolean
+        get() = (emailValid && firstName.isNotEmpty() && lastName.isNotEmpty() && termsAccepted)
+}
 

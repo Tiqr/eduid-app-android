@@ -21,10 +21,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import nl.eduid.R
 import nl.eduid.flags.FeatureFlag
 import nl.eduid.flags.GroupedTestSetting
 import nl.eduid.ui.AlertDialogWithSingleButton
@@ -41,9 +43,9 @@ fun EditFeatureFlagsScreen(
     val context = LocalContext.current
     viewModel.uiState.showForceStopPrompt?.let {
         AlertDialogWithSingleButton(
-            title = "App must restart",
-            explanation = "App data is cleared, you must force stop the app before using.",
-            buttonLabel = "Open settings",
+            title = stringResource(R.string.editflags_app_must_restart),
+            explanation = stringResource(R.string.editflags_app_restart_explained),
+            buttonLabel = stringResource(R.string.editflags_open_settings),
             onDismiss = {
                 context.openAppSystemSettings()
                 viewModel.clearForceStopPrompt()
@@ -79,7 +81,9 @@ private fun EditFeatureFlagContent(
         Spacer(Modifier.height(24.dp))
         Text(
             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
-            text = if (isForTestSettings) "Edit Test Settings" else "Edit Feature Flags",
+            text = if (isForTestSettings) stringResource(R.string.editflags_edit_test_settings) else stringResource(
+                R.string.editflags_edit_feature_flags
+            ),
             modifier = Modifier.fillMaxWidth()
         )
     }

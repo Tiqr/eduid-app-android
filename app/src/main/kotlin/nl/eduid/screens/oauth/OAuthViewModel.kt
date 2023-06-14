@@ -31,6 +31,7 @@ import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.di.assist.AuthenticationAssistant
 import nl.eduid.di.repository.StorageRepository
+import nl.eduid.env.EnvironmentProvider
 import timber.log.Timber
 import java.io.IOException
 import java.security.MessageDigest
@@ -209,7 +210,8 @@ class OAuthViewModel @Inject constructor(
 
     private fun loadConfigurationFromResources(resources: Resources): Configuration {
         val source =
-            resources.openRawResource(R.raw.auth_config_test2).bufferedReader().use { it.readText() }
+            resources.openRawResource(EnvironmentProvider.getCurrent().authConfig).bufferedReader()
+                .use { it.readText() }
         return try {
             configAdapter.fromJson(source) ?: Configuration.EMPTY
         } catch (e: IOException) {

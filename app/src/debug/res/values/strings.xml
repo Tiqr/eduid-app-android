@@ -3,5 +3,10 @@
 
     <string name="app_name" translatable="false">eduID DEBUG</string>
     <string name="title_activity_test_settings" translatable="false">Test Settings</string>
-
+    <string name="editflags_app_must_restart">App must restart</string>
+    <string name="editflags_app_restart_explained">App data is cleared, you must force stop the app before using.</string>
+    <string name="editflags_open_settings">Open settings</string>
+    <string name="editflags_edit_test_settings">Edit Test Settings</string>
+    <string name="editflags_edit_feature_flags">Edit Feature Flags</string>
+    <string name="editflags_environment_info">Working on the %s environment.</string>
 </resources>

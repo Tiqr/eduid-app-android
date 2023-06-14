@@ -12,10 +12,8 @@ if (JavaVersion.current() < JavaVersion.VERSION_17) {
 
 fun String.runCommand(workingDir: File = file("./")): String {
     val parts = this.split("\\s".toRegex())
-    val proc = ProcessBuilder(*parts.toTypedArray())
-        .directory(workingDir)
-        .redirectOutput(ProcessBuilder.Redirect.PIPE)
-        .redirectError(ProcessBuilder.Redirect.PIPE)
+    val proc = ProcessBuilder(*parts.toTypedArray()).directory(workingDir)
+        .redirectOutput(ProcessBuilder.Redirect.PIPE).redirectError(ProcessBuilder.Redirect.PIPE)
         .start()
 
     proc.waitFor(1, TimeUnit.MINUTES)
@@ -29,6 +27,9 @@ val keystorePass = if (devKeystorePassFile.exists()) {
     //Used by the github action
     System.getenv("ANDROID_KEYSTORE_PASSWORD")
 }
+//We want to have the testing app with editable feature flags uploaded to Google Play.
+//Apps uploaded to google play must not be debuggable, hence the flag:
+val isRunningOnCI = System.getenv("CI") == "true"
 
 android {
     compileSdk = libs.versions.android.sdk.compile.get().toInt()
@@ -79,14 +80,13 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-            buildConfigField("String", "ENV_HOST", "\"https://login.test2.eduid.nl\"")
-            buildConfigField("String", "CLIENT_ID", "\"\"")
+            buildConfigField("String", "CLIENT_ID", "\"dev.egeniq.nl\"")
         }
 
         getByName("debug") {
             applicationIdSuffix = ".testing"
             versionNameSuffix = " DEBUG"
-            buildConfigField("String", "ENV_HOST", "\"https://login.test2.eduid.nl\"")
+            isDebuggable = !isRunningOnCI
             buildConfigField("String", "CLIENT_ID", "\"dev.egeniq.nl\"")
         }
     }
