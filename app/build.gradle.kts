@@ -29,7 +29,7 @@ val keystorePass = if (devKeystorePassFile.exists()) {
 }
 //We want to have the testing app with editable feature flags uploaded to Google Play.
 //Apps uploaded to google play must not be debuggable, hence the flag:
-val isRunningOnCI = System.getenv("CI") == "true"
+val isAppDebuggable = System.getenv("CI") == "false"
 
 android {
     compileSdk = libs.versions.android.sdk.compile.get().toInt()
@@ -68,11 +68,15 @@ android {
     }
     signingConfigs {
         //Must use a unified debug signing certificate, otherwise deep linking verification will fail on Android>=12
-        getByName("debug") {
-            storeFile = file("keystore/testing.keystore")
-            storePassword = keystorePass
-            keyAlias = "androiddebugkey"
-            keyPassword = keystorePass
+        //Only used for signing debuggable builds when building locally or apks from PRs that are archived
+        //Must not be used for signing when building a bundle for Google Play upload
+        if (isAppDebuggable) {
+            getByName("debug") {
+                storeFile = file("keystore/testing.keystore")
+                storePassword = keystorePass
+                keyAlias = "androiddebugkey"
+                keyPassword = keystorePass
+            }
         }
     }
     buildTypes {
@@ -86,7 +90,7 @@ android {
         getByName("debug") {
             applicationIdSuffix = ".testing"
             versionNameSuffix = " DEBUG"
-            isDebuggable = !isRunningOnCI
+            isDebuggable = isAppDebuggable
             buildConfigField("String", "CLIENT_ID", "\"dev.egeniq.nl\"")
         }
     }
