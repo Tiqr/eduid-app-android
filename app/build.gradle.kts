@@ -84,14 +84,12 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-            buildConfigField("String", "CLIENT_ID", "\"dev.egeniq.nl\"")
         }
 
         getByName("debug") {
             applicationIdSuffix = ".testing"
             versionNameSuffix = " DEBUG"
             isDebuggable = isAppDebuggable
-            buildConfigField("String", "CLIENT_ID", "\"dev.egeniq.nl\"")
         }
     }
 

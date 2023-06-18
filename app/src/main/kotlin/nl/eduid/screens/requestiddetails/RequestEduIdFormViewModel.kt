@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import nl.eduid.BuildConfig
 import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.di.model.CREATE_EMAIL_SENT
@@ -108,7 +107,7 @@ class RequestEduIdFormViewModel @Inject constructor(
             JSONObject(source).get("client_id").toString()
         } catch (e: IOException) {
             Timber.e(e, "Failed to parse configurations")
-            BuildConfig.CLIENT_ID
+            EnvironmentProvider.getCurrent().clientId
         }
     }
 }
