@@ -38,7 +38,7 @@ val isAppDebuggable = if (System.getenv("CI") == "true") {
 android {
     compileSdk = libs.versions.android.sdk.compile.get().toInt()
 
-    val gitTagCount = "git tag --list".runCommand().split('\n').size
+    val gitCommitCount = "git rev-list --all --count".runCommand().toInt()
     val gitTag = "git describe --tags --dirty".runCommand()
     val gitCoreSha = "git submodule status".runCommand().substring(0, 8)
 
@@ -56,7 +56,7 @@ android {
             "appAuthRedirectScheme" to "eduid"
         )
         applicationId = "nl.eduid"
-        versionCode = gitTagCount
+        versionCode = gitCommitCount
         versionName = gitTag.trim().drop(1) + " core($gitCoreSha)"
 
         minSdk = libs.versions.android.sdk.min.get().toInt()
