@@ -35,8 +35,6 @@ val isAppDebuggable = if (System.getenv("CI") == "true") {
     true
 }
 
-println(">>>>>>>>>>>>>Is the app debuggable? $isAppDebuggable. System env: ${System.getenv("CI")}")
-
 android {
     compileSdk = libs.versions.android.sdk.compile.get().toInt()
 
@@ -97,7 +95,11 @@ android {
 
         getByName("debug") {
             applicationIdSuffix = ".testing"
-            versionNameSuffix = " DEBUG"
+            if (isAppDebuggable) {
+              versionNameSuffix = " DEBUG"
+            } else {
+              versionNameSuffix = " TESTING"
+            }
             isDebuggable = isAppDebuggable
             signingConfig = if (isAppDebuggable) {
                 signingConfigs.getByName("debug")

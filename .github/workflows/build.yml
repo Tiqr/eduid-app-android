@@ -36,20 +36,20 @@ jobs:
         with:
           name: eduID-${{ github.sha }}-unsigned.apk
           path: app/build/outputs/apk/release/app-release-unsigned.apk
-      # - name: Sign nl.eduid Release APK with developer key for sideloading
-      #   id: sign_apk
-      #   uses: r0adkll/sign-android-release@v1
-      #   with:
-      #     releaseDirectory: app/build/outputs/apk/release/
-      #     signingKeyBase64: ${{ secrets.SIGNINGKEYBASE64 }}
-      #     alias: ${{ secrets.ALIAS }}
-      #     keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
-      #     keyPassword: ${{ secrets.KEYPASSWORD }}
-      # - name: Upload nl.eduid signed Release APK for sideloading
-      #   uses: actions/upload-artifact@v1
-      #   with:
-      #     name: eduID-${{ github.sha }}-signed.apk
-      #     path: ${{ steps.sign_apk.outputs.signedReleaseFile }}
+      - name: Sign nl.eduid Release APK with developer key for sideloading
+        id: sign_apk
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/apk/release/
+          signingKeyBase64: ${{ secrets.SIGNINGKEYBASE64 }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
+          keyPassword: ${{ secrets.KEYPASSWORD }}
+      - name: Upload nl.eduid signed Release APK for sideloading
+        uses: actions/upload-artifact@v1
+        with:
+          name: eduID-${{ github.sha }}-signed.apk
+          path: ${{ steps.sign_apk.outputs.signedReleaseFile }}
 
       - name: Build nl.eduid.testing bundle for Play store upload
         run: ./gradlew bundleDebug
@@ -72,16 +72,16 @@ jobs:
         with:
           name: eduID-${{ github.sha }}-testing-signed.aab
           path: ${{ steps.sign_aab.outputs.signedReleaseFile }}
-      # - name: Publish to play store internal test track
-      #   uses: r0adkll/upload-google-play@v1
-      #   with:
-      #     serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-      #     packageName: nl.eduid.testing
-      #     releaseFiles: ${{ steps.sign_aab.outputs.signedReleaseFile }}
-      #     track: internal
-      #     status: completed
+      - name: Publish to play store internal test track
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          packageName: nl.eduid.testing
+          releaseFiles: ${{ steps.sign_aab.outputs.signedReleaseFile }}
+          track: internal
+          status: completed
 
-  check-tranlations:
+  check-translations:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
