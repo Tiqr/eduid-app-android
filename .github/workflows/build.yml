@@ -79,7 +79,7 @@ jobs:
           packageName: nl.eduid.testing
           releaseFiles: ${{ steps.sign_aab.outputs.signedReleaseFile }}
           track: internal
-          status: completed
+          status: draft
 
   check-translations:
     runs-on: ubuntu-latest
