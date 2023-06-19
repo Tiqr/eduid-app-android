@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name" translatable="false">eduID DEBUG</string>
-    <string name="title_activity_test_settings" translatable="false">Test Settings</string>
+    <string name="app_name" translatable="false">eduID Test</string>
+    <string name="title_activity_test_settings" translatable="false">eduID Test Settings</string>
     <string name="editflags_app_must_restart">App must restart</string>
     <string name="editflags_app_restart_explained">App data is cleared, you must force stop the app before using.</string>
     <string name="editflags_open_settings">Open settings</string>
