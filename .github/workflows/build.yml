@@ -1,4 +1,4 @@
-name: Build APK
+name: Build APK and testing-release
 on:
   workflow_dispatch:
   pull_request:
@@ -11,7 +11,7 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,29 +25,62 @@ jobs:
           java-version: 17
           distribution: 'temurin'
           cache: 'gradle'
+      - name: Set Github ENV variable
+        shell: bash
+        run: echo "CI=true" >> $GITHUB_ENV
+
       - name: Build nl.eduid Release APK
         run: bash ./gradlew assembleRelease --stacktrace
-      - name: Upload nl.eduid Release APK
+      - name: Upload nl.eduid unsigned Release APK
         uses: actions/upload-artifact@v1
         with:
-          name: eduID-${{ github.sha }}.apk
+          name: eduID-${{ github.sha }}-unsigned.apk
           path: app/build/outputs/apk/release/app-release-unsigned.apk
-      - name: Restore testing keystore required for redesign app deep linking to work
-        run: |
-          echo "${{ secrets.ANDROID_TESTING_KEYSTORE }}" > testing.keystore.asc
-          mkdir -p app/keystore
-          gpg -d --passphrase "${{ secrets.ANDROID_GPG_PASSPHRASE }}" --batch testing.keystore.asc > ./app/keystore/testing.keystore
-          rm testing.keystore.asc
+      # - name: Sign nl.eduid Release APK with developer key for sideloading
+      #   id: sign_apk
+      #   uses: r0adkll/sign-android-release@v1
+      #   with:
+      #     releaseDirectory: app/build/outputs/apk/release/
+      #     signingKeyBase64: ${{ secrets.SIGNINGKEYBASE64 }}
+      #     alias: ${{ secrets.ALIAS }}
+      #     keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
+      #     keyPassword: ${{ secrets.KEYPASSWORD }}
+      # - name: Upload nl.eduid signed Release APK for sideloading
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: eduID-${{ github.sha }}-signed.apk
+      #     path: ${{ steps.sign_apk.outputs.signedReleaseFile }}
 
-      - name: Build nl.eduid.testing Debug APK
-        env:
-          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_TESTING_KEYSTORE_PASSPHRASE }}
-        run: bash ./gradlew assembleDebug --stacktrace
-      - name: Upload nl.eduid.testing Debug APK
+      - name: Build nl.eduid.testing bundle for Play store upload
+        run: ./gradlew bundleDebug
+      - name: Upload nl.eduid.testing unsigned bundle
         uses: actions/upload-artifact@v1
         with:
-          name: eduID-${{ github.sha }}-debug.apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: eduID-${{ github.sha }}-testing-unsigned.aab
+          path: app/build/outputs/bundle/debug/app-debug.aab
+      - name: Sign nl.eduid.testing Bundle with developer key for Play store upload
+        id: sign_aab
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/bundle/debug/
+          signingKeyBase64: ${{ secrets.SIGNINGKEYBASE64 }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
+          keyPassword: ${{ secrets.KEYPASSWORD }}
+      - name: Upload nl.eduid.testing signed bundle for Play store upload
+        uses: actions/upload-artifact@v1
+        with:
+          name: eduID-${{ github.sha }}-testing-signed.aab
+          path: ${{ steps.sign_aab.outputs.signedReleaseFile }}
+      # - name: Publish to play store internal test track
+      #   uses: r0adkll/upload-google-play@v1
+      #   with:
+      #     serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+      #     packageName: nl.eduid.testing
+      #     releaseFiles: ${{ steps.sign_aab.outputs.signedReleaseFile }}
+      #     track: internal
+      #     status: completed
+
   check-tranlations:
     runs-on: ubuntu-latest
     steps:
