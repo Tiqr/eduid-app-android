@@ -29,7 +29,13 @@ val keystorePass = if (devKeystorePassFile.exists()) {
 }
 //We want to have the testing app with editable feature flags uploaded to Google Play.
 //Apps uploaded to google play must not be debuggable, hence the flag:
-val isAppDebuggable = System.getenv("CI") == "false"
+val isAppDebuggable = if (System.getenv("CI") == "true") {
+    false
+} else {
+    true
+}
+
+println(">>>>>>>>>>>>>Is the app debuggable? $isAppDebuggable. System env: ${System.getenv("CI")}")
 
 android {
     compileSdk = libs.versions.android.sdk.compile.get().toInt()
@@ -71,12 +77,15 @@ android {
         //Only used for signing debuggable builds when building locally or apks from PRs that are archived
         //Must not be used for signing when building a bundle for Google Play upload
         if (isAppDebuggable) {
+            println("ADDING debug signing")
             getByName("debug") {
                 storeFile = file("keystore/testing.keystore")
                 storePassword = keystorePass
                 keyAlias = "androiddebugkey"
                 keyPassword = keystorePass
             }
+        } else {
+            println("SKIPPING debug signing")
         }
     }
     buildTypes {
