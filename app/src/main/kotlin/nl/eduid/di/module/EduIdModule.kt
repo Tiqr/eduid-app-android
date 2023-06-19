@@ -83,7 +83,7 @@ internal object RepositoryModule {
         okHttpClient: OkHttpClient,
     ): OkHttpClient {
         val builder = okHttpClient.newBuilder()
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.BUILD_TYPE == "debug") {
             builder.addInterceptor(loggingInterceptor)
         }
 

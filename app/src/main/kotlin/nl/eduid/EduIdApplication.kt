@@ -54,7 +54,7 @@ open class EduIdApplication : Application() {
         RuntimeBehavior.initialize(this)
         TiqrConfig.initialize(this)
         // Setup Timber
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.BUILD_TYPE == "debug") {
             Timber.plant(Timber.DebugTree())
 
         }
