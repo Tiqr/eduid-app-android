@@ -99,6 +99,11 @@ android {
             applicationIdSuffix = ".testing"
             versionNameSuffix = " DEBUG"
             isDebuggable = isAppDebuggable
+            signingConfig = if (isAppDebuggable) {
+                signingConfigs.getByName("debug")
+            } else {
+                null
+            }
         }
     }
 
