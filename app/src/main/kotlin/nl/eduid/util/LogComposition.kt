@@ -13,7 +13,7 @@ class Ref(var value: Int)
 // original call site.
 @Composable
 inline fun LogCompositions(msg: String) {
-    if (BuildConfig.DEBUG) {
+    if (BuildConfig.BUILD_TYPE == "debug") {
         val ref = remember { Ref(0) }
         SideEffect { ref.value++ }
         Timber.e("\n$msg\n \trecomp count: ${ref.value}")

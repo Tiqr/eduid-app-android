@@ -9,7 +9,7 @@ object RuntimeBehavior {
     private val providers = CopyOnWriteArrayList<FeatureFlagProvider>()
 
     fun initialize(context: Context) {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.BUILD_TYPE == "debug") {
             addProvider(LocalFeatureFlagProvider(context))
         } else {
             addProvider(StoreFeatureFlagProvider())
