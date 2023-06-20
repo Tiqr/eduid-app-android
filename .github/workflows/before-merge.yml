@@ -1,0 +1,51 @@
+name: Check build before merging, will run on PRs to develop
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ develop ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          cache: 'gradle'
+      - name: Check release build is OK
+        run: bash ./gradlew assembleRelease --stacktrace
+      - name: Build nl.eduid.testing
+        run: ./gradlew assembleDebug
+      - name: Sign nl.eduid.testing APK
+        id: sign_apk
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/apk/debug/
+          signingKeyBase64: ${{ secrets.SIGNINGKEYBASE64 }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
+          keyPassword: ${{ secrets.KEYPASSWORD }}
+      - name: Archive nl.eduid.testing signed APK as a GHA artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: eduID-${{ github.sha }}-testing-signed.apk
+          path: ${{ steps.sign_aab.outputs.signedReleaseFile }}
+
+  check-translations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - name: Check for missing or untranslated strings
+        run: ./app/src/main/res/check-trans.sh

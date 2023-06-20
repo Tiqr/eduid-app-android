@@ -1,0 +1,75 @@
+name: Create a release candidate bundle that is uploaded to Google Play internal testing track
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'rc*'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          cache: 'gradle'
+      - name: Check release build is OK
+        run: bash ./gradlew assembleRelease --stacktrace
+
+      - name: Build nl.eduid.testing unsigned bundle for Play store upload
+        run: ./gradlew bundleDebug
+
+      - name: Sign nl.eduid.testing Bundle with developer key for Play store upload
+        id: sign_aab
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/bundle/debug/
+          signingKeyBase64: ${{ secrets.SIGNINGKEYBASE64 }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
+          keyPassword: ${{ secrets.KEYPASSWORD }}
+
+      - name: Publish to play store internal test track
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          packageName: nl.eduid.testing
+          releaseFiles: ${{ steps.sign_aab.outputs.signedReleaseFile }}
+          track: internal
+          status: draft
+
+      - name: Build Changelog
+        id: changelog
+        uses: ardalanamini/auto-changelog@v3
+
+      - name: Create GHA Pre-release
+        uses: actions/create-release@v1
+        id: create_prerelease
+        with:
+          draft: false
+          prerelease: true
+          release_name: Release ${{ github.ref }}
+          tag_name: ${{ github.ref }}
+          body: |
+            ${{ steps.changelog.outputs.changelog }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  check-translations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - name: Check for missing or untranslated strings
+        run: ./app/src/main/res/check-trans.sh

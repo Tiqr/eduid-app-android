@@ -18,18 +18,6 @@ jobs:
         distribution: 'temurin'
         cache: 'gradle'
 
-    - name: Build APK
-      run: ./gradlew assembleRelease
-    - name: Sign APK
-      id: sign_apk
-      uses: r0adkll/sign-android-release@v1
-      with:
-        releaseDirectory: app/build/outputs/apk/release/
-        signingKeyBase64: ${{ secrets.SIGNINGKEYBASE64 }}
-        alias: ${{ secrets.ALIAS }}
-        keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
-        keyPassword: ${{ secrets.KEYPASSWORD }}
-
     - name: Build App bundle
       run: ./gradlew bundleRelease
     - name: Sign App Bundle
@@ -41,7 +29,6 @@ jobs:
         alias: ${{ secrets.ALIAS }}
         keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
         keyPassword: ${{ secrets.KEYPASSWORD }}
-
 
     - name: Build Changelog
       id: changelog
@@ -59,25 +46,6 @@ jobs:
           ${{ steps.changelog.outputs.changelog }}
       env:
         GITHUB_TOKEN: ${{ github.token }}
-
-    - name: Upload APK
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ steps.sign_apk.outputs.signedReleaseFile }}
-        asset_name: eduID-${{ github.ref_name }}.apk
-        asset_content_type: application/zip
-    - name: Upload App bundle
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ steps.sign_aab.outputs.signedReleaseFile }}
-        asset_name: eduID-${{ github.ref_name }}.aab
-        asset_content_type: application/zip
 
     - name: Publish to play store test track
       uses: r0adkll/upload-google-play@v1
