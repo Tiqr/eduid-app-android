@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-prod:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -25,6 +25,14 @@ jobs:
           java-version: 17
           distribution: 'temurin'
           cache: 'gradle'
+      - uses: actions/cache@v2
+        with:
+          path: |
+              ~/.gradle/caches
+              ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+              ${{ runner.os }}-gradle-
 
       - name: Build nl.eduid Release APK
         run: bash ./gradlew assembleRelease --stacktrace
@@ -43,13 +51,29 @@ jobs:
           name: eduID-${{ github.sha }}-signed.apk
           path: ${{ steps.sign_apk.outputs.signedReleaseFile }}
 
-      - name: Build nl.eduid.testing bundle for Play store upload
-        run: ./gradlew bundleDebug
-      - name: Upload nl.eduid.testing unsigned bundle
-        uses: actions/upload-artifact@v1
+  build-testing:
+    needs: [build-prod]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
         with:
-          name: eduID-${{ github.sha }}-testing-unsigned.aab
-          path: app/build/outputs/bundle/debug/app-debug.aab
+          fetch-depth: 0
+          submodules: recursive
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          cache: 'gradle'
+      - uses: actions/cache@v2
+        with:
+          path: |
+              ~/.gradle/caches
+              ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+              ${{ runner.os }}-gradle-
+      - name: Build nl.eduid.testing Bundle for Play store upload
+        run: ./gradlew bundleDebug
       - name: Sign nl.eduid.testing Bundle with developer key for Play store upload
         id: sign_aab
         uses: r0adkll/sign-android-release@v1
@@ -59,11 +83,6 @@ jobs:
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
           keyPassword: ${{ secrets.KEYPASSWORD }}
-      - name: Upload nl.eduid.testing signed bundle for Play store upload
-        uses: actions/upload-artifact@v1
-        with:
-          name: eduID-${{ github.sha }}-testing-signed.aab
-          path: ${{ steps.sign_aab.outputs.signedReleaseFile }}
       - name: Publish to play store internal test track
         uses: r0adkll/upload-google-play@v1
         with:
