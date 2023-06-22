@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import nl.eduid.BuildConfig
 import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.di.model.CREATE_EMAIL_SENT
@@ -18,6 +17,7 @@ import nl.eduid.di.model.EMAIL_DOMAIN_FORBIDDEN
 import nl.eduid.di.model.FAIL_EMAIL_IN_USE
 import nl.eduid.di.model.RequestEduIdAccount
 import nl.eduid.di.repository.EduIdRepository
+import nl.eduid.env.EnvironmentProvider
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
@@ -101,30 +101,31 @@ class RequestEduIdFormViewModel @Inject constructor(
 
     private fun getClientIdFromOAuthConfig(resources: Resources): String {
         val source =
-            resources.openRawResource(R.raw.auth_config).bufferedReader().use { it.readText() }
+            resources.openRawResource(EnvironmentProvider.getCurrent().authConfig).bufferedReader()
+                .use { it.readText() }
         return try {
             JSONObject(source).get("client_id").toString()
         } catch (e: IOException) {
             Timber.e(e, "Failed to parse configurations")
-            BuildConfig.CLIENT_ID
+            EnvironmentProvider.getCurrent().clientId
         }
     }
 }
 
 
-    data class InputForm(
-        val email: String = "",
-        val firstName: String = "",
-        val lastName: String = "",
-        val termsAccepted: Boolean = false,
-        val isProcessing: Boolean = false,
-        val requestComplete: Boolean = false,
-        val errorData: ErrorData? = null,
-    ) {
-        val emailValid: Boolean
-            get() = Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()
+data class InputForm(
+    val email: String = "",
+    val firstName: String = "",
+    val lastName: String = "",
+    val termsAccepted: Boolean = false,
+    val isProcessing: Boolean = false,
+    val requestComplete: Boolean = false,
+    val errorData: ErrorData? = null,
+) {
+    val emailValid: Boolean
+        get() = Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()
 
-        val isFormValid: Boolean
-            get() = (emailValid && firstName.isNotEmpty() && lastName.isNotEmpty() && termsAccepted)
-    }
+    val isFormValid: Boolean
+        get() = (emailValid && firstName.isNotEmpty() && lastName.isNotEmpty() && termsAccepted)
+}
 

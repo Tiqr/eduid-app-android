@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import nl.eduid.env.EnvironmentProvider
 import nl.eduid.graphs.ConfigurePassword.Form
 import nl.eduid.graphs.ConfigurePassword.Request
 import nl.eduid.screens.resetpassword.ResetPasswordScreen
@@ -85,12 +86,11 @@ sealed class ConfigurePassword(val route: String) {
             nullable = false
             defaultValue = ""
         })
-        const val resetPassword =
-            "https://login.test2.eduid.nl/client/mobile/reset-password?$passwordHashArg={$passwordHashArg}"
-        const val addPassword =
-            "https://login.test2.eduid.nl/client/mobile/add-password?$passwordHashArg={$passwordHashArg}"
+        val resetPassword =
+            "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/reset-password?$passwordHashArg={$passwordHashArg}"
+        val addPassword =
+            "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/add-password?$passwordHashArg={$passwordHashArg}"
         const val customSchemeResetPassword =
             "eduid://client/mobile/reset-password?$passwordHashArg={$passwordHashArg}"
     }
 }
-

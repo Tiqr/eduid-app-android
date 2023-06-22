@@ -1,4 +1,4 @@
-name: Release Build
+name: Release nl.eduid app to Github and playstore
 on:
   workflow_dispatch:
   push:
@@ -18,9 +18,9 @@ jobs:
         distribution: 'temurin'
         cache: 'gradle'
 
-    - name: Build APK
+    - name: Build nl.eduid APK
       run: ./gradlew assembleRelease
-    - name: Sign APK
+    - name: Sign nl.eduid APK
       id: sign_apk
       uses: r0adkll/sign-android-release@v1
       with:
@@ -30,9 +30,9 @@ jobs:
         keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
         keyPassword: ${{ secrets.KEYPASSWORD }}
 
-    - name: Build App bundle
+    - name: Build nl.eduid App bundle
       run: ./gradlew bundleRelease
-    - name: Sign App Bundle
+    - name: Sign nl.eduid App Bundle
       id: sign_aab
       uses: r0adkll/sign-android-release@v1
       with:
@@ -60,7 +60,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
 
-    - name: Upload APK
+    - name: Upload nl.eduid APK
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ github.token }}
@@ -69,7 +69,7 @@ jobs:
         asset_path: ${{ steps.sign_apk.outputs.signedReleaseFile }}
         asset_name: eduID-${{ github.ref_name }}.apk
         asset_content_type: application/zip
-    - name: Upload App bundle
+    - name: Upload nl.eduid App bundle
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ github.token }}
@@ -79,7 +79,7 @@ jobs:
         asset_name: eduID-${{ github.ref_name }}.aab
         asset_content_type: application/zip
 
-    - name: Publish to play store test track
+    - name: Publish to nl.eduid play store test track
       uses: r0adkll/upload-google-play@v1
       with:
         serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}

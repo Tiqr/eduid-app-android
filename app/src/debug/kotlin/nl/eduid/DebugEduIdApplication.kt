@@ -29,4 +29,16 @@
 
 package nl.eduid
 
-class DebugEduIdApplication : EduIdApplication()
+import android.widget.Toast
+import nl.eduid.env.EnvironmentProvider
+
+class DebugEduIdApplication : EduIdApplication() {
+    override fun onCreate() {
+        super.onCreate()
+        Toast.makeText(
+            this,
+            getString(R.string.editflags_environment_info, EnvironmentProvider.getCurrent().name),
+            Toast.LENGTH_LONG
+        ).show()
+    }
+}

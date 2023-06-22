@@ -12,10 +12,8 @@ if (JavaVersion.current() < JavaVersion.VERSION_17) {
 
 fun String.runCommand(workingDir: File = file("./")): String {
     val parts = this.split("\\s".toRegex())
-    val proc = ProcessBuilder(*parts.toTypedArray())
-        .directory(workingDir)
-        .redirectOutput(ProcessBuilder.Redirect.PIPE)
-        .redirectError(ProcessBuilder.Redirect.PIPE)
+    val proc = ProcessBuilder(*parts.toTypedArray()).directory(workingDir)
+        .redirectOutput(ProcessBuilder.Redirect.PIPE).redirectError(ProcessBuilder.Redirect.PIPE)
         .start()
 
     proc.waitFor(1, TimeUnit.MINUTES)
@@ -29,11 +27,18 @@ val keystorePass = if (devKeystorePassFile.exists()) {
     //Used by the github action
     System.getenv("ANDROID_KEYSTORE_PASSWORD")
 }
+//We want to have the testing app with editable feature flags uploaded to Google Play.
+//Apps uploaded to google play must not be debuggable, hence the flag:
+val isAppDebuggable = if (System.getenv("CI") == "true") {
+    false
+} else {
+    true
+}
 
 android {
     compileSdk = libs.versions.android.sdk.compile.get().toInt()
 
-    val gitTagCount = "git tag --list".runCommand().split('\n').size
+    val gitCommitCount = "git rev-list --all --count".runCommand().toInt()
     val gitTag = "git describe --tags --dirty".runCommand()
     val gitCoreSha = "git submodule status".runCommand().substring(0, 8)
 
@@ -51,7 +56,7 @@ android {
             "appAuthRedirectScheme" to "eduid"
         )
         applicationId = "nl.eduid"
-        versionCode = gitTagCount
+        versionCode = gitCommitCount
         versionName = gitTag.trim().drop(1) + " core($gitCoreSha)"
 
         minSdk = libs.versions.android.sdk.min.get().toInt()
@@ -67,11 +72,18 @@ android {
     }
     signingConfigs {
         //Must use a unified debug signing certificate, otherwise deep linking verification will fail on Android>=12
-        getByName("debug") {
-            storeFile = file("keystore/testing.keystore")
-            storePassword = keystorePass
-            keyAlias = "androiddebugkey"
-            keyPassword = keystorePass
+        //Only used for signing debuggable builds when building locally or apks from PRs that are archived
+        //Must not be used for signing when building a bundle for Google Play upload
+        if (isAppDebuggable) {
+            println("ADDING debug signing")
+            getByName("debug") {
+                storeFile = file("keystore/testing.keystore")
+                storePassword = keystorePass
+                keyAlias = "androiddebugkey"
+                keyPassword = keystorePass
+            }
+        } else {
+            println("SKIPPING debug signing")
         }
     }
     buildTypes {
@@ -79,15 +91,21 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-            buildConfigField("String", "ENV_HOST", "\"https://login.test2.eduid.nl\"")
-            buildConfigField("String", "CLIENT_ID", "\"\"")
         }
 
         getByName("debug") {
             applicationIdSuffix = ".testing"
-            versionNameSuffix = " DEBUG"
-            buildConfigField("String", "ENV_HOST", "\"https://login.test2.eduid.nl\"")
-            buildConfigField("String", "CLIENT_ID", "\"dev.egeniq.nl\"")
+            if (isAppDebuggable) {
+              versionNameSuffix = " DEBUG"
+            } else {
+              versionNameSuffix = " TESTING"
+            }
+            isDebuggable = isAppDebuggable
+            signingConfig = if (isAppDebuggable) {
+                signingConfigs.getByName("debug")
+            } else {
+                null
+            }
         }
     }
 
@@ -124,6 +142,9 @@ android {
         }
     }
     namespace = "nl.eduid"
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {

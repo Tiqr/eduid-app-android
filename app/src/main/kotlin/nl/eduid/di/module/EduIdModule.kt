@@ -18,6 +18,7 @@ import nl.eduid.di.auth.TokenInterceptor
 import nl.eduid.di.auth.TokenProvider
 import nl.eduid.di.repository.EduIdRepository
 import nl.eduid.di.repository.StorageRepository
+import nl.eduid.env.EnvironmentProvider
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -50,7 +51,7 @@ internal object RepositoryModule {
     @Singleton
     internal fun providesDataAssistant(
         personalInfoRepository: PersonalInfoRepository,
-        storageRepository: StorageRepository
+        storageRepository: StorageRepository,
     ) = DataAssistant(personalInfoRepository, storageRepository)
 
     @Provides
@@ -82,7 +83,7 @@ internal object RepositoryModule {
         okHttpClient: OkHttpClient,
     ): OkHttpClient {
         val builder = okHttpClient.newBuilder()
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.BUILD_TYPE == "debug") {
             builder.addInterceptor(loggingInterceptor)
         }
 
@@ -106,7 +107,7 @@ internal object RepositoryModule {
             .addCallAdapterFactory(ApiResponseAdapterFactory.create())
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl(BuildConfig.ENV_HOST).build()
+            .baseUrl(EnvironmentProvider.getCurrent().baseUrl).build()
     }
 
     @Provides
