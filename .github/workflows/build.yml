@@ -74,13 +74,13 @@ jobs:
         with:
           name: eduID-${{ github.sha }}-signed.apk
           path: ${{ steps.sign_aab.outputs.signedReleaseFile }}
-      - name: Publish to play store internal test track
+      - name: Publish nl.eduid.testing to play store internal test track
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
           packageName: nl.eduid.testing
           releaseFiles: ${{ steps.sign_aab.outputs.signedReleaseFile }}
-          track: alpha
+          track: internal
           status: completed
 
   check-translations:
