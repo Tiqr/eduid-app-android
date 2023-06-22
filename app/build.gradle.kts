@@ -59,6 +59,8 @@ android {
         versionCode = gitCommitCount
         versionName = gitTag.trim().drop(1) + " core($gitCoreSha)"
 
+        println("versionName: "+versionName+", versionCode: "+versionCode)
+
         minSdk = libs.versions.android.sdk.min.get().toInt()
         targetSdk = libs.versions.android.sdk.target.get().toInt()
 
