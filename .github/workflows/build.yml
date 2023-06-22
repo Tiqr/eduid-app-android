@@ -33,23 +33,8 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
               ${{ runner.os }}-gradle-
-
       - name: Build nl.eduid Release APK
         run: bash ./gradlew assembleRelease --stacktrace
-      - name: Sign nl.eduid Release APK with developer key for sideloading
-        id: sign_apk
-        uses: r0adkll/sign-android-release@v1
-        with:
-          releaseDirectory: app/build/outputs/apk/release/
-          signingKeyBase64: ${{ secrets.SIGNINGKEYBASE64 }}
-          alias: ${{ secrets.ALIAS }}
-          keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
-          keyPassword: ${{ secrets.KEYPASSWORD }}
-      - name: Upload nl.eduid signed Release APK for sideloading
-        uses: actions/upload-artifact@v1
-        with:
-          name: eduID-${{ github.sha }}-signed.apk
-          path: ${{ steps.sign_apk.outputs.signedReleaseFile }}
 
   build-testing:
     needs: [build-prod]
@@ -84,6 +69,11 @@ jobs:
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
           keyPassword: ${{ secrets.KEYPASSWORD }}
+      - name: Upload nl.eduid.testing signed Release APK for sideloading
+        uses: actions/upload-artifact@v1
+        with:
+          name: eduID-${{ github.sha }}-signed.apk
+          path: ${{ steps.sign_aab.outputs.signedReleaseFile }}
       - name: Publish to play store internal test track
         uses: r0adkll/upload-google-play@v1
         with:
