@@ -11,6 +11,8 @@
         <activity
             android:name=".TestSettingsActivity"
             android:exported="true"
+            android:logo="@drawable/settings_icon"
+            android:icon="@drawable/settings_icon"
             android:label="@string/title_activity_test_settings"
             android:launchMode="singleInstance"
             android:theme="@style/AppTheme">
