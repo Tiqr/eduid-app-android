@@ -124,12 +124,12 @@
     <string name="homepage_title_two">is klaar voor gebruik</string>
 
     <string name="personal_info_title">Jouw persoonlijke informatie</string>
-    <string name="personal_info_subtitle">Als je inlogt met je eduID op andere websites, wordt een deel van jouw informatie gedeeld. Sommige diensten vereisen dat jouw informatie is gevalideerd door een externe partij.</string>
+    <string name="personal_info_subtitle">Wanneer je eduID gebruikt om in te loggen op andere websites, kan jouw persoonlijke informatie worden gedeeld. Sommige websites vereisen dat je persoonlijke gegevens worden gevalideerd door een derde partij.</string>
     <string name="personal_info_info_header">Deelbare informatie</string>
 
     <string name="data_info_title">Data &amp; activiteit</string>
     <string name="data_info_subtitle">Elke dienst waarvoor je eduID gebruikt ontvangt bepaalde gegevens vanuit jouw eduID account. Denk hierbij aan je naam, e-mailadres of aan een pseudoniem waarmee de dienst jou uniek kan identificeren.</string>
-    <string name="data_info_delete_disclaimer">Elke dienst waarvoor je eduID gebruikt ontvangt bepaalde gegevens vanuit jouw eduID account. Denk hierbij aan je naam, e-mailadres of aan een pseudoniem waarmee de dienst jou uniek kan identificeren.</string>
+    <string name="data_info_delete_disclaimer">Als je deze logingegevens verwijdert, verwijdert eduID deze informatie uit je eduID account. Je hebt nog een account bij de dienst zelf. Als je dat wilt laten verwijderen, doe dat dan rechtstreeks bij de dienst.</string>
     <string name="data_info_on_date">op %s</string>
 
     <string name="security_title">Beveiliging</string>
@@ -206,7 +206,7 @@
     <string name="app_not_authorized">Niet toegestaan</string>
     <string name="app_not_authorized_explanation">De app heeft geen toegang tot jouw data. Wil je dit toestaan?</string>
     <string name="home_with_account_scan">Scan QR</string>
-    <string name="home_with_account_personal_info">Persoonlijke informatie</string>
+    <string name="home_with_account_personal_info">Gegevens</string>
     <string name="home_with_account_security">Beveiliging</string>
     <string name="home_with_account_activity">Activiteit</string>
 
@@ -230,24 +230,24 @@
     <string name="delete_no_undo_warning">Er is geen manier om deze actie ongedaan te maken.</string>
     <string name="delete_account_two_description">Als je wilt doorgaan, typ dan je volledige naam zoals bekend in je eduID account ter bevestiging.</string>
     <string name="infotab_remove_connection">Verwijder koppeling</string>
-    <string name="infotab_login_details">inlog gegevens</string>
-    <string name="infotab_login_first">Eerste keer inloggen</string>
-    <string name="infotab_login_unique_eduid">Unieke eduid</string>
+    <string name="infotab_login_details">Logingegevens</string>
+    <string name="infotab_login_first">Eerste login</string>
+    <string name="infotab_login_unique_eduid">Unieke eduID</string>
 
     <string name="infotab_name">Naam</string>
     <string name="infotab_fullname">Volledige naam</string>
     <string name="infotab_email">E-mail</string>
     <string name="infotab_providedby">Geleverd door %s</string>
     <string name="infotab_providedby_you">Zelf ingesteld</string>
-    <string name="infotab_at">Door %s</string>
+    <string name="infotab_at">Geverifieerd door %s</string>
     <string name="infotab_role_institution">Rol &amp; instelling</string>
     <string name="personalinfo_manage_your_account">Beheer jouw gegevens</string>
     <string name="personalinfo_add_role_institution">Voeg een rol &amp; instelling toe</string>
     <string name="personalinfo_add_via">Voeg dit toe via SURFConext</string>
     <string name="personalinfo_verified_by_on">Geverifieerd door %1$s op %2$s.</string>
     <string name="personalinfo_institution">Instelling</string>
-    <string name="personalinfo_affiliations">Aansluiting(en)</string>
-    <string name="personalinfo_expires">Link verloopt</string>
+    <string name="personalinfo_affiliations">Betrekking(en)</string>
+    <string name="personalinfo_expires">Koppeling verloopt</string>
 
     <string name="infotab_delete_login_details">Verwijder inloggegevens *</string>
 
