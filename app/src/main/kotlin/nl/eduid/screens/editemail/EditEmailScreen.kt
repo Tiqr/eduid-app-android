@@ -51,7 +51,6 @@ import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
-import nl.eduid.ui.theme.ButtonBlue
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
@@ -174,7 +173,6 @@ fun EditEmailScreenContent(
             modifier = Modifier.widthIn(min = 140.dp),
             text = stringResource(R.string.edit_email_confirm_button),
             onClick = { onNewEmailRequestClicked(uiState.email) },
-            buttonBackgroundColor = ButtonBlue,
             buttonTextColor = Color.White,
             enabled = uiState.isEmailValid,
         )

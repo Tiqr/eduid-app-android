@@ -40,7 +40,6 @@ import nl.eduid.graphs.RequestEduIdLinkSent.CHANGE_PASSWORD_REASON
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
-import nl.eduid.ui.theme.ButtonBlue
 import nl.eduid.ui.theme.ButtonBorderGrey
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
@@ -158,7 +157,6 @@ fun ResetPasswordScreenContent(
             modifier = Modifier.widthIn(min = 140.dp),
             text = stringResource(R.string.reset_password_confirm_button),
             onClick = onResetPasswordClicked,
-            buttonBackgroundColor = ButtonBlue,
             buttonTextColor = Color.White,
         )
     }

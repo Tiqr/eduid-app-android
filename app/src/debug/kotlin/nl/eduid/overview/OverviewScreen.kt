@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.ui.EduIdTopAppBar
-import nl.eduid.ui.theme.ButtonBlue
+import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -36,7 +36,7 @@ fun OverviewScreen(
         Divider(
             modifier = Modifier.fillMaxWidth(),
             thickness = 2.dp,
-            color = ButtonBlue
+            color = ButtonGreen
         )
         Spacer(Modifier.height(8.dp))
         Text(
@@ -52,7 +52,7 @@ fun OverviewScreen(
         Divider(
             modifier = Modifier.fillMaxWidth(),
             thickness = 2.dp,
-            color = ButtonBlue
+            color = ButtonGreen
         )
         Spacer(Modifier.height(8.dp))
         Text(
@@ -68,7 +68,7 @@ fun OverviewScreen(
         Divider(
             modifier = Modifier.fillMaxWidth(),
             thickness = 2.dp,
-            color = ButtonBlue
+            color = ButtonGreen
         )
         Spacer(Modifier.height(8.dp))
 
