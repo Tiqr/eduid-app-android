@@ -89,7 +89,7 @@ fun DataAndActivityScreenContent(
     Spacer(Modifier.height(12.dp))
     Text(
         style = MaterialTheme.typography.bodyLarge,
-        textAlign = TextAlign.Justify,
+        textAlign = TextAlign.Start,
         modifier = Modifier.fillMaxWidth(),
         text = stringResource(R.string.data_info_subtitle),
     )

@@ -112,7 +112,7 @@ private fun DeleteAccountFirstConfirmScreenContent(
         Spacer(Modifier.height(18.dp))
         Text(
             text = stringResource(R.string.delete_account_description),
-            textAlign = TextAlign.Justify,
+            textAlign = TextAlign.Start,
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = TextBlack,
                 textAlign = TextAlign.Start
