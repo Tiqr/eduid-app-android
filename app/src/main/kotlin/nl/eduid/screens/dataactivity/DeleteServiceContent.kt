@@ -91,7 +91,7 @@ fun DeleteServiceContent(
                     R.string.delete_service_confirm_explanation, providerName
                 ),
                 style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Justify,
+                textAlign = TextAlign.Start,
                 modifier = Modifier.fillMaxWidth(),
             )
             Spacer(Modifier.height(36.dp))

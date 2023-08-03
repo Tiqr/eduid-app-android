@@ -54,7 +54,6 @@ import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
 import nl.eduid.ui.keyboardAsState
-import nl.eduid.ui.theme.ButtonBlue
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.util.LogCompositions
@@ -217,7 +216,6 @@ fun EditNameFormContent(
             modifier = Modifier.widthIn(min = 140.dp),
             text = stringResource(R.string.edit_email_confirm_button),
             onClick = onUpdateName,
-            buttonBackgroundColor = ButtonBlue,
             buttonTextColor = Color.White,
             enabled = submitEnable,
         )
