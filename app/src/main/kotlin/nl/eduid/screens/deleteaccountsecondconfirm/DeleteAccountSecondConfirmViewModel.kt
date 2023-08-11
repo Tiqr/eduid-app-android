@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.R
@@ -13,7 +14,6 @@ import nl.eduid.di.model.UnauthorizedException
 import nl.eduid.di.repository.StorageRepository
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import org.tiqr.data.repository.IdentityRepository
-import org.tiqr.data.service.DatabaseService
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,7 +21,6 @@ import javax.inject.Inject
 @HiltViewModel
 class DeleteAccountSecondConfirmViewModel @Inject constructor(
     private val repository: PersonalInfoRepository,
-    private val db: DatabaseService,
     private val identity: IdentityRepository,
     private val storage: StorageRepository
 ) : ViewModel() {
@@ -41,11 +40,12 @@ class DeleteAccountSecondConfirmViewModel @Inject constructor(
                 val typedFullName = uiState.fullName
                 if (knownFullName == typedFullName) {
                     val deleteOk = repository.deleteAccount()
-                    val allIdentities = db.getAllIdentities()
+                    val tiqrSecretForEduIdAccount =
+                        identity.identity(userDetails.id).firstOrNull()
                     storage.clearAll()
                     try {
-                        allIdentities.forEach {
-                            identity.delete(it)
+                        if (tiqrSecretForEduIdAccount != null) {
+                            identity.delete(tiqrSecretForEduIdAccount.identity)
                         }
                     } catch (e: Exception) {
                         Timber.e(e, "Failed to cleanup existing identities when deleting account")
