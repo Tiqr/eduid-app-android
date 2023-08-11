@@ -1,5 +1,6 @@
 package nl.eduid.screens.accountlinked
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +14,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -35,6 +37,7 @@ import nl.eduid.ui.theme.TextGreen
 @Composable
 fun AccountLinkedScreen(
     viewModel: PersonalInfoViewModel,
+    result: ResultAccountLinked,
     continueToHome: () -> Unit,
 ) = EduIdTopAppBar(
     withBackIcon = false
@@ -44,15 +47,71 @@ fun AccountLinkedScreen(
             .fillMaxSize()
             .padding(it)
     ) {
-        AccountLinkedContent(
-            personalInfo = viewModel.uiState.personalInfo,
-            isLoading = viewModel.uiState.isLoading,
-            errorData = viewModel.uiState.errorData,
-            dismissError = viewModel::clearErrorData,
-            continueToHome = continueToHome,
-            removeConnection = { index -> viewModel.removeConnection(index) },
+        if (result is ResultAccountLinked.OK) {
+            AccountLinkedContent(
+                personalInfo = viewModel.uiState.personalInfo,
+                isLoading = viewModel.uiState.isLoading,
+                errorData = viewModel.uiState.errorData,
+                dismissError = viewModel::clearErrorData,
+                continueToHome = continueToHome,
+                removeConnection = { index -> viewModel.removeConnection(index) },
+            )
+        } else {
+            AccountFailedLinkContent(result = result, continueToHome = continueToHome)
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun AccountFailedLinkContent(
+    result: ResultAccountLinked = ResultAccountLinked.FailedAlreadyLinkedResult,
+    continueToHome: () -> Unit = {}
+) = Column(
+    modifier = Modifier
+        .fillMaxSize()
+        .navigationBarsPadding()
+        .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
+    verticalArrangement = Arrangement.SpaceBetween
+) {
+    Column(
+        horizontalAlignment = Alignment.Start, modifier = Modifier
+            .verticalScroll(rememberScrollState())
+    ) {
+        Spacer(Modifier.height(36.dp))
+        Text(
+            style = MaterialTheme.typography.titleLarge.copy(
+                textAlign = TextAlign.Start, color = TextGreen
+            ),
+            text = stringResource(R.string.account_linked_title),
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(Modifier.height(12.dp))
+        Text(
+            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
+            text = stringResource(R.string.account_linked_fail_subtitle),
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(Modifier.height(12.dp))
+        val explanation =
+            if (result is ResultAccountLinked.FailedExpired) {
+                stringResource(R.string.account_linked_fail1_description)
+            } else {
+                stringResource(R.string.account_linked_fail2_description)
+            }
+        Text(
+            text = explanation,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.fillMaxWidth()
         )
     }
+    PrimaryButton(
+        text = stringResource(R.string.button_continue),
+        onClick = continueToHome,
+        modifier = Modifier
+            .fillMaxWidth(),
+    )
+
 }
 
 @Composable
@@ -140,7 +199,7 @@ private fun AccountLinkedContent(
         text = stringResource(R.string.button_continue),
         onClick = continueToHome,
         modifier = Modifier
-            .fillMaxWidth() ,
+            .fillMaxWidth(),
     )
 }
 

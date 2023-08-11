@@ -1,6 +1,8 @@
 package nl.eduid.graphs
 
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -12,6 +14,7 @@ import androidx.navigation.navDeepLink
 import nl.eduid.graphs.RequestEduIdLinkSent.LOGIN_REASON
 import nl.eduid.graphs.RequestEduIdLinkSent.reasonArg
 import nl.eduid.screens.accountlinked.AccountLinkedScreen
+import nl.eduid.screens.accountlinked.ResultAccountLinked
 import nl.eduid.screens.biometric.EnableBiometricScreen
 import nl.eduid.screens.biometric.EnableBiometricViewModel
 import nl.eduid.screens.created.RequestEduIdCreatedScreen
@@ -336,10 +339,25 @@ fun MainGraph(
                 uriPattern = AccountLinked.uriPatternExpired
             },
         )
-    ) {
-        val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
+    ) { entry ->
+        val deepLinkIntent: Intent? =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                entry.arguments?.getParcelable(
+                    NavController.KEY_DEEP_LINK_INTENT,
+                    Intent::class.java
+                )
+            } else {
+                entry.arguments?.getParcelable(
+                    NavController.KEY_DEEP_LINK_INTENT
+                )
+            }
+        val fullUri = deepLinkIntent?.data ?: Uri.EMPTY
+        val result = ResultAccountLinked.fromRedirectUrl(fullUri.path.orEmpty())
+
+        val viewModel = hiltViewModel<PersonalInfoViewModel>(entry)
         AccountLinkedScreen(
             viewModel = viewModel,
+            result = result,
             continueToHome = { navController.goToWithPopCurrent(Graph.HOME_PAGE) },
         )
     }//endregion
