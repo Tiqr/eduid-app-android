@@ -70,7 +70,10 @@
 
     <string name="account_linked_title">Your school/uni</string>
     <string name="account_linked_subtitle">was contacted successfully</string>
+    <string name="account_linked_fail_subtitle">could not be contacted</string>
     <string name="account_linked_description">The following information has been added to your eduID and can now be shared.</string>
+    <string name="account_linked_fail1_description">Reason: Your session expired.</string>
+    <string name="account_linked_fail2_description">Reason: The account is already linked.</string>
 
     <string name="authorize_title">Request to log on</string>
     <string name="authorize_subtitle01">Do you want to login to</string>
