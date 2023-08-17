@@ -104,7 +104,7 @@ fun EditNameFormScreen(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EditNameFormContent(
     givenName: String,
@@ -133,7 +133,6 @@ fun EditNameFormContent(
         derivedStateOf { isGivenNameValid && isFamilyNameValid }
     }
     val isKeyboardOpen by keyboardAsState()
-    LogCompositions(msg = "Recomposing edit name form isGivenNameValid: $isGivenNameValid. isFamilyNameValid: $isFamilyNameValid")
     Column(
         horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()
     ) {

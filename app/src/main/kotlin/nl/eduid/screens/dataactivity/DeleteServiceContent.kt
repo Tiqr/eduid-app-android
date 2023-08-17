@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,20 +38,21 @@ import nl.eduid.ui.theme.TextGreen
 fun DeleteServiceContent(
     providerName: String,
     inProgress: Boolean = false,
+    paddingValues: PaddingValues = PaddingValues(),
     removeService: () -> Unit = {},
     goBack: () -> Unit = {},
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .navigationBarsPadding()
-            .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
+            .padding(paddingValues)
+            .padding(horizontal = 24.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
         ) {
             Text(
                 text = stringResource(R.string.delete_service_confirm_title),
@@ -99,7 +101,9 @@ fun DeleteServiceContent(
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .navigationBarsPadding()
+                .padding(bottom = 24.dp),
         ) {
             SecondaryButton(
                 text = stringResource(R.string.button_cancel),
