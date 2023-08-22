@@ -227,7 +227,7 @@
 
     <string name="delete_account_one_title">Verwijder je eduID account</string>
     <string name="delete_account_one_subtitle">Ga voorzichtig te werk, want je verliest de unieke eduID ID\'s die momenteel aan je e-mailadres zijn gekoppeld.</string>
-    <string name="delete_account_description">Je kunt je eduID account verwijderen wanneer je maar wilt.\n\nLet op, je verliest de unieke eduID nummers die aan je e-mailadres zijn gekoppeld. Wanneer je je opnieuw registreert voor eduID met hetzelfde e-mailadres, krijg je een nieuwe eduID nummers. Sommige diensten gebruiken deze nummers om je uniek te identificeren, dus voor die diensten word je dan gezien als een nieuwe gebruiker. Houd er rekening mee dat het verwijderen van je eduID niet betekent dat alle diensten die je met je eduID hebt gebruikt, ook je gegevens zullen verwijderen.</string>
+    <string name="delete_account_description">Je kunt je eduID account verwijderen wanneer je maar wilt.\n\nLet op, je verliest de unieke eduID nummers die aan je e-mailadres zijn gekoppeld. Wanneer je je opnieuw registreert voor eduID met hetzelfde e-mailadres, krijg je een nieuw eduID nummer. Sommige diensten gebruiken deze nummers om je uniek te identificeren, dus voor die diensten word je dan gezien als een nieuwe gebruiker. Houd er rekening mee dat het verwijderen van je eduID niet betekent dat alle diensten die je met je eduID hebt gebruikt, ook je gegevens zullen verwijderen.</string>
 
     <string name="delete_account_two_title">Je account voor alle eeuwigheid verwijderen?</string>
     <string name="delete_no_undo_warning">Er is geen manier om deze actie ongedaan te maken.</string>
