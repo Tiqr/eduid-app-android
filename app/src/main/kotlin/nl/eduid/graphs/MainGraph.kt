@@ -232,8 +232,6 @@ fun MainGraph(
     composable(//region Account-Created
         route = RequestEduIdCreated.route, deepLinks = listOf(navDeepLink {
             uriPattern = RequestEduIdCreated.uriPatternHttps
-        }, navDeepLink {
-            uriPattern = RequestEduIdCreated.uriPatternCustomScheme
         })
     ) { entry ->
         val viewModel = hiltViewModel<HomePageViewModel>(entry)
@@ -451,9 +449,6 @@ fun MainGraph(
 
     composable(Security.Settings.route, deepLinks = listOf(navDeepLink {
         uriPattern = Security.ConfirmEmail.confirmEmail
-        action = Intent.ACTION_VIEW
-    }, navDeepLink {
-        uriPattern = Security.ConfirmEmail.customSchemeConfirmEmail
         action = Intent.ACTION_VIEW
     })) {//region Home - Security
         val viewModel = hiltViewModel<SecurityViewModel>(it)

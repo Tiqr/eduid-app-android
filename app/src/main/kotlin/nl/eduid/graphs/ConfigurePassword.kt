@@ -47,8 +47,6 @@ fun NavGraphBuilder.configurePasswordFlow(
                 uriPattern = Form.resetPassword
             }, navDeepLink {
                 uriPattern = Form.addPassword
-            }, navDeepLink {
-                uriPattern = Form.customSchemeResetPassword
             })
         ) { entry ->
             val deepLinkIntent: Intent? =
@@ -90,7 +88,5 @@ sealed class ConfigurePassword(val route: String) {
             "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/reset-password?$passwordHashArg={$passwordHashArg}"
         val addPassword =
             "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/add-password?$passwordHashArg={$passwordHashArg}"
-        const val customSchemeResetPassword =
-            "eduid://client/mobile/reset-password?$passwordHashArg={$passwordHashArg}"
     }
 }

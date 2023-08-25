@@ -1,6 +1,6 @@
 {
   "client_id": "eduid.nl",
-  "redirect_uri": "eduid://client/mobile/oauth-redirect",
+  "redirect_uri": "https://login.eduid.nl/client/mobile/oauth-redirect",
   "end_session_redirect_uri": "http://login.eduid.nl",
   "authorization_scope": "eduid.nl/mobile",
   "discovery_uri": "https://connect.surfconext.nl/oidc/.well-known/openid-configuration",
