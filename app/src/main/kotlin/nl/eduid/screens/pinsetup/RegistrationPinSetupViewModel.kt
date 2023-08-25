@@ -137,7 +137,7 @@ class RegistrationPinSetupViewModel @Inject constructor(
             if (userDetails != null) {
                 NextStep.Recovery
             } else {
-                NextStep.Home
+                NextStep.RecoveryInBrowser
             }
         }
     }

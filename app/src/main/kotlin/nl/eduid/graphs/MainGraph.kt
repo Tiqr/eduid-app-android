@@ -17,6 +17,7 @@ import nl.eduid.screens.accountlinked.AccountLinkedScreen
 import nl.eduid.screens.accountlinked.ResultAccountLinked
 import nl.eduid.screens.biometric.EnableBiometricScreen
 import nl.eduid.screens.biometric.EnableBiometricViewModel
+import nl.eduid.screens.contbrowser.ContinueInBrowserScreen
 import nl.eduid.screens.created.RequestEduIdCreatedScreen
 import nl.eduid.screens.dataactivity.DataAndActivityScreen
 import nl.eduid.screens.dataactivity.DataAndActivityViewModel
@@ -128,13 +129,8 @@ fun MainGraph(
             closePinSetupFlow = { navController.popBackStack() },
             goToNextStep = { nextStep ->
                 when (nextStep) {
-                    NextStep.Home -> {
-                        //Go to the home page and clear the entire stack while doing so
-                        navController.navigate(Graph.HOME_PAGE) {
-                            popUpTo(Graph.HOME_PAGE) {
-                                inclusive = true
-                            }
-                        }
+                    NextStep.RecoveryInBrowser -> {
+                        navController.navigate(Graph.CONTINUE_RECOVERY_IN_BROWSER)
                     }
 
                     is NextStep.PromptBiometric -> {
@@ -182,7 +178,7 @@ fun MainGraph(
         })
     }//endregion
 
-    composable(//region EnableBiometric-Conditional
+    composable(//region EnableBiometric
         route = WithChallenge.EnableBiometric.routeWithArgs, arguments = WithChallenge.arguments
     ) { entry ->
         val viewModel = hiltViewModel<EnableBiometricViewModel>(entry)
@@ -192,11 +188,12 @@ fun MainGraph(
                     popUpTo(Graph.HOME_PAGE)
                 }
             } else {
-                //Recovery is already completed/done via web
-                navController.navigate(Graph.HOME_PAGE)
+                //Continue recovery via web
+                navController.navigate(Graph.CONTINUE_RECOVERY_IN_BROWSER)
             }
         }) { navController.popBackStack() }
-    }//endregion
+    }
+    //endregion
 
     //region OAuth-Conditional
     composable(
@@ -324,6 +321,16 @@ fun MainGraph(
                     }
                 }
             })
+    }
+    composable(Graph.CONTINUE_RECOVERY_IN_BROWSER) {
+        ContinueInBrowserScreen(goHome = {
+            //Clear the entire backstack and reload the home page now that there is an account
+            navController.navigate(Graph.HOME_PAGE) {
+                popUpTo(Graph.HOME_PAGE) {
+                    inclusive = true
+                }
+            }
+        })
     }
     composable(//region Account Linked
         route = AccountLinked.route, deepLinks = listOf(
