@@ -121,8 +121,7 @@
                 <data android:path="/${tiqr_config_enroll_path_param}/" />
             </intent-filter>
             <!--
-            Change email confirmation link: The link in the validation email is https://login.{environment}.eduid.nl/client/mobile/update-email?h=={{hash}}with an unique 'h' query param which must be used in 'mobile/api/sp/confirm-email' to confirm the update.
-            If the URL is not properly intercepted by the eduID app, then the browser app redirects to eduid://client/mobile/confirm-email?h={{hash}}-->
+            Change email confirmation link: The link in the validation email is https://login.{environment}.eduid.nl/client/mobile/update-email?h=={{hash}}with an unique 'h' query param which must be used in 'mobile/api/sp/confirm-email' to confirm the update.-->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -152,7 +151,6 @@
             Sent the user a mail with a link for the user to change their password.
              Reset password: Link in the validation email is https://login.{environment}.eduid.nl/client/mobile/reset-password?h={{hash}} if the user already had a password.
              Add password: https://login.{environment}.eduid.nl/client/mobile/add-password?h={{hash}}
-             If the URL is not properly intercepted by the eduID app, then the browser app redirects to eduid://client/mobile/reset-password?h={{hash}}
              -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -198,8 +196,6 @@
             which must NOT be captured by the eduID app.
             After the account is finalized server-side the user is logged in and the server redirects
             to https://login.{environment}.eduid.nl/client/mobile/created
-            If the URL is not properly intercepted by the eduID app, then the browser app redirects
-            to eduid://client/mobile/created?new=true
             -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />

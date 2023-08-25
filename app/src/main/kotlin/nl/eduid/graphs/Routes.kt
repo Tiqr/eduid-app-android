@@ -34,7 +34,6 @@ object OAuth {
 object RequestEduIdCreated {
     const val route = "request_edu_id_created"
     val uriPatternHttps = "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/created"
-    const val uriPatternCustomScheme = "eduid:///client/mobile/created"
 }
 
 object AccountLinked {
@@ -262,9 +261,6 @@ sealed class Security(val route: String) {
         })
         val confirmEmail =
             "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/update-email?$confirmEmailHash={$confirmEmailHash}"
-        const val customSchemeConfirmEmail =
-            "eduid://client/mobile/update-email?$confirmEmailHash={$confirmEmailHash}"
-
     }
 }
 
