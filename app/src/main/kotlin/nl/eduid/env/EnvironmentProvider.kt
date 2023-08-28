@@ -9,6 +9,8 @@ object EnvironmentProvider {
         RuntimeBehavior.isFeatureEnabled(GroupedTestSetting.USE_TEST2_ENV) -> Environment.Test2
         RuntimeBehavior.isFeatureEnabled(GroupedTestSetting.USE_TEST_ENV) -> Environment.Test
         RuntimeBehavior.isFeatureEnabled(GroupedTestSetting.USE_ACCEPTANCE_ENV) -> Environment.Acceptance
-        else -> Environment.Production
+        //Use testing as default for once
+	//else -> Environment.Production
+	else -> Environment.Test
     }
 }
