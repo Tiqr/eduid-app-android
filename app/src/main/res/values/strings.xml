@@ -123,6 +123,9 @@
     <string name="start_item_three_bold">Verify your identity</string>
     <string name="start_item_three_regular">so you can access more secure services.</string>
 
+    <string name="recovery_browser_title">Return to your webbrowser</string>
+    <string name="recovery_browser_explain">Continue in your browser to finish the connection of this app to your eduID-account.</string>
+
     <string name="homepage_title_one">Your eduID app</string>
     <string name="homepage_title_two">is ready for use</string>
 

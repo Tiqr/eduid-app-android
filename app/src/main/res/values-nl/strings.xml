@@ -123,6 +123,9 @@
     <string name="start_item_three_bold">Valideer jouw gegevens</string>
     <string name="start_item_three_regular">om beveligde diensten de benaderen.</string>
 
+    <string name="recovery_browser_title">Ga terug naar jouw webbrowser</string>
+    <string name="recovery_browser_explain">Ga terug naar je browser om de koppeling van deze app aan je eduID-account te voltooien.</string>
+
     <string name="homepage_title_one">Jouw eduID app</string>
     <string name="homepage_title_two">is klaar voor gebruik</string>
 
