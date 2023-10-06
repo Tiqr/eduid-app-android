@@ -7,16 +7,35 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.*
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -57,6 +76,7 @@ fun ScanScreen(
                     state.toggleTorch()
                     true // Mark as handled since wse sent the broadcast because currently scanning
                 }
+
                 else -> {
                     false
                 }
@@ -119,7 +139,7 @@ private fun ScanContent(
     lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
 ) {
     Box(
-        Modifier
+        modifier = Modifier
             .fillMaxSize()
     ) {
         val config = LocalConfiguration.current
@@ -157,7 +177,6 @@ private fun ScanContent(
                             context = factoryContext,
                             lifecycleOwner = lifecycleOwner,
                             viewFinder = previewView,
-                            viewFinderRatio = (config.screenHeightDp - paddingValues.calculateTopPadding().value - paddingValues.calculateBottomPadding().value) / config.screenWidthDp
                         ) { result ->
                             onScanResult(result)
                         }
