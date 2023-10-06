@@ -32,7 +32,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -142,7 +141,6 @@ private fun ScanContent(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        val config = LocalConfiguration.current
         val launcher =
             rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission(),
                 onResult = { granted ->
@@ -230,6 +228,7 @@ private fun ScanContent(
                 RegistrationExplanation(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(paddingValues)
                         .constrainAs(registrationExplanation) {
                             bottom.linkTo(parent.bottom, margin = 80.dp)
                         })
