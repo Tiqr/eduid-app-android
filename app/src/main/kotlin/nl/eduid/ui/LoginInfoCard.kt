@@ -158,17 +158,25 @@ private fun ServiceProviderBlock(
     Modifier.fillMaxWidth()
 ) {
     InfoRow(label = stringResource(R.string.infotab_login_details))
-    InfoRow(
-        label = stringResource(R.string.infotab_login_first),
-        value = serviceProviderInfo.firstLoginStamp.getDateString()
-    )
-    InfoRow(
-        label = stringResource(R.string.infotab_login_unique_eduid),
-        value = serviceProviderInfo.uniqueId
-    )
+    serviceProviderInfo.firstLoginStamp?.let {
+        InfoRow(
+            label = stringResource(R.string.infotab_login_first),
+            value = it.getDateString()
+        )
+    }
+    serviceProviderInfo.uniqueId?.let {
+        InfoRow(
+            label = stringResource(R.string.infotab_login_unique_eduid),
+            value = it
+        )
+    }
     Button(
         shape = RoundedCornerShape(CornerSize(6.dp)),
-        onClick = { onDeleteButtonClicked(serviceProviderInfo.uniqueId) },
+        onClick = {
+            serviceProviderInfo.uniqueId?.let {
+                onDeleteButtonClicked(it)
+            }
+        },
         border = BorderStroke(1.dp, Color.Red),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
         modifier = Modifier

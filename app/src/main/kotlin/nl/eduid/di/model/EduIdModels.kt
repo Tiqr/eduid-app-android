@@ -61,7 +61,6 @@ data class UserDetails(
     val usePassword: Boolean,
     val usePublicKey: Boolean,
     val forgottenPassword: Boolean,
-//    val publicKeyCredentials: List<Any?>,
     val linkedAccounts: List<LinkedAccount>,
     val schacHomeOrganization: String,
     val uid: String,
@@ -82,11 +81,11 @@ data class UserDetails(
 @JsonClass(generateAdapter = true)
 data class EduIdPerServiceProvider(
     val serviceProviderEntityId: String,
-    val value: String,
-    val serviceName: String,
-    val serviceNameNl: String,
+    val value: String?,
+    val serviceName: String?,
+    val serviceNameNl: String?,
     val serviceLogoUrl: String?,
-    val createdAt: Long,
+    val createdAt: Long?,
 ) : Parcelable
 
 @Parcelize
@@ -118,8 +117,7 @@ data class Registration(
 data class InstitutionNameResponse(
     val displayNameEn: String,
     val displayNameNl: String,
-
-    ) : Parcelable
+) : Parcelable
 
 @Parcelize
 @JsonClass(generateAdapter = true)

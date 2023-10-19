@@ -109,10 +109,13 @@ fun DataAndActivityScreenContent(
         data.forEach { provider ->
             LoginInfoCard(
                 startIconLargeUrl = provider.providerLogoUrl.orEmpty(),
-                title = provider.providerName,
-                subtitle = stringResource(
-                    R.string.data_info_on_date, provider.firstLoginStamp.getDateTimeString()
-                ),
+                title = provider.providerName.orEmpty(),
+                subtitle = provider.firstLoginStamp?.let {
+                    stringResource(
+                        R.string.data_info_on_date,
+                        it.getDateTimeString()
+                    )
+                } ?: "-",
                 onDeleteButtonClicked = { goToConfirmDeleteService(provider) },
                 serviceProviderInfo = provider,
             )
