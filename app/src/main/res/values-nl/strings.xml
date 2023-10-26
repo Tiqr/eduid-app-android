@@ -59,7 +59,7 @@
 
     <string name="first_time_title">Studeer je in Nederland?</string>
     <string name="first_time_subtitle">Voeg je instelling toe!</string>
-    <string name="first_time_description01">Als je in studeert in Nederland</string>
+    <string name="first_time_description01">Als je studeert in Nederland</string>
     <string name="first_time_description02">en je eduID wil gebruiken om in te loggen op diensten van een instelling, moeten we zeker weten dat jij het bent. En niet iemand anders.</string>
     <string name="first_time_description03">Je kunt daarom de volgende informatie toevoegen aan je eduID:</string>
     <string name="first_time_required">&#x2022; Validatie van je volledige naam door een derde partij\n&#x2022; Bewijs dat je student bent\n&#x2022; Je huidige instelling</string>
@@ -107,7 +107,7 @@
 
     <string name="request_id_recovery_title">Voeg een telefoonnummer voor herstel toe</string>
     <string name="request_id_recovery_text_code">Als je niet in kunt loggen op eduID met de app of de link, kun je dit gebruiken om toegang te krijgen tot je account.</string>
-    <string name="request_id_recovery_button">Controleer dit telefoonnummer</string>
+    <string name="request_id_recovery_button">Controleer</string>
     <string name="request_id_recovery_input_hint">We sturen een SMS om het nummer te controleren.</string>
 
     <string name="confirm_sms_code_title">Controleer je berichten!</string>
