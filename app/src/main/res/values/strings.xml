@@ -85,7 +85,7 @@
 
     <string name="button_back">Back</string>
     <string name="button_continue">Continue</string>
-    <string name="button_allow">Allow</string>
+    <string name="button_login">Log in</string>
     <string name="button_torch">Turn on flashlight</string>
     <string name="confirmpin_mismatch">PIN doesn\'t match.</string>
     <string name="button_scan">Scan</string>
@@ -209,8 +209,8 @@
     <string name="biometric_enable_description" tools:ignore="ExtraTranslation">Do you want to use your biometrics to add an extra layer of security to your eduID?</string>
     <string name="biometric_enable_allow" tools:ignore="ExtraTranslation">Set up biometric access</string>
     <string name="biometric_enable_skip" tools:ignore="ExtraTranslation">Skip this</string>
-    <string name="app_not_authorized">Not Allowed</string>
-    <string name="app_not_authorized_explanation">The app is not allowed to access the data of your eduid account. Do you want to allow access?</string>
+    <string name="app_not_authorized">Please Log in</string>
+    <string name="app_not_authorized_explanation">To retrieve the information you must be logged in.</string>
     <string name="home_with_account_scan">Scan QR</string>
     <string name="home_with_account_personal_info">Your Info</string>
     <string name="home_with_account_security">Security</string>
