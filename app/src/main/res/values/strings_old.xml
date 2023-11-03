@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
-
-    <string name="first_time_title">Are you studying in NL?</string>
-    <string name="first_time_subtitle">Connect your institution!</string>
-    <string name="first_time_description01">When you study in the Netherlands</string>
-    <string name="first_time_description02">and you want to use eduID to logon to an educational service, we need to be sure it\'s you and not someone impersonating you.</string>
-    <string name="first_time_description03">You must therefore add the following information to your eduID:</string>
-    <string name="first_time_required">&#x2022; Validation of your full name by a third party\n&#x2022; Proof of being a student\n&#x2022; Your current institution</string>
-    <string name="first_time_footer01">Add this information</string>
-    <string name="first_time_footer02">by connecting your school/institution via SURFconext.</string>
-    <string name="first_time_button_connect">Connect your school/institution</string>
-    <string name="first_time_button_skip">Skip this</string>
-
     <string name="account_linked_title">Your school/uni</string>
     <string name="account_linked_subtitle">was contacted successfully</string>
     <string name="account_linked_fail_subtitle">could not be contacted</string>

@@ -3205,17 +3205,14 @@ SHARED:
           en: Connect your school/institution
           nl: Sluit je school/instelling aan
       MainTextTitle:
-        COPY:
-          en: >-
-            Are you studying in NL?
-            Connect your institution!
-          nl: >-
-            Studeer je in NL?
-            Sluit dan je instelling aan!
-      MainTextTitleBoldPart:
-        COPY:
-          en: Connect your institution!
-          nl: Sluit dan je instelling aan!
+        FirstPart:
+          COPY:
+            en: Are you studying in NL?
+            nl: Studeer je in Nederland?
+        SecondPart:
+          COPY:
+            en: Connect your institution!
+            nl: Sluit dan je instelling aan!
       MainText:
         COPY:
           en: >-

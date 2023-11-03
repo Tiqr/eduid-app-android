@@ -42,6 +42,7 @@ import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
+import nl.eduid.ui.annotatedStringWithBoldParts
 import nl.eduid.ui.theme.AlertWarningBackground
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextGreen
@@ -123,14 +124,14 @@ private fun FirstTimeDialogContent(
                 .weight(1f)
         ) {
             Text(
-                text = stringResource(R.string.first_time_title),
+                text = stringResource(R.string.CreateEduID_FirstTimeDialog_MainTextTitle_FirstPart_COPY),
                 style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp),
             )
             Text(
-                text = stringResource(R.string.first_time_subtitle),
+                text = stringResource(R.string.CreateEduID_FirstTimeDialog_MainTextTitle_SecondPart_COPY),
                 style = MaterialTheme.typography.titleMedium.copy(
                     color = TextGreen, textAlign = TextAlign.Center
                 ),
@@ -141,37 +142,18 @@ private fun FirstTimeDialogContent(
 
             Spacer(Modifier.height(40.dp))
 
-            val text = buildAnnotatedString {
-                withStyle(style = SpanStyle(fontWeight = FontWeight.SemiBold)) {
-                    append(stringResource(R.string.first_time_description01))
-                }
-                append(" ")
-                append(stringResource(R.string.first_time_description02))
-                append("\n")
-                append("\n")
-                withStyle(style = SpanStyle(fontWeight = FontWeight.SemiBold)) {
-                    append(stringResource(R.string.first_time_description03))
-                }
-            }
-
             Box(Modifier.background(color = AlertWarningBackground)) {
-                Column {
-                    Text(
-                        style = MaterialTheme.typography.bodyLarge,
-                        text = text,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 24.dp)
-                    )
-                    Text(
-                        style = MaterialTheme.typography.bodyLarge,
-                        text = stringResource(R.string.first_time_required),
-                        modifier = Modifier
-                            .padding(start = 16.dp)
-                            .fillMaxWidth()
-                            .padding(horizontal = 24.dp)
-                    )
-                }
+                Text(
+                    style = MaterialTheme.typography.bodyLarge,
+                    text = annotatedStringWithBoldParts(
+                        stringResource(id = R.string.CreateEduID_FirstTimeDialog_MainText_COPY),
+                        stringResource(id = R.string.CreateEduID_FirstTimeDialog_MainTextFirstBoldPart_COPY),
+                        stringResource(id = R.string.CreateEduID_FirstTimeDialog_MainTextSecondBoldPart_COPY),
+                        ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp)
+                )
             }
         }
         Column(
@@ -179,27 +161,23 @@ private fun FirstTimeDialogContent(
                 .fillMaxSize()
                 .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
         ) {
-            val text = buildAnnotatedString {
-                withStyle(style = SpanStyle(fontWeight = FontWeight.SemiBold)) {
-                    append(stringResource(R.string.first_time_footer01))
-                }
-                append(" ")
-                append(stringResource(R.string.first_time_footer02))
-            }
             Text(
                 style = MaterialTheme.typography.bodyLarge,
-                text = text,
+                text = annotatedStringWithBoldParts(
+                    stringResource(id = R.string.CreateEduID_FirstTimeDialog_AddInformationText_COPY),
+                    stringResource(id = R.string.CreateEduID_FirstTimeDialog_AddInformationBoldPart_COPY),
+                ),
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(Modifier.height(8.dp))
             PrimaryButton(
-                text = stringResource(R.string.first_time_button_connect),
+                text = stringResource(R.string.CreateEduID_FirstTimeDialog_ConnectButtonTitle_COPY),
                 onClick = onClick,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(Modifier.height(24.dp))
             SecondaryButton(
-                text = stringResource(R.string.first_time_button_skip),
+                text = stringResource(R.string.CreateEduID_FirstTimeDialog_SkipButtonTitle_COPY),
                 onClick = skipThis,
                 modifier = Modifier.fillMaxWidth()
             )
