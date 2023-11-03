@@ -626,7 +626,7 @@
   <string name="PinAndBioMetrics_SecondPinScreenSelectTitle_COPY">"Repeat selected PIN"</string>
   <string name="PinAndBioMetrics_SecondPinScreenText_COPY">"Please enter your PIN code again"</string>
   <string name="PinAndBioMetrics_VerifyPinScreenText_COPY">"Enter the PIN and press OK"</string>
-  <string name="PinAndBioMetrics_SignIn_COPY">"Login"</string>
+  <string name="PinAndBioMetrics_SignIn_COPY">"Log in"</string>
   <string name="PinAndBioMetrics_OKButton_COPY">"OK"</string>
   <string name="PinAndBioMetrics_LoginRequest_COPY">"Request to log on"</string>
   <string name="PinAndBioMetrics_DoYouWantToLogInTo_COPY">"Do you want to log in to"</string>
@@ -706,4 +706,5 @@
   <string name="ResponseErrors_UnknownErrorText_COPY">"An unknown error occured with the following status code"</string>
   <string name="ResponseErrors_ExistinUserAndDeviceTitle_COPY">"Already associated"</string>
   <string name="ResponseErrors_ExistinUserAndDeviceText_COPY">"This account is already associated with a different device. Remove your other device first from your account before registering a new device."</string>
+  <string name="Deeplink_Processing_COPY">"Checking request..."</string>
 </resources>

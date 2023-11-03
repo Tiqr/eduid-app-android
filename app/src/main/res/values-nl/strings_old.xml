@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
-    <string name="authorize_title">Verzoek om in te loggen</string>
-    <string name="authorize_subtitle01">Wil je inloggen bij</string>
-    <string name="authorize_subtitle02">%s?</string>
-    <string name="authorize_login_button">Login</string>
-    <string name="authorize_confirmed_subtitle">Je bent ingelogd</string>
-
-    <string name="deeplink_processing">Controleren verzoek…</string>
 
     <string name="button_back">Terug</string>
     <string name="button_continue">Ga door</string>

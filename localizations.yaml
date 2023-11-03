@@ -1,3 +1,9 @@
+ANDROID:
+  Deeplink:
+    Processing:
+      COPY:
+        en: "Checking request..."
+        nl: "Verzoek aan het bewerken..."
 SHARED:
   Sidebar:
     Home:
@@ -3067,7 +3073,7 @@ SHARED:
         nl: Voer uw PIN in en druk op OK
     SignIn:
       COPY:
-        en: Login
+        en: Log in
         nl: Inloggen
     OKButton:
       COPY:

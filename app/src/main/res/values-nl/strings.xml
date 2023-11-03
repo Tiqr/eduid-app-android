@@ -706,4 +706,5 @@
   <string name="ResponseErrors_UnknownErrorText_COPY">"Er is een onbekende fout opgetreden met de volgende statuscode"</string>
   <string name="ResponseErrors_ExistinUserAndDeviceTitle_COPY">"Reeds geassocieerd"</string>
   <string name="ResponseErrors_ExistinUserAndDeviceText_COPY">"Dit account is al gekoppeld aan een ander apparaat. Verwijder eerst jouw andere apparaat uit je account voordat je een nieuw apparaat registreert."</string>
+  <string name="Deeplink_Processing_COPY">"Verzoek aan het bewerken..."</string>
 </resources>
