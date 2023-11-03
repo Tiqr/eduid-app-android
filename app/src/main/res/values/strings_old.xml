@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
-
-    <string name="personal_info_title">Your personal info</string>
-    <string name="personal_info_subtitle">When you use eduID to login to other websites, some of your personal information will be shared. Some websites require that your personal information is validated by a third party.</string>
-    <string name="personal_info_info_header">Shareable information</string>
-
     <string name="data_info_title">Data &amp; Activity</string>
     <string name="data_info_subtitle">Each service you accessed through eduID receives certain personal data (attributes) from your eduID account. E.g. your name &amp; email address or a pseudonym which the service can use to uniquely identify you.</string>
     <string name="data_info_delete_disclaimer">Each service you accessed through eduID receives certain personal data (attributes) from your eduID account. E.g. your name &amp; email address or a pseudonym which the service can use to uniquely identify you.</string>

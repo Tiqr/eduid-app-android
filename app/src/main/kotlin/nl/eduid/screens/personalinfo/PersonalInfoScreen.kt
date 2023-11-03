@@ -122,12 +122,12 @@ fun PersonalInfoScreenContent(
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
             textAlign = TextAlign.Start, color = ButtonGreen
-        ), text = stringResource(R.string.personal_info_title), modifier = Modifier.fillMaxWidth()
+        ), text = stringResource(R.string.Profile_Title_COPY), modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
     Text(
         style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-        text = stringResource(R.string.personal_info_subtitle),
+        text = stringResource(R.string.Profile_Info_COPY),
         modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
@@ -135,7 +135,7 @@ fun PersonalInfoScreenContent(
         style = MaterialTheme.typography.titleLarge.copy(
             textAlign = TextAlign.Start, color = ButtonGreen, fontSize = 20.sp
         ),
-        text = stringResource(R.string.personal_info_info_header),
+        text = stringResource(R.string.Profile_ShareableInformation_COPY),
         modifier = Modifier.fillMaxWidth()
     )
     if (isLoading) {

@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
-
-    <string name="personal_info_title">Jouw persoonlijke informatie</string>
-    <string name="personal_info_subtitle">Wanneer je eduID gebruikt om in te loggen op andere websites, kan jouw persoonlijke informatie worden gedeeld. Sommige websites vereisen dat je persoonlijke gegevens worden gevalideerd door een derde partij.</string>
-    <string name="personal_info_info_header">Deelbare informatie</string>
-
     <string name="data_info_title">Data &amp; activiteit</string>
     <string name="data_info_subtitle">Elke dienst waarvoor je eduID gebruikt ontvangt bepaalde gegevens vanuit jouw eduID account. Denk hierbij aan je naam, e-mailadres of aan een pseudoniem waarmee de dienst jou uniek kan identificeren.</string>
     <string name="data_info_delete_disclaimer">Als je deze logingegevens verwijdert, verwijdert eduID deze informatie uit je eduID account. Je hebt nog een account bij de dienst zelf. Als je dat wilt laten verwijderen, doe dat dan rechtstreeks bij de dienst.</string>
