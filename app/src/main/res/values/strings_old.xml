@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
 
-    <string name="request_id_created_title">Your eduID has been created!</string>
-    <string name="request_id_created_description">To safely use this app, we need you to set a pincode and provide a phone number in case you might forget it.</string>
-
-    <string name="request_id_created_fail_title">Could not create your eduID account!</string>
-    <string name="request_id_created_fail_description">The account creation has failed. Please try again.</string>
-
     <string name="first_time_title">Are you studying in NL?</string>
     <string name="first_time_subtitle">Connect your institution!</string>
     <string name="first_time_description01">When you study in the Netherlands</string>

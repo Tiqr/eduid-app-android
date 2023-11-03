@@ -118,7 +118,7 @@ private fun RequestEduIdCreatedContent(
             .fillMaxWidth()
     ) {
         Text(
-            text = stringResource(R.string.request_id_created_title),
+            text = stringResource(R.string.CreateEduID_Created_MainTitleLabel_COPY),
             style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
             modifier = Modifier.fillMaxWidth()
         )
@@ -134,7 +134,7 @@ private fun RequestEduIdCreatedContent(
         }
 
         Text(
-            text = stringResource(R.string.request_id_created_description),
+            text = stringResource(R.string.CreateEduID_Created_MainText_COPY),
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth()
         )
@@ -167,7 +167,7 @@ private fun RequestEduIdFailedCreationContent() =
             .fillMaxSize()
     ) {
         Text(
-            text = stringResource(R.string.request_id_created_fail_title),
+            text = stringResource(R.string.CreateEduID_ErrorCreateFailed_Title_COPY),
             style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
             modifier = Modifier.fillMaxWidth()
         )
@@ -176,7 +176,7 @@ private fun RequestEduIdFailedCreationContent() =
             modifier = Modifier.height(16.dp)
         )
         Text(
-            text = stringResource(R.string.request_id_created_fail_description),
+            text = stringResource(R.string.CreateEduID_ErrorCreateFailed_Message_COPY),
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth()
         )

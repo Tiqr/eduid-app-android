@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
-
-    <string name="request_id_created_title">Je eduID is aangemaakt!</string>
-    <string name="request_id_created_description">Om de app veilig te gebruiken moet je een pincode kiezen en je telefoonnummer toevoegen, mocht je de pincode vergeten.</string>
-
-    <string name="request_id_created_fail_title">Je eduID aanmaken is niet gelukt!</string>
-    <string name="request_id_created_fail_description">Het account aanmaken is mislukt. Probeer het nogmaals.</string>
-
     <string name="first_time_title">Studeer je in Nederland?</string>
     <string name="first_time_subtitle">Voeg je instelling toe!</string>
     <string name="first_time_description01">Als je studeert in Nederland</string>

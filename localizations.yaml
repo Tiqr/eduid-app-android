@@ -3173,6 +3173,15 @@ SHARED:
         en: Continue in your browser to finish the connection of this app to your edulD account
         nl: Ga verder in je browser om de verbinding van deze app met jouw edulD account te voltooien
   CreateEduID:
+    ErrorCreateFailed:
+      Title:
+        COPY:
+          en: Could not create your eduID account!
+          nl: Je eduID aanmaken is niet gelukt!
+      Message:
+        COPY:
+          en: The account creation has failed. Please try again.
+          nl: Het account aanmaken is mislukt. Probeer het nogmaals.
     LandingPage:
       MainText:
         COPY:
