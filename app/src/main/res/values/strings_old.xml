@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
-    <string name="request_id_link_title">Check your email</string>
-    <string name="request_id_link_header_text">To sign in, click the link in the email we sent to </string>
-    <string name="request_id_link_open_email_client">Open email client</string>
-    <string name="request_id_link_spam_text">Can’t find it? Check your spam folder.</string>
-
     <string name="request_id_recovery_title">Add a recovery phone number</string>
     <string name="request_id_recovery_text_code">If you can\'t access eduID with the app or via email, you can use this to sign in to your eduID Account.</string>
     <string name="request_id_recovery_button">Verify</string>

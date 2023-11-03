@@ -709,4 +709,5 @@
   <string name="ResponseErrors_ExistinUserAndDeviceText_COPY">"Dit account is al gekoppeld aan een ander apparaat. Verwijder eerst jouw andere apparaat uit je account voordat je een nieuw apparaat registreert."</string>
   <string name="Deeplink_Processing_COPY">"Verzoek aan het bewerken..."</string>
   <string name="Biometrics_UnknownError_COPY">"Biometrie mislukt om onbekende reden."</string>
+  <string name="MagicLink_OpenEmailClient_COPY">"Open de email app"</string>
 </resources>

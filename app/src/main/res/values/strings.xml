@@ -709,4 +709,5 @@
   <string name="ResponseErrors_ExistinUserAndDeviceText_COPY">"This account is already associated with a different device. Remove your other device first from your account before registering a new device."</string>
   <string name="Deeplink_Processing_COPY">"Checking request..."</string>
   <string name="Biometrics_UnknownError_COPY">"Biometrics failed for unknown reason."</string>
+  <string name="MagicLink_OpenEmailClient_COPY">"Open email client"</string>
 </resources>

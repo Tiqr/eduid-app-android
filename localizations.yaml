@@ -9,6 +9,11 @@ ANDROID:
       COPY:
         en: "Biometrics failed for unknown reason."
         nl: "Biometrie mislukt om onbekende reden."
+  MagicLink:
+    OpenEmailClient:
+      COPY:
+        en: "Open email client"
+        nl: "Open de email app"
 SHARED:
   Sidebar:
     Home:
