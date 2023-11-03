@@ -1,5 +1,6 @@
 package nl.eduid.ui
 
+import android.text.Html
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.*
@@ -31,38 +32,15 @@ fun CheckToSAndPrivacyPolicy(
         Checkbox(
             checked = hasAcceptedToC,
             onCheckedChange = onAcceptChange,
-            modifier = Modifier.height(16.dp).width(16.dp)
+            modifier = Modifier
+                .height(16.dp)
+                .width(16.dp)
         )
-        val uriHandler = LocalUriHandler.current
-        val privacyPolicy = stringResource(R.string.tc_understand)
-        val fullText = stringResource(R.string.tc_full_text)
-        val annotatedString = with(AnnotatedString.Builder(stringResource(R.string.tc_agree))) {
-            append(" ")
-            pushStyle(SpanStyle(color = Color.Blue, textDecoration = TextDecoration.Underline))
-            append(stringResource(R.string.tc_terms))
-            pop()
-            append(" ")
-            append(privacyPolicy)
-            append(" ")
-            pushStyle(SpanStyle(color = Color.Blue, textDecoration = TextDecoration.Underline))
-            append(stringResource(R.string.tc_privacy_policy))
-            toAnnotatedString()
-        }
-
-        val termsLink = stringResource(R.string.edu_id_terms_link)
-        val privacyPolicyLink = stringResource(R.string.edu_id_privacy_policy_link)
-        ClickableText(
-            text = annotatedString,
-            style = MaterialTheme.typography.bodySmall,
-            modifier = Modifier.wrapContentWidth().padding(start = 12.dp),
-            onClick = {
-                val privacyPosition = fullText.indexOf(privacyPolicy)
-                if (it < privacyPosition) {
-                    uriHandler.openUri(termsLink)
-                } else {
-                    uriHandler.openUri(privacyPolicyLink)
-                }
-            }
+        HtmlText(
+            html = stringResource(id = R.string.LinkFromInstitution_AgreeWithTerms_COPY),
+            modifier = Modifier
+                .wrapContentWidth()
+                .padding(start = 12.dp)
         )
     }
 }

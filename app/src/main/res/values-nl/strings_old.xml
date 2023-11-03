@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
 
-    <string name="tc_full_text">Ik ga akkoord met de voorwaarden van deze dienst. Ik begrijp de privacy policy.</string>
-    <string name="tc_understand">" Ik begrijp ook "</string>
-    <string name="tc_agree">"Ik stem in met "</string>
-    <string name="tc_terms">de voorwaarden van deze dienst.</string>
-    <string name="tc_privacy_policy">de privacy policy</string>
-    <string name="edu_id_terms_link">https://eduid.nl/terms-of-use/</string>
-    <string name="edu_id_privacy_policy_link">https://eduid.nl/privacy_policy/</string>
-
     <string name="request_id_link_title">Controleer je email</string>
     <string name="request_id_link_header_text">Om in te loggen, klik op de link in de email die verstuurd is aan </string>
     <string name="request_id_link_open_email_client">Open de email app</string>
