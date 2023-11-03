@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
-
-    <string name="start_button">Oke, begrepen!</string>
-    <string name="start_title">Welkom! Gebruik deze app om</string>
-    <string name="start_item_one_bold">Snel inloggen </string>
-    <string name="start_item_one_regular">op onderwijs diensten</string>
-    <string name="start_item_two_bold">Bekijk</string>
-    <string name="start_item_two_regular">welke gegevens van jouw eduID worden gedeeld met deze diensten</string>
-    <string name="start_item_three_bold">Valideer jouw gegevens</string>
-    <string name="start_item_three_regular">om beveligde diensten de benaderen.</string>
-
     <string name="recovery_browser_title">Ga terug naar jouw webbrowser</string>
     <string name="recovery_browser_explain">Ga terug naar je browser om de koppeling van deze app aan je eduID-account te voltooien.</string>
 

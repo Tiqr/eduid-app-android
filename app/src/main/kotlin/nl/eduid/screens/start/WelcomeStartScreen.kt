@@ -67,7 +67,7 @@ private fun WelcomeStartContent(
             modifier = Modifier.fillMaxSize()
         ) {
             Text(
-                text = stringResource(R.string.start_title),
+                text = stringResource(R.string.WelcomeToApp_Title_COPY),
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
@@ -94,10 +94,10 @@ private fun WelcomeStartContent(
                 Text(
                     style = MaterialTheme.typography.bodyLarge, text = buildAnnotatedString {
                         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                            append(stringResource(R.string.start_item_one_bold))
+                            append(stringResource(R.string.WelcomeToApp_Title_COPY))
                         }
                         append(" ")
-                        append(stringResource(R.string.start_item_one_regular))
+                        append(stringResource(R.string.WelcomeToApp_Quickly_Text_COPY))
                     }, modifier = Modifier.padding(start = 8.dp)
                 )
             }
@@ -117,10 +117,10 @@ private fun WelcomeStartContent(
                 Text(
                     style = MaterialTheme.typography.bodyLarge, text = buildAnnotatedString {
                         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                            append(stringResource(R.string.start_item_two_bold))
+                            append(stringResource(R.string.WelcomeToApp_ViewWhat_Highlight_COPY))
                         }
                         append(" ")
-                        append(stringResource(R.string.start_item_two_regular))
+                        append(stringResource(R.string.WelcomeToApp_ViewWhat_Text_COPY))
                     }, modifier = Modifier.padding(start = 8.dp)
                 )
             }
@@ -140,10 +140,10 @@ private fun WelcomeStartContent(
                 Text(
                     style = MaterialTheme.typography.bodyLarge, text = buildAnnotatedString {
                         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                            append(stringResource(R.string.start_item_three_bold))
+                            append(stringResource(R.string.WelcomeToApp_VerifyYour_Highlight_COPY))
                         }
                         append(" ")
-                        append(stringResource(R.string.start_item_three_regular))
+                        append(stringResource(R.string.WelcomeToApp_VerifyYour_Text_COPY))
                     }, modifier = Modifier.padding(start = 8.dp)
                 )
             }
@@ -160,7 +160,7 @@ private fun WelcomeStartContent(
         }
 
         PrimaryButton(
-            text = stringResource(R.string.start_button),
+            text = stringResource(R.string.WelcomeToApp_GotItButton_COPY),
             enabled = !uiState.isLoading,
             onClick = onNext,
             modifier = Modifier

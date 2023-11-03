@@ -68,7 +68,7 @@ fun ContinueInBrowserScreen(
         }
 
         PrimaryButton(
-            text = stringResource(R.string.start_button),
+            text = stringResource(R.string.WelcomeToApp_GotItButton_COPY),
             onClick = goHome,
             modifier = Modifier
                 .fillMaxWidth()
