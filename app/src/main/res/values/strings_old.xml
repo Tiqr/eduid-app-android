@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+
+
+
+
+    <!--Compose strings-->
+    <string name="enroll_screen_sign_in_button">Sign in</string>
+    <string name="enroll_screen_scan_button">Scan a QR code</string>
+    <string name="enroll_screen_request_id_button">I don\'t have an eduID</string>
+
+    <string name="request_id_screen_title">Don’t have an eduID yet?</string>
+    <string name="request_id_screen_header_text">eduID is a central account for users associated with Dutch education and research. It is yours and exists independent of an educational institution.</string>
+    <string name="request_id_screen_bullet_point_1">Use it to login to several services connected to SURFconext.</string>
+    <string name="request_id_screen_bullet_point_2">Users without an institution account can also request an eduID.</string>
+    <string name="request_id_screen_bullet_point_3">eduID is a lifelong account. It stays valid after you graduate.</string>
+    <string name="request_id_screen_create_id_button">Create a new eduID</string>
+
+    <string name="request_id_details_screen_title">Request your eduID</string>
+    <string name="request_id_details_screen_email_input_title">Your email address</string>
+    <string name="request_id_details_screen_email_input_hint">e.g. timbernerslee@gmail.com</string>
+    <string name="request_id_details_screen_first_name_input_title">First name</string>
+    <string name="request_id_details_screen_first_name_input_hint">e.g. Tim</string>
+    <string name="request_id_details_screen_last_name_input_title">Last name</string>
+    <string name="request_id_details_screen_last_name_input_hint">e.g. Berners-Lee</string>
+    <string name="request_id_details_screen_request_id_button">Request your eduID</string>
+
+    <string name="request_id_created_title">Your eduID has been created!</string>
+    <string name="request_id_created_description">To safely use this app, we need you to set a pincode and provide a phone number in case you might forget it.</string>
+
+    <string name="request_id_created_fail_title">Could not create your eduID account!</string>
+    <string name="request_id_created_fail_description">The account creation has failed. Please try again.</string>
+
+    <string name="first_time_title">Are you studying in NL?</string>
+    <string name="first_time_subtitle">Connect your institution!</string>
+    <string name="first_time_description01">When you study in the Netherlands</string>
+    <string name="first_time_description02">and you want to use eduID to logon to an educational service, we need to be sure it\'s you and not someone impersonating you.</string>
+    <string name="first_time_description03">You must therefore add the following information to your eduID:</string>
+    <string name="first_time_required">&#x2022; Validation of your full name by a third party\n&#x2022; Proof of being a student\n&#x2022; Your current institution</string>
+    <string name="first_time_footer01">Add this information</string>
+    <string name="first_time_footer02">by connecting your school/institution via SURFconext.</string>
+    <string name="first_time_button_connect">Connect your school/institution</string>
+    <string name="first_time_button_skip">Skip this</string>
+
+    <string name="account_linked_title">Your school/uni</string>
+    <string name="account_linked_subtitle">was contacted successfully</string>
+    <string name="account_linked_fail_subtitle">could not be contacted</string>
+    <string name="account_linked_description">The following information has been added to your eduID and can now be shared.</string>
+    <string name="account_linked_fail1_description">Reason: Your session expired.</string>
+    <string name="account_linked_fail2_description">Reason: The account is already linked.</string>
+
+    <string name="authorize_title">Request to log on</string>
+    <string name="authorize_subtitle01">Do you want to login to</string>
+    <string name="authorize_subtitle02">%s?</string>
+    <string name="authorize_login_button">Login</string>
+    <string name="authorize_confirmed_subtitle">You are logged on</string>
+
+    <string name="deeplink_processing">Checking request…</string>
+
+    <string name="button_back">Back</string>
+    <string name="button_continue">Continue</string>
+    <string name="button_login">Log in</string>
+    <string name="button_torch">Turn on flashlight</string>
+    <string name="confirmpin_mismatch">PIN doesn\'t match.</string>
+    <string name="button_scan">Scan</string>
+    <string name="biometric_failed_unknown">Biometrics failed for unknown reason.</string>
+    <string name="login_access_description">to access the eduID app</string>
+
+    <string name="tc_full_text">I agree with the terms of service. I also understand the privacy policy.</string>
+    <string name="tc_understand">"I also understand"</string>
+    <string name="tc_agree">"I agree with"</string>
+    <string name="tc_terms">the terms of service.</string>
+    <string name="tc_privacy_policy">the privacy policy</string>
+    <string name="edu_id_terms_link">https://eduid.nl/terms-of-use/</string>
+    <string name="edu_id_privacy_policy_link">https://eduid.nl/privacy_policy/</string>
+
+    <string name="request_id_link_title">Check your email</string>
+    <string name="request_id_link_header_text">To sign in, click the link in the email we sent to </string>
+    <string name="request_id_link_open_email_client">Open email client</string>
+    <string name="request_id_link_spam_text">Can’t find it? Check your spam folder.</string>
+
+    <string name="request_id_recovery_title">Add a recovery phone number</string>
+    <string name="request_id_recovery_text_code">If you can\'t access eduID with the app or via email, you can use this to sign in to your eduID Account.</string>
+    <string name="request_id_recovery_button">Verify</string>
+    <string name="request_id_recovery_input_hint">We will text you a code to verify your number.</string>
+
+    <string name="confirm_sms_code_title">Check your messages!</string>
+    <string name="confirm_sms_code_subtitle">Enter the six-digit code we sent to your phone (%s) to continue</string>
+    <string name="confirm_sms_code_button">Verify this phonenumber</string>
+
+    <string name="start_button">OK, got it!</string>
+    <string name="start_title">Welcome! Use this app to</string>
+    <string name="start_item_one_bold">Quickly login </string>
+    <string name="start_item_one_regular">to educational services</string>
+    <string name="start_item_two_bold">View</string>
+    <string name="start_item_two_regular">what details of your eduID get shared with those services</string>
+    <string name="start_item_three_bold">Verify your identity</string>
+    <string name="start_item_three_regular">so you can access more secure services.</string>
+
+    <string name="recovery_browser_title">Return to your webbrowser</string>
+    <string name="recovery_browser_explain">Continue in your browser to finish the connection of this app to your eduID-account.</string>
+
+    <string name="homepage_title_one">Your eduID app</string>
+    <string name="homepage_title_two">is ready for use</string>
+
+    <string name="personal_info_title">Your personal info</string>
+    <string name="personal_info_subtitle">When you use eduID to login to other websites, some of your personal information will be shared. Some websites require that your personal information is validated by a third party.</string>
+    <string name="personal_info_info_header">Shareable information</string>
+
+    <string name="data_info_title">Data &amp; Activity</string>
+    <string name="data_info_subtitle">Each service you accessed through eduID receives certain personal data (attributes) from your eduID account. E.g. your name &amp; email address or a pseudonym which the service can use to uniquely identify you.</string>
+    <string name="data_info_delete_disclaimer">Each service you accessed through eduID receives certain personal data (attributes) from your eduID account. E.g. your name &amp; email address or a pseudonym which the service can use to uniquely identify you.</string>
+    <string name="data_info_on_date">on %s</string>
+
+    <string name="security_title">Security settings</string>
+    <string name="security_subtitle">We provide different methods to sign in to your eduID account.</string>
+
+    <string name="two_fa_key_title">2FA key(s)</string>
+    <string name="two_fa_key_list_title">Your key(s)</string>
+    <string name="two_fa_key_subtitle">Keys to securely sign in without passwords or accessing your email.</string>
+    <string name="two_fa_key_empty">You have no local keys</string>
+    <string name="two_fa_use_biometric">Use Biometrics</string>
+    <string name="two_fa_delete">Delete key</string>
+    <string name="two_fa_account">Account</string>
+    <string name="two_fa_unieque_keyid">Unique KeyID</string>
+
+    <string name="add_password_title">Add password</string>
+    <string name="change_password_title">Change or delete password</string>
+    <string name="add_password_subtitle">We will send you an email instantly with a link to add a password.</string>
+    <string name="change_password_subtitle">We will send you an email instantly with a link to change or delete your current password.</string>
+    <string name="reset_password_add_pass_email_sent">To add a password, click on the link in the email we sent to </string>
+    <string name="reset_password_change_pass_email_sent">To change or remove your password, click on the link in the email we sent to </string>
+    <string name="reset_password_cancel_button">Cancel</string>
+    <string name="reset_password_confirm_button">Send email</string>
+
+    <string name="reset_password_change_title">Change password</string>
+    <string name="reset_password_add_title">Add password</string>
+    <string name="reset_password_password_label">Your password</string>
+    <string name="reset_password_repeat_password_label">Repeat password</string>
+    <string name="reset_password_confirm_subtitle">Make sure your new password is at least 15 characters OR at least 8 characters including a number and a uppercase letter.</string>
+    <string name="reset_password_confirm_second_title">Want to delete your password entirely?</string>
+    <string name="reset_password_confirm_second_subtitle">When you prefer other methods than a password, you can delete your current one.</string>
+    <string name="button_reset_password">Reset password</string>
+    <string name="button_add_password">Reset password</string>
+    <string name="button_delete_password">Delete my password</string>
+
+    <string name="edit_email_title">Email</string>
+    <string name="edit_email_subtitle">Please enter your new email address. A verification mail will be sent to this address.</string>
+    <string name="edit_email_cancel_button">Cancel</string>
+    <string name="edit_email_confirm_button">Save</string>
+    <string name="edit_email_new_email_title">Your new email address</string>
+
+    <string name="edit_name_title">All details of</string>
+    <string name="edit_name_form_title">Edit</string>
+    <string name="edit_name_subtitle">Full name</string>
+    <string name="edit_name_selfasserted">Self asserted</string>
+    <string name="edit_name_verified">Verified</string>
+    <string name="edit_name_add_another_source">Another source...</string>
+    <string name="button_update">Update</string>
+    <string name="edit_name_another_source">Another source…</string>
+    <string name="edit_name_add_link_not_available">Not available</string>
+    <string name="edit_name_add_link_via">Proceed to add this via your school/uni</string>
+
+    <string name="scan_title" tools:ignore="ExtraTranslation">Scan the QR-code</string>
+    <string name="scan_registration_explaination" tools:ignore="ExtraTranslation">Don\'t see a QR code?</string>
+    <string name="scan_registration_explaination1a" tools:ignore="ExtraTranslation">1. Go to </string>
+    <string name="scan_registration_explaination1b" tools:ignore="ExtraTranslation">eduid.nl\/security</string>
+    <string name="scan_registration_explaination1c" tools:ignore="ExtraTranslation">on your desktop</string>
+    <string name="scan_registration_explaination2" tools:ignore="ExtraTranslation">2. Create your personal QR code</string>
+    <string name="scan_registration_explaination3" tools:ignore="ExtraTranslation">3. Scan it here.</string>
+    <string name="scan_permission_explanation" tools:ignore="ExtraTranslation">Please grant access to the camera.</string>
+
+    <string name="pinsetup_title" tools:ignore="ExtraTranslation">Select a PINcode</string>
+    <string name="pinsetup_description" tools:ignore="ExtraTranslation">To use the eduID app you need a PIN code.</string>
+    <string name="pinsetup_confirm_title" tools:ignore="ExtraTranslation">Repeat your PINcode</string>
+    <string name="pinsetup_confirm_description" tools:ignore="ExtraTranslation">Enter your PINcode again.</string>
+
+    <string name="oauth_title" tools:ignore="ExtraTranslation">Authorize app</string>
+    <string name="oauth_description" tools:ignore="ExtraTranslation">Allow the mobile application to access your data.</string>
+    <string name="oauth_processing" tools:ignore="ExtraTranslation">Processing…</string>
+
+    <string name="biometric_enable_title" tools:ignore="ExtraTranslation">Biometric approval</string>
+    <string name="biometric_enable_description" tools:ignore="ExtraTranslation">Do you want to use your biometrics to add an extra layer of security to your eduID?</string>
+    <string name="biometric_enable_allow" tools:ignore="ExtraTranslation">Set up biometric access</string>
+    <string name="biometric_enable_skip" tools:ignore="ExtraTranslation">Skip this</string>
+    <string name="app_not_authorized">Please Log in</string>
+    <string name="app_not_authorized_explanation">To retrieve the information you must be logged in.</string>
+    <string name="home_with_account_scan">Scan QR</string>
+    <string name="home_with_account_personal_info">Your Info</string>
+    <string name="home_with_account_security">Security</string>
+    <string name="home_with_account_activity">Activity</string>
+
+    <string name="manage_account_title">Your account</string>
+    <string name="manage_account_opendownload">Open</string>
+    <string name="manage_account_subtitle">Your account was created on</string>
+    <string name="manage_account_info_block">All of your personal data from your eduID is yours and can be either downloaded or deleted. This data also contains technical keys and references.</string>
+    <string name="manage_account_result_ok">Your data was downloaded in your downloads folder.</string>
+    <string name="manage_account_result_fail">Failed to download your data.</string>
+    <string name="manage_account_download_my_data">Download my data</string>
+    <string name="manage_account_delete_your_account">Delete your account</string>
+    <string name="button_manage_account_delete">Delete your account</string>
+    <string name="managa_account_your_full_name">Your full name</string>
+    <string name="manage_account_full_name_explain">Your full name as used on your profile</string>
+
+    <string name="delete_account_one_title">Delete your account</string>
+    <string name="delete_account_one_subtitle">Proceed with care, as you will lose the unique eduID number currently associated with your email address.</string>
+    <string name="delete_account_description">You can delete your eduID whenever you want.\n\nWhen you re-register for a new eduID with that same email address, you will receive a new eduID number. Some services use this unique number to identify you, so for those services you will be treated as a new user. Please note that deleting your eduID account does not mean all services you accessed with that eduID account will also have your data removed.</string>
+
+    <string name="delete_account_two_title">Delete your account for all eternity?</string>
+    <string name="delete_no_undo_warning">There is no way to undo this action</string>
+    <string name="delete_account_two_description">If you wish to proceed, please type in your full name for confirmation.</string>
+    <string name="infotab_remove_connection">Remove connection</string>
+    <string name="infotab_login_details">Login Details</string>
+    <string name="infotab_login_first">First Login</string>
+    <string name="infotab_login_unique_eduid">Unique eduid</string>
+    <string name="infotab_name">Name</string>
+    <string name="infotab_fullname">Full Name</string>
+    <string name="infotab_email">Email</string>
+    <string name="infotab_providedby">Provided by %s</string>
+    <string name="infotab_providedby_you">Provided by you</string>
+    <string name="infotab_at">At %s</string>
+    <string name="infotab_role_institution">Role &amp; institution</string>
+    <string name="personalinfo_manage_your_account">Manage your account</string>
+    <string name="personalinfo_add_role_institution">Add role &amp; institution</string>
+    <string name="personalinfo_add_via">Proceed to add this via SURFConext</string>
+    <string name="personalinfo_verified_by_on">Verified by %1$s on %2$s.</string>
+    <string name="personalinfo_institution">Institution</string>
+    <string name="personalinfo_affiliations">Affiliation(s)</string>
+    <string name="personalinfo_expires">Link expires</string>
+    <string name="infotab_delete_login_details">Delete login details *</string>
+
+    <string name="delete_two_key_title">Delete key</string>
+    <string name="delete_two_key_subtitle">There is no way to undo this action</string>
+    <string name="delete_two_key_description">Are you sure you want to delete your key?</string>
+
+    <string name="delete_service_confirm_title">Delete service</string>
+    <string name="delete_service_confirm_explanation">Are you sure you want to delete your unique pseudonymised eduID for %s and revoke access to your linked accounts? This service might not recognize you the next time you login and all your personal data within this service might be lost.</string>
+    <string name="button_confirm">Confirm</string>
+    <string name="security_sign_in_methods">Sign-in methods</string>
+    <string name="security_2fa_key">2FA key</string>
+    <string name="security_provided_by_eduid">Provided by %s</string>
+    <string name="security_send_a_magic_link_to">Send a magic link to</string>
+    <string name="security_add_a_password">Add a password</string>
+    <string name="security_change_password">Change your password</string>
+
+    <string name="preenroll_check_blocked_title">Already enrolled on a different device</string>
+    <string name="preenroll_check_blocked_explanation">This account already has a device setup for 2FA. Would you like to deactivate existing enrollment to enroll on this device?</string>
+    <string name="preenroll_button_deactivate">Deactivate</string>
+    <string name="preenroll_button_cancel">Cancel</string>
+
+    <string name="preenroll_check_completed_title">Already enrolled!</string>
+    <string name="preenroll_check_completed_explanation">Enrollment was already completed.</string>
+
+    <string name="preenroll_check_missing_title">Missing account details</string>
+    <string name="preenroll_check_missing_explanation">Could not retrieve the account details.</string>
+
+    <string name="preenroll_check_incompleted_title">Enrollment incomplete</string>
+    <string name="preenroll_check_incompleted_explanation">Enrollment is incomplete, either recovery was not complete or access was revoked</string>
+
+    <string name="err_title_load_fail">Cannot load data</string>
+    <string name="err_msg_data_history_fail">Could not load activity history.</string>
+    <string name="err_msg_personal_fail">Could not personal details.</string>
+    <string name="err_msg_unauthorized_request_fail">Cannot complete request, please sign in and grant access.</string>
+
+    <string name="err_title_delete_fail">Cannot delete</string>
+    <string name="err_msg_delete_fail">Could not delete account.</string>
+    <string name="err_msg_delete_name_missmatch">Typed name does not match known name.</string>
+
+    <string name="err_msg_request_fail">Request cannot be completed at this moment. Please retry later.</string>
+    <string name="err_title_link_account_fail">Could not retrieve URL for linking your current account.</string>
+
+    <string name="err_title_auth_unexpected_fail">Unexpected error</string>
+    <string name="err_msg_auth_init_fail">Failed to initialize AppData. Please retry.</string>
+    <string name="err_msg_auth_init_fail_arg">Failed to initialize AppData. Reason: %s</string>
+
+    <string name="err_title_auth_invalid">Authorization invalid</string>
+    <string name="err_msg_auth_invalid">Did not receive valid authentication.</string>
+    <string name="err_title_auth_failed">Authorization failed</string>
+    <string name="err_msg_auth_failed">No authorization state retained - reauthorization required.</string>
+    <string name="err_msg_auth_token_failed">Authorization token code exchange failed.</string>
+    <string name="err_msg_auth_code_failed_arg">Authorization code exchange failed: %s.</string>
+
+    <string name="err_title_generic_fail">Cannot complete request</string>
+    <string name="err_msg_generic_unexpected_with_arg">Unexpected error: %s, please retry.</string>
+
+    <string name="err_title_email_in_use">Email in use</string>
+    <string name="err_msg_email_in_use">There already is an account registered for the email %s.</string>
+    <string name="err_title_email_domain_forbidden">Email domain is forbidden</string>
+    <string name="err_msg_email_domain_forbidden">The email domain used in %s is not allowed.</string>
+    <string name="err_msg_create_unknown_fail">Could not create eduid account for email %s.</string>
+    <string name="err_msg_change_email_fail">Could not confirm changing to your new email address.</string>
+
+    <string name="err_title_invalid_challenge">Enrollment challenge is invalid</string>
+    <string name="err_msg_invalid_challenge">Cannot parse enrollment challenge, challenge is invalid.</string>
+    <string name="err_msg_request_sms_validation_fail">Could not request SMS code, please retry.</string>
+    <string name="err_msg_confirm_sms_validation_fail">SMS code not confirmed, please retry.</string>
+    <string name="err_msg_cannot_request_reset_pass">Could not request reset password link.</string>
+
+    <string name="err_title_cannot_update_pass">Cannot update password</string>
+    <string name="err_msg_pass_is_invalid">Chosen password is invalid.</string>
+    <string name="err_msg_pass_do_not_match">Passwords do not match</string>
+    <string name="err_msg_pass_invalid_hash">Invalid password hash, please resend email link.</string>
+    <string name="err_msg_pass_missing_hash">Missing password hash, please resend email link.</string>
+    <string name="err_msg_delete_key_lost">Cannot find key for deletion.</string>
+    <string name="err_msg_change_key_lost">The key you want to change cannot be found.</string>
+
+    <string name="err_title_deactivate_request_fail">Failed to request deactivation code</string>
+    <string name="err_msg_deactivate_request_fail">Could not request deactivation code for known phone number: %s.</string>
+
+    <string name="err_title_enroll_fail">Invalid enroll request</string>
+    <string name="err_msg_enroll_parse_fail">Cannot parse enroll challenge.</string>
+</resources>

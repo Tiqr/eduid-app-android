@@ -170,7 +170,7 @@ fun HomePageNoAccountContent(
         )
 
         Text(
-            text = stringResource(R.string.enroll_screen_title),
+            text = stringResource(R.string.Splash_Title_COPY),
             style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
             modifier = Modifier
                 .fillMaxWidth()

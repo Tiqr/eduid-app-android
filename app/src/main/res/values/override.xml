@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Strings below override strings from core module that are app-specific-->
+    <string name="start_welcome"><![CDATA[<b>With the eduID app you can log in safely and securely to various web services.</b><br/><br/>Go to <a href=\"https://mijn.eduid.nl\">eduid.nl</a> to activate your eduID app<br/> <br/>During the activation process you will need to scan a QR code. Press <b>Scan</b> when asked.]]></string>
+    <string name="start_instructions"><![CDATA[<b>Use eduID to log in</b> <br/> <br/>1. Open the push message or press <b>Scan</b> and scan the QR-code on the website.<br/><br/>2. Confirm with your biometric or enter your PIN<br/><br/>3. You are logged in!]]></string>
+    <string name="start_blocked"><![CDATA[<b>Now what?</b><br/>
+    <br/>
+    Remove your eduID app registration by going to your account overview at the top right. Then go to <a href=\"https://mijn.eduid.nl\">mijn.eduid.nl</a> and delete your app registration. You will need your previously chosen recovery method for this. After that you can register the eduID app again.]]></string>
+    <string name="scan_permission_required_message">For scanning a QR code, the eduID app needs access to the camera.</string>
+    <string name="enroll_pin_title">Choose a unique PIN for eduID</string>
+    <string name="account_id">eduID account id</string>
+    <string name="auth_pin_title">Enter your eduID PIN</string>
+    <string name="notification_channel_description">Notifications for messages from eduID</string>
+
+    <!-- The eduID server does not block accounts, but uses an incremental backoff-time.
+         The tiqr-protocol has no way of communicating this yet.
+         For now, we just replace the message shown to the user -->
+    <string name="error_auth_title_blocked">Authentication failed</string>
+    <string name="error_auth_blocked">Try again in a moment.</string>
+</resources>
