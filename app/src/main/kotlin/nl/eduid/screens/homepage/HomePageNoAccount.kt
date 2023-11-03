@@ -170,7 +170,7 @@ fun HomePageNoAccountContent(
         )
 
         Text(
-            text = stringResource(R.string.Splash_Title_COPY),
+            text = stringResource(R.string.CreateEduID_LandingPage_MainText_COPY),
             style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
             modifier = Modifier
                 .fillMaxWidth()
@@ -211,7 +211,7 @@ fun HomePageNoAccountContent(
             }
 
             PrimaryButton(
-                text = stringResource(R.string.enroll_screen_sign_in_button),
+                text = stringResource(R.string.CreateEduID_LandingPage_SignInButton_COPY),
                 enabled = !waitToComplete,
                 onClick = {
                     if (isAuthorizedForDataAccess) {
@@ -230,7 +230,7 @@ fun HomePageNoAccountContent(
             Spacer(Modifier.height(24.dp))
 
             PrimaryButton(
-                text = stringResource(R.string.scan_button),
+                text = stringResource(R.string.CreateEduID_LandingPage_ScanQrButton_COPY),
                 enabled = !waitToComplete,
                 onClick = onGoToScan,
                 modifier = Modifier
@@ -251,7 +251,7 @@ fun HomePageNoAccountContent(
             shape = RoundedCornerShape(CornerSize(6.dp)),
         ) {
             Text(
-                text = stringResource(R.string.enroll_screen_request_id_button),
+                text = stringResource(R.string.CreateEduID_LandingPage_NoEduIdButton_COPY),
                 style = MaterialTheme.typography.bodyLarge.copy(
                     color = ButtonGreen, fontWeight = FontWeight.SemiBold
                 ),

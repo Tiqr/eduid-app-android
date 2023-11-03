@@ -1,9 +1,3 @@
-ANDROID:
-  Splash:
-    Title:
-      COPY:
-        en: Personal account for Education and Research
-        nl: Persoonlijke login voor Onderwijs en Onderzoek
 SHARED:
   Sidebar:
     Home:
@@ -864,7 +858,7 @@ SHARED:
             This account already has a device setup for 2FA
             Would you like to deactivate existing enrollment to enroll on this device?
           nl: |
-            Dit account is al aan een toestel gekoppeld voor 2FA. 
+            Dit account is al aan een toestel gekoppeld voor 2FA.
             Wil je 2FA op het bestaande toestel deactiveren en hier toevoegen?
   PasswordResetLink:
     Title:
@@ -3182,12 +3176,8 @@ SHARED:
     LandingPage:
       MainText:
         COPY:
-          en: |
-            Personal account for
-            Education and Research
-          nl: |
-            Persoonlijke login voor
-            Onderwijs en Onderzoek
+          en: Personal account for Education and Research
+          nl: Persoonlijke login voor Onderwijs en Onderzoek
       SignInButton:
         COPY:
           en: Sign in
@@ -3199,7 +3189,7 @@ SHARED:
       NoEduIdButton:
         COPY:
           en: I don't have an eduID
-          nl: Ik heb geen eduID
+          nl: Ik heb nog geen eduID
     FirstTimeDialog:
       ConnectButtonTitle:
         COPY:
@@ -3211,7 +3201,7 @@ SHARED:
             Are you studying in NL?
             Connect your institution!
           nl: >-
-            Studeer je in NL? 
+            Studeer je in NL?
             Sluit dan je instelling aan!
       MainTextTitleBoldPart:
         COPY:
@@ -3272,13 +3262,18 @@ SHARED:
             • eduID is a lifelong account. It stays valid after you graduate.
           nl: |
             eduID is een centraal account voor gebruikers
-             verbonden aan het Nederlandse onderwijs en onderzoek. 
+             verbonden aan het Nederlandse onderwijs en onderzoek.
              Het is van jou en bestaat onafhankelijk van een onderwijsinstelling.
             
              • Hiermee log je in op verschillende diensten die zijn aangesloten op SURFconext.
              • Gebruikers zonder instellingsaccount kunnen ook een eduID aanvragen.
              • eduID is een levenslang account. Het blijft geldig nadat je bent afgestudeerd.
       CreateEduidButton:
+        COPY:
+          en: Create a new eduID
+          nl: Maak een nieuw eduID aan
+    Create:
+      MainTitleLabel:
         COPY:
           en: Create a new eduID
           nl: Maak een nieuw eduID aan
@@ -3322,7 +3317,7 @@ SHARED:
             
             We will text you a code to verify your number.
           nl: |
-            Laten we een hersteltelefoonnummer toevoegen. Als je met de app of via e-mail geen toegang hebt tot eduID, kun je hiermee inloggen op je eduID Account. 
+            Laten we een hersteltelefoonnummer toevoegen. Als je met de app of via e-mail geen toegang hebt tot eduID, kun je hiermee inloggen op je eduID Account.
             
             We sturen je een code om je nummer te verifiëren.
       BoldRange:
@@ -3432,4 +3427,3 @@ SHARED:
       COPY:
         en: This account is already associated with a different device. Remove your other device first from your account before registering a new device.
         nl: Dit account is al gekoppeld aan een ander apparaat. Verwijder eerst jouw andere apparaat uit je account voordat je een nieuw apparaat registreert.
-

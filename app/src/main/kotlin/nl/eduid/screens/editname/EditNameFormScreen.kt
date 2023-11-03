@@ -176,8 +176,8 @@ fun EditNameFormContent(
             isError = !isGivenNameValid,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             onValueChange = onGivenNameChange,
-            label = { Text(stringResource(R.string.request_id_details_screen_first_name_input_title)) },
-            placeholder = { Text(stringResource(R.string.request_id_details_screen_first_name_input_hint)) },
+            label = { Text(stringResource(R.string.Login_GivenName_COPY)) },
+            placeholder = { Text(stringResource(R.string.Login_GivenNamePlaceholder_COPY)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .focusRequester(focusRequester)
@@ -189,8 +189,8 @@ fun EditNameFormContent(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
             onValueChange = onFamilyNameChange,
-            label = { Text(stringResource(R.string.request_id_details_screen_last_name_input_title)) },
-            placeholder = { Text(stringResource(R.string.request_id_details_screen_last_name_input_hint)) },
+            label = { Text(stringResource(R.string.Login_FamilyName_COPY)) },
+            placeholder = { Text(stringResource(R.string.Login_FamilyNamePlaceholder_COPY)) },
             modifier = Modifier.fillMaxWidth()
         )
         LaunchedEffect(focusRequester) {

@@ -1,30 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
 
-
-
-
-    <!--Compose strings-->
-    <string name="enroll_screen_sign_in_button">Sign in</string>
-    <string name="enroll_screen_scan_button">Scan a QR code</string>
-    <string name="enroll_screen_request_id_button">I don\'t have an eduID</string>
-
-    <string name="request_id_screen_title">Don’t have an eduID yet?</string>
-    <string name="request_id_screen_header_text">eduID is a central account for users associated with Dutch education and research. It is yours and exists independent of an educational institution.</string>
-    <string name="request_id_screen_bullet_point_1">Use it to login to several services connected to SURFconext.</string>
-    <string name="request_id_screen_bullet_point_2">Users without an institution account can also request an eduID.</string>
-    <string name="request_id_screen_bullet_point_3">eduID is a lifelong account. It stays valid after you graduate.</string>
-    <string name="request_id_screen_create_id_button">Create a new eduID</string>
-
-    <string name="request_id_details_screen_title">Request your eduID</string>
-    <string name="request_id_details_screen_email_input_title">Your email address</string>
-    <string name="request_id_details_screen_email_input_hint">e.g. timbernerslee@gmail.com</string>
-    <string name="request_id_details_screen_first_name_input_title">First name</string>
-    <string name="request_id_details_screen_first_name_input_hint">e.g. Tim</string>
-    <string name="request_id_details_screen_last_name_input_title">Last name</string>
-    <string name="request_id_details_screen_last_name_input_hint">e.g. Berners-Lee</string>
-    <string name="request_id_details_screen_request_id_button">Request your eduID</string>
-
     <string name="request_id_created_title">Your eduID has been created!</string>
     <string name="request_id_created_description">To safely use this app, we need you to set a pincode and provide a phone number in case you might forget it.</string>
 

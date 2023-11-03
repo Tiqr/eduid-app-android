@@ -145,7 +145,7 @@ fun EditEmailScreenContent(
             isError = !uiState.isEmailValid,
             onValueChange = { onEmailTextChange(it) },
             label = { Text(stringResource(R.string.edit_email_new_email_title)) },
-            placeholder = { Text(stringResource(R.string.request_id_details_screen_email_input_hint)) },
+            placeholder = { Text(stringResource(R.string.CreateEduID_EnterPersonalInfo_EmailFieldPlaceHolder_COPY)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .focusRequester(focusRequester)

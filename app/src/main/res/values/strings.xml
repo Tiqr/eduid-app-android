@@ -651,7 +651,7 @@
   <string name="WelcomeToApp_GotItButton_COPY">"Ok, got it!"</string>
   <string name="WelcomeToApp_ReturnBrowserTitle_COPY">"Return to your web browser"</string>
   <string name="WelcomeToApp_ReturnBrowserText_COPY">"Continue in your browser to finish the connection of this app to your edulD account"</string>
-  <string name="CreateEduID_LandingPage_MainText_COPY">"Personal account for\nEducation and Research\n"</string>
+  <string name="CreateEduID_LandingPage_MainText_COPY">"Personal account for Education and Research"</string>
   <string name="CreateEduID_LandingPage_SignInButton_COPY">"Sign in"</string>
   <string name="CreateEduID_LandingPage_ScanQrButton_COPY">"Scan"</string>
   <string name="CreateEduID_LandingPage_NoEduIdButton_COPY">"I don't have an eduID"</string>
@@ -667,6 +667,7 @@
   <string name="CreateEduID_Explanation_MainTitleLabel_COPY">"Don't have an eduID yet?"</string>
   <string name="CreateEduID_Explanation_MainExplanationText_COPY">"eduID is a central account for users\nassociated with Dutch education and research. It is yours and exists independent\nof an educational institution.\n\n• Use it to login to several services connected to SURFconext.\n• Users without an institution account can also request an eduID.\n• eduID is a lifelong account. It stays valid after you graduate.\n"</string>
   <string name="CreateEduID_Explanation_CreateEduidButton_COPY">"Create a new eduID"</string>
+  <string name="CreateEduID_Create_MainTitleLabel_COPY">"Create a new eduID"</string>
   <string name="CreateEduID_Created_MainTitleLabel_COPY">"Your eduID has been created"</string>
   <string name="CreateEduID_Created_MainText_COPY">"To safely use this app, we need you to set a pincode and provide a phonenumber in case you might forget it"</string>
   <string name="CreateEduID_EnterPersonalInfo_EmailFieldTitle_COPY">"Your email address"</string>
@@ -700,5 +701,4 @@
   <string name="ResponseErrors_UnknownErrorText_COPY">"An unknown error occured with the following status code"</string>
   <string name="ResponseErrors_ExistinUserAndDeviceTitle_COPY">"Already associated"</string>
   <string name="ResponseErrors_ExistinUserAndDeviceText_COPY">"This account is already associated with a different device. Remove your other device first from your account before registering a new device."</string>
-  <string name="Splash_Title_COPY">"Personal account for Education and Research"</string>
 </resources>

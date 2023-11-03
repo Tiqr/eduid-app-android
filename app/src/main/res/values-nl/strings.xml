@@ -180,7 +180,7 @@
   <string name="Security_Tiqr_Sms_COPY">"SMS"</string>
   <string name="Security_Tiqr_Code_COPY">"Herstelcode"</string>
   <string name="Security_Tiqr_AlreadyEnrolledTitle_COPY">"Al toegevoegd aan een ander toestel"</string>
-  <string name="Security_Tiqr_AlreadyEnrolledText_COPY">"Dit account is al aan een toestel gekoppeld voor 2FA. \nWil je 2FA op het bestaande toestel deactiveren en hier toevoegen?\n"</string>
+  <string name="Security_Tiqr_AlreadyEnrolledText_COPY">"Dit account is al aan een toestel gekoppeld voor 2FA.\nWil je 2FA op het bestaande toestel deactiveren en hier toevoegen?\n"</string>
   <string name="PasswordResetLink_Title_AddPassword_COPY">"Voeg een wachtwoord toe"</string>
   <string name="PasswordResetLink_Title_ChangePassword_COPY">"Wachtwoord wijzigen of verwijderen"</string>
   <string name="PasswordResetLink_Description_AddPassword_COPY">"We sturen je een email om een wachtwoord in te stellen."</string>
@@ -651,12 +651,12 @@
   <string name="WelcomeToApp_GotItButton_COPY">"Ok, begrepen!"</string>
   <string name="WelcomeToApp_ReturnBrowserTitle_COPY">"Keer terug naar je webbrowser"</string>
   <string name="WelcomeToApp_ReturnBrowserText_COPY">"Ga verder in je browser om de verbinding van deze app met jouw edulD account te voltooien"</string>
-  <string name="CreateEduID_LandingPage_MainText_COPY">"Persoonlijke login voor\nOnderwijs en Onderzoek\n"</string>
+  <string name="CreateEduID_LandingPage_MainText_COPY">"Persoonlijke login voor Onderwijs en Onderzoek"</string>
   <string name="CreateEduID_LandingPage_SignInButton_COPY">"Inloggen"</string>
   <string name="CreateEduID_LandingPage_ScanQrButton_COPY">"Scan"</string>
-  <string name="CreateEduID_LandingPage_NoEduIdButton_COPY">"Ik heb geen eduID"</string>
+  <string name="CreateEduID_LandingPage_NoEduIdButton_COPY">"Ik heb nog geen eduID"</string>
   <string name="CreateEduID_FirstTimeDialog_ConnectButtonTitle_COPY">"Sluit je school/instelling aan"</string>
-  <string name="CreateEduID_FirstTimeDialog_MainTextTitle_COPY">"Studeer je in NL?  Sluit dan je instelling aan!"</string>
+  <string name="CreateEduID_FirstTimeDialog_MainTextTitle_COPY">"Studeer je in NL? Sluit dan je instelling aan!"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextTitleBoldPart_COPY">"Sluit dan je instelling aan!"</string>
   <string name="CreateEduID_FirstTimeDialog_MainText_COPY">"Wanneer je in Nederland studeert en je wilt met eduID inloggen bij een onderwijsdienst, moeten we er zeker van zijn dat jij het bent en niet iemand die zich voordoet als jij. Daarom moet je de volgende gegevens toevoegen aan jouw eduID\n• Validatie van je volledige naam door een derde partij • Bewijs dat je student bent • Je huidige instelling"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextFirstBoldPart_COPY">"Wanneer je in Nederland studeert"</string>
@@ -665,8 +665,9 @@
   <string name="CreateEduID_FirstTimeDialog_AddInformationBoldPart_COPY">"Voeg deze informatie toe"</string>
   <string name="CreateEduID_FirstTimeDialog_SkipButtonTitle_COPY">"Sla dit over"</string>
   <string name="CreateEduID_Explanation_MainTitleLabel_COPY">"Heb je nog geen eduID?"</string>
-  <string name="CreateEduID_Explanation_MainExplanationText_COPY">"eduID is een centraal account voor gebruikers\n verbonden aan het Nederlandse onderwijs en onderzoek. \n Het is van jou en bestaat onafhankelijk van een onderwijsinstelling.\n\n • Hiermee log je in op verschillende diensten die zijn aangesloten op SURFconext.\n • Gebruikers zonder instellingsaccount kunnen ook een eduID aanvragen.\n • eduID is een levenslang account. Het blijft geldig nadat je bent afgestudeerd.\n"</string>
+  <string name="CreateEduID_Explanation_MainExplanationText_COPY">"eduID is een centraal account voor gebruikers\n verbonden aan het Nederlandse onderwijs en onderzoek.\n Het is van jou en bestaat onafhankelijk van een onderwijsinstelling.\n\n • Hiermee log je in op verschillende diensten die zijn aangesloten op SURFconext.\n • Gebruikers zonder instellingsaccount kunnen ook een eduID aanvragen.\n • eduID is een levenslang account. Het blijft geldig nadat je bent afgestudeerd.\n"</string>
   <string name="CreateEduID_Explanation_CreateEduidButton_COPY">"Maak een nieuw eduID aan"</string>
+  <string name="CreateEduID_Create_MainTitleLabel_COPY">"Maak een nieuw eduID aan"</string>
   <string name="CreateEduID_Created_MainTitleLabel_COPY">"Je eduID is aangemaakt"</string>
   <string name="CreateEduID_Created_MainText_COPY">"Om deze app veilig te kunnen gebruiken, hebben we een pincode nodig en een telefoonnummer voor het geval je het vergeet"</string>
   <string name="CreateEduID_EnterPersonalInfo_EmailFieldTitle_COPY">"Je emailaddres"</string>
@@ -674,7 +675,7 @@
   <string name="CreateEduID_EnterPersonalInfo_Agreement_COPY">"Ik ga akkoord met de servicevoorwaarden. Ik begrijp ook het privacybeleid"</string>
   <string name="CreateEduID_EnterPhoneNumber_PhoneFieldTitle_COPY">"Vul je telefoonnummer in"</string>
   <string name="CreateEduID_EnterPhoneNumber_PhoneFieldPlaceholder_COPY">"0612345678"</string>
-  <string name="CreateEduID_EnterPhoneNumber_MainText_COPY">"Laten we een hersteltelefoonnummer toevoegen. Als je met de app of via e-mail geen toegang hebt tot eduID, kun je hiermee inloggen op je eduID Account. \n\nWe sturen je een code om je nummer te verifiëren.\n"</string>
+  <string name="CreateEduID_EnterPhoneNumber_MainText_COPY">"Laten we een hersteltelefoonnummer toevoegen. Als je met de app of via e-mail geen toegang hebt tot eduID, kun je hiermee inloggen op je eduID Account.\n\nWe sturen je een code om je nummer te verifiëren.\n"</string>
   <string name="CreateEduID_EnterPhoneNumber_BoldRange_COPY">"34"</string>
   <string name="CreateEduID_EnterPhoneNumber_VerifyPhoneNumber_COPY">"Bevestig dit telefoonnummer"</string>
   <string name="CreateEduID_AddInstitution_MainTitle_COPY">"Je school/uni werd met succes toegevoegd"</string>
@@ -700,5 +701,4 @@
   <string name="ResponseErrors_UnknownErrorText_COPY">"Er is een onbekende fout opgetreden met de volgende statuscode"</string>
   <string name="ResponseErrors_ExistinUserAndDeviceTitle_COPY">"Reeds geassocieerd"</string>
   <string name="ResponseErrors_ExistinUserAndDeviceText_COPY">"Dit account is al gekoppeld aan een ander apparaat. Verwijder eerst jouw andere apparaat uit je account voordat je een nieuw apparaat registreert."</string>
-  <string name="Splash_Title_COPY">"Persoonlijke login voor Onderwijs en Onderzoek"</string>
 </resources>

@@ -1,54 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
 
-    <!--    Strings below override strings from core module that are app-specific-->
-
-    <string name="scan_permission_required_message">Om een QR code te scannen, heeft eduID toegang nodig tot de camera.</string>
-
-    <!-- Start -->
-    <string name="start_welcome"><![CDATA[<b>Met de eduID app kun je veilig en vertrouwd inloggen bij verschillende webdiensten.</b><br/> <br/> Ga naar <a href=\"https://mijn.eduid.nl\">eduid.nl</a> om je eduID app te activeren<br/> <br/>Tijdens het activatieproces moet je een QR code scannen. Druk op <b>Scan</> als hierom gevraagd wordt.]]></string>
-
-    <string name="start_instructions"><![CDATA[<b>Gebruik eduID om in te loggen</b> <br/> <br/> 1. Open de eduID notificatie of druk op <b>Scan</b> en scan de QR-code op de website <br/> <br/> 2. Bevestig met je biometrie of vul je PIN in <br/> <br/> 3. Je bent ingelogd!]]></string>
-
-    <string name="start_blocked"><![CDATA[<b>Wat nu?</b><br/>
-    <br/>
-    Verwijder je eduID app registratie door naar je account overzicht rechtsboven te gaan. Ga vervolgens naar <a href=\"https://mijn.eduid.nl\">mijn.eduid.nl</a> en verwijder daar ook je
-    app registratie. Hiervoor heb je je eerder gekozen herstelmethode voor nodig. Daarna kun je de eduID app opnieuw registreren.]]></string>
-
-    <string name="enroll_pin_title">Kies een unieke PIN voor eduID</string>
-
-    <string name="account_id">eduID account id</string>
-
-    <string name="auth_pin_title">Voer je eduID PIN in</string>
-
-    <string name="notification_channel_description">Notificaties voor berichten van eduID</string>
-
-    <!-- De eduID server blokkeert geen accounts, maar gebruikt een incrementele backoff-tijd. Dit iz nog niet opgenomen in het protocoll.
-            Voor nu tonen we een aangepaste melding aan de gebruiker. -->
-    <string name="error_auth_title_blocked">Inloggen mislukt</string>
-    <string name="error_auth_blocked">Probeer het over een ogenblik opnieuw.</string>
-
-    <!--Compose strings-->
-    <string name="enroll_screen_sign_in_button">Log in</string>
-    <string name="enroll_screen_scan_button">Scan een QR code</string>
-    <string name="enroll_screen_request_id_button">Ik heb nog geen eduID</string>
-
-    <string name="request_id_screen_title">Heb je nog geen eduID?</string>
-    <string name="request_id_screen_header_text">eduID is een persoonlijke login voor gebruikers gerelateerd aan het Nederlandse onderwijs en onderzoek. Het is van jezelf, en bestaat onafhankelijk van een onderwijsinstelling.</string>
-    <string name="request_id_screen_bullet_point_1">Gebruik eduID om in te loggen op diensten gekoppeld aan SURFconext.</string>
-    <string name="request_id_screen_bullet_point_2">Gebruikers zonder login bij een instelling kunnen ook een eduID aanvragen.</string>
-    <string name="request_id_screen_bullet_point_3">eduID is een een levenslange login. Het blijft geldig na je afstuderen.</string>
-    <string name="request_id_screen_create_id_button">Maak een nieuw eduID</string>
-
-    <string name="request_id_details_screen_title">Vraag een eduID aan</string>
-    <string name="request_id_details_screen_email_input_title">Jouw emailadres</string>
-    <string name="request_id_details_screen_email_input_hint">bijv. timbernerslee@gmail.com</string>
-    <string name="request_id_details_screen_first_name_input_title">Voornaam</string>
-    <string name="request_id_details_screen_first_name_input_hint">bijv. Tim</string>
-    <string name="request_id_details_screen_last_name_input_title">Achternaam</string>
-    <string name="request_id_details_screen_last_name_input_hint">bijv. Berners-Lee</string>
-    <string name="request_id_details_screen_request_id_button">Vraag jouw eduID aan</string>
-
     <string name="request_id_created_title">Je eduID is aangemaakt!</string>
     <string name="request_id_created_description">Om de app veilig te gebruiken moet je een pincode kiezen en je telefoonnummer toevoegen, mocht je de pincode vergeten.</string>
 
