@@ -124,14 +124,14 @@ private fun ConfirmCodeContent(
             .fillMaxWidth()
     ) {
         Text(
-            text = stringResource(R.string.confirm_sms_code_title),
+            text = stringResource(R.string.PinAndBioMetrics_CheckMessages_COPY),
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(modifier = Modifier.height(32.dp))
         Text(
-            text = stringResource(R.string.confirm_sms_code_subtitle, phoneNumber),
+            text = stringResource(R.string.PinAndBioMetrics_EnterSixDigitCode_COPY, phoneNumber),
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
@@ -167,7 +167,7 @@ private fun ConfirmCodeContent(
 //        }
     }
     PrimaryButton(
-        text = stringResource(R.string.confirm_sms_code_button),
+        text = stringResource(R.string.PhoneVerification_Verify_COPY),
         enabled = uiState.input.isNotEmpty(),
         onClick = onClick,
         modifier = Modifier

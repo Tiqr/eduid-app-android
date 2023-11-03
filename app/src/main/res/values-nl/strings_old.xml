@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
-    <string name="confirm_sms_code_title">Controleer je berichten!</string>
-    <string name="confirm_sms_code_subtitle">Voer het 6 cijferige nummer in dat verstuurd is aan (%s) om door te gaan</string>
-    <string name="confirm_sms_code_button">Controleer dit telefoonnummer</string>
 
     <string name="start_button">Oke, begrepen!</string>
     <string name="start_title">Welkom! Gebruik deze app om</string>
