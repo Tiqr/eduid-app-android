@@ -48,8 +48,8 @@ class SecurityViewModel @Inject constructor(
         } catch (e: UnauthorizedException) {
             uiState = uiState.copy(
                 isLoading = false, errorData = ErrorData(
-                    titleId = R.string.err_title_load_fail,
-                    messageId = R.string.err_msg_unauthorized_request_fail
+                    titleId = R.string.ResponseErrors_UnauthorizedTitle_COPY,
+                    messageId = R.string.ResponseErrors_UnauthorizedText_COPY
                 )
             )
         }
@@ -63,8 +63,8 @@ class SecurityViewModel @Inject constructor(
         } catch (e: UnauthorizedException) {
             uiState = uiState.copy(
                 isLoading = false, errorData = ErrorData(
-                    titleId = R.string.err_title_load_fail,
-                    messageId = R.string.err_msg_unauthorized_request_fail
+                    titleId = R.string.ResponseErrors_UnauthorizedTitle_COPY,
+                    messageId = R.string.ResponseErrors_UnauthorizedText_COPY
                 )
             )
         }
@@ -87,15 +87,15 @@ class SecurityViewModel @Inject constructor(
             if (isChangeEmail) {
                 uiState.copy(
                     isLoading = false, errorData = ErrorData(
-                        titleId = R.string.err_title_generic_fail,
-                        messageId = R.string.err_msg_change_email_fail
+                        titleId = R.string.Generic_RequestError_Title_COPY,
+                        messageId = R.string.Email_UpdateError_COPY
                     )
                 )
             } else {
                 uiState.copy(
                     isLoading = false, errorData = ErrorData(
-                        titleId = R.string.err_title_load_fail,
-                        messageId = R.string.err_msg_personal_fail
+                        titleId = R.string.ResponseErrors_UnauthorizedTitle_COPY,
+                        messageId = R.string.ResponseErrors_PersonalDetailsRetrieveError_COPY
                     )
                 )
             }

@@ -72,7 +72,7 @@ private fun DeleteAccountFirstConfirmScreenContent(
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = stringResource(R.string.delete_account_one_title),
+            text = stringResource(R.string.DeleteAccount_Title_COPY),
             style = MaterialTheme.typography.titleLarge.copy(
                 color = TextGreen,
                 textAlign = TextAlign.Start
@@ -98,7 +98,7 @@ private fun DeleteAccountFirstConfirmScreenContent(
             )
             Text(
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
-                text = stringResource(R.string.delete_account_one_subtitle),
+                text = stringResource(R.string.DeleteAccount_Disclaimer_COPY),
                 modifier = Modifier
                     .constrainAs(text) {
                         start.linkTo(image.end)
@@ -111,7 +111,7 @@ private fun DeleteAccountFirstConfirmScreenContent(
         }
         Spacer(Modifier.height(18.dp))
         Text(
-            text = stringResource(R.string.delete_account_description),
+            text = stringResource(R.string.DeleteAccount_LongDescription_COPY),
             textAlign = TextAlign.Start,
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = TextBlack,
@@ -130,7 +130,7 @@ private fun DeleteAccountFirstConfirmScreenContent(
             .sizeIn(minHeight = 56.dp),
     ) {
         Text(
-            text = stringResource(R.string.button_manage_account_delete),
+            text = stringResource(R.string.DeleteAccount_DeleteAccountButton_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = ButtonRed, fontWeight = FontWeight.SemiBold
             )

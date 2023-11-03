@@ -97,7 +97,7 @@ fun EnableBiometricContent(
     val contentTopSpacing = createGuidelineFromTop(40.dp)
     val backgroundAlign = createGuidelineFromEnd(0.3f)
     Text(
-        text = stringResource(R.string.biometric_enable_title),
+        text = stringResource(R.string.PinAndBioMetrics_BiometricsApproval_COPY),
         style = MaterialTheme.typography.titleLarge,
         textAlign = TextAlign.Start,
         modifier = Modifier
@@ -112,7 +112,7 @@ fun EnableBiometricContent(
             top.linkTo(title.bottom)
         })
     Text(
-        text = stringResource(R.string.biometric_enable_description),
+        text = stringResource(R.string.PinAndBioMetrics_BiometricsExplain_COPY),
         style = MaterialTheme.typography.bodyLarge,
         textAlign = TextAlign.Start,
         modifier = Modifier
@@ -148,13 +148,13 @@ fun EnableBiometricContent(
                 bottom.linkTo(parent.bottom)
             }) {
         PrimaryButton(
-            text = stringResource(R.string.biometric_enable_allow), onClick = {
+            text = stringResource(R.string.PinAndBioMetrics_SetupBiometrics_COPY), onClick = {
                 enable()
             }, modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(24.dp))
         SecondaryButton(
-            text = stringResource(R.string.biometric_enable_skip), onClick = {
+            text = stringResource(R.string.PinAndBioMetrics_Skip_COPY), onClick = {
                 skip()
             }, modifier = Modifier.fillMaxWidth()
         )

@@ -58,7 +58,7 @@ private fun SplashContent(
         Spacer(Modifier.height(36.dp))
 
         Text(
-            text = stringResource(id = R.string.splash_title),
+            text = stringResource(id = R.string.CreateEduID_LandingPage_MainText_COPY),
             style = MaterialTheme.typography.headlineLarge.copy(
                 color = Color.White, textAlign = TextAlign.Center
             ),

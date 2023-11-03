@@ -50,10 +50,10 @@ fun HomePageWithAccountContent(
 ) { paddingValues ->
     val isAuthorizedForDataAccess by viewModel.isAuthorizedForDataAccess.observeAsState(false)
     viewModel.uiState.promptForAuth?.let {
-        AlertDialogWithTwoButton(title = stringResource(R.string.app_not_authorized),
-            explanation = stringResource(id = R.string.app_not_authorized_explanation),
+        AlertDialogWithTwoButton(title = stringResource(R.string.PromptForOAuth_Title_COPY),
+            explanation = stringResource(id = R.string.PromptForOAuth_Description_COPY),
             dismissButtonLabel = stringResource(R.string.button_cancel),
-            confirmButtonLabel = stringResource(R.string.button_login),
+            confirmButtonLabel = stringResource(R.string.PinAndBioMetrics_SignIn_COPY),
             onDismiss = viewModel::clearPromptForAuthTrigger,
             onConfirm = {
                 viewModel.clearPromptForAuthTrigger()
@@ -92,11 +92,11 @@ private fun AccountContent(
             style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
             text = buildAnnotatedString {
                 withStyle(style = SpanStyle(color = TextGreen)) {
-                    append(stringResource(R.string.homepage_title_one))
+                    append(stringResource(R.string.HomeView_MainText_FirstPart_COPY))
                 }
                 append("\n")
                 withStyle(style = SpanStyle(color = TextBlack)) {
-                    append(stringResource(R.string.homepage_title_two))
+                    append(stringResource(R.string.HomeView_MainText_SecondPart_COPY))
                 }
             },
             modifier = Modifier
@@ -132,12 +132,12 @@ private fun AccountContent(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     PrimaryButtonWithIcon(
-                        text = stringResource(R.string.home_with_account_scan), onClick = {
+                        text = stringResource(R.string.HomeView_ScanQRButton_COPY), onClick = {
                             onScanForAuthorization()
                         }, icon = R.drawable.homepage_scan_icon, modifier = Modifier.weight(1f)
                     )
                     PrimaryButtonWithIcon(
-                        text = stringResource(R.string.home_with_account_personal_info), onClick = {
+                        text = stringResource(R.string.HomeView_PersonalInfoButton_COPY), onClick = {
                             if (isAuthorizedForDataAccess) {
                                 onPersonalInfoClicked()
                             } else {
@@ -147,7 +147,7 @@ private fun AccountContent(
                     )
 
                     PrimaryButtonWithIcon(
-                        text = stringResource(R.string.home_with_account_security), onClick = {
+                        text = stringResource(R.string.HomeView_SecurityButton_COPY), onClick = {
                             if (isAuthorizedForDataAccess) {
                                 onSecurityClicked()
                             } else {
@@ -156,7 +156,7 @@ private fun AccountContent(
                         }, icon = R.drawable.homepage_security_icon, modifier = Modifier.weight(1f)
                     )
                     PrimaryButtonWithIcon(
-                        text = stringResource(R.string.home_with_account_activity), onClick = {
+                        text = stringResource(R.string.HomeView_ActivityButton_COPY), onClick = {
                             if (isAuthorizedForDataAccess) {
                                 onActivityClicked()
                             } else {

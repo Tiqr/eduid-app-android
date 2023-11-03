@@ -44,7 +44,7 @@ fun RequestEduIdStartScreen(
                 .fillMaxWidth()
         ) {
             Text(
-                text = stringResource(R.string.request_id_screen_title),
+                text = stringResource(R.string.CreateEduID_Explanation_MainTitleLabel_COPY),
                 style = MaterialTheme.typography.titleLarge.copy(
                     textAlign = TextAlign.Start,
                     color = TextBlack
@@ -58,40 +58,15 @@ fun RequestEduIdStartScreen(
             )
 
             Text(
-                text = stringResource(R.string.request_id_screen_header_text),
+                text = stringResource(R.string.CreateEduID_Explanation_MainExplanationText_COPY),
                 style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-
-            Spacer(
-                modifier = Modifier.height(32.dp)
-            )
-
-            BulletPoint(
-                text = stringResource(R.string.request_id_screen_bullet_point_1),
-                textStyle = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-
-            BulletPoint(
-                text = stringResource(R.string.request_id_screen_bullet_point_2),
-                textStyle = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-
-            BulletPoint(
-                text = stringResource(R.string.request_id_screen_bullet_point_3),
-                textStyle = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
                 modifier = Modifier
                     .fillMaxWidth()
             )
         }
 
         PrimaryButton(
-            text = stringResource(R.string.request_id_screen_create_id_button),
+            text = stringResource(R.string.CreateEduID_Explanation_CreateEduidButton_COPY),
             onClick = requestId,
             modifier = Modifier
                 .fillMaxWidth()

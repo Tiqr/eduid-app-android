@@ -125,7 +125,7 @@ private fun RequestEduIdFormContent(
         ) {
             Column() {
                 Text(
-                    text = stringResource(R.string.request_id_details_screen_title),
+                    text = stringResource(R.string.CreateEduID_Create_MainTitleLabel_COPY),
                     style = MaterialTheme.typography.titleLarge.copy(
                         textAlign = TextAlign.Start
                     ),
@@ -154,8 +154,8 @@ private fun RequestEduIdFormContent(
             }),
             isError = (inputFormData.email.length > 2 && !inputFormData.emailValid),
             onValueChange = onEmailChange,
-            label = { Text(stringResource(R.string.request_id_details_screen_email_input_title)) },
-            placeholder = { Text(stringResource(R.string.request_id_details_screen_email_input_hint)) },
+            label = { Text(stringResource(R.string.CreateEduID_EnterPersonalInfo_EmailFieldTitle_COPY)) },
+            placeholder = { Text(stringResource(R.string.CreateEduID_EnterPersonalInfo_EmailFieldPlaceHolder_COPY)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .focusRequester(focusRequester)
@@ -172,8 +172,8 @@ private fun RequestEduIdFormContent(
                 )
             }),
             onValueChange = onFirstNameChange,
-            label = { Text(stringResource(R.string.request_id_details_screen_first_name_input_title)) },
-            placeholder = { Text(stringResource(R.string.request_id_details_screen_first_name_input_hint)) },
+            label = { Text(stringResource(R.string.Login_GivenName_COPY)) },
+            placeholder = { Text(stringResource(R.string.Login_GivenNamePlaceholder_COPY)) },
             modifier = Modifier
                 .fillMaxWidth()
         )
@@ -186,8 +186,8 @@ private fun RequestEduIdFormContent(
                 focusManager.clearFocus()
             }),
             onValueChange = onLastNameChange,
-            label = { Text(stringResource(R.string.request_id_details_screen_last_name_input_title)) },
-            placeholder = { Text(stringResource(R.string.request_id_details_screen_last_name_input_hint)) },
+            label = { Text(stringResource(R.string.Login_FamilyName_COPY)) },
+            placeholder = { Text(stringResource(R.string.Login_FamilyNamePlaceholder_COPY)) },
             modifier = Modifier
                 .fillMaxWidth()
         )
@@ -206,7 +206,7 @@ private fun RequestEduIdFormContent(
         }
     }
     PrimaryButton(
-        text = stringResource(R.string.request_id_screen_create_id_button),
+        text = stringResource(R.string.CreateEduID_Explanation_CreateEduidButton_COPY),
         onClick = onRequestEduIdAccount,
         modifier = Modifier
             .fillMaxWidth()

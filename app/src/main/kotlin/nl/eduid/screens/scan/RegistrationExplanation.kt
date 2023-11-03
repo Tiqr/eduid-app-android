@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import nl.eduid.R
+import nl.eduid.ui.annotatedStringWithBoldParts
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -25,53 +26,13 @@ fun RegistrationExplanation(modifier: Modifier = Modifier) = Column(
     modifier = modifier
 ) {
     Text(
-        text = stringResource(R.string.scan_registration_explaination),
+        text = annotatedStringWithBoldParts(
+            stringResource(R.string.ScanView_MainText_COPY),
+            stringResource(R.string.ScanView_MainTextBoldPart_COPY),
+            boldWeight = FontWeight.Bold
+            ),
         style = MaterialTheme.typography.titleLarge.copy(
-            textAlign = TextAlign.Center, color = Color.White, fontWeight = FontWeight.Bold
-        ),
-        modifier = Modifier.fillMaxWidth()
-    )
-    val annotatedString = with(AnnotatedString.Builder()) {
-        pushStyle(
-            MaterialTheme.typography.bodyLarge.copy(color = Color.White).toSpanStyle()
-        )
-        append(stringResource(R.string.scan_registration_explaination1a))
-        append(" ")
-        pop()
-        pushStyle(
-            MaterialTheme.typography.bodyLarge.copy(
-                color = Color.White,
-                textDecoration = TextDecoration.Underline
-            ).toSpanStyle()
-        )
-        append(stringResource(R.string.scan_registration_explaination1b))
-        pop()
-        append(" ")
-        pushStyle(
-            MaterialTheme.typography.bodyLarge.copy(color = Color.White).toSpanStyle()
-        )
-        append(stringResource(R.string.scan_registration_explaination1c))
-        toAnnotatedString()
-    }
-
-    Text(
-        text = annotatedString, style = MaterialTheme.typography.bodyLarge.copy(
-            textAlign = TextAlign.Center,
-        ), modifier = Modifier.fillMaxWidth()
-    )
-    Text(
-        text = stringResource(R.string.scan_registration_explaination2),
-        style = MaterialTheme.typography.bodyLarge.copy(
-            textAlign = TextAlign.Center,
-            color = Color.White,
-        ),
-        modifier = Modifier.fillMaxWidth()
-    )
-    Text(
-        text = stringResource(R.string.scan_registration_explaination3),
-        style = MaterialTheme.typography.bodyLarge.copy(
-            textAlign = TextAlign.Center,
-            color = Color.White,
+            textAlign = TextAlign.Center, color = Color.White, fontWeight = FontWeight.SemiBold
         ),
         modifier = Modifier.fillMaxWidth()
     )

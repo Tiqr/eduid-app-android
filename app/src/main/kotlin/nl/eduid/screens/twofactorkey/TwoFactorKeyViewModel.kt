@@ -58,8 +58,8 @@ class TwoFactorKeyViewModel @Inject constructor(
             } else {
                 uiState = uiState.copy(
                     isLoading = false, errorData = ErrorData(
-                        titleId = R.string.err_title_generic_fail,
-                        messageId = R.string.err_msg_change_key_lost,
+                        titleId = R.string.Generic_RequestError_Title_COPY,
+                        messageId = R.string.ResponseErrors_ModifyKeyLostError_COPY,
                     )
                 )
             }
@@ -67,8 +67,8 @@ class TwoFactorKeyViewModel @Inject constructor(
             Timber.e(e, "Failed to change biometric flag for key")
             uiState = uiState.copy(
                 isLoading = false, errorData = ErrorData(
-                    titleId = R.string.err_title_generic_fail,
-                    messageId = R.string.err_msg_generic_unexpected_with_arg,
+                    titleId = R.string.Generic_RequestError_Title_COPY,
+                    messageId = R.string.Generic_RequestError_Description_COPY,
                     messageArg = e.message ?: e.javaClass.simpleName
                 )
             )

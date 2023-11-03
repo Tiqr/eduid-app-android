@@ -124,7 +124,7 @@ fun PinInputField(
     // Supporting text for error message.
     if (isPinInvalid) {
         Text(
-            text = stringResource(R.string.confirmpin_mismatch),
+            text = stringResource(R.string.PinAndBioMetrics_EnteredPinNotEqual_COPY),
             style = MaterialTheme.typography.bodySmall.copy(
                 fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.error
             ),

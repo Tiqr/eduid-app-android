@@ -55,8 +55,8 @@ class DeleteAccountSecondConfirmViewModel @Inject constructor(
                             inProgress = false,
                             isDeleted = if (deleteOk) Unit else null,
                             errorData = if (deleteOk) null else ErrorData(
-                                titleId = R.string.err_title_delete_fail,
-                                messageId = R.string.err_msg_delete_fail
+                                titleId = R.string.ResponseErrors_DeleteError_Title_COPY,
+                                messageId = R.string.ResponseErrors_DeleteError_Description_COPY
                             ),
                         )
                 } else {
@@ -64,8 +64,8 @@ class DeleteAccountSecondConfirmViewModel @Inject constructor(
                         uiState.copy(
                             inProgress = false,
                             errorData = ErrorData(
-                                titleId = R.string.err_title_delete_fail,
-                                messageId = R.string.err_msg_delete_name_missmatch
+                                titleId = R.string.ResponseErrors_DeleteError_Title_COPY,
+                                messageId = R.string.ResponseErrors_DeleteError_NameMismatchDescription_COPY
                             )
                         )
                 }
@@ -73,8 +73,8 @@ class DeleteAccountSecondConfirmViewModel @Inject constructor(
         } catch (e: UnauthorizedException) {
             uiState = uiState.copy(
                 inProgress = false, errorData = ErrorData(
-                    titleId = R.string.err_title_delete_fail,
-                    messageId = R.string.err_msg_unauthorized_request_fail
+                    titleId = R.string.ResponseErrors_DeleteError_Title_COPY,
+                    messageId = R.string.ResponseErrors_UnauthorizedText_COPY
                 )
             )
         }

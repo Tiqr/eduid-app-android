@@ -80,12 +80,12 @@ fun TwoFactorKeyScreenContent(
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
             textAlign = TextAlign.Start, color = ButtonGreen
-        ), text = stringResource(R.string.two_fa_key_title), modifier = Modifier.fillMaxWidth()
+        ), text = stringResource(R.string.TwoFactorKeys_Title_COPY), modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
     Text(
         style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-        text = stringResource(R.string.two_fa_key_subtitle),
+        text = stringResource(R.string.TwoFactorKeys_Description_COPY),
         modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(36.dp))
@@ -95,7 +95,7 @@ fun TwoFactorKeyScreenContent(
     if (keyList.isNotEmpty()) {
         Spacer(Modifier.height(6.dp))
         Text(
-            text = stringResource(R.string.two_fa_key_list_title),
+            text = stringResource(R.string.TwoFactorKeys_YourKeys_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.SemiBold,
@@ -134,12 +134,12 @@ fun TwoFactorKeyScreenNoContent(
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
             textAlign = TextAlign.Start, color = ButtonGreen
-        ), text = stringResource(R.string.two_fa_key_title), modifier = Modifier.fillMaxWidth()
+        ), text = stringResource(R.string.TwoFactorKeys_Title_COPY), modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
     Text(
         style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-        text = stringResource(R.string.two_fa_key_empty),
+        text = stringResource(R.string.TwoFactorKeys_NoKeys_COPY),
         modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(36.dp))

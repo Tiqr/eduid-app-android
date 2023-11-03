@@ -92,14 +92,14 @@ fun ScanScreen(
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
                         tint = MaterialTheme.colorScheme.onPrimary,
-                        contentDescription = stringResource(R.string.button_back),
+                        contentDescription = stringResource(R.string.PinAndBioMetrics_Button_Back_COPY),
                         modifier = Modifier.size(width = 53.dp, height = 53.dp)
                     )
                 }
             },
             actions = {
                 Image(painter = painterResource(R.drawable.ic_flashlight),
-                    contentDescription = stringResource(R.string.button_torch),
+                    contentDescription = stringResource(R.string.ScanView_Flashlight_TurnOn_COPY),
                     colorFilter = ColorFilter.tint(
                         MaterialTheme.colorScheme.onPrimary, BlendMode.SrcIn
                     ),
@@ -202,7 +202,7 @@ private fun ScanContent(
                         end.linkTo(parent.end)
                     })
             if (!hasCamPermission) {
-                Text(text = stringResource(R.string.scan_permission_explanation),
+                Text(text = stringResource(R.string.Permission_Scan_COPY),
                     style = MaterialTheme.typography.titleLarge.copy(
                         textAlign = TextAlign.Center, color = Color.White
                     ),
@@ -213,7 +213,7 @@ private fun ScanContent(
                         })
             }
             if (!isEnrolment) {
-                Text(text = stringResource(R.string.scan_title),
+                Text(text = stringResource(R.string.ScanView_Title_COPY),
                     style = MaterialTheme.typography.titleLarge.copy(
                         textAlign = TextAlign.Center, color = Color.White
                     ),
@@ -230,7 +230,7 @@ private fun ScanContent(
                         .fillMaxWidth()
                         .padding(paddingValues)
                         .constrainAs(registrationExplanation) {
-                            bottom.linkTo(parent.bottom, margin = 80.dp)
+                            bottom.linkTo(parent.bottom, margin = 10.dp)
                         })
             }
 

@@ -83,21 +83,21 @@ private fun AccountFailedLinkContent(
             style = MaterialTheme.typography.titleLarge.copy(
                 textAlign = TextAlign.Start, color = TextGreen
             ),
-            text = stringResource(R.string.account_linked_title),
+            text = stringResource(R.string.NameUpdated_Title_YourSchool_COPY),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(12.dp))
         Text(
             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
-            text = stringResource(R.string.account_linked_fail_subtitle),
+            text = stringResource(R.string.NameUpdated_Title_ContactedSuccessfully_COPY),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(12.dp))
         val explanation =
             if (result is ResultAccountLinked.FailedExpired) {
-                stringResource(R.string.account_linked_fail1_description)
+                stringResource(R.string.NameUpdated_Title_FailReason_SessionExpired_COPY)
             } else {
-                stringResource(R.string.account_linked_fail2_description)
+                stringResource(R.string.NameUpdated_Title_FailReason_AlreadyLinked_COPY)
             }
         Text(
             text = explanation,
@@ -106,7 +106,7 @@ private fun AccountFailedLinkContent(
         )
     }
     PrimaryButton(
-        text = stringResource(R.string.button_continue),
+        text = stringResource(R.string.NameUpdated_Continue_COPY),
         onClick = continueToHome,
         modifier = Modifier
             .fillMaxWidth(),
@@ -142,19 +142,19 @@ private fun AccountLinkedContent(
         style = MaterialTheme.typography.titleLarge.copy(
             textAlign = TextAlign.Start, color = TextGreen
         ),
-        text = stringResource(R.string.account_linked_title),
+        text = stringResource(R.string.NameUpdated_Title_YourSchool_COPY),
         modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
     Text(
         style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
-        text = stringResource(R.string.account_linked_subtitle),
+        text = stringResource(R.string.NameUpdated_Title_ContactedSuccessfully_COPY),
         modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
     Text(
         style = MaterialTheme.typography.bodyLarge,
-        text = stringResource(R.string.account_linked_description),
+        text = stringResource(R.string.NameUpdated_Description_COPY),
         modifier = Modifier.fillMaxWidth()
     )
     if (isLoading) {
@@ -169,17 +169,17 @@ private fun AccountLinkedContent(
     InfoField(
         title = personalInfo.name,
         subtitle = if (personalInfo.nameProvider == null) {
-            stringResource(R.string.infotab_providedby_you)
+            stringResource(R.string.Profile_ProvidedByYou_COPY)
         } else {
-            stringResource(R.string.infotab_providedby, personalInfo.nameProvider)
+            stringResource(R.string.Profile_ProvidedBy_COPY, personalInfo.nameProvider)
         },
         endIcon = R.drawable.shield_tick_blue,
-        label = stringResource(R.string.infotab_fullname)
+        label = stringResource(R.string.NameOverview_Title_FullName_COPY)
     )
     Spacer(Modifier.height(16.dp))
     if (personalInfo.institutionAccounts.isNotEmpty()) {
         Text(
-            text = stringResource(R.string.infotab_role_institution),
+            text = stringResource(R.string.Profile_RoleAndInstitution_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.SemiBold,
@@ -190,13 +190,13 @@ private fun AccountLinkedContent(
     personalInfo.institutionAccounts.forEachIndexed { index, account ->
         ConnectionCard(
             title = account.role,
-            subtitle = stringResource(R.string.infotab_at, account.roleProvider),
+            subtitle = stringResource(R.string.Profile_InstitutionAt_COPY, account.roleProvider),
             institutionInfo = account,
             onRemoveConnection = { removeConnection(index) },
         )
     }
     PrimaryButton(
-        text = stringResource(R.string.button_continue),
+        text = stringResource(R.string.NameUpdated_Continue_COPY),
         onClick = continueToHome,
         modifier = Modifier
             .fillMaxWidth(),

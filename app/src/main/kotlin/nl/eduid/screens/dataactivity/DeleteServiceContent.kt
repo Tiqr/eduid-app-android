@@ -55,7 +55,7 @@ fun DeleteServiceContent(
                 .fillMaxWidth()
         ) {
             Text(
-                text = stringResource(R.string.delete_service_confirm_title),
+                text = stringResource(R.string.DeleteService_Title_COPY),
                 style = MaterialTheme.typography.titleLarge.copy(
                     color = TextGreen, textAlign = TextAlign.Start
                 ),
@@ -82,7 +82,7 @@ fun DeleteServiceContent(
                 )
                 Text(
                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
-                    text = stringResource(R.string.delete_no_undo_warning),
+                    text = stringResource(R.string.DeleteService_Disclaimer_COPY),
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -90,7 +90,7 @@ fun DeleteServiceContent(
             Spacer(Modifier.height(18.dp))
             Text(
                 text = stringResource(
-                    R.string.delete_service_confirm_explanation, providerName
+                    R.string.DeleteService_Description_COPY, providerName
                 ),
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Start,
@@ -112,7 +112,7 @@ fun DeleteServiceContent(
                 modifier = Modifier.widthIn(min = 140.dp),
             )
             PrimaryButton(
-                text = stringResource(R.string.button_confirm),
+                text = stringResource(R.string.ConfirmDelete_Button_Confirm_COPY),
                 onClick = removeService,
                 enabled = !inProgress,
                 modifier = Modifier.widthIn(min = 140.dp),

@@ -35,15 +35,15 @@ class PersonalInfoViewModel @Inject constructor(
                     UiState(isLoading = false, personalInfo = personalInfo)
                 } ?: UiState(
                     isLoading = false, errorData = ErrorData(
-                        titleId = R.string.err_title_load_fail,
-                        messageId = R.string.err_msg_personal_fail
+                        titleId = R.string.ResponseErrors_UnauthorizedTitle_COPY,
+                        messageId = R.string.ResponseErrors_PersonalDetailsRetrieveError_COPY
                     )
                 )
             } catch (e: UnauthorizedException) {
                 uiState = uiState.copy(
                     isLoading = false, errorData = ErrorData(
-                        titleId = R.string.err_title_load_fail,
-                        messageId = R.string.err_msg_unauthorized_request_fail
+                        titleId = R.string.ResponseErrors_UnauthorizedTitle_COPY,
+                        messageId = R.string.ResponseErrors_UnauthorizedText_COPY
                     )
                 )
             }
@@ -96,15 +96,15 @@ class PersonalInfoViewModel @Inject constructor(
             } ?: uiState.copy(
                 isLoading = false,
                 errorData = ErrorData(
-                    titleId = R.string.err_title_generic_fail,
-                    messageId = R.string.err_msg_request_fail,
+                    titleId = R.string.Generic_RequestError_Title_COPY,
+                    messageId = R.string.ResponseErrors_GeneralRequestError_COPY,
                 )
             )
         } catch (e: UnauthorizedException) {
             uiState = uiState.copy(
                 isLoading = false, errorData = ErrorData(
-                    titleId = R.string.err_title_generic_fail,
-                    messageId = R.string.err_msg_unauthorized_request_fail
+                    titleId = R.string.Generic_RequestError_Title_COPY,
+                    messageId = R.string.ResponseErrors_UnauthorizedText_COPY
                 )
             )
         }
@@ -121,16 +121,16 @@ class PersonalInfoViewModel @Inject constructor(
             } else {
                 uiState.copy(
                     isLoading = false, errorData = ErrorData(
-                        titleId = R.string.err_title_generic_fail,
-                        messageId = R.string.err_msg_request_fail
+                        titleId = R.string.Generic_RequestError_Title_COPY,
+                        messageId = R.string.ResponseErrors_GeneralRequestError_COPY
                     )
                 )
             }
         } catch (e: UnauthorizedException) {
             uiState = uiState.copy(
                 isLoading = false, errorData = ErrorData(
-                    titleId = R.string.err_title_generic_fail,
-                    messageId = R.string.err_msg_unauthorized_request_fail
+                    titleId = R.string.Generic_RequestError_Title_COPY,
+                    messageId = R.string.ResponseErrors_UnauthorizedText_COPY
                 )
             )
         }
@@ -151,15 +151,15 @@ class PersonalInfoViewModel @Inject constructor(
             } ?: uiState.copy(
                 isLoading = false,
                 errorData = ErrorData(
-                    titleId = R.string.err_title_generic_fail,
-                    messageId = R.string.err_msg_request_fail
+                    titleId = R.string.Generic_RequestError_Title_COPY,
+                    messageId = R.string.ResponseErrors_GeneralRequestError_COPY
                 )
             )
         } catch (e: UnauthorizedException) {
             uiState = uiState.copy(
                 isLoading = false, errorData = ErrorData(
-                    titleId = R.string.err_title_generic_fail,
-                    messageId = R.string.err_msg_unauthorized_request_fail
+                    titleId = R.string.Generic_RequestError_Title_COPY,
+                    messageId = R.string.ResponseErrors_UnauthorizedText_COPY
                 )
             )
         }

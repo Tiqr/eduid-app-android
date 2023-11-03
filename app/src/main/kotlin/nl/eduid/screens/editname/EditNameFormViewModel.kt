@@ -56,15 +56,15 @@ class EditNameFormViewModel @Inject constructor(
                 uiState.copy(inProgress = false, isCompleted = Unit)
             } ?: uiState.copy(
                 inProgress = false, errorData = ErrorData(
-                    titleId = R.string.err_title_generic_fail,
-                    messageId = R.string.err_msg_request_fail
+                    titleId = R.string.Generic_RequestError_Title_COPY,
+                    messageId = R.string.ResponseErrors_GeneralRequestError_COPY
                 )
             )
         } catch (e: UnauthorizedException) {
             uiState = uiState.copy(
                 inProgress = false, errorData = ErrorData(
-                    titleId = R.string.err_title_generic_fail,
-                    messageId = R.string.err_msg_unauthorized_request_fail
+                    titleId = R.string.Generic_RequestError_Title_COPY,
+                    messageId = R.string.ResponseErrors_UnauthorizedText_COPY
                 )
             )
         }

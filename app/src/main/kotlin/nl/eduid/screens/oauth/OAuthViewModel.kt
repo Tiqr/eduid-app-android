@@ -70,8 +70,8 @@ class OAuthViewModel @Inject constructor(
             val argument = e.message ?: e.localizedMessage
             uiState = UiState(
                 OAuthStep.Error, ErrorData(
-                    titleId = R.string.err_title_auth_unexpected_fail,
-                    messageId = if (argument == null) R.string.err_msg_auth_init_fail else R.string.err_msg_auth_init_fail_arg,
+                    titleId = R.string.Generic_RequestError_Title_COPY,
+                    messageId = if (argument == null) R.string.AppData_InitializationError_Generic_COPY else R.string.AppData_InitializationError_WithException_COPY,
                     messageArg = argument
                 )
             )
@@ -95,8 +95,8 @@ class OAuthViewModel @Inject constructor(
             intent == null -> {
                 uiState = UiState(
                     OAuthStep.Error, ErrorData(
-                        titleId = R.string.err_title_auth_invalid,
-                        messageId = R.string.err_msg_auth_invalid,
+                        titleId = R.string.ResponseErrors_Auth_Invalid_Title_COPY,
+                        messageId = R.string.ResponseErrors_Auth_Invalid_Description_COPY,
                     )
                 )
             }
@@ -104,8 +104,8 @@ class OAuthViewModel @Inject constructor(
             currentAuthState == null -> {
                 uiState = UiState(
                     OAuthStep.Error, ErrorData(
-                        titleId = R.string.err_title_auth_failed,
-                        messageId = R.string.err_msg_auth_failed,
+                        titleId = R.string.ResponseErrors_Auth_Failed_Title_COPY,
+                        messageId = R.string.ResponseErrors_Auth_Failed_Description_COPY,
                     )
                 )
             }
@@ -142,8 +142,8 @@ class OAuthViewModel @Inject constructor(
                         } else {
                             uiState = UiState(
                                 OAuthStep.Error, ErrorData(
-                                    titleId = R.string.err_title_auth_failed,
-                                    messageId = R.string.err_msg_auth_token_failed,
+                                    titleId = R.string.ResponseErrors_Auth_Failed_Title_COPY,
+                                    messageId = R.string.ResponseErrors_Auth_Failed_TokenFailedDescription_Generic_COPY,
                                 )
                             )
                         }
@@ -152,8 +152,8 @@ class OAuthViewModel @Inject constructor(
                         val arg = "${e.javaClass.simpleName}: ${e.message}"
                         uiState = UiState(
                             OAuthStep.Error, ErrorData(
-                                titleId = R.string.err_title_auth_failed,
-                                messageId = R.string.err_msg_auth_code_failed_arg,
+                                titleId = R.string.ResponseErrors_Auth_Failed_Title_COPY,
+                                messageId = R.string.ResponseErrors_Auth_Failed_TokenFailedDescription_WithException_COPY,
                                 messageArg = arg
                             )
                         )
@@ -162,16 +162,16 @@ class OAuthViewModel @Inject constructor(
                     val arg = "${ex.javaClass.simpleName}: ${ex.message}"
                     uiState = UiState(
                         OAuthStep.Error, ErrorData(
-                            titleId = R.string.err_title_auth_failed,
-                            messageId = R.string.err_msg_generic_unexpected_with_arg,
+                            titleId = R.string.ResponseErrors_Auth_Failed_Title_COPY,
+                            messageId = R.string.Generic_RequestError_Description_COPY,
                             messageArg = arg
                         )
                     )
                 } else {
                     uiState = UiState(
                         OAuthStep.Error, ErrorData(
-                            titleId = R.string.err_title_auth_failed,
-                            messageId = R.string.err_msg_auth_failed,
+                            titleId = R.string.ResponseErrors_Auth_Failed_Title_COPY,
+                            messageId = R.string.ResponseErrors_Auth_Failed_Description_COPY,
                         )
                     )
                 }

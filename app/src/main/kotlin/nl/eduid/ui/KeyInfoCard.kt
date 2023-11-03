@@ -133,11 +133,11 @@ private fun TwoFABlock(
     Modifier.fillMaxWidth()
 ) {
     InfoRow(
-        label = stringResource(R.string.two_fa_account),
+        label = stringResource(R.string.TwoFactorKeys_Label_Account_COPY),
         value = keyInfo.account,
     )
     InfoRow(
-        label = stringResource(R.string.two_fa_unieque_keyid),
+        label = stringResource(R.string.TwoFactorKeys_Label_UniqueKeyId_COPY),
         value = keyInfo.uniqueKey,
     )
 
@@ -146,7 +146,7 @@ private fun TwoFABlock(
     ) {
         Text(
             modifier = Modifier.weight(1f),
-            text = stringResource(R.string.two_fa_use_biometric),
+            text = stringResource(R.string.TwoFactorKeys_Label_UseBiometrics_COPY),
             style = MaterialTheme.typography.bodyMedium.copy(
                 textAlign = TextAlign.Start,
                 color = BlueText,
@@ -168,7 +168,7 @@ private fun TwoFABlock(
             .fillMaxWidth(),
     ) {
         Text(
-            text = stringResource(R.string.two_fa_delete),
+            text = stringResource(R.string.TwoFactorKeys_DeleteKey_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = ButtonRed, fontWeight = FontWeight.SemiBold
             )

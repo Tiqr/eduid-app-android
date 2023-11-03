@@ -126,7 +126,7 @@ private fun PhoneRequestCodeContent(
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = stringResource(R.string.request_id_recovery_title),
+                    text = stringResource(R.string.Recovery_PhoneNumber_COPY),
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -136,7 +136,7 @@ private fun PhoneRequestCodeContent(
                 )
 
                 Text(
-                    text = stringResource(R.string.request_id_recovery_text_code),
+                    text = stringResource(R.string.Recovery_Info_COPY),
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -148,7 +148,7 @@ private fun PhoneRequestCodeContent(
         }
 
         Text(
-            text = stringResource(R.string.request_id_recovery_input_hint),
+            text = stringResource(R.string.PhoneVerification_Text_COPY),
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth()
         )
@@ -174,7 +174,7 @@ private fun PhoneRequestCodeContent(
         }
     }
     PrimaryButton(
-        text = stringResource(R.string.request_id_recovery_button),
+        text = stringResource(R.string.Profile_Verify_COPY),
         onClick = onClick,
         enabled = uiState.input.isNotEmpty(),
         modifier = Modifier

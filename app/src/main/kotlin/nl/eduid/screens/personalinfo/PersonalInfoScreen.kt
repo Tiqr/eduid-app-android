@@ -122,12 +122,12 @@ fun PersonalInfoScreenContent(
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
             textAlign = TextAlign.Start, color = ButtonGreen
-        ), text = stringResource(R.string.personal_info_title), modifier = Modifier.fillMaxWidth()
+        ), text = stringResource(R.string.Profile_Title_COPY), modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
     Text(
         style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-        text = stringResource(R.string.personal_info_subtitle),
+        text = stringResource(R.string.Profile_Info_COPY),
         modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
@@ -135,7 +135,7 @@ fun PersonalInfoScreenContent(
         style = MaterialTheme.typography.titleLarge.copy(
             textAlign = TextAlign.Start, color = ButtonGreen, fontSize = 20.sp
         ),
-        text = stringResource(R.string.personal_info_info_header),
+        text = stringResource(R.string.Profile_ShareableInformation_COPY),
         modifier = Modifier.fillMaxWidth()
     )
     if (isLoading) {
@@ -148,28 +148,28 @@ fun PersonalInfoScreenContent(
     Spacer(Modifier.height(12.dp))
     InfoField(
         title = personalInfo.name, subtitle = if (personalInfo.nameProvider == null) {
-            stringResource(R.string.infotab_providedby_you)
+            stringResource(R.string.Profile_ProvidedByYou_COPY)
         } else {
-            stringResource(R.string.infotab_providedby, personalInfo.nameProvider)
+            stringResource(R.string.Profile_ProvidedBy_COPY, personalInfo.nameProvider)
         }, onClick = onNameClicked, endIcon = if (personalInfo.nameProvider == null) {
             R.drawable.edit_icon
         } else {
             R.drawable.shield_tick_blue
-        }, label = stringResource(R.string.infotab_name)
+        }, label = stringResource(R.string.Profile_Name_COPY)
     )
     Spacer(Modifier.height(16.dp))
     InfoField(
         title = personalInfo.email,
-        subtitle = stringResource(R.string.infotab_providedby_you),
+        subtitle = stringResource(R.string.Profile_ProvidedByYou_COPY),
         onClick = onEmailClicked,
         endIcon = R.drawable.edit_icon,
         capitalizeTitle = false,
-        label = stringResource(R.string.infotab_email),
+        label = stringResource(R.string.Profile_Email_COPY),
     )
     Spacer(Modifier.height(16.dp))
     if (personalInfo.institutionAccounts.isNotEmpty()) {
         Text(
-            text = stringResource(R.string.infotab_role_institution),
+            text = stringResource(R.string.Profile_RoleAndInstitution_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.SemiBold,
@@ -180,7 +180,7 @@ fun PersonalInfoScreenContent(
     personalInfo.institutionAccounts.forEachIndexed { index, account ->
         ConnectionCard(
             title = account.role,
-            subtitle = stringResource(R.string.infotab_at, account.roleProvider),
+            subtitle = stringResource(R.string.Profile_InstitutionAt_COPY, account.roleProvider),
             institutionInfo = account,
             onRemoveConnection = { removeConnection(index) },
         )
@@ -188,8 +188,8 @@ fun PersonalInfoScreenContent(
 
     Spacer(Modifier.height(12.dp))
     LinkAccountCard(
-        title = R.string.personalinfo_add_role_institution,
-        subtitle = R.string.personalinfo_add_via,
+        title = R.string.Profile_AddRoleAndInstitution_COPY,
+        subtitle = R.string.Profile_AddViaSurfconext_COPY,
         enabled = !isLoading,
         addLinkToAccount = addLinkToAccount
     )
@@ -208,7 +208,7 @@ fun PersonalInfoScreenContent(
             modifier = Modifier.padding(start = 24.dp, end = 24.dp)
         )
         Text(
-            text = stringResource(R.string.personalinfo_manage_your_account),
+            text = stringResource(R.string.Profile_ManageYourAccount_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 textAlign = TextAlign.Start,
                 color = ButtonTextGrey,
