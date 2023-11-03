@@ -10,7 +10,8 @@
   <string name="EnvironmentSwitcher_Button_COPY">"Environment"</string>
   <string name="EnvironmentSwitcher_Title_COPY">"Switch environment"</string>
   <string name="EnvironmentSwitcher_Subtitle_COPY">"Click on one of the environments to use it in the app for communicating"</string>
-  <string name="HomeView_MainText_COPY">"Your eduID app\nis ready for use\n"</string>
+  <string name="HomeView_MainText_FirstPart_COPY">"Your eduID app"</string>
+  <string name="HomeView_MainText_SecondPart_COPY">"is ready for use"</string>
   <string name="HomeView_YourEduId_COPY">"Your eduID app"</string>
   <string name="HomeView_SecurityButton_COPY">"Security"</string>
   <string name="HomeView_PersonalInfoButton_COPY">"Personal info"</string>

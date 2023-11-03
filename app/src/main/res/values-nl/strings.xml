@@ -10,7 +10,8 @@
   <string name="EnvironmentSwitcher_Button_COPY">"Omgeving"</string>
   <string name="EnvironmentSwitcher_Title_COPY">"Wisselen van omgeving"</string>
   <string name="EnvironmentSwitcher_Subtitle_COPY">"Klik op een van de omgevingen om die te gebruiken voor de communicatie"</string>
-  <string name="HomeView_MainText_COPY">"Jouw eduID app\nis klaar voor gebruik\n"</string>
+  <string name="HomeView_MainText_FirstPart_COPY">"Jouw eduID app"</string>
+  <string name="HomeView_MainText_SecondPart_COPY">"is klaar voor gebruik"</string>
   <string name="HomeView_YourEduId_COPY">"Jouw eduID app"</string>
   <string name="HomeView_SecurityButton_COPY">"Beveiliging"</string>
   <string name="HomeView_PersonalInfoButton_COPY">"Gegevens"</string>

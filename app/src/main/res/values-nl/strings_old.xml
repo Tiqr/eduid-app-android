@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
-    <string name="recovery_browser_title">Ga terug naar jouw webbrowser</string>
-    <string name="recovery_browser_explain">Ga terug naar je browser om de koppeling van deze app aan je eduID-account te voltooien.</string>
-
-    <string name="homepage_title_one">Jouw eduID app</string>
-    <string name="homepage_title_two">is klaar voor gebruik</string>
 
     <string name="personal_info_title">Jouw persoonlijke informatie</string>
     <string name="personal_info_subtitle">Wanneer je eduID gebruikt om in te loggen op andere websites, kan jouw persoonlijke informatie worden gedeeld. Sommige websites vereisen dat je persoonlijke gegevens worden gevalideerd door een derde partij.</string>

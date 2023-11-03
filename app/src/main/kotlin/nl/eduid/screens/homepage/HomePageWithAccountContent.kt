@@ -92,11 +92,11 @@ private fun AccountContent(
             style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
             text = buildAnnotatedString {
                 withStyle(style = SpanStyle(color = TextGreen)) {
-                    append(stringResource(R.string.homepage_title_one))
+                    append(stringResource(R.string.HomeView_MainText_FirstPart_COPY))
                 }
                 append("\n")
                 withStyle(style = SpanStyle(color = TextBlack)) {
-                    append(stringResource(R.string.homepage_title_two))
+                    append(stringResource(R.string.HomeView_MainText_SecondPart_COPY))
                 }
             },
             modifier = Modifier

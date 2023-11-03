@@ -64,13 +64,14 @@ SHARED:
         nl: Klik op een van de omgevingen om die te gebruiken voor de communicatie
   HomeView:
     MainText:
-      COPY:
-        en: |
-          Your eduID app
-          is ready for use
-        nl: |
-          Jouw eduID app
-          is klaar voor gebruik
+      FirstPart:
+        COPY:
+          en: Your eduID app
+          nl: Jouw eduID app
+      SecondPart:
+        COPY:
+          en: is ready for use
+          nl: is klaar voor gebruik
     YourEduId:
       COPY:
         en: Your eduID app
