@@ -83,21 +83,21 @@ private fun AccountFailedLinkContent(
             style = MaterialTheme.typography.titleLarge.copy(
                 textAlign = TextAlign.Start, color = TextGreen
             ),
-            text = stringResource(R.string.account_linked_title),
+            text = stringResource(R.string.NameUpdated_Title_YourSchool_COPY),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(12.dp))
         Text(
             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
-            text = stringResource(R.string.account_linked_fail_subtitle),
+            text = stringResource(R.string.NameUpdated_Title_ContactedSuccessfully_COPY),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(12.dp))
         val explanation =
             if (result is ResultAccountLinked.FailedExpired) {
-                stringResource(R.string.account_linked_fail1_description)
+                stringResource(R.string.NameUpdated_Title_FailReason_SessionExpired_COPY)
             } else {
-                stringResource(R.string.account_linked_fail2_description)
+                stringResource(R.string.NameUpdated_Title_FailReason_AlreadyLinked_COPY)
             }
         Text(
             text = explanation,
@@ -142,19 +142,19 @@ private fun AccountLinkedContent(
         style = MaterialTheme.typography.titleLarge.copy(
             textAlign = TextAlign.Start, color = TextGreen
         ),
-        text = stringResource(R.string.account_linked_title),
+        text = stringResource(R.string.NameUpdated_Title_YourSchool_COPY),
         modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
     Text(
         style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
-        text = stringResource(R.string.account_linked_subtitle),
+        text = stringResource(R.string.NameUpdated_Title_ContactedSuccessfully_COPY),
         modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
     Text(
         style = MaterialTheme.typography.bodyLarge,
-        text = stringResource(R.string.account_linked_description),
+        text = stringResource(R.string.NameUpdated_Description_COPY),
         modifier = Modifier.fillMaxWidth()
     )
     if (isLoading) {

@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
-    <string name="account_linked_title">Je school/instelling</string>
-    <string name="account_linked_subtitle">is nu gekoppeld</string>
-    <string name="account_linked_fail_subtitle">is niet gekoppeld</string>
-    <string name="account_linked_description">De volgende gegevens zijn toegevoegd aan je eduID en kan gedeeld worden.</string>
-    <string name="account_linked_fail1_description">Reden: Je sessie is verlopen.</string>
-    <string name="account_linked_fail2_description">Reden: Het account is al gekoppeld.</string>
-
     <string name="authorize_title">Verzoek om in te loggen</string>
     <string name="authorize_subtitle01">Wil je inloggen bij</string>
     <string name="authorize_subtitle02">%s?</string>

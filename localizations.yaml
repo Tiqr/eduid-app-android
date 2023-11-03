@@ -523,6 +523,19 @@ SHARED:
         COPY:
           en: was contacted successfully
           nl: is nu gekoppeld
+      ContactedError:
+        COPY:
+          en: could not be contacted
+          nl: is niet gekoppeld
+      FailReason:
+        AlreadyLinked:
+          COPY:
+            en: "Reason: The account is already linked."
+            nl: "Reden: Het account is al gekoppeld."
+        SessionExpired:
+          COPY:
+            en: "Reason: Your session expired."
+            nl: "Reden: Je sessie is verlopen."
     Description:
       COPY:
         en: The following information has been added to your eduID and can now be shared.!

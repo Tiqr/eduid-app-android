@@ -108,6 +108,9 @@
   <string name="Email_OutstandingPasswordForgottenConfirmation_COPY">"You have requested a password forgotten link. This link will no longer be valid if you confirm your email change."</string>
   <string name="NameUpdated_Title_YourSchool_COPY">"Your school/uni"</string>
   <string name="NameUpdated_Title_ContactedSuccessfully_COPY">"was contacted successfully"</string>
+  <string name="NameUpdated_Title_ContactedError_COPY">"could not be contacted"</string>
+  <string name="NameUpdated_Title_FailReason_AlreadyLinked_COPY">"Reason: The account is already linked."</string>
+  <string name="NameUpdated_Title_FailReason_SessionExpired_COPY">"Reason: Your session expired."</string>
   <string name="NameUpdated_Description_COPY">"The following information has been added to your eduID and can now be shared.!"</string>
   <string name="NameUpdated_FullName_COPY">"Full name"</string>
   <string name="NameUpdated_Continue_COPY">"Continue"</string>
