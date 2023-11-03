@@ -4,6 +4,11 @@ ANDROID:
       COPY:
         en: "Checking request..."
         nl: "Verzoek aan het bewerken..."
+  Biometrics:
+    UnknownError:
+      COPY:
+        en: "Biometrics failed for unknown reason."
+        nl: "Biometrie mislukt om onbekende reden."
 SHARED:
   Sidebar:
     Home:
@@ -98,10 +103,15 @@ SHARED:
       COPY:
         en: Don't see a QR code?
         nl: Zie je geen QR-code?
-    FlashlightNotAvailable:
-      COPY:
-        en: Torch isn't available
-        nl: Zaklamp is niet beschikbaar
+    Flashlight:
+      NotAvailable:
+        COPY:
+          en: Torch isn't available
+          nl: Zaklamp is niet beschikbaar
+      TurnOn:
+        COPY:
+          en: Turn on flashlight
+          nl: Zet zaklamp aan
     Error:
       COPY:
         en: Error

@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
 
-    <string name="button_back">Terug</string>
-    <string name="button_continue">Ga door</string>
-    <string name="button_login">Inloggen</string>
-    <string name="button_torch">Zet zaklamp aan</string>
-    <string name="confirmpin_mismatch">PIN komt niet overeen.</string>
-    <string name="button_scan">Scan</string>
-    <string name="biometric_failed_unknown">Biometrie mislukt om onbekende reden.</string>
-    <string name="login_access_description">om in te loggen op de eduID app</string>
-
     <string name="tc_full_text">Ik ga akkoord met de voorwaarden van deze dienst. Ik begrijp de privacy policy.</string>
     <string name="tc_understand">" Ik begrijp ook "</string>
     <string name="tc_agree">"Ik stem in met "</string>

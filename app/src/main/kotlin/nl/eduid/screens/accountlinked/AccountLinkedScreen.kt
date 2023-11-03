@@ -106,7 +106,7 @@ private fun AccountFailedLinkContent(
         )
     }
     PrimaryButton(
-        text = stringResource(R.string.button_continue),
+        text = stringResource(R.string.NameUpdated_Continue_COPY),
         onClick = continueToHome,
         modifier = Modifier
             .fillMaxWidth(),
@@ -196,7 +196,7 @@ private fun AccountLinkedContent(
         )
     }
     PrimaryButton(
-        text = stringResource(R.string.button_continue),
+        text = stringResource(R.string.NameUpdated_Continue_COPY),
         onClick = continueToHome,
         modifier = Modifier
             .fillMaxWidth(),

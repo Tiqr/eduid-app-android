@@ -151,7 +151,7 @@ private fun RequestEduIdCreatedContent(
     }
 
     PrimaryButton(
-        text = stringResource(id = R.string.button_continue),
+        text = stringResource(id = R.string.NameUpdated_Continue_COPY),
         onClick = {
             waitingForVmEvent = true
             startEnrollment()

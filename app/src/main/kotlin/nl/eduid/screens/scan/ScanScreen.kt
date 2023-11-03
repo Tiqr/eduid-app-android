@@ -92,14 +92,14 @@ fun ScanScreen(
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
                         tint = MaterialTheme.colorScheme.onPrimary,
-                        contentDescription = stringResource(R.string.button_back),
+                        contentDescription = stringResource(R.string.PinAndBioMetrics_Button_Back_COPY),
                         modifier = Modifier.size(width = 53.dp, height = 53.dp)
                     )
                 }
             },
             actions = {
                 Image(painter = painterResource(R.drawable.ic_flashlight),
-                    contentDescription = stringResource(R.string.button_torch),
+                    contentDescription = stringResource(R.string.ScanView_Flashlight_TurnOn_COPY),
                     colorFilter = ColorFilter.tint(
                         MaterialTheme.colorScheme.onPrimary, BlendMode.SrcIn
                     ),

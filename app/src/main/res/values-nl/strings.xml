@@ -18,7 +18,8 @@
   <string name="HomeView_ScanQRButton_COPY">"Scan QR"</string>
   <string name="ScanView_MainText_COPY">"Zie je geen QR-code?\nGa naar eduid.nl/security\nMaak je persoonlijke QR-code aan\nScan het hier\n"</string>
   <string name="ScanView_MainTextBoldPart_COPY">"Zie je geen QR-code?"</string>
-  <string name="ScanView_FlashlightNotAvailable_COPY">"Zaklamp is niet beschikbaar"</string>
+  <string name="ScanView_Flashlight_NotAvailable_COPY">"Zaklamp is niet beschikbaar"</string>
+  <string name="ScanView_Flashlight_TurnOn_COPY">"Zet zaklamp aan"</string>
   <string name="ScanView_Error_COPY">"Fout"</string>
   <string name="Header_Title_COPY">"eduID"</string>
   <string name="Header_Logout_COPY">"Uitloggen"</string>
@@ -707,4 +708,5 @@
   <string name="ResponseErrors_ExistinUserAndDeviceTitle_COPY">"Reeds geassocieerd"</string>
   <string name="ResponseErrors_ExistinUserAndDeviceText_COPY">"Dit account is al gekoppeld aan een ander apparaat. Verwijder eerst jouw andere apparaat uit je account voordat je een nieuw apparaat registreert."</string>
   <string name="Deeplink_Processing_COPY">"Verzoek aan het bewerken..."</string>
+  <string name="Biometrics_UnknownError_COPY">"Biometrie mislukt om onbekende reden."</string>
 </resources>

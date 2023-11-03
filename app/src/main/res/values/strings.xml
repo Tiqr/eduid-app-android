@@ -18,7 +18,8 @@
   <string name="HomeView_ScanQRButton_COPY">"Scan QR"</string>
   <string name="ScanView_MainText_COPY">"Don't see a QR code?\nGo to eduid.nl/security\nCreate your personal QR code/n\nScan it here\n"</string>
   <string name="ScanView_MainTextBoldPart_COPY">"Don't see a QR code?"</string>
-  <string name="ScanView_FlashlightNotAvailable_COPY">"Torch isn't available"</string>
+  <string name="ScanView_Flashlight_NotAvailable_COPY">"Torch isn't available"</string>
+  <string name="ScanView_Flashlight_TurnOn_COPY">"Turn on flashlight"</string>
   <string name="ScanView_Error_COPY">"Error"</string>
   <string name="Header_Title_COPY">"eduID"</string>
   <string name="Header_Logout_COPY">"Logout"</string>
@@ -707,4 +708,5 @@
   <string name="ResponseErrors_ExistinUserAndDeviceTitle_COPY">"Already associated"</string>
   <string name="ResponseErrors_ExistinUserAndDeviceText_COPY">"This account is already associated with a different device. Remove your other device first from your account before registering a new device."</string>
   <string name="Deeplink_Processing_COPY">"Checking request..."</string>
+  <string name="Biometrics_UnknownError_COPY">"Biometrics failed for unknown reason."</string>
 </resources>

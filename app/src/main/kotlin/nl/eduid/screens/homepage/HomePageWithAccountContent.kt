@@ -53,7 +53,7 @@ fun HomePageWithAccountContent(
         AlertDialogWithTwoButton(title = stringResource(R.string.app_not_authorized),
             explanation = stringResource(id = R.string.app_not_authorized_explanation),
             dismissButtonLabel = stringResource(R.string.button_cancel),
-            confirmButtonLabel = stringResource(R.string.button_login),
+            confirmButtonLabel = stringResource(R.string.PinAndBioMetrics_SignIn_COPY),
             onDismiss = viewModel::clearPromptForAuthTrigger,
             onConfirm = {
                 viewModel.clearPromptForAuthTrigger()

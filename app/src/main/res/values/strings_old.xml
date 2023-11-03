@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
 
-    <string name="button_back">Back</string>
-    <string name="button_continue">Continue</string>
-    <string name="button_login">Log in</string>
-    <string name="button_torch">Turn on flashlight</string>
-    <string name="confirmpin_mismatch">PIN doesn\'t match.</string>
-    <string name="button_scan">Scan</string>
-    <string name="biometric_failed_unknown">Biometrics failed for unknown reason.</string>
-    <string name="login_access_description">to access the eduID app</string>
-
     <string name="tc_full_text">I agree with the terms of service. I also understand the privacy policy.</string>
     <string name="tc_understand">"I also understand"</string>
     <string name="tc_agree">"I agree with"</string>
