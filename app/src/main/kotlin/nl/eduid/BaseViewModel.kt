@@ -7,7 +7,9 @@ import org.tiqr.data.model.AuthenticationChallenge
 import org.tiqr.data.model.Challenge
 import org.tiqr.data.model.EnrollmentChallenge
 
-open class BaseViewModel(private val moshi: Moshi) : ViewModel() {
+open class BaseViewModel(
+    private val moshi: Moshi,
+) : ViewModel() {
 
     fun encodeChallenge(scanResult: Challenge): String {
         val asJson: String = when (scanResult) {
@@ -15,6 +17,7 @@ open class BaseViewModel(private val moshi: Moshi) : ViewModel() {
                 val adapter = moshi.adapter(EnrollmentChallenge::class.java)
                 adapter.toJson(scanResult)
             }
+
             is AuthenticationChallenge -> {
                 val adapter = moshi.adapter(AuthenticationChallenge::class.java)
                 adapter.toJson(scanResult)

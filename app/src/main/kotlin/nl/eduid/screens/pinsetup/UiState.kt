@@ -8,7 +8,6 @@ data class UiState(
     val pinValue: String = "",
     val pinConfirmValue: String = "",
     val isPinInvalid: Boolean = false,
-    val promptAuth: Boolean? = null,
     val nextStep: NextStep? = null,
     val errorData: ErrorData? = null,
     val isProcessing: Boolean = false,

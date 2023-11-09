@@ -8,10 +8,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import nl.eduid.BaseViewModel
-import nl.eduid.di.repository.StorageRepository
+import nl.eduid.CheckRecovery
 import nl.eduid.graphs.WithChallenge
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import org.tiqr.data.model.AuthenticationChallenge
@@ -25,13 +24,14 @@ import javax.inject.Inject
 class EnableBiometricViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     moshi: Moshi,
+    personal: PersonalInfoRepository,
     private val repository: EnrollmentRepository,
-    private val personal: PersonalInfoRepository,
-    private val storageRepository: StorageRepository,
-) : BaseViewModel(moshi) {
+) : BaseViewModel(moshi = moshi) {
     private val challenge: Challenge?
     private val pin: String
-    var isCompleted: Boolean? by mutableStateOf(null)
+    private val checkRecovery =
+        CheckRecovery(personal = personal)
+    var shouldAskForRecovery: Boolean? by mutableStateOf(null)
         private set
 
     init {
@@ -62,19 +62,13 @@ class EnableBiometricViewModel @Inject constructor(
                 repository.upgradeBiometric(it, challenge.identityProvider, pin)
             }
         }
-        isCompleted = storageRepository.isAuthorized.firstOrNull() ?: false
+        shouldAskForRecovery = checkRecovery.shouldAppDoRecoveryForIdentity(challenge?.identity?.identifier.orEmpty())
     }
 
     fun stopOfferBiometric() = viewModelScope.launch {
         challenge?.identity?.let {
             repository.stopOfferBiometric(it)
         }
-        isCompleted = storageRepository.isAuthorized.firstOrNull() ?: false
-    }
-
-    @SuppressWarnings("unused")
-    private suspend fun checkRecoveryRequired(): Boolean {
-        val userDetails = personal.getUserDetails()
-        return userDetails?.isRecoveryRequired() == true
+        shouldAskForRecovery = checkRecovery.shouldAppDoRecoveryForIdentity(challenge?.identity?.identifier.orEmpty())
     }
 }
