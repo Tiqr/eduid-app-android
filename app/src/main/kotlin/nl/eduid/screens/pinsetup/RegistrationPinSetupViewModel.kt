@@ -6,16 +6,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import nl.eduid.BaseViewModel
+import nl.eduid.CheckRecovery
 import nl.eduid.ErrorData
 import nl.eduid.R
-import nl.eduid.di.repository.StorageRepository
 import nl.eduid.graphs.Account
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import nl.eduid.ui.PIN_MAX_LENGTH
@@ -31,15 +29,15 @@ import javax.inject.Inject
 class RegistrationPinSetupViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     moshi: Moshi,
+    personal: PersonalInfoRepository,
     private val enrollRepository: EnrollmentRepository,
-    private val personal: PersonalInfoRepository,
-    private val storage: StorageRepository,
 ) : BaseViewModel(moshi) {
     var uiState by mutableStateOf(UiState())
         private set
 
-    val isAuthorized = storage.isAuthorized.asLiveData()
     private val challenge: EnrollmentChallenge?
+    private val checkRecovery =
+        CheckRecovery(personal = personal)
 
     init {
         val enrolChallenge =
@@ -63,10 +61,10 @@ class RegistrationPinSetupViewModel @Inject constructor(
     }
 
     fun onPinChange(inputCode: String, pinStep: PinStep) {
-        if (pinStep is PinStep.PinCreate) {
-            uiState = uiState.copy(pinValue = inputCode, isPinInvalid = false)
+        uiState = if (pinStep is PinStep.PinCreate) {
+            uiState.copy(pinValue = inputCode, isPinInvalid = false)
         } else {
-            uiState = uiState.copy(pinConfirmValue = inputCode, isPinInvalid = false)
+            uiState.copy(pinConfirmValue = inputCode, isPinInvalid = false)
         }
     }
 
@@ -74,14 +72,14 @@ class RegistrationPinSetupViewModel @Inject constructor(
         uiState = uiState.copy(isProcessing = true)
         if (currentStep is PinStep.PinCreate) {
             val createdPin = uiState.pinValue
-            if (createdPin.length == PIN_MAX_LENGTH) {
-                uiState = uiState.copy(
+            uiState = if (createdPin.length == PIN_MAX_LENGTH) {
+                uiState.copy(
                     pinStep = PinStep.PinConfirm,
                     isPinInvalid = false,
                     isProcessing = false
                 )
             } else {
-                uiState = uiState.copy(isPinInvalid = true, isProcessing = false)
+                uiState.copy(isPinInvalid = true, isProcessing = false)
             }
         } else {
             val confirmPin = uiState.pinConfirmValue
@@ -118,7 +116,6 @@ class RegistrationPinSetupViewModel @Inject constructor(
                 val nextStep = calculateNextStep(context, currentChallenge)
                 uiState =
                     uiState.copy(
-                        promptAuth = storage.isAuthorized.firstOrNull(),
                         nextStep = nextStep,
                         isProcessing = false
                     )
@@ -130,11 +127,12 @@ class RegistrationPinSetupViewModel @Inject constructor(
         context: Context,
         currentChallenge: EnrollmentChallenge,
     ): NextStep {
-        val userDetails = personal.getUserDetails()
         return if (context.biometricUsable() && currentChallenge.identity.biometricOfferUpgrade) {
             NextStep.PromptBiometric(currentChallenge, uiState.pinConfirmValue)
         } else {
-            if (userDetails != null) {
+            val shouldAppDoRecovery =
+                checkRecovery.shouldAppDoRecoveryForIdentity(currentChallenge.identity.identifier)
+            if (shouldAppDoRecovery) {
                 NextStep.Recovery
             } else {
                 NextStep.RecoveryInBrowser

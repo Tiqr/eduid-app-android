@@ -126,30 +126,29 @@ fun MainGraph(
     ) { entry ->
         val viewModel = hiltViewModel<RegistrationPinSetupViewModel>(entry)
         RegistrationPinSetupScreen(viewModel = viewModel,
-            closePinSetupFlow = { navController.popBackStack() },
-            goToNextStep = { nextStep ->
-                when (nextStep) {
-                    NextStep.RecoveryInBrowser -> {
-                        navController.navigate(Graph.CONTINUE_RECOVERY_IN_BROWSER)
-                    }
+            closePinSetupFlow = { navController.popBackStack() }
+        ) { nextStep ->
+            when (nextStep) {
+                NextStep.RecoveryInBrowser -> {
+                    navController.navigate(Graph.CONTINUE_RECOVERY_IN_BROWSER)
+                }
 
-                    is NextStep.PromptBiometric -> {
-                        navController.navigate(
-                            WithChallenge.EnableBiometric.buildRouteForEnrolment(
-                                encodedChallenge = viewModel.encodeChallenge(nextStep.challenge),
-                                pin = nextStep.pin
-                            )
-                        ) {
-                            popUpTo(Graph.HOME_PAGE)
-                        }
-                    }
-
-                    NextStep.Recovery -> navController.navigate(PhoneNumberRecovery.RequestCode.route) {
+                is NextStep.PromptBiometric -> {
+                    navController.navigate(
+                        WithChallenge.EnableBiometric.buildRouteForEnrolment(
+                            encodedChallenge = viewModel.encodeChallenge(nextStep.challenge),
+                            pin = nextStep.pin
+                        )
+                    ) {
                         popUpTo(Graph.HOME_PAGE)
                     }
                 }
-            },
-            promptAuth = { navController.navigate(Graph.OAUTH) })
+
+                NextStep.Recovery -> navController.navigate(PhoneNumberRecovery.RequestCode.route) {
+                    popUpTo(Graph.HOME_PAGE)
+                }
+            }
+        }
     }//endregion
 
     //region Authentication
@@ -182,8 +181,8 @@ fun MainGraph(
         route = WithChallenge.EnableBiometric.routeWithArgs, arguments = WithChallenge.arguments
     ) { entry ->
         val viewModel = hiltViewModel<EnableBiometricViewModel>(entry)
-        EnableBiometricScreen(viewModel = viewModel, goToNext = { askRecovery ->
-            if (askRecovery) {
+        EnableBiometricScreen(viewModel = viewModel, goToNext = { shouldAskForRecovery ->
+            if (shouldAskForRecovery) {
                 navController.navigate(PhoneNumberRecovery.RequestCode.route) {
                     popUpTo(Graph.HOME_PAGE)
                 }
@@ -352,6 +351,7 @@ fun MainGraph(
                     Intent::class.java
                 )
             } else {
+                @Suppress("DEPRECATION")
                 entry.arguments?.getParcelable(
                     NavController.KEY_DEEP_LINK_INTENT
                 )

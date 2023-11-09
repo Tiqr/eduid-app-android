@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -29,7 +28,6 @@ fun RegistrationPinSetupScreen(
     viewModel: RegistrationPinSetupViewModel,
     closePinSetupFlow: () -> Unit,
     goToNextStep: (NextStep) -> Unit,
-    promptAuth: () -> Unit,
 ) {
     BackHandler { viewModel.handleBackNavigation(closePinSetupFlow) }
     //Because the same screen is being used for creating the PIN as well as confirming the PIN
@@ -39,14 +37,10 @@ fun RegistrationPinSetupScreen(
     EduIdTopAppBar(
         onBackClicked = dispatcher::onBackPressed,
     ) {
-        val isAuthorized by viewModel.isAuthorized.observeAsState(initial = null)
-
         RegistrationPinSetupContent(
             uiState = viewModel.uiState,
-            isAuthorized = isAuthorized,
             padding = it,
             goToNextStep = goToNextStep,
-            promptAuth = promptAuth,
             viewModel = viewModel,
         )
     }
@@ -55,10 +49,8 @@ fun RegistrationPinSetupScreen(
 @Composable
 private fun RegistrationPinSetupContent(
     uiState: UiState,
-    isAuthorized: Boolean? = null,
     padding: PaddingValues = PaddingValues(),
     goToNextStep: (NextStep) -> Unit = {},
-    promptAuth: () -> Unit = {},
     viewModel: RegistrationPinSetupViewModel,
 ) {
     var enrollmentInProgress by rememberSaveable { mutableStateOf(false) }

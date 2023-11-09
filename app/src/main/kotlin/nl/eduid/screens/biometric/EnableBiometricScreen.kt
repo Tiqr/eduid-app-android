@@ -58,7 +58,7 @@ fun EnableBiometricScreen(
     if (waitingForVmEvent) {
         val currentGoToNextStep by rememberUpdatedState(goToNext)
         LaunchedEffect(lifecycle) {
-            snapshotFlow { viewModel.isCompleted }.distinctUntilChanged().filterNotNull()
+            snapshotFlow { viewModel.shouldAskForRecovery }.distinctUntilChanged().filterNotNull()
                 .flowWithLifecycle(lifecycle).collect {
                     waitingForVmEvent = false
                     currentGoToNextStep(it)
