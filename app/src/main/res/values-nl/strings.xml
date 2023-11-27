@@ -97,8 +97,8 @@
     <string name="tc_agree">"Ik stem in met "</string>
     <string name="tc_terms">de voorwaarden van deze dienst.</string>
     <string name="tc_privacy_policy">de privacy policy</string>
-    <string name="edu_id_terms_link">https://eduid.nl/terms-of-use/</string>
-    <string name="edu_id_privacy_policy_link">https://eduid.nl/privacy_policy/</string>
+    <string name="edu_id_terms_link">https://eduid.nl/gebruiksvoorwaarden/</string>
+    <string name="edu_id_privacy_policy_link">https://eduid.nl/privacy/</string>
 
     <string name="request_id_link_title">Controleer je email</string>
     <string name="request_id_link_header_text">Om in te loggen, klik op de link in de email die verstuurd is aan </string>
