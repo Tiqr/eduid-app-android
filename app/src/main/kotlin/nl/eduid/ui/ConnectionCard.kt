@@ -128,22 +128,20 @@ private fun InstitutionInfoBlock(
     Modifier.fillMaxWidth()
 ) {
     InfoRow(
-        label = stringResource(
-            R.string.personalinfo_verified_by_on,
-            institutionInfo.institution,
-            institutionInfo.createdStamp.getDateString()
+        label = stringResource(R.string.Profile_VerifiedBy_COPY, institutionInfo.institution)
+                + stringResource(R.string.Profile_VerifiedOn_COPY, institutionInfo.createdStamp.getDateString()
         )
     )
     InfoRow(
-        label = stringResource(R.string.personalinfo_institution),
+        label = stringResource(R.string.Profile_Institution_COPY),
         value = institutionInfo.institution
     )
     InfoRow(
-        label = stringResource(R.string.personalinfo_affiliations),
+        label = stringResource(R.string.Profile_Affiliations_COPY),
         value = institutionInfo.affiliationString
     )
     InfoRow(
-        label = stringResource(R.string.personalinfo_expires),
+        label = stringResource(R.string.Profile_Expires_COPY),
         value = institutionInfo.expiryStamp.getDateString()
     )
     Button(

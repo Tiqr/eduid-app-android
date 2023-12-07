@@ -188,8 +188,8 @@ fun PersonalInfoScreenContent(
 
     Spacer(Modifier.height(12.dp))
     LinkAccountCard(
-        title = R.string.personalinfo_add_role_institution,
-        subtitle = R.string.personalinfo_add_via,
+        title = R.string.Profile_AddRoleAndInstitution_COPY,
+        subtitle = R.string.Profile_AddViaSurfconext_COPY,
         enabled = !isLoading,
         addLinkToAccount = addLinkToAccount
     )
@@ -208,7 +208,7 @@ fun PersonalInfoScreenContent(
             modifier = Modifier.padding(start = 24.dp, end = 24.dp)
         )
         Text(
-            text = stringResource(R.string.personalinfo_manage_your_account),
+            text = stringResource(R.string.Profile_ManageYourAccount_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 textAlign = TextAlign.Start,
                 color = ButtonTextGrey,
