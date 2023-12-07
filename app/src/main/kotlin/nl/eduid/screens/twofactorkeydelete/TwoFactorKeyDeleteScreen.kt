@@ -173,7 +173,7 @@ private fun TwoFactorKeyDeleteScreenContent(
         )
         PrimaryButton(
             enabled = !inProgress,
-            text = stringResource(id = R.string.button_confirm),
+            text = stringResource(id = R.string.ConfirmDelete_Button_Confirm_COPY),
             modifier = Modifier.widthIn(min = 140.dp),
             onClick = onDeleteClicked,
             buttonBackgroundColor = ButtonRed,

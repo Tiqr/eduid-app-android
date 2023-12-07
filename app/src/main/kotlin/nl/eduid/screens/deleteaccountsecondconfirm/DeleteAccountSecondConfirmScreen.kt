@@ -213,7 +213,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
         )
         PrimaryButton(
             modifier = Modifier.widthIn(min = 140.dp),
-            text = stringResource(R.string.button_confirm),
+            text = stringResource(R.string.ConfirmDelete_Button_Confirm_COPY),
             onClick = onDeleteAccountPressed,
             buttonBackgroundColor = ButtonRed,
             buttonTextColor = Color.White,

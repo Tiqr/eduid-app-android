@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
-
-    <string name="button_confirm">Bevestigen</string>
-    <string name="security_sign_in_methods">Aanmeldmethoden</string>
-    <string name="security_2fa_key">2FA sleutel</string>
-    <string name="security_provided_by_eduid">Geleverd door %s</string>
-    <string name="security_send_a_magic_link_to">Stuur een magiche link naar</string>
-    <string name="security_add_a_password">Wachtwoord toevoegen</string>
-    <string name="security_change_password">Wijzig uw wachtwoord</string>
-
     <string name="preenroll_check_blocked_title">Al toegevoegd aan een ander toestel</string>
     <string name="preenroll_check_blocked_explanation">Dit account is al aan een toestel gekoppeld voor 2FA. Wil je 2FA op het bestaande toestel deactiveren en hier toevoegen?</string>
     <string name="preenroll_button_deactivate">Deactiveren</string>

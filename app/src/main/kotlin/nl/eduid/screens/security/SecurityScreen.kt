@@ -91,16 +91,16 @@ fun SecurityScreenContent(
     }
     securityInfo.twoFAProvider?.let { provider ->
         InfoField(
-            title = stringResource(R.string.security_2fa_key),
-            subtitle = stringResource(R.string.security_provided_by_eduid, provider),
+            title = stringResource(R.string.Security_TwoFAKey_COPY),
+            subtitle = stringResource(R.string.Security_ProvidedBy_COPY) + " $provider",
             onClick = on2FaClicked,
             endIcon = R.drawable.shield_tick_blue,
-            label = stringResource(R.string.security_sign_in_methods)
+            label = stringResource(R.string.Security_SecondSubTitle_COPY)
         )
         Spacer(Modifier.height(16.dp))
     } ?: run {
         Text(
-            text = stringResource(R.string.security_sign_in_methods),
+            text = stringResource(R.string.Security_SecondSubTitle_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.SemiBold,
@@ -109,7 +109,7 @@ fun SecurityScreenContent(
         Spacer(Modifier.height(6.dp))
     }
     InfoField(
-        title = stringResource(R.string.security_send_a_magic_link_to),
+        title = stringResource(R.string.Security_UseMagicLink_COPY),
         subtitle = securityInfo.email,
         onClick = onEditEmailClicked,
         endIcon = R.drawable.edit_icon
@@ -117,9 +117,9 @@ fun SecurityScreenContent(
     Spacer(Modifier.height(16.dp))
     InfoField(
         title = if (securityInfo.hasPassword) {
-            stringResource(R.string.security_change_password)
+            stringResource(R.string.Security_ChangePassword_COPY)
         } else {
-            stringResource(R.string.security_add_a_password)
+            stringResource(R.string.Security_AddPassword_COPY)
         }, subtitle = if (securityInfo.hasPassword) {
             "****"
         } else {

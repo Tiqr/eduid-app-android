@@ -112,7 +112,7 @@ fun DeleteServiceContent(
                 modifier = Modifier.widthIn(min = 140.dp),
             )
             PrimaryButton(
-                text = stringResource(R.string.button_confirm),
+                text = stringResource(R.string.ConfirmDelete_Button_Confirm_COPY),
                 onClick = removeService,
                 enabled = !inProgress,
                 modifier = Modifier.widthIn(min = 140.dp),

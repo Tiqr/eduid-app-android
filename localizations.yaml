@@ -807,7 +807,7 @@ SHARED:
         nl: Niet ondersteund
     UseMagicLink:
       COPY:
-        en: Send magic link to
+        en: Send a magic link to
         nl: Stuur magische link naar
     AddSecurityKeyInfo:
       COPY:
