@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
-
-    <string name="delete_two_key_title">Delete key</string>
-    <string name="delete_two_key_subtitle">There is no way to undo this action</string>
-    <string name="delete_two_key_description">Are you sure you want to delete your key?</string>
-
-    <string name="delete_service_confirm_title">Delete service</string>
-    <string name="delete_service_confirm_explanation">Are you sure you want to delete your unique pseudonymised eduID for %s and revoke access to your linked accounts? This service might not recognize you the next time you login and all your personal data within this service might be lost.</string>
     <string name="button_confirm">Confirm</string>
     <string name="security_sign_in_methods">Sign-in methods</string>
     <string name="security_2fa_key">2FA key</string>

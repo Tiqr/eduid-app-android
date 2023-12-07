@@ -55,7 +55,7 @@ fun DeleteServiceContent(
                 .fillMaxWidth()
         ) {
             Text(
-                text = stringResource(R.string.delete_service_confirm_title),
+                text = stringResource(R.string.DeleteService_Title_COPY),
                 style = MaterialTheme.typography.titleLarge.copy(
                     color = TextGreen, textAlign = TextAlign.Start
                 ),
@@ -90,7 +90,7 @@ fun DeleteServiceContent(
             Spacer(Modifier.height(18.dp))
             Text(
                 text = stringResource(
-                    R.string.delete_service_confirm_explanation, providerName
+                    R.string.DeleteService_Description_COPY, providerName
                 ),
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Start,

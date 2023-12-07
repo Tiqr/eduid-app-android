@@ -92,6 +92,7 @@ fun TwoFactorKeyDeleteScreen(
             waitForVmEvent = true
             viewModel.deleteKey(twoFaKeyId)
         },
+        keyId = twoFaKeyId,
         goBack = goBack,
     )
 }
@@ -99,6 +100,7 @@ fun TwoFactorKeyDeleteScreen(
 @Composable
 private fun TwoFactorKeyDeleteScreenContent(
     inProgress: Boolean = false,
+    keyId: String,
     padding: PaddingValues = PaddingValues(),
     onDeleteClicked: () -> Unit = {},
     goBack: () -> Unit = {},
@@ -112,7 +114,7 @@ private fun TwoFactorKeyDeleteScreenContent(
 ) {
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.Start) {
         Text(
-            text = stringResource(R.string.delete_two_key_title),
+            text = stringResource(R.string.TwoFactorKeys_DeleteKey_COPY),
             style = MaterialTheme.typography.titleLarge.copy(
                 color = TextGreen, textAlign = TextAlign.Start
             ),
@@ -133,7 +135,7 @@ private fun TwoFactorKeyDeleteScreenContent(
                     end.linkTo(text.start, margin = 12.dp)
                 })
             Text(style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
-                text = stringResource(R.string.delete_two_key_subtitle),
+                text = stringResource(R.string.ConfirmDelete_Disclaimer_COPY),
                 modifier = Modifier.constrainAs(text) {
                     start.linkTo(image.end)
                     end.linkTo(parent.end, margin = 12.dp)
@@ -148,7 +150,7 @@ private fun TwoFactorKeyDeleteScreenContent(
             Spacer(Modifier.height(18.dp))
         }
         Text(
-            text = stringResource(R.string.delete_two_key_description),
+            text = stringResource(R.string.Credential_DeleteCredentialConfirmation_COPY, keyId),
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = TextBlack, textAlign = TextAlign.Start
             ),
@@ -184,6 +186,6 @@ private fun TwoFactorKeyDeleteScreenContent(
 @Composable
 private fun PreviewTwoFactorKeyDeleteScreenContent() {
     EduidAppAndroidTheme {
-        TwoFactorKeyDeleteScreenContent(onDeleteClicked = { })
+        TwoFactorKeyDeleteScreenContent(keyId = "123", onDeleteClicked = { })
     }
 }
