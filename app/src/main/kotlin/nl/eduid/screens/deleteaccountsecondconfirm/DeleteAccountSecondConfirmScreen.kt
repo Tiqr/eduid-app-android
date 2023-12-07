@@ -130,7 +130,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
         ) {
             Column() {
                 Text(
-                    text = stringResource(R.string.delete_account_two_title),
+                    text = stringResource(R.string.Account_DeleteAccountSure_COPY),
                     style = MaterialTheme.typography.titleLarge.copy(
                         color = TextGreen, textAlign = TextAlign.Start
                     ),
@@ -160,7 +160,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
                     end.linkTo(text.start, margin = 12.dp)
                 })
             Text(style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
-                text = stringResource(R.string.delete_no_undo_warning),
+                text = stringResource(R.string.ConfirmDelete_Disclaimer_COPY),
                 modifier = Modifier.constrainAs(text) {
                     start.linkTo(image.end)
                     end.linkTo(parent.end, margin = 12.dp)
@@ -175,7 +175,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
             Column() {
                 Spacer(Modifier.height(18.dp))
                 Text(
-                    text = stringResource(R.string.delete_account_two_description),
+                    text = stringResource(R.string.ConfirmDelete_TypeNameToConfirm_COPY),
                     style = MaterialTheme.typography.bodyLarge.copy(
                         color = TextBlack, textAlign = TextAlign.Start
                     ),

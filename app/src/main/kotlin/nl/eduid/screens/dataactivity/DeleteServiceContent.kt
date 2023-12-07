@@ -82,7 +82,7 @@ fun DeleteServiceContent(
                 )
                 Text(
                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
-                    text = stringResource(R.string.delete_no_undo_warning),
+                    text = stringResource(R.string.DeleteService_Disclaimer_COPY),
                     modifier = Modifier.fillMaxWidth()
                 )
             }
