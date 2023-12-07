@@ -266,6 +266,10 @@ SHARED:
       COPY:
         en: provided by
         nl: aangeboden door
+    ProvidedByYou:
+      COPY:
+        en: Provided by you
+        nl: Zelf ingesteld
     Title:
       COPY:
         en: Personal information

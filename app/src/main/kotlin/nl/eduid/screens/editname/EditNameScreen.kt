@@ -124,7 +124,7 @@ private fun EditNameContent(
     }
     InfoField(
         title = "${personalInfo.seflAssertedName.givenName} ${personalInfo.seflAssertedName.familyName}",
-        subtitle = stringResource(R.string.infotab_providedby_you),
+        subtitle = stringResource(R.string.Profile_ProvidedByYou_COPY),
         endIcon = R.drawable.edit_icon,
         onClick = { updateName(personalInfo.seflAssertedName) },
     )
@@ -150,7 +150,7 @@ private fun EditNameContent(
         }
         ConnectionCard(
             title = personalInfo.name,
-            subtitle = stringResource(R.string.infotab_providedby, personalInfo.nameProvider),
+            subtitle = stringResource(R.string.Profile_ProvidedBy_COPY, personalInfo.nameProvider),
             institutionInfo = account,
             onRemoveConnection = { removeConnection(0) },
         )

@@ -156,7 +156,7 @@ private fun InstitutionInfoBlock(
             .fillMaxWidth(),
     ) {
         Text(
-            text = stringResource(R.string.infotab_remove_connection),
+            text = stringResource(R.string.Institution_Delete_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = ButtonRed, fontWeight = FontWeight.SemiBold
             )

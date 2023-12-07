@@ -51,6 +51,7 @@
   <string name="Profile_RemoveServicePrompt_Delete_COPY">"Verwijder"</string>
   <string name="Profile_RemoveServicePrompt_Cancel_COPY">"Annuleer"</string>
   <string name="Profile_ProvidedBy_COPY">"aangeboden door"</string>
+  <string name="Profile_ProvidedByYou_COPY">"Zelf ingesteld"</string>
   <string name="Profile_Title_COPY">"Persoonlijke informatie"</string>
   <string name="Profile_Info_COPY">"Wanneer je eduID gebruikt om in te loggen op andere websites, kan jouw persoonlijke informatie worden gedeeld. Sommige websites vereisen dat je persoonlijke gegevens worden gevalideerd door een derde partij."</string>
   <string name="Profile_Basic_COPY">"Basis informatie"</string>

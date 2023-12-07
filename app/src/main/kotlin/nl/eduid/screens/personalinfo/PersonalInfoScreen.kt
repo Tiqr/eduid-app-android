@@ -148,28 +148,28 @@ fun PersonalInfoScreenContent(
     Spacer(Modifier.height(12.dp))
     InfoField(
         title = personalInfo.name, subtitle = if (personalInfo.nameProvider == null) {
-            stringResource(R.string.infotab_providedby_you)
+            stringResource(R.string.Profile_ProvidedByYou_COPY)
         } else {
-            stringResource(R.string.infotab_providedby, personalInfo.nameProvider)
+            stringResource(R.string.Profile_ProvidedBy_COPY, personalInfo.nameProvider)
         }, onClick = onNameClicked, endIcon = if (personalInfo.nameProvider == null) {
             R.drawable.edit_icon
         } else {
             R.drawable.shield_tick_blue
-        }, label = stringResource(R.string.infotab_name)
+        }, label = stringResource(R.string.Profile_Name_COPY)
     )
     Spacer(Modifier.height(16.dp))
     InfoField(
         title = personalInfo.email,
-        subtitle = stringResource(R.string.infotab_providedby_you),
+        subtitle = stringResource(R.string.Profile_ProvidedByYou_COPY),
         onClick = onEmailClicked,
         endIcon = R.drawable.edit_icon,
         capitalizeTitle = false,
-        label = stringResource(R.string.infotab_email),
+        label = stringResource(R.string.Profile_Email_COPY),
     )
     Spacer(Modifier.height(16.dp))
     if (personalInfo.institutionAccounts.isNotEmpty()) {
         Text(
-            text = stringResource(R.string.infotab_role_institution),
+            text = stringResource(R.string.Profile_RoleAndInstitution_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.SemiBold,
@@ -180,7 +180,7 @@ fun PersonalInfoScreenContent(
     personalInfo.institutionAccounts.forEachIndexed { index, account ->
         ConnectionCard(
             title = account.role,
-            subtitle = stringResource(R.string.infotab_at, account.roleProvider),
+            subtitle = stringResource(R.string.Profile_InstitutionAt_COPY, account.roleProvider),
             institutionInfo = account,
             onRemoveConnection = { removeConnection(index) },
         )

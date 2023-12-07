@@ -157,16 +157,16 @@ private fun ServiceProviderBlock(
 ) = Column(
     Modifier.fillMaxWidth()
 ) {
-    InfoRow(label = stringResource(R.string.infotab_login_details))
+    InfoRow(label = stringResource(R.string.DataActivity_Details_Login_COPY))
     serviceProviderInfo.firstLoginStamp?.let {
         InfoRow(
-            label = stringResource(R.string.infotab_login_first),
+            label = stringResource(R.string.DataActivity_Details_FirstLogin_COPY),
             value = it.getDateString()
         )
     }
     serviceProviderInfo.uniqueId?.let {
         InfoRow(
-            label = stringResource(R.string.infotab_login_unique_eduid),
+            label = stringResource(R.string.DataActivity_Details_UniqueEduID_COPY),
             value = it
         )
     }
@@ -184,7 +184,7 @@ private fun ServiceProviderBlock(
             .fillMaxWidth(),
     ) {
         Text(
-            text = stringResource(R.string.infotab_delete_login_details),
+            text = stringResource(R.string.DataActivity_Details_Delete_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = ButtonRed, fontWeight = FontWeight.SemiBold
             )

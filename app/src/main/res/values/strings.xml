@@ -51,6 +51,7 @@
   <string name="Profile_RemoveServicePrompt_Delete_COPY">"Delete"</string>
   <string name="Profile_RemoveServicePrompt_Cancel_COPY">"Cancel"</string>
   <string name="Profile_ProvidedBy_COPY">"provided by"</string>
+  <string name="Profile_ProvidedByYou_COPY">"Provided by you"</string>
   <string name="Profile_Title_COPY">"Personal information"</string>
   <string name="Profile_Info_COPY">"When you use eduID to login to other websites, some of your personal information will be shared. Some websites require that your personal information is validated by a third party."</string>
   <string name="Profile_Basic_COPY">"Basic information"</string>

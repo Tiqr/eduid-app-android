@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
-    <string name="infotab_remove_connection">Verwijder koppeling</string>
-    <string name="infotab_login_details">Logingegevens</string>
-    <string name="infotab_login_first">Eerste login</string>
-    <string name="infotab_login_unique_eduid">Unieke eduID</string>
-
-    <string name="infotab_name">Naam</string>
-    <string name="infotab_fullname">Volledige naam</string>
-    <string name="infotab_email">E-mail</string>
-    <string name="infotab_providedby">Geleverd door %s</string>
-    <string name="infotab_providedby_you">Zelf ingesteld</string>
-    <string name="infotab_at">Geverifieerd door %s</string>
-    <string name="infotab_role_institution">Rol &amp; instelling</string>
     <string name="personalinfo_manage_your_account">Beheer jouw gegevens</string>
     <string name="personalinfo_add_role_institution">Voeg een rol &amp; instelling toe</string>
     <string name="personalinfo_add_via">Voeg dit toe via SURFConext</string>
