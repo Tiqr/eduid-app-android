@@ -87,14 +87,14 @@ fun DataAndActivityScreenContent(
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
             textAlign = TextAlign.Start, color = ButtonGreen
-        ), text = stringResource(R.string.data_info_title), modifier = Modifier.fillMaxWidth()
+        ), text = stringResource(R.string.DataActivity_Title_COPY), modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
     Text(
         style = MaterialTheme.typography.bodyLarge,
         textAlign = TextAlign.Start,
         modifier = Modifier.fillMaxWidth(),
-        text = stringResource(R.string.data_info_subtitle),
+        text = stringResource(R.string.DataActivity_Info_COPY),
     )
     Spacer(Modifier.height(12.dp))
     if (isLoading) {
@@ -112,7 +112,7 @@ fun DataAndActivityScreenContent(
                 title = provider.providerName.orEmpty(),
                 subtitle = provider.firstLoginStamp?.let {
                     stringResource(
-                        R.string.data_info_on_date,
+                        R.string.Profile_VerifiedOn_COPY,
                         it.getDateTimeString()
                     )
                 } ?: "-",

@@ -192,7 +192,7 @@ private fun ServiceProviderBlock(
     }
     Spacer(Modifier.height(24.dp))
     Text(
-        text = stringResource(R.string.data_info_delete_disclaimer),
+        text = stringResource(R.string.DataActivity_Info_COPY),
         style = MaterialTheme.typography.bodySmall.copy(
             textAlign = TextAlign.Start,
             color = TextBlack,

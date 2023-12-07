@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
-    <string name="data_info_title">Data &amp; activiteit</string>
-    <string name="data_info_subtitle">Elke dienst waarvoor je eduID gebruikt ontvangt bepaalde gegevens vanuit jouw eduID account. Denk hierbij aan je naam, e-mailadres of aan een pseudoniem waarmee de dienst jou uniek kan identificeren.</string>
-    <string name="data_info_delete_disclaimer">Als je deze logingegevens verwijdert, verwijdert eduID deze informatie uit je eduID account. Je hebt nog een account bij de dienst zelf. Als je dat wilt laten verwijderen, doe dat dan rechtstreeks bij de dienst.</string>
-    <string name="data_info_on_date">op %s</string>
-
-    <string name="security_title">Beveiliging</string>
-    <string name="security_subtitle">We bieden verschillende methoden om in te loggen met je eduID.</string>
-
     <string name="two_fa_key_title">2FA sleutel(s)</string>
     <string name="two_fa_key_list_title">Jouw sleutel(s)</string>
     <string name="two_fa_key_subtitle">Sleutels om veilig in te loggen zonder wachtwoord of link.</string>
