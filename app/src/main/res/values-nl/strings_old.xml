@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
-    <string name="two_fa_key_title">2FA sleutel(s)</string>
-    <string name="two_fa_key_list_title">Jouw sleutel(s)</string>
-    <string name="two_fa_key_subtitle">Sleutels om veilig in te loggen zonder wachtwoord of link.</string>
-    <string name="two_fa_key_empty">Geen sleutels.</string>
-    <string name="two_fa_use_biometric">Gebruik biometrie</string>
-    <string name="two_fa_delete">Sleutel verwijderen</string>
-    <string name="two_fa_account">Account</string>
-    <string name="two_fa_unieque_keyid">Uniek SleutelID</string>
-
     <string name="add_password_title">Voeg een wachtwoord toe</string>
     <string name="change_password_title">Wachtwoord wijzigen of verwijderen</string>
     <string name="add_password_subtitle">We sturen je een email om een wachtwoord in te stellen.</string>

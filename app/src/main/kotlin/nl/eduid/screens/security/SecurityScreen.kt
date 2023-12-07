@@ -74,12 +74,12 @@ fun SecurityScreenContent(
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
             textAlign = TextAlign.Start, color = ButtonGreen
-        ), text = stringResource(R.string.security_title), modifier = Modifier.fillMaxWidth()
+        ), text = stringResource(R.string.Sidebar_Security_COPY), modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
     Text(
         style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-        text = stringResource(R.string.security_subtitle),
+        text = stringResource(R.string.Security_SubTitle_COPY),
         modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(36.dp))
