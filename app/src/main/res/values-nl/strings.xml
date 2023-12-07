@@ -17,6 +17,7 @@
   <string name="HomeView_PersonalInfoButton_COPY">"Gegevens"</string>
   <string name="HomeView_ActivityButton_COPY">"Activiteit"</string>
   <string name="HomeView_ScanQRButton_COPY">"Scan QR"</string>
+  <string name="ScanView_Title_COPY">"Scan de QR-code"</string>
   <string name="ScanView_MainText_COPY">"Zie je geen QR-code?\nGa naar eduid.nl/security\nMaak je persoonlijke QR-code aan\nScan het hier\n"</string>
   <string name="ScanView_MainTextBoldPart_COPY">"Zie je geen QR-code?"</string>
   <string name="ScanView_Flashlight_NotAvailable_COPY">"Zaklamp is niet beschikbaar"</string>
@@ -712,4 +713,5 @@
   <string name="Deeplink_Processing_COPY">"Verzoek aan het bewerken..."</string>
   <string name="Biometrics_UnknownError_COPY">"Biometrie mislukt om onbekende reden."</string>
   <string name="MagicLink_OpenEmailClient_COPY">"Open de email app"</string>
+  <string name="Permission_Scan_COPY">"Geef toestemming voor het gebruik van de camera."</string>
 </resources>

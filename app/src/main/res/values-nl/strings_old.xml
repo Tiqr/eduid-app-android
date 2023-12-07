@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
-    <string name="scan_title" tools:ignore="ExtraTranslation">Scan de QR-code</string>
-    <string name="scan_registration_explaination" tools:ignore="ExtraTranslation">Geen QR-code?</string>
-    <string name="scan_registration_explaination1a" tools:ignore="ExtraTranslation">1. Ga naar </string>
-    <string name="scan_registration_explaination1b" tools:ignore="ExtraTranslation">eduid.nl\/security</string>
-    <string name="scan_registration_explaination1c" tools:ignore="ExtraTranslation">op je pc</string>
-    <string name="scan_registration_explaination2" tools:ignore="ExtraTranslation">2. Genereer een persoonlijke QR-code</string>
-    <string name="scan_registration_explaination3" tools:ignore="ExtraTranslation">3. Scan het in de app.</string>
-    <string name="scan_permission_explanation" tools:ignore="ExtraTranslation">Geef toestemming voor het gebruik van de camera.</string>
-
     <string name="pinsetup_title" tools:ignore="ExtraTranslation">Kies een PINcode</string>
     <string name="pinsetup_description" tools:ignore="ExtraTranslation">Om de eduID app te gebruiken moet je een pincode instellen.</string>
     <string name="pinsetup_confirm_title" tools:ignore="ExtraTranslation">Herhaal de PINcode</string>

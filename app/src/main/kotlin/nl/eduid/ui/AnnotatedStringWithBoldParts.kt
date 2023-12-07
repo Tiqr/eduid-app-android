@@ -11,13 +11,14 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 fun annotatedStringWithBoldParts(
     text: String,
-    vararg boldParts: String
+    vararg boldParts: String,
+    boldWeight: FontWeight = FontWeight.SemiBold
 ) : AnnotatedString {
     val annotatedString = AnnotatedString.Builder(text)
     boldParts.forEach { boldPart ->
         val startIndex = text.indexOf(boldPart)
         if (startIndex >= 0) {
-            annotatedString.addStyle(SpanStyle(fontWeight = FontWeight.SemiBold), startIndex, boldPart.length)
+            annotatedString.addStyle(SpanStyle(fontWeight = boldWeight), startIndex, boldPart.length)
         }
     }
     return annotatedString.toAnnotatedString()

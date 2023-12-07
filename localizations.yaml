@@ -14,6 +14,11 @@ ANDROID:
       COPY:
         en: "Open email client"
         nl: "Open de email app"
+  Permission:
+    Scan:
+      COPY:
+        en: Please grant access to the camera.
+        nl: Geef toestemming voor het gebruik van de camera.
 SHARED:
   Sidebar:
     Home:
@@ -93,12 +98,16 @@ SHARED:
         en: Scan QR
         nl: Scan QR
   ScanView:
+    Title:
+      COPY:
+        en: Scan the QR-code
+        nl: Scan de QR-code
     MainText:
       COPY:
         en: |
           Don't see a QR code?
           Go to eduid.nl/security
-          Create your personal QR code/n
+          Create your personal QR code
           Scan it here
         nl: |
           Zie je geen QR-code?
