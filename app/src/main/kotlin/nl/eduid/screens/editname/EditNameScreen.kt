@@ -38,6 +38,7 @@ import nl.eduid.screens.personalinfo.PersonalInfoViewModel
 import nl.eduid.ui.ConnectionCard
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.InfoField
+import nl.eduid.ui.TwoColorTitle
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.LinkAccountCard
@@ -94,15 +95,9 @@ private fun EditNameContent(
         .navigationBarsPadding()
         .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
 ) {
-    Text(
-        style = MaterialTheme.typography.titleLarge,
-        text = stringResource(R.string.edit_name_title),
-        modifier = Modifier.fillMaxWidth()
-    )
-    Text(
-        style = MaterialTheme.typography.titleLarge.copy(
-            color = ButtonGreen
-        ), text = stringResource(R.string.edit_name_subtitle), modifier = Modifier.fillMaxWidth()
+    TwoColorTitle(
+        firstPart = stringResource(R.string.NameOverview_Title_AllDetailsOf_COPY),
+        secondPart = stringResource(R.string.NameOverview_Title_FullName_COPY)
     )
     if (isLoading) {
         Spacer(modifier = Modifier.height(8.dp))
@@ -121,7 +116,7 @@ private fun EditNameContent(
             modifier = Modifier.width(8.dp)
         )
         Text(
-            text = stringResource(R.string.edit_name_selfasserted),
+            text = stringResource(R.string.NameOverview_SelfAsserted_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 fontWeight = FontWeight.SemiBold,
             ),
@@ -147,7 +142,7 @@ private fun EditNameContent(
                 modifier = Modifier.width(8.dp)
             )
             Text(
-                text = stringResource(R.string.edit_name_verified),
+                text = stringResource(R.string.NameOverview_Verified_COPY),
                 style = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.SemiBold,
                 ),
@@ -168,15 +163,15 @@ private fun EditNameContent(
                 modifier = Modifier.width(8.dp)
             )
             Text(
-                text = stringResource(R.string.edit_name_add_another_source),
+                text = stringResource(R.string.NameOverview_AnotherSource_COPY),
                 style = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.SemiBold,
                 ),
             )
         }
         LinkAccountCard(
-            title = R.string.edit_name_add_link_not_available,
-            subtitle = R.string.edit_name_add_link_via,
+            title = R.string.NameOverview_NotAvailable_COPY,
+            subtitle = R.string.NameOverview_ProceedToAdd_COPY,
             enabled = !isLoading,
             addLinkToAccount = addLinkToAccount
         )

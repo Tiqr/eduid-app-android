@@ -53,6 +53,7 @@ import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
+import nl.eduid.ui.TwoColorTitle
 import nl.eduid.ui.keyboardAsState
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
@@ -141,21 +142,11 @@ fun EditNameFormContent(
         AnimatedVisibility(
             !isKeyboardOpen, Modifier.fillMaxWidth()
         ) {
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    style = MaterialTheme.typography.titleLarge,
-                    text = stringResource(R.string.edit_name_form_title),
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Text(
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        color = ButtonGreen
-                    ),
-                    text = stringResource(R.string.edit_name_subtitle),
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(Modifier.height(12.dp))
-            }
+            TwoColorTitle(
+                firstPart = stringResource(R.string.EditName_Title_Edit_COPY),
+                secondPart = stringResource(R.string.EditName_Title_FullName_COPY)
+            )
+            Spacer(Modifier.height(12.dp))
         }
         if (inProgress) {
             LinearProgressIndicator(

@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
-    <string name="edit_name_title">All details of</string>
-    <string name="edit_name_form_title">Edit</string>
-    <string name="edit_name_subtitle">Full name</string>
-    <string name="edit_name_selfasserted">Self asserted</string>
-    <string name="edit_name_verified">Verified</string>
-    <string name="edit_name_add_another_source">Another source...</string>
-    <string name="button_update">Update</string>
-    <string name="edit_name_another_source">Another source…</string>
-    <string name="edit_name_add_link_not_available">Not available</string>
-    <string name="edit_name_add_link_via">Proceed to add this via your school/uni</string>
-
     <string name="scan_title" tools:ignore="ExtraTranslation">Scan the QR-code</string>
     <string name="scan_registration_explaination" tools:ignore="ExtraTranslation">Don\'t see a QR code?</string>
     <string name="scan_registration_explaination1a" tools:ignore="ExtraTranslation">1. Go to </string>
