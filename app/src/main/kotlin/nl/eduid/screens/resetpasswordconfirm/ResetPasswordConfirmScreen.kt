@@ -153,9 +153,9 @@ fun ResetPasswordConfirmScreenContent(
                     style = MaterialTheme.typography.titleLarge.copy(
                         textAlign = TextAlign.Start, color = ButtonGreen
                     ), text = if (isAddPassword) {
-                        stringResource(R.string.reset_password_add_title)
+                        stringResource(R.string.Password_AddTitle_COPY)
                     } else {
-                        stringResource(R.string.reset_password_change_title)
+                        stringResource(R.string.Password_UpdateTitle_COPY)
                     }, modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(Modifier.height(32.dp))
@@ -173,7 +173,7 @@ fun ResetPasswordConfirmScreenContent(
                 textAlign =
                 TextAlign.Start
             ),
-            text = stringResource(R.string.reset_password_confirm_subtitle),
+            text = stringResource(R.string.ChangePassword_Description_NewPassword_COPY),
             modifier = Modifier.fillMaxWidth()
         )
         val bringIntoViewRequester = BringIntoViewRequester()
@@ -193,7 +193,7 @@ fun ResetPasswordConfirmScreenContent(
                 ),
                 keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
                 onValueChange = { onNewPasswordChange(it) },
-                label = { Text(stringResource(R.string.reset_password_password_label)) },
+                label = { Text(stringResource(R.string.ChangePassword_Label_NewPassword_COPY)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .onFocusEvent { event ->
@@ -216,7 +216,7 @@ fun ResetPasswordConfirmScreenContent(
                     focusManager.clearFocus()
                 }),
                 onValueChange = { onConfirmPasswordChange(it) },
-                label = { Text(stringResource(R.string.reset_password_repeat_password_label)) },
+                label = { Text(stringResource(R.string.ChangePassword_Label_RepeatPassword_COPY)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .onFocusEvent { event ->
@@ -231,9 +231,9 @@ fun ResetPasswordConfirmScreenContent(
             Spacer(Modifier.height(16.dp))
             PrimaryButton(
                 text = if (isAddPassword) {
-                    stringResource(R.string.button_add_password)
+                    stringResource(R.string.ChangePassword_Button_Add_COPY)
                 } else {
-                    stringResource(R.string.button_reset_password)
+                    stringResource(R.string.ChangePassword_Button_Reset_COPY)
                 },
                 enabled = !inProgress,
                 onClick = onResetPasswordClicked,
@@ -249,19 +249,19 @@ fun ResetPasswordConfirmScreenContent(
                 style = MaterialTheme.typography.titleLarge.copy(
                     textAlign = TextAlign.Start, color = ButtonGreen
                 ),
-                text = stringResource(R.string.reset_password_confirm_second_title),
+                text = stringResource(R.string.Password_DeletePasswordConfirmation_COPY),
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(Modifier.height(6.dp))
             Text(
                 style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-                text = stringResource(R.string.reset_password_confirm_second_subtitle),
+                text = stringResource(R.string.ChangePassword_DeleteHeader_Description_COPY),
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(Modifier.height(12.dp))
             PrimaryButton(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.button_delete_password),
+                text = stringResource(R.string.ChangePassword_Button_Delete_COPY),
                 enabled = !inProgress,
                 onClick = onDeletePasswordClicked,
                 buttonBackgroundColor = Color.Transparent,
