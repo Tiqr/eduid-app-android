@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
-    <string name="biometric_enable_title" tools:ignore="ExtraTranslation">Toestemming met biometrie</string>
-    <string name="biometric_enable_description" tools:ignore="ExtraTranslation">Wil je jouw eduID extra beveiligen met biometrie?</string>
-    <string name="biometric_enable_allow" tools:ignore="ExtraTranslation">Instellen biometrie</string>
-    <string name="biometric_enable_skip" tools:ignore="ExtraTranslation">Overslaan</string>
-    <string name="app_not_authorized">Inloggen</string>
-    <string name="app_not_authorized_explanation">Om imformatie op te halen moet je ingelpgd zijn.</string>
-    <string name="home_with_account_scan">Scan QR</string>
-    <string name="home_with_account_personal_info">Gegevens</string>
-    <string name="home_with_account_security">Beveiliging</string>
-    <string name="home_with_account_activity">Activiteit</string>
-
     <string name="manage_account_title">Je eduID account</string>
     <string name="manage_account_opendownload">Tonen</string>
     <string name="manage_account_subtitle">Jouw account is gemaakt op</string>

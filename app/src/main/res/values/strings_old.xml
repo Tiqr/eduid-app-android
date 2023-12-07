@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
-    <string name="biometric_enable_title" tools:ignore="ExtraTranslation">Biometric approval</string>
-    <string name="biometric_enable_description" tools:ignore="ExtraTranslation">Do you want to use your biometrics to add an extra layer of security to your eduID?</string>
-    <string name="biometric_enable_allow" tools:ignore="ExtraTranslation">Set up biometric access</string>
-    <string name="biometric_enable_skip" tools:ignore="ExtraTranslation">Skip this</string>
-    <string name="app_not_authorized">Please Log in</string>
-    <string name="app_not_authorized_explanation">To retrieve the information you must be logged in.</string>
-    <string name="home_with_account_scan">Scan QR</string>
-    <string name="home_with_account_personal_info">Your Info</string>
-    <string name="home_with_account_security">Security</string>
-    <string name="home_with_account_activity">Activity</string>
-
     <string name="manage_account_title">Your account</string>
     <string name="manage_account_opendownload">Open</string>
     <string name="manage_account_subtitle">Your account was created on</string>

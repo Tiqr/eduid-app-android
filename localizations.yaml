@@ -76,6 +76,15 @@ SHARED:
       COPY:
         en: Click on one of the environments to use it in the app for communicating
         nl: Klik op een van de omgevingen om die te gebruiken voor de communicatie
+  PromptForOAuth:
+    Title:
+      COPY:
+        en: Please log in
+        nl: Inloggen
+    Description:
+      COPY:
+        en: To retrieve the information you must be logged in.
+        nl: Om imformatie op te halen moet je ingelogd zijn.
   HomeView:
     MainText:
       FirstPart:
@@ -3059,8 +3068,12 @@ SHARED:
   PinAndBioMetrics:
     SetupBiometrics:
       COPY:
-        en: Setup biometric access
+        en: Set up biometric access
         nl: Stel biometrische toegang in
+    Skip:
+      COPY:
+        en: Skip this
+        nl: Overslaan
     BiometricsApproval:
       COPY:
         en: Biometric approval

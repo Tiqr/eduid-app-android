@@ -10,6 +10,8 @@
   <string name="EnvironmentSwitcher_Button_COPY">"Environment"</string>
   <string name="EnvironmentSwitcher_Title_COPY">"Switch environment"</string>
   <string name="EnvironmentSwitcher_Subtitle_COPY">"Click on one of the environments to use it in the app for communicating"</string>
+  <string name="PromptForOAuth_Title_COPY">"Please log in"</string>
+  <string name="PromptForOAuth_Description_COPY">"To retrieve the information you must be logged in."</string>
   <string name="HomeView_MainText_FirstPart_COPY">"Your eduID app"</string>
   <string name="HomeView_MainText_SecondPart_COPY">"is ready for use"</string>
   <string name="HomeView_YourEduId_COPY">"Your eduID app"</string>
@@ -617,7 +619,8 @@
   <string name="SubContent_Warning_COPY">"The service your logging into has explicitly requested you login using your eduID app. If you login with a different method, this service will not receive your attributes."</string>
   <string name="SubContent_ConfirmLabel_COPY">"Change login option anyway"</string>
   <string name="SubContent_CancelLabel_COPY">"Did not know that"</string>
-  <string name="PinAndBioMetrics_SetupBiometrics_COPY">"Setup biometric access"</string>
+  <string name="PinAndBioMetrics_SetupBiometrics_COPY">"Set up biometric access"</string>
+  <string name="PinAndBioMetrics_Skip_COPY">"Skip this"</string>
   <string name="PinAndBioMetrics_BiometricsApproval_COPY">"Biometric approval"</string>
   <string name="PinAndBioMetrics_BiometricsExplain_COPY">"Do you want to use your biometrics to access the eduID app more easily?"</string>
   <string name="PinAndBioMetrics_BiometricsExplainBoldPart_COPY">"biometrics"</string>

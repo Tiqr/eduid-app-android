@@ -10,6 +10,8 @@
   <string name="EnvironmentSwitcher_Button_COPY">"Omgeving"</string>
   <string name="EnvironmentSwitcher_Title_COPY">"Wisselen van omgeving"</string>
   <string name="EnvironmentSwitcher_Subtitle_COPY">"Klik op een van de omgevingen om die te gebruiken voor de communicatie"</string>
+  <string name="PromptForOAuth_Title_COPY">"Inloggen"</string>
+  <string name="PromptForOAuth_Description_COPY">"Om imformatie op te halen moet je ingelogd zijn."</string>
   <string name="HomeView_MainText_FirstPart_COPY">"Jouw eduID app"</string>
   <string name="HomeView_MainText_SecondPart_COPY">"is klaar voor gebruik"</string>
   <string name="HomeView_YourEduId_COPY">"Jouw eduID app"</string>
@@ -618,6 +620,7 @@
   <string name="SubContent_ConfirmLabel_COPY">"Verander login optie"</string>
   <string name="SubContent_CancelLabel_COPY">"Dat wist ik niet"</string>
   <string name="PinAndBioMetrics_SetupBiometrics_COPY">"Stel biometrische toegang in"</string>
+  <string name="PinAndBioMetrics_Skip_COPY">"Overslaan"</string>
   <string name="PinAndBioMetrics_BiometricsApproval_COPY">"Biometrische goedkeuring"</string>
   <string name="PinAndBioMetrics_BiometricsExplain_COPY">"Wil je met je biometrie makkelijker toegang krijgen tot de eduID app?"</string>
   <string name="PinAndBioMetrics_BiometricsExplainBoldPart_COPY">"biometrie"</string>
