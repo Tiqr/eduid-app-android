@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
-    <string name="add_password_title">Voeg een wachtwoord toe</string>
-    <string name="change_password_title">Wachtwoord wijzigen of verwijderen</string>
-    <string name="add_password_subtitle">We sturen je een email om een wachtwoord in te stellen.</string>
-    <string name="change_password_subtitle">We sturen je een email om je huidige wachtwoord opnieuw in te stellen of te verwijderen.</string>
-    <string name="reset_password_add_pass_email_sent">Om een wachtwoord toe te voegen, klik je op de link in de e-mail die we hebben verzonden</string>
-    <string name="reset_password_change_pass_email_sent">Om je wachtwoord te wijzigen of verwijderen, klik je op de link in de e-mail die we hebben gestuurd</string>
-    <string name="reset_password_cancel_button">Annuleer</string>
-    <string name="reset_password_confirm_button">Stuur email</string>
-
     <string name="reset_password_change_title">Wijzig wachtwoord</string>
     <string name="reset_password_add_title">Wachtwoord toevoegen</string>
     <string name="reset_password_password_label">Jouw wachtwoord</string>

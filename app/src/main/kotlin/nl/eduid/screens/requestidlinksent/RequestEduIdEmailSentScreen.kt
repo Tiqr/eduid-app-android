@@ -49,8 +49,8 @@ fun RequestEduIdEmailSentScreen(
         derivedStateOf {
             when (reason) {
                 LOGIN_REASON -> R.string.MagicLink_Info_COPY
-                ADD_PASSWORD_REASON -> R.string.reset_password_add_pass_email_sent
-                CHANGE_PASSWORD_REASON -> R.string.reset_password_change_pass_email_sent
+                ADD_PASSWORD_REASON -> R.string.PasswordResetLink_Description_AddPassword_COPY
+                CHANGE_PASSWORD_REASON -> R.string.PasswordResetLink_Description_ChangePassword_COPY
                 else -> R.string.MagicLink_Info_COPY
             }
         }

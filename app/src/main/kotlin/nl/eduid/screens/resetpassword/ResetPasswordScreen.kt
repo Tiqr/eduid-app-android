@@ -120,9 +120,9 @@ fun ResetPasswordScreenContent(
                 style = MaterialTheme.typography.titleLarge.copy(
                     textAlign = TextAlign.Start, color = ButtonGreen
                 ), text = if (password == Password.Add) {
-                    stringResource(R.string.add_password_title)
+                    stringResource(R.string.PasswordResetLink_Title_AddPassword_COPY)
                 } else {
-                    stringResource(R.string.change_password_title)
+                    stringResource(R.string.PasswordResetLink_Title_ChangePassword_COPY)
                 }, modifier = Modifier.fillMaxWidth()
             )
         }
@@ -130,9 +130,9 @@ fun ResetPasswordScreenContent(
         Text(
             style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
             text = if (password == Password.Add) {
-                stringResource(R.string.add_password_subtitle)
+                stringResource(R.string.PasswordResetLink_Description_AddPassword_COPY)
             } else {
-                stringResource(R.string.change_password_subtitle)
+                stringResource(R.string.PasswordResetLink_Description_ChangePassword_COPY)
             },
             modifier = Modifier.fillMaxWidth()
         )
@@ -146,7 +146,7 @@ fun ResetPasswordScreenContent(
         PrimaryButton(
             enabled = !inProgress,
             modifier = Modifier.widthIn(min = 140.dp),
-            text = stringResource(R.string.reset_password_cancel_button),
+            text = stringResource(R.string.PasswordResetLink_Button_Cancel_COPY),
             onClick = goBack,
             buttonBackgroundColor = Color.Transparent,
             buttonTextColor = TextGrey,
@@ -155,7 +155,7 @@ fun ResetPasswordScreenContent(
         PrimaryButton(
             enabled = !inProgress,
             modifier = Modifier.widthIn(min = 140.dp),
-            text = stringResource(R.string.reset_password_confirm_button),
+            text = stringResource(R.string.PasswordResetLink_Button_SendEmail_COPY),
             onClick = onResetPasswordClicked,
             buttonTextColor = Color.White,
         )
