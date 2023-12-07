@@ -51,6 +51,7 @@ import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
+import nl.eduid.ui.TwoColorTitle
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
@@ -97,7 +98,7 @@ fun EditEmailScreen(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EditEmailScreenContent(
     uiState: UiState,
@@ -119,10 +120,10 @@ fun EditEmailScreenContent(
     ) {
         val keyboardController = LocalSoftwareKeyboardController.current
         val focusRequester = remember { FocusRequester() }
-        Text(
-            style = MaterialTheme.typography.titleLarge.copy(
-                textAlign = TextAlign.Start, color = ButtonGreen
-            ), text = stringResource(R.string.edit_email_title), modifier = Modifier.fillMaxWidth()
+        TwoColorTitle(
+            modifier = Modifier.fillMaxWidth(),
+            firstPart = stringResource(R.string.Email_Title_Edit_COPY),
+            secondPart = stringResource(R.string.Email_Title_EmailAddress_COPY)
         )
         Spacer(Modifier.height(12.dp))
         if (uiState.inProgress) {
@@ -134,7 +135,7 @@ fun EditEmailScreenContent(
 
         Text(
             style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-            text = stringResource(R.string.edit_email_subtitle),
+            text = stringResource(R.string.Email_Info_COPY),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(12.dp))
@@ -144,7 +145,7 @@ fun EditEmailScreenContent(
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
             isError = !uiState.isEmailValid,
             onValueChange = { onEmailTextChange(it) },
-            label = { Text(stringResource(R.string.edit_email_new_email_title)) },
+            label = { Text(stringResource(R.string.Email_NewEmail_COPY)) },
             placeholder = { Text(stringResource(R.string.CreateEduID_EnterPersonalInfo_EmailFieldPlaceHolder_COPY)) },
             modifier = Modifier
                 .fillMaxWidth()
@@ -166,12 +167,12 @@ fun EditEmailScreenContent(
     ) {
         SecondaryButton(
             modifier = Modifier.widthIn(min = 140.dp),
-            text = stringResource(R.string.edit_email_cancel_button),
+            text = stringResource(R.string.Email_Cancel_COPY),
             onClick = goBack,
         )
         PrimaryButton(
             modifier = Modifier.widthIn(min = 140.dp),
-            text = stringResource(R.string.edit_email_confirm_button),
+            text = stringResource(R.string.Email_Save_COPY),
             onClick = { onNewEmailRequestClicked(uiState.email) },
             buttonTextColor = Color.White,
             enabled = uiState.isEmailValid,

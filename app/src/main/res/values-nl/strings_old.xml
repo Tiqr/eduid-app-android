@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nl">
-    <string name="edit_email_title">E-mail</string>
-    <string name="edit_email_subtitle">Voer je nieuwe e-mailadres in. Er wordt een verificatiemail naar dit adres gestuurd.</string>
-    <string name="edit_email_cancel_button">Annuleer</string>
-    <string name="edit_email_confirm_button">Opslaan</string>
-    <string name="edit_email_new_email_title">Je nieuwe email adres</string>
-
     <string name="edit_name_title">Alle gegevens van</string>
     <string name="edit_name_form_title">Bewerken</string>
     <string name="edit_name_subtitle">Volledige naam</string>

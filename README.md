@@ -24,7 +24,7 @@ Once you have it installed, execute the following line from the root of the repo
 contents of `localizations.yaml`:
 
 ```shell
-localicious render localizations.yaml ./ --languages en,nl --outputTypes android -c SHARED &&\
+localicious render localizations.yaml ./ --languages en,nl --outputTypes android -c SHARED,ANDROID &&\
 mv android/nl/strings.xml app/src/main/res/values-nl/strings.xml &&\
 mv android/en/strings.xml app/src/main/res/values/strings.xml &&\
 rm -rf android/

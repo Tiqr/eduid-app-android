@@ -101,6 +101,7 @@
   <string name="Email_Placeholder_COPY">"bijv tim@bernerslee.com"</string>
   <string name="Email_Update_COPY">"Verstuur"</string>
   <string name="Email_Cancel_COPY">"Annuleer"</string>
+  <string name="Email_Save_COPY">"Opslaan"</string>
   <string name="Email_Updated_COPY">"Een verificatiemail is verzonden naar %1$s"</string>
   <string name="Email_Confirmed_COPY">"Je e-mail is gewijzigd naar %1$s"</string>
   <string name="Email_Back_COPY">"/personal"</string>

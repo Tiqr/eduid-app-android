@@ -166,7 +166,7 @@ fun EditNameFormContent(
 
         Text(
             style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-            text = stringResource(R.string.edit_email_subtitle),
+            text = stringResource(R.string.Email_Info_COPY),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(12.dp))
@@ -208,12 +208,12 @@ fun EditNameFormContent(
     ) {
         SecondaryButton(
             modifier = Modifier.widthIn(min = 140.dp),
-            text = stringResource(R.string.edit_email_cancel_button),
+            text = stringResource(R.string.Email_Cancel_COPY),
             onClick = goBack,
         )
         PrimaryButton(
             modifier = Modifier.widthIn(min = 140.dp),
-            text = stringResource(R.string.edit_email_confirm_button),
+            text = stringResource(R.string.Email_Save_COPY),
             onClick = onUpdateName,
             buttonTextColor = Color.White,
             enabled = submitEnable,

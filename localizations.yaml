@@ -503,6 +503,10 @@ SHARED:
       COPY:
         en: Cancel
         nl: Annuleer
+    Save:
+      COPY:
+        en: Save
+        nl: Opslaan
     Updated:
       COPY:
         en: A verification email has been sent to %1{{s}}

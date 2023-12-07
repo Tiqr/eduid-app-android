@@ -101,6 +101,7 @@
   <string name="Email_Placeholder_COPY">"eg tim@bernerslee.com"</string>
   <string name="Email_Update_COPY">"Request"</string>
   <string name="Email_Cancel_COPY">"Cancel"</string>
+  <string name="Email_Save_COPY">"Save"</string>
   <string name="Email_Updated_COPY">"A verification email has been sent to %1$s"</string>
   <string name="Email_Confirmed_COPY">"Your email address has been changed to %1$s"</string>
   <string name="Email_Back_COPY">"/personal"</string>
