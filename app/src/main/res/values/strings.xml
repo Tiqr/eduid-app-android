@@ -146,6 +146,7 @@
   <string name="MyAccount_PersonalDataDisclaimer_COPY">"All of your personal data from your eduID is yours and can be either downloaded or deleted. This data also contains technical keys and references."</string>
   <string name="MyAccount_DownloadDataButton_COPY">"Download my data"</string>
   <string name="MyAccount_DeleteAccountButton_COPY">"Delete your account"</string>
+  <string name="MyAccount_DownloadSuccess_COPY">"Your data was downloaded in your downloads folder."</string>
   <string name="MyAccount_DownloadError_COPY">"Failed to download your data"</string>
   <string name="NameOverview_Title_AllDetailsOf_COPY">"All details of"</string>
   <string name="NameOverview_Title_FullName_COPY">"Full name"</string>

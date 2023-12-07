@@ -62,11 +62,11 @@ fun ManageAccountScreen(
 
     downloadResult?.let { isOk ->
         val snackbarText = if (isOk) {
-            stringResource(R.string.manage_account_result_ok)
+            stringResource(R.string.MyAccount_DownloadSuccess_COPY)
         } else {
-            stringResource(R.string.manage_account_result_fail)
+            stringResource(R.string.MyAccount_DownloadError_COPY)
         }
-        val okAction = stringResource(R.string.manage_account_opendownload)
+        val okAction = stringResource(R.string.MyAccount_DownloadDataButton_COPY)
         LaunchedEffect(snackbarHostState, viewModel, snackbarText) {
             val snackbarResult = snackbarHostState.showSnackbar(
                 snackbarText,
@@ -109,7 +109,7 @@ private fun ManageAccountScreenContent(
         horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()
     ) {
         Text(
-            text = stringResource(R.string.manage_account_title),
+            text = stringResource(R.string.MyAccount_Title_COPY),
             style = MaterialTheme.typography.titleLarge.copy(
                 color = TextGreen, textAlign = TextAlign.Start
             ),
@@ -117,7 +117,7 @@ private fun ManageAccountScreenContent(
         )
         Spacer(Modifier.height(12.dp))
         Text(
-            text = "${stringResource(R.string.manage_account_subtitle)} $dateString",
+            text = "${stringResource(R.string.MyAccount_AccountCreatedOn_COPY)} $dateString",
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = TextBlack, textAlign = TextAlign.Start
             ),
@@ -132,14 +132,14 @@ private fun ManageAccountScreenContent(
             Column {
                 Text(
                     style = MaterialTheme.typography.bodyLarge,
-                    text = stringResource(R.string.manage_account_info_block),
+                    text = stringResource(R.string.MyAccount_PersonalDataDisclaimer_COPY),
                     modifier = Modifier.fillMaxWidth()
                 )
             }
         }
         Spacer(Modifier.height(20.dp))
         PrimaryButton(
-            text = stringResource(R.string.manage_account_download_my_data),
+            text = stringResource(R.string.MyAccount_DownloadDataButton_COPY),
             enabled = !inProgress,
             onClick = onDownloadData,
             modifier = Modifier.fillMaxWidth()
@@ -152,7 +152,7 @@ private fun ManageAccountScreenContent(
         modifier = Modifier.fillMaxWidth()
     ) {
         Text(
-            text = stringResource(R.string.manage_account_delete_your_account),
+            text = stringResource(R.string.MyAccount_DeleteAccountButton_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = ButtonRed, fontWeight = FontWeight.SemiBold
             )

@@ -146,6 +146,7 @@
   <string name="MyAccount_PersonalDataDisclaimer_COPY">"Alle informatie in jouw eduID account is van jou en kan worden gedownload of verwijderd. De download van je persoonlijke gegevens van je eduID-account bevat alle informatie die we over je hebben. Het bevat ook technische sleutels en referenties."</string>
   <string name="MyAccount_DownloadDataButton_COPY">"Download mijn data"</string>
   <string name="MyAccount_DeleteAccountButton_COPY">"Verwijder je account"</string>
+  <string name="MyAccount_DownloadSuccess_COPY">"De informatie is opgeslagen in de downloads folder."</string>
   <string name="MyAccount_DownloadError_COPY">"Downloaden mislukt"</string>
   <string name="NameOverview_Title_AllDetailsOf_COPY">"Alle gegevens van"</string>
   <string name="NameOverview_Title_FullName_COPY">"Volledige naam"</string>

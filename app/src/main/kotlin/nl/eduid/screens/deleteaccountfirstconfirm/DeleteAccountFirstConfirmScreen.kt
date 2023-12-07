@@ -130,7 +130,7 @@ private fun DeleteAccountFirstConfirmScreenContent(
             .sizeIn(minHeight = 56.dp),
     ) {
         Text(
-            text = stringResource(R.string.button_manage_account_delete),
+            text = stringResource(R.string.DeleteAccount_DeleteAccountButton_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = ButtonRed, fontWeight = FontWeight.SemiBold
             )

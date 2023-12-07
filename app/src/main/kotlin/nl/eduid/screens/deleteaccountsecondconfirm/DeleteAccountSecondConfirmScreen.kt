@@ -189,8 +189,8 @@ private fun DeleteAccountSecondConfirmScreenContent(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
             onValueChange = { onInputChange(it) },
-            label = { Text(stringResource(R.string.managa_account_your_full_name)) },
-            placeholder = { Text(stringResource(R.string.manage_account_full_name_explain)) },
+            label = { Text(stringResource(R.string.ConfirmDelete_YourFullNameLabel_COPY)) },
+            placeholder = { Text(stringResource(R.string.ConfirmDelete_Placeholder_COPY)) },
             modifier = Modifier
                 .fillMaxWidth()
         )

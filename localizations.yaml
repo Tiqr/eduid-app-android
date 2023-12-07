@@ -722,6 +722,10 @@ SHARED:
       COPY:
         en: Delete your account
         nl: Verwijder je account
+    DownloadSuccess:
+      COPY:
+        en: Your data was downloaded in your downloads folder.
+        nl: De informatie is opgeslagen in de downloads folder.
     DownloadError:
       COPY:
         en: Failed to download your data
