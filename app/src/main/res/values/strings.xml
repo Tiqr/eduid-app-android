@@ -714,4 +714,6 @@
   <string name="Biometrics_UnknownError_COPY">"Biometrics failed for unknown reason."</string>
   <string name="MagicLink_OpenEmailClient_COPY">"Open email client"</string>
   <string name="Permission_Scan_COPY">"Please grant access to the camera."</string>
+  <string name="Permission_OAuth_Title_COPY">"Authorize app"</string>
+  <string name="Permission_OAuth_Description_COPY">"Allow the mobile application to access your data."</string>
 </resources>

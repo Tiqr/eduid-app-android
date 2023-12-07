@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
-    <string name="pinsetup_title" tools:ignore="ExtraTranslation">Select a PINcode</string>
-    <string name="pinsetup_description" tools:ignore="ExtraTranslation">To use the eduID app you need a PIN code.</string>
-    <string name="pinsetup_confirm_title" tools:ignore="ExtraTranslation">Repeat your PINcode</string>
-    <string name="pinsetup_confirm_description" tools:ignore="ExtraTranslation">Enter your PINcode again.</string>
-
-    <string name="oauth_title" tools:ignore="ExtraTranslation">Authorize app</string>
-    <string name="oauth_description" tools:ignore="ExtraTranslation">Allow the mobile application to access your data.</string>
-    <string name="oauth_processing" tools:ignore="ExtraTranslation">Processing…</string>
-
     <string name="biometric_enable_title" tools:ignore="ExtraTranslation">Biometric approval</string>
     <string name="biometric_enable_description" tools:ignore="ExtraTranslation">Do you want to use your biometrics to add an extra layer of security to your eduID?</string>
     <string name="biometric_enable_allow" tools:ignore="ExtraTranslation">Set up biometric access</string>

@@ -120,14 +120,14 @@ private fun RegistrationPinSetupContent(
             pinStep = uiState.pinStep,
             isPinInvalid = uiState.isPinInvalid,
             title = if (uiState.pinStep is PinStep.PinCreate) {
-                stringResource(R.string.pinsetup_title)
+                stringResource(R.string.PinAndBioMetrics_FirstPinScreenSelectTitle_COPY)
             } else {
-                stringResource(R.string.pinsetup_confirm_title)
+                stringResource(R.string.PinAndBioMetrics_SecondPinScreenSelectTitle_COPY)
             },
             description = if (uiState.pinStep is PinStep.PinCreate) {
-                stringResource(R.string.pinsetup_description)
+                stringResource(R.string.PinAndBioMetrics_FirstPinScreenText_COPY)
             } else {
-                stringResource(R.string.pinsetup_confirm_description)
+                stringResource(R.string.PinAndBioMetrics_SecondPinScreenText_COPY)
             },
             label = "",
             onPinChange = { pin, step ->

@@ -19,6 +19,15 @@ ANDROID:
       COPY:
         en: Please grant access to the camera.
         nl: Geef toestemming voor het gebruik van de camera.
+    OAuth:
+      Title:
+        COPY:
+          en: Authorize app
+          nl: Autoriseer de app
+      Description:
+        COPY:
+          en: Allow the mobile application to access your data.
+          nl: Geef de mobiele app toegang tot jouw gegevens.
 SHARED:
   Sidebar:
     Home:
