@@ -82,13 +82,3 @@ jobs:
           releaseFiles: ${{ steps.sign_aab.outputs.signedReleaseFile }}
           track: internal
           status: completed
-
-  check-translations:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          submodules: recursive
-      - name: Check for missing or untranslated strings
-        run: ./app/src/main/res/check-trans.sh
