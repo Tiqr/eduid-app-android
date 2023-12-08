@@ -134,14 +134,14 @@ private fun OAuthContent(
         ) {
             Spacer(modifier = Modifier.height(40.dp))
             Text(
-                text = stringResource(R.string.oauth_title),
+                text = stringResource(R.string.Permission_OAuth_Title_COPY),
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Start,
                 modifier = Modifier.fillMaxWidth(),
             )
             Spacer(modifier = Modifier.height(32.dp))
             Text(
-                text = stringResource(R.string.oauth_description),
+                text = stringResource(R.string.Permission_OAuth_Description_COPY),
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Start,
                 modifier = Modifier.fillMaxWidth(),

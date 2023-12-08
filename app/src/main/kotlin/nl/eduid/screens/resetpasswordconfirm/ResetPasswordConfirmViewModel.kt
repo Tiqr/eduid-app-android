@@ -49,15 +49,15 @@ class ResetPasswordConfirmViewModel @Inject constructor(
             changePassword(uiState, newPassword = uiState.newPasswordInput)
         } else {
             val detailMessage = if (uiState.newPasswordInput.isNullOrEmpty()) {
-                R.string.err_msg_pass_is_invalid
+                R.string.ResponseErrors_InvalidPasswordError_COPY
             } else if (uiState.newPasswordInput != uiState.confirmPasswordInput) {
-                R.string.err_msg_pass_do_not_match
+                R.string.ResponseErrors_PasswordMismatchError_COPY
             } else {
-                R.string.err_msg_pass_missing_hash
+                R.string.ResponseErrors_MissingPasswordHash_COPY
             }
             uiState = uiState.copy(
                 errorData = ErrorData(
-                    titleId = R.string.err_title_cannot_update_pass,
+                    titleId = R.string.ResponseErrors_PasswordUpdateError_COPY,
                     messageId = detailMessage
                 )
             )
@@ -87,8 +87,8 @@ class ResetPasswordConfirmViewModel @Inject constructor(
                 } else {
                     uiState = currentState.copy(
                         inProgress = false, isCompleted = null, errorData = ErrorData(
-                            titleId = R.string.err_title_cannot_update_pass,
-                            messageId = R.string.err_msg_generic_unexpected_with_arg,
+                            titleId = R.string.ResponseErrors_PasswordUpdateError_COPY,
+                            messageId = R.string.Generic_RequestError_Description_COPY,
                             messageArg = "[${response.code()}/${response.message()}]${
                                 response.errorBody()?.string()
                             }",
@@ -98,16 +98,16 @@ class ResetPasswordConfirmViewModel @Inject constructor(
             } else {
                 uiState = currentState.copy(
                     inProgress = false, isCompleted = null, errorData = ErrorData(
-                        titleId = R.string.err_title_cannot_update_pass,
-                        messageId = R.string.err_msg_pass_invalid_hash,
+                        titleId = R.string.ResponseErrors_PasswordUpdateError_COPY,
+                        messageId = R.string.ResponseErrors_InvalidPasswordHash_COPY,
                     )
                 )
             }
         } catch (e: Exception) {
             uiState = currentState.copy(
                 inProgress = false, errorData = ErrorData(
-                    titleId = R.string.err_title_cannot_update_pass,
-                    messageId = R.string.err_msg_generic_unexpected_with_arg,
+                    titleId = R.string.ResponseErrors_PasswordUpdateError_COPY,
+                    messageId = R.string.Generic_RequestError_Description_COPY,
                     messageArg = e.message ?: e.javaClass.simpleName,
                 )
             )

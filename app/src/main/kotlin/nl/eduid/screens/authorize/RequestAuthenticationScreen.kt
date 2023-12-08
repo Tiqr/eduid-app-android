@@ -68,7 +68,7 @@ private fun RequestAuthenticationContent(
                 style = MaterialTheme.typography.titleLarge.copy(
                     textAlign = TextAlign.Start, color = TextGreen
                 ),
-                text = stringResource(R.string.authorize_title),
+                text = stringResource(R.string.PinAndBioMetrics_LoginRequest_COPY),
                 modifier = Modifier.fillMaxWidth()
             )
             val loginQuestion = buildAnnotatedString {
@@ -77,7 +77,7 @@ private fun RequestAuthenticationContent(
                         color = TextGreen
                     ).toSpanStyle()
                 )
-                append(stringResource(R.string.authorize_subtitle01))
+                append(stringResource(R.string.PinAndBioMetrics_DoYouWantToLogInTo_COPY))
                 pop()
                 append("\n")
                 pushStyle(
@@ -85,11 +85,8 @@ private fun RequestAuthenticationContent(
                         textAlign = TextAlign.Center
                     ).toSpanStyle()
                 )
-                append(
-                    stringResource(
-                        R.string.authorize_subtitle02, loginToService
-                    )
-                )
+                append(loginToService)
+                append("?")
             }
 
             Text(
@@ -114,7 +111,7 @@ private fun RequestAuthenticationContent(
                 )
                 PrimaryButton(
                     modifier = Modifier.widthIn(min = 140.dp),
-                    text = stringResource(R.string.authorize_login_button),
+                    text = stringResource(R.string.PinAndBioMetrics_SignIn_COPY),
                     onClick = onLogin,
                 )
             }

@@ -153,8 +153,8 @@ class HomePageViewModel @Inject constructor(
         } else {
             uiState = uiState.copy(
                 inProgress = false, errorData = ErrorData(
-                    titleId = R.string.err_title_deactivate_request_fail,
-                    messageId = R.string.err_msg_deactivate_request_fail,
+                    titleId = R.string.ResponseErrors_DeactivationError_Title_COPY,
+                    messageId = R.string.ResponseErrors_DeactivationError_Description_COPY,
                     messageArg = knownPhoneNumber
                 )
             )
@@ -173,8 +173,8 @@ class HomePageViewModel @Inject constructor(
         } else {
             uiState = uiState.copy(
                 inProgress = false, currentChallenge = null, errorData = ErrorData(
-                    titleId = R.string.err_title_enroll_fail,
-                    messageId = R.string.err_msg_enroll_parse_fail,
+                    titleId = R.string.ResponseErrors_InvalidChallenge_Title_COPY,
+                    messageId = R.string.ResponseErrors_InvalidChallenge_Description_COPY,
                 )
             )
         }

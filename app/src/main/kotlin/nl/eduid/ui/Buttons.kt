@@ -129,7 +129,7 @@ private fun Preview_PrimaryButton() {
 private fun Preview_PrimaryButtonWithIcon() {
     EduidAppAndroidTheme {
         PrimaryButtonWithIcon(
-            text = stringResource(R.string.home_with_account_personal_info),
+            text = stringResource(R.string.HomeView_PersonalInfoButton_COPY),
             icon = R.drawable.homepage_scan_icon,
             onClick = { })
     }

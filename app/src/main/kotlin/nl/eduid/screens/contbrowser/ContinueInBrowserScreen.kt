@@ -43,7 +43,7 @@ fun ContinueInBrowserScreen(
             modifier = Modifier.fillMaxSize()
         ) {
             Text(
-                text = stringResource(R.string.recovery_browser_title),
+                text = stringResource(R.string.WelcomeToApp_ReturnBrowserTitle_COPY),
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
@@ -53,7 +53,7 @@ fun ContinueInBrowserScreen(
 
             Text(
                 style = MaterialTheme.typography.bodyLarge,
-                text = stringResource(R.string.recovery_browser_explain),
+                text = stringResource(R.string.WelcomeToApp_ReturnBrowserText_COPY),
                 modifier = Modifier.padding(start = 8.dp)
             )
             Spacer(Modifier.height(16.dp))
@@ -68,7 +68,7 @@ fun ContinueInBrowserScreen(
         }
 
         PrimaryButton(
-            text = stringResource(R.string.start_button),
+            text = stringResource(R.string.WelcomeToApp_GotItButton_COPY),
             onClick = goHome,
             modifier = Modifier
                 .fillMaxWidth()

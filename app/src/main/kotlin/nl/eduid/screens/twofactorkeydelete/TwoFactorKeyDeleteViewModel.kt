@@ -33,16 +33,16 @@ class TwoFactorKeyDeleteViewModel @Inject constructor(val identityRepository: Id
                 val message = "${e.javaClass.simpleName}: ${e.localizedMessage ?: e.message}"
                 uiState.copy(
                     inProgress = false, errorData = ErrorData(
-                        titleId = R.string.err_title_generic_fail,
-                        messageId = R.string.err_msg_generic_unexpected_with_arg,
+                        titleId = R.string.Generic_RequestError_Title_COPY,
+                        messageId = R.string.Generic_RequestError_Description_COPY,
                         messageArg = message
                     )
                 )
             }
         } ?: uiState.copy(
             inProgress = false, errorData = ErrorData(
-                titleId = R.string.err_title_generic_fail,
-                messageId = R.string.err_msg_delete_key_lost,
+                titleId = R.string.Generic_RequestError_Title_COPY,
+                messageId = R.string.ResponseErrors_DeleteKeyLostError_COPY,
             )
         )
     }

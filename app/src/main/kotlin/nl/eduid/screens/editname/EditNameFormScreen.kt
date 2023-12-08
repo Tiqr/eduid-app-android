@@ -53,6 +53,7 @@ import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
+import nl.eduid.ui.TwoColorTitle
 import nl.eduid.ui.keyboardAsState
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
@@ -141,21 +142,11 @@ fun EditNameFormContent(
         AnimatedVisibility(
             !isKeyboardOpen, Modifier.fillMaxWidth()
         ) {
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    style = MaterialTheme.typography.titleLarge,
-                    text = stringResource(R.string.edit_name_form_title),
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Text(
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        color = ButtonGreen
-                    ),
-                    text = stringResource(R.string.edit_name_subtitle),
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(Modifier.height(12.dp))
-            }
+            TwoColorTitle(
+                firstPart = stringResource(R.string.EditName_Title_Edit_COPY),
+                secondPart = stringResource(R.string.EditName_Title_FullName_COPY)
+            )
+            Spacer(Modifier.height(12.dp))
         }
         if (inProgress) {
             LinearProgressIndicator(
@@ -166,7 +157,7 @@ fun EditNameFormContent(
 
         Text(
             style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-            text = stringResource(R.string.edit_email_subtitle),
+            text = stringResource(R.string.Email_Info_COPY),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(12.dp))
@@ -176,8 +167,8 @@ fun EditNameFormContent(
             isError = !isGivenNameValid,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             onValueChange = onGivenNameChange,
-            label = { Text(stringResource(R.string.request_id_details_screen_first_name_input_title)) },
-            placeholder = { Text(stringResource(R.string.request_id_details_screen_first_name_input_hint)) },
+            label = { Text(stringResource(R.string.Login_GivenName_COPY)) },
+            placeholder = { Text(stringResource(R.string.Login_GivenNamePlaceholder_COPY)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .focusRequester(focusRequester)
@@ -189,8 +180,8 @@ fun EditNameFormContent(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
             onValueChange = onFamilyNameChange,
-            label = { Text(stringResource(R.string.request_id_details_screen_last_name_input_title)) },
-            placeholder = { Text(stringResource(R.string.request_id_details_screen_last_name_input_hint)) },
+            label = { Text(stringResource(R.string.Login_FamilyName_COPY)) },
+            placeholder = { Text(stringResource(R.string.Login_FamilyNamePlaceholder_COPY)) },
             modifier = Modifier.fillMaxWidth()
         )
         LaunchedEffect(focusRequester) {
@@ -208,12 +199,12 @@ fun EditNameFormContent(
     ) {
         SecondaryButton(
             modifier = Modifier.widthIn(min = 140.dp),
-            text = stringResource(R.string.edit_email_cancel_button),
+            text = stringResource(R.string.Email_Cancel_COPY),
             onClick = goBack,
         )
         PrimaryButton(
             modifier = Modifier.widthIn(min = 140.dp),
-            text = stringResource(R.string.edit_email_confirm_button),
+            text = stringResource(R.string.Email_Save_COPY),
             onClick = onUpdateName,
             buttonTextColor = Color.White,
             enabled = submitEnable,

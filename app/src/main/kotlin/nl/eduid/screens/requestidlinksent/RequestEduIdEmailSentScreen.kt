@@ -32,6 +32,7 @@ import nl.eduid.graphs.RequestEduIdLinkSent.CHANGE_PASSWORD_REASON
 import nl.eduid.graphs.RequestEduIdLinkSent.LOGIN_REASON
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
+import nl.eduid.ui.annotatedStringWithBoldParts
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextGrey
 
@@ -47,10 +48,10 @@ fun RequestEduIdEmailSentScreen(
     val reasonExplanation by remember {
         derivedStateOf {
             when (reason) {
-                LOGIN_REASON -> R.string.request_id_link_header_text
-                ADD_PASSWORD_REASON -> R.string.reset_password_add_pass_email_sent
-                CHANGE_PASSWORD_REASON -> R.string.reset_password_change_pass_email_sent
-                else -> R.string.request_id_link_header_text
+                LOGIN_REASON -> R.string.MagicLink_Info_COPY
+                ADD_PASSWORD_REASON -> R.string.PasswordResetLink_Description_AddPassword_COPY
+                CHANGE_PASSWORD_REASON -> R.string.PasswordResetLink_Description_ChangePassword_COPY
+                else -> R.string.MagicLink_Info_COPY
             }
         }
     }
@@ -62,7 +63,7 @@ fun RequestEduIdEmailSentScreen(
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = stringResource(R.string.request_id_link_title),
+            text = stringResource(R.string.MagicLink_Header_COPY),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.fillMaxWidth()
         )
@@ -71,14 +72,10 @@ fun RequestEduIdEmailSentScreen(
             modifier = Modifier.height(16.dp)
         )
 
-        val annotatedString =
-            with(AnnotatedString.Builder(stringResource(reasonExplanation))) {
-                append(" ")
-                pushStyle(SpanStyle(color = Color.Blue))
-                append(userEmail)
-                pop()
-                toAnnotatedString()
-            }
+        val annotatedString = annotatedStringWithBoldParts(
+            stringResource(reasonExplanation, userEmail),
+            userEmail
+        )
 
         Text(
             text = annotatedString,
@@ -108,7 +105,7 @@ fun RequestEduIdEmailSentScreen(
                 .padding(bottom = 24.dp),
         ) {
             PrimaryButton(
-                text = stringResource(R.string.request_id_link_open_email_client), onClick = {
+                text = stringResource(R.string.MagicLink_OpenEmailClient_COPY), onClick = {
                     val intent =
                         Intent.makeMainSelectorActivity(
                             Intent.ACTION_MAIN,
@@ -125,7 +122,7 @@ fun RequestEduIdEmailSentScreen(
             )
 
             Text(
-                text = stringResource(R.string.request_id_link_spam_text),
+                text = stringResource(R.string.MagicLink_Spam_COPY),
                 style = MaterialTheme.typography.bodyMedium.copy(color = TextGrey),
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )

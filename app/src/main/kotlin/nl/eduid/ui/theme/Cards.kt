@@ -67,8 +67,8 @@ fun LinkAccountCard(
 private fun Preview_LinkAccountCard() {
     EduidAppAndroidTheme {
         LinkAccountCard(
-            title = R.string.personalinfo_add_role_institution,
-            subtitle = R.string.personalinfo_add_via,
+            title = R.string.Profile_AddRoleAndInstitution_COPY,
+            subtitle = R.string.Profile_AddViaSurfconext_COPY,
         )
     }
 }

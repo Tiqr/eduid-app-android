@@ -51,8 +51,8 @@ class RegistrationPinSetupViewModel @Inject constructor(
             Timber.e(e, "Failed to parse enrollment challenge")
             uiState = uiState.copy(
                 errorData = ErrorData(
-                    titleId = R.string.err_title_invalid_challenge,
-                    messageId = R.string.err_msg_invalid_challenge,
+                    titleId = R.string.ResponseErrors_InvalidChallenge_Title_COPY,
+                    messageId = R.string.ResponseErrors_InvalidChallenge_Description_COPY,
                 )
             )
             null

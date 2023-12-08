@@ -32,7 +32,7 @@ class SignInWithBiometricsActivity : AppCompatActivity() {
             super.onAuthenticationFailed()
             setResult(BIOMETRIC_FAILED, Intent().apply {
                 putExtra(BIOMETRIC_ERRORCODE_KEY, BIOMETRIC_FAILED)
-                putExtra(BIOMETRIC_ERRORMESSAGE_KEY, getString(R.string.biometric_failed_unknown))
+                putExtra(BIOMETRIC_ERRORMESSAGE_KEY, getString(R.string.Biometrics_UnknownError_COPY))
             })
             biometricPrompt.cancelAuthentication()
             finish()

@@ -64,9 +64,9 @@ fun HomePageNoAccountContent(
         viewModel.uiState.preEnrollCheck?.let { preEnrollCheck ->
             when (preEnrollCheck) {
                 PreEnrollCheck.AlreadyCompleted -> AlertDialogWithSingleButton(title = stringResource(
-                    R.string.preenroll_check_completed_title
+                    R.string.Security_Tiqr_EnrollmentCompleted_Title_COPY
                 ),
-                    explanation = stringResource(R.string.preenroll_check_completed_explanation),
+                    explanation = stringResource(R.string.Security_Tiqr_EnrollmentCompleted_Description_COPY),
                     buttonLabel = stringResource(R.string.button_ok),
                     onDismiss = {
                         waitingForVmEvent = false
@@ -74,11 +74,11 @@ fun HomePageNoAccountContent(
                     })
 
                 PreEnrollCheck.DeactivateExisting -> AlertDialogWithTwoButton(title = stringResource(
-                    R.string.preenroll_check_blocked_title
+                    R.string.Security_Tiqr_AlreadyEnrolled_Title_COPY
                 ),
-                    explanation = stringResource(id = R.string.preenroll_check_blocked_explanation),
-                    dismissButtonLabel = stringResource(R.string.preenroll_button_cancel),
-                    confirmButtonLabel = stringResource(R.string.preenroll_button_deactivate),
+                    explanation = stringResource(id = R.string.Security_Tiqr_AlreadyEnrolled_Description_COPY),
+                    dismissButtonLabel = stringResource(R.string.Modal_Cancel_COPY),
+                    confirmButtonLabel = stringResource(R.string.Security_Tiqr_Deactivate_COPY),
                     onDismiss = {
                         waitingForVmEvent = false
                         viewModel.clearPreEnrollCheck()
@@ -91,9 +91,9 @@ fun HomePageNoAccountContent(
                     })
 
                 PreEnrollCheck.Incomplete -> AlertDialogWithSingleButton(title = stringResource(
-                    R.string.preenroll_check_incompleted_title
+                    R.string.Security_Tiqr_EnrollmentIncomplete_Title_COPY
                 ),
-                    explanation = stringResource(R.string.preenroll_check_incompleted_explanation),
+                    explanation = stringResource(R.string.Security_Tiqr_EnrollmentIncomplete_Description_COPY),
                     buttonLabel = stringResource(R.string.button_ok),
                     onDismiss = {
                         waitingForVmEvent = false
@@ -101,9 +101,9 @@ fun HomePageNoAccountContent(
                     })
 
                 PreEnrollCheck.MissingAccount -> AlertDialogWithSingleButton(title = stringResource(
-                    R.string.preenroll_check_missing_title
+                    R.string.Security_Tiqr_MissingAccountDetails_Title_COPY
                 ),
-                    explanation = stringResource(R.string.preenroll_check_missing_explanation),
+                    explanation = stringResource(R.string.Security_Tiqr_MissingAccountDetails_Description_COPY),
                     buttonLabel = stringResource(R.string.button_ok),
                     onDismiss = {
                         waitingForVmEvent = false
@@ -170,7 +170,7 @@ fun HomePageNoAccountContent(
         )
 
         Text(
-            text = stringResource(R.string.enroll_screen_title),
+            text = stringResource(R.string.CreateEduID_LandingPage_MainText_COPY),
             style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
             modifier = Modifier
                 .fillMaxWidth()
@@ -211,7 +211,7 @@ fun HomePageNoAccountContent(
             }
 
             PrimaryButton(
-                text = stringResource(R.string.enroll_screen_sign_in_button),
+                text = stringResource(R.string.CreateEduID_LandingPage_SignInButton_COPY),
                 enabled = !waitToComplete,
                 onClick = {
                     if (isAuthorizedForDataAccess) {
@@ -230,7 +230,7 @@ fun HomePageNoAccountContent(
             Spacer(Modifier.height(24.dp))
 
             PrimaryButton(
-                text = stringResource(R.string.scan_button),
+                text = stringResource(R.string.CreateEduID_LandingPage_ScanQrButton_COPY),
                 enabled = !waitToComplete,
                 onClick = onGoToScan,
                 modifier = Modifier
@@ -251,7 +251,7 @@ fun HomePageNoAccountContent(
             shape = RoundedCornerShape(CornerSize(6.dp)),
         ) {
             Text(
-                text = stringResource(R.string.enroll_screen_request_id_button),
+                text = stringResource(R.string.CreateEduID_LandingPage_NoEduIdButton_COPY),
                 style = MaterialTheme.typography.bodyLarge.copy(
                     color = ButtonGreen, fontWeight = FontWeight.SemiBold
                 ),

@@ -130,7 +130,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
         ) {
             Column() {
                 Text(
-                    text = stringResource(R.string.delete_account_two_title),
+                    text = stringResource(R.string.Account_DeleteAccountSure_COPY),
                     style = MaterialTheme.typography.titleLarge.copy(
                         color = TextGreen, textAlign = TextAlign.Start
                     ),
@@ -160,7 +160,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
                     end.linkTo(text.start, margin = 12.dp)
                 })
             Text(style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
-                text = stringResource(R.string.delete_no_undo_warning),
+                text = stringResource(R.string.ConfirmDelete_Disclaimer_COPY),
                 modifier = Modifier.constrainAs(text) {
                     start.linkTo(image.end)
                     end.linkTo(parent.end, margin = 12.dp)
@@ -175,7 +175,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
             Column() {
                 Spacer(Modifier.height(18.dp))
                 Text(
-                    text = stringResource(R.string.delete_account_two_description),
+                    text = stringResource(R.string.ConfirmDelete_TypeNameToConfirm_COPY),
                     style = MaterialTheme.typography.bodyLarge.copy(
                         color = TextBlack, textAlign = TextAlign.Start
                     ),
@@ -189,8 +189,8 @@ private fun DeleteAccountSecondConfirmScreenContent(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
             onValueChange = { onInputChange(it) },
-            label = { Text(stringResource(R.string.managa_account_your_full_name)) },
-            placeholder = { Text(stringResource(R.string.manage_account_full_name_explain)) },
+            label = { Text(stringResource(R.string.ConfirmDelete_YourFullNameLabel_COPY)) },
+            placeholder = { Text(stringResource(R.string.ConfirmDelete_Placeholder_COPY)) },
             modifier = Modifier
                 .fillMaxWidth()
         )
@@ -213,7 +213,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
         )
         PrimaryButton(
             modifier = Modifier.widthIn(min = 140.dp),
-            text = stringResource(R.string.button_confirm),
+            text = stringResource(R.string.ConfirmDelete_Button_Confirm_COPY),
             onClick = onDeleteAccountPressed,
             buttonBackgroundColor = ButtonRed,
             buttonTextColor = Color.White,

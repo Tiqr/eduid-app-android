@@ -69,8 +69,8 @@ class RequestEduIdFormViewModel @Inject constructor(
             FAIL_EMAIL_IN_USE -> {
                 inputForm.copy(
                     isProcessing = false, errorData = ErrorData(
-                        titleId = R.string.err_title_email_in_use,
-                        messageId = R.string.err_msg_email_in_use,
+                        titleId = R.string.ResponseErrors_EmailInUse_Title_COPY,
+                        messageId = R.string.ResponseErrors_EmailInUse_Description_COPY,
                         messageArg = inputForm.email
                     )
                 )
@@ -79,8 +79,8 @@ class RequestEduIdFormViewModel @Inject constructor(
             EMAIL_DOMAIN_FORBIDDEN -> {
                 inputForm.copy(
                     isProcessing = false, errorData = ErrorData(
-                        titleId = R.string.err_title_email_domain_forbidden,
-                        messageId = R.string.err_msg_email_domain_forbidden,
+                        titleId = R.string.ResponseErrors_EmailDomainForbidden_Title_COPY,
+                        messageId = R.string.ResponseErrors_EmailDomainForbidden_Description_COPY,
                         messageArg = inputForm.email
                     )
                 )
@@ -89,8 +89,8 @@ class RequestEduIdFormViewModel @Inject constructor(
             else -> {
                 inputForm.copy(
                     isProcessing = false, errorData = ErrorData(
-                        titleId = R.string.err_title_auth_unexpected_fail,
-                        messageId = R.string.err_msg_create_unknown_fail,
+                        titleId = R.string.Generic_RequestError_Title_COPY,
+                        messageId = R.string.ResponseErrors_AccountCreateError_COPY,
                         messageArg = inputForm.email
                     )
                 )

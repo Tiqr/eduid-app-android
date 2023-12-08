@@ -92,7 +92,7 @@ private fun DeepLinkContent(
         )
     }
     Text(
-        text = stringResource(R.string.deeplink_processing),
+        text = stringResource(R.string.Deeplink_Processing_COPY),
         style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
         modifier = Modifier.fillMaxWidth()
     )

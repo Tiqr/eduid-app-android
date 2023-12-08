@@ -194,6 +194,7 @@ dependencies {
     implementation(libs.google.firebase.messaging)
     implementation(libs.appauth)
     implementation(libs.jwtdecode)
+    implementation(libs.material3.html.text)
 
     implementation(libs.dagger.hilt.android)
     implementation(libs.dagger.hilt.fragment)

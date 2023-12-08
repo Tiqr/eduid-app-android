@@ -42,7 +42,7 @@ fun AuthenticationCompletedScreen(goHome: () -> Unit = {}) = EduIdTopAppBar(
         Text(
             style = MaterialTheme.typography.titleLarge.copy(
                 textAlign = TextAlign.Start, color = TextGreen
-            ), text = stringResource(R.string.authorize_title), modifier = Modifier.fillMaxWidth()
+            ), text = stringResource(R.string.PinAndBioMetrics_LoginRequest_COPY), modifier = Modifier.fillMaxWidth()
         )
         Column(
             verticalArrangement = Arrangement.Center,
@@ -56,7 +56,7 @@ fun AuthenticationCompletedScreen(goHome: () -> Unit = {}) = EduIdTopAppBar(
             )
 
             Text(
-                text = stringResource(R.string.authorize_confirmed_subtitle),
+                text = stringResource(R.string.Profile_YouAreLoggedIn_COPY),
                 style = MaterialTheme.typography.titleLarge.copy(
                     color = TextGreen
                 ),

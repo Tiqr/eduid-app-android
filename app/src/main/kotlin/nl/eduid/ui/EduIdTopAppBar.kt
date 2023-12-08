@@ -56,7 +56,7 @@ fun EduIdTopAppBar(
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.ArrowBack,
-                                contentDescription = stringResource(R.string.button_back),
+                                contentDescription = stringResource(R.string.PinAndBioMetrics_Button_Back_COPY),
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(width = 48.dp, height = 48.dp)
                             )

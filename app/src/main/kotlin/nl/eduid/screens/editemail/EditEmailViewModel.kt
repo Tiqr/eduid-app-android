@@ -46,8 +46,8 @@ class EditEmailViewModel @Inject constructor(
                             FAIL_EMAIL_IN_USE -> {
                                 uiState.copy(
                                     inProgress = false, errorData = ErrorData(
-                                        titleId = R.string.err_title_email_in_use,
-                                        messageId = R.string.err_msg_email_in_use,
+                                        titleId = R.string.ResponseErrors_EmailInUse_Title_COPY,
+                                        messageId = R.string.ResponseErrors_EmailInUse_Description_COPY,
                                         messageArg = uiState.email
                                     )
                                 )
@@ -56,8 +56,8 @@ class EditEmailViewModel @Inject constructor(
                             EMAIL_DOMAIN_FORBIDDEN -> {
                                 uiState.copy(
                                     inProgress = false, errorData = ErrorData(
-                                        titleId = R.string.err_title_email_domain_forbidden,
-                                        messageId = R.string.err_msg_email_domain_forbidden,
+                                        titleId = R.string.ResponseErrors_EmailDomainForbidden_Title_COPY,
+                                        messageId = R.string.ResponseErrors_EmailDomainForbidden_Description_COPY,
                                         messageArg = uiState.email
                                     )
                                 )
@@ -66,8 +66,8 @@ class EditEmailViewModel @Inject constructor(
                             else -> {
                                 uiState.copy(
                                     inProgress = false, errorData = ErrorData(
-                                        titleId = R.string.err_title_generic_fail,
-                                        messageId = R.string.err_msg_generic_unexpected_with_arg,
+                                        titleId = R.string.Generic_RequestError_Title_COPY,
+                                        messageId = R.string.Generic_RequestError_Description_COPY,
                                         messageArg = uiState.email
                                     )
                                 )
@@ -78,8 +78,8 @@ class EditEmailViewModel @Inject constructor(
                 } catch (e: Exception) {
                     uiState = uiState.copy(
                         inProgress = false, errorData = ErrorData(
-                            titleId = R.string.err_title_cannot_update_pass,
-                            messageId = R.string.err_msg_generic_unexpected_with_arg,
+                            titleId = R.string.ResponseErrors_PasswordUpdateError_COPY,
+                            messageId = R.string.Generic_RequestError_Description_COPY,
                             messageArg = e.message ?: e.javaClass.simpleName,
                         )
                     )

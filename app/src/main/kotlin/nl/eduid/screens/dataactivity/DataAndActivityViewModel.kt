@@ -31,16 +31,16 @@ class DataAndActivityViewModel @Inject constructor(private val assistant: DataAs
                 } else {
                     uiState.copy(
                         isLoading = false, errorData = ErrorData(
-                            titleId = R.string.err_title_load_fail,
-                            messageId = R.string.err_msg_data_history_fail
+                            titleId = R.string.ResponseErrors_UnauthorizedTitle_COPY,
+                            messageId = R.string.ResponseErrors_ActivityHistoryRetrieveError_COPY
                         )
                     )
                 }
             } catch (e: UnauthorizedException) {
                 uiState = uiState.copy(
                     isLoading = false, errorData = ErrorData(
-                        titleId = R.string.err_title_load_fail,
-                        messageId = R.string.err_msg_unauthorized_request_fail
+                        titleId = R.string.ResponseErrors_UnauthorizedTitle_COPY,
+                        messageId = R.string.ResponseErrors_UnauthorizedText_COPY
                     )
                 )
             }
@@ -65,16 +65,16 @@ class DataAndActivityViewModel @Inject constructor(private val assistant: DataAs
                 UiState(
                     isLoading = false,
                     errorData = ErrorData(
-                        titleId = R.string.err_title_load_fail,
-                        messageId = R.string.err_msg_data_history_fail
+                        titleId = R.string.ResponseErrors_UnauthorizedTitle_COPY,
+                        messageId = R.string.ResponseErrors_ActivityHistoryRetrieveError_COPY
                     ),
                 )
             }
         } catch (e: UnauthorizedException) {
             uiState = uiState.copy(
                 isLoading = false, errorData = ErrorData(
-                    titleId = R.string.err_title_generic_fail,
-                    messageId = R.string.err_msg_unauthorized_request_fail
+                    titleId = R.string.Generic_RequestError_Title_COPY,
+                    messageId = R.string.ResponseErrors_UnauthorizedText_COPY
                 )
             )
         }
