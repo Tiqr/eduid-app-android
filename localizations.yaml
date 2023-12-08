@@ -105,10 +105,6 @@ SHARED:
         COPY:
           en: is ready for use
           nl: is klaar voor gebruik
-    YourEduId:
-      COPY:
-        en: Your eduID app
-        nl: Jouw eduID app
     SecurityButton:
       COPY:
         en: Security
@@ -3678,5 +3674,3 @@ SHARED:
             COPY:
               en: "Authorization code exchange failed: %1{{s}}."
               nl: "Autorisatiecode-uitwisseling mislukt: %1{{s}}."
-
-
