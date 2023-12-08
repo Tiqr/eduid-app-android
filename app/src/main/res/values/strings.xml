@@ -20,7 +20,7 @@
   <string name="HomeView_ActivityButton_COPY">"Activity"</string>
   <string name="HomeView_ScanQRButton_COPY">"Scan QR"</string>
   <string name="ScanView_Title_COPY">"Scan the QR-code"</string>
-  <string name="ScanView_MainText_COPY">"Don't see a QR code?\nGo to eduid.nl/security\nCreate your personal QR code\nScan it here\n"</string>
+  <string name="ScanView_MainText_COPY">"&lt;b&gt;Don't see a QR code?&lt;/b&gt;&lt;br/&gt;\nGo to &lt;a href=&quot;https://eduid.nl/security&quot; target=&quot;_blank&quot;&gt;eduid.nl/security&lt;/a&gt;&lt;br/&gt;\nCreate your personal QR code&lt;br/&gt;\nScan it here\n"</string>
   <string name="ScanView_MainTextBoldPart_COPY">"Don't see a QR code?"</string>
   <string name="ScanView_Flashlight_NotAvailable_COPY">"Torch isn't available"</string>
   <string name="ScanView_Flashlight_TurnOn_COPY">"Turn on flashlight"</string>

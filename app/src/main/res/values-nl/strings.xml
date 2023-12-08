@@ -20,7 +20,7 @@
   <string name="HomeView_ActivityButton_COPY">"Activiteit"</string>
   <string name="HomeView_ScanQRButton_COPY">"Scan QR"</string>
   <string name="ScanView_Title_COPY">"Scan de QR-code"</string>
-  <string name="ScanView_MainText_COPY">"Zie je geen QR-code?\nGa naar eduid.nl/security\nMaak je persoonlijke QR-code aan\nScan het hier\n"</string>
+  <string name="ScanView_MainText_COPY">"&lt;b&gt;Zie je geen QR-code?&lt;/b&gt;&lt;br/&gt;\nGa naar &lt;a href=&quot;https://eduid.nl/security&quot; target=&quot;_blank&quot;&gt;eduid.nl/security&lt;/a&gt;&lt;br/&gt;\nMaak je persoonlijke QR-code aan&lt;br/&gt;\nScan het hier\n"</string>
   <string name="ScanView_MainTextBoldPart_COPY">"Zie je geen QR-code?"</string>
   <string name="ScanView_Flashlight_NotAvailable_COPY">"Zaklamp is niet beschikbaar"</string>
   <string name="ScanView_Flashlight_TurnOn_COPY">"Zet zaklamp aan"</string>
@@ -456,7 +456,7 @@
   <string name="LinkFromInstitution_InstitutionDomainNameWarning2_COPY">"We raden je aan om je persoonlijke e-mailadres te gebruiken voor eduID."</string>
   <string name="LinkFromInstitution_AllowedDomainNamesError_COPY">"Domeinnaam %1$s niet toegestaan."</string>
   <string name="LinkFromInstitution_AllowedDomainNamesError2_COPY">"eduID is beperkt om alleen te worden gebruikt door toegestane domeinen."</string>
-  <string name="LinkFromInstitution_AgreeWithTerms_COPY">"&lt;span&gt;Ik ga akkoord met &lt;a tabindex='-1' href='https://eduid.nl/gebruiksvoorwaarden/' target='_blank'&gt;de voorwaarden.&lt;/a&gt; En ik begrijp &lt;a tabindex='-1' href='https://eduid.nl/privacyverklaring/' target='_blank'&gt;de privacyverklaring&lt;/a&gt;.&lt;/span&gt;"</string>
+  <string name="LinkFromInstitution_AgreeWithTerms_COPY">"&lt;span&gt;Ik ga akkoord met &lt;a tabindex='-1' href='https://eduid.nl/gebruiksvoorwaarden/' target='_blank'&gt;de voorwaarden.&lt;/a&gt; En ik begrijp &lt;a tabindex='-1' href='https://eduid.nl/privacy/' target='_blank'&gt;de privacyverklaring&lt;/a&gt;.&lt;/span&gt;"</string>
   <string name="LinkFromInstitution_RequestEduIdButton_COPY">"Vraag je eduID aan"</string>
   <string name="PollFromInstitution_Header_COPY">"Open je mailbox!"</string>
   <string name="PollFromInstitution_Awaiting_COPY">"Wachten tot je op de link klikt..."</string>

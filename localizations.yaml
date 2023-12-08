@@ -133,14 +133,14 @@ SHARED:
     MainText:
       COPY:
         en: |
-          Don't see a QR code?
-          Go to eduid.nl/security
-          Create your personal QR code
+          <b>Don't see a QR code?</b><br/>
+          Go to <a href="https://eduid.nl/security" target="_blank">eduid.nl/security</a><br/>
+          Create your personal QR code<br/>
           Scan it here
         nl: |
-          Zie je geen QR-code?
-          Ga naar eduid.nl/security
-          Maak je persoonlijke QR-code aan
+          <b>Zie je geen QR-code?</b><br/>
+          Ga naar <a href="https://eduid.nl/security" target="_blank">eduid.nl/security</a><br/>
+          Maak je persoonlijke QR-code aan<br/>
           Scan het hier
     MainTextBoldPart:
       COPY:
@@ -2279,7 +2279,7 @@ SHARED:
           <span>Ik ga akkoord met <a tabindex='-1'
           href='https://eduid.nl/gebruiksvoorwaarden/' target='_blank'>de
           voorwaarden.</a> En ik begrijp <a tabindex='-1'
-          href='https://eduid.nl/privacyverklaring/' target='_blank'>de
+          href='https://eduid.nl/privacy/' target='_blank'>de
           privacyverklaring</a>.</span>
     RequestEduIdButton:
       COPY:
