@@ -3337,7 +3337,9 @@ SHARED:
             You must therefore add the following information to your eduID
             
             • Validation of your full name by a third party
+            
             • Proof of being a student
+            
             • Your current institution
           nl: >-
             Wanneer je in Nederland studeert en je wilt met eduID inloggen bij een onderwijsdienst,
@@ -3345,7 +3347,9 @@ SHARED:
             Daarom moet je de volgende gegevens toevoegen aan jouw eduID
             
             • Validatie van je volledige naam door een derde partij
+            
             • Bewijs dat je student bent
+            
             • Je huidige instelling
       MainTextFirstBoldPart:
         COPY:
