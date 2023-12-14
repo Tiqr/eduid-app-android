@@ -1,0 +1,37 @@
+name: Update translations
+on:
+  workflow_dispatch:
+  push:
+    paths:
+    - 'localizations.yaml'
+jobs:
+  localicious:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'npm'
+    - name: Install localicious/
+      run: |
+        npm install -g @picnicsupermarket/localicious
+    - name: Create Localizable.strings files
+      run: |
+        cd ${{ github.workspace }}
+        localicious render localizations.yaml ./ --languages en,nl --outputTypes android -c SHARED,ANDROID
+    - name: Move files and clean up
+      run: |
+        cd ${{ github.workspace }}
+        mv android/nl/strings.xml app/src/main/res/values-nl/strings.xml
+        mv android/en/strings.xml app/src/main/res/values/strings.xml
+        rm -rf android
+    - name: Commit updated files
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Automated update of strings.xml after updating localizations.yaml
+        file_pattern: '**/strings.xml'
+
+  
