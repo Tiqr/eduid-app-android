@@ -69,11 +69,6 @@ jobs:
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
           keyPassword: ${{ secrets.KEYPASSWORD }}
-      - name: Upload nl.eduid.testing signed Release APK for sideloading
-        uses: actions/upload-artifact@v1
-        with:
-          name: eduID-${{ github.sha }}-signed.apk
-          path: ${{ steps.sign_aab.outputs.signedReleaseFile }}
       - name: Publish nl.eduid.testing to play store internal test track
         uses: r0adkll/upload-google-play@v1
         with:
