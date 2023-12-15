@@ -100,6 +100,9 @@ android {
             } else {
                 versionNameSuffix = " TESTING"
             }
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             isDebuggable = isAppDebuggable
             signingConfig = if (isAppDebuggable) {
                 signingConfigs.getByName("debug")
@@ -143,7 +146,6 @@ android {
 dependencies {
 
     implementation(project(":data"))
-    implementation(project(":core"))
 
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.core)

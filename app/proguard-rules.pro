@@ -28,3 +28,15 @@
 # keep names for any Parcelabe & Serializable
 -keepnames class * extends android.os.Parcelable
 -keepnames class * extends java.io.Serializable
+
+# Firebase
+-keep public class com.google.firebase.** {*;}
+-keep class com.google.android.gms.** { *; }
+-keep class com.google.android.gms.internal.** { *; }
+-keepclasseswithmembers class com.google.firebase.FirebaseException
+-keep interface com.google.firebase.analytics.connector.AnalyticsConnector
+-keep class ** implements com.google.firebase.analytics.connector.AnalyticsConnector {
+    *;
+}
+-dontwarn com.google.firebase.analytics.connector.AnalyticsConnector
+-dontwarn org.tiqr.core.BR
