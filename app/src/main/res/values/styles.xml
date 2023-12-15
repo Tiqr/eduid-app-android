@@ -81,20 +81,6 @@
         <item name="android:windowMinWidthMinor">100%</item>
     </style>
 
-    <style name="AppTheme.Widget.Pin" parent="Widget.MaterialComponents.TextView">
-        <item name="android:background">@drawable/pin_input_background</item>
-        <item name="android:clickable">false</item>
-        <item name="android:focusable">false</item>
-        <item name="android:longClickable">false</item>
-        <item name="android:digits">0123456789</item>
-        <item name="android:gravity">center</item>
-        <item name="android:inputType">numberPassword</item>
-        <item name="android:maxLength">1</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:textAppearance">@style/AppTheme.TextAppearance</item>
-        <item name="android:includeFontPadding">false</item>
-    </style>
-
     <style name="ScanButtonIcon" parent="Widget.MaterialComponents.Button.Icon">
         <item name="android:textColor">@color/scanColor</item>
         <item name="android:fontFamily">@font/nunito_bold</item>
