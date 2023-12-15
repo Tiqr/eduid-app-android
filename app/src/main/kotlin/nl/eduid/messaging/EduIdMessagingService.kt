@@ -64,7 +64,7 @@ class EduIdMessagingService : FirebaseMessagingService() {
                 notificationManager.createNotificationChannel(
                     NotificationChannel(
                         CHANNEL_ID,
-                        resources.getString(R.string.notification_channel_name),
+                        resources.getString(org.tiqr.core.R.string.notification_channel_name),
                         NotificationManager.IMPORTANCE_DEFAULT
                     ).also {
                         it.description =

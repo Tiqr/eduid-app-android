@@ -186,8 +186,8 @@ class HomePageViewModel @Inject constructor(
             auth.isValidChallenge(rawChallenge) -> auth.parseChallenge(rawChallenge)
             else -> ChallengeParseResult.failure(
                 ParseFailure(
-                    title = resources.getString(R.string.error_qr_unknown_title),
-                    message = resources.getString(R.string.error_qr_unknown)
+                    title = resources.getString(R.string.QR_UnknownErrorTitle_COPY),
+                    message = resources.getString(R.string.QR_UnknownError_COPY)
                 )
             )
         }

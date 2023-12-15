@@ -155,9 +155,9 @@ private fun ScanContent(
             AlertDialogWithTwoButton(
                 title = errorData.title(context),
                 explanation = errorData.message(context),
-                dismissButtonLabel = stringResource(R.string.button_cancel),
+                dismissButtonLabel = stringResource(R.string.Button_Cancel_COPY),
                 onDismiss = dismissErrorDialog,
-                confirmButtonLabel = stringResource(R.string.button_retry),
+                confirmButtonLabel = stringResource(R.string.Button_Retry_COPY),
                 onConfirm = retryErrorDialog
             )
         }

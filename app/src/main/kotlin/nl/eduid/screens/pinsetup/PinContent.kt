@@ -71,7 +71,7 @@ fun PinContent(
         Spacer(modifier = Modifier.height(24.dp))
     }
     PrimaryButton(
-        text = stringResource(R.string.button_ok),
+        text = stringResource(R.string.Button_OK_COPY),
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()

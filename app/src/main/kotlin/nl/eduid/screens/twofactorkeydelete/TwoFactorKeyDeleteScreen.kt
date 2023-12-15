@@ -69,7 +69,7 @@ fun TwoFactorKeyDeleteScreen(
         AlertDialogWithSingleButton(
             title = errorData.title(context),
             explanation = errorData.message(context),
-            buttonLabel = stringResource(R.string.button_ok),
+            buttonLabel = stringResource(R.string.Button_OK_COPY),
             onDismiss = viewModel::dismissError
         )
     }
@@ -164,7 +164,7 @@ private fun TwoFactorKeyDeleteScreenContent(
     ) {
         PrimaryButton(
             enabled = !inProgress,
-            text = stringResource(id = R.string.button_cancel),
+            text = stringResource(id = R.string.Button_Cancel_COPY),
             modifier = Modifier.widthIn(min = 140.dp),
             onClick = goBack,
             buttonBackgroundColor = Color.Transparent,

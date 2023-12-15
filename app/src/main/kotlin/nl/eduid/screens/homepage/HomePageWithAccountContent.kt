@@ -52,7 +52,7 @@ fun HomePageWithAccountContent(
     viewModel.uiState.promptForAuth?.let {
         AlertDialogWithTwoButton(title = stringResource(R.string.PromptForOAuth_Title_COPY),
             explanation = stringResource(id = R.string.PromptForOAuth_Description_COPY),
-            dismissButtonLabel = stringResource(R.string.button_cancel),
+            dismissButtonLabel = stringResource(R.string.Button_Cancel_COPY),
             confirmButtonLabel = stringResource(R.string.PinAndBioMetrics_SignIn_COPY),
             onDismiss = viewModel::clearPromptForAuthTrigger,
             onConfirm = {

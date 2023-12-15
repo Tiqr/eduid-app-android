@@ -749,7 +749,12 @@
   <string name="ResponseErrors_Auth_Failed_Description_COPY">"No authorization state retained - reauthorization required."</string>
   <string name="ResponseErrors_Auth_Failed_TokenFailedDescription_Generic_COPY">"Authorization token code exchange failed."</string>
   <string name="ResponseErrors_Auth_Failed_TokenFailedDescription_WithException_COPY">"Authorization code exchange failed: %1$s."</string>
-  <string name="Deeplink_Processing_COPY">"Checking request..."</string>
+  <string name="Button_OK_COPY">"OK"</string>
+  <string name="Button_Cancel_COPY">"Cancel"</string>
+  <string name="Button_Retry_COPY">"Retry"</string>
+  <string name="QR_UnknownErrorTitle_COPY">"Unknown QR code"</string>
+  <string name="QR_UnknownError_COPY">"This QR code cannot be processed."</string>
+  <string name="Deeplink_Processing_COPY">"Checking request…"</string>
   <string name="Biometrics_UnknownError_COPY">"Biometrics failed for unknown reason."</string>
   <string name="MagicLink_OpenEmailClient_COPY">"Open email client"</string>
   <string name="Permission_Scan_COPY">"Please grant access to the camera."</string>

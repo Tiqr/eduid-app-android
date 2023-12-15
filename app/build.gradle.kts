@@ -1,9 +1,9 @@
 plugins {
     id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
-    id("kotlin-parcelize")
+    id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
+    id("kotlin-parcelize")
+    id("com.google.devtools.ksp")
 }
 
 if (JavaVersion.current() < JavaVersion.VERSION_17) {
@@ -96,9 +96,9 @@ android {
         getByName("debug") {
             applicationIdSuffix = ".testing"
             if (isAppDebuggable) {
-              versionNameSuffix = " DEBUG"
+                versionNameSuffix = " DEBUG"
             } else {
-              versionNameSuffix = " TESTING"
+                versionNameSuffix = " TESTING"
             }
             isDebuggable = isAppDebuggable
             signingConfig = if (isAppDebuggable) {
@@ -111,6 +111,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     compileOptions {
@@ -122,29 +123,21 @@ android {
         jvmToolchain(17)
     }
 
-    kapt {
-        correctErrorTypes = true
-        useBuildCache = true
-        javacOptions {
-            option("-Xmaxerrs", 1000)
-        }
-    }
-
     lint {
         abortOnError = false
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.6"
+        kotlinCompilerExtensionVersion = "1.5.5"
     }
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
+    packaging {
+        resources.excludes.addAll(
+            arrayOf(
+                "/META-INF/AL2.0",
+                "/META-INF/LGPL2.1",
+            )
+        )
     }
     namespace = "nl.eduid"
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 }
 
 dependencies {
@@ -198,7 +191,7 @@ dependencies {
 
     implementation(libs.dagger.hilt.android)
     implementation(libs.dagger.hilt.fragment)
-    kapt(libs.dagger.hilt.compiler)
+    ksp(libs.dagger.hilt.compiler)
 
     implementation(libs.permission)
     implementation(libs.coil)
@@ -206,7 +199,7 @@ dependencies {
     implementation(libs.betterLink)
 
     api(libs.moshi.moshi)
-    kapt(libs.moshi.codegen)
+    ksp(libs.moshi.codegen)
 
     api(libs.okhttp.okhttp)
     api(libs.okhttp.logging)
@@ -227,7 +220,7 @@ dependencies {
     androidTestImplementation(libs.kotlinx.coroutines.test)
 
     androidTestImplementation(libs.dagger.hilt.testing)
-    kaptAndroidTest(libs.dagger.hilt.compiler)
+    kspAndroidTest(libs.dagger.hilt.compiler)
 }
 
 // Disable analytics

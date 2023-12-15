@@ -55,7 +55,7 @@ fun HomePageNoAccountContent(
             val context = LocalContext.current
             AlertDialogWithSingleButton(title = errorData.title(context),
                 explanation = errorData.message(context),
-                buttonLabel = stringResource(R.string.button_ok),
+                buttonLabel = stringResource(R.string.Button_OK_COPY),
                 onDismiss = {
                     waitingForVmEvent = false
                     viewModel.dismissError()
@@ -67,7 +67,7 @@ fun HomePageNoAccountContent(
                     R.string.Security_Tiqr_EnrollmentCompleted_Title_COPY
                 ),
                     explanation = stringResource(R.string.Security_Tiqr_EnrollmentCompleted_Description_COPY),
-                    buttonLabel = stringResource(R.string.button_ok),
+                    buttonLabel = stringResource(R.string.Button_OK_COPY),
                     onDismiss = {
                         waitingForVmEvent = false
                         viewModel.clearPreEnrollCheck()
@@ -94,7 +94,7 @@ fun HomePageNoAccountContent(
                     R.string.Security_Tiqr_EnrollmentIncomplete_Title_COPY
                 ),
                     explanation = stringResource(R.string.Security_Tiqr_EnrollmentIncomplete_Description_COPY),
-                    buttonLabel = stringResource(R.string.button_ok),
+                    buttonLabel = stringResource(R.string.Button_OK_COPY),
                     onDismiss = {
                         waitingForVmEvent = false
                         viewModel.clearPreEnrollCheck()
@@ -104,7 +104,7 @@ fun HomePageNoAccountContent(
                     R.string.Security_Tiqr_MissingAccountDetails_Title_COPY
                 ),
                     explanation = stringResource(R.string.Security_Tiqr_MissingAccountDetails_Description_COPY),
-                    buttonLabel = stringResource(R.string.button_ok),
+                    buttonLabel = stringResource(R.string.Button_OK_COPY),
                     onDismiss = {
                         waitingForVmEvent = false
                         viewModel.clearPreEnrollCheck()

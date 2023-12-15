@@ -122,7 +122,7 @@ private fun AuthenticationPinBiometricContent(
                         }
                         AlertDialogWithSingleButton(title = failure.title,
                             explanation = failure.message,
-                            buttonLabel = stringResource(R.string.button_ok),
+                            buttonLabel = stringResource(R.string.Button_OK_COPY),
                             onDismiss = {
                                 if (remaining != null && remaining == 0) {
                                     goHomeOnFail()
@@ -136,7 +136,7 @@ private fun AuthenticationPinBiometricContent(
                         AlertDialogWithSingleButton(
                             title = failure.title,
                             explanation = failure.message,
-                            buttonLabel = stringResource(R.string.button_ok),
+                            buttonLabel = stringResource(org.tiqr.core.R.string.button_ok),
                             onDismiss = {
                                 isCheckingSecret = false
                                 clearCompleteChallenge()
@@ -201,7 +201,7 @@ private fun AuthenticationPinBiometricContent(
             )
 
             Spacer(modifier = Modifier.height(36.dp))
-            PinInputField(label = stringResource(R.string.auth_pin_subtitle),
+            PinInputField(label = stringResource(org.tiqr.core.R.string.auth_pin_subtitle),
                 pinCode = pinValue,
                 isPinInvalid = isPinInvalid,
                 shouldShowKeyboard = shouldShowKeyboard,
@@ -223,12 +223,12 @@ private fun AuthenticationPinBiometricContent(
         ) {
             SecondaryButton(
                 modifier = Modifier.widthIn(min = 140.dp),
-                text = stringResource(R.string.button_cancel),
+                text = stringResource(R.string.Button_Cancel_COPY),
                 onClick = onCancel,
             )
             PrimaryButton(
                 modifier = Modifier.widthIn(min = 140.dp),
-                text = stringResource(R.string.button_ok),
+                text = stringResource(org.tiqr.core.R.string.button_ok),
                 onClick = {
                     isCheckingSecret = true
                     submitPin(pinValue)

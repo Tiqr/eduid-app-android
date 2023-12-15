@@ -106,7 +106,7 @@ fun DeleteServiceContent(
                 .padding(bottom = 24.dp),
         ) {
             SecondaryButton(
-                text = stringResource(R.string.button_cancel),
+                text = stringResource(R.string.Button_Cancel_COPY),
                 onClick = goBack,
                 enabled = !inProgress,
                 modifier = Modifier.widthIn(min = 140.dp),

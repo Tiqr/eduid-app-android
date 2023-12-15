@@ -114,7 +114,7 @@ private fun ConfirmCodeContent(
         AlertDialogWithSingleButton(
             title = uiState.errorData.title(context),
             explanation = uiState.errorData.message(context),
-            buttonLabel = stringResource(R.string.button_ok),
+            buttonLabel = stringResource(R.string.Button_OK_COPY),
             onDismiss = dismissError
         )
     }

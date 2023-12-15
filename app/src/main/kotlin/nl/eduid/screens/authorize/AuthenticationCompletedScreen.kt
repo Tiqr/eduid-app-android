@@ -70,7 +70,7 @@ fun AuthenticationCompletedScreen(goHome: () -> Unit = {}) = EduIdTopAppBar(
                 .weight(1f, false)
                 .navigationBarsPadding()
                 .padding(bottom = 24.dp),
-            text = stringResource(R.string.button_ok),
+            text = stringResource(org.tiqr.core.R.string.button_ok),
             onClick = {
                 goHome()
                 context.findActivity().finish()

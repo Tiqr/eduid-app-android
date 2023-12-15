@@ -48,7 +48,7 @@ fun DataAndActivityScreen(
             AlertDialogWithSingleButton(
                 title = errorData.title(context),
                 explanation = errorData.message(context),
-                buttonLabel = stringResource(R.string.button_ok),
+                buttonLabel = stringResource(org.tiqr.core.R.string.button_ok),
                 onDismiss = viewModel::clearErrorData
             )
         }
