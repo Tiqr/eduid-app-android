@@ -151,13 +151,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.core)
-    implementation(libs.kotlinx.coroutines.playServices)
 
     implementation(libs.androidx.activity)
     implementation(libs.androidx.autofill)
-    implementation(libs.androidx.camera.lifecycle)
-    implementation(libs.androidx.camera.view)
-    implementation(libs.androidx.biometric)
     implementation(libs.androidx.lifecycle.process)
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
@@ -174,7 +170,6 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.compose.constraint)
     implementation(libs.androidx.core)
-    implementation(libs.androidx.concurrent)
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.lifecycle.runtimeCompose)
     implementation(libs.androidx.lifecycle.viewModelCompose)
@@ -186,11 +181,12 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.splashscreen)
     implementation(libs.google.android.material)
-    implementation(libs.google.mlkit.barcode)
     implementation(libs.google.firebase.messaging)
     implementation(libs.appauth)
     implementation(libs.jwtdecode)
     implementation(libs.material3.html.text)
+
+    implementation(libs.androidx.camera.camera2)
 
     implementation(libs.dagger.hilt.android)
     implementation(libs.dagger.hilt.fragment)
@@ -201,17 +197,10 @@ dependencies {
     implementation(libs.coilCompose)
     implementation(libs.betterLink)
 
-    api(libs.moshi.moshi)
     ksp(libs.moshi.codegen)
 
-    api(libs.okhttp.okhttp)
-    api(libs.okhttp.logging)
-
-    api(libs.retrofit.retrofit)
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.retrofit.converter.scalars)
-
-    api(libs.timber)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.junit)
