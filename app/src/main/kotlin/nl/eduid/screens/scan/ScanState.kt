@@ -13,9 +13,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
-import org.tiqr.core.scan.ScanComponent
 import org.tiqr.data.model.Challenge
 import org.tiqr.data.model.ChallengeParseResult
+import org.tiqr.data.scan.ScanComponent
 import java.util.*
 
 

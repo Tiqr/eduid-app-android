@@ -3,7 +3,6 @@ package nl.eduid.screens.authorize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -42,7 +41,9 @@ fun AuthenticationCompletedScreen(goHome: () -> Unit = {}) = EduIdTopAppBar(
         Text(
             style = MaterialTheme.typography.titleLarge.copy(
                 textAlign = TextAlign.Start, color = TextGreen
-            ), text = stringResource(R.string.PinAndBioMetrics_LoginRequest_COPY), modifier = Modifier.fillMaxWidth()
+            ),
+            text = stringResource(R.string.PinAndBioMetrics_LoginRequest_COPY),
+            modifier = Modifier.fillMaxWidth()
         )
         Column(
             verticalArrangement = Arrangement.Center,
@@ -70,7 +71,7 @@ fun AuthenticationCompletedScreen(goHome: () -> Unit = {}) = EduIdTopAppBar(
                 .weight(1f, false)
                 .navigationBarsPadding()
                 .padding(bottom = 24.dp),
-            text = stringResource(org.tiqr.core.R.string.button_ok),
+            text = stringResource(R.string.Button_OK_COPY),
             onClick = {
                 goHome()
                 context.findActivity().finish()

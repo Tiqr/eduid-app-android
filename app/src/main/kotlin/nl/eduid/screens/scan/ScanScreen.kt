@@ -47,8 +47,8 @@ import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithTwoButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import org.tiqr.core.scan.ScanComponent
 import org.tiqr.data.model.Challenge
+import org.tiqr.data.scan.ScanComponent
 import androidx.camera.core.Preview as CameraPreview
 
 @OptIn(ExperimentalMaterial3Api::class)

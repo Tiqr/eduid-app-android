@@ -33,6 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import biometricUsable
 import nl.eduid.R
 import nl.eduid.screens.biometric.BiometricSignIn
 import nl.eduid.screens.biometric.SignInWithBiometricsContract
@@ -43,7 +44,6 @@ import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextGreen
-import org.tiqr.core.util.extensions.biometricUsable
 import org.tiqr.data.model.AuthenticationChallenge
 import org.tiqr.data.model.AuthenticationCompleteFailure
 import org.tiqr.data.model.ChallengeCompleteFailure
@@ -136,7 +136,7 @@ private fun AuthenticationPinBiometricContent(
                         AlertDialogWithSingleButton(
                             title = failure.title,
                             explanation = failure.message,
-                            buttonLabel = stringResource(org.tiqr.core.R.string.button_ok),
+                            buttonLabel = stringResource(R.string.Button_OK_COPY),
                             onDismiss = {
                                 isCheckingSecret = false
                                 clearCompleteChallenge()
@@ -201,7 +201,7 @@ private fun AuthenticationPinBiometricContent(
             )
 
             Spacer(modifier = Modifier.height(36.dp))
-            PinInputField(label = stringResource(org.tiqr.core.R.string.auth_pin_subtitle),
+            PinInputField(label = stringResource(org.tiqr.data.R.string.auth_pin_subtitle),
                 pinCode = pinValue,
                 isPinInvalid = isPinInvalid,
                 shouldShowKeyboard = shouldShowKeyboard,
@@ -228,7 +228,7 @@ private fun AuthenticationPinBiometricContent(
             )
             PrimaryButton(
                 modifier = Modifier.widthIn(min = 140.dp),
-                text = stringResource(org.tiqr.core.R.string.button_ok),
+                text = stringResource(R.string.Button_OK_COPY),
                 onClick = {
                     isCheckingSecret = true
                     submitPin(pinValue)

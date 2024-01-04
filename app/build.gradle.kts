@@ -158,6 +158,7 @@ dependencies {
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.view)
     implementation(libs.androidx.biometric)
+    implementation(libs.androidx.lifecycle.process)
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
 

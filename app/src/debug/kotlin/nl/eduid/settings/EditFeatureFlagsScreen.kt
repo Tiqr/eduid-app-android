@@ -32,7 +32,7 @@ import nl.eduid.flags.GroupedTestSetting
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import org.tiqr.core.util.extensions.openAppSystemSettings
+import openAppSystemSettings
 
 @Composable
 fun EditFeatureFlagsScreen(

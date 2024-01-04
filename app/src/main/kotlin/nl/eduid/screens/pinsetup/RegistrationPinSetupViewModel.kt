@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import biometricUsable
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,7 +18,6 @@ import nl.eduid.R
 import nl.eduid.graphs.Account
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import nl.eduid.ui.PIN_MAX_LENGTH
-import org.tiqr.core.util.extensions.biometricUsable
 import org.tiqr.data.model.ChallengeCompleteResult
 import org.tiqr.data.model.EnrollmentChallenge
 import org.tiqr.data.model.EnrollmentCompleteRequest
