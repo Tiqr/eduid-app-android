@@ -11,7 +11,7 @@
   <string name="EnvironmentSwitcher_Title_COPY">"Wisselen van omgeving"</string>
   <string name="EnvironmentSwitcher_Subtitle_COPY">"Klik op een van de omgevingen om die te gebruiken voor de communicatie"</string>
   <string name="PromptForOAuth_Title_COPY">"Inloggen"</string>
-  <string name="PromptForOAuth_Description_COPY">"Om imformatie op te halen moet je ingelogd zijn."</string>
+  <string name="PromptForOAuth_Description_COPY">"Om informatie op te halen moet je ingelogd zijn."</string>
   <string name="HomeView_MainText_FirstPart_COPY">"Jouw eduID app"</string>
   <string name="HomeView_MainText_SecondPart_COPY">"is klaar voor gebruik"</string>
   <string name="HomeView_SecurityButton_COPY">"Beveiliging"</string>
@@ -225,6 +225,11 @@
   <string name="TwoFactorKeys_Label_UniqueKeyId_COPY">"Uniek SleutelID"</string>
   <string name="TwoFactorKeys_Label_UseBiometrics_COPY">"Gebruik biometrie"</string>
   <string name="TwoFactorKeys_DeleteKey_COPY">"Delete key"</string>
+  <string name="ConfirmDeleteKey_Title_COPY">"Verwijder sleutel"</string>
+  <string name="ConfirmDeleteKey_Subtitle_COPY">"Dit kan niet ongedaan worden gemaakt"</string>
+  <string name="ConfirmDeleteKey_Description_COPY">"Weet je zeker dat je deze sleutel wil verwijderen?"</string>
+  <string name="ConfirmDeleteKey_Button_Confirm_COPY">"Bevestigen"</string>
+  <string name="ConfirmDeleteKey_Button_Cancel_COPY">"Annuleren"</string>
   <string name="Home_Home_COPY">"Home"</string>
   <string name="Home_Welcome_COPY">"Welkom %1$s"</string>
   <string name="Home_DataAndActivity_COPY">"Data &amp; activiteit"</string>
@@ -691,7 +696,6 @@
   <string name="CreateEduID_Created_MainText_COPY">"Om deze app veilig te kunnen gebruiken, hebben we een pincode nodig en een telefoonnummer voor het geval je het vergeet"</string>
   <string name="CreateEduID_EnterPersonalInfo_EmailFieldTitle_COPY">"Je emailaddres"</string>
   <string name="CreateEduID_EnterPersonalInfo_EmailFieldPlaceHolder_COPY">"e.g. timbernerslee@gmail.com"</string>
-  <string name="CreateEduID_EnterPersonalInfo_Agreement_COPY">"Ik ga akkoord met de servicevoorwaarden. Ik begrijp ook het privacybeleid"</string>
   <string name="CreateEduID_EnterPhoneNumber_PhoneFieldTitle_COPY">"Vul je telefoonnummer in"</string>
   <string name="CreateEduID_EnterPhoneNumber_PhoneFieldPlaceholder_COPY">"0612345678"</string>
   <string name="CreateEduID_EnterPhoneNumber_MainText_COPY">"Laten we een hersteltelefoonnummer toevoegen. Als je met de app of via e-mail geen toegang hebt tot eduID, kun je hiermee inloggen op je eduID Account.\n\nWe sturen je een code om je nummer te verifiëren.\n"</string>
@@ -749,12 +753,7 @@
   <string name="ResponseErrors_Auth_Failed_Description_COPY">"Er zijn geen autorisatiegegevens opgeslaan - herautorisatie is nodig."</string>
   <string name="ResponseErrors_Auth_Failed_TokenFailedDescription_Generic_COPY">"Autorisatiecode-uitwisseling mislukt"</string>
   <string name="ResponseErrors_Auth_Failed_TokenFailedDescription_WithException_COPY">"Autorisatiecode-uitwisseling mislukt: %1$s."</string>
-  <string name="Button_OK_COPY">"OK"</string>
-  <string name="Button_Cancel_COPY">"Annuleren"</string>
-  <string name="Button_Retry_COPY">"Nogmaals"</string>
-  <string name="QR_UnknownErrorTitle_COPY">"Onbekende QR-code"</string>
-  <string name="QR_UnknownError_COPY">"Deze QR-code kan niet worden verwerkt."</string>
-  <string name="Deeplink_Processing_COPY">"Verzoek aan het bewerken…"</string>
+  <string name="Deeplink_Processing_COPY">"Verzoek aan het bewerken..."</string>
   <string name="Biometrics_UnknownError_COPY">"Biometrie mislukt om onbekende reden."</string>
   <string name="MagicLink_OpenEmailClient_COPY">"Open de email app"</string>
   <string name="Permission_Scan_COPY">"Geef toestemming voor het gebruik van de camera."</string>
