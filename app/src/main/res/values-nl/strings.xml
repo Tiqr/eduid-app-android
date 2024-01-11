@@ -11,7 +11,7 @@
   <string name="EnvironmentSwitcher_Title_COPY">"Wisselen van omgeving"</string>
   <string name="EnvironmentSwitcher_Subtitle_COPY">"Klik op een van de omgevingen om die te gebruiken voor de communicatie"</string>
   <string name="PromptForOAuth_Title_COPY">"Inloggen"</string>
-  <string name="PromptForOAuth_Description_COPY">"Om imformatie op te halen moet je ingelogd zijn."</string>
+  <string name="PromptForOAuth_Description_COPY">"Om informatie op te halen moet je ingelogd zijn."</string>
   <string name="HomeView_MainText_FirstPart_COPY">"Jouw eduID app"</string>
   <string name="HomeView_MainText_SecondPart_COPY">"is klaar voor gebruik"</string>
   <string name="HomeView_SecurityButton_COPY">"Beveiliging"</string>
