@@ -121,7 +121,7 @@ SHARED:
     Description:
       COPY:
         en: To retrieve the information you must be logged in.
-        nl: Om imformatie op te halen moet je ingelogd zijn.
+        nl: Om informatie op te halen moet je ingelogd zijn.
   HomeView:
     MainText:
       FirstPart:
