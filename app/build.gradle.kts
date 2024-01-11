@@ -1,9 +1,9 @@
 plugins {
     id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
-    id("kotlin-parcelize")
+    id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
+    id("kotlin-parcelize")
+    id("com.google.devtools.ksp")
 }
 
 if (JavaVersion.current() < JavaVersion.VERSION_17) {
@@ -75,7 +75,6 @@ android {
         //Only used for signing debuggable builds when building locally or apks from PRs that are archived
         //Must not be used for signing when building a bundle for Google Play upload
         if (isAppDebuggable) {
-            println("ADDING debug signing")
             getByName("debug") {
                 storeFile = file("keystore/testing.keystore")
                 storePassword = keystorePass
@@ -96,10 +95,13 @@ android {
         getByName("debug") {
             applicationIdSuffix = ".testing"
             if (isAppDebuggable) {
-              versionNameSuffix = " DEBUG"
+                versionNameSuffix = " DEBUG"
             } else {
-              versionNameSuffix = " TESTING"
+                versionNameSuffix = " TESTING"
             }
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             isDebuggable = isAppDebuggable
             signingConfig = if (isAppDebuggable) {
                 signingConfigs.getByName("debug")
@@ -111,6 +113,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     compileOptions {
@@ -122,47 +125,35 @@ android {
         jvmToolchain(17)
     }
 
-    kapt {
-        correctErrorTypes = true
-        useBuildCache = true
-        javacOptions {
-            option("-Xmaxerrs", 1000)
-        }
-    }
-
     lint {
         abortOnError = false
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.6"
+        kotlinCompilerExtensionVersion = "1.5.5"
     }
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
+    packaging {
+        resources.excludes.addAll(
+            arrayOf(
+                "/META-INF/AL2.0",
+                "/META-INF/LGPL2.1",
+            )
+        )
     }
     namespace = "nl.eduid"
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 }
 
 dependencies {
 
     implementation(project(":data"))
-    implementation(project(":core"))
 
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.core)
-    implementation(libs.kotlinx.coroutines.playServices)
 
     implementation(libs.androidx.activity)
     implementation(libs.androidx.autofill)
-    implementation(libs.androidx.camera.lifecycle)
-    implementation(libs.androidx.camera.view)
-    implementation(libs.androidx.biometric)
+    implementation(libs.androidx.lifecycle.process)
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
 
@@ -178,7 +169,6 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.compose.constraint)
     implementation(libs.androidx.core)
-    implementation(libs.androidx.concurrent)
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.lifecycle.runtimeCompose)
     implementation(libs.androidx.lifecycle.viewModelCompose)
@@ -190,32 +180,26 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.splashscreen)
     implementation(libs.google.android.material)
-    implementation(libs.google.mlkit.barcode)
     implementation(libs.google.firebase.messaging)
     implementation(libs.appauth)
     implementation(libs.jwtdecode)
     implementation(libs.material3.html.text)
 
+    implementation(libs.androidx.camera.camera2)
+
     implementation(libs.dagger.hilt.android)
     implementation(libs.dagger.hilt.fragment)
-    kapt(libs.dagger.hilt.compiler)
+    ksp(libs.dagger.hilt.compiler)
 
     implementation(libs.permission)
     implementation(libs.coil)
     implementation(libs.coilCompose)
     implementation(libs.betterLink)
 
-    api(libs.moshi.moshi)
-    kapt(libs.moshi.codegen)
+    ksp(libs.moshi.codegen)
 
-    api(libs.okhttp.okhttp)
-    api(libs.okhttp.logging)
-
-    api(libs.retrofit.retrofit)
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.retrofit.converter.scalars)
-
-    api(libs.timber)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.junit)
@@ -227,7 +211,7 @@ dependencies {
     androidTestImplementation(libs.kotlinx.coroutines.test)
 
     androidTestImplementation(libs.dagger.hilt.testing)
-    kaptAndroidTest(libs.dagger.hilt.compiler)
+    kspAndroidTest(libs.dagger.hilt.compiler)
 }
 
 // Disable analytics

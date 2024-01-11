@@ -32,7 +32,10 @@ class SignInWithBiometricsActivity : AppCompatActivity() {
             super.onAuthenticationFailed()
             setResult(BIOMETRIC_FAILED, Intent().apply {
                 putExtra(BIOMETRIC_ERRORCODE_KEY, BIOMETRIC_FAILED)
-                putExtra(BIOMETRIC_ERRORMESSAGE_KEY, getString(R.string.Biometrics_UnknownError_COPY))
+                putExtra(
+                    BIOMETRIC_ERRORMESSAGE_KEY,
+                    getString(R.string.Biometrics_UnknownError_COPY)
+                )
             })
             biometricPrompt.cancelAuthentication()
             finish()
@@ -56,9 +59,9 @@ class SignInWithBiometricsActivity : AppCompatActivity() {
 
     private fun createPromptInfo(): BiometricPrompt.PromptInfo =
         BiometricPrompt.PromptInfo.Builder().apply {
-            setTitle(getString(R.string.auth_biometric_dialog_title))
+            setTitle(getString(org.tiqr.data.R.string.auth_biometric_dialog_title))
             setConfirmationRequired(false)
-            setNegativeButtonText(getString(R.string.auth_biometric_dialog_cancel))
+            setNegativeButtonText(getString(org.tiqr.data.R.string.auth_biometric_dialog_cancel))
         }.build()
 
     override fun onBackPressed() {

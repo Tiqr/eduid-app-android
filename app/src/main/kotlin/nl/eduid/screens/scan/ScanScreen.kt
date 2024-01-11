@@ -47,8 +47,8 @@ import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithTwoButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import org.tiqr.core.scan.ScanComponent
 import org.tiqr.data.model.Challenge
+import org.tiqr.data.scan.ScanComponent
 import androidx.camera.core.Preview as CameraPreview
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -155,9 +155,9 @@ private fun ScanContent(
             AlertDialogWithTwoButton(
                 title = errorData.title(context),
                 explanation = errorData.message(context),
-                dismissButtonLabel = stringResource(R.string.button_cancel),
+                dismissButtonLabel = stringResource(R.string.Button_Cancel_COPY),
                 onDismiss = dismissErrorDialog,
-                confirmButtonLabel = stringResource(R.string.button_retry),
+                confirmButtonLabel = stringResource(R.string.Button_Retry_COPY),
                 onConfirm = retryErrorDialog
             )
         }

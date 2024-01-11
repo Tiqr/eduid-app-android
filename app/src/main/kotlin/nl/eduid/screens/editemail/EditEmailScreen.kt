@@ -81,7 +81,7 @@ fun EditEmailScreen(
         AlertDialogWithSingleButton(
             title = errorData.title(context),
             explanation = errorData.message(context),
-            buttonLabel = stringResource(R.string.button_ok),
+            buttonLabel = stringResource(R.string.Button_OK_COPY),
             onDismiss = viewModel::dismissError
         )
     }

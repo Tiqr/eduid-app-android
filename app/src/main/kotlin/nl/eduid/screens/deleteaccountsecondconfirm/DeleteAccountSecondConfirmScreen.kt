@@ -116,7 +116,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
         AlertDialogWithSingleButton(
             title = errorData.title(context),
             explanation = errorData.message(context),
-            buttonLabel = stringResource(R.string.button_ok),
+            buttonLabel = stringResource(R.string.Button_OK_COPY),
             onDismiss = dismissError
         )
     }
@@ -205,7 +205,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
     ) {
         PrimaryButton(
             modifier = Modifier.widthIn(min = 140.dp),
-            text = stringResource(R.string.button_cancel),
+            text = stringResource(R.string.Button_Cancel_COPY),
             onClick = goBack,
             buttonBackgroundColor = Color.Transparent,
             buttonTextColor = TextGrey,

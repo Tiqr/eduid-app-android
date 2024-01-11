@@ -54,9 +54,8 @@ open class EduIdApplication : Application() {
         RuntimeBehavior.initialize(this)
         TiqrConfig.initialize(this)
         // Setup Timber
-        if (BuildConfig.BUILD_TYPE == "debug") {
+        if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
-
         }
 
         Coil.setImageLoader(ImageLoader.Builder(context = this)

@@ -1,9 +1,36 @@
 ANDROID:
+  Button:
+    OK:
+      COPY:
+        en: OK
+        nl: OK
+    Cancel:
+      COPY:
+        en: Cancel
+        nl: Annuleren
+    Retry:
+      COPY:
+        en: Retry
+        nl: Nogmaals
+  Notifications:
+    ChannelName:
+      COPY:
+      en: Messages
+      nl: Berichten
+  QR:
+    UnknownErrorTitle:
+      COPY:
+        en: "Unknown QR code"
+        nl: "Onbekende QR-code"
+    UnknownError:
+      COPY:
+        en: "This QR code cannot be processed."
+        nl: "Deze QR-code kan niet worden verwerkt."
   Deeplink:
     Processing:
       COPY:
-        en: "Checking request..."
-        nl: "Verzoek aan het bewerken..."
+        en: "Checking request…"
+        nl: "Verzoek aan het bewerken…"
   Biometrics:
     UnknownError:
       COPY:
@@ -3248,8 +3275,8 @@ SHARED:
     Quickly:
       Text:
         COPY:
-          en:  to educational services
-          nl:  op educatieve diensten
+          en: to educational services
+          nl: op educatieve diensten
       Highlight:
         COPY:
           en: Quickly login
@@ -3257,8 +3284,8 @@ SHARED:
     ViewWhat:
       Text:
         COPY:
-          en:  what details of your eduID get shared with those services
-          nl:  welke gegevens van je eduID met die diensten worden gedeeld
+          en: what details of your eduID get shared with those services
+          nl: welke gegevens van je eduID met die diensten worden gedeeld
       Highlight:
         COPY:
           en: View
@@ -3266,8 +3293,8 @@ SHARED:
     VerifyYour:
       Text:
         COPY:
-          en:  so you can access more secure services
-          nl:  zodat je toegang krijgt tot beter beveiligde services
+          en: so you can access more secure services
+          nl: zodat je toegang krijgt tot beter beveiligde services
       Highlight:
         COPY:
           en: Verify your identity

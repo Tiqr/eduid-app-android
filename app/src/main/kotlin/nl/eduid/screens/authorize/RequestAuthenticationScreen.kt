@@ -106,7 +106,7 @@ private fun RequestAuthenticationContent(
             ) {
                 SecondaryButton(
                     modifier = Modifier.widthIn(min = 140.dp),
-                    text = stringResource(R.string.button_cancel),
+                    text = stringResource(R.string.Button_Cancel_COPY),
                     onClick = onCancel,
                 )
                 PrimaryButton(

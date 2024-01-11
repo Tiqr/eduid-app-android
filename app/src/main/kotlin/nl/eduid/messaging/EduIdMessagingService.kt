@@ -64,7 +64,7 @@ class EduIdMessagingService : FirebaseMessagingService() {
                 notificationManager.createNotificationChannel(
                     NotificationChannel(
                         CHANNEL_ID,
-                        resources.getString(R.string.notification_channel_name),
+                        resources.getString(org.tiqr.data.R.string.notification_channel_name),
                         NotificationManager.IMPORTANCE_DEFAULT
                     ).also {
                         it.description =
@@ -74,7 +74,8 @@ class EduIdMessagingService : FirebaseMessagingService() {
             }
 
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(challenge)).also { intent ->
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NEW_DOCUMENT or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
+                intent.flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NEW_DOCUMENT or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
                 //When using only FLAG_ACTIVITY_MULTIPLE_TASK a new separate task does not seem to be created for
 //                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
             }

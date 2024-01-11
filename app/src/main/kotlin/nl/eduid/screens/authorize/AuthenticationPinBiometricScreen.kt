@@ -43,11 +43,11 @@ import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextGreen
-import org.tiqr.core.util.extensions.biometricUsable
 import org.tiqr.data.model.AuthenticationChallenge
 import org.tiqr.data.model.AuthenticationCompleteFailure
 import org.tiqr.data.model.ChallengeCompleteFailure
 import org.tiqr.data.model.ChallengeCompleteResult
+import org.tiqr.data.util.extension.biometricUsable
 import timber.log.Timber
 
 @Composable
@@ -122,7 +122,7 @@ private fun AuthenticationPinBiometricContent(
                         }
                         AlertDialogWithSingleButton(title = failure.title,
                             explanation = failure.message,
-                            buttonLabel = stringResource(R.string.button_ok),
+                            buttonLabel = stringResource(R.string.Button_OK_COPY),
                             onDismiss = {
                                 if (remaining != null && remaining == 0) {
                                     goHomeOnFail()
@@ -136,7 +136,7 @@ private fun AuthenticationPinBiometricContent(
                         AlertDialogWithSingleButton(
                             title = failure.title,
                             explanation = failure.message,
-                            buttonLabel = stringResource(R.string.button_ok),
+                            buttonLabel = stringResource(R.string.Button_OK_COPY),
                             onDismiss = {
                                 isCheckingSecret = false
                                 clearCompleteChallenge()
@@ -201,7 +201,7 @@ private fun AuthenticationPinBiometricContent(
             )
 
             Spacer(modifier = Modifier.height(36.dp))
-            PinInputField(label = stringResource(R.string.auth_pin_subtitle),
+            PinInputField(label = stringResource(org.tiqr.data.R.string.auth_pin_subtitle),
                 pinCode = pinValue,
                 isPinInvalid = isPinInvalid,
                 shouldShowKeyboard = shouldShowKeyboard,
@@ -223,12 +223,12 @@ private fun AuthenticationPinBiometricContent(
         ) {
             SecondaryButton(
                 modifier = Modifier.widthIn(min = 140.dp),
-                text = stringResource(R.string.button_cancel),
+                text = stringResource(R.string.Button_Cancel_COPY),
                 onClick = onCancel,
             )
             PrimaryButton(
                 modifier = Modifier.widthIn(min = 140.dp),
-                text = stringResource(R.string.button_ok),
+                text = stringResource(R.string.Button_OK_COPY),
                 onClick = {
                     isCheckingSecret = true
                     submitPin(pinValue)

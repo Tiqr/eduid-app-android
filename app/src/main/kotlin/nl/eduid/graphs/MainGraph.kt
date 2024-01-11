@@ -125,9 +125,9 @@ fun MainGraph(
         arguments = Account.EnrollPinSetup.arguments,
     ) { entry ->
         val viewModel = hiltViewModel<RegistrationPinSetupViewModel>(entry)
-        RegistrationPinSetupScreen(viewModel = viewModel,
-            closePinSetupFlow = { navController.popBackStack() }
-        ) { nextStep ->
+        RegistrationPinSetupScreen(
+            viewModel = viewModel,
+            closePinSetupFlow = { navController.popBackStack() }) { nextStep ->
             when (nextStep) {
                 NextStep.RecoveryInBrowser -> {
                     navController.navigate(Graph.CONTINUE_RECOVERY_IN_BROWSER)
@@ -228,6 +228,10 @@ fun MainGraph(
     composable(//region Account-Created
         route = RequestEduIdCreated.route, deepLinks = listOf(navDeepLink {
             uriPattern = RequestEduIdCreated.uriPatternHttps
+        }, navDeepLink {
+            uriPattern = RequestEduIdCreated.uriProdPatternHttps
+        }, navDeepLink {
+            uriPattern = RequestEduIdCreated.customScheme
         })
     ) { entry ->
         val viewModel = hiltViewModel<HomePageViewModel>(entry)
@@ -344,18 +348,15 @@ fun MainGraph(
             },
         )
     ) { entry ->
-        val deepLinkIntent: Intent? =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                entry.arguments?.getParcelable(
-                    NavController.KEY_DEEP_LINK_INTENT,
-                    Intent::class.java
-                )
-            } else {
-                @Suppress("DEPRECATION")
-                entry.arguments?.getParcelable(
-                    NavController.KEY_DEEP_LINK_INTENT
-                )
-            }
+        val deepLinkIntent: Intent? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            entry.arguments?.getParcelable(
+                NavController.KEY_DEEP_LINK_INTENT, Intent::class.java
+            )
+        } else {
+            @Suppress("DEPRECATION") entry.arguments?.getParcelable(
+                NavController.KEY_DEEP_LINK_INTENT
+            )
+        }
         val fullUri = deepLinkIntent?.data ?: Uri.EMPTY
         val result = ResultAccountLinked.fromRedirectUrl(fullUri.path.orEmpty())
 
@@ -481,16 +482,14 @@ fun MainGraph(
         route = DeleteTwoFaRoute.routeWithArgs, arguments = DeleteTwoFaRoute.arguments
     ) { entry ->
         val viewModel = hiltViewModel<TwoFactorKeyDeleteViewModel>(entry)
-        TwoFactorKeyDeleteScreen(
-            viewModel = viewModel,
+        TwoFactorKeyDeleteScreen(viewModel = viewModel,
             twoFaKeyId = DeleteTwoFaRoute.decodeIdFromEntry(entry),
             goBack = { navController.popBackStack() },
             onDeleteDone = {
                 navController.navigate(Graph.TWO_FA_DETAIL) {
                     popUpTo(Graph.TWO_FA_DETAIL) { inclusive = true }
                 }
-            }
-        )
+            })
     }
     //region Configure Password: add, change or remove
     configurePasswordFlow(navController) { navController.navigate(Security.Settings.route) }

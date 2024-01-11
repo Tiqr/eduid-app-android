@@ -17,11 +17,11 @@ import nl.eduid.R
 import nl.eduid.graphs.Account
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import nl.eduid.ui.PIN_MAX_LENGTH
-import org.tiqr.core.util.extensions.biometricUsable
 import org.tiqr.data.model.ChallengeCompleteResult
 import org.tiqr.data.model.EnrollmentChallenge
 import org.tiqr.data.model.EnrollmentCompleteRequest
 import org.tiqr.data.repository.EnrollmentRepository
+import org.tiqr.data.util.extension.biometricUsable
 import timber.log.Timber
 import javax.inject.Inject
 

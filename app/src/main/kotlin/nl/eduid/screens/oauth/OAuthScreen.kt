@@ -114,7 +114,7 @@ private fun OAuthContent(
         AlertDialogWithSingleButton(
             title = uiState.error.title(context),
             explanation = uiState.error.message(context),
-            buttonLabel = stringResource(R.string.button_ok),
+            buttonLabel = stringResource(R.string.Button_OK_COPY),
             onDismiss = dismissError
         )
     }
@@ -161,7 +161,7 @@ private fun OAuthContent(
         }
         if (uiState.oauthStep is OAuthStep.Error) {
             PrimaryButton(
-                text = stringResource(R.string.button_retry),
+                text = stringResource(R.string.Button_Retry_COPY),
                 onClick = onRetry,
                 modifier = Modifier
                     .fillMaxWidth(),
