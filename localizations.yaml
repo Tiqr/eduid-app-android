@@ -12,11 +12,6 @@ ANDROID:
       COPY:
         en: Retry
         nl: Nogmaals
-  Notifications:
-    ChannelName:
-      COPY:
-      en: Messages
-      nl: Berichten
   QR:
     UnknownErrorTitle:
       COPY:
