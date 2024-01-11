@@ -32,7 +32,7 @@ import nl.eduid.flags.GroupedTestSetting
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import openAppSystemSettings
+import org.tiqr.data.util.extension.openAppSystemSettings
 
 @Composable
 fun EditFeatureFlagsScreen(
@@ -188,7 +188,7 @@ private fun Preview_SettingsScreen() {
     }
 }
 
-private val groupedTestSetting = GroupedTestSetting.values().asList().map { it ->
+private val groupedTestSetting = GroupedTestSetting.entries.map { it ->
     FeatureToggle(
         key = it.key,
         groupId = it.groupId,
@@ -198,7 +198,7 @@ private val groupedTestSetting = GroupedTestSetting.values().asList().map { it -
         isEnabled = false
     )
 }.groupBy { it.groupId }
-private val featureFlags = FeatureFlag.values().asList().map { it ->
+private val featureFlags = FeatureFlag.entries.map { it ->
     FeatureToggle(
         key = it.key,
         groupId = null,

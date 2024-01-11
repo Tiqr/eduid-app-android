@@ -33,7 +33,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import biometricUsable
 import nl.eduid.R
 import nl.eduid.screens.biometric.BiometricSignIn
 import nl.eduid.screens.biometric.SignInWithBiometricsContract
@@ -48,6 +47,7 @@ import org.tiqr.data.model.AuthenticationChallenge
 import org.tiqr.data.model.AuthenticationCompleteFailure
 import org.tiqr.data.model.ChallengeCompleteFailure
 import org.tiqr.data.model.ChallengeCompleteResult
+import org.tiqr.data.util.extension.biometricUsable
 import timber.log.Timber
 
 @Composable
