@@ -1,36 +1,9 @@
 ANDROID:
-  Button:
-    OK:
-      COPY:
-        en: OK
-        nl: OK
-    Cancel:
-      COPY:
-        en: Cancel
-        nl: Annuleren
-    Retry:
-      COPY:
-        en: Retry
-        nl: Nogmaals
-  Notifications:
-    ChannelName:
-      COPY:
-      en: Messages
-      nl: Berichten
-  QR:
-    UnknownErrorTitle:
-      COPY:
-        en: "Unknown QR code"
-        nl: "Onbekende QR-code"
-    UnknownError:
-      COPY:
-        en: "This QR code cannot be processed."
-        nl: "Deze QR-code kan niet worden verwerkt."
   Deeplink:
     Processing:
       COPY:
-        en: "Checking request…"
-        nl: "Verzoek aan het bewerken…"
+        en: "Checking request..."
+        nl: "Verzoek aan het bewerken..."
   Biometrics:
     UnknownError:
       COPY:
@@ -1119,6 +1092,28 @@ SHARED:
       COPY:
         en: Sleutel verwijderen
         nl: Delete key
+  ConfirmDeleteKey:
+    Title:
+      COPY:
+        en: Delete key
+        nl: Verwijder sleutel
+    Subtitle:
+      COPY:
+        en: There is no way to undo this action
+        nl: Dit kan niet ongedaan worden gemaakt
+    Description:
+      COPY:
+        en: Are you sure you want to delete your key?
+        nl: Weet je zeker dat je deze sleutel wil verwijderen?
+    Button:
+      Confirm:
+        COPY:
+          en: Confirm
+          nl: Bevestigen
+      Cancel:
+        COPY:
+          en: Cancel
+          nl: Annuleren
   Home:
     Home:
       COPY:
@@ -3275,8 +3270,8 @@ SHARED:
     Quickly:
       Text:
         COPY:
-          en: to educational services
-          nl: op educatieve diensten
+          en:  to educational services
+          nl:  op educatieve diensten
       Highlight:
         COPY:
           en: Quickly login
@@ -3284,8 +3279,8 @@ SHARED:
     ViewWhat:
       Text:
         COPY:
-          en: what details of your eduID get shared with those services
-          nl: welke gegevens van je eduID met die diensten worden gedeeld
+          en:  what details of your eduID get shared with those services
+          nl:  welke gegevens van je eduID met die diensten worden gedeeld
       Highlight:
         COPY:
           en: View
@@ -3293,8 +3288,8 @@ SHARED:
     VerifyYour:
       Text:
         COPY:
-          en: so you can access more secure services
-          nl: zodat je toegang krijgt tot beter beveiligde services
+          en:  so you can access more secure services
+          nl:  zodat je toegang krijgt tot beter beveiligde services
       Highlight:
         COPY:
           en: Verify your identity
@@ -3446,10 +3441,6 @@ SHARED:
         COPY:
           en: e.g. timbernerslee@gmail.com
           nl: e.g. timbernerslee@gmail.com
-      Agreement:
-        COPY:
-          en: I agree with the terms of service. I also understand the privacy policy
-          nl: Ik ga akkoord met de servicevoorwaarden. Ik begrijp ook het privacybeleid
     EnterPhoneNumber:
       PhoneFieldTitle:
         COPY:
