@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -31,8 +30,6 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -42,7 +39,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.flowWithLifecycle
-import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import nl.eduid.R
@@ -97,9 +93,7 @@ fun PhoneRequestCodeScreen(
 }
 
 @Composable
-@OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class,
-)
+@OptIn(ExperimentalComposeUiApi::class)
 private fun PhoneRequestCodeContent(
     uiState: UiState,
     padding: PaddingValues = PaddingValues(),
@@ -118,23 +112,25 @@ private fun PhoneRequestCodeContent(
             .fillMaxWidth()
     ) {
         val keyboardController = LocalSoftwareKeyboardController.current
-        val focusRequester = remember { FocusRequester() }
         val isKeyboardOpen by keyboardAsState()
+
+        Text(
+            text = stringResource(R.string.Recovery_PhoneNumber_COPY),
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(
+            modifier = Modifier.height(16.dp)
+        )
 
         AnimatedVisibility(
             !isKeyboardOpen, Modifier.fillMaxWidth()
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    text = stringResource(R.string.Recovery_PhoneNumber_COPY),
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.fillMaxWidth()
-                )
 
                 Spacer(
-                    modifier = Modifier.height(24.dp)
+                    modifier = Modifier.height(8.dp)
                 )
-
                 Text(
                     text = stringResource(R.string.Recovery_Info_COPY),
                     style = MaterialTheme.typography.bodyLarge,
@@ -165,13 +161,8 @@ private fun PhoneRequestCodeContent(
             onValueChange = onValueChange,
             modifier = Modifier
                 .fillMaxWidth()
-                .focusRequester(focusRequester)
                 .requiredHeight(TextFieldDefaults.MinHeight)
         )
-        LaunchedEffect(focusRequester) {
-            awaitFrame()
-            focusRequester.requestFocus()
-        }
     }
     PrimaryButton(
         text = stringResource(R.string.Profile_Verify_COPY),
@@ -179,9 +170,9 @@ private fun PhoneRequestCodeContent(
         enabled = uiState.input.isNotEmpty(),
         modifier = Modifier
             .fillMaxWidth()
-            .imePadding()
+            .padding(bottom = 24.dp)
             .navigationBarsPadding()
-            .padding(bottom = 24.dp),
+            .imePadding(),
     )
 }
 
