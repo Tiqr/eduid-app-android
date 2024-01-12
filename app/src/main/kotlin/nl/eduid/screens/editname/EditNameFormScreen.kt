@@ -3,13 +3,16 @@ package nl.eduid.screens.editname
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
@@ -54,10 +57,7 @@ import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
 import nl.eduid.ui.TwoColorTitle
-import nl.eduid.ui.keyboardAsState
-import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.util.LogCompositions
 
 @Composable
 fun EditNameFormScreen(
@@ -105,7 +105,7 @@ fun EditNameFormScreen(
     )
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun EditNameFormContent(
     givenName: String,
@@ -133,7 +133,7 @@ fun EditNameFormContent(
     val submitEnable by remember(isGivenNameValid, isFamilyNameValid) {
         derivedStateOf { isGivenNameValid && isFamilyNameValid }
     }
-    val isKeyboardOpen by keyboardAsState()
+    val isKeyboardOpen by rememberUpdatedState(WindowInsets.isImeVisible)
     Column(
         horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()
     ) {
