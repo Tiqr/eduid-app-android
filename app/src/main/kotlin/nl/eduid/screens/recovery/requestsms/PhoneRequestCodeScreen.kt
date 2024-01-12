@@ -3,18 +3,20 @@ package nl.eduid.screens.recovery.requestsms
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -46,7 +48,6 @@ import nl.eduid.screens.recovery.UiState
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
-import nl.eduid.ui.keyboardAsState
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -93,7 +94,7 @@ fun PhoneRequestCodeScreen(
 }
 
 @Composable
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalLayoutApi::class)
 private fun PhoneRequestCodeContent(
     uiState: UiState,
     padding: PaddingValues = PaddingValues(),
@@ -112,7 +113,7 @@ private fun PhoneRequestCodeContent(
             .fillMaxWidth()
     ) {
         val keyboardController = LocalSoftwareKeyboardController.current
-        val isKeyboardOpen by keyboardAsState()
+        val isKeyboardOpen by rememberUpdatedState(WindowInsets.isImeVisible)
 
         Text(
             text = stringResource(R.string.Recovery_PhoneNumber_COPY),

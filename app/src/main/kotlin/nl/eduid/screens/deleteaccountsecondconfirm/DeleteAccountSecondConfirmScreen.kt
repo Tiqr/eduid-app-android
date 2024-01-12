@@ -5,13 +5,16 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
@@ -50,7 +53,6 @@ import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
-import nl.eduid.ui.keyboardAsState
 import nl.eduid.ui.theme.AlertRedBackground
 import nl.eduid.ui.theme.ButtonBorderGrey
 import nl.eduid.ui.theme.ButtonRed
@@ -93,7 +95,7 @@ fun DeleteAccountSecondConfirmScreen(
     )
 }
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 private fun DeleteAccountSecondConfirmScreenContent(
     fullNameInput: String = "",
@@ -124,7 +126,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
         horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()
     ) {
         val keyboardController = LocalSoftwareKeyboardController.current
-        val isKeyboardOpen by keyboardAsState()
+        val isKeyboardOpen by rememberUpdatedState(WindowInsets.isImeVisible)
         AnimatedVisibility(
             !isKeyboardOpen, Modifier.fillMaxWidth()
         ) {
