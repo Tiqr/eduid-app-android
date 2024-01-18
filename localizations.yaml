@@ -61,6 +61,11 @@ ANDROID:
           en: "Failed to initialize AppData. Reason: %1{{s}}"
           nl: "AppData kan niet worden geïnitialiseerd. Reden: %1{{s}}"
 SHARED:
+  About:
+    Info:
+      COPY:
+        en: App information
+        nl: App-informatie
   Sidebar:
     Home:
       COPY:
@@ -3296,7 +3301,7 @@ SHARED:
           nl: Verifieer jouw identiteit
     GotItButton:
       COPY:
-        en: Ok, got it!
+        en: OK, got it!
         nl: Ok, begrepen!
     ReturnBrowserTitle:
       COPY:
@@ -3624,7 +3629,7 @@ SHARED:
         nl: Onbekende fout
     UnknownErrorText:
       COPY:
-        en: An unknown error occured with the following status code
+        en: An unknown error occurred with the following status code
         nl: Er is een onbekende fout opgetreden met de volgende statuscode
     ExistingUserAndDeviceTitle:
       COPY:

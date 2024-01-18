@@ -81,7 +81,7 @@ fun HomePageNoAccountContent(
                         Icon(
                             imageVector = Icons.Outlined.Info,
                             tint = SmallActionGray,
-                            contentDescription = "",
+                            contentDescription = stringResource(id = R.string.About_Info_COPY),
                             modifier = Modifier.size(width = 46.dp, height = 46.dp)
                         )
                     }

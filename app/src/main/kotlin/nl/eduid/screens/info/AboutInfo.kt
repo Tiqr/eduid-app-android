@@ -47,7 +47,7 @@ fun AboutInfo(
         )
         Image(
             painter = painterResource(R.drawable.ic_correct_logo),
-            contentDescription = "",
+            contentDescription = stringResource(id = R.string.app_name),
             modifier = Modifier
                 .size(width = 122.dp, height = 46.dp)
                 .align(Alignment.CenterHorizontally),
@@ -61,7 +61,7 @@ fun AboutInfo(
         )
         Image(
             painter = painterResource(R.drawable.ic_surf_logo),
-            contentDescription = "",
+            contentDescription = stringResource(id = R.string.surf),
             modifier = Modifier
                 .size(width = 122.dp, height = 46.dp)
                 .align(Alignment.CenterHorizontally)

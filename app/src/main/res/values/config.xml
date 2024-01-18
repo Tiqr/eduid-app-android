@@ -3,4 +3,5 @@
     <string name="app_name" translatable="false">eduID</string>
     <string name="app_name_with_version" translatable="false">eduID &#8226; v%s</string>
     <string name="app_url" translatable="false">https://eduid.nl/</string>
+    <string name="surf" translatable="false">Surf/</string>
 </resources>

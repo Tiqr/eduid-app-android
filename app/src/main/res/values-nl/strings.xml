@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="About_Info_COPY">"App-informatie"</string>
   <string name="Sidebar_Home_COPY">"Home"</string>
   <string name="Sidebar_PersonalInfo_COPY">"Persoonlijke info"</string>
   <string name="Sidebar_DataActivity_COPY">"Data &amp; activiteit"</string>

@@ -84,7 +84,7 @@ fun HomePageWithAccountContent(
                 title = {
                     Image(
                         painter = painterResource(R.drawable.ic_correct_logo),
-                        contentDescription = "",
+                        contentDescription = stringResource(id = R.string.About_Info_COPY),
                         modifier = Modifier.size(width = 122.dp, height = 46.dp),
                         alignment = Alignment.Center
                     )
