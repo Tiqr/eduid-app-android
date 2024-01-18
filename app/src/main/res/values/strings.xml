@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="About_Info_COPY">"App information"</string>
   <string name="Sidebar_Home_COPY">"Home"</string>
   <string name="Sidebar_PersonalInfo_COPY">"Personal info"</string>
   <string name="Sidebar_DataActivity_COPY">"Data &amp; activity"</string>
@@ -35,7 +36,7 @@
   <string name="RegistrationCheck_DeleteTitle_COPY">"Your eduID account has been deleted"</string>
   <string name="RegistrationCheck_DeleteStatus_COPY">"To finalise the removal process you must now close this browser."</string>
   <string name="RegistrationCheck_RegisterAgain_COPY">"Register again"</string>
-  <string name="NotFound_Title_COPY">"Whoops..."</string>
+  <string name="NotFound_Title_COPY">"Whoops…"</string>
   <string name="NotFound_Title2_COPY">"Something went wrong (404)"</string>
   <string name="Profile_YouAreLoggedIn_COPY">"You are logged in"</string>
   <string name="Profile_ManageYourAccount_COPY">"Manage your account"</string>
@@ -152,7 +153,7 @@
   <string name="NameOverview_Title_FullName_COPY">"Full name"</string>
   <string name="NameOverview_SelfAsserted_COPY">"Self asserted"</string>
   <string name="NameOverview_Verified_COPY">"Verified"</string>
-  <string name="NameOverview_AnotherSource_COPY">"Another source..."</string>
+  <string name="NameOverview_AnotherSource_COPY">"Another source…"</string>
   <string name="NameOverview_NotAvailable_COPY">"Not available"</string>
   <string name="NameOverview_ProceedToAdd_COPY">"Proceed to add this via your school/uni"</string>
   <string name="Security_Title_COPY">"Security settings"</string>
@@ -458,7 +459,7 @@
   <string name="LinkFromInstitution_AgreeWithTerms_COPY">"&lt;span&gt;I agree with &lt;a tabindex='-1' href='https://eduid.nl/terms-of-use/' target='_blank'&gt;the terms of service.&lt;/a&gt; I also understand &lt;a tabindex='-1' href='https://eduid.nl/privacy_policy/' target='_blank'&gt;the privacy policy&lt;/a&gt;.&lt;/span&gt;"</string>
   <string name="LinkFromInstitution_RequestEduIdButton_COPY">"Request your eduID"</string>
   <string name="PollFromInstitution_Header_COPY">"Check your email!"</string>
-  <string name="PollFromInstitution_Awaiting_COPY">"Waiting for you to click the link..."</string>
+  <string name="PollFromInstitution_Awaiting_COPY">"Waiting for you to click the link…"</string>
   <string name="PollFromInstitution_OpenGMail_COPY">"Open Gmail.com"</string>
   <string name="PollFromInstitution_OpenOutlook_COPY">"Open Outlook.com"</string>
   <string name="PollFromInstitution_Spam_COPY">"Can't find the email? Check your spam folder."</string>
@@ -542,7 +543,7 @@
   <string name="MagicLink_OpenMailDisclaimer_COPY">"If you can't find the email? Also check the spam folder"</string>
   <string name="MagicLink_Header_COPY">"Check your email"</string>
   <string name="MagicLink_Info_COPY">"To sign in, click the link in the email we sent to %1$s."</string>
-  <string name="MagicLink_Awaiting_COPY">"Waiting for you to click the link..."</string>
+  <string name="MagicLink_Awaiting_COPY">"Waiting for you to click the link…"</string>
   <string name="MagicLink_OpenGMail_COPY">"Open Gmail.com"</string>
   <string name="MagicLink_OpenOutlook_COPY">"Open Outlook.com"</string>
   <string name="MagicLink_Spam_COPY">"Can't find it? Check your spam folder."</string>
@@ -588,12 +589,12 @@
   <string name="WebAuthnTest_Info_COPY">"Test security key"</string>
   <string name="WebAuthnTest_BrowserPrompt_COPY">"Click the button below to test a security key. Please follow the instructions given by your browser."</string>
   <string name="WebAuthnTest_Start_COPY">"Test"</string>
-  <string name="AffiliationMissing_Header_COPY">"Account linked, but..."</string>
+  <string name="AffiliationMissing_Header_COPY">"Account linked, but…"</string>
   <string name="AffiliationMissing_Info_COPY">"Your eduID is successfully linked, however the institution you choose did not provide the correct affiliation."</string>
   <string name="AffiliationMissing_Proceed_COPY">"You can try to link to another institution or proceed to %1$s."</string>
   <string name="AffiliationMissing_ProceedLink_COPY">"Proceed"</string>
   <string name="AffiliationMissing_RetryLink_COPY">"Retry"</string>
-  <string name="ValidNameMissing_Header_COPY">"Account linked, but..."</string>
+  <string name="ValidNameMissing_Header_COPY">"Account linked, but…"</string>
   <string name="ValidNameMissing_Info_COPY">"Your eduID is successfully linked, however the institution you choose did not provide a valid name."</string>
   <string name="ValidNameMissing_Proceed_COPY">"You can try to link to another institution or proceed to %1$s."</string>
   <string name="ValidNameMissing_ProceedLink_COPY">"Proceed"</string>
@@ -665,7 +666,7 @@
   <string name="WelcomeToApp_ViewWhat_Highlight_COPY">"View"</string>
   <string name="WelcomeToApp_VerifyYour_Text_COPY">"so you can access more secure services"</string>
   <string name="WelcomeToApp_VerifyYour_Highlight_COPY">"Verify your identity"</string>
-  <string name="WelcomeToApp_GotItButton_COPY">"Ok, got it!"</string>
+  <string name="WelcomeToApp_GotItButton_COPY">"OK, got it!"</string>
   <string name="WelcomeToApp_ReturnBrowserTitle_COPY">"Return to your web browser"</string>
   <string name="WelcomeToApp_ReturnBrowserText_COPY">"Continue in your browser to finish the connection of this app to your edulD account"</string>
   <string name="CreateEduID_ErrorCreateFailed_Title_COPY">"Could not create your eduID account!"</string>
@@ -732,7 +733,7 @@
   <string name="ResponseErrors_SMSErrorTitle_COPY">"Wrong verification"</string>
   <string name="ResponseErrors_SMSErrorText_COPY">"You have entered a wrong verification combination"</string>
   <string name="ResponseErrors_UnknownErrorTitle_COPY">"Uknown error"</string>
-  <string name="ResponseErrors_UnknownErrorText_COPY">"An unknown error occured with the following status code"</string>
+  <string name="ResponseErrors_UnknownErrorText_COPY">"An unknown error occurred with the following status code"</string>
   <string name="ResponseErrors_ExistingUserAndDeviceTitle_COPY">"Already associated"</string>
   <string name="ResponseErrors_ExistingUserAndDeviceText_COPY">"This account is already associated with a different device. Remove your other device first from your account before registering a new device."</string>
   <string name="ResponseErrors_PersonalDetailsRetrieveError_COPY">"Could not retrieve personal details"</string>

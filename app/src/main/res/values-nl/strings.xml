@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="About_Info_COPY">"App-informatie"</string>
   <string name="Sidebar_Home_COPY">"Home"</string>
   <string name="Sidebar_PersonalInfo_COPY">"Persoonlijke info"</string>
   <string name="Sidebar_DataActivity_COPY">"Data &amp; activiteit"</string>
@@ -35,7 +36,7 @@
   <string name="RegistrationCheck_DeleteTitle_COPY">"Jouw eduID is verwijderd"</string>
   <string name="RegistrationCheck_DeleteStatus_COPY">"Om het verwijderen van je eduID te voltooien, moet je jouw browser nu afsluiten."</string>
   <string name="RegistrationCheck_RegisterAgain_COPY">"Opnieuw registreren"</string>
-  <string name="NotFound_Title_COPY">"Oeps..."</string>
+  <string name="NotFound_Title_COPY">"Oeps…"</string>
   <string name="NotFound_Title2_COPY">"Er is iets fout gegaan (404)."</string>
   <string name="Profile_YouAreLoggedIn_COPY">"Je bent ingelogd"</string>
   <string name="Profile_ManageYourAccount_COPY">"Beheer jouw gegevens"</string>
@@ -152,7 +153,7 @@
   <string name="NameOverview_Title_FullName_COPY">"Volledige naam"</string>
   <string name="NameOverview_SelfAsserted_COPY">"Zelf ingevuld"</string>
   <string name="NameOverview_Verified_COPY">"Gecontroleerd"</string>
-  <string name="NameOverview_AnotherSource_COPY">"Een andere bron..."</string>
+  <string name="NameOverview_AnotherSource_COPY">"Een andere bron…"</string>
   <string name="NameOverview_NotAvailable_COPY">"Niet beschikbaar"</string>
   <string name="NameOverview_ProceedToAdd_COPY">"Voeg dit toe door in te loggen bij jouw instelling"</string>
   <string name="Security_Title_COPY">"Beveiliging"</string>
@@ -458,7 +459,7 @@
   <string name="LinkFromInstitution_AgreeWithTerms_COPY">"&lt;span&gt;Ik ga akkoord met &lt;a tabindex='-1' href='https://eduid.nl/gebruiksvoorwaarden/' target='_blank'&gt;de voorwaarden.&lt;/a&gt; En ik begrijp &lt;a tabindex='-1' href='https://eduid.nl/privacy/' target='_blank'&gt;de privacyverklaring&lt;/a&gt;.&lt;/span&gt;"</string>
   <string name="LinkFromInstitution_RequestEduIdButton_COPY">"Vraag je eduID aan"</string>
   <string name="PollFromInstitution_Header_COPY">"Open je mailbox!"</string>
-  <string name="PollFromInstitution_Awaiting_COPY">"Wachten tot je op de link klikt..."</string>
+  <string name="PollFromInstitution_Awaiting_COPY">"Wachten tot je op de link klikt…"</string>
   <string name="PollFromInstitution_OpenGMail_COPY">"Open Gmail.com"</string>
   <string name="PollFromInstitution_OpenOutlook_COPY">"Open Outlook.com"</string>
   <string name="PollFromInstitution_Spam_COPY">"Kan je de e-mail niet vinden? Kijk in je spam."</string>
@@ -542,7 +543,7 @@
   <string name="MagicLink_OpenMailDisclaimer_COPY">"Kun je de mail niet vinden? Kijk ook in de spam folder"</string>
   <string name="MagicLink_Header_COPY">"Controleer je email"</string>
   <string name="MagicLink_Info_COPY">"Om in te loggen, klik op de link in de email die verstuurd is aan %1$s."</string>
-  <string name="MagicLink_Awaiting_COPY">"Wachten tot je op de link klikt..."</string>
+  <string name="MagicLink_Awaiting_COPY">"Wachten tot je op de link klikt…"</string>
   <string name="MagicLink_OpenGMail_COPY">"Open Gmail.com"</string>
   <string name="MagicLink_OpenOutlook_COPY">"Open Outlook.com"</string>
   <string name="MagicLink_Spam_COPY">"Kun je de mail niet vinden? Kijk ook in de spam folder."</string>
@@ -588,12 +589,12 @@
   <string name="WebAuthnTest_Info_COPY">"Test een beveligingssleutel"</string>
   <string name="WebAuthnTest_BrowserPrompt_COPY">"Klik op de onderstaande knop om een beveligingssleutel te testen. Volg daarbij de instructies van je browser op."</string>
   <string name="WebAuthnTest_Start_COPY">"Test"</string>
-  <string name="AffiliationMissing_Header_COPY">"Account is gekoppeld, maar..."</string>
+  <string name="AffiliationMissing_Header_COPY">"Account is gekoppeld, maar…"</string>
   <string name="AffiliationMissing_Info_COPY">"Je eduID is succesvol gekoppeld, maar de instelling die je hebt gekozen heeft niet de juiste attributen teruggegeven."</string>
   <string name="AffiliationMissing_Proceed_COPY">"Je kan het nogmaals met een andere instelling proberen of doorgaan naar %1$s."</string>
   <string name="AffiliationMissing_ProceedLink_COPY">"Doorgaan"</string>
   <string name="AffiliationMissing_RetryLink_COPY">"Opnieuw proberen"</string>
-  <string name="ValidNameMissing_Header_COPY">"Account is gekoppeld, maar..."</string>
+  <string name="ValidNameMissing_Header_COPY">"Account is gekoppeld, maar…"</string>
   <string name="ValidNameMissing_Info_COPY">"Je eduID is succesvol gekoppeld, maar de instelling die je hebt gekozen heeft niet de juiste attributen teruggegeven."</string>
   <string name="ValidNameMissing_Proceed_COPY">"Je kan het nogmaals met een andere instelling proberen of doorgaan naar %1$s."</string>
   <string name="ValidNameMissing_ProceedLink_COPY">"Doorgaan"</string>

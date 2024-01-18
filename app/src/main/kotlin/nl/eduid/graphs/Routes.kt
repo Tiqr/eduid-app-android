@@ -21,7 +21,6 @@ object Graph {
     const val OAUTH = "oauth_mobile_eduid"
     const val CONFIGURE_PASSWORD = "configure_password_subgraph"
     const val EDIT_EMAIL = "edit_email"
-    const val EDIT_NAME = "edit_name"
     const val TWO_FA_DETAIL = "2fa_detail"
     const val DELETE_ACCOUNT_FIRST_CONFIRM = "delete_account_first_confirm"
     const val DELETE_ACCOUNT_SECOND_CONFIRM = "delete_account_second_confirm"

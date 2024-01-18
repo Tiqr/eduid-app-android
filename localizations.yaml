@@ -61,6 +61,11 @@ ANDROID:
           en: "Failed to initialize AppData. Reason: %1{{s}}"
           nl: "AppData kan niet worden geïnitialiseerd. Reden: %1{{s}}"
 SHARED:
+  About:
+    Info:
+      COPY:
+        en: App information
+        nl: App-informatie
   Sidebar:
     Home:
       COPY:
@@ -233,8 +238,8 @@ SHARED:
   NotFound:
     Title:
       COPY:
-        en: Whoops...
-        nl: Oeps...
+        en: Whoops…
+        nl: Oeps…
     Title2:
       COPY:
         en: Something went wrong (404)
@@ -782,8 +787,8 @@ SHARED:
         en: Verified
     AnotherSource:
       COPY:
-        nl: Een andere bron...
-        en: Another source...
+        nl: Een andere bron…
+        en: Another source…
     NotAvailable:
       COPY:
         nl: Niet beschikbaar
@@ -2310,8 +2315,8 @@ SHARED:
         nl: Open je mailbox!
     Awaiting:
       COPY:
-        en: Waiting for you to click the link...
-        nl: Wachten tot je op de link klikt...
+        en: Waiting for you to click the link…
+        nl: Wachten tot je op de link klikt…
     OpenGMail:
       COPY:
         en: Open Gmail.com
@@ -2696,8 +2701,8 @@ SHARED:
         nl: Om in te loggen, klik op de link in de email die verstuurd is aan %1{{s}}.
     Awaiting:
       COPY:
-        en: Waiting for you to click the link...
-        nl: Wachten tot je op de link klikt...
+        en: Waiting for you to click the link…
+        nl: Wachten tot je op de link klikt…
     OpenGMail:
       COPY:
         en: Open Gmail.com
@@ -2927,8 +2932,8 @@ SHARED:
   AffiliationMissing:
     Header:
       COPY:
-        en: Account linked, but...
-        nl: Account is gekoppeld, maar...
+        en: Account linked, but…
+        nl: Account is gekoppeld, maar…
     Info:
       COPY:
         en: >-
@@ -2954,8 +2959,8 @@ SHARED:
   ValidNameMissing:
     Header:
       COPY:
-        en: Account linked, but...
-        nl: Account is gekoppeld, maar...
+        en: Account linked, but…
+        nl: Account is gekoppeld, maar…
     Info:
       COPY:
         en: >-
@@ -3296,7 +3301,7 @@ SHARED:
           nl: Verifieer jouw identiteit
     GotItButton:
       COPY:
-        en: Ok, got it!
+        en: OK, got it!
         nl: Ok, begrepen!
     ReturnBrowserTitle:
       COPY:
@@ -3624,7 +3629,7 @@ SHARED:
         nl: Onbekende fout
     UnknownErrorText:
       COPY:
-        en: An unknown error occured with the following status code
+        en: An unknown error occurred with the following status code
         nl: Er is een onbekende fout opgetreden met de volgende statuscode
     ExistingUserAndDeviceTitle:
       COPY:
