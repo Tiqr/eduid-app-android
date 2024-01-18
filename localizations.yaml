@@ -1119,6 +1119,28 @@ SHARED:
       COPY:
         en: Sleutel verwijderen
         nl: Delete key
+  ConfirmDeleteKey:
+    Title:
+      COPY:
+        en: Delete key
+        nl: Verwijder sleutel
+    Subtitle:
+      COPY:
+        en: There is no way to undo this action
+        nl: Dit kan niet ongedaan worden gemaakt
+    Description:
+      COPY:
+        en: Are you sure you want to delete your key?
+        nl: Weet je zeker dat je deze sleutel wil verwijderen?
+    Button:
+      Confirm:
+        COPY:
+          en: Confirm
+          nl: Bevestigen
+      Cancel:
+        COPY:
+          en: Cancel
+          nl: Annuleren
   Home:
     Home:
       COPY:
@@ -1427,6 +1449,30 @@ SHARED:
       COPY:
         en: Cannot remove service
         nl: Fout bij verwijderen dienst
+  RevokeAccessToken:
+    Title:
+      COPY:
+        en: Revoke access token
+        nl: Beveiligingssleutel intrekken
+    Description:
+      COPY:
+        en: >-
+          Are you sure you want to revoke the API access token for %1{{s}}?
+        nl: >-
+          Weet je zeker dat de API access beveiligingssleutel voor %1{{s}} wilt intrekken?
+    Button:
+      Confirm:
+        COPY:
+          en: Confirm
+          nl: Bevestigen
+      Cancel:
+        COPY:
+          en: Cancel
+          nl: Annuleer
+    Error:
+      COPY:
+        en: Cannot remove access token
+        nl: Fout bij verwijderen van beveiligingssleutel
   Institution:
     Title:
       COPY:

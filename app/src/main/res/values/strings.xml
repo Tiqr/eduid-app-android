@@ -226,6 +226,11 @@
   <string name="TwoFactorKeys_Label_UniqueKeyId_COPY">"Unique KeyID"</string>
   <string name="TwoFactorKeys_Label_UseBiometrics_COPY">"Use biometrics"</string>
   <string name="TwoFactorKeys_DeleteKey_COPY">"Sleutel verwijderen"</string>
+  <string name="ConfirmDeleteKey_Title_COPY">"Delete key"</string>
+  <string name="ConfirmDeleteKey_Subtitle_COPY">"There is no way to undo this action"</string>
+  <string name="ConfirmDeleteKey_Description_COPY">"Are you sure you want to delete your key?"</string>
+  <string name="ConfirmDeleteKey_Button_Confirm_COPY">"Confirm"</string>
+  <string name="ConfirmDeleteKey_Button_Cancel_COPY">"Cancel"</string>
   <string name="Home_Home_COPY">"Home"</string>
   <string name="Home_Welcome_COPY">"Welcome %1$s"</string>
   <string name="Home_DataAndActivity_COPY">"Data &amp; activity"</string>
@@ -286,6 +291,11 @@
   <string name="DeleteService_Button_Confirm_COPY">"Confirm"</string>
   <string name="DeleteService_Button_Cancel_COPY">"Cancel"</string>
   <string name="DeleteService_Error_COPY">"Cannot remove service"</string>
+  <string name="RevokeAccessToken_Title_COPY">"Revoke access token"</string>
+  <string name="RevokeAccessToken_Description_COPY">"Are you sure you want to revoke the API access token for %1$s?"</string>
+  <string name="RevokeAccessToken_Button_Confirm_COPY">"Confirm"</string>
+  <string name="RevokeAccessToken_Button_Cancel_COPY">"Cancel"</string>
+  <string name="RevokeAccessToken_Error_COPY">"Cannot remove access token"</string>
   <string name="Institution_Title_COPY">"Connected institution"</string>
   <string name="Institution_Info_COPY">"This institution was connected to your eduID account on %1$s at %2$s:%3$s"</string>
   <string name="Institution_Name_COPY">"Institution name"</string>

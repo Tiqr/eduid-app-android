@@ -226,6 +226,11 @@
   <string name="TwoFactorKeys_Label_UniqueKeyId_COPY">"Uniek SleutelID"</string>
   <string name="TwoFactorKeys_Label_UseBiometrics_COPY">"Gebruik biometrie"</string>
   <string name="TwoFactorKeys_DeleteKey_COPY">"Delete key"</string>
+  <string name="ConfirmDeleteKey_Title_COPY">"Verwijder sleutel"</string>
+  <string name="ConfirmDeleteKey_Subtitle_COPY">"Dit kan niet ongedaan worden gemaakt"</string>
+  <string name="ConfirmDeleteKey_Description_COPY">"Weet je zeker dat je deze sleutel wil verwijderen?"</string>
+  <string name="ConfirmDeleteKey_Button_Confirm_COPY">"Bevestigen"</string>
+  <string name="ConfirmDeleteKey_Button_Cancel_COPY">"Annuleren"</string>
   <string name="Home_Home_COPY">"Home"</string>
   <string name="Home_Welcome_COPY">"Welkom %1$s"</string>
   <string name="Home_DataAndActivity_COPY">"Data &amp; activiteit"</string>
@@ -286,6 +291,11 @@
   <string name="DeleteService_Button_Confirm_COPY">"Bevestigen"</string>
   <string name="DeleteService_Button_Cancel_COPY">"Annuleer"</string>
   <string name="DeleteService_Error_COPY">"Fout bij verwijderen dienst"</string>
+  <string name="RevokeAccessToken_Title_COPY">"Beveiligingssleutel intrekken"</string>
+  <string name="RevokeAccessToken_Description_COPY">"Weet je zeker dat de API access beveiligingssleutel voor %1$s wilt intrekken?"</string>
+  <string name="RevokeAccessToken_Button_Confirm_COPY">"Bevestigen"</string>
+  <string name="RevokeAccessToken_Button_Cancel_COPY">"Annuleer"</string>
+  <string name="RevokeAccessToken_Error_COPY">"Fout bij verwijderen van beveiligingssleutel"</string>
   <string name="Institution_Title_COPY">"Gekoppelde instelling"</string>
   <string name="Institution_Info_COPY">"Deze instelling is op %1$s om %2$s: %3$s gekoppeld aan jouw eduID."</string>
   <string name="Institution_Name_COPY">"Naam van de instelling"</string>
