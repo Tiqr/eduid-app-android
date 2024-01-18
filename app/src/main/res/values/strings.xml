@@ -666,7 +666,7 @@
   <string name="WelcomeToApp_ViewWhat_Highlight_COPY">"View"</string>
   <string name="WelcomeToApp_VerifyYour_Text_COPY">"so you can access more secure services"</string>
   <string name="WelcomeToApp_VerifyYour_Highlight_COPY">"Verify your identity"</string>
-  <string name="WelcomeToApp_GotItButton_COPY">"Ok, got it!"</string>
+  <string name="WelcomeToApp_GotItButton_COPY">"OK, got it!"</string>
   <string name="WelcomeToApp_ReturnBrowserTitle_COPY">"Return to your web browser"</string>
   <string name="WelcomeToApp_ReturnBrowserText_COPY">"Continue in your browser to finish the connection of this app to your edulD account"</string>
   <string name="CreateEduID_ErrorCreateFailed_Title_COPY">"Could not create your eduID account!"</string>
@@ -733,7 +733,7 @@
   <string name="ResponseErrors_SMSErrorTitle_COPY">"Wrong verification"</string>
   <string name="ResponseErrors_SMSErrorText_COPY">"You have entered a wrong verification combination"</string>
   <string name="ResponseErrors_UnknownErrorTitle_COPY">"Uknown error"</string>
-  <string name="ResponseErrors_UnknownErrorText_COPY">"An unknown error occured with the following status code"</string>
+  <string name="ResponseErrors_UnknownErrorText_COPY">"An unknown error occurred with the following status code"</string>
   <string name="ResponseErrors_ExistingUserAndDeviceTitle_COPY">"Already associated"</string>
   <string name="ResponseErrors_ExistingUserAndDeviceText_COPY">"This account is already associated with a different device. Remove your other device first from your account before registering a new device."</string>
   <string name="ResponseErrors_PersonalDetailsRetrieveError_COPY">"Could not retrieve personal details"</string>
