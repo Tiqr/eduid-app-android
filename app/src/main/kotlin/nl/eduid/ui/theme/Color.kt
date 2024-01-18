@@ -81,4 +81,4 @@ val ButtonRed = Color(0xFFDA362D)
 val InfoTabDarkFill = Color(0xFFF4F6F8)
 val ButtonBorderGrey = Color(0xFF5E6873)
 val AlertRedBackground = Color(0xFFFFCDCA)
-
+val SmallActionGray = Color(0xFFB2B6BE)
