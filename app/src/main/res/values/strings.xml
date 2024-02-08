@@ -83,11 +83,9 @@
   <string name="Profile_VerifyStudent_AddInstitutionConfirmation_COPY">"When you proceed you will be asked to login at the institution you want to link to your eduID. First, select which institution you want to connect; then, login at that institution.&lt;br/&gt;&lt;br/&gt;After a successful login you will come back here."</string>
   <string name="Profile_VerifyParty_AddInstitution_COPY">"Link party"</string>
   <string name="Profile_VerifyParty_AddInstitutionConfirmation_COPY">"When you proceed you will be asked to login at the institution you want to link to your eduID. First, select which institution you want to connect; then, login at that institution.&lt;br/&gt;&lt;br/&gt;After a successful login you will come back here."</string>
-  <string name="EppnAlreadyLinked_Header_COPY">"Account not linked!"</string>
+  <string name="EppnAlreadyLinked_Title_COPY">"Account not linked!"</string>
   <string name="EppnAlreadyLinked_Info_COPY">"Your eduID could not be linked. The trusted account with which you just logged in, is already linked to a different eduID account: %1$s."</string>
-  <string name="EppnAlreadyLinked_Proceed_COPY">"You can try to link to another institution or proceed to %1$s."</string>
-  <string name="EppnAlreadyLinked_ProceedLink_COPY">"Proceed"</string>
-  <string name="EppnAlreadyLinked_RetryLink_COPY">"Retry"</string>
+  <string name="EppnAlreadyLinked_RetryButton_COPY">"Retry"</string>
   <string name="Edit_Title_COPY">"Name"</string>
   <string name="Edit_Info_COPY">"Please provide your full name"</string>
   <string name="Edit_GivenName_COPY">"Your first name"</string>
