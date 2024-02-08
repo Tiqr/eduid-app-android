@@ -463,10 +463,10 @@ SHARED:
             instelling je wilt koppelen en log daarna in.<br/> <br/>Nadat je
             succesvol bent ingelogd kom je hier weer terug.
   EppnAlreadyLinked:
-    Header:
+    Title:
       COPY:
         en: Account not linked!
-        nl: Account niet gekoppeld!
+        nl: Koppeling niet gemaakt!
     Info:
       COPY:
         en: >-
@@ -477,17 +477,7 @@ SHARED:
           Je eduID kon niet worden gekoppeld. Het vertrouwde account waarmee je
           zojuist bent ingelogd, is al aan een ander eduID-account gekoppeld:
           %1{{s}}.
-    Proceed:
-      COPY:
-        en: You can try to link to another institution or proceed to %1{{s}}.
-        nl: >-
-          Je kan het nogmaals met een andere instelling proberen of doorgaan
-          naar %1{{s}}.
-    ProceedLink:
-      COPY:
-        en: Proceed
-        nl: Doorgaan
-    RetryLink:
+    RetryButton:
       COPY:
         en: Retry
         nl: Opnieuw proberen
