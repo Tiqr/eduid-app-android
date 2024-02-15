@@ -358,7 +358,7 @@ fun MainGraph(
             )
         }
         val fullUri = deepLinkIntent?.data ?: Uri.EMPTY
-        val result = ResultAccountLinked.fromRedirectUrl(fullUri.path.orEmpty())
+        val result = ResultAccountLinked.fromRedirectUrl(fullUri)
 
         val viewModel = hiltViewModel<PersonalInfoViewModel>(entry)
         AccountLinkedScreen(

@@ -47,8 +47,19 @@ fun AccountLinkedScreen(
             .fillMaxSize()
             .padding(it)
     ) {
-        if (result is ResultAccountLinked.OK) {
-            AccountLinkedContent(
+        when (result) {
+            is ResultAccountLinked.FailedAlreadyLinkedResult -> AccountFailedLinkContent(
+                explanation = stringResource(
+                    R.string.NameUpdated_Title_FailReason_AlreadyLinked_COPY, result.withEmail
+                ), continueToHome = continueToHome
+            )
+
+            ResultAccountLinked.FailedExpired -> AccountFailedLinkContent(
+                explanation = stringResource(R.string.NameUpdated_Title_FailReason_SessionExpired_COPY),
+                continueToHome = continueToHome
+            )
+
+            ResultAccountLinked.OK -> AccountLinkedContent(
                 personalInfo = viewModel.uiState.personalInfo,
                 isLoading = viewModel.uiState.isLoading,
                 errorData = viewModel.uiState.errorData,
@@ -56,17 +67,14 @@ fun AccountLinkedScreen(
                 continueToHome = continueToHome,
                 removeConnection = { index -> viewModel.removeConnection(index) },
             )
-        } else {
-            AccountFailedLinkContent(result = result, continueToHome = continueToHome)
         }
     }
 }
 
-@Preview
 @Composable
 private fun AccountFailedLinkContent(
-    result: ResultAccountLinked = ResultAccountLinked.FailedAlreadyLinkedResult,
-    continueToHome: () -> Unit = {}
+    explanation: String,
+    continueToHome: () -> Unit = {},
 ) = Column(
     modifier = Modifier
         .fillMaxSize()
@@ -75,8 +83,8 @@ private fun AccountFailedLinkContent(
     verticalArrangement = Arrangement.SpaceBetween
 ) {
     Column(
-        horizontalAlignment = Alignment.Start, modifier = Modifier
-            .verticalScroll(rememberScrollState())
+        horizontalAlignment = Alignment.Start,
+        modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
         Spacer(Modifier.height(36.dp))
         Text(
@@ -89,16 +97,10 @@ private fun AccountFailedLinkContent(
         Spacer(Modifier.height(12.dp))
         Text(
             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
-            text = stringResource(R.string.NameUpdated_Title_ContactedSuccessfully_COPY),
+            text = stringResource(R.string.NameUpdated_Title_ContactedError_COPY),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(12.dp))
-        val explanation =
-            if (result is ResultAccountLinked.FailedExpired) {
-                stringResource(R.string.NameUpdated_Title_FailReason_SessionExpired_COPY)
-            } else {
-                stringResource(R.string.NameUpdated_Title_FailReason_AlreadyLinked_COPY)
-            }
         Text(
             text = explanation,
             style = MaterialTheme.typography.bodyLarge,
@@ -108,8 +110,7 @@ private fun AccountFailedLinkContent(
     PrimaryButton(
         text = stringResource(R.string.NameUpdated_Continue_COPY),
         onClick = continueToHome,
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
     )
 
 }
@@ -198,8 +199,7 @@ private fun AccountLinkedContent(
     PrimaryButton(
         text = stringResource(R.string.NameUpdated_Continue_COPY),
         onClick = continueToHome,
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
     )
 }
 

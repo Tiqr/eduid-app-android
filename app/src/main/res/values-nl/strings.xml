@@ -116,7 +116,7 @@
   <string name="NameUpdated_Title_YourSchool_COPY">"Je school/instelling"</string>
   <string name="NameUpdated_Title_ContactedSuccessfully_COPY">"is nu gekoppeld"</string>
   <string name="NameUpdated_Title_ContactedError_COPY">"is niet gekoppeld"</string>
-  <string name="NameUpdated_Title_FailReason_AlreadyLinked_COPY">"Reden: Het account is al gekoppeld."</string>
+  <string name="NameUpdated_Title_FailReason_AlreadyLinked_COPY">"Reden: Het account is al gekoppeld: %1$s"</string>
   <string name="NameUpdated_Title_FailReason_SessionExpired_COPY">"Reden: Je sessie is verlopen."</string>
   <string name="NameUpdated_Description_COPY">"De volgende gegevens zijn toegevoegd aan je eduID en kan gedeeld worden."</string>
   <string name="NameUpdated_FullName_COPY">"Volledige naam"</string>

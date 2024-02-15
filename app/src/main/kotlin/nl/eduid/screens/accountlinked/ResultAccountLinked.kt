@@ -1,14 +1,18 @@
 package nl.eduid.screens.accountlinked
 
-interface ResultAccountLinked {
-    object OK : ResultAccountLinked
-    object FailedAlreadyLinkedResult : ResultAccountLinked
-    object FailedExpired : ResultAccountLinked
+import android.net.Uri
+
+sealed interface ResultAccountLinked {
+    data object OK : ResultAccountLinked
+    data class FailedAlreadyLinkedResult(val withEmail: String) : ResultAccountLinked
+    data object FailedExpired : ResultAccountLinked
 
     companion object {
-        fun fromRedirectUrl(path: String) = when {
-            path.contains("expired", true) -> FailedExpired
-            path.contains("already-linked") -> FailedAlreadyLinkedResult
+        fun fromRedirectUrl(uri: Uri) = when {
+            uri.path?.contains("expired", true) ?: false -> FailedExpired
+            uri.path?.contains("already-linked")
+                ?: false -> FailedAlreadyLinkedResult(uri.getQueryParameter("email") ?: "")
+
             else -> {
                 OK
             }
