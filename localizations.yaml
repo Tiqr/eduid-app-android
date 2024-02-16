@@ -610,8 +610,8 @@ SHARED:
       FailReason:
         AlreadyLinked:
           COPY:
-            en: "Reason: The account is already linked."
-            nl: "Reden: Het account is al gekoppeld."
+            en: "Reason: The account is already linked: %1{{s}}"
+            nl: "Reden: Het account is al gekoppeld: %1{{s}}"
         SessionExpired:
           COPY:
             en: "Reason: Your session expired."

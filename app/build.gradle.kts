@@ -29,11 +29,7 @@ val keystorePass = if (devKeystorePassFile.exists()) {
 }
 //We want to have the testing app with editable feature flags uploaded to Google Play.
 //Apps uploaded to google play must not be debuggable, hence the flag:
-val isAppDebuggable = if (System.getenv("CI") == "true") {
-    false
-} else {
-    true
-}
+val isAppDebuggable = System.getenv("CI") != "true"
 
 android {
     compileSdk = libs.versions.android.sdk.compile.get().toInt()
@@ -94,10 +90,10 @@ android {
 
         getByName("debug") {
             applicationIdSuffix = ".testing"
-            if (isAppDebuggable) {
-                versionNameSuffix = " DEBUG"
+            versionNameSuffix = if (isAppDebuggable) {
+                " DEBUG"
             } else {
-                versionNameSuffix = " TESTING"
+                " TESTING"
             }
             isMinifyEnabled = true
             isShrinkResources = true
