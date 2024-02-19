@@ -2,6 +2,22 @@
 
 ## [Unreleased](https://github.com/SURFnet/eduid-app-android/tree/HEAD)
 
+# 0.1.21
+- Update translations
+- Show version number in info screen
+- Improve error message if account already linked
+
+# 0.1.17
+- Don't start recovery in the app when a second key is added. (065f9c6)
+- Update translations
+- Allow add/update passwords
+- Force recovery flow when enrolling
+- Fix UI issues
+
+# 0.1.0
+Complete redesign of the app, allowing viewing and management of the eduID
+profile information.
+
 # 0.0.17
 - Add dark theme
 
