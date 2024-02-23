@@ -794,7 +794,7 @@ SHARED:
         nl: Beveiliging
     SubTitle:
       COPY:
-        en: We provide different methods to sign in to your eduID account.
+        en: We provide different methods to sign in using your eduID account.
         nl: We bieden verschillende methoden om in te loggen met je eduID.
     SecondSubTitle:
       COPY:
