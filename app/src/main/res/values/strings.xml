@@ -155,7 +155,7 @@
   <string name="NameOverview_NotAvailable_COPY">"Not available"</string>
   <string name="NameOverview_ProceedToAdd_COPY">"Proceed to add this via your school/uni"</string>
   <string name="Security_Title_COPY">"Security settings"</string>
-  <string name="Security_SubTitle_COPY">"We provide different methods to sign in to your eduID account."</string>
+  <string name="Security_SubTitle_COPY">"We provide different methods to sign in using your eduID account."</string>
   <string name="Security_SecondSubTitle_COPY">"Sign-in methods"</string>
   <string name="Security_AddPassword_COPY">"Add a password"</string>
   <string name="Security_PasswordPlaceholder_COPY">"• • • • • • • • • •"</string>
