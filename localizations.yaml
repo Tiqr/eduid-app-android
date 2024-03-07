@@ -3438,21 +3438,17 @@ SHARED:
       MainExplanationText:
         COPY:
           en: |
-            eduID is a central account for users
-            associated with Dutch education and research. It is yours and exists independent
-            of an educational institution.
+            eduID is a central account for users associated with Dutch education and research. It is yours and exists independent of an educational institution.
             
             • Use it to login to several services connected to SURFconext.
             • Users without an institution account can also request an eduID.
             • eduID is a lifelong account. It stays valid after you graduate.
           nl: |
-            eduID is een centraal account voor gebruikers
-             verbonden aan het Nederlandse onderwijs en onderzoek.
-             Het is van jou en bestaat onafhankelijk van een onderwijsinstelling.
+            eduID is een centraal account voor gebruikers verbonden aan het Nederlandse onderwijs en onderzoek. Het is van jou en bestaat onafhankelijk van een onderwijsinstelling.
             
-             • Hiermee log je in op verschillende diensten die zijn aangesloten op SURFconext.
-             • Gebruikers zonder instellingsaccount kunnen ook een eduID aanvragen.
-             • eduID is een levenslang account. Het blijft geldig nadat je bent afgestudeerd.
+            • Hiermee log je in op verschillende diensten die zijn aangesloten op SURFconext.
+            • Gebruikers zonder instellingsaccount kunnen ook een eduID aanvragen.
+            • eduID is een levenslang account. Het blijft geldig nadat je bent afgestudeerd.
       CreateEduidButton:
         COPY:
           en: Create a new eduID
