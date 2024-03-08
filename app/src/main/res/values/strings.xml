@@ -679,7 +679,7 @@
   <string name="WelcomeToApp_ReturnBrowserText_COPY">"Continue in your browser to finish the connection of this app to your edulD account"</string>
   <string name="CreateEduID_ErrorCreateFailed_Title_COPY">"Could not create your eduID account!"</string>
   <string name="CreateEduID_ErrorCreateFailed_Message_COPY">"The account creation has failed. Please try again."</string>
-  <string name="CreateEduID_LandingPage_MainText_COPY">"Personal account for Education and Research"</string>
+  <string name="CreateEduID_LandingPage_MainText_COPY">"Your account for Education and Research"</string>
   <string name="CreateEduID_LandingPage_SignInButton_COPY">"Sign in"</string>
   <string name="CreateEduID_LandingPage_ScanQrButton_COPY">"Scan"</string>
   <string name="CreateEduID_LandingPage_NoEduIdButton_COPY">"I don't have an eduID"</string>
