@@ -3360,8 +3360,8 @@ SHARED:
     LandingPage:
       MainText:
         COPY:
-          en: Personal account for Education and Research
-          nl: Persoonlijke login voor Onderwijs en Onderzoek
+          en: Your account for Education and Research
+          nl: Jouw account voor Onderwijs en Onderzoek
       SignInButton:
         COPY:
           en: Sign in
