@@ -693,7 +693,7 @@
   <string name="CreateEduID_FirstTimeDialog_AddInformationBoldPart_COPY">"Add this information"</string>
   <string name="CreateEduID_FirstTimeDialog_SkipButtonTitle_COPY">"Skip this"</string>
   <string name="CreateEduID_Explanation_MainTitleLabel_COPY">"Don't have an eduID yet?"</string>
-  <string name="CreateEduID_Explanation_MainExplanationText_COPY">"eduID is a central account for users\nassociated with Dutch education and research. It is yours and exists independent\nof an educational institution.\n\n• Use it to login to several services connected to SURFconext.\n• Users without an institution account can also request an eduID.\n• eduID is a lifelong account. It stays valid after you graduate.\n"</string>
+  <string name="CreateEduID_Explanation_MainExplanationText_COPY">"eduID is a central account for users associated with Dutch education and research. It is yours and exists independent of an educational institution.\n\n• Use it to login to several services connected to SURFconext.\n• Users without an institution account can also request an eduID.\n• eduID is a lifelong account. It stays valid after you graduate.\n"</string>
   <string name="CreateEduID_Explanation_CreateEduidButton_COPY">"Create a new eduID"</string>
   <string name="CreateEduID_Create_MainTitleLabel_COPY">"Create a new eduID"</string>
   <string name="CreateEduID_Created_MainTitleLabel_COPY">"Your eduID has been created"</string>
