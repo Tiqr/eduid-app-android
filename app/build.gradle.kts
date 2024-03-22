@@ -125,7 +125,7 @@ android {
         abortOnError = false
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.5"
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
     packaging {
         resources.excludes.addAll(
@@ -184,7 +184,6 @@ dependencies {
     implementation(libs.androidx.camera.camera2)
 
     implementation(libs.dagger.hilt.android)
-    implementation(libs.dagger.hilt.fragment)
     ksp(libs.dagger.hilt.compiler)
 
     implementation(libs.permission)
