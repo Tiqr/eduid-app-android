@@ -52,6 +52,7 @@ fun PrimaryButton(
 ) {
     Text(
         text = text,
+        overflow = TextOverflow.Ellipsis,
         style = MaterialTheme.typography.bodyLarge.copy(
             color = buttonTextColor, fontWeight = FontWeight.SemiBold
         ),
@@ -110,6 +111,7 @@ fun SecondaryButton(
 ) {
     Text(
         text = text,
+        overflow = TextOverflow.Ellipsis,
         style = MaterialTheme.typography.bodyLarge.copy(
             color = ButtonTextGrey, fontWeight = FontWeight.SemiBold
         ),

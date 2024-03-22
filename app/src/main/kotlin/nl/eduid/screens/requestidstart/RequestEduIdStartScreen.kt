@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,7 +20,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
-import nl.eduid.ui.BulletPoint
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
@@ -41,7 +42,8 @@ fun RequestEduIdStartScreen(
         Column(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
-                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+                .weight(1f, false)
         ) {
             Text(
                 text = stringResource(R.string.CreateEduID_Explanation_MainTitleLabel_COPY),
@@ -76,7 +78,7 @@ fun RequestEduIdStartScreen(
     }
 }
 
-@Preview()
+@Preview(locale = "nl")
 @Composable
 private fun PreviewEnroll() {
     EduidAppAndroidTheme {
