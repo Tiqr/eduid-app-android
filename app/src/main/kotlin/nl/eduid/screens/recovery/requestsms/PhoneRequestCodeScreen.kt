@@ -57,15 +57,18 @@ fun PhoneRequestCodeScreen(
     goToConfirmPhoneNumber: (phoneNumber: String) -> Unit,
 ) = EduIdTopAppBar(
     onBackClicked = onBackClicked
-) {
+) { paddingValues ->
     var waitForVmEvent by rememberSaveable { mutableStateOf(false) }
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
 
     if (waitForVmEvent) {
+        val lifecycle = LocalLifecycleOwner.current.lifecycle
         val currentGoToConfirmNumber by rememberUpdatedState(newValue = goToConfirmPhoneNumber)
         LaunchedEffect(viewModel, lifecycle) {
-            snapshotFlow { viewModel.uiState }.distinctUntilChanged()
-                .filter { it.isCompleted != null }.flowWithLifecycle(lifecycle).collect {
+            snapshotFlow { viewModel.uiState }
+                .distinctUntilChanged()
+                .filter { state -> state.isCompleted != null }
+                .flowWithLifecycle(lifecycle)
+                .collect {
                     waitForVmEvent = false
                     currentGoToConfirmNumber(it.input)
                     viewModel.clearCompleted()
@@ -84,10 +87,10 @@ fun PhoneRequestCodeScreen(
 
     PhoneRequestCodeContent(
         uiState = viewModel.uiState,
-        padding = it,
+        padding = paddingValues,
         onClick = {
-            waitForVmEvent = true
             viewModel.requestPhoneCode()
+            waitForVmEvent = true
         },
         onValueChange = { viewModel.onPhoneNumberChange(it) },
     )
@@ -160,6 +163,7 @@ private fun PhoneRequestCodeContent(
             ),
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
             onValueChange = onValueChange,
+            singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .requiredHeight(TextFieldDefaults.MinHeight)
