@@ -78,7 +78,7 @@ fun RequestEduIdStartScreen(
     }
 }
 
-@Preview(locale = "nl")
+@Preview(locale = "nl", showSystemUi = true)
 @Composable
 private fun PreviewEnroll() {
     EduidAppAndroidTheme {
