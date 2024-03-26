@@ -81,8 +81,8 @@ object RequestEduIdLinkSent {
 }
 
 sealed class PhoneNumberRecovery(val route: String) {
-    object RequestCode : PhoneNumberRecovery("phone_number_recover")
-    object ConfirmCode : PhoneNumberRecovery("phone_number_confirm_code") {
+    data object RequestCode : PhoneNumberRecovery("phone_number_recover")
+    data object ConfirmCode : PhoneNumberRecovery("phone_number_confirm_code") {
         private const val phoneNumberArg = "phone_number_arg"
         const val isDeactivationArg = "is_deactivation_arg"
         val routeWithArgs = "${route}/{$phoneNumberArg}/{$isDeactivationArg}"

@@ -94,7 +94,7 @@ private fun WelcomeStartContent(
                 Text(
                     style = MaterialTheme.typography.bodyLarge, text = buildAnnotatedString {
                         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                            append(stringResource(R.string.WelcomeToApp_Title_COPY))
+                            append(stringResource(R.string.WelcomeToApp_Quickly_Highlight_COPY))
                         }
                         append(" ")
                         append(stringResource(R.string.WelcomeToApp_Quickly_Text_COPY))

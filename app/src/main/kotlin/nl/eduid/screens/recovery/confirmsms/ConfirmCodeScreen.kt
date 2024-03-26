@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -28,7 +27,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -59,7 +57,7 @@ fun ConfirmCodeScreen(
     phoneNumber: String,
     goToStartScreen: () -> Unit,
     goBack: () -> Unit,
-) =  EduIdTopAppBar(
+) = EduIdTopAppBar(
     onBackClicked = goBack
 ) {
     var waitForVmEvent by rememberSaveable { mutableStateOf(false) }
@@ -90,7 +88,6 @@ fun ConfirmCodeScreen(
     )
 }
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 private fun ConfirmCodeContent(
     uiState: UiState,
@@ -143,6 +140,7 @@ private fun ConfirmCodeContent(
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done, keyboardType = KeyboardType.Number
             ),
+            singleLine = true,
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
             onValueChange = onValueChange,
             modifier = Modifier
@@ -150,7 +148,7 @@ private fun ConfirmCodeContent(
                 .focusRequester(focusRequester)
                 .onFocusChanged { focusState ->
                     if (focusState.isFocused && clipboardManager.hasText()) {
-                        val clipText = clipboardManager.getText()?.text ?: ""
+                        val clipText = clipboardManager.getText()?.text?.trim() ?: ""
                         if (clipText.isNotEmpty() && clipText.length == 6) {
                             onValueChange(clipText)
                         }
