@@ -223,7 +223,7 @@
   <string name="TwoFactorKeys_Label_Account_COPY">"Account"</string>
   <string name="TwoFactorKeys_Label_UniqueKeyId_COPY">"Unique KeyID"</string>
   <string name="TwoFactorKeys_Label_UseBiometrics_COPY">"Use biometrics"</string>
-  <string name="TwoFactorKeys_DeleteKey_COPY">"Sleutel verwijderen"</string>
+  <string name="TwoFactorKeys_DeleteKey_COPY">"Delete key"</string>
   <string name="ConfirmDeleteKey_Title_COPY">"Delete key"</string>
   <string name="ConfirmDeleteKey_Subtitle_COPY">"There is no way to undo this action"</string>
   <string name="ConfirmDeleteKey_Description_COPY">"Are you sure you want to delete your key?"</string>
