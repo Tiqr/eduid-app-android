@@ -2,10 +2,23 @@ package nl.eduid.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -19,7 +32,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.LineHeightStyle.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,7 +40,6 @@ import nl.eduid.R
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PinInputField(
     label: String?,
@@ -36,6 +47,7 @@ fun PinInputField(
     isPinInvalid: Boolean,
     modifier: Modifier = Modifier,
     shouldShowKeyboard: Boolean = true,
+    isInputEnabled: Boolean = true,
     onPinChange: (String) -> Unit = {},
     submitPin: () -> Unit = {},
     pinMaxLength: Int = PIN_MAX_LENGTH,
@@ -95,6 +107,7 @@ fun PinInputField(
         }
         OutlinedTextField(
             value = pinCode,
+            enabled = isInputEnabled,
             onValueChange = {
                 onPinChange(it)
                 if (it.length == PIN_MAX_LENGTH) {

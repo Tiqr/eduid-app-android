@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -66,12 +67,8 @@ fun AuthenticationPinBiometricScreen(
         shouldPromptBiometric = context.biometricUsable() && authChallenge?.identity?.biometricInUse == true,
         challengeComplete = challengeComplete,
         padding = it,
-        onBiometricResult = { biometricSignIn ->
-            viewModel.authenticateWithBiometric(biometricSignIn)
-        },
-        submitPin = { pin ->
-            viewModel.authenticateWithPin(pin)
-        },
+        onBiometricResult = viewModel::authenticateWithBiometric,
+        submitPin = viewModel::authenticateWithPin,
         onCancel = onCancel,
         goToAuthenticationComplete = { pin ->
             goToAuthenticationComplete(authChallenge, pin)
@@ -201,10 +198,17 @@ private fun AuthenticationPinBiometricContent(
             )
 
             Spacer(modifier = Modifier.height(36.dp))
+            if (isCheckingSecret) {
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+            }
             PinInputField(label = stringResource(org.tiqr.data.R.string.auth_pin_subtitle),
                 pinCode = pinValue,
                 isPinInvalid = isPinInvalid,
                 shouldShowKeyboard = shouldShowKeyboard,
+                isInputEnabled = !isCheckingSecret,
                 modifier = Modifier.fillMaxWidth(),
                 onPinChange = { newValue -> pinValue = newValue },
                 submitPin = {
@@ -225,6 +229,7 @@ private fun AuthenticationPinBiometricContent(
                 modifier = Modifier.widthIn(min = 140.dp),
                 text = stringResource(R.string.Button_Cancel_COPY),
                 onClick = onCancel,
+                enabled = !isCheckingSecret,
             )
             PrimaryButton(
                 modifier = Modifier.widthIn(min = 140.dp),
@@ -233,6 +238,7 @@ private fun AuthenticationPinBiometricContent(
                     isCheckingSecret = true
                     submitPin(pinValue)
                 },
+                enabled = !isCheckingSecret,
             )
         }
     }
