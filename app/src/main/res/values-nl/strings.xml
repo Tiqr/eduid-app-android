@@ -223,7 +223,7 @@
   <string name="TwoFactorKeys_Label_Account_COPY">"Account"</string>
   <string name="TwoFactorKeys_Label_UniqueKeyId_COPY">"Uniek SleutelID"</string>
   <string name="TwoFactorKeys_Label_UseBiometrics_COPY">"Gebruik biometrie"</string>
-  <string name="TwoFactorKeys_DeleteKey_COPY">"Delete key"</string>
+  <string name="TwoFactorKeys_DeleteKey_COPY">"Sleutel verwijderen"</string>
   <string name="ConfirmDeleteKey_Title_COPY">"Verwijder sleutel"</string>
   <string name="ConfirmDeleteKey_Subtitle_COPY">"Dit kan niet ongedaan worden gemaakt"</string>
   <string name="ConfirmDeleteKey_Description_COPY">"Weet je zeker dat je deze sleutel wil verwijderen?"</string>
@@ -686,7 +686,7 @@
   <string name="CreateEduID_FirstTimeDialog_ConnectButtonTitle_COPY">"Sluit je school/instelling aan"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextTitle_FirstPart_COPY">"Studeer je in Nederland?"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextTitle_SecondPart_COPY">"Sluit dan je instelling aan!"</string>
-  <string name="CreateEduID_FirstTimeDialog_MainText_COPY">"Wanneer je in Nederland studeert en je wilt met eduID inloggen bij een onderwijsdienst, moeten we er zeker van zijn dat jij het bent en niet iemand die zich voordoet als jij. Daarom moet je de volgende gegevens toevoegen aan jouw eduID\n• Validatie van je volledige naam door een derde partij\n• Bewijs dat je student bent\n• Je huidige instelling"</string>
+  <string name="CreateEduID_FirstTimeDialog_MainText_COPY">"Wanneer je in Nederland studeert en je wilt met eduID inloggen bij een onderwijsdienst, moeten we er zeker van zijn dat jij het bent en niet iemand die zich voordoet als jij.\n\nDaarom moet je de volgende gegevens toevoegen aan jouw eduID\n• Validatie van je volledige naam door een derde partij\n• Bewijs dat je student bent\n• Je huidige instelling"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextFirstBoldPart_COPY">"Wanneer je in Nederland studeert"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextSecondBoldPart_COPY">"Daarom moet je de volgende gegevens toevoegen aan jouw eduID"</string>
   <string name="CreateEduID_FirstTimeDialog_AddInformationText_COPY">"Voeg deze informatie toe door je school/instelling aan te sluiten via SURFconext"</string>
