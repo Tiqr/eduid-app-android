@@ -277,10 +277,10 @@ sealed class EditName(val route: String) {
     object View : EditName("name_overview")
 
     object Form : EditName("edit_name_form") {
-        const val choseName = "chosenName"
+        const val chosenName = "chosenName"
         const val familyName = "familyName"
-        val routeWithArgs = "${route}/{$choseName}/{$familyName}"
-        val arguments = listOf(navArgument(choseName) {
+        val routeWithArgs = "${route}/{$chosenName}/{$familyName}"
+        val arguments = listOf(navArgument(chosenName) {
             type = NavType.StringType
             nullable = false
             defaultValue = ""
@@ -294,7 +294,7 @@ sealed class EditName(val route: String) {
             "${route}/${Uri.encode(selfAssertedName.chosenName)}/${Uri.encode(selfAssertedName.familyName)}"
 
         fun decodeIdFromEntry(entry: NavBackStackEntry): SelfAssertedName {
-            val choseName = entry.arguments?.getString(choseName) ?: ""
+            val choseName = entry.arguments?.getString(chosenName) ?: ""
             val familyName = entry.arguments?.getString(familyName) ?: ""
             return SelfAssertedName(
                 familyName = Uri.decode(familyName), chosenName = Uri.decode(choseName)

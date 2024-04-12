@@ -26,9 +26,9 @@ class EditNameFormViewModel @Inject constructor(
         private set
 
     init {
-        val choseName = savedStateHandle.get<String>(EditName.Form.choseName) ?: ""
+        val chosenName = savedStateHandle.get<String>(EditName.Form.chosenName) ?: ""
         val familyName = savedStateHandle.get<String>(EditName.Form.familyName) ?: ""
-        uiState = uiState.copy(chosenName = choseName, familyName = familyName)
+        uiState = uiState.copy(chosenName = chosenName, familyName = familyName)
     }
 
     fun onChosenNameChange(newValue: String) {
