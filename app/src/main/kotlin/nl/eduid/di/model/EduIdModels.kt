@@ -57,6 +57,7 @@ data class UserDetails(
     val id: String,
     val email: String,
     val givenName: String,
+    val chosenName: String,
     val familyName: String,
     val usePassword: Boolean,
     val usePublicKey: Boolean,
@@ -162,7 +163,11 @@ data class Description(val en: String?, val nl: String?) : Parcelable
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-data class SelfAssertedName(val familyName: String? = null, val givenName: String? = null) :
+data class SelfAssertedName(
+    val familyName: String? = null,
+    val givenName: String? = null,
+    val chosenName: String? = null,
+) :
     Parcelable
 
 @Parcelize

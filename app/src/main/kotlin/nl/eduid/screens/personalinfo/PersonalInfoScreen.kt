@@ -191,7 +191,7 @@ fun PersonalInfoScreenContent(
     personalInfo.institutionAccounts.forEachIndexed { index, account ->
         ConnectionCard(
             title = account.role,
-            subtitle = stringResource(R.string.Profile_InstitutionAt_COPY, account.roleProvider),
+            subtitle = stringResource(R.string.Profile_InstitutionAt_COPY) + " " + account.roleProvider,
             institutionInfo = account,
             onRemoveConnection = { removeConnection(index) },
         )

@@ -69,7 +69,7 @@
   <string name="Profile_TrustedInfo_COPY">"You eduID account is not yet linked to a third party"</string>
   <string name="Profile_Link_COPY">"Link"</string>
   <string name="Profile_Institution_COPY">"Institution"</string>
-  <string name="Profile_InstitutionAt_COPY">"At %1$s"</string>
+  <string name="Profile_InstitutionAt_COPY">"At"</string>
   <string name="Profile_Employee_COPY">"Employee"</string>
   <string name="Profile_Affiliations_COPY">"Affiliation(s)"</string>
   <string name="Profile_Expires_COPY">"Link expires"</string>

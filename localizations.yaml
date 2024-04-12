@@ -386,8 +386,8 @@ SHARED:
         nl: Instelling
     InstitutionAt:
       COPY:
-        en: "At %1{{s}}"
-        nl: "Door %1{{s}}"
+        en: At
+        nl: Door
     Employee:
       COPY:
         en: Employee

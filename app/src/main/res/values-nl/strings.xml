@@ -69,7 +69,7 @@
   <string name="Profile_TrustedInfo_COPY">"Je eduID account is nog niet gekoppeld aan een vertrouwde partij."</string>
   <string name="Profile_Link_COPY">"Koppel"</string>
   <string name="Profile_Institution_COPY">"Instelling"</string>
-  <string name="Profile_InstitutionAt_COPY">"Door %1$s"</string>
+  <string name="Profile_InstitutionAt_COPY">"Door"</string>
   <string name="Profile_Employee_COPY">"Medewerker"</string>
   <string name="Profile_Affiliations_COPY">"Betrekking(en)"</string>
   <string name="Profile_Expires_COPY">"Koppeling verloopt"</string>

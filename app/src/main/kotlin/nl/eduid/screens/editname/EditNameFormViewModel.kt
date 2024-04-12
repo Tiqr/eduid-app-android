@@ -11,7 +11,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.R
-import nl.eduid.di.api.EduIdApi
 import nl.eduid.di.assist.DataAssistant
 import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.di.model.UnauthorizedException
@@ -20,7 +19,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditNameFormViewModel @Inject constructor(
-    private val eduIdApi: EduIdApi,
     private val assistant: DataAssistant,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -28,13 +26,13 @@ class EditNameFormViewModel @Inject constructor(
         private set
 
     init {
-        val givenName = savedStateHandle.get<String>(EditName.Form.givenName) ?: ""
+        val choseName = savedStateHandle.get<String>(EditName.Form.choseName) ?: ""
         val familyName = savedStateHandle.get<String>(EditName.Form.familyName) ?: ""
-        uiState = uiState.copy(givenName = givenName, familyName = familyName)
+        uiState = uiState.copy(chosenName = choseName, familyName = familyName)
     }
 
-    fun onGivenNameChange(newValue: String) {
-        uiState = uiState.copy(givenName = newValue)
+    fun onChosenNameChange(newValue: String) {
+        uiState = uiState.copy(chosenName = newValue)
     }
 
     fun onFamilyNameChange(newValue: String) {
@@ -49,7 +47,7 @@ class EditNameFormViewModel @Inject constructor(
         uiState = uiState.copy(inProgress = true, isCompleted = null)
         try {
             val validatedSelfName = SelfAssertedName(
-                familyName = uiState.familyName, givenName = uiState.givenName
+                familyName = uiState.familyName, chosenName = uiState.chosenName
             )
             val newDetails = assistant.updateName(validatedSelfName)
             uiState = newDetails?.let { _ ->
@@ -73,7 +71,7 @@ class EditNameFormViewModel @Inject constructor(
 
 @Stable
 data class UiState(
-    val givenName: String = "",
+    val chosenName: String = "",
     val familyName: String = "",
     val inProgress: Boolean = false,
     val errorData: ErrorData? = null,
