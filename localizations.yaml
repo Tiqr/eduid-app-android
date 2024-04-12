@@ -50,6 +50,11 @@ ANDROID:
         COPY:
           en: Allow the mobile application to access your data.
           nl: Geef de mobiele app toegang tot jouw gegevens.
+  Profile:
+    You:
+      COPY:
+        en: you
+        nl: Zelf
   AppData:
     InitializationError:
       Generic:
@@ -816,6 +821,8 @@ SHARED:
       COPY:
         en: 2FA key
         nl: 2FA sleutel
+
+
     ProvidedBy:
       COPY:
         en: Provided by

@@ -769,6 +769,7 @@
   <string name="Permission_Scan_COPY">"Geef toestemming voor het gebruik van de camera."</string>
   <string name="Permission_OAuth_Title_COPY">"Autoriseer de app"</string>
   <string name="Permission_OAuth_Description_COPY">"Geef de mobiele app toegang tot jouw gegevens."</string>
+  <string name="Profile_You_COPY">"Zelf"</string>
   <string name="AppData_InitializationError_Generic_COPY">"AppData kan niet worden geïnitialiseerd. Probeer het opnieuw."</string>
   <string name="AppData_InitializationError_WithException_COPY">"AppData kan niet worden geïnitialiseerd. Reden: %1$s"</string>
 </resources>
