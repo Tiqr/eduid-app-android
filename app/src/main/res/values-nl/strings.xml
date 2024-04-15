@@ -69,7 +69,7 @@
   <string name="Profile_TrustedInfo_COPY">"Je eduID account is nog niet gekoppeld aan een vertrouwde partij."</string>
   <string name="Profile_Link_COPY">"Koppel"</string>
   <string name="Profile_Institution_COPY">"Instelling"</string>
-  <string name="Profile_InstitutionAt_COPY">"Door "</string>
+  <string name="Profile_InstitutionAt_COPY">"Door"</string>
   <string name="Profile_Employee_COPY">"Medewerker"</string>
   <string name="Profile_Affiliations_COPY">"Betrekking(en)"</string>
   <string name="Profile_Expires_COPY">"Koppeling verloopt"</string>
@@ -769,6 +769,7 @@
   <string name="Permission_Scan_COPY">"Geef toestemming voor het gebruik van de camera."</string>
   <string name="Permission_OAuth_Title_COPY">"Autoriseer de app"</string>
   <string name="Permission_OAuth_Description_COPY">"Geef de mobiele app toegang tot jouw gegevens."</string>
+  <string name="Profile_You_COPY">"Zelf"</string>
   <string name="AppData_InitializationError_Generic_COPY">"AppData kan niet worden geïnitialiseerd. Probeer het opnieuw."</string>
   <string name="AppData_InitializationError_WithException_COPY">"AppData kan niet worden geïnitialiseerd. Reden: %1$s"</string>
 </resources>

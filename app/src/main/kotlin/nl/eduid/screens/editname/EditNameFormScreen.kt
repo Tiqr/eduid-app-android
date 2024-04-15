@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -91,7 +90,7 @@ fun EditNameFormScreen(
     }
 
     EditNameFormContent(
-        givenName = viewModel.uiState.givenName,
+        givenName = viewModel.uiState.chosenName,
         familyName = viewModel.uiState.familyName,
         inProgress = viewModel.uiState.inProgress,
         padding = it,
@@ -99,7 +98,7 @@ fun EditNameFormScreen(
             waitForVmEvent = true
             viewModel.updateName()
         },
-        onGivenNameChange = viewModel::onGivenNameChange,
+        onGivenNameChange = viewModel::onChosenNameChange,
         onFamilyNameChange = viewModel::onFamilyNameChange,
         goBack = goBack,
     )

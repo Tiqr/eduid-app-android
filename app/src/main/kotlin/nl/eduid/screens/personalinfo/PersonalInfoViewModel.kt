@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PersonalInfoViewModel @Inject constructor(
-    private val assistant: DataAssistant
+    private val assistant: DataAssistant,
 ) : ViewModel() {
     private var cachedUserDetails: UserDetails? = null
     var uiState by mutableStateOf(UiState())
@@ -181,7 +181,7 @@ class PersonalInfoViewModel @Inject constructor(
         val nameProvider = linkedAccounts.firstOrNull()?.schacHomeOrganization
         val name: String = linkedAccounts.firstOrNull()?.let {
             "${it.givenName} ${it.familyName}"
-        } ?: "${userDetails.givenName} ${userDetails.familyName}"
+        } ?: "${userDetails.chosenName} ${userDetails.familyName}"
 
         val email: String = userDetails.email
 
@@ -208,7 +208,9 @@ class PersonalInfoViewModel @Inject constructor(
         return PersonalInfo(
             name = name,
             seflAssertedName = SelfAssertedName(
-                familyName = userDetails.familyName, givenName = userDetails.givenName
+                familyName = userDetails.familyName,
+                givenName = userDetails.givenName,
+                chosenName = userDetails.chosenName
             ),
             nameProvider = nameProvider,
             nameStatus = PersonalInfo.InfoStatus.Final,

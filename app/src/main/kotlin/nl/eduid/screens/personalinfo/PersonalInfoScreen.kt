@@ -41,6 +41,7 @@ import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.ConnectionCard
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.InfoField
+import nl.eduid.ui.annotatedStringWithBoldParts
 import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.ButtonTextGrey
@@ -147,10 +148,17 @@ fun PersonalInfoScreenContent(
     }
     Spacer(Modifier.height(12.dp))
     InfoField(
-        title = personalInfo.name, subtitle = if (personalInfo.nameProvider == null) {
-            stringResource(R.string.Profile_ProvidedByYou_COPY)
+        title = personalInfo.name,
+        subtitle = if (personalInfo.nameProvider == null) {
+            annotatedStringWithBoldParts(
+                stringResource(R.string.Profile_ProvidedByYou_COPY),
+                "you"
+            )
         } else {
-            stringResource(R.string.Profile_ProvidedBy_COPY, personalInfo.nameProvider)
+            annotatedStringWithBoldParts(
+                stringResource(R.string.Profile_ProvidedBy_COPY) + " " + personalInfo.nameProvider,
+                personalInfo.nameProvider
+            )
         }, onClick = onNameClicked, endIcon = if (personalInfo.nameProvider == null) {
             R.drawable.edit_icon
         } else {
@@ -160,7 +168,10 @@ fun PersonalInfoScreenContent(
     Spacer(Modifier.height(16.dp))
     InfoField(
         title = personalInfo.email,
-        subtitle = stringResource(R.string.Profile_ProvidedByYou_COPY),
+        subtitle = annotatedStringWithBoldParts(
+            stringResource(R.string.Profile_ProvidedByYou_COPY),
+            stringResource(R.string.Profile_You_COPY)
+        ),
         onClick = onEmailClicked,
         endIcon = R.drawable.edit_icon,
         capitalizeTitle = false,
@@ -180,7 +191,7 @@ fun PersonalInfoScreenContent(
     personalInfo.institutionAccounts.forEachIndexed { index, account ->
         ConnectionCard(
             title = account.role,
-            subtitle = stringResource(R.string.Profile_InstitutionAt_COPY, account.roleProvider),
+            subtitle = stringResource(R.string.Profile_InstitutionAt_COPY) + " " + account.roleProvider,
             institutionInfo = account,
             onRemoveConnection = { removeConnection(index) },
         )
@@ -219,7 +230,7 @@ fun PersonalInfoScreenContent(
 }
 
 
-@Preview
+@Preview(locale = "nl")
 @Composable
 private fun PreviewPersonalInfoScreenContent() = EduidAppAndroidTheme {
     PersonalInfoScreenContent(
