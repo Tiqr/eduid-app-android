@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
+import nl.eduid.ui.AlertDialogWithTwoButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.LoginInfoCard
 import nl.eduid.ui.getDateTimeString
@@ -53,19 +54,20 @@ fun DataAndActivityScreen(
             )
         }
         if (viewModel.uiState.deleteService != null) {
-            DeleteServiceContent(
-                providerName = viewModel.uiState.deleteService?.providerName.orEmpty(),
-                inProgress = viewModel.uiState.isLoading,
-                paddingValues = paddingValues,
-                removeService = { viewModel.removeService(viewModel.uiState.deleteService?.serviceProviderEntityId) },
-                goBack = viewModel::cancelDeleteService
+            AlertDialogWithTwoButton(
+                title = stringResource(id = R.string.DeleteService_Title_COPY) + viewModel.uiState.deleteService?.providerName.orEmpty(),
+                explanation = stringResource(id = R.string.DeleteService_Description_COPY),
+                dismissButtonLabel = stringResource(id = R.string.Button_Cancel_COPY),
+                onDismiss = viewModel::cancelDeleteService,
+                confirmButtonLabel = stringResource(id = R.string.DeleteService_Button_Confirm_COPY),
+                onConfirm = { viewModel.removeService(viewModel.uiState.deleteService?.serviceProviderEntityId) }
             )
-        } else {
-            DataAndActivityScreenContent(
-                data = viewModel.uiState.data, isLoading = viewModel.uiState.isLoading,
-                paddingValues = paddingValues,
-            ) { viewModel.goToDeleteService(it) }
         }
+
+        DataAndActivityScreenContent(
+            data = viewModel.uiState.data, isLoading = viewModel.uiState.isLoading,
+            paddingValues = paddingValues,
+        ) { viewModel.showDeleteServiceDialog(it) }
     }
 }
 
@@ -84,10 +86,13 @@ fun DataAndActivityScreenContent(
         .padding(bottom = 24.dp)
         .padding(horizontal = 24.dp)
 ) {
+
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
             textAlign = TextAlign.Start, color = ButtonGreen
-        ), text = stringResource(R.string.DataActivity_Title_COPY), modifier = Modifier.fillMaxWidth()
+        ),
+        text = stringResource(R.string.DataActivity_Title_COPY),
+        modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
     Text(
