@@ -199,6 +199,7 @@ fun VerifiedInfoField(
     subtitle: String,
     modifier: Modifier = Modifier,
     expandedPreview: Boolean = false,
+    canExpand: Boolean = false,
 ) {
     var expanded by remember { mutableStateOf(expandedPreview) }
     ListItem(colors = ListItemDefaults.colors(trailingIconColor = BlueButton), leadingContent = {
@@ -228,13 +229,17 @@ fun VerifiedInfoField(
         }
     },
         trailingContent = {
-            Icon(
-                imageVector = Icons.Outlined.KeyboardArrowDown,
-                contentDescription = "",
-            )
-        }, modifier = modifier.clickable {
+            if (canExpand) {
+                Icon(
+                    imageVector = Icons.Outlined.KeyboardArrowDown,
+                    contentDescription = "",
+                )
+            }
+        },
+        modifier = modifier.clickable {
             expanded = !expanded
-        })
+        }
+    )
 }
 
 @Preview
@@ -257,9 +262,10 @@ private fun Preview_InfoField() = EduidAppAndroidTheme {
 @Composable
 private fun Preview_VerifiedInfoField() = EduidAppAndroidTheme {
     VerifiedInfoField(
-        title = "Vetinari", subtitle = "Lord"
+        title = "Vetinari", subtitle = "Lord", canExpand = true
     )
 }
+
 
 @Preview
 @Composable

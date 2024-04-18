@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.di.assist.DataAssistant
+import nl.eduid.di.model.ConfirmedName
 import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.di.model.UnauthorizedException
 import nl.eduid.di.model.UserDetails
@@ -178,8 +179,9 @@ class PersonalInfoViewModel @Inject constructor(
         //Not sure if we should use the eduPersonAffiliations or the schacHomeOrganisation to get the institution name
         //val affiliation = linkedAccounts.firstOrNull()?.eduPersonAffiliations?.firstOrNull()
         //val nameProvider = affiliation?.substring(affiliation.indexOf("@"),affiliation.length) ?: "You"
-        val nameProvider = linkedAccounts.firstOrNull()?.schacHomeOrganization
-        val name: String = linkedAccounts.firstOrNull()?.let {
+        val confirmationProvider = linkedAccounts.firstOrNull()
+        val nameProvider = confirmationProvider?.schacHomeOrganization
+        val name: String = confirmationProvider?.let {
             "${it.givenName} ${it.familyName}"
         } ?: "${userDetails.chosenName} ${userDetails.familyName}"
 
@@ -212,6 +214,7 @@ class PersonalInfoViewModel @Inject constructor(
                 givenName = userDetails.givenName,
                 chosenName = userDetails.chosenName
             ),
+            confirmedName = ConfirmedName(confirmationProvider?.familyName, confirmationProvider?.givenName),
             nameProvider = nameProvider,
             nameStatus = PersonalInfo.InfoStatus.Final,
             email = email,

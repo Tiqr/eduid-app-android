@@ -2,6 +2,8 @@ package nl.eduid.screens.accountlinked
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowColumn
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,8 +31,9 @@ import nl.eduid.screens.personalinfo.PersonalInfoViewModel
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.ConnectionCard
 import nl.eduid.ui.EduIdTopAppBar
-import nl.eduid.ui.InfoFieldOld
+import nl.eduid.ui.InfoField
 import nl.eduid.ui.PrimaryButton
+import nl.eduid.ui.VerifiedInfoField
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextGreen
 
@@ -115,6 +118,7 @@ private fun AccountFailedLinkContent(
 
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun AccountLinkedContent(
     personalInfo: PersonalInfo,
@@ -123,7 +127,7 @@ private fun AccountLinkedContent(
     dismissError: () -> Unit = {},
     continueToHome: () -> Unit = {},
     removeConnection: (Int) -> Unit = {},
-) = Column(
+) = FlowColumn(
     modifier = Modifier
         .verticalScroll(rememberScrollState())
         .navigationBarsPadding()
@@ -167,15 +171,24 @@ private fun AccountLinkedContent(
     } else {
         Spacer(Modifier.height(12.dp))
     }
-    InfoFieldOld(
-        title = personalInfo.name,
-        subtitle = if (personalInfo.nameProvider == null) {
-            stringResource(R.string.Profile_ProvidedByYou_COPY)
-        } else {
-            stringResource(R.string.Profile_ProvidedBy_COPY, personalInfo.nameProvider)
-        },
-        endIcon = R.drawable.shield_tick_blue,
-        label = "stringResource(R.string.NameOverview_Title_FullName_COPY)"
+    personalInfo.confirmedName.givenName?.let {
+        VerifiedInfoField(
+            title = it,
+            subtitle = stringResource(id = R.string.Profile_VerifiedGivenName_COPY),
+        )
+    } ?: InfoField(
+        title = personalInfo.seflAssertedName.chosenName.orEmpty(),
+        subtitle = stringResource(id = R.string.Profile_ProvidedByYou_COPY)
+    )
+    Spacer(Modifier.height(16.dp))
+    personalInfo.confirmedName.familyName?.let {
+        VerifiedInfoField(
+            title = it,
+            subtitle = stringResource(id = R.string.Profile_VerifiedFamilyName_COPY),
+        )
+    } ?: InfoField(
+        title = personalInfo.seflAssertedName.familyName.orEmpty(),
+        subtitle = stringResource(id = R.string.Profile_ProvidedByYou_COPY)
     )
     Spacer(Modifier.height(16.dp))
     if (personalInfo.institutionAccounts.isNotEmpty()) {

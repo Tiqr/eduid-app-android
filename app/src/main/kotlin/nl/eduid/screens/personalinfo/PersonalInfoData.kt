@@ -1,10 +1,12 @@
 package nl.eduid.screens.personalinfo
 
+import nl.eduid.di.model.ConfirmedName
 import nl.eduid.di.model.SelfAssertedName
 
 data class PersonalInfo(
     val name: String = "",
     val seflAssertedName: SelfAssertedName = SelfAssertedName(),
+    val confirmedName: ConfirmedName = ConfirmedName(),
     val nameProvider: String? = null,
     val nameStatus: InfoStatus = InfoStatus.Final,
     val email: String = "",
@@ -29,6 +31,7 @@ data class PersonalInfo(
             return PersonalInfo(
                 name = "R. van Hamersdonksveer",
                 seflAssertedName = SelfAssertedName("Pratchett", "Terence David John", "Terry"),
+                confirmedName = ConfirmedName("Pratchett", "Terence David John"),
                 nameProvider = "Universiteit van Amsterdam",
                 nameStatus = InfoStatus.Final,
                 email = "r.v.hamersdonksveer@uva.nl",
