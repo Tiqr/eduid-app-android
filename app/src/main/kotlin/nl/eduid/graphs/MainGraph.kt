@@ -30,7 +30,6 @@ import nl.eduid.screens.editemail.EditEmailScreen
 import nl.eduid.screens.editemail.EditEmailViewModel
 import nl.eduid.screens.editname.EditNameFormScreen
 import nl.eduid.screens.editname.EditNameFormViewModel
-import nl.eduid.screens.editname.EditNameScreen
 import nl.eduid.screens.firsttimedialog.FirstTimeDialogScreen
 import nl.eduid.screens.firsttimedialog.LinkAccountViewModel
 import nl.eduid.screens.homepage.HomePageScreen
@@ -374,7 +373,7 @@ fun MainGraph(
         PersonalInfoScreen(
             viewModel = viewModel,
             onEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
-            onNameClicked = { navController.navigate(EditName.View.route) },
+            onNameClicked = { name, canEditFamilyName -> navController.navigate(EditName.Form.routeWithArgs(name, canEditFamilyName)) },
             onManageAccountClicked = { dateString ->
                 navController.navigate(
                     ManageAccountRoute.routeWithArgs(
@@ -392,21 +391,14 @@ fun MainGraph(
             onSaveNewEmailRequested = { email -> navController.goToEmailSent(email) },
         )
     }//endregion
-    composable(EditName.View.route) {//region Edit name
-        val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
-        EditNameScreen(
-            viewModel = viewModel,
-            updateName = { name -> navController.navigate(EditName.Form.routeWithArgs(name)) },
-            goBack = { navController.popBackStack() },
-        )
-    }
+
     composable(route = EditName.Form.routeWithArgs, arguments = EditName.Form.arguments) {
         val viewModel = hiltViewModel<EditNameFormViewModel>(it)
         EditNameFormScreen(
             viewModel = viewModel,
             onNameChangeDone = {
-                navController.navigate(EditName.View.route) {
-                    popUpTo(EditName.View.route) {
+                navController.navigate(Graph.PERSONAL_INFO) {
+                    popUpTo(Graph.PERSONAL_INFO) {
                         inclusive = true
                     }
                 }

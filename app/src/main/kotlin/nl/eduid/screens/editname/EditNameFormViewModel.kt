@@ -28,7 +28,13 @@ class EditNameFormViewModel @Inject constructor(
     init {
         val chosenName = savedStateHandle.get<String>(EditName.Form.chosenName) ?: ""
         val familyName = savedStateHandle.get<String>(EditName.Form.familyName) ?: ""
-        uiState = uiState.copy(chosenName = chosenName, familyName = familyName)
+        val canEditFamilyName =
+            savedStateHandle.get<Boolean>(EditName.Form.canEditFamilyName) ?: true
+        uiState = uiState.copy(
+            chosenName = chosenName,
+            familyName = familyName,
+            canEditFamilyName = canEditFamilyName
+        )
     }
 
     fun onChosenNameChange(newValue: String) {
@@ -74,6 +80,7 @@ data class UiState(
     val chosenName: String = "",
     val familyName: String = "",
     val inProgress: Boolean = false,
+    val canEditFamilyName: Boolean = true,
     val errorData: ErrorData? = null,
     val isCompleted: Unit? = null,
 )
