@@ -102,7 +102,11 @@ fun PrimaryButtonWithIcon(
 
 @Composable
 fun SecondaryButton(
-    text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true,
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    color: Color = ButtonTextGrey,
+    enabled: Boolean = true,
 ) = OutlinedButton(
     onClick = onClick,
     enabled = enabled,
@@ -113,7 +117,7 @@ fun SecondaryButton(
         text = text,
         overflow = TextOverflow.Ellipsis,
         style = MaterialTheme.typography.bodyLarge.copy(
-            color = ButtonTextGrey, fontWeight = FontWeight.SemiBold
+            color = color, fontWeight = FontWeight.SemiBold
         ),
     )
 }

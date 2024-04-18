@@ -12,6 +12,7 @@ data class PersonalInfo(
     val institutionAccounts: List<InstitutionAccount> = emptyList(),
     val dateCreated: Long = 0,
 ) {
+    val isVerified = institutionAccounts.isNotEmpty()
 
     data class InstitutionAccount(
         val id: String,
@@ -27,6 +28,7 @@ data class PersonalInfo(
         fun demoData(): PersonalInfo {
             return PersonalInfo(
                 name = "R. van Hamersdonksveer",
+                seflAssertedName = SelfAssertedName("Pratchett", "Terence David John", "Terry"),
                 nameProvider = "Universiteit van Amsterdam",
                 nameStatus = InfoStatus.Final,
                 email = "r.v.hamersdonksveer@uva.nl",
