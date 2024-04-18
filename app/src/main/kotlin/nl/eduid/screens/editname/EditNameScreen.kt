@@ -95,8 +95,8 @@ private fun EditNameContent(
         .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
 ) {
     TwoColorTitle(
-        firstPart = stringResource(R.string.NameOverview_Title_AllDetailsOf_COPY),
-        secondPart = stringResource(R.string.NameOverview_Title_FullName_COPY)
+        firstPart = "stringResource(R.string.NameOverview_Title_AllDetailsOf_COPY)",
+        secondPart = "stringResource(R.string.NameOverview_Title_FullName_COPY)"
     )
     if (isLoading) {
         Spacer(modifier = Modifier.height(8.dp))
@@ -115,7 +115,7 @@ private fun EditNameContent(
             modifier = Modifier.width(8.dp)
         )
         Text(
-            text = stringResource(R.string.NameOverview_SelfAsserted_COPY),
+            text = "stringResource(R.string.NameOverview_SelfAsserted_COPY)",
             style = MaterialTheme.typography.bodyLarge.copy(
                 fontWeight = FontWeight.SemiBold,
             ),
@@ -141,7 +141,7 @@ private fun EditNameContent(
                 modifier = Modifier.width(8.dp)
             )
             Text(
-                text = stringResource(R.string.NameOverview_Verified_COPY),
+                text = "stringResource(R.string.NameOverview_Verified_COPY)",
                 style = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.SemiBold,
                 ),
@@ -162,18 +162,18 @@ private fun EditNameContent(
                 modifier = Modifier.width(8.dp)
             )
             Text(
-                text = stringResource(R.string.NameOverview_AnotherSource_COPY),
+                text = "stringResource(R.string.NameOverview_AnotherSource_COPY)",
                 style = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.SemiBold,
                 ),
             )
         }
-        LinkAccountCard(
-            title = R.string.NameOverview_NotAvailable_COPY,
-            subtitle = R.string.NameOverview_ProceedToAdd_COPY,
-            enabled = !isLoading,
-            addLinkToAccount = addLinkToAccount
-        )
+//        LinkAccountCard(
+//            title = R.string.NameOverview_NotAvailable_COPY,
+//            subtitle = R.string.NameOverview_ProceedToAdd_COPY,
+//            enabled = !isLoading,
+//            addLinkToAccount = addLinkToAccount
+//        )
     }
 }
 

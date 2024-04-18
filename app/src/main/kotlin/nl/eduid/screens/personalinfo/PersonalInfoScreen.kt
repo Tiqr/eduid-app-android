@@ -170,7 +170,7 @@ fun PersonalInfoScreenContent(
         title = personalInfo.email,
         subtitle = annotatedStringWithBoldParts(
             stringResource(R.string.Profile_ProvidedByYou_COPY),
-            stringResource(R.string.Profile_You_COPY)
+//            stringResource(R.string.Profile_You_COPY)
         ),
         onClick = onEmailClicked,
         endIcon = R.drawable.edit_icon,
@@ -232,7 +232,14 @@ fun PersonalInfoScreenContent(
 
 @Preview(locale = "nl")
 @Composable
-private fun PreviewPersonalInfoScreenContent() = EduidAppAndroidTheme {
+private fun Preview_PersonalInfoScreenContentNL() = EduidAppAndroidTheme {
+    PersonalInfoScreenContent(
+        personalInfo = PersonalInfo.demoData(),
+    )
+}
+@Preview(locale = "en")
+@Composable
+private fun Preview_PersonalInfoScreenContentEN() = EduidAppAndroidTheme {
     PersonalInfoScreenContent(
         personalInfo = PersonalInfo.demoData(),
     )
