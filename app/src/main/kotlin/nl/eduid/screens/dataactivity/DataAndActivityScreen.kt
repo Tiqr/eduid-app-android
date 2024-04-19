@@ -30,8 +30,8 @@ import nl.eduid.ui.AlertDialogWithTwoButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.LoginInfoCard
 import nl.eduid.ui.getDateTimeString
-import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.MainSurfGreen
 
 @Composable
 fun DataAndActivityScreen(
@@ -54,14 +54,12 @@ fun DataAndActivityScreen(
             )
         }
         if (viewModel.uiState.deleteService != null) {
-            AlertDialogWithTwoButton(
-                title = stringResource(id = R.string.DeleteService_Title_COPY) + viewModel.uiState.deleteService?.providerName.orEmpty(),
+            AlertDialogWithTwoButton(title = stringResource(id = R.string.DeleteService_Title_COPY) + viewModel.uiState.deleteService?.providerName.orEmpty(),
                 explanation = stringResource(id = R.string.DeleteService_Description_COPY),
                 dismissButtonLabel = stringResource(id = R.string.Button_Cancel_COPY),
                 onDismiss = viewModel::cancelDeleteService,
                 confirmButtonLabel = stringResource(id = R.string.DeleteService_Button_Confirm_COPY),
-                onConfirm = { viewModel.removeService(viewModel.uiState.deleteService?.serviceProviderEntityId) }
-            )
+                onConfirm = { viewModel.removeService(viewModel.uiState.deleteService?.serviceProviderEntityId) })
         }
 
         DataAndActivityScreenContent(
@@ -89,7 +87,7 @@ fun DataAndActivityScreenContent(
 
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
-            textAlign = TextAlign.Start, color = ButtonGreen
+            textAlign = TextAlign.Start, color = MainSurfGreen
         ),
         text = stringResource(R.string.DataActivity_Title_COPY),
         modifier = Modifier.fillMaxWidth()
@@ -117,8 +115,7 @@ fun DataAndActivityScreenContent(
                 title = provider.providerName.orEmpty(),
                 subtitle = provider.firstLoginStamp?.let {
                     stringResource(
-                        R.string.Profile_VerifiedOn_COPY,
-                        it.getDateTimeString()
+                        R.string.Profile_VerifiedOn_COPY, it.getDateTimeString()
                     )
                 } ?: "-",
                 onDeleteButtonClicked = { goToConfirmDeleteService(provider) },

@@ -49,10 +49,10 @@ import nl.eduid.screens.info.AboutInfo
 import nl.eduid.ui.AlertDialogWithTwoButton
 import nl.eduid.ui.PrimaryButtonWithIcon
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.MainSurfGreen
 import nl.eduid.ui.theme.SmallActionGray
 import nl.eduid.ui.theme.SplashScreenBackgroundColor
 import nl.eduid.ui.theme.TextBlack
-import nl.eduid.ui.theme.TextGreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -156,7 +156,7 @@ private fun AccountContent(
         Text(
             style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
             text = buildAnnotatedString {
-                withStyle(style = SpanStyle(color = TextGreen)) {
+                withStyle(style = SpanStyle(color = MainSurfGreen)) {
                     append(stringResource(R.string.HomeView_MainText_FirstPart_COPY))
                 }
                 append("\n")

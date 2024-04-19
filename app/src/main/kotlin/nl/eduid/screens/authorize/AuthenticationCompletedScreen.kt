@@ -23,7 +23,7 @@ import nl.eduid.R
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextGreen
+import nl.eduid.ui.theme.MainSurfGreen
 import nl.eduid.ui.theme.findActivity
 
 @Composable
@@ -40,7 +40,7 @@ fun AuthenticationCompletedScreen(goHome: () -> Unit = {}) = EduIdTopAppBar(
     ) {
         Text(
             style = MaterialTheme.typography.titleLarge.copy(
-                textAlign = TextAlign.Start, color = TextGreen
+                textAlign = TextAlign.Start, color = MainSurfGreen
             ),
             text = stringResource(R.string.PinAndBioMetrics_LoginRequest_COPY),
             modifier = Modifier.fillMaxWidth()
@@ -59,7 +59,7 @@ fun AuthenticationCompletedScreen(goHome: () -> Unit = {}) = EduIdTopAppBar(
             Text(
                 text = stringResource(R.string.Profile_YouAreLoggedIn_COPY),
                 style = MaterialTheme.typography.titleLarge.copy(
-                    color = TextGreen
+                    color = MainSurfGreen
                 ),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center

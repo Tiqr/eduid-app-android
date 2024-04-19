@@ -1,53 +1,44 @@
 package nl.eduid.ui
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.MainSurfGreen
 import nl.eduid.ui.theme.TextBlack
-import nl.eduid.ui.theme.TextGreen
 
 
 @Composable
-fun TwoColorTitle(
-    modifier: Modifier = Modifier,
+fun ColumnScope.TwoColorTitle(
     firstPart: String,
     secondPart: String,
-    textStyle: TextStyle = MaterialTheme.typography.titleLarge.copy(
-        textAlign = TextAlign.Start
-    ),
-) = Column(
-    modifier = modifier.padding(vertical = 2.dp)
 ) {
     Text(
         text = firstPart,
-        style = textStyle.copy(color = TextBlack),
+        style = MaterialTheme.typography.titleLarge.copy(color = TextBlack),
+        modifier = Modifier.align(Alignment.Start)
     )
     Text(
         text = secondPart,
-        style = textStyle.copy(color = TextGreen),
-
-        )
+        style = MaterialTheme.typography.titleLarge.copy(color = MainSurfGreen),
+        modifier = Modifier.align(Alignment.Start)
+    )
 }
 
 @Preview
 @Composable
-private fun Preview_BulletPoints() {
+private fun Preview_TwoColorTitle() {
     EduidAppAndroidTheme {
-        BulletPoint(
-            text = "A detailed bullet point",
-            textStyle = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-            modifier = Modifier
-                .padding(horizontal = 32.dp)
-                .fillMaxWidth()
-        )
+        Column {
+            TwoColorTitle(
+                firstPart = "Edit",
+                secondPart = "Something",
+            )
+        }
     }
 }

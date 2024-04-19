@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -33,7 +32,6 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -57,8 +55,8 @@ import nl.eduid.ui.theme.AlertRedBackground
 import nl.eduid.ui.theme.ButtonBorderGrey
 import nl.eduid.ui.theme.ButtonRed
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.MainSurfGreen
 import nl.eduid.ui.theme.TextBlack
-import nl.eduid.ui.theme.TextGreen
 import nl.eduid.ui.theme.TextGrey
 
 @Composable
@@ -95,7 +93,9 @@ fun DeleteAccountSecondConfirmScreen(
     )
 }
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(
+    ExperimentalLayoutApi::class
+)
 @Composable
 private fun DeleteAccountSecondConfirmScreenContent(
     fullNameInput: String = "",
@@ -134,7 +134,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
                 Text(
                     text = stringResource(R.string.Account_DeleteAccountSure_COPY),
                     style = MaterialTheme.typography.titleLarge.copy(
-                        color = TextGreen, textAlign = TextAlign.Start
+                        color = MainSurfGreen, textAlign = TextAlign.Start
                     ),
                     modifier = Modifier.fillMaxWidth(),
                 )

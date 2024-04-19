@@ -53,7 +53,7 @@ import nl.eduid.screens.info.AboutInfo
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.AlertDialogWithTwoButton
 import nl.eduid.ui.PrimaryButton
-import nl.eduid.ui.theme.ButtonGreen
+import nl.eduid.ui.theme.MainSurfGreen
 import nl.eduid.ui.theme.SmallActionGray
 import org.tiqr.data.model.EnrollmentChallenge
 import timber.log.Timber
@@ -317,7 +317,7 @@ fun HomePageNoAccountContent(
                 Text(
                     text = stringResource(R.string.CreateEduID_LandingPage_NoEduIdButton_COPY),
                     style = MaterialTheme.typography.bodyLarge.copy(
-                        color = ButtonGreen, fontWeight = FontWeight.SemiBold
+                        color = MainSurfGreen, fontWeight = FontWeight.SemiBold
                     ),
                 )
             }

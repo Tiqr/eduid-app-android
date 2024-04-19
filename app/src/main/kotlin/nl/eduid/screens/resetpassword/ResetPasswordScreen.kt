@@ -41,8 +41,8 @@ import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.ButtonBorderGrey
-import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.MainSurfGreen
 import nl.eduid.ui.theme.TextGrey
 
 @Composable
@@ -118,7 +118,7 @@ fun ResetPasswordScreenContent(
         } else {
             Text(
                 style = MaterialTheme.typography.titleLarge.copy(
-                    textAlign = TextAlign.Start, color = ButtonGreen
+                    textAlign = TextAlign.Start, color = MainSurfGreen
                 ), text = if (password == Password.Add) {
                     stringResource(R.string.PasswordResetLink_Title_AddPassword_COPY)
                 } else {

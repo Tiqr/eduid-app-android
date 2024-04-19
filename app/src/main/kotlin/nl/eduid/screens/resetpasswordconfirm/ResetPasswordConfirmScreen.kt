@@ -60,8 +60,8 @@ import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.ButtonBorderGrey
-import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.MainSurfGreen
 import nl.eduid.ui.theme.TextBlack
 import nl.eduid.ui.theme.TextGrey
 
@@ -152,7 +152,7 @@ fun ResetPasswordConfirmScreenContent(
             Column() {
                 Text(
                     style = MaterialTheme.typography.titleLarge.copy(
-                        textAlign = TextAlign.Start, color = ButtonGreen
+                        textAlign = TextAlign.Start, color = MainSurfGreen
                     ), text = if (isAddPassword) {
                         stringResource(R.string.Password_AddTitle_COPY)
                     } else {
@@ -248,7 +248,7 @@ fun ResetPasswordConfirmScreenContent(
             Spacer(Modifier.height(16.dp))
             Text(
                 style = MaterialTheme.typography.titleLarge.copy(
-                    textAlign = TextAlign.Start, color = ButtonGreen
+                    textAlign = TextAlign.Start, color = MainSurfGreen
                 ),
                 text = stringResource(R.string.Password_DeletePasswordConfirmation_COPY),
                 modifier = Modifier.fillMaxWidth()

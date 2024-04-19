@@ -48,8 +48,8 @@ import nl.eduid.ui.theme.AlertRedBackground
 import nl.eduid.ui.theme.ButtonBorderGrey
 import nl.eduid.ui.theme.ButtonRed
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.MainSurfGreen
 import nl.eduid.ui.theme.TextBlack
-import nl.eduid.ui.theme.TextGreen
 import nl.eduid.ui.theme.TextGrey
 
 @Composable
@@ -116,7 +116,7 @@ private fun TwoFactorKeyDeleteScreenContent(
         Text(
             text = stringResource(R.string.TwoFactorKeys_DeleteKey_COPY),
             style = MaterialTheme.typography.titleLarge.copy(
-                color = TextGreen, textAlign = TextAlign.Start
+                color = MainSurfGreen, textAlign = TextAlign.Start
             ),
             modifier = Modifier.fillMaxWidth(),
         )

@@ -1,7 +1,6 @@
 package nl.eduid.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -18,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.MainSurfGreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -57,7 +57,7 @@ fun EduIdTopAppBar(
                             Icon(
                                 imageVector = Icons.Filled.ArrowBack,
                                 contentDescription = stringResource(R.string.PinAndBioMetrics_Button_Back_COPY),
-                                tint = MaterialTheme.colorScheme.primary,
+                                tint = MainSurfGreen,
                                 modifier = Modifier.size(width = 48.dp, height = 48.dp)
                             )
                         }

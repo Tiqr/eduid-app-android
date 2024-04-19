@@ -26,7 +26,7 @@ import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextGreen
+import nl.eduid.ui.theme.MainSurfGreen
 import org.tiqr.data.model.AuthenticationChallenge
 
 @Composable
@@ -65,7 +65,7 @@ private fun RequestAuthenticationContent(
         ) {
             Text(
                 style = MaterialTheme.typography.titleLarge.copy(
-                    textAlign = TextAlign.Start, color = TextGreen
+                    textAlign = TextAlign.Start, color = MainSurfGreen
                 ),
                 text = stringResource(R.string.PinAndBioMetrics_LoginRequest_COPY),
                 modifier = Modifier.fillMaxWidth()
@@ -73,7 +73,7 @@ private fun RequestAuthenticationContent(
             val loginQuestion = buildAnnotatedString {
                 pushStyle(
                     MaterialTheme.typography.titleLarge.copy(
-                        color = TextGreen
+                        color = MainSurfGreen
                     ).toSpanStyle()
                 )
                 append(stringResource(R.string.PinAndBioMetrics_DoYouWantToLogInTo_COPY))

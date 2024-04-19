@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -52,7 +51,6 @@ import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
 import nl.eduid.ui.TwoColorTitle
-import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -121,7 +119,6 @@ fun EditEmailScreenContent(
         val keyboardController = LocalSoftwareKeyboardController.current
         val focusRequester = remember { FocusRequester() }
         TwoColorTitle(
-            modifier = Modifier.fillMaxWidth(),
             firstPart = stringResource(R.string.Email_Title_Edit_COPY),
             secondPart = stringResource(R.string.Email_Title_EmailAddress_COPY)
         )

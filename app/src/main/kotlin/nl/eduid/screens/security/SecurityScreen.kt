@@ -22,9 +22,9 @@ import androidx.compose.ui.unit.dp
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
-import nl.eduid.ui.InfoField
-import nl.eduid.ui.theme.ButtonGreen
+import nl.eduid.ui.InfoFieldOld
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.MainSurfGreen
 
 @Composable
 fun SecurityScreen(
@@ -73,7 +73,7 @@ fun SecurityScreenContent(
 
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
-            textAlign = TextAlign.Start, color = ButtonGreen
+            textAlign = TextAlign.Start, color = MainSurfGreen
         ), text = stringResource(R.string.Sidebar_Security_COPY), modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
@@ -90,7 +90,7 @@ fun SecurityScreenContent(
         )
     }
     securityInfo.twoFAProvider?.let { provider ->
-        InfoField(
+        InfoFieldOld(
             title = stringResource(R.string.Security_TwoFAKey_COPY),
             subtitle = stringResource(R.string.Security_ProvidedBy_COPY) + " $provider",
             onClick = on2FaClicked,
@@ -108,14 +108,14 @@ fun SecurityScreenContent(
         )
         Spacer(Modifier.height(6.dp))
     }
-    InfoField(
+    InfoFieldOld(
         title = stringResource(R.string.Security_UseMagicLink_COPY),
         subtitle = securityInfo.email,
         onClick = onEditEmailClicked,
         endIcon = R.drawable.edit_icon
     )
     Spacer(Modifier.height(16.dp))
-    InfoField(
+    InfoFieldOld(
         title = if (securityInfo.hasPassword) {
             stringResource(R.string.Security_ChangePassword_COPY)
         } else {

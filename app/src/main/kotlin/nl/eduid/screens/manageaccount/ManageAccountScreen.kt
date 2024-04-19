@@ -42,8 +42,8 @@ import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.AlertWarningBackground
 import nl.eduid.ui.theme.ButtonRed
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.MainSurfGreen
 import nl.eduid.ui.theme.TextBlack
-import nl.eduid.ui.theme.TextGreen
 
 @Composable
 fun ManageAccountScreen(
@@ -111,7 +111,7 @@ private fun ManageAccountScreenContent(
         Text(
             text = stringResource(R.string.MyAccount_Title_COPY),
             style = MaterialTheme.typography.titleLarge.copy(
-                color = TextGreen, textAlign = TextAlign.Start
+                color = MainSurfGreen, textAlign = TextAlign.Start
             ),
             modifier = Modifier.fillMaxWidth(),
         )

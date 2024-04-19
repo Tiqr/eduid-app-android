@@ -41,7 +41,7 @@ import nl.eduid.ui.SecondaryButton
 import nl.eduid.ui.annotatedStringWithBoldParts
 import nl.eduid.ui.theme.AlertWarningBackground
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextGreen
+import nl.eduid.ui.theme.MainSurfGreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -129,7 +129,7 @@ private fun FirstTimeDialogContent(
             Text(
                 text = stringResource(R.string.CreateEduID_FirstTimeDialog_MainTextTitle_SecondPart_COPY),
                 style = MaterialTheme.typography.titleMedium.copy(
-                    color = TextGreen, textAlign = TextAlign.Center
+                    color = MainSurfGreen, textAlign = TextAlign.Center
                 ),
                 modifier = Modifier
                     .fillMaxWidth()

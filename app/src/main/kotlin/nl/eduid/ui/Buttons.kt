@@ -32,14 +32,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
-import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.ButtonTextGrey
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.MainSurfGreen
 
 @Composable
 fun PrimaryButton(
     text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true,
-    buttonBackgroundColor: Color = ButtonGreen,
+    buttonBackgroundColor: Color = MainSurfGreen,
     buttonTextColor: Color = Color.White,
     buttonBorderColor: Color = Color.Transparent,
 ) = Button(
@@ -75,7 +75,7 @@ fun PrimaryButtonWithIcon(
     Button(
         onClick = onClick,
         shape = RoundedCornerShape(CornerSize(6.dp)),
-        colors = ButtonDefaults.buttonColors(containerColor = ButtonGreen),
+        colors = ButtonDefaults.buttonColors(containerColor = MainSurfGreen),
         contentPadding = PaddingValues(16.dp),
         modifier = Modifier
             .size(height = 60.dp, width = 60.dp)

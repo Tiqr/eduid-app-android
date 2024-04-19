@@ -73,7 +73,7 @@
   <string name="Profile_LinkedAccountValidUntil_COPY">"valid until "</string>
   <string name="Profile_ManageYourVerifiedInformation_COPY">"Manage your verified information"</string>
   <string name="Profile_VerifyNow_Title_COPY">"Some services require your identity to be verified by a trusted party."</string>
-  <string name="Profile_VerifyNow_Button_COPY">"Verify identity now"</string>
+  <string name="Profile_VerifyNow_Button_COPY">"Verify your identity now"</string>
   <string name="Profile_FirstName_COPY">"First name"</string>
   <string name="Profile_LastName_COPY">"Last name"</string>
   <string name="Profile_ContactDetails_COPY">"Contact details"</string>
@@ -139,7 +139,7 @@
   <string name="NameUpdated_Title_ContactedError_COPY">"could not be contacted"</string>
   <string name="NameUpdated_Title_FailReason_AlreadyLinked_COPY">"Reason: The account is already linked: %1$s"</string>
   <string name="NameUpdated_Title_FailReason_SessionExpired_COPY">"Reason: Your session expired."</string>
-  <string name="NameUpdated_Description_COPY">"The following information has been added to your eduID and can now be shared.!"</string>
+  <string name="NameUpdated_Description_COPY">"The following information has been added to your eduID and can now be shared."</string>
   <string name="NameUpdated_FullName_COPY">"Full name"</string>
   <string name="NameUpdated_Continue_COPY">"Continue"</string>
   <string name="EditName_Title_Edit_COPY">"Edit"</string>

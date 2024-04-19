@@ -11,41 +11,42 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val LightColors = lightColorScheme(
-    primary = md_theme_light_primary,
-    onPrimary = md_theme_light_onPrimary,
-    primaryContainer = md_theme_light_primaryContainer,
-    onPrimaryContainer = md_theme_light_onPrimaryContainer,
-    secondary = md_theme_light_secondary,
-    onSecondary = md_theme_light_onSecondary,
-    secondaryContainer = md_theme_light_secondaryContainer,
-    onSecondaryContainer = md_theme_light_onSecondaryContainer,
-    tertiary = md_theme_light_tertiary,
-    onTertiary = md_theme_light_onTertiary,
-    tertiaryContainer = md_theme_light_tertiaryContainer,
-    onTertiaryContainer = md_theme_light_onTertiaryContainer,
-    error = md_theme_light_error,
-    errorContainer = md_theme_light_errorContainer,
-    onError = md_theme_light_onError,
-    onErrorContainer = md_theme_light_onErrorContainer,
-    background = md_theme_light_background,
-    onBackground = md_theme_light_onBackground,
-    surface = md_theme_light_surface,
-    onSurface = md_theme_light_onSurface,
-    surfaceVariant = md_theme_light_surfaceVariant,
-    onSurfaceVariant = md_theme_light_onSurfaceVariant,
-    outline = md_theme_light_outline,
-    inverseOnSurface = md_theme_light_onSecondary,
-    inverseSurface = md_theme_light_secondaryContainer,
-    inversePrimary = md_theme_light_inversePrimary,
-    surfaceTint = md_theme_light_surfaceTint,
-    outlineVariant = md_theme_light_outlineVariant,
-    scrim = md_theme_light_scrim,
+    primary = Color(0xFF0060AC),
+    onPrimary = Color(0xFFFFFFFF),
+    primaryContainer = Color(0xFFFFFFFF),
+    onPrimaryContainer = Color(0xFF001C39),
+    secondary = Color(0xFF0060AC),
+    onSecondary = Color(0xFFFFFFFF),
+    secondaryContainer = Color(0xFFD4E3FF),
+    onSecondaryContainer = Color(0xFF001C39),
+    tertiary = Color(0xFF0060AC),
+    onTertiary = Color(0xFFFFFFFF),
+    tertiaryContainer = Color(0xFF97F0FF),
+    onTertiaryContainer = Color(0xFF001F24),
+    error = Color(0xFFBA1A1A),
+    errorContainer = Color(0xFFFFDAD6),
+    onError = Color(0xFFFFFFFF),
+    onErrorContainer = Color(0xFF410002),
+    background = Color(0xFFF8FDFF),
+    onBackground = Color(0xFF001F25),
+    surface = Color(0xFFF8FDFF),
+    onSurface = Color(0xFF001F25),
+    surfaceVariant = Color(0xFFDFE2EB),
+    onSurfaceVariant = Color(0xFF43474E),
+    outline = Color(0xFF73777F),
+    inverseOnSurface = Color(0xFFFFFFFF),
+    inverseSurface = Color(0xFFD4E3FF),
+    inversePrimary = Color(0xFFA4C9FF),
+    surfaceTint = Color(0xFF0060AC),
+    outlineVariant = Color(0xFFC3C6CF),
+    scrim = Color(0xFF000000),
 )
 
 

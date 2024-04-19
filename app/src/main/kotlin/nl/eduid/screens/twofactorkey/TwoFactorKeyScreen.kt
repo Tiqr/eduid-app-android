@@ -25,8 +25,8 @@ import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.KeyInfoCard
-import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.MainSurfGreen
 
 @Composable
 fun TwoFactorKeyScreen(
@@ -79,7 +79,7 @@ fun TwoFactorKeyScreenContent(
 
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
-            textAlign = TextAlign.Start, color = ButtonGreen
+            textAlign = TextAlign.Start, color = MainSurfGreen
         ), text = stringResource(R.string.TwoFactorKeys_Title_COPY), modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
@@ -133,7 +133,7 @@ fun TwoFactorKeyScreenNoContent(
     ) {
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
-            textAlign = TextAlign.Start, color = ButtonGreen
+            textAlign = TextAlign.Start, color = MainSurfGreen
         ), text = stringResource(R.string.TwoFactorKeys_Title_COPY), modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))

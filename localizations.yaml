@@ -395,7 +395,7 @@ SHARED:
           nl: Sommige diensten eisen dat jouw identiteit geverifieerd is door een vertrouwde instelling.
       Button:
         COPY:
-          en: Verify identity now
+          en: Verify your identity now
           nl: Verifïeer mijn identiteit
     FirstName:
       COPY:
@@ -710,7 +710,7 @@ SHARED:
             nl: "Reden: Je sessie is verlopen."
     Description:
       COPY:
-        en: The following information has been added to your eduID and can now be shared.!
+        en: The following information has been added to your eduID and can now be shared.
         nl: De volgende gegevens zijn toegevoegd aan je eduID en kan gedeeld worden.
     FullName:
       COPY:
