@@ -3,6 +3,7 @@ package nl.eduid.screens.personalinfo
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -49,9 +50,9 @@ import nl.eduid.screens.firsttimedialog.LinkAccountContract
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.ConnectionCard
 import nl.eduid.ui.EduIdTopAppBar
-import nl.eduid.ui.InfoFieldOld
+import nl.eduid.ui.InfoField
 import nl.eduid.ui.SecondaryButton
-import nl.eduid.ui.annotatedStringWithBoldParts
+import nl.eduid.ui.VerifiedInfoField
 import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.theme.AlertInfoBackground
 import nl.eduid.ui.theme.ButtonTextGrey
@@ -153,63 +154,59 @@ fun PersonalInfoScreenContent(
     )
     if (!personalInfo.isVerified) {
         NotVerifiedBanner(addLinkToAccount)
-    } else {
-        Spacer(Modifier.height(12.dp))
     }
     Column(modifier = Modifier.padding(horizontal = 24.dp)) {
-        if (isLoading) {
-            Spacer(modifier = Modifier.height(16.dp))
-            LinearProgressIndicator(
-                modifier = Modifier.fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-        }
+        Spacer(Modifier.height(14.dp))
         YourIdentityWithBanner(personalInfo.isVerified)
-        Spacer(Modifier.height(12.dp))
-        InfoFieldOld(
+        if (isLoading) {
+            LinearProgressIndicator(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp)
+            )
+        } else {
+            Spacer(Modifier.height(16.dp))
+        }
+        InfoField(
             title = personalInfo.seflAssertedName.chosenName.orEmpty(),
             subtitle = stringResource(R.string.Profile_FirstName_COPY),
-            onClick = { onNameClicked },
-            endIcon = R.drawable.edit_icon
+            modifier = Modifier.clickable {
+                onNameClicked(personalInfo.seflAssertedName, !personalInfo.isVerified)
+            }
         )
         Spacer(Modifier.height(12.dp))
         if (personalInfo.nameProvider == null) {
-            InfoFieldOld(
+            InfoField(
                 title = personalInfo.seflAssertedName.familyName.orEmpty(),
                 subtitle = stringResource(R.string.Profile_LastName_COPY),
-                onClick = { onNameClicked },
-                endIcon = R.drawable.edit_icon
+                modifier = Modifier.clickable {
+                    onNameClicked(personalInfo.seflAssertedName, !personalInfo.isVerified)
+                }
             )
         } else {
-
+            VerifiedInfoField(
+                title = personalInfo.seflAssertedName.familyName.orEmpty(),
+                subtitle = stringResource(R.string.Profile_LastName_COPY),
+            )
         }
-
-        InfoFieldOld(
-            title = personalInfo.name, subtitle = if (personalInfo.nameProvider == null) {
-                annotatedStringWithBoldParts(
-                    stringResource(R.string.Profile_ProvidedByYou_COPY), "you"
-                )
-            } else {
-                annotatedStringWithBoldParts(
-                    stringResource(R.string.Profile_ProvidedBy_COPY) + " " + personalInfo.nameProvider,
-                    personalInfo.nameProvider
-                )
-            }, onClick = { onNameClicked }, endIcon = if (personalInfo.nameProvider == null) {
-                R.drawable.edit_icon
-            } else {
-                R.drawable.shield_tick_blue
-            }
+        Spacer(Modifier.height(18.dp))
+        Text(
+            style = MaterialTheme.typography.titleLarge.copy(color = MainSurfGreen),
+            text = stringResource(R.string.Profile_ContactDetails_COPY),
         )
         Spacer(Modifier.height(16.dp))
-        InfoFieldOld(
+        InfoField(
             title = personalInfo.email,
-            subtitle = annotatedStringWithBoldParts(
-                stringResource(R.string.Profile_ProvidedByYou_COPY),
-//            stringResource(R.string.Profile_You_COPY)
-            ),
-            onClick = onEmailClicked,
-            endIcon = R.drawable.edit_icon,
-            capitalizeTitle = false,
+            subtitle = stringResource(R.string.Profile_LastName_COPY),
+            modifier = Modifier.clickable {
+                onNameClicked(personalInfo.seflAssertedName, !personalInfo.isVerified)
+            }
+        )
+
+        Spacer(Modifier.height(32.dp))
+        Text(
+            style = MaterialTheme.typography.titleLarge.copy(color = MainSurfGreen),
+            text = stringResource(R.string.Profile_RoleAndInstitution_COPY),
         )
         Spacer(Modifier.height(16.dp))
         if (personalInfo.institutionAccounts.isNotEmpty()) {
@@ -306,7 +303,7 @@ private fun ColumnScope.YourIdentityWithBanner(isVerified: Boolean) {
 
 @Composable
 private fun ColumnScope.NotVerifiedBanner(addLinkToAccount: () -> Unit = {}) {
-    Spacer(Modifier.height(24.dp))
+    Spacer(Modifier.height(18.dp))
     Column(
         modifier = Modifier
             .background(AlertInfoBackground)
@@ -345,6 +342,7 @@ private fun ColumnScope.NotVerifiedBanner(addLinkToAccount: () -> Unit = {}) {
 private fun Preview_PersonalInfoScreenContentNL() = EduidAppAndroidTheme {
     PersonalInfoScreenContent(
         personalInfo = PersonalInfo.demoData(),
+        isLoading = false,
     )
 }
 

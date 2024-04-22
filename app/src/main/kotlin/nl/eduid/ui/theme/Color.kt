@@ -48,5 +48,5 @@ val ButtonBorderGrey = Color(0xFF5E6873)
 val AlertRedBackground = Color(0xFFFFCDCA)
 val SmallActionGray = Color(0xFFB2B6BE)
 
-val BlueBorder = Color(0xFF0077C8)
+val SupportBlue400 = Color(0xFF0077C8)
 val AlertInfoBackground = Color(0xFFB3E5FF)

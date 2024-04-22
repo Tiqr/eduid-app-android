@@ -51,7 +51,6 @@ fun ConnectionCard(
     onRemoveConnection: (id: String) -> Unit = { },
 ) {
     val isOpen = remember { mutableStateOf(isExpanded) }
-    Spacer(Modifier.height(6.dp))
     Box(modifier = Modifier
         .clip(RoundedCornerShape(6.dp))
         .border(

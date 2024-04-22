@@ -4,17 +4,19 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
+import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -175,22 +177,36 @@ fun InfoField(
     title: String,
     subtitle: String,
     modifier: Modifier = Modifier,
-) = ListItem(colors = ListItemDefaults.colors(trailingIconColor = BlueButton), headlineContent = {
-    Text(
-        text = title,
-        modifier = Modifier.fillMaxWidth(),
+) = ListItem(
+    headlineContent = {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyLarge.copy(
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onSurface
+            ),
+            modifier = Modifier.fillMaxWidth(),
+        )
+    },
+    supportingContent = {
+        Text(
+            text = subtitle,
+            modifier = Modifier.fillMaxWidth(),
+            style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
+        )
+    },
+    trailingContent = {
+        Image(
+            painter = painterResource(id = R.drawable.edit_icon),
+            contentDescription = "",
+            modifier = Modifier.size(24.dp)
+        )
+    },
+    modifier = modifier.border(
+        color = MaterialTheme.colorScheme.onSurface,
+        shape = RoundedCornerShape(6.dp),
+        width = 2.dp
     )
-}, supportingContent = {
-    Text(
-        text = subtitle,
-        modifier = Modifier.fillMaxWidth(),
-    )
-}, trailingContent = {
-    Icon(
-        imageVector = Icons.Outlined.Edit,
-        contentDescription = "",
-    )
-}, modifier = modifier
 )
 
 @Composable
@@ -199,48 +215,87 @@ fun VerifiedInfoField(
     subtitle: String,
     modifier: Modifier = Modifier,
     expandedPreview: Boolean = false,
-    canExpand: Boolean = false,
+    canExpand: Boolean = true,
 ) {
-    var expanded by remember { mutableStateOf(expandedPreview) }
-    ListItem(colors = ListItemDefaults.colors(trailingIconColor = BlueButton), leadingContent = {
-        Image(
-            painter = painterResource(id = R.drawable.shield_tick_blue), contentDescription = ""
-        )
-    }, headlineContent = {
-        Text(
-            text = title,
-            modifier = Modifier.fillMaxWidth(),
-        )
-    }, supportingContent = {
-        Column {
-            Text(
-                text = subtitle,
-                modifier = Modifier.fillMaxWidth(),
+    var isExpanded by remember { mutableStateOf(expandedPreview) }
+    ListItem(
+        colors = ListItemDefaults.colors(trailingIconColor = MaterialTheme.colorScheme.onSurface),
+        leadingContent = {
+            Image(
+                painter = painterResource(id = R.drawable.shield_tick_blue), contentDescription = ""
             )
-            if (expanded) {
-                Spacer(modifier = Modifier.height(8.dp))
-                HorizontalDivider(thickness = 2.dp)
-                Spacer(modifier = Modifier.height(8.dp))
+        },
+        headlineContent = {
+            Text(
+                text = title,
+                modifier = Modifier.fillMaxWidth(),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface
+                ),
+            )
+        },
+        supportingContent = {
+            Column {
                 Text(
                     text = subtitle,
                     modifier = Modifier.fillMaxWidth(),
+                    style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
                 )
+                if (isExpanded) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    HorizontalDivider(thickness = 2.dp, color = MaterialTheme.colorScheme.onSurface)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = subtitle,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
             }
-        }
-    },
+        },
         trailingContent = {
-            if (canExpand) {
+            if (isExpanded) {
+                Icon(
+                    imageVector = Icons.Outlined.KeyboardArrowUp,
+                    contentDescription = "",
+                )
+            } else {
                 Icon(
                     imageVector = Icons.Outlined.KeyboardArrowDown,
                     contentDescription = "",
                 )
             }
         },
-        modifier = modifier.clickable {
-            expanded = !expanded
-        }
-    )
+        modifier = modifier
+            .border(
+                color = MaterialTheme.colorScheme.onSurface,
+                shape = RoundedCornerShape(6.dp),
+                width = 2.dp
+            )
+            .clickable {
+                isExpanded = !isExpanded
+            })
 }
+
+@Preview(showBackground = true)
+@Composable
+private fun Preview_InfoFields() = EduidAppAndroidTheme {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        InfoField(
+            title = "Vetinari", subtitle = "First name"
+        )
+        VerifiedInfoField(
+            title = "Vetinari", subtitle = "First Name", canExpand = true
+        )
+
+        VerifiedInfoField(
+            title = "Vetinari",
+            subtitle = "Verified family name",
+            expandedPreview = true
+        )
+    }
+}
+
 
 @Preview
 @Composable
@@ -250,25 +305,3 @@ private fun Preview_OldInfoField() = EduidAppAndroidTheme {
     )
 }
 
-@Preview
-@Composable
-private fun Preview_InfoField() = EduidAppAndroidTheme {
-    InfoField(
-        title = "Vetinari", subtitle = "Lord"
-    )
-}
-
-@Preview
-@Composable
-private fun Preview_VerifiedInfoField() = EduidAppAndroidTheme {
-    VerifiedInfoField(
-        title = "Vetinari", subtitle = "Lord", canExpand = true
-    )
-}
-
-
-@Preview
-@Composable
-private fun Preview_VerifiedInfoField_Expanded() = EduidAppAndroidTheme {
-    VerifiedInfoField(title = "Vetinari", subtitle = "Verified family name", expandedPreview = true)
-}
