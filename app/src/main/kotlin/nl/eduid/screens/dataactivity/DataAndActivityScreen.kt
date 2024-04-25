@@ -26,9 +26,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
-import nl.eduid.ui.AlertDialogWithTwoButton
+import nl.eduid.ui.DeleteServiceDialog
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.LoginInfoCard
+import nl.eduid.ui.TwoColorTitle
 import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
@@ -53,15 +54,15 @@ fun DataAndActivityScreen(
                 onDismiss = viewModel::clearErrorData
             )
         }
+        val a: Unit = TwoColorTitle(firstPart = "", secondPart = "")
         if (viewModel.uiState.deleteService != null) {
-            AlertDialogWithTwoButton(
-                title = stringResource(id = R.string.DeleteService_Title_COPY) + viewModel.uiState.deleteService?.providerName.orEmpty(),
+            DeleteServiceDialog(
+                service = viewModel.uiState.deleteService?.providerName.orEmpty(),
                 explanation = stringResource(id = R.string.DeleteService_Description_COPY),
                 dismissButtonLabel = stringResource(id = R.string.Button_Cancel_COPY),
-                onDismiss = viewModel::cancelDeleteService,
                 confirmButtonLabel = stringResource(id = R.string.DeleteService_Button_Confirm_COPY),
-                onConfirm = { viewModel.removeService(viewModel.uiState.deleteService?.serviceProviderEntityId) }
-            )
+                onDismiss = viewModel::cancelDeleteService
+            ) { viewModel.removeService(viewModel.uiState.deleteService?.serviceProviderEntityId) }
         }
 
         DataAndActivityScreenContent(
