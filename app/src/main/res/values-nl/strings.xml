@@ -170,13 +170,6 @@
   <string name="MyAccount_DeleteAccountButton_COPY">"Verwijder je account"</string>
   <string name="MyAccount_DownloadSuccess_COPY">"De informatie is opgeslagen in de downloads folder."</string>
   <string name="MyAccount_DownloadError_COPY">"Downloaden mislukt"</string>
-  <string name="NameOverview_Title_AllDetailsOf_COPY">"Alle gegevens van"</string>
-  <string name="NameOverview_Title_FullName_COPY">"Volledige naam"</string>
-  <string name="NameOverview_SelfAsserted_COPY">"Zelf ingevuld"</string>
-  <string name="NameOverview_Verified_COPY">"Gecontroleerd"</string>
-  <string name="NameOverview_AnotherSource_COPY">"Een andere bron…"</string>
-  <string name="NameOverview_NotAvailable_COPY">"Niet beschikbaar"</string>
-  <string name="NameOverview_ProceedToAdd_COPY">"Voeg dit toe door in te loggen bij jouw instelling"</string>
   <string name="Security_Title_COPY">"Beveiliging"</string>
   <string name="Security_SubTitle_COPY">"We bieden verschillende methoden om in te loggen met je eduID."</string>
   <string name="Security_SecondSubTitle_COPY">"Aanmeldmethoden"</string>
@@ -246,7 +239,7 @@
   <string name="TwoFactorKeys_Label_Account_COPY">"Account"</string>
   <string name="TwoFactorKeys_Label_UniqueKeyId_COPY">"Uniek SleutelID"</string>
   <string name="TwoFactorKeys_Label_UseBiometrics_COPY">"Gebruik biometrie"</string>
-  <string name="TwoFactorKeys_DeleteKey_COPY">"Sleutel verwijderen"</string>
+  <string name="TwoFactorKeys_DeleteKey_COPY">"Delete key"</string>
   <string name="ConfirmDeleteKey_Title_COPY">"Verwijder sleutel"</string>
   <string name="ConfirmDeleteKey_Subtitle_COPY">"Dit kan niet ongedaan worden gemaakt"</string>
   <string name="ConfirmDeleteKey_Description_COPY">"Weet je zeker dat je deze sleutel wil verwijderen?"</string>
@@ -792,7 +785,6 @@
   <string name="Permission_Scan_COPY">"Geef toestemming voor het gebruik van de camera."</string>
   <string name="Permission_OAuth_Title_COPY">"Autoriseer de app"</string>
   <string name="Permission_OAuth_Description_COPY">"Geef de mobiele app toegang tot jouw gegevens."</string>
-  <string name="Profile_You_COPY">"Zelf"</string>
   <string name="AppData_InitializationError_Generic_COPY">"AppData kan niet worden geïnitialiseerd. Probeer het opnieuw."</string>
   <string name="AppData_InitializationError_WithException_COPY">"AppData kan niet worden geïnitialiseerd. Reden: %1$s"</string>
 </resources>
