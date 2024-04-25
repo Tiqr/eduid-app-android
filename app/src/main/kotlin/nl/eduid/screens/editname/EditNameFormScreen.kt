@@ -33,7 +33,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -93,6 +92,7 @@ fun EditNameFormScreen(
         givenName = viewModel.uiState.chosenName,
         familyName = viewModel.uiState.familyName,
         inProgress = viewModel.uiState.inProgress,
+        canEditFamilyName = viewModel.uiState.canEditFamilyName,
         padding = it,
         onUpdateName = {
             waitForVmEvent = true
@@ -104,11 +104,12 @@ fun EditNameFormScreen(
     )
 }
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun EditNameFormContent(
     givenName: String,
     familyName: String,
+    canEditFamilyName: Boolean,
     inProgress: Boolean,
     padding: PaddingValues = PaddingValues(),
     onGivenNameChange: (String) -> Unit = {},
@@ -173,16 +174,18 @@ fun EditNameFormContent(
                 .focusRequester(focusRequester)
         )
         Spacer(Modifier.height(12.dp))
-        OutlinedTextField(
-            value = familyName,
-            isError = !isFamilyNameValid,
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-            keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
-            onValueChange = onFamilyNameChange,
-            label = { Text(stringResource(R.string.Login_FamilyName_COPY)) },
-            placeholder = { Text(stringResource(R.string.Login_FamilyNamePlaceholder_COPY)) },
-            modifier = Modifier.fillMaxWidth()
-        )
+        if (canEditFamilyName) {
+            OutlinedTextField(
+                value = familyName,
+                isError = !isFamilyNameValid,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
+                onValueChange = onFamilyNameChange,
+                label = { Text(stringResource(R.string.Login_FamilyName_COPY)) },
+                placeholder = { Text(stringResource(R.string.Login_FamilyNamePlaceholder_COPY)) },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
         LaunchedEffect(focusRequester) {
             awaitFrame()
             focusRequester.requestFocus()
@@ -218,6 +221,7 @@ private fun PreviewEditNameFormContent() = EduidAppAndroidTheme {
     EditNameFormContent(
         givenName = "Vetinari",
         familyName = "Lord",
+        canEditFamilyName = true,
         inProgress = true,
         onGivenNameChange = {},
         goBack = { },

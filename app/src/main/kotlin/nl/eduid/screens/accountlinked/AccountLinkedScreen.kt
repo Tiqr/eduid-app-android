@@ -29,7 +29,7 @@ import nl.eduid.screens.personalinfo.PersonalInfoViewModel
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.ConnectionCard
 import nl.eduid.ui.EduIdTopAppBar
-import nl.eduid.ui.InfoField
+import nl.eduid.ui.InfoFieldOld
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextGreen
@@ -167,7 +167,7 @@ private fun AccountLinkedContent(
     } else {
         Spacer(Modifier.height(12.dp))
     }
-    InfoField(
+    InfoFieldOld(
         title = personalInfo.name,
         subtitle = if (personalInfo.nameProvider == null) {
             stringResource(R.string.Profile_ProvidedByYou_COPY)
@@ -175,7 +175,6 @@ private fun AccountLinkedContent(
             stringResource(R.string.Profile_ProvidedBy_COPY, personalInfo.nameProvider)
         },
         endIcon = R.drawable.shield_tick_blue,
-        label = stringResource(R.string.NameOverview_Title_FullName_COPY)
     )
     Spacer(Modifier.height(16.dp))
     if (personalInfo.institutionAccounts.isNotEmpty()) {

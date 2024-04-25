@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.di.assist.DataAssistant
+import nl.eduid.di.model.ConfirmedName
 import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.di.model.UnauthorizedException
 import nl.eduid.di.model.UserDetails
@@ -94,8 +95,7 @@ class PersonalInfoViewModel @Inject constructor(
                 val personalInfo = mapUserDetailsToPersonalInfo(updatedDetails)
                 uiState.copy(isLoading = false, personalInfo = personalInfo)
             } ?: uiState.copy(
-                isLoading = false,
-                errorData = ErrorData(
+                isLoading = false, errorData = ErrorData(
                     titleId = R.string.Generic_RequestError_Title_COPY,
                     messageId = R.string.ResponseErrors_GeneralRequestError_COPY,
                 )
@@ -149,8 +149,7 @@ class PersonalInfoViewModel @Inject constructor(
                 val personalInfo = mapUserDetailsToPersonalInfo(updatedDetails)
                 uiState.copy(isLoading = false, personalInfo = personalInfo)
             } ?: uiState.copy(
-                isLoading = false,
-                errorData = ErrorData(
+                isLoading = false, errorData = ErrorData(
                     titleId = R.string.Generic_RequestError_Title_COPY,
                     messageId = R.string.ResponseErrors_GeneralRequestError_COPY
                 )
@@ -175,11 +174,12 @@ class PersonalInfoViewModel @Inject constructor(
         val dateCreated = userDetails.created * 1000
         val linkedAccounts = userDetails.linkedAccounts
 
-        //Not sure if we should use the eduPersonAffiliations or the schacHomeOrganisation to get the institution name
-        //val affiliation = linkedAccounts.firstOrNull()?.eduPersonAffiliations?.firstOrNull()
-        //val nameProvider = affiliation?.substring(affiliation.indexOf("@"),affiliation.length) ?: "You"
-        val nameProvider = linkedAccounts.firstOrNull()?.schacHomeOrganization
-        val name: String = linkedAccounts.firstOrNull()?.let {
+        val familyNameConfirmer = linkedAccounts.firstOrNull { it.familyName != null }
+        val givenNameConfirmer = linkedAccounts.firstOrNull { it.givenName != null }
+
+        val affiliationProvider = linkedAccounts.firstOrNull()
+        val nameProvider = affiliationProvider?.schacHomeOrganization
+        val name: String = affiliationProvider?.let {
             "${it.givenName} ${it.familyName}"
         } ?: "${userDetails.chosenName} ${userDetails.familyName}"
 
@@ -211,6 +211,12 @@ class PersonalInfoViewModel @Inject constructor(
                 familyName = userDetails.familyName,
                 givenName = userDetails.givenName,
                 chosenName = userDetails.chosenName
+            ),
+            confirmedName = ConfirmedName(
+                familyName = familyNameConfirmer?.familyName,
+                familyNameConfirmedBy = familyNameConfirmer?.institutionIdentifier,
+                givenName = givenNameConfirmer?.givenName,
+                givenNameConfirmedBy = givenNameConfirmer?.institutionIdentifier
             ),
             nameProvider = nameProvider,
             nameStatus = PersonalInfo.InfoStatus.Final,

@@ -167,8 +167,17 @@ data class SelfAssertedName(
     val familyName: String? = null,
     val givenName: String? = null,
     val chosenName: String? = null,
-) :
-    Parcelable
+) : Parcelable
+
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class ConfirmedName(
+    val familyName: String? = null,
+    val familyNameConfirmedBy: String? = null,
+    val givenName: String? = null,
+    val givenNameConfirmedBy: String? = null,
+) : Parcelable
 
 @Parcelize
 @JsonClass(generateAdapter = true)

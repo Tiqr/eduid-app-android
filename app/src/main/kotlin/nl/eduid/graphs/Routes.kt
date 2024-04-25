@@ -274,12 +274,12 @@ sealed class Security(val route: String) {
 }
 
 sealed class EditName(val route: String) {
-    object View : EditName("name_overview")
 
     object Form : EditName("edit_name_form") {
         const val chosenName = "chosenName"
         const val familyName = "familyName"
-        val routeWithArgs = "${route}/{$chosenName}/{$familyName}"
+        const val canEditFamilyName = "canEditFamilyname"
+        val routeWithArgs = "${route}/{$chosenName}/{$familyName}/{$canEditFamilyName}"
         val arguments = listOf(navArgument(chosenName) {
             type = NavType.StringType
             nullable = false
@@ -288,10 +288,14 @@ sealed class EditName(val route: String) {
             type = NavType.StringType
             nullable = false
             defaultValue = ""
+        }, navArgument(canEditFamilyName) {
+            type = NavType.BoolType
+            nullable = false
+            defaultValue = true
         })
 
-        fun routeWithArgs(selfAssertedName: SelfAssertedName) =
-            "${route}/${Uri.encode(selfAssertedName.chosenName)}/${Uri.encode(selfAssertedName.familyName)}"
+        fun routeWithArgs(selfAssertedName: SelfAssertedName, canEditFamilyName: Boolean) =
+            "${route}/${Uri.encode(selfAssertedName.chosenName)}/${Uri.encode(selfAssertedName.familyName)}/${canEditFamilyName}"
 
         fun decodeIdFromEntry(entry: NavBackStackEntry): SelfAssertedName {
             val choseName = entry.arguments?.getString(chosenName) ?: ""

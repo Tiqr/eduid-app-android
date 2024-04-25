@@ -170,13 +170,6 @@
   <string name="MyAccount_DeleteAccountButton_COPY">"Verwijder je account"</string>
   <string name="MyAccount_DownloadSuccess_COPY">"De informatie is opgeslagen in de downloads folder."</string>
   <string name="MyAccount_DownloadError_COPY">"Downloaden mislukt"</string>
-  <string name="NameOverview_Title_AllDetailsOf_COPY">"Alle gegevens van"</string>
-  <string name="NameOverview_Title_FullName_COPY">"Volledige naam"</string>
-  <string name="NameOverview_SelfAsserted_COPY">"Zelf ingevuld"</string>
-  <string name="NameOverview_Verified_COPY">"Gecontroleerd"</string>
-  <string name="NameOverview_AnotherSource_COPY">"Een andere bron…"</string>
-  <string name="NameOverview_NotAvailable_COPY">"Niet beschikbaar"</string>
-  <string name="NameOverview_ProceedToAdd_COPY">"Voeg dit toe door in te loggen bij jouw instelling"</string>
   <string name="Security_Title_COPY">"Beveiliging"</string>
   <string name="Security_SubTitle_COPY">"We bieden verschillende methoden om in te loggen met je eduID."</string>
   <string name="Security_SecondSubTitle_COPY">"Aanmeldmethoden"</string>

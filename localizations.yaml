@@ -715,7 +715,7 @@ SHARED:
             nl: "Reden: Je sessie is verlopen."
     Description:
       COPY:
-        en: The following information has been added to your eduID and can now be shared.!
+        en: The following information has been added to your eduID and can now be shared.
         nl: De volgende gegevens zijn toegevoegd aan je eduID en kan gedeeld worden.
     FullName:
       COPY:
@@ -854,36 +854,6 @@ SHARED:
       COPY:
         en: Failed to download your data
         nl: Downloaden mislukt
-  NameOverview:
-    Title:
-      AllDetailsOf:
-        COPY:
-          nl: Alle gegevens van
-          en: All details of
-      FullName:
-        COPY:
-          nl: Volledige naam
-          en: Full name
-    SelfAsserted:
-      COPY:
-        nl: Zelf ingevuld
-        en: Self asserted
-    Verified:
-      COPY:
-        nl: Gecontroleerd
-        en: Verified
-    AnotherSource:
-      COPY:
-        nl: Een andere bron…
-        en: Another source…
-    NotAvailable:
-      COPY:
-        nl: Niet beschikbaar
-        en: Not available
-    ProceedToAdd:
-      COPY:
-        nl: Voeg dit toe door in te loggen bij jouw instelling
-        en: Proceed to add this via your school/uni
   Security:
     Title:
       COPY:

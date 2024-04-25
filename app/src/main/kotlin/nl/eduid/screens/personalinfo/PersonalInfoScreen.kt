@@ -2,6 +2,7 @@ package nl.eduid.screens.personalinfo
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,11 +37,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import nl.eduid.ErrorData
 import nl.eduid.R
+import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.screens.firsttimedialog.LinkAccountContract
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.ConnectionCard
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.InfoField
+import nl.eduid.ui.InfoFieldOld
 import nl.eduid.ui.annotatedStringWithBoldParts
 import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.theme.ButtonGreen
@@ -52,7 +55,7 @@ import nl.eduid.ui.theme.LinkAccountCard
 fun PersonalInfoScreen(
     viewModel: PersonalInfoViewModel,
     onEmailClicked: () -> Unit,
-    onNameClicked: () -> Unit = {},
+    onNameClicked: (SelfAssertedName, Boolean) -> Unit = { _, _ -> },
     onManageAccountClicked: (dateString: String) -> Unit,
     goBack: () -> Unit,
 ) = EduIdTopAppBar(
@@ -99,7 +102,7 @@ fun PersonalInfoScreenContent(
     isLoading: Boolean = false,
     errorData: ErrorData? = null,
     dismissError: () -> Unit = {},
-    onNameClicked: () -> Unit = {},
+    onNameClicked: (SelfAssertedName, Boolean) -> Unit = { _, _ -> },
     onEmailClicked: () -> Unit = {},
     removeConnection: (Int) -> Unit = {},
     onManageAccountClicked: (dateString: String) -> Unit = {},
@@ -148,25 +151,14 @@ fun PersonalInfoScreenContent(
     }
     Spacer(Modifier.height(12.dp))
     InfoField(
-        title = personalInfo.name,
-        subtitle = if (personalInfo.nameProvider == null) {
-            annotatedStringWithBoldParts(
-                stringResource(R.string.Profile_ProvidedByYou_COPY),
-                "you"
-            )
-        } else {
-            annotatedStringWithBoldParts(
-                stringResource(R.string.Profile_ProvidedBy_COPY) + " " + personalInfo.nameProvider,
-                personalInfo.nameProvider
-            )
-        }, onClick = onNameClicked, endIcon = if (personalInfo.nameProvider == null) {
-            R.drawable.edit_icon
-        } else {
-            R.drawable.shield_tick_blue
-        }, label = stringResource(R.string.Profile_Name_COPY)
+        title = personalInfo.seflAssertedName.chosenName.orEmpty(),
+        subtitle = stringResource(R.string.Profile_FirstName_COPY),
+        modifier = Modifier.clickable {
+            onNameClicked(personalInfo.seflAssertedName, !personalInfo.isVerified)
+        }
     )
     Spacer(Modifier.height(16.dp))
-    InfoField(
+    InfoFieldOld(
         title = personalInfo.email,
         subtitle = annotatedStringWithBoldParts(
             stringResource(R.string.Profile_ProvidedByYou_COPY),

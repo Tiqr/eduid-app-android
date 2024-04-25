@@ -139,7 +139,7 @@
   <string name="NameUpdated_Title_ContactedError_COPY">"could not be contacted"</string>
   <string name="NameUpdated_Title_FailReason_AlreadyLinked_COPY">"Reason: The account is already linked: %1$s"</string>
   <string name="NameUpdated_Title_FailReason_SessionExpired_COPY">"Reason: Your session expired."</string>
-  <string name="NameUpdated_Description_COPY">"The following information has been added to your eduID and can now be shared.!"</string>
+  <string name="NameUpdated_Description_COPY">"The following information has been added to your eduID and can now be shared."</string>
   <string name="NameUpdated_FullName_COPY">"Full name"</string>
   <string name="NameUpdated_Continue_COPY">"Continue"</string>
   <string name="EditName_Title_Edit_COPY">"Edit"</string>
@@ -170,13 +170,6 @@
   <string name="MyAccount_DeleteAccountButton_COPY">"Delete your account"</string>
   <string name="MyAccount_DownloadSuccess_COPY">"Your data was downloaded in your downloads folder."</string>
   <string name="MyAccount_DownloadError_COPY">"Failed to download your data"</string>
-  <string name="NameOverview_Title_AllDetailsOf_COPY">"All details of"</string>
-  <string name="NameOverview_Title_FullName_COPY">"Full name"</string>
-  <string name="NameOverview_SelfAsserted_COPY">"Self asserted"</string>
-  <string name="NameOverview_Verified_COPY">"Verified"</string>
-  <string name="NameOverview_AnotherSource_COPY">"Another source…"</string>
-  <string name="NameOverview_NotAvailable_COPY">"Not available"</string>
-  <string name="NameOverview_ProceedToAdd_COPY">"Proceed to add this via your school/uni"</string>
   <string name="Security_Title_COPY">"Security settings"</string>
   <string name="Security_SubTitle_COPY">"We provide different methods to sign in using your eduID account."</string>
   <string name="Security_SecondSubTitle_COPY">"Sign-in methods"</string>
