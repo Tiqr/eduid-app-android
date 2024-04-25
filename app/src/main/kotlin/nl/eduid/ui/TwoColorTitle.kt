@@ -11,16 +11,17 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.ColorGrayScaleBlack
+import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextGreen
 
 
 @Composable
 fun TwoColorTitle(
-    modifier: Modifier = Modifier,
     firstPart: String,
     secondPart: String,
+    modifier: Modifier = Modifier,
+    isEditTitle: Boolean = true,
     textStyle: TextStyle = MaterialTheme.typography.titleLarge.copy(
         textAlign = TextAlign.Start
     ),
@@ -29,11 +30,11 @@ fun TwoColorTitle(
 ) {
     Text(
         text = firstPart,
-        style = textStyle.copy(color = ColorGrayScaleBlack),
+        style = textStyle.copy(color = if (isEditTitle) ColorGrayScaleBlack else TextGreen),
     )
     Text(
         text = secondPart,
-        style = textStyle.copy(color = TextGreen),
+        style = textStyle.copy(color = if (isEditTitle) TextGreen else ColorGrayScaleBlack),
     )
 }
 
