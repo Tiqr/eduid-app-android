@@ -175,7 +175,6 @@ private fun AccountLinkedContent(
             stringResource(R.string.Profile_ProvidedBy_COPY, personalInfo.nameProvider)
         },
         endIcon = R.drawable.shield_tick_blue,
-        label = stringResource(R.string.NameOverview_Title_FullName_COPY)
     )
     Spacer(Modifier.height(16.dp))
     if (personalInfo.institutionAccounts.isNotEmpty()) {
