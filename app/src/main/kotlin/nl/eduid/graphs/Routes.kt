@@ -288,7 +288,7 @@ sealed class EditName(val route: String) {
             type = NavType.StringType
             nullable = false
             defaultValue = ""
-        }, navArgument(familyName) {
+        }, navArgument(canEditFamilyName) {
             type = NavType.BoolType
             nullable = false
             defaultValue = true
