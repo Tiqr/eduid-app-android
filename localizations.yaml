@@ -50,6 +50,11 @@ ANDROID:
         COPY:
           en: Allow the mobile application to access your data.
           nl: Geef de mobiele app toegang tot jouw gegevens.
+  Profile:
+    You:
+      COPY:
+        en: you
+        nl: Zelf
   AppData:
     InitializationError:
       Generic:
@@ -849,6 +854,36 @@ SHARED:
       COPY:
         en: Failed to download your data
         nl: Downloaden mislukt
+  NameOverview:
+    Title:
+      AllDetailsOf:
+        COPY:
+          nl: Alle gegevens van
+          en: All details of
+      FullName:
+        COPY:
+          nl: Volledige naam
+          en: Full name
+    SelfAsserted:
+      COPY:
+        nl: Zelf ingevuld
+        en: Self asserted
+    Verified:
+      COPY:
+        nl: Gecontroleerd
+        en: Verified
+    AnotherSource:
+      COPY:
+        nl: Een andere bron…
+        en: Another source…
+    NotAvailable:
+      COPY:
+        nl: Niet beschikbaar
+        en: Not available
+    ProceedToAdd:
+      COPY:
+        nl: Voeg dit toe door in te loggen bij jouw instelling
+        en: Proceed to add this via your school/uni
   Security:
     Title:
       COPY:
