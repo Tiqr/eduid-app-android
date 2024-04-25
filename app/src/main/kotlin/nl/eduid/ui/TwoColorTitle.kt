@@ -12,7 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextBlack
+import nl.eduid.ui.theme.ColorGrayScaleBlack
 import nl.eduid.ui.theme.TextGreen
 
 
@@ -29,7 +29,7 @@ fun TwoColorTitle(
 ) {
     Text(
         text = firstPart,
-        style = textStyle.copy(color = TextBlack),
+        style = textStyle.copy(color = ColorGrayScaleBlack),
     )
     Text(
         text = secondPart,

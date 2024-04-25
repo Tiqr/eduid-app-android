@@ -59,10 +59,10 @@ import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
-import nl.eduid.ui.theme.ButtonBorderGrey
 import nl.eduid.ui.theme.ButtonGreen
+import nl.eduid.ui.theme.ColorGrayScale500
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextBlack
+import nl.eduid.ui.theme.ColorGrayScaleBlack
 import nl.eduid.ui.theme.TextGrey
 
 @Composable
@@ -244,7 +244,7 @@ fun ResetPasswordConfirmScreenContent(
         }
         if (!isAddPassword) {
             Spacer(Modifier.height(16.dp))
-            HorizontalDivider(color = TextBlack, thickness = 1.dp)
+            HorizontalDivider(color = ColorGrayScaleBlack, thickness = 1.dp)
             Spacer(Modifier.height(16.dp))
             Text(
                 style = MaterialTheme.typography.titleLarge.copy(
@@ -267,7 +267,7 @@ fun ResetPasswordConfirmScreenContent(
                 onClick = onDeletePasswordClicked,
                 buttonBackgroundColor = Color.Transparent,
                 buttonTextColor = TextGrey,
-                buttonBorderColor = ButtonBorderGrey,
+                buttonBorderColor = ColorGrayScale500,
             )
         }
     }

@@ -15,7 +15,7 @@ val Typography = Typography(
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp,
-        color = TextBlack
+        color = ColorGrayScaleBlack
     ),
     // Other default text styles to override
     titleLarge = TextStyle(
@@ -39,7 +39,7 @@ val Typography = Typography(
         fontFamily = FontFamily.Default,
         fontSize = 14.sp,
         lineHeight = 16.sp,
-        color = TextBlack
+        color = ColorGrayScaleBlack
     ),
 
     bodySmall = TextStyle(
@@ -47,6 +47,6 @@ val Typography = Typography(
         fontSize = 12.sp,
         lineHeight = 15.sp,
         fontWeight = FontWeight.Normal,
-        color = TextBlack
+        color = ColorGrayScaleBlack
     ),
 )

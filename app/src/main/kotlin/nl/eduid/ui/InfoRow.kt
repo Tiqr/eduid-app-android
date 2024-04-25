@@ -1,6 +1,5 @@
 package nl.eduid.ui
 
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import nl.eduid.ui.theme.BlueText
-import nl.eduid.ui.theme.TextBlack
+import nl.eduid.ui.theme.ColorGrayScaleBlack
 
 @Composable
 fun InfoRow(label: String, value: String = ""){
@@ -40,6 +39,6 @@ fun InfoRow(label: String, value: String = ""){
         }
     }
     Spacer(Modifier.height(12.dp))
-    HorizontalDivider(color = TextBlack, thickness = 1.dp)
+    HorizontalDivider(color = ColorGrayScaleBlack, thickness = 1.dp)
     Spacer(Modifier.height(12.dp))
 }

@@ -36,9 +36,9 @@ import androidx.constraintlayout.compose.Dimension
 import nl.eduid.R
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.theme.AlertWarningBackground
-import nl.eduid.ui.theme.ButtonRed
+import nl.eduid.ui.theme.ColorAlertRed
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextBlack
+import nl.eduid.ui.theme.ColorGrayScaleBlack
 import nl.eduid.ui.theme.TextGreen
 
 @Composable
@@ -114,7 +114,7 @@ private fun DeleteAccountFirstConfirmScreenContent(
             text = stringResource(R.string.DeleteAccount_LongDescription_COPY),
             textAlign = TextAlign.Start,
             style = MaterialTheme.typography.bodyLarge.copy(
-                color = TextBlack,
+                color = ColorGrayScaleBlack,
                 textAlign = TextAlign.Start
             ),
             modifier = Modifier.fillMaxWidth(),
@@ -124,7 +124,7 @@ private fun DeleteAccountFirstConfirmScreenContent(
         shape = RoundedCornerShape(CornerSize(6.dp)),
         onClick = onDeleteAccountPressed,
         border = BorderStroke(1.dp, Color.Red),
-        colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
+        colors = ButtonDefaults.outlinedButtonColors(contentColor = ColorAlertRed),
         modifier = Modifier
             .fillMaxWidth()
             .sizeIn(minHeight = 56.dp),
@@ -132,7 +132,7 @@ private fun DeleteAccountFirstConfirmScreenContent(
         Text(
             text = stringResource(R.string.DeleteAccount_DeleteAccountButton_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
-                color = ButtonRed, fontWeight = FontWeight.SemiBold
+                color = ColorAlertRed, fontWeight = FontWeight.SemiBold
             )
         )
     }

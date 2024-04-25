@@ -29,7 +29,6 @@ import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.DeleteServiceDialog
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.LoginInfoCard
-import nl.eduid.ui.TwoColorTitle
 import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
@@ -54,13 +53,9 @@ fun DataAndActivityScreen(
                 onDismiss = viewModel::clearErrorData
             )
         }
-        val a: Unit = TwoColorTitle(firstPart = "", secondPart = "")
         if (viewModel.uiState.deleteService != null) {
             DeleteServiceDialog(
                 service = viewModel.uiState.deleteService?.providerName.orEmpty(),
-                explanation = stringResource(id = R.string.DeleteService_Description_COPY),
-                dismissButtonLabel = stringResource(id = R.string.Button_Cancel_COPY),
-                confirmButtonLabel = stringResource(id = R.string.DeleteService_Button_Confirm_COPY),
                 onDismiss = viewModel::cancelDeleteService
             ) { viewModel.removeService(viewModel.uiState.deleteService?.serviceProviderEntityId) }
         }

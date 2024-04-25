@@ -38,9 +38,9 @@ import nl.eduid.R
 import nl.eduid.screens.twofactorkey.IdentityData
 import nl.eduid.ui.theme.BlueButton
 import nl.eduid.ui.theme.BlueText
-import nl.eduid.ui.theme.ButtonRed
+import nl.eduid.ui.theme.ColorAlertRed
+import nl.eduid.ui.theme.ColorGrayScale500
 import nl.eduid.ui.theme.InfoTabDarkFill
-import nl.eduid.ui.theme.TextGrayScale
 import java.util.Locale
 
 @Composable
@@ -91,7 +91,7 @@ fun KeyInfoCard(
                     text = subtitle,
                     style = MaterialTheme.typography.bodySmall.copy(
                         textAlign = TextAlign.Start,
-                        color = TextGrayScale,
+                        color = ColorGrayScale500,
                     ),
                 )
             }
@@ -162,7 +162,7 @@ private fun TwoFABlock(
         shape = RoundedCornerShape(CornerSize(6.dp)),
         onClick = { onDeleteButtonClicked(keyInfo.uniqueKey) },
         border = BorderStroke(1.dp, Color.Red),
-        colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
+        colors = ButtonDefaults.outlinedButtonColors(contentColor = ColorAlertRed),
         modifier = Modifier
             .sizeIn(minHeight = 48.dp)
             .fillMaxWidth(),
@@ -170,7 +170,7 @@ private fun TwoFABlock(
         Text(
             text = stringResource(R.string.TwoFactorKeys_DeleteKey_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
-                color = ButtonRed, fontWeight = FontWeight.SemiBold
+                color = ColorAlertRed, fontWeight = FontWeight.SemiBold
             )
         )
     }
