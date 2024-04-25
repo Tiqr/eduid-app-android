@@ -32,7 +32,7 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 import java.util.Locale
 
 @Composable
-fun InfoField(
+fun InfoFieldOld(
     title: String,
     subtitle: AnnotatedString,
     onClick: () -> Unit = {},
@@ -96,7 +96,7 @@ fun InfoField(
 }
 
 @Composable
-fun InfoField(
+fun InfoFieldOld(
     title: String,
     subtitle: String,
     onClick: () -> Unit = {},
@@ -162,7 +162,7 @@ fun InfoField(
 @Preview
 @Composable
 private fun PreviewInfoField() = EduidAppAndroidTheme {
-    InfoField(
+    InfoFieldOld(
         title = "Vetinari", subtitle = "Lord", label = "Full Name"
     )
 }

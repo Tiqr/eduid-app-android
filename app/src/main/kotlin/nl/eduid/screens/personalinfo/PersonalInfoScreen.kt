@@ -36,11 +36,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import nl.eduid.ErrorData
 import nl.eduid.R
+import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.screens.firsttimedialog.LinkAccountContract
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.ConnectionCard
 import nl.eduid.ui.EduIdTopAppBar
-import nl.eduid.ui.InfoField
+import nl.eduid.ui.InfoFieldOld
 import nl.eduid.ui.annotatedStringWithBoldParts
 import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.theme.ButtonGreen
@@ -52,7 +53,7 @@ import nl.eduid.ui.theme.LinkAccountCard
 fun PersonalInfoScreen(
     viewModel: PersonalInfoViewModel,
     onEmailClicked: () -> Unit,
-    onNameClicked: () -> Unit = {},
+    onNameClicked: (SelfAssertedName, Boolean) -> Unit = { _, _ -> },
     onManageAccountClicked: (dateString: String) -> Unit,
     goBack: () -> Unit,
 ) = EduIdTopAppBar(
@@ -99,7 +100,7 @@ fun PersonalInfoScreenContent(
     isLoading: Boolean = false,
     errorData: ErrorData? = null,
     dismissError: () -> Unit = {},
-    onNameClicked: () -> Unit = {},
+    onNameClicked: (SelfAssertedName, Boolean) -> Unit = { _, _ -> },
     onEmailClicked: () -> Unit = {},
     removeConnection: (Int) -> Unit = {},
     onManageAccountClicked: (dateString: String) -> Unit = {},
@@ -147,7 +148,7 @@ fun PersonalInfoScreenContent(
         Spacer(modifier = Modifier.height(16.dp))
     }
     Spacer(Modifier.height(12.dp))
-    InfoField(
+    InfoFieldOld(
         title = personalInfo.name,
         subtitle = if (personalInfo.nameProvider == null) {
             annotatedStringWithBoldParts(
@@ -166,7 +167,7 @@ fun PersonalInfoScreenContent(
         }, label = stringResource(R.string.Profile_Name_COPY)
     )
     Spacer(Modifier.height(16.dp))
-    InfoField(
+    InfoFieldOld(
         title = personalInfo.email,
         subtitle = annotatedStringWithBoldParts(
             stringResource(R.string.Profile_ProvidedByYou_COPY),
