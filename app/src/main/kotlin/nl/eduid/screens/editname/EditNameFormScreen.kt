@@ -143,7 +143,7 @@ fun EditNameFormContent(
         ) {
             TwoColorTitle(
                 firstPart = stringResource(R.string.EditName_Title_Edit_COPY),
-                secondPart = stringResource(R.string.EditName_Title_FullName_COPY)
+                secondPart = stringResource(R.string.EditName_Title_YourName_COPY)
             )
             Spacer(Modifier.height(12.dp))
         }

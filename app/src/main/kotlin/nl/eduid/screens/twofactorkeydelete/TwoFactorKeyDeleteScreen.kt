@@ -45,10 +45,10 @@ import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.AlertRedBackground
-import nl.eduid.ui.theme.ButtonBorderGrey
-import nl.eduid.ui.theme.ButtonRed
+import nl.eduid.ui.theme.ColorAlertRed
+import nl.eduid.ui.theme.ColorGrayScale500
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextBlack
+import nl.eduid.ui.theme.ColorGrayScaleBlack
 import nl.eduid.ui.theme.TextGreen
 import nl.eduid.ui.theme.TextGrey
 
@@ -152,7 +152,7 @@ private fun TwoFactorKeyDeleteScreenContent(
         Text(
             text = stringResource(R.string.Credential_DeleteCredentialConfirmation_COPY, keyId),
             style = MaterialTheme.typography.bodyLarge.copy(
-                color = TextBlack, textAlign = TextAlign.Start
+                color = ColorGrayScaleBlack, textAlign = TextAlign.Start
             ),
             modifier = Modifier.fillMaxWidth(),
         )
@@ -169,14 +169,14 @@ private fun TwoFactorKeyDeleteScreenContent(
             onClick = goBack,
             buttonBackgroundColor = Color.Transparent,
             buttonTextColor = TextGrey,
-            buttonBorderColor = ButtonBorderGrey,
+            buttonBorderColor = ColorGrayScale500,
         )
         PrimaryButton(
             enabled = !inProgress,
             text = stringResource(id = R.string.ConfirmDelete_Button_Confirm_COPY),
             modifier = Modifier.widthIn(min = 140.dp),
             onClick = onDeleteClicked,
-            buttonBackgroundColor = ButtonRed,
+            buttonBackgroundColor = ColorAlertRed,
             buttonTextColor = Color.White,
         )
     }

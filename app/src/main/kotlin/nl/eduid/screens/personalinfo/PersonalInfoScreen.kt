@@ -44,7 +44,7 @@ import nl.eduid.ui.InfoField
 import nl.eduid.ui.annotatedStringWithBoldParts
 import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.theme.ButtonGreen
-import nl.eduid.ui.theme.ButtonTextGrey
+import nl.eduid.ui.theme.ColorGrayScale500
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.LinkAccountCard
 
@@ -222,7 +222,7 @@ fun PersonalInfoScreenContent(
             text = stringResource(R.string.Profile_ManageYourAccount_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 textAlign = TextAlign.Start,
-                color = ButtonTextGrey,
+                color = ColorGrayScale500,
                 fontWeight = FontWeight.SemiBold,
             ),
         )

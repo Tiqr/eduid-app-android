@@ -33,7 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
 import nl.eduid.ui.theme.ButtonGreen
-import nl.eduid.ui.theme.ButtonTextGrey
+import nl.eduid.ui.theme.ColorGrayScale500
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -113,7 +113,7 @@ fun SecondaryButton(
         text = text,
         overflow = TextOverflow.Ellipsis,
         style = MaterialTheme.typography.bodyLarge.copy(
-            color = ButtonTextGrey, fontWeight = FontWeight.SemiBold
+            color = ColorGrayScale500, fontWeight = FontWeight.SemiBold
         ),
     )
 }

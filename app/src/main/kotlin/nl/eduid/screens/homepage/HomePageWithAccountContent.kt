@@ -51,7 +51,7 @@ import nl.eduid.ui.PrimaryButtonWithIcon
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.SmallActionGray
 import nl.eduid.ui.theme.SplashScreenBackgroundColor
-import nl.eduid.ui.theme.TextBlack
+import nl.eduid.ui.theme.ColorGrayScaleBlack
 import nl.eduid.ui.theme.TextGreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -160,7 +160,7 @@ private fun AccountContent(
                     append(stringResource(R.string.HomeView_MainText_FirstPart_COPY))
                 }
                 append("\n")
-                withStyle(style = SpanStyle(color = TextBlack)) {
+                withStyle(style = SpanStyle(color = ColorGrayScaleBlack)) {
                     append(stringResource(R.string.HomeView_MainText_SecondPart_COPY))
                 }
             },

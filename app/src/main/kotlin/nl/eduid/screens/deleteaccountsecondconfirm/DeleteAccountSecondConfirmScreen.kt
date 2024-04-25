@@ -54,10 +54,10 @@ import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.AlertRedBackground
-import nl.eduid.ui.theme.ButtonBorderGrey
-import nl.eduid.ui.theme.ButtonRed
+import nl.eduid.ui.theme.ColorAlertRed
+import nl.eduid.ui.theme.ColorGrayScale500
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextBlack
+import nl.eduid.ui.theme.ColorGrayScaleBlack
 import nl.eduid.ui.theme.TextGreen
 import nl.eduid.ui.theme.TextGrey
 
@@ -179,7 +179,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
                 Text(
                     text = stringResource(R.string.ConfirmDelete_TypeNameToConfirm_COPY),
                     style = MaterialTheme.typography.bodyLarge.copy(
-                        color = TextBlack, textAlign = TextAlign.Start
+                        color = ColorGrayScaleBlack, textAlign = TextAlign.Start
                     ),
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -211,13 +211,13 @@ private fun DeleteAccountSecondConfirmScreenContent(
             onClick = goBack,
             buttonBackgroundColor = Color.Transparent,
             buttonTextColor = TextGrey,
-            buttonBorderColor = ButtonBorderGrey,
+            buttonBorderColor = ColorGrayScale500,
         )
         PrimaryButton(
             modifier = Modifier.widthIn(min = 140.dp),
             text = stringResource(R.string.ConfirmDelete_Button_Confirm_COPY),
             onClick = onDeleteAccountPressed,
-            buttonBackgroundColor = ButtonRed,
+            buttonBackgroundColor = ColorAlertRed,
             buttonTextColor = Color.White,
             enabled = fullNameInput.isNotBlank(),
         )

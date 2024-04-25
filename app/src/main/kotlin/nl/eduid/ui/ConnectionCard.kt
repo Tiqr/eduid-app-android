@@ -37,9 +37,9 @@ import androidx.constraintlayout.compose.Dimension
 import nl.eduid.R
 import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.ui.theme.BlueButton
-import nl.eduid.ui.theme.ButtonRed
+import nl.eduid.ui.theme.ColorAlertRed
+import nl.eduid.ui.theme.ColorGrayScale500
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextGrayScale
 import java.util.Locale
 
 @Composable
@@ -92,7 +92,7 @@ fun ConnectionCard(
                     text = subtitle,
                     style = MaterialTheme.typography.bodySmall.copy(
                         textAlign = TextAlign.Start,
-                        color = TextGrayScale,
+                        color = ColorGrayScale500,
                     ),
                 )
             }
@@ -148,7 +148,7 @@ private fun InstitutionInfoBlock(
         shape = RoundedCornerShape(CornerSize(6.dp)),
         onClick = { onDeleteButtonClicked(institutionInfo.id) },
         border = BorderStroke(1.dp, Color.Red),
-        colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
+        colors = ButtonDefaults.outlinedButtonColors(contentColor = ColorAlertRed),
         modifier = Modifier
             .sizeIn(minHeight = 48.dp)
             .fillMaxWidth(),
@@ -156,7 +156,7 @@ private fun InstitutionInfoBlock(
         Text(
             text = stringResource(R.string.Institution_Delete_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
-                color = ButtonRed, fontWeight = FontWeight.SemiBold
+                color = ColorAlertRed, fontWeight = FontWeight.SemiBold
             )
         )
     }

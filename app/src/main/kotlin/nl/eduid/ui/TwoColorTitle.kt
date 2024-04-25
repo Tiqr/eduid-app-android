@@ -1,7 +1,6 @@
 package nl.eduid.ui
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -12,9 +11,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import nl.eduid.ui.theme.ButtonGreen
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextBlack
+import nl.eduid.ui.theme.ColorGrayScaleBlack
 import nl.eduid.ui.theme.TextGreen
 
 
@@ -31,11 +29,11 @@ fun TwoColorTitle(
 ) {
     Text(
         text = firstPart,
-        style = textStyle.copy(color = TextGreen),
+        style = textStyle.copy(color = ColorGrayScaleBlack),
     )
     Text(
         text = secondPart,
-        style = textStyle.copy(color = TextBlack),
+        style = textStyle.copy(color = TextGreen),
     )
 }
 
@@ -43,11 +41,12 @@ fun TwoColorTitle(
 @Composable
 private fun Preview_BulletPoints() {
     EduidAppAndroidTheme {
-        BulletPoint(text = "A detailed bullet point",
+        BulletPoint(
+            text = "A detailed bullet point",
             textStyle = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
             modifier = Modifier
-            .padding(horizontal = 32.dp)
-            .fillMaxWidth()
+                .padding(horizontal = 32.dp)
+                .fillMaxWidth()
         )
     }
 }

@@ -40,7 +40,7 @@ fun LinkAccountCard(
                 text = stringResource(title),
                 style = MaterialTheme.typography.bodyLarge.copy(
                     textAlign = TextAlign.Start,
-                    color = ButtonTextGrey,
+                    color = ColorGrayScale500,
                     fontWeight = FontWeight.Bold,
                 )
             )
@@ -48,7 +48,7 @@ fun LinkAccountCard(
                 text = stringResource(subtitle),
                 style = MaterialTheme.typography.bodyMedium.copy(
                     textAlign = TextAlign.Start,
-                    color = ButtonTextGrey,
+                    color = ColorGrayScale500,
                     fontWeight = FontWeight.Light,
                     fontStyle = FontStyle.Italic
                 )

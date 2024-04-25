@@ -40,9 +40,9 @@ import nl.eduid.R
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.AlertWarningBackground
-import nl.eduid.ui.theme.ButtonRed
+import nl.eduid.ui.theme.ColorAlertRed
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextBlack
+import nl.eduid.ui.theme.ColorGrayScaleBlack
 import nl.eduid.ui.theme.TextGreen
 
 @Composable
@@ -119,7 +119,7 @@ private fun ManageAccountScreenContent(
         Text(
             text = "${stringResource(R.string.MyAccount_AccountCreatedOn_COPY)} $dateString",
             style = MaterialTheme.typography.bodyLarge.copy(
-                color = TextBlack, textAlign = TextAlign.Start
+                color = ColorGrayScaleBlack, textAlign = TextAlign.Start
             ),
             modifier = Modifier.fillMaxWidth(),
         )
@@ -148,13 +148,13 @@ private fun ManageAccountScreenContent(
     OutlinedButton(
         shape = RoundedCornerShape(CornerSize(6.dp)),
         onClick = onDeleteAccountPressed,
-        colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
+        colors = ButtonDefaults.outlinedButtonColors(contentColor = ColorAlertRed),
         modifier = Modifier.fillMaxWidth()
     ) {
         Text(
             text = stringResource(R.string.MyAccount_DeleteAccountButton_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
-                color = ButtonRed, fontWeight = FontWeight.SemiBold
+                color = ColorAlertRed, fontWeight = FontWeight.SemiBold
             )
         )
     }

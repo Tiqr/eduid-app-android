@@ -80,7 +80,7 @@ class DataAndActivityViewModel @Inject constructor(private val assistant: DataAs
         }
     }
 
-    fun goToDeleteService(provider: ServiceProvider) {
+    fun showDeleteServiceDialog(provider: ServiceProvider) {
         uiState = uiState.copy(deleteService = provider)
     }
 

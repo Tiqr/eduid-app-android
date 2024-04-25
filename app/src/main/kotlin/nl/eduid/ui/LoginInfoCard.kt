@@ -41,11 +41,11 @@ import coil.compose.AsyncImage
 import nl.eduid.R
 import nl.eduid.screens.dataactivity.ServiceProvider
 import nl.eduid.ui.theme.BlueButton
-import nl.eduid.ui.theme.ButtonRed
+import nl.eduid.ui.theme.ColorAlertRed
+import nl.eduid.ui.theme.ColorGrayScale500
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.InfoTabDarkFill
-import nl.eduid.ui.theme.TextBlack
-import nl.eduid.ui.theme.TextGrayScale
+import nl.eduid.ui.theme.ColorGrayScaleBlack
 import java.util.Locale
 
 @Composable
@@ -119,7 +119,7 @@ fun LoginInfoCard(
                     text = subtitle,
                     style = MaterialTheme.typography.bodySmall.copy(
                         textAlign = TextAlign.Start,
-                        color = TextGrayScale,
+                        color = ColorGrayScale500,
                     ),
                 )
             }
@@ -178,7 +178,7 @@ private fun ServiceProviderBlock(
             }
         },
         border = BorderStroke(1.dp, Color.Red),
-        colors = ButtonDefaults.outlinedButtonColors(contentColor = ButtonRed),
+        colors = ButtonDefaults.outlinedButtonColors(contentColor = ColorAlertRed),
         modifier = Modifier
             .sizeIn(minHeight = 48.dp)
             .fillMaxWidth(),
@@ -186,7 +186,7 @@ private fun ServiceProviderBlock(
         Text(
             text = stringResource(R.string.DataActivity_Details_Delete_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
-                color = ButtonRed, fontWeight = FontWeight.SemiBold
+                color = ColorAlertRed, fontWeight = FontWeight.SemiBold
             )
         )
     }
@@ -195,7 +195,7 @@ private fun ServiceProviderBlock(
         text = stringResource(R.string.DataActivity_Details_DeleteDisclaimer_COPY),
         style = MaterialTheme.typography.bodySmall.copy(
             textAlign = TextAlign.Start,
-            color = TextBlack,
+            color = ColorGrayScaleBlack,
         ),
     )
     Spacer(Modifier.height(32.dp))

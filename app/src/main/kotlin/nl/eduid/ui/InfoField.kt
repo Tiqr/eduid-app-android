@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import nl.eduid.R
 import nl.eduid.ui.theme.BlueButton
+import nl.eduid.ui.theme.ColorGrayScale500
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextGrayScale
 import java.util.Locale
 
 @Composable
@@ -82,7 +82,7 @@ fun InfoField(
                 text = subtitle,
                 style = MaterialTheme.typography.bodySmall.copy(
                     textAlign = TextAlign.Start,
-                    color = TextGrayScale,
+                    color = ColorGrayScale500,
                 ),
             )
         }
@@ -146,7 +146,7 @@ fun InfoField(
                 text = subtitle,
                 style = MaterialTheme.typography.bodySmall.copy(
                     textAlign = TextAlign.Start,
-                    color = TextGrayScale,
+                    color = ColorGrayScale500,
                 ),
             )
         }
