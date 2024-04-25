@@ -50,11 +50,6 @@ ANDROID:
         COPY:
           en: Allow the mobile application to access your data.
           nl: Geef de mobiele app toegang tot jouw gegevens.
-  Profile:
-    You:
-      COPY:
-        en: you
-        nl: Zelf
   AppData:
     InitializationError:
       Generic:
@@ -249,6 +244,43 @@ SHARED:
       COPY:
         en: Something went wrong (404)
         nl: Er is iets fout gegaan (404).
+  YourVerifiedInformation:
+    Title:
+      COPY:
+        en: "Your verified information"
+        nl: "Jouw geverifieerde gegevens"
+    Subtitle:
+      COPY:
+        en: "This is an overview of the verified information we have received from trusted sources."
+        nl: "Dit is een overzicht van je geverifieerde gegevens die wij van de vertrouwde instellingen hebben gekregen."
+    ExplainIcon:
+      COPY:
+        en: "This icon indicates the information is used on ‘your personal info’ as default."
+        nl: "Dit pictogram geeft aan dat de informatie standaard wordt gebruikt voor ‘jouw persoonlijke informatie’"
+    FromInstitution:
+      COPY:
+        en: "From %1{{s}}"
+        nl: "Van %1{{s}}"
+    AtInstitution:
+      COPY:
+        en: "At %1{{s}}"
+        nl: "Bij %1{{s}}"
+    ReceivedOn:
+      COPY:
+        en: "Received on "
+        nl: "Gekregen op "
+    ValidUntil:
+      COPY:
+        en: "Valid until "
+        nl: "Geldig tot "
+    RemoveThisInformation:
+      COPY:
+        en: "Remove this information"
+        nl: "Verwijder deze informatie"
+    FromYourEduID:
+      COPY:
+        en: " from you eduID"
+        nl: " van jouw eduID"
   Profile:
     YouAreLoggedIn:
       COPY:
@@ -310,18 +342,73 @@ SHARED:
         nl: Zelf ingesteld
     Title:
       COPY:
-        en: Personal information
-        nl: Persoonlijke informatie
+        en: Your personal info
+        nl: Jouw persoonlijke informatie
     Info:
       COPY:
         en: >-
-          When you use eduID to login to other websites, some of your personal
-          information will be shared. Some websites require that your personal
-          information is validated by a third party.
+          When you use eduID to logon to other websites, some of your personal
+          information will be shared.
         nl: >-
           Wanneer je eduID gebruikt om in te loggen op andere websites, kan jouw
-          persoonlijke informatie worden gedeeld. Sommige websites vereisen dat
-          je persoonlijke gegevens worden gevalideerd door een derde partij.
+          persoonlijke informatie worden gedeeld.
+    YourIdentity:
+      COPY:
+        en: Your identity
+        nl: Jouw identiteit
+    Verified:
+      COPY:
+        nl: geverifieerd
+        en: verified
+    NotVerified:
+      COPY:
+        nl: niet geverifieerd
+        en: not verified
+    VerifiedGivenName:
+      COPY:
+        nl: Geverifieerde voornaam
+        en: Verified given name
+    VerifiedFamilyName:
+      COPY:
+        nl: Geverifieerde achternaam
+        en: Verified family name
+    VerifiedDateOfBirth:
+      COPY:
+        nl: Geverifieerde geboortedatum
+        en: Verified date of birth
+    LinkedAccountCreatedAt:
+      COPY:
+        nl: "op "
+        en: "on "
+    LinkedAccountValidUntil:
+      COPY:
+        nl: "geldig tot "
+        en: "valid until "
+    ManageYourVerifiedInformation:
+      COPY:
+        nl: "Beheer jouw geverifieerde gegevens"
+        en: "Manage your verified information"
+    VerifyNow:
+      Title:
+        COPY:
+          en: Some services require your identity to be verified by a trusted party.
+          nl: Sommige diensten eisen dat jouw identiteit geverifieerd is door een vertrouwde instelling.
+      Button:
+        COPY:
+          en: Verify identity now
+          nl: Verifïeer mijn identiteit
+    FirstName:
+      COPY:
+        en: First name
+        nl: Voornaam
+    LastName:
+      COPY:
+        en: Last name
+        nl: Achternaam
+    ContactDetails:
+      COPY:
+        en: Contact details
+        nl: Contactgegevens
     Basic:
       COPY:
         en: Basic information
@@ -386,8 +473,8 @@ SHARED:
         nl: Instelling
     InstitutionAt:
       COPY:
-        en: At
-        nl: Door
+        en: "At "
+        nl: "Door "
     Employee:
       COPY:
         en: Employee
@@ -639,10 +726,10 @@ SHARED:
         COPY:
           en: Edit
           nl: Bewerk
-      FullName:
+      YourName:
         COPY:
-          en: Full name
-          nl: Volledige naam
+          en: Your name
+          nl: Jouw naam
     FirstName:
       COPY:
         en: First name
@@ -762,36 +849,6 @@ SHARED:
       COPY:
         en: Failed to download your data
         nl: Downloaden mislukt
-  NameOverview:
-    Title:
-      AllDetailsOf:
-        COPY:
-          nl: Alle gegevens van
-          en: All details of
-      FullName:
-        COPY:
-          nl: Volledige naam
-          en: Full name
-    SelfAsserted:
-      COPY:
-        nl: Zelf ingevuld
-        en: Self asserted
-    Verified:
-      COPY:
-        nl: Gecontroleerd
-        en: Verified
-    AnotherSource:
-      COPY:
-        nl: Een andere bron…
-        en: Another source…
-    NotAvailable:
-      COPY:
-        nl: Niet beschikbaar
-        en: Not available
-    ProceedToAdd:
-      COPY:
-        nl: Voeg dit toe door in te loggen bij jouw instelling
-        en: Proceed to add this via your school/uni
   Security:
     Title:
       COPY:
@@ -821,8 +878,6 @@ SHARED:
       COPY:
         en: 2FA key
         nl: 2FA sleutel
-
-
     ProvidedBy:
       COPY:
         en: Provided by
@@ -1114,8 +1169,8 @@ SHARED:
           nl: Gebruik biometrie
     DeleteKey:
       COPY:
-        en: Delete key
-        nl: Sleutel verwijderen
+        en: Sleutel verwijderen
+        nl: Delete key
   ConfirmDeleteKey:
     Title:
       COPY:
@@ -1327,15 +1382,14 @@ SHARED:
     Info:
       COPY:
         en: >-
-          Each service you accessed through eduID receives certain personal data
-          (attributes) from your eduID account. For example, your name, your
-          email address or a pseudonym which the service can use to uniquely
-          identify you.
+          When you use eduID to logon to other websites, the following information can be shared.
         nl: >-
-          Elke dienst waarvoor je eduID gebruikt ontvangt bepaalde gegevens
-          (attributen) vanuit jouw eduID account. Denk hierbij aan je naam,
-          e-mailadres of aan een pseudoniem waarmee de dienst jou uniek kan
-          identificeren.
+          Wanneer je eduID gebruikt om aan te melden bij andere diensten, de volgende gegevens kunnen worden gedeeld.
+    ExplainIcon:
+      COPY:
+        en: "This icon indicates the service has access to your data."
+        nl: "Dit pictogram geeft aan dat de dienst toegang heeft tot je gegevens."
+
     AppsHeader:
       COPY:
         en: Apps you logged into using eduID.
@@ -1367,16 +1421,16 @@ SHARED:
           nl: Logingegevens
       Delete:
         COPY:
-          en: Delete login details *
-          nl: Verwijder logingegevens *
+          en: Delete these login details
+          nl: Verwijder deze logingegevens
       FirstLogin:
         COPY:
-          en: First login
-          nl: Eerste login
+          en: "First login: "
+          nl: "Eerste login: "
       UniqueEduID:
         COPY:
-          en: Unique eduID
-          nl: Unieke eduID
+          en: "eduID#: "
+          nl: "eduID#: "
       HomePage:
         COPY:
           en: Homepage
@@ -1394,7 +1448,7 @@ SHARED:
             rechtstreeks bij de dienst.
       Access:
         COPY:
-          en: Access rights
+          en: Granted access rights
           nl: Toegangsrechten
       Details:
         COPY:
@@ -1402,21 +1456,21 @@ SHARED:
           nl: Accountgegevens
       Consent:
         COPY:
-          en: Date of consent
-          nl: Datum toestemming
+          en: "Consent given on: "
+          nl: "Toestemming gegeven op: "
       Expires:
         COPY:
-          en: Date of expiry
-          nl: Vervaldatum
+          en: "Access expires on: "
+          nl: "Toegang vervalt op: "
       Revoke:
         COPY:
-          en: Revoke access
-          nl: Intrekken
+          en: Revoke these access right
+          nl: Deze toegangsrechten intrekken
   DeleteService:
     Title:
       COPY:
-        en: Delete service
-        nl: Verwijder dienst
+        en: "Delete login details of "
+        nl: "Verwijder logingegevens van "
     Description:
       COPY:
         en: >-
@@ -3389,9 +3443,7 @@ SHARED:
         COPY:
           en: >-
             When you study in the Netherlands and you want to use eduID to logon to an educational services,
-            we need to be sure it is you and not someone impersonating you.
-            
-            
+            we need to be sure it's you and not someone impersonating you
             You must therefore add the following information to your eduID
             
             • Validation of your full name by a third party
@@ -3402,8 +3454,6 @@ SHARED:
           nl: >-
             Wanneer je in Nederland studeert en je wilt met eduID inloggen bij een onderwijsdienst,
             moeten we er zeker van zijn dat jij het bent en niet iemand die zich voordoet als jij.
-            
-            
             Daarom moet je de volgende gegevens toevoegen aan jouw eduID
             
             • Validatie van je volledige naam door een derde partij
@@ -3439,17 +3489,21 @@ SHARED:
       MainExplanationText:
         COPY:
           en: |
-            eduID is a central account for users associated with Dutch education and research. It is yours and exists independent of an educational institution.
+            eduID is a central account for users
+            associated with Dutch education and research. It is yours and exists independent
+            of an educational institution.
             
             • Use it to login to several services connected to SURFconext.
             • Users without an institution account can also request an eduID.
             • eduID is a lifelong account. It stays valid after you graduate.
           nl: |
-            eduID is een centraal account voor gebruikers verbonden aan het Nederlandse onderwijs en onderzoek. Het is van jou en bestaat onafhankelijk van een onderwijsinstelling.
+            eduID is een centraal account voor gebruikers
+             verbonden aan het Nederlandse onderwijs en onderzoek.
+             Het is van jou en bestaat onafhankelijk van een onderwijsinstelling.
             
-            • Hiermee log je in op verschillende diensten die zijn aangesloten op SURFconext.
-            • Gebruikers zonder instellingsaccount kunnen ook een eduID aanvragen.
-            • eduID is een levenslang account. Het blijft geldig nadat je bent afgestudeerd.
+             • Hiermee log je in op verschillende diensten die zijn aangesloten op SURFconext.
+             • Gebruikers zonder instellingsaccount kunnen ook een eduID aanvragen.
+             • eduID is een levenslang account. Het blijft geldig nadat je bent afgestudeerd.
       CreateEduidButton:
         COPY:
           en: Create a new eduID
