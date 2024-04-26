@@ -20,7 +20,7 @@ import androidx.core.view.WindowCompat
 private val LightColors = lightColorScheme(
     primary = Color(0xFF0060AC),
     onPrimary = Color(0xFFFFFFFF),
-    primaryContainer = Color(0xFFD4E3FF),
+    primaryContainer = Color(0xFFFFFFFF),
     onPrimaryContainer = Color(0xFF001C39),
     secondary = Color(0xFF0060AC),
     onSecondary = Color(0xFFFFFFFF),
@@ -34,18 +34,18 @@ private val LightColors = lightColorScheme(
     errorContainer = Color(0xFFFFDAD6),
     onError = Color(0xFFFFFFFF),
     onErrorContainer = Color(0xFF410002),
-    background = Color(0xFFF8FDFF),
+    background = Color(0xFFFFFFFF),
     onBackground = Color(0xFF001F25),
-    surface = Color(0xFFF8FDFF),
-    onSurface = Color(0xFF001F25),
-    surfaceVariant = Color(0xFFDFE2EB),
-    onSurfaceVariant = Color(0xFF43474E),
+    surface = Color(0xFFFFFFFF),
+    onSurface = ColorSupportBlue400,
+    surfaceVariant = Color(0xFFFFFFFF),
+    onSurfaceVariant = ColorGrayScale500,
     outline = Color(0xFF73777F),
     inverseOnSurface = Color(0xFFFFFFFF),
-    inverseSurface = Color(0xFFD4E3FF),
+    inverseSurface = ColorSupportBlue400,
     inversePrimary = Color(0xFFA4C9FF),
     surfaceTint = Color(0xFF0060AC),
-    outlineVariant = Color(0xFFC3C6CF),
+    outlineVariant = ColorGrayScale400,
     scrim = Color(0xFF000000),
 )
 
@@ -96,17 +96,6 @@ fun EduidAppAndroidTheme(
 
         darkTheme -> DarkColors
         else -> LightColors
-    }
-    val view = LocalView.current
-    val context = LocalContext.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            (view.context as Activity).window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(
-                context.findActivity().window,
-                view
-            ).isAppearanceLightStatusBars = false
-        }
     }
 
     MaterialTheme(
