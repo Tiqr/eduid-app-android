@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -58,7 +59,7 @@ fun SecurityScreenContent(
     modifier = Modifier
         .fillMaxSize()
         .padding(padding)
-        .navigationBarsPadding()
+        .systemBarsPadding()
         .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
 ) {
     if (securityInfo.errorData != null) {

@@ -79,8 +79,7 @@ fun DataAndActivityScreenContent(
         .verticalScroll(rememberScrollState())
         .padding(paddingValues)
         .systemBarsPadding()
-        .padding(bottom = 24.dp)
-        .padding(horizontal = 24.dp)
+        .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
 ) {
 
     Text(
