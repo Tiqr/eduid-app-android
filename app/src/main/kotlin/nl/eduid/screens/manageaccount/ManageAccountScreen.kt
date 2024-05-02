@@ -42,8 +42,8 @@ import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.AlertWarningBackground
 import nl.eduid.ui.theme.ColorAlertRed
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.ColorGrayScaleBlack
-import nl.eduid.ui.theme.TextGreen
+import nl.eduid.ui.theme.ColorScale_Gray_Black
+import nl.eduid.ui.theme.ColorMain_Green_400
 
 @Composable
 fun ManageAccountScreen(
@@ -111,7 +111,7 @@ private fun ManageAccountScreenContent(
         Text(
             text = stringResource(R.string.MyAccount_Title_COPY),
             style = MaterialTheme.typography.titleLarge.copy(
-                color = TextGreen, textAlign = TextAlign.Start
+                color = ColorMain_Green_400, textAlign = TextAlign.Start
             ),
             modifier = Modifier.fillMaxWidth(),
         )
@@ -119,7 +119,7 @@ private fun ManageAccountScreenContent(
         Text(
             text = "${stringResource(R.string.MyAccount_AccountCreatedOn_COPY)} $dateString",
             style = MaterialTheme.typography.bodyLarge.copy(
-                color = ColorGrayScaleBlack, textAlign = TextAlign.Start
+                color = ColorScale_Gray_Black, textAlign = TextAlign.Start
             ),
             modifier = Modifier.fillMaxWidth(),
         )

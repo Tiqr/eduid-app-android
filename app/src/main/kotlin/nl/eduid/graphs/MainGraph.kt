@@ -38,7 +38,7 @@ import nl.eduid.screens.manageaccount.ManageAccountScreen
 import nl.eduid.screens.manageaccount.ManageAccountViewModel
 import nl.eduid.screens.oauth.OAuthScreen
 import nl.eduid.screens.oauth.OAuthViewModel
-import nl.eduid.screens.personalinfo.PersonalInfoScreen
+import nl.eduid.screens.personalinfo.PersonalInfoRoute
 import nl.eduid.screens.personalinfo.PersonalInfoViewModel
 import nl.eduid.screens.pinsetup.NextStep
 import nl.eduid.screens.pinsetup.RegistrationPinSetupScreen
@@ -370,7 +370,7 @@ fun MainGraph(
 
     composable(Graph.PERSONAL_INFO) {//region Home - Your Info
         val viewModel = hiltViewModel<PersonalInfoViewModel>(it)
-        PersonalInfoScreen(
+        PersonalInfoRoute(
             viewModel = viewModel,
             onEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
             onNameClicked = { name, canEditFamilyName -> navController.navigate(EditName.Form.routeWithArgs(name, canEditFamilyName)) },

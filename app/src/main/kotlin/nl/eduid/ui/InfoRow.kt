@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import nl.eduid.ui.theme.BlueText
-import nl.eduid.ui.theme.ColorGrayScaleBlack
+import nl.eduid.ui.theme.ColorScale_Gray_Black
 
 @Composable
 fun InfoRow(label: String, value: String = ""){
@@ -39,6 +39,6 @@ fun InfoRow(label: String, value: String = ""){
         }
     }
     Spacer(Modifier.height(12.dp))
-    HorizontalDivider(color = ColorGrayScaleBlack, thickness = 1.dp)
+    HorizontalDivider(color = ColorScale_Gray_Black, thickness = 1.dp)
     Spacer(Modifier.height(12.dp))
 }

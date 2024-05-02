@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.LinearProgressIndicator
@@ -24,7 +23,7 @@ import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.InfoFieldOld
-import nl.eduid.ui.theme.ButtonGreen
+import nl.eduid.ui.theme.ColorMain_Green_400
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -74,7 +73,7 @@ fun SecurityScreenContent(
 
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
-            textAlign = TextAlign.Start, color = ButtonGreen
+            textAlign = TextAlign.Start, color = ColorMain_Green_400
         ), text = stringResource(R.string.Sidebar_Security_COPY), modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))

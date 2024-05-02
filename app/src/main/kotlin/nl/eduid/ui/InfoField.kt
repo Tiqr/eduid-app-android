@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -40,7 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import nl.eduid.R
 import nl.eduid.ui.theme.BlueButton
-import nl.eduid.ui.theme.ColorGrayScale500
+import nl.eduid.ui.theme.ColorScale_Gray_500
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import java.util.Locale
 
@@ -95,7 +94,7 @@ fun InfoFieldOld(
                 text = subtitle,
                 style = MaterialTheme.typography.bodySmall.copy(
                     textAlign = TextAlign.Start,
-                    color = ColorGrayScale500,
+                    color = ColorScale_Gray_500,
                 ),
             )
         }
@@ -159,7 +158,7 @@ fun InfoFieldOld(
                 text = subtitle,
                 style = MaterialTheme.typography.bodySmall.copy(
                     textAlign = TextAlign.Start,
-                    color = ColorGrayScale500,
+                    color = ColorScale_Gray_500,
                 ),
             )
         }
@@ -177,35 +176,25 @@ fun InfoField(
     title: String,
     subtitle: String,
     modifier: Modifier = Modifier,
-) = ListItem(
-    headlineContent = {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.bodyLarge.copy(
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurface
-            ),
-            modifier = Modifier.fillMaxWidth(),
-        )
-    },
-    supportingContent = {
-        Text(
-            text = subtitle,
-            modifier = Modifier.fillMaxWidth(),
-            style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
-        )
-    },
-    trailingContent = {
-        Image(
-            painter = painterResource(id = R.drawable.edit_icon),
-            contentDescription = "",
-            modifier = Modifier.size(24.dp)
-        )
-    },
-    modifier = modifier.border(
-        color = MaterialTheme.colorScheme.onSurface,
-        shape = RoundedCornerShape(6.dp),
-        width = 2.dp
+) = ListItem(colors = ListItemDefaults.colors(
+    containerColor = MaterialTheme.colorScheme.surface,
+    headlineColor = MaterialTheme.colorScheme.onSurface,
+    supportingColor = MaterialTheme.colorScheme.onSurfaceVariant,
+    trailingIconColor = MaterialTheme.colorScheme.onSurface
+), headlineContent = {
+    Text(
+        text = title,
+        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
+    )
+}, supportingContent = { Text(text = subtitle) }, trailingContent = {
+    Icon(
+        painter = painterResource(id = R.drawable.edit_icon),
+        contentDescription = "",
+    )
+}, modifier = modifier
+    .fillMaxWidth()
+    .border(
+        color = MaterialTheme.colorScheme.onSurface, shape = RoundedCornerShape(6.dp), width = 2.dp
     )
 )
 
@@ -218,8 +207,7 @@ fun VerifiedInfoField(
     canExpand: Boolean = true,
 ) {
     var isExpanded by remember { mutableStateOf(expandedPreview) }
-    ListItem(
-        colors = ListItemDefaults.colors(trailingIconColor = MaterialTheme.colorScheme.onSurface),
+    ListItem(colors = ListItemDefaults.colors(trailingIconColor = MaterialTheme.colorScheme.onSurface),
         leadingContent = {
             Image(
                 painter = painterResource(id = R.drawable.shield_tick_blue), contentDescription = ""
@@ -230,8 +218,7 @@ fun VerifiedInfoField(
                 text = title,
                 modifier = Modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.bodyLarge.copy(
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onSurface
+                    fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurface
                 ),
             )
         },
@@ -289,9 +276,7 @@ private fun Preview_InfoFields() = EduidAppAndroidTheme {
         )
 
         VerifiedInfoField(
-            title = "Vetinari",
-            subtitle = "Verified family name",
-            expandedPreview = true
+            title = "Vetinari", subtitle = "Verified family name", expandedPreview = true
         )
     }
 }

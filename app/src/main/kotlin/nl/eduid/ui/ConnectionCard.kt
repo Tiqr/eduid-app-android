@@ -38,7 +38,7 @@ import nl.eduid.R
 import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.ui.theme.BlueButton
 import nl.eduid.ui.theme.ColorAlertRed
-import nl.eduid.ui.theme.ColorGrayScale500
+import nl.eduid.ui.theme.ColorScale_Gray_500
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import java.util.Locale
 
@@ -92,7 +92,7 @@ fun ConnectionCard(
                     text = subtitle,
                     style = MaterialTheme.typography.bodySmall.copy(
                         textAlign = TextAlign.Start,
-                        color = ColorGrayScale500,
+                        color = ColorScale_Gray_500,
                     ),
                 )
             }

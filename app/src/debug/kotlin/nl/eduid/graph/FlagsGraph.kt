@@ -1,16 +1,15 @@
 package nl.eduid.graph
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import nl.eduid.ThemeSample
 import nl.eduid.overview.OverviewScreen
 import nl.eduid.settings.EditFeatureFlagsScreen
 import nl.eduid.settings.EditFeatureFlagsViewModel
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun FlagsGraph(
     navController: NavHostController,
@@ -22,7 +21,8 @@ fun FlagsGraph(
             navController.navigate(FlagRoute.EditFeatureFlags.routeForFeatureFlags)
         }, gotoTestSettings = {
             navController.navigate(FlagRoute.EditFeatureFlags.routeForTestSettings)
-        })
+        }, goToTheme = { navController.navigate(FlagRoute.TestTheme.route) }
+        )
     }
     composable(
         route = FlagRoute.EditFeatureFlags.routeWithArgs,
@@ -30,5 +30,10 @@ fun FlagsGraph(
     ) {
         val viewModel = hiltViewModel<EditFeatureFlagsViewModel>(it)
         EditFeatureFlagsScreen(viewModel)
+    }
+    composable(
+        route = FlagRoute.TestTheme.route,
+    ) {
+        ThemeSample()
     }
 }

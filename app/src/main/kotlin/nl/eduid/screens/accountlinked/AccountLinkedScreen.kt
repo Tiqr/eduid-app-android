@@ -32,7 +32,7 @@ import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.InfoFieldOld
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextGreen
+import nl.eduid.ui.theme.ColorMain_Green_400
 
 @Composable
 fun AccountLinkedScreen(
@@ -89,7 +89,7 @@ private fun AccountFailedLinkContent(
         Spacer(Modifier.height(36.dp))
         Text(
             style = MaterialTheme.typography.titleLarge.copy(
-                textAlign = TextAlign.Start, color = TextGreen
+                textAlign = TextAlign.Start, color = ColorMain_Green_400
             ),
             text = stringResource(R.string.NameUpdated_Title_YourSchool_COPY),
             modifier = Modifier.fillMaxWidth()
@@ -141,7 +141,7 @@ private fun AccountLinkedContent(
     Spacer(Modifier.height(36.dp))
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
-            textAlign = TextAlign.Start, color = TextGreen
+            textAlign = TextAlign.Start, color = ColorMain_Green_400
         ),
         text = stringResource(R.string.NameUpdated_Title_YourSchool_COPY),
         modifier = Modifier.fillMaxWidth()

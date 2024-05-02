@@ -42,10 +42,10 @@ import nl.eduid.R
 import nl.eduid.screens.dataactivity.ServiceProvider
 import nl.eduid.ui.theme.BlueButton
 import nl.eduid.ui.theme.ColorAlertRed
-import nl.eduid.ui.theme.ColorGrayScale500
+import nl.eduid.ui.theme.ColorScale_Gray_500
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.InfoTabDarkFill
-import nl.eduid.ui.theme.ColorGrayScaleBlack
+import nl.eduid.ui.theme.ColorScale_Gray_Black
 import java.util.Locale
 
 @Composable
@@ -119,7 +119,7 @@ fun LoginInfoCard(
                     text = subtitle,
                     style = MaterialTheme.typography.bodySmall.copy(
                         textAlign = TextAlign.Start,
-                        color = ColorGrayScale500,
+                        color = ColorScale_Gray_500,
                     ),
                 )
             }
@@ -195,7 +195,7 @@ private fun ServiceProviderBlock(
         text = stringResource(R.string.DataActivity_Details_DeleteDisclaimer_COPY),
         style = MaterialTheme.typography.bodySmall.copy(
             textAlign = TextAlign.Start,
-            color = ColorGrayScaleBlack,
+            color = ColorScale_Gray_Black,
         ),
     )
     Spacer(Modifier.height(32.dp))

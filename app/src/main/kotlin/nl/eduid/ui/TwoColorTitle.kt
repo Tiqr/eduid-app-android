@@ -11,9 +11,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import nl.eduid.ui.theme.ColorGrayScaleBlack
+import nl.eduid.ui.theme.ColorScale_Gray_Black
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextGreen
+import nl.eduid.ui.theme.ColorMain_Green_400
 
 
 @Composable
@@ -30,11 +30,11 @@ fun TwoColorTitle(
 ) {
     Text(
         text = firstPart,
-        style = textStyle.copy(color = if (isEditTitle) ColorGrayScaleBlack else TextGreen),
+        style = textStyle.copy(color = if (isEditTitle) ColorScale_Gray_Black else ColorMain_Green_400),
     )
     Text(
         text = secondPart,
-        style = textStyle.copy(color = if (isEditTitle) TextGreen else ColorGrayScaleBlack),
+        style = textStyle.copy(color = if (isEditTitle) ColorMain_Green_400 else ColorScale_Gray_Black),
     )
 }
 

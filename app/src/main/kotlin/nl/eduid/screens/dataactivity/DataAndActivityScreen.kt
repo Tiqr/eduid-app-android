@@ -30,7 +30,7 @@ import nl.eduid.ui.DeleteServiceDialog
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.LoginInfoCard
 import nl.eduid.ui.getDateTimeString
-import nl.eduid.ui.theme.ButtonGreen
+import nl.eduid.ui.theme.ColorMain_Green_400
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -84,7 +84,7 @@ fun DataAndActivityScreenContent(
 
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
-            textAlign = TextAlign.Start, color = ButtonGreen
+            textAlign = TextAlign.Start, color = ColorMain_Green_400
         ),
         text = stringResource(R.string.DataActivity_Title_COPY),
         modifier = Modifier.fillMaxWidth()
