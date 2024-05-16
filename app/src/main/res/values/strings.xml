@@ -139,7 +139,7 @@
   <string name="NameUpdated_Title_ContactedError_COPY">"could not be contacted"</string>
   <string name="NameUpdated_Title_FailReason_AlreadyLinked_COPY">"Reason: The account is already linked: %1$s"</string>
   <string name="NameUpdated_Title_FailReason_SessionExpired_COPY">"Reason: Your session expired."</string>
-  <string name="NameUpdated_Description_COPY">"The following information has been added to your eduID and can now be shared."</string>
+  <string name="NameUpdated_Description_COPY">"The following information has been added to your eduID and can now be shared.!"</string>
   <string name="NameUpdated_FullName_COPY">"Full name"</string>
   <string name="NameUpdated_Continue_COPY">"Continue"</string>
   <string name="EditName_Title_Edit_COPY">"Edit"</string>
@@ -171,16 +171,16 @@
   <string name="MyAccount_DownloadSuccess_COPY">"Your data was downloaded in your downloads folder."</string>
   <string name="MyAccount_DownloadError_COPY">"Failed to download your data"</string>
   <string name="Security_Title_COPY">"Security settings"</string>
-  <string name="Security_SubTitle_COPY">"We provide different methods to sign in using your eduID account."</string>
-  <string name="Security_SecondSubTitle_COPY">"Sign-in methods"</string>
+  <string name="Security_SubTitle_COPY">"How you sign in with eduID"</string>
+  <string name="Security_OtherMethods_COPY">"Other methods"</string>
   <string name="Security_AddPassword_COPY">"Add a password"</string>
   <string name="Security_PasswordPlaceholder_COPY">"• • • • • • • • • •"</string>
-  <string name="Security_ChangePassword_COPY">"Change your password"</string>
-  <string name="Security_TwoFAKey_COPY">"2FA key"</string>
+  <string name="Security_ChangePassword_COPY">"Password"</string>
+  <string name="Security_TwoFAKey_COPY">"Security key"</string>
   <string name="Security_ProvidedBy_COPY">"Provided by"</string>
   <string name="Security_NotAddedYet_COPY">"Not added to your eduID yet"</string>
   <string name="Security_NotSupported_COPY">"Not supported"</string>
-  <string name="Security_UseMagicLink_COPY">"Send a magic link to"</string>
+  <string name="Security_UseMagicLink_COPY">"Magic link email"</string>
   <string name="Security_AddSecurityKeyInfo_COPY">"You can add security keys to your eduID account which can be used to login. You can use, for example, the built-in sensor of your device (TouchID, FaceID) or a separate hardware key (YubiKey)."</string>
   <string name="Security_RememberMeInfo_COPY">"&lt;strong&gt;Your device is currently remembered. You will be automatically logged in to eduID.&lt;/strong&gt;"</string>
   <string name="Security_NoRememberMeInfo_COPY">"When logging in with your eduID, you can choose to &lt;strong&gt;stay logged in&lt;/strong&gt;. This remembers your login on the device you use at that moment."</string>
@@ -709,7 +709,7 @@
   <string name="CreateEduID_FirstTimeDialog_AddInformationBoldPart_COPY">"Add this information"</string>
   <string name="CreateEduID_FirstTimeDialog_SkipButtonTitle_COPY">"Skip this"</string>
   <string name="CreateEduID_Explanation_MainTitleLabel_COPY">"Don't have an eduID yet?"</string>
-  <string name="CreateEduID_Explanation_MainExplanationText_COPY">"eduID is a central account for users\nassociated with Dutch education and research. It is yours and exists independent\nof an educational institution.\n\n• Use it to login to several services connected to SURFconext.\n• Users without an institution account can also request an eduID.\n• eduID is a lifelong account. It stays valid after you graduate.\n"</string>
+  <string name="CreateEduID_Explanation_MainExplanationText_COPY">"eduID is a central account for users associated with Dutch education and research. It is yours and exists independent of an educational institution.\n\n• Use it to login to several services connected to SURFconext.\n• Users without an institution account can also request an eduID.\n• eduID is a lifelong account. It stays valid after you graduate.\n"</string>
   <string name="CreateEduID_Explanation_CreateEduidButton_COPY">"Create a new eduID"</string>
   <string name="CreateEduID_Create_MainTitleLabel_COPY">"Create a new eduID"</string>
   <string name="CreateEduID_Created_MainTitleLabel_COPY">"Your eduID has been created"</string>
@@ -785,7 +785,6 @@
   <string name="Permission_Scan_COPY">"Please grant access to the camera."</string>
   <string name="Permission_OAuth_Title_COPY">"Authorize app"</string>
   <string name="Permission_OAuth_Description_COPY">"Allow the mobile application to access your data."</string>
-  <string name="Profile_You_COPY">"you"</string>
   <string name="AppData_InitializationError_Generic_COPY">"Failed to initialize AppData. Please retry."</string>
   <string name="AppData_InitializationError_WithException_COPY">"Failed to initialize AppData. Reason: %1$s"</string>
 </resources>
