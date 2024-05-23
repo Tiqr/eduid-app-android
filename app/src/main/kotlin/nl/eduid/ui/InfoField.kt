@@ -22,6 +22,7 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,15 +32,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import nl.eduid.R
+import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.ui.theme.BlueButton
 import nl.eduid.ui.theme.ColorScale_Gray_500
+import nl.eduid.ui.theme.ColorSupport_Blue_100
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import java.util.Locale
 
@@ -194,7 +199,9 @@ fun InfoField(
 }, modifier = modifier
     .fillMaxWidth()
     .border(
-        color = MaterialTheme.colorScheme.onSurface, shape = RoundedCornerShape(6.dp), width = 2.dp
+        color = MaterialTheme.colorScheme.onSurface,
+        shape = RoundedCornerShape(6.dp),
+        width = 2.dp
     )
 )
 
@@ -202,12 +209,21 @@ fun InfoField(
 fun VerifiedInfoField(
     title: String,
     subtitle: String,
+    confirmedByInstitution: PersonalInfo.InstitutionAccount?,
     modifier: Modifier = Modifier,
+    openVerifiedInformation: () -> Unit = {},
     expandedPreview: Boolean = false,
-    canExpand: Boolean = true,
 ) {
     var isExpanded by remember { mutableStateOf(expandedPreview) }
-    ListItem(colors = ListItemDefaults.colors(trailingIconColor = MaterialTheme.colorScheme.onSurface),
+    val containerColor = if (isExpanded) {
+        ColorSupport_Blue_100
+    } else {
+        MaterialTheme.colorScheme.surface
+    }
+    ListItem(colors = ListItemDefaults.colors(
+        containerColor = containerColor,
+        trailingIconColor = MaterialTheme.colorScheme.onSurface
+    ),
         leadingContent = {
             Image(
                 painter = painterResource(id = R.drawable.shield_tick_blue), contentDescription = ""
@@ -223,20 +239,38 @@ fun VerifiedInfoField(
             )
         },
         supportingContent = {
-            Column {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = subtitle,
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 4.dp),
                     style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
                 )
                 if (isExpanded) {
-                    Spacer(modifier = Modifier.height(8.dp))
                     HorizontalDivider(thickness = 2.dp, color = MaterialTheme.colorScheme.onSurface)
-                    Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = subtitle,
-                        modifier = Modifier.fillMaxWidth(),
+                        text = stringResource(
+                            id = R.string.Profile_VerifiedBy_COPY,
+                            confirmedByInstitution?.institution.orEmpty()
+                        ),
+                        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
                     )
+                    VerifiedRowInfo(
+                        R.string.Profile_VerifiedOnNoPlaceholder_COPY,
+                        confirmedByInstitution?.createdStamp?.getDateString().orEmpty()
+                    )
+                    VerifiedRowInfo(
+                        R.string.Profile_VerifiedValidUntil_COPY,
+                        confirmedByInstitution?.expiryStamp?.getDateString().orEmpty()
+                    )
+                    HorizontalDivider(thickness = 2.dp, color = MaterialTheme.colorScheme.onSurface)
+                    TextButton(onClick = openVerifiedInformation) {
+                        Text(
+                            stringResource(id = R.string.Profile_ManageYourVerifiedInformation_COPY),
+                            textDecoration = TextDecoration.Underline
+                        )
+                    }
                 }
             }
         },
@@ -264,6 +298,15 @@ fun VerifiedInfoField(
             })
 }
 
+@Composable
+fun VerifiedRowInfo(prefixId: Int, info: String) = Row {
+    Text(text = stringResource(prefixId))
+    Text(
+        text = info,
+        fontWeight = FontWeight.Bold
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
 private fun Preview_InfoFields() = EduidAppAndroidTheme {
@@ -272,21 +315,14 @@ private fun Preview_InfoFields() = EduidAppAndroidTheme {
             title = "Vetinari", subtitle = "First name"
         )
         VerifiedInfoField(
-            title = "Vetinari", subtitle = "First Name", canExpand = true
+            title = "Vetinari", subtitle = "First Name",
+            confirmedByInstitution = PersonalInfo.generateInstitutionAccountList()[0],
         )
 
         VerifiedInfoField(
-            title = "Vetinari", subtitle = "Verified family name", expandedPreview = true
+            title = "Vetinari", subtitle = "Verified family name",
+            confirmedByInstitution = PersonalInfo.generateInstitutionAccountList()[0],
+            expandedPreview = true
         )
     }
 }
-
-
-@Preview
-@Composable
-private fun Preview_OldInfoField() = EduidAppAndroidTheme {
-    InfoFieldOld(
-        title = "Vetinari", subtitle = "Lord", label = "Full Name"
-    )
-}
-

@@ -8,6 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import nl.eduid.BuildConfig
 import nl.eduid.di.EduIdScope
 import nl.eduid.di.api.EduIdApi
@@ -23,6 +24,7 @@ import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.tiqr.data.api.response.ApiResponseAdapterFactory
+import org.tiqr.data.di.DefaultDispatcher
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -52,7 +54,8 @@ internal object RepositoryModule {
     internal fun providesDataAssistant(
         personalInfoRepository: PersonalInfoRepository,
         storageRepository: StorageRepository,
-    ) = DataAssistant(personalInfoRepository, storageRepository)
+        @DefaultDispatcher dispatcher: CoroutineDispatcher,
+    ) = DataAssistant(personalInfoRepository, storageRepository, dispatcher)
 
     @Provides
     @Singleton

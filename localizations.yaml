@@ -361,6 +361,14 @@ SHARED:
       COPY:
         en: Your identity
         nl: Jouw identiteit
+    VerifiedOnNoPlaceholder:
+      COPY:
+        en: "• on "
+        nl: "• op "
+    VerifiedValidUntil:
+      COPY:
+        en: "• valid until "
+        nl: "• geldig tot "
     Verified:
       COPY:
         nl: geverifieerd

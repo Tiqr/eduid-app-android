@@ -8,9 +8,7 @@ data class PersonalInfo(
     val seflAssertedName: SelfAssertedName = SelfAssertedName(),
     val confirmedName: ConfirmedName = ConfirmedName(),
     val nameProvider: String? = null,
-    val nameStatus: InfoStatus = InfoStatus.Final,
     val email: String = "",
-    val emailStatus: InfoStatus = InfoStatus.Final,
     val institutionAccounts: List<InstitutionAccount> = emptyList(),
     val dateCreated: Long = 0,
 ) {
@@ -31,18 +29,39 @@ data class PersonalInfo(
             return PersonalInfo(
                 name = "R. van Hamersdonksveer",
                 seflAssertedName = SelfAssertedName("Pratchett", "Terence David John", "Terry"),
-                confirmedName = ConfirmedName("Pratchett", "Terence David John"),
+                confirmedName = ConfirmedName(),
                 nameProvider = "Universiteit van Amsterdam",
-                nameStatus = InfoStatus.Final,
                 email = "r.v.hamersdonksveer@uva.nl",
-                emailStatus = InfoStatus.Editable,
                 institutionAccounts = emptyList(),
             )
         }
+
+        fun verifiedDemoData(): PersonalInfo {
+            return PersonalInfo(
+                name = "R. van Hamersdonksveer",
+                seflAssertedName = SelfAssertedName("Pratchett", "Terence David John", "Terry"),
+                confirmedName = ConfirmedName(
+                    familyName = "Pratchett",
+                    familyNameConfirmedBy = "1",
+                    givenName = "Terence David John",
+                    givenNameConfirmedBy = "1"
+                ),
+                nameProvider = "Universiteit van Amsterdam",
+                email = "r.v.hamersdonksveer@uva.nl",
+                institutionAccounts = generateInstitutionAccountList(),
+            )
+        }
+        fun generateInstitutionAccountList() = listOf(
+            InstitutionAccount(
+                id = "1",
+                role = "Librarian",
+                roleProvider = "Library",
+                institution = "Unseen University",
+                affiliationString = "Librarian",
+                createdStamp = System.currentTimeMillis(),
+                expiryStamp = System.currentTimeMillis()
+            )
+        )
     }
 
-    sealed class InfoStatus {
-        object Editable : InfoStatus()
-        object Final : InfoStatus()
-    }
 }

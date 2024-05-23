@@ -2,55 +2,77 @@ package nl.eduid.screens.personalinfo
 
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flattenConcat
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.di.assist.DataAssistant
+import nl.eduid.di.assist.SaveableResult
 import nl.eduid.di.model.ConfirmedName
 import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.di.model.UnauthorizedException
 import nl.eduid.di.model.UserDetails
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class PersonalInfoViewModel @Inject constructor(
     private val assistant: DataAssistant,
 ) : ViewModel() {
-    private var cachedUserDetails: UserDetails? = null
-    var uiState by mutableStateOf(UiState())
-        private set
+    private val stateFromNetwork: Flow<UiState> = assistant.observableDetails.map { it ->
+        when (it) {
+            is SaveableResult.Success -> {
+                val personalInfo = mapUserDetailsToPersonalInfo(it.data)
+                UiState(isLoading = false, personalInfo = personalInfo)
+            }
 
-    init {
-        viewModelScope.launch {
-            uiState = UiState(isLoading = true)
-            try {
-                cachedUserDetails = assistant.getErringUserDetails()
-                uiState = cachedUserDetails?.let { details ->
-                    val personalInfo = mapUserDetailsToPersonalInfo(details)
-                    UiState(isLoading = false, personalInfo = personalInfo)
-                } ?: UiState(
-                    isLoading = false, errorData = ErrorData(
-                        titleId = R.string.ResponseErrors_UnauthorizedTitle_COPY,
-                        messageId = R.string.ResponseErrors_PersonalDetailsRetrieveError_COPY
-                    )
-                )
-            } catch (e: UnauthorizedException) {
-                uiState = uiState.copy(
+            is SaveableResult.LoadError -> if (it.exception is UnauthorizedException) {
+                UiState(
                     isLoading = false, errorData = ErrorData(
                         titleId = R.string.ResponseErrors_UnauthorizedTitle_COPY,
                         messageId = R.string.ResponseErrors_UnauthorizedText_COPY
                     )
                 )
+            } else {
+                UiState(
+                    isLoading = false, errorData = ErrorData(
+                        titleId = R.string.ResponseErrors_UnauthorizedTitle_COPY,
+                        messageId = R.string.ResponseErrors_PersonalDetailsRetrieveError_COPY
+                    )
+                )
             }
 
+            null -> UiState(
+                isLoading = false, errorData = ErrorData(
+                    titleId = R.string.ResponseErrors_UnauthorizedTitle_COPY,
+                    messageId = R.string.ResponseErrors_PersonalDetailsRetrieveError_COPY
+                )
+            )
         }
+
     }
+
+    private val uiStateInternal: MutableStateFlow<UiState> =
+        MutableStateFlow(UiState(isLoading = true))
+
+    val uiState =
+        flowOf(stateFromNetwork, uiStateInternal).flattenConcat().distinctUntilChanged().stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(3_000),
+            initialValue = UiState(isLoading = true),
+        )
 
     private suspend fun mapUserDetailsToPersonalInfo(userDetails: UserDetails): PersonalInfo {
         var personalInfo = convertToUiData(userDetails)
@@ -81,27 +103,28 @@ class PersonalInfoViewModel @Inject constructor(
     }
 
     fun clearErrorData() {
-        uiState = uiState.copy(errorData = null)
+        uiStateInternal.value = uiState.value.copy(errorData = null)
     }
 
     fun removeConnection(index: Int) = viewModelScope.launch {
-        val details = cachedUserDetails ?: return@launch
-        uiState = uiState.copy(isLoading = true)
+        val details = assistant.observableDetails.map { it.mapToFirst() }.first()
+        if (details == null) return@launch
+
+        uiStateInternal.value = uiState.value.copy(isLoading = true)
         try {
             val linkedAccount = details.linkedAccounts[index]
             val newDetails = assistant.removeConnection(linkedAccount)
-            uiState = newDetails?.let { updatedDetails ->
-                cachedUserDetails = updatedDetails
+            uiStateInternal.value = newDetails?.let { updatedDetails ->
                 val personalInfo = mapUserDetailsToPersonalInfo(updatedDetails)
-                uiState.copy(isLoading = false, personalInfo = personalInfo)
-            } ?: uiState.copy(
+                uiState.value.copy(isLoading = false, personalInfo = personalInfo)
+            } ?: uiState.value.copy(
                 isLoading = false, errorData = ErrorData(
                     titleId = R.string.Generic_RequestError_Title_COPY,
                     messageId = R.string.ResponseErrors_GeneralRequestError_COPY,
                 )
             )
         } catch (e: UnauthorizedException) {
-            uiState = uiState.copy(
+            uiStateInternal.value = uiState.value.copy(
                 isLoading = false, errorData = ErrorData(
                     titleId = R.string.Generic_RequestError_Title_COPY,
                     messageId = R.string.ResponseErrors_UnauthorizedText_COPY
@@ -111,15 +134,15 @@ class PersonalInfoViewModel @Inject constructor(
     }
 
     fun requestLinkUrl() = viewModelScope.launch {
-        uiState = uiState.copy(isLoading = true, linkUrl = null)
+        uiStateInternal.value = uiState.value.copy(isLoading = true, linkUrl = null)
         try {
             val response = assistant.getStartLinkAccount()
-            uiState = if (response != null) {
-                uiState.copy(
+            uiStateInternal.value = if (response != null) {
+                uiState.value.copy(
                     linkUrl = createLaunchIntent(response), isLoading = false
                 )
             } else {
-                uiState.copy(
+                uiState.value.copy(
                     isLoading = false, errorData = ErrorData(
                         titleId = R.string.Generic_RequestError_Title_COPY,
                         messageId = R.string.ResponseErrors_GeneralRequestError_COPY
@@ -127,35 +150,7 @@ class PersonalInfoViewModel @Inject constructor(
                 )
             }
         } catch (e: UnauthorizedException) {
-            uiState = uiState.copy(
-                isLoading = false, errorData = ErrorData(
-                    titleId = R.string.Generic_RequestError_Title_COPY,
-                    messageId = R.string.ResponseErrors_UnauthorizedText_COPY
-                )
-            )
-        }
-    }
-
-    fun updateName(givenName: String, familyName: String) = viewModelScope.launch {
-        val currentDetails = cachedUserDetails ?: return@launch
-        uiState = uiState.copy(isLoading = true)
-        try {
-            val validatedSelfName =
-                SelfAssertedName(familyName = givenName.ifEmpty { currentDetails.givenName },
-                    givenName = familyName.ifEmpty { currentDetails.familyName })
-            val newDetails = assistant.updateName(validatedSelfName)
-            uiState = newDetails?.let { updatedDetails ->
-                cachedUserDetails = updatedDetails
-                val personalInfo = mapUserDetailsToPersonalInfo(updatedDetails)
-                uiState.copy(isLoading = false, personalInfo = personalInfo)
-            } ?: uiState.copy(
-                isLoading = false, errorData = ErrorData(
-                    titleId = R.string.Generic_RequestError_Title_COPY,
-                    messageId = R.string.ResponseErrors_GeneralRequestError_COPY
-                )
-            )
-        } catch (e: UnauthorizedException) {
-            uiState = uiState.copy(
+            uiStateInternal.value = uiState.value.copy(
                 isLoading = false, errorData = ErrorData(
                     titleId = R.string.Generic_RequestError_Title_COPY,
                     messageId = R.string.ResponseErrors_UnauthorizedText_COPY
@@ -219,11 +214,15 @@ class PersonalInfoViewModel @Inject constructor(
                 givenNameConfirmedBy = givenNameConfirmer?.institutionIdentifier
             ),
             nameProvider = nameProvider,
-            nameStatus = PersonalInfo.InfoStatus.Final,
             email = email,
-            emailStatus = PersonalInfo.InfoStatus.Editable,
             institutionAccounts = institutionAccounts,
             dateCreated = dateCreated,
         )
     }
+}
+
+fun SaveableResult<UserDetails>?.mapToFirst(): UserDetails? = when (this) {
+    is SaveableResult.Success -> this.data
+    is SaveableResult.LoadError -> null
+    else -> null
 }

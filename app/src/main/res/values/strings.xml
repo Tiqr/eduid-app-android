@@ -64,6 +64,8 @@
   <string name="Profile_Title_COPY">"Your personal info"</string>
   <string name="Profile_Info_COPY">"When you use eduID to logon to other websites, some of your personal information will be shared."</string>
   <string name="Profile_YourIdentity_COPY">"Your identity"</string>
+  <string name="Profile_VerifiedOnNoPlaceholder_COPY">"• on "</string>
+  <string name="Profile_VerifiedValidUntil_COPY">"• valid until "</string>
   <string name="Profile_Verified_COPY">"verified"</string>
   <string name="Profile_NotVerified_COPY">"not verified"</string>
   <string name="Profile_VerifiedGivenName_COPY">"Verified given name"</string>

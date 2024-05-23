@@ -64,6 +64,8 @@
   <string name="Profile_Title_COPY">"Jouw persoonlijke informatie"</string>
   <string name="Profile_Info_COPY">"Wanneer je eduID gebruikt om in te loggen op andere websites, kan jouw persoonlijke informatie worden gedeeld."</string>
   <string name="Profile_YourIdentity_COPY">"Jouw identiteit"</string>
+  <string name="Profile_VerifiedOnNoPlaceholder_COPY">"• op "</string>
+  <string name="Profile_VerifiedValidUntil_COPY">"• geldig tot "</string>
   <string name="Profile_Verified_COPY">"geverifieerd"</string>
   <string name="Profile_NotVerified_COPY">"niet geverifieerd"</string>
   <string name="Profile_VerifiedGivenName_COPY">"Geverifieerde voornaam"</string>

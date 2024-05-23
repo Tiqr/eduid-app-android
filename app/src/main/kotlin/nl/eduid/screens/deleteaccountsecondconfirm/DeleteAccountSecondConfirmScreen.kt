@@ -51,10 +51,10 @@ import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
-import nl.eduid.ui.theme.AlertRedBackground
 import nl.eduid.ui.theme.ColorAlertRed
 import nl.eduid.ui.theme.ColorMain_Green_400
 import nl.eduid.ui.theme.ColorScale_Gray_Black
+import nl.eduid.ui.theme.ColorSupport_Blue_100
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -149,7 +149,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = AlertRedBackground)
+                .background(color = ColorSupport_Blue_100)
         ) {
             val (image, text) = createRefs()
             Image(painter = painterResource(R.drawable.warning_icon_red),
