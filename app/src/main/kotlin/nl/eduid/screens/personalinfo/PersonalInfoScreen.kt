@@ -187,8 +187,15 @@ fun PersonalInfoScreen(
                 .background(MaterialTheme.colorScheme.tertiaryContainer)
                 .padding(vertical = 12.dp, horizontal = 24.dp),
         ) {
+            val dateFormat = stringResource(id = R.string.ManageAccount_CreatedAt_COPY)
             OutlinedButton(
-                onClick = { onManageAccountClicked(personalInfo.dateCreated.getDateTimeString("EEEE, dd MMMM yyyy 'at' HH:MM")) },
+                onClick = {
+                    onManageAccountClicked(
+                        personalInfo.dateCreated.getDateTimeString(
+                            dateFormat
+                        )
+                    )
+                },
                 shape = RoundedCornerShape(CornerSize(6.dp)),
                 modifier = Modifier
                     .sizeIn(minHeight = 48.dp)
