@@ -208,7 +208,6 @@ fun EditNameFormContent(
             modifier = Modifier.widthIn(min = 140.dp),
             text = stringResource(R.string.Email_Save_COPY),
             onClick = onUpdateName,
-            buttonTextColor = Color.White,
             enabled = submitEnable,
         )
     }

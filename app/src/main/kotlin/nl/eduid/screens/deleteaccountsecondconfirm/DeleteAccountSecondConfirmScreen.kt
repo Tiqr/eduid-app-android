@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -33,9 +32,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -53,13 +50,12 @@ import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
-import nl.eduid.ui.theme.AlertRedBackground
+import nl.eduid.ui.SecondaryButton
 import nl.eduid.ui.theme.ColorAlertRed
-import nl.eduid.ui.theme.ColorGrayScale500
+import nl.eduid.ui.theme.ColorMain_Green_400
+import nl.eduid.ui.theme.ColorScale_Gray_Black
+import nl.eduid.ui.theme.ColorSupport_Blue_100
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.ColorGrayScaleBlack
-import nl.eduid.ui.theme.TextGreen
-import nl.eduid.ui.theme.TextGrey
 
 @Composable
 fun DeleteAccountSecondConfirmScreen(
@@ -95,7 +91,9 @@ fun DeleteAccountSecondConfirmScreen(
     )
 }
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(
+    ExperimentalLayoutApi::class
+)
 @Composable
 private fun DeleteAccountSecondConfirmScreenContent(
     fullNameInput: String = "",
@@ -134,7 +132,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
                 Text(
                     text = stringResource(R.string.Account_DeleteAccountSure_COPY),
                     style = MaterialTheme.typography.titleLarge.copy(
-                        color = TextGreen, textAlign = TextAlign.Start
+                        color = ColorMain_Green_400, textAlign = TextAlign.Start
                     ),
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -151,7 +149,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = AlertRedBackground)
+                .background(color = ColorSupport_Blue_100)
         ) {
             val (image, text) = createRefs()
             Image(painter = painterResource(R.drawable.warning_icon_red),
@@ -179,7 +177,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
                 Text(
                     text = stringResource(R.string.ConfirmDelete_TypeNameToConfirm_COPY),
                     style = MaterialTheme.typography.bodyLarge.copy(
-                        color = ColorGrayScaleBlack, textAlign = TextAlign.Start
+                        color = ColorScale_Gray_Black, textAlign = TextAlign.Start
                     ),
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -205,20 +203,16 @@ private fun DeleteAccountSecondConfirmScreenContent(
             .imePadding()
             .padding(bottom = 24.dp),
     ) {
-        PrimaryButton(
+        SecondaryButton(
             modifier = Modifier.widthIn(min = 140.dp),
             text = stringResource(R.string.Button_Cancel_COPY),
             onClick = goBack,
-            buttonBackgroundColor = Color.Transparent,
-            buttonTextColor = TextGrey,
-            buttonBorderColor = ColorGrayScale500,
         )
         PrimaryButton(
             modifier = Modifier.widthIn(min = 140.dp),
             text = stringResource(R.string.ConfirmDelete_Button_Confirm_COPY),
             onClick = onDeleteAccountPressed,
             buttonBackgroundColor = ColorAlertRed,
-            buttonTextColor = Color.White,
             enabled = fullNameInput.isNotBlank(),
         )
     }

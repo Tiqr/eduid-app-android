@@ -5,6 +5,7 @@ import android.os.Environment
 import android.util.AtomicFile
 import androidx.core.util.writeText
 import nl.eduid.di.api.EduIdApi
+import nl.eduid.di.assist.processResponse
 import nl.eduid.di.model.ConfirmDeactivationCode
 import nl.eduid.di.model.ConfirmPhoneCode
 import nl.eduid.di.model.DeleteServiceRequest
@@ -23,6 +24,11 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 
 class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
+
+    suspend fun getUserDetailsResult(): Result<UserDetails> {
+        val response = eduIdApi.getUserDetails()
+        return processResponse(response = response)
+    }
 
     suspend fun getUserDetails(): UserDetails? = try {
         val response = eduIdApi.getUserDetails()

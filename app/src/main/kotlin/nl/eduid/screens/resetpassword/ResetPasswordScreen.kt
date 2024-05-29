@@ -40,8 +40,8 @@ import nl.eduid.graphs.RequestEduIdLinkSent.CHANGE_PASSWORD_REASON
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
-import nl.eduid.ui.theme.ButtonGreen
-import nl.eduid.ui.theme.ColorGrayScale500
+import nl.eduid.ui.theme.ColorScale_Gray_500
+import nl.eduid.ui.theme.ColorMain_Green_400
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextGrey
 
@@ -118,7 +118,7 @@ fun ResetPasswordScreenContent(
         } else {
             Text(
                 style = MaterialTheme.typography.titleLarge.copy(
-                    textAlign = TextAlign.Start, color = ButtonGreen
+                    textAlign = TextAlign.Start, color = ColorMain_Green_400
                 ), text = if (password == Password.Add) {
                     stringResource(R.string.PasswordResetLink_Title_AddPassword_COPY)
                 } else {
@@ -149,15 +149,12 @@ fun ResetPasswordScreenContent(
             text = stringResource(R.string.PasswordResetLink_Button_Cancel_COPY),
             onClick = goBack,
             buttonBackgroundColor = Color.Transparent,
-            buttonTextColor = TextGrey,
-            buttonBorderColor = ColorGrayScale500,
         )
         PrimaryButton(
             enabled = !inProgress,
             modifier = Modifier.widthIn(min = 140.dp),
             text = stringResource(R.string.PasswordResetLink_Button_SendEmail_COPY),
             onClick = onResetPasswordClicked,
-            buttonTextColor = Color.White,
         )
     }
 

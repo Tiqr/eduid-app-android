@@ -23,7 +23,7 @@ import nl.eduid.R
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.ColorGrayScaleBlack
+import nl.eduid.ui.theme.ColorScale_Gray_Black
 
 @Composable
 fun RequestEduIdStartScreen(
@@ -49,7 +49,7 @@ fun RequestEduIdStartScreen(
                 text = stringResource(R.string.CreateEduID_Explanation_MainTitleLabel_COPY),
                 style = MaterialTheme.typography.titleLarge.copy(
                     textAlign = TextAlign.Start,
-                    color = ColorGrayScaleBlack
+                    color = ColorScale_Gray_Black
                 ),
                 modifier = Modifier
                     .fillMaxWidth()

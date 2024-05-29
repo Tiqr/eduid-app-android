@@ -55,6 +55,11 @@ ANDROID:
       COPY:
         en: you
         nl: Zelf
+  ManageAccount:
+    CreatedAt:
+      COPY:
+        en: "EEEE, dd MMMM yyyy 'at' HH:MM"
+        nl: "EEEE, dd MMMM yyyy 'om' HH:MM"
   AppData:
     InitializationError:
       Generic:
@@ -361,6 +366,14 @@ SHARED:
       COPY:
         en: Your identity
         nl: Jouw identiteit
+    VerifiedOnNoPlaceholder:
+      COPY:
+        en: "• on "
+        nl: "• op "
+    VerifiedValidUntil:
+      COPY:
+        en: "• valid until "
+        nl: "• geldig tot "
     Verified:
       COPY:
         nl: geverifieerd

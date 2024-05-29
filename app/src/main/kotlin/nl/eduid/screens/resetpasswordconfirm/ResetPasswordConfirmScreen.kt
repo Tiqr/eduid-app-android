@@ -59,10 +59,10 @@ import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
-import nl.eduid.ui.theme.ButtonGreen
-import nl.eduid.ui.theme.ColorGrayScale500
+import nl.eduid.ui.theme.ColorScale_Gray_500
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.ColorGrayScaleBlack
+import nl.eduid.ui.theme.ColorScale_Gray_Black
+import nl.eduid.ui.theme.ColorMain_Green_400
 import nl.eduid.ui.theme.TextGrey
 
 @Composable
@@ -152,7 +152,7 @@ fun ResetPasswordConfirmScreenContent(
             Column() {
                 Text(
                     style = MaterialTheme.typography.titleLarge.copy(
-                        textAlign = TextAlign.Start, color = ButtonGreen
+                        textAlign = TextAlign.Start, color = ColorMain_Green_400
                     ), text = if (isAddPassword) {
                         stringResource(R.string.Password_AddTitle_COPY)
                     } else {
@@ -244,11 +244,11 @@ fun ResetPasswordConfirmScreenContent(
         }
         if (!isAddPassword) {
             Spacer(Modifier.height(16.dp))
-            HorizontalDivider(color = ColorGrayScaleBlack, thickness = 1.dp)
+            HorizontalDivider(color = ColorScale_Gray_Black, thickness = 1.dp)
             Spacer(Modifier.height(16.dp))
             Text(
                 style = MaterialTheme.typography.titleLarge.copy(
-                    textAlign = TextAlign.Start, color = ButtonGreen
+                    textAlign = TextAlign.Start, color = ColorMain_Green_400
                 ),
                 text = stringResource(R.string.Password_DeletePasswordConfirmation_COPY),
                 modifier = Modifier.fillMaxWidth()
@@ -266,8 +266,6 @@ fun ResetPasswordConfirmScreenContent(
                 enabled = !inProgress,
                 onClick = onDeletePasswordClicked,
                 buttonBackgroundColor = Color.Transparent,
-                buttonTextColor = TextGrey,
-                buttonBorderColor = ColorGrayScale500,
             )
         }
     }

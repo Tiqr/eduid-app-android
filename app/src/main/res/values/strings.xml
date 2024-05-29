@@ -64,6 +64,8 @@
   <string name="Profile_Title_COPY">"Your personal info"</string>
   <string name="Profile_Info_COPY">"When you use eduID to logon to other websites, some of your personal information will be shared."</string>
   <string name="Profile_YourIdentity_COPY">"Your identity"</string>
+  <string name="Profile_VerifiedOnNoPlaceholder_COPY">"• on "</string>
+  <string name="Profile_VerifiedValidUntil_COPY">"• valid until "</string>
   <string name="Profile_Verified_COPY">"verified"</string>
   <string name="Profile_NotVerified_COPY">"not verified"</string>
   <string name="Profile_VerifiedGivenName_COPY">"Verified given name"</string>
@@ -786,6 +788,7 @@
   <string name="Permission_OAuth_Title_COPY">"Authorize app"</string>
   <string name="Permission_OAuth_Description_COPY">"Allow the mobile application to access your data."</string>
   <string name="Profile_You_COPY">"you"</string>
+  <string name="ManageAccount_CreatedAt_COPY">"EEEE, dd MMMM yyyy 'at' HH:MM"</string>
   <string name="AppData_InitializationError_Generic_COPY">"Failed to initialize AppData. Please retry."</string>
   <string name="AppData_InitializationError_WithException_COPY">"Failed to initialize AppData. Reason: %1$s"</string>
 </resources>

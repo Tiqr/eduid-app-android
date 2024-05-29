@@ -12,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import nl.eduid.R
 import nl.eduid.ui.theme.ColorAlertRed
-import nl.eduid.ui.theme.ColorGrayScale500
+import nl.eduid.ui.theme.ColorScale_Gray_500
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -124,7 +124,7 @@ fun DeleteServiceDialog(
         }, text = {
             Text(
                 text = stringResource(id = R.string.DeleteService_Description_COPY),
-                style = MaterialTheme.typography.bodyLarge.copy(color = ColorGrayScale500),
+                style = MaterialTheme.typography.bodyLarge.copy(color = ColorScale_Gray_500),
             )
         }, confirmButton = {
             PrimaryButton(

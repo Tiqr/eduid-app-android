@@ -5,6 +5,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,13 +15,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.KeyboardArrowDown
+import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,6 +40,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,14 +48,109 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import nl.eduid.R
 import nl.eduid.screens.personalinfo.PersonalInfo
+import nl.eduid.screens.personalinfo.PersonalInfo.Companion.generateInstitutionAccountList
 import nl.eduid.ui.theme.BlueButton
 import nl.eduid.ui.theme.ColorAlertRed
-import nl.eduid.ui.theme.ColorGrayScale500
+import nl.eduid.ui.theme.ColorScale_Gray_500
+import nl.eduid.ui.theme.ColorSupport_Blue_100
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import java.util.Locale
 
 @Composable
 fun ConnectionCard(
+    title: String,
+    confirmedByInstitution: PersonalInfo.InstitutionAccount,
+    modifier: Modifier = Modifier,
+    expandedPreview: Boolean = false,
+    openVerifiedInformation: () -> Unit = {},
+) {
+    var isExpanded by remember { mutableStateOf(expandedPreview) }
+    val containerColor = if (isExpanded) {
+        ColorSupport_Blue_100
+    } else {
+        MaterialTheme.colorScheme.surface
+    }
+    ListItem(
+        colors = ListItemDefaults.colors(
+            containerColor = containerColor,
+            trailingIconColor = MaterialTheme.colorScheme.onSurface
+        ),
+        leadingContent = {},
+        headlineContent = {
+            Text(
+                text = title,
+                modifier = Modifier.fillMaxWidth(),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurface
+                ),
+            )
+        },
+        supportingContent = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(
+                    text = stringResource(
+                        id = R.string.YourVerifiedInformation_AtInstitution_COPY,
+                        confirmedByInstitution.institution
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 4.dp),
+                    style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
+                )
+                if (isExpanded) {
+                    HorizontalDivider(thickness = 2.dp, color = MaterialTheme.colorScheme.onSurface)
+                    Text(
+                        text = stringResource(
+                            id = R.string.Profile_VerifiedBy_COPY,
+                            confirmedByInstitution.institution
+                        ),
+                        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
+                    )
+                    VerifiedRowInfo(
+                        R.string.Profile_VerifiedOnNoPlaceholder_COPY,
+                        confirmedByInstitution.createdStamp.getDateString()
+                    )
+                    VerifiedRowInfo(
+                        R.string.Profile_VerifiedValidUntil_COPY,
+                        confirmedByInstitution.expiryStamp.getDateString()
+                    )
+                    HorizontalDivider(thickness = 2.dp, color = MaterialTheme.colorScheme.onSurface)
+                    TextButton(onClick = openVerifiedInformation) {
+                        Text(
+                            stringResource(id = R.string.Profile_ManageYourVerifiedInformation_COPY),
+                            textDecoration = TextDecoration.Underline
+                        )
+                    }
+                }
+            }
+        },
+        trailingContent = {
+            if (isExpanded) {
+                Icon(
+                    imageVector = Icons.Outlined.KeyboardArrowUp,
+                    contentDescription = "",
+                )
+            } else {
+                Icon(
+                    imageVector = Icons.Outlined.KeyboardArrowDown,
+                    contentDescription = "",
+                )
+            }
+        },
+        modifier = modifier
+            .border(
+                color = MaterialTheme.colorScheme.onSurface,
+                shape = RoundedCornerShape(6.dp),
+                width = 2.dp
+            )
+            .clickable {
+                isExpanded = !isExpanded
+            }
+    )
+}
+
+@Composable
+fun ConnectionCardOld(
     title: String,
     subtitle: String,
     institutionInfo: PersonalInfo.InstitutionAccount? = null,
@@ -92,7 +199,7 @@ fun ConnectionCard(
                     text = subtitle,
                     style = MaterialTheme.typography.bodySmall.copy(
                         textAlign = TextAlign.Start,
-                        color = ColorGrayScale500,
+                        color = ColorScale_Gray_500,
                     ),
                 )
             }
@@ -129,7 +236,8 @@ private fun InstitutionInfoBlock(
 ) {
     InfoRow(
         label = stringResource(R.string.Profile_VerifiedBy_COPY, institutionInfo.institution)
-                + stringResource(R.string.Profile_VerifiedOn_COPY, institutionInfo.createdStamp.getDateString()
+                + stringResource(
+            R.string.Profile_VerifiedOn_COPY, institutionInfo.createdStamp.getDateString()
         )
     )
     InfoRow(
@@ -164,19 +272,24 @@ private fun InstitutionInfoBlock(
 
 @Preview
 @Composable
-private fun PreviewConnectionCard() = EduidAppAndroidTheme {
-    ConnectionCard(
-        title = "Librarian",
-        subtitle = "Urangutan",
-        institutionInfo = PersonalInfo.InstitutionAccount(
-            id = "id",
-            role = "Librarian",
-            roleProvider = "Library",
-            institution = "Unseen University",
-            affiliationString = "Librarian",
-            createdStamp = 0L,
-            expiryStamp = 0L
-        ),
-        isExpanded = true
-    )
+private fun Preview_ConnectionCard() = EduidAppAndroidTheme {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        ConnectionCard(
+            title = "Librarian",
+            confirmedByInstitution = generateInstitutionAccountList()[0],
+        )
+        ConnectionCard(
+            title = "Librarian",
+            confirmedByInstitution = generateInstitutionAccountList()[0],
+            expandedPreview = true,
+        )
+
+        ConnectionCardOld(
+            title = "Librarian",
+            subtitle = "Urangutan",
+            institutionInfo = generateInstitutionAccountList()[0],
+            isExpanded = true
+        )
+
+    }
 }

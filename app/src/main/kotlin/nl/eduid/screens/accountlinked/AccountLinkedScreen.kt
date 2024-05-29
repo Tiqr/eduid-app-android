@@ -14,6 +14,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -22,17 +23,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.screens.personalinfo.PersonalInfoViewModel
 import nl.eduid.ui.AlertDialogWithSingleButton
-import nl.eduid.ui.ConnectionCard
+import nl.eduid.ui.ConnectionCardOld
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.InfoFieldOld
 import nl.eduid.ui.PrimaryButton
+import nl.eduid.ui.theme.ColorMain_Green_400
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextGreen
 
 @Composable
 fun AccountLinkedScreen(
@@ -59,14 +61,17 @@ fun AccountLinkedScreen(
                 continueToHome = continueToHome
             )
 
-            ResultAccountLinked.OK -> AccountLinkedContent(
-                personalInfo = viewModel.uiState.personalInfo,
-                isLoading = viewModel.uiState.isLoading,
-                errorData = viewModel.uiState.errorData,
-                dismissError = viewModel::clearErrorData,
-                continueToHome = continueToHome,
-                removeConnection = { index -> viewModel.removeConnection(index) },
-            )
+            ResultAccountLinked.OK -> {
+                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                AccountLinkedContent(
+                    personalInfo = uiState.personalInfo,
+                    isLoading = uiState.isLoading,
+                    errorData = uiState.errorData,
+                    dismissError = viewModel::clearErrorData,
+                    continueToHome = continueToHome,
+                    removeConnection = { index -> viewModel.removeConnection(index) },
+                )
+            }
         }
     }
 }
@@ -89,7 +94,7 @@ private fun AccountFailedLinkContent(
         Spacer(Modifier.height(36.dp))
         Text(
             style = MaterialTheme.typography.titleLarge.copy(
-                textAlign = TextAlign.Start, color = TextGreen
+                textAlign = TextAlign.Start, color = ColorMain_Green_400
             ),
             text = stringResource(R.string.NameUpdated_Title_YourSchool_COPY),
             modifier = Modifier.fillMaxWidth()
@@ -141,7 +146,7 @@ private fun AccountLinkedContent(
     Spacer(Modifier.height(36.dp))
     Text(
         style = MaterialTheme.typography.titleLarge.copy(
-            textAlign = TextAlign.Start, color = TextGreen
+            textAlign = TextAlign.Start, color = ColorMain_Green_400
         ),
         text = stringResource(R.string.NameUpdated_Title_YourSchool_COPY),
         modifier = Modifier.fillMaxWidth()
@@ -188,7 +193,7 @@ private fun AccountLinkedContent(
         Spacer(Modifier.height(6.dp))
     }
     personalInfo.institutionAccounts.forEachIndexed { index, account ->
-        ConnectionCard(
+        ConnectionCardOld(
             title = account.role,
             subtitle = stringResource(R.string.Profile_InstitutionAt_COPY, account.roleProvider),
             institutionInfo = account,

@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -20,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
-import nl.eduid.ui.theme.ButtonGreen
+import nl.eduid.ui.theme.ColorMain_Green_400
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -35,7 +34,7 @@ fun HomeGreenButton(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(6.dp))
-            .background(ButtonGreen)
+            .background(ColorMain_Green_400)
             .height(50.dp)
             .width(50.dp)
     ) {

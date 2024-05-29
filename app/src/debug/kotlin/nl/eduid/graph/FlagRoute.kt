@@ -5,6 +5,7 @@ import androidx.navigation.navArgument
 
 sealed class FlagRoute(val route: String) {
     object Overview : FlagRoute("flags_overview")
+    object TestTheme : FlagRoute("test_theme")
     object EditFeatureFlags : FlagRoute("edit_feature_flags") {
         const val isTestSettings = "is_for_test_settings"
         val routeWithArgs = "${route}/{$isTestSettings}"

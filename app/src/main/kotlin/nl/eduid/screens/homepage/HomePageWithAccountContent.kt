@@ -51,8 +51,8 @@ import nl.eduid.ui.PrimaryButtonWithIcon
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.SmallActionGray
 import nl.eduid.ui.theme.SplashScreenBackgroundColor
-import nl.eduid.ui.theme.ColorGrayScaleBlack
-import nl.eduid.ui.theme.TextGreen
+import nl.eduid.ui.theme.ColorScale_Gray_Black
+import nl.eduid.ui.theme.ColorMain_Green_400
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -156,11 +156,11 @@ private fun AccountContent(
         Text(
             style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
             text = buildAnnotatedString {
-                withStyle(style = SpanStyle(color = TextGreen)) {
+                withStyle(style = SpanStyle(color = ColorMain_Green_400)) {
                     append(stringResource(R.string.HomeView_MainText_FirstPart_COPY))
                 }
                 append("\n")
-                withStyle(style = SpanStyle(color = ColorGrayScaleBlack)) {
+                withStyle(style = SpanStyle(color = ColorScale_Gray_Black)) {
                     append(stringResource(R.string.HomeView_MainText_SecondPart_COPY))
                 }
             },

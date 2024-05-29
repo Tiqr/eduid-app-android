@@ -1,7 +1,6 @@
 package nl.eduid.ui.theme
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -15,7 +14,6 @@ val Typography = Typography(
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp,
-        color = ColorGrayScaleBlack
     ),
     // Other default text styles to override
     titleLarge = TextStyle(
@@ -24,7 +22,6 @@ val Typography = Typography(
         fontSize = 24.sp,
         lineHeight = 34.sp,
         letterSpacing = (-0.18).sp,
-        color = Color(0xFF173552)
     ),
 
     headlineLarge = TextStyle(
@@ -39,7 +36,6 @@ val Typography = Typography(
         fontFamily = FontFamily.Default,
         fontSize = 14.sp,
         lineHeight = 16.sp,
-        color = ColorGrayScaleBlack
     ),
 
     bodySmall = TextStyle(
@@ -47,6 +43,5 @@ val Typography = Typography(
         fontSize = 12.sp,
         lineHeight = 15.sp,
         fontWeight = FontWeight.Normal,
-        color = ColorGrayScaleBlack
     ),
 )

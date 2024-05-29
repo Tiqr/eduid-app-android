@@ -43,7 +43,7 @@ import nl.eduid.ui.PinInputField
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.TextGreen
+import nl.eduid.ui.theme.ColorMain_Green_400
 import org.tiqr.data.model.AuthenticationChallenge
 import org.tiqr.data.model.AuthenticationCompleteFailure
 import org.tiqr.data.model.ChallengeCompleteFailure
@@ -191,7 +191,7 @@ private fun AuthenticationPinBiometricContent(
         ) {
             Text(
                 style = MaterialTheme.typography.titleLarge.copy(
-                    textAlign = TextAlign.Start, color = TextGreen
+                    textAlign = TextAlign.Start, color = ColorMain_Green_400
                 ),
                 text = stringResource(R.string.auth_pin_title),
                 modifier = Modifier.fillMaxWidth()

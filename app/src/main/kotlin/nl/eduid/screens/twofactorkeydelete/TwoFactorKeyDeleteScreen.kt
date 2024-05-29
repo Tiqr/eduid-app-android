@@ -44,13 +44,11 @@ import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
-import nl.eduid.ui.theme.AlertRedBackground
 import nl.eduid.ui.theme.ColorAlertRed
-import nl.eduid.ui.theme.ColorGrayScale500
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.ColorGrayScaleBlack
-import nl.eduid.ui.theme.TextGreen
-import nl.eduid.ui.theme.TextGrey
+import nl.eduid.ui.theme.ColorScale_Gray_Black
+import nl.eduid.ui.theme.ColorMain_Green_400
+import nl.eduid.ui.theme.ColorSupport_Blue_100
 
 @Composable
 fun TwoFactorKeyDeleteScreen(
@@ -116,7 +114,7 @@ private fun TwoFactorKeyDeleteScreenContent(
         Text(
             text = stringResource(R.string.TwoFactorKeys_DeleteKey_COPY),
             style = MaterialTheme.typography.titleLarge.copy(
-                color = TextGreen, textAlign = TextAlign.Start
+                color = ColorMain_Green_400, textAlign = TextAlign.Start
             ),
             modifier = Modifier.fillMaxWidth(),
         )
@@ -124,7 +122,7 @@ private fun TwoFactorKeyDeleteScreenContent(
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = AlertRedBackground)
+                .background(color = ColorSupport_Blue_100)
         ) {
             val (image, text) = createRefs()
             Image(painter = painterResource(R.drawable.warning_icon_red),
@@ -152,7 +150,7 @@ private fun TwoFactorKeyDeleteScreenContent(
         Text(
             text = stringResource(R.string.Credential_DeleteCredentialConfirmation_COPY, keyId),
             style = MaterialTheme.typography.bodyLarge.copy(
-                color = ColorGrayScaleBlack, textAlign = TextAlign.Start
+                color = ColorScale_Gray_Black, textAlign = TextAlign.Start
             ),
             modifier = Modifier.fillMaxWidth(),
         )
@@ -168,8 +166,6 @@ private fun TwoFactorKeyDeleteScreenContent(
             modifier = Modifier.widthIn(min = 140.dp),
             onClick = goBack,
             buttonBackgroundColor = Color.Transparent,
-            buttonTextColor = TextGrey,
-            buttonBorderColor = ColorGrayScale500,
         )
         PrimaryButton(
             enabled = !inProgress,
@@ -177,7 +173,6 @@ private fun TwoFactorKeyDeleteScreenContent(
             modifier = Modifier.widthIn(min = 140.dp),
             onClick = onDeleteClicked,
             buttonBackgroundColor = ColorAlertRed,
-            buttonTextColor = Color.White,
         )
     }
 }

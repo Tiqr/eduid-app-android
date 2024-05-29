@@ -38,8 +38,8 @@ import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.theme.AlertWarningBackground
 import nl.eduid.ui.theme.ColorAlertRed
 import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.ColorGrayScaleBlack
-import nl.eduid.ui.theme.TextGreen
+import nl.eduid.ui.theme.ColorScale_Gray_Black
+import nl.eduid.ui.theme.ColorMain_Green_400
 
 @Composable
 fun DeleteAccountFirstConfirmScreen(
@@ -74,7 +74,7 @@ private fun DeleteAccountFirstConfirmScreenContent(
         Text(
             text = stringResource(R.string.DeleteAccount_Title_COPY),
             style = MaterialTheme.typography.titleLarge.copy(
-                color = TextGreen,
+                color = ColorMain_Green_400,
                 textAlign = TextAlign.Start
             ),
             modifier = Modifier.fillMaxWidth(),
@@ -114,7 +114,7 @@ private fun DeleteAccountFirstConfirmScreenContent(
             text = stringResource(R.string.DeleteAccount_LongDescription_COPY),
             textAlign = TextAlign.Start,
             style = MaterialTheme.typography.bodyLarge.copy(
-                color = ColorGrayScaleBlack,
+                color = ColorScale_Gray_Black,
                 textAlign = TextAlign.Start
             ),
             modifier = Modifier.fillMaxWidth(),
