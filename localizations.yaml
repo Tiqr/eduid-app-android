@@ -366,14 +366,6 @@ SHARED:
       COPY:
         en: Your identity
         nl: Jouw identiteit
-    VerifiedOnNoPlaceholder:
-      COPY:
-        en: "• on "
-        nl: "• op "
-    VerifiedValidUntil:
-      COPY:
-        en: "• valid until "
-        nl: "• geldig tot "
     Verified:
       COPY:
         nl: geverifieerd
@@ -396,12 +388,12 @@ SHARED:
         en: Verified date of birth
     LinkedAccountCreatedAt:
       COPY:
-        nl: "op "
-        en: "on "
+        nl: "• op "
+        en: "• on "
     LinkedAccountValidUntil:
       COPY:
-        nl: "geldig tot "
-        en: "valid until "
+        nl: "• geldig tot "
+        en: "• valid until "
     ManageYourVerifiedInformation:
       COPY:
         nl: "Beheer jouw geverifieerde gegevens"
@@ -874,12 +866,12 @@ SHARED:
         nl: Beveiliging
     SubTitle:
       COPY:
-        en: We provide different methods to sign in using your eduID account.
-        nl: We bieden verschillende methoden om in te loggen met je eduID.
-    SecondSubTitle:
+        en: How you sign in with eduID
+        nl: Hoe je inlogt met eduID
+    OtherMethods:
       COPY:
-        en: Sign-in methods
-        nl: Aanmeldmethoden
+        en: Other methods
+        nl: Andere methoden
     AddPassword:
       COPY:
         en: Add a password
@@ -890,12 +882,12 @@ SHARED:
         nl: "• • • • • • • • • •"
     ChangePassword:
       COPY:
-        en: Change your password
-        nl: Wijzig uw wachtwoord
+        en: Password
+        nl: Wachtwoord
     TwoFAKey:
       COPY:
-        en: 2FA key
-        nl: 2FA sleutel
+        en: Security key
+        nl: Beveiligingssleutel
     ProvidedBy:
       COPY:
         en: Provided by
@@ -910,8 +902,8 @@ SHARED:
         nl: Niet ondersteund
     UseMagicLink:
       COPY:
-        en: Send a magic link to
-        nl: Stuur magische link naar
+        en: Magic link email
+        nl: Magische link e-mail
     AddSecurityKeyInfo:
       COPY:
         en: >-
@@ -3507,21 +3499,17 @@ SHARED:
       MainExplanationText:
         COPY:
           en: |
-            eduID is a central account for users
-            associated with Dutch education and research. It is yours and exists independent
-            of an educational institution.
+            eduID is a central account for users associated with Dutch education and research. It is yours and exists independent of an educational institution.
             
             • Use it to login to several services connected to SURFconext.
             • Users without an institution account can also request an eduID.
             • eduID is a lifelong account. It stays valid after you graduate.
           nl: |
-            eduID is een centraal account voor gebruikers
-             verbonden aan het Nederlandse onderwijs en onderzoek.
-             Het is van jou en bestaat onafhankelijk van een onderwijsinstelling.
+            eduID is een centraal account voor gebruikers verbonden aan het Nederlandse onderwijs en onderzoek. Het is van jou en bestaat onafhankelijk van een onderwijsinstelling.
             
-             • Hiermee log je in op verschillende diensten die zijn aangesloten op SURFconext.
-             • Gebruikers zonder instellingsaccount kunnen ook een eduID aanvragen.
-             • eduID is een levenslang account. Het blijft geldig nadat je bent afgestudeerd.
+            • Hiermee log je in op verschillende diensten die zijn aangesloten op SURFconext.
+            • Gebruikers zonder instellingsaccount kunnen ook een eduID aanvragen.
+            • eduID is een levenslang account. Het blijft geldig nadat je bent afgestudeerd.
       CreateEduidButton:
         COPY:
           en: Create a new eduID
