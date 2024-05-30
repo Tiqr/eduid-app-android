@@ -152,6 +152,15 @@
   <string name="DeleteAccount_Disclaimer_COPY">"Proceed with care, as you will lose the unique eduID number currently associated with your email address."</string>
   <string name="DeleteAccount_LongDescription_COPY">"You can delete your eduID whenever you want.\nWhen you re-register for a new eduID with that same email address, you will receive a new eduID number. Some services use this unique number to identify you, so for those services you will be treated as a new user. Please note that deleting your eduID account does not mean all services you accessed with that eduID account will also have your data removed."</string>
   <string name="DeleteAccount_DeleteAccountButton_COPY">"Delete your account"</string>
+  <string name="OneTimePassword_GenerateError_Title_COPY">"Cannot generate OTP"</string>
+  <string name="OneTimePassword_GenerateError_Description_COPY">"Something went wrong when generating your one time password."</string>
+  <string name="OneTimePassword_Title_COPY">"You appear to be offline"</string>
+  <string name="OneTimePassword_Description_COPY">"Don't worry! Click the QR code on the website. You will be asked to enter the following one-time credentials:"</string>
+  <string name="OneTimePassword_YourId_COPY">"Your ID is:"</string>
+  <string name="OneTimePassword_OneTimePassword_COPY">"One-time password:"</string>
+  <string name="OneTimePassword_PinNotVerified_Title_COPY">"Note: your PIN has not been verified yet."</string>
+  <string name="OneTimePassword_PinNotVerified_Description_COPY">"If you can't login with the credentials above, scan again and enter the correct PIN code."</string>
+  <string name="OneTimePassword_CloseButton_COPY">"Close"</string>
   <string name="ConfirmDelete_Title_COPY">"Delete your account for all eternity?"</string>
   <string name="ConfirmDelete_Disclaimer_COPY">"There is no way to undo this action."</string>
   <string name="ConfirmDelete_TypeNameToConfirm_COPY">"If you wish to proceed, please type in your full name for confirmation."</string>
@@ -682,7 +691,6 @@
   <string name="Generic_RequestError_Title_COPY">"Cannot complete request"</string>
   <string name="Generic_RequestError_Description_COPY">"Unexpected error: %1$s, please retry."</string>
   <string name="Generic_RequestError_CloseButton_COPY">"Close"</string>
-  <string name="OneTimeCode_CloseButton_COPY">"Close"</string>
   <string name="WelcomeToApp_Title_COPY">"Welcome! Use this app to"</string>
   <string name="WelcomeToApp_Quickly_Text_COPY">"to educational services"</string>
   <string name="WelcomeToApp_Quickly_Highlight_COPY">"Quickly login"</string>

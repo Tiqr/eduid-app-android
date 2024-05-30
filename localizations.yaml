@@ -782,6 +782,55 @@ SHARED:
       COPY:
         en: Delete your account
         nl: Verwijder je account
+  OneTimePassword:
+    GenerateError:
+      Title:
+        COPY:
+          en: Cannot generate OTP
+          nl: Kan OTP niet genereren
+      Description:
+        COPY:
+          en: Something went wrong when generating your one time password.
+          nl: Er is iets misgegaan bij het genereren van je eenmalige wachtwoord.
+    Title:
+      COPY:
+        en: You appear to be offline
+        nl: Je lijkt offline te zijn
+    Description:
+      COPY:
+        en: >-
+          Don't worry! Click the QR code on the website. You will be asked to enter the following one-time credentials:
+        nl: >-
+          Geen paniek! Klik op de QR code op de website. Je zult gevraagd worden om de volgende eenmalige gegevens in te geven:
+    YourId:
+      COPY:
+        en: >-
+          Your ID is:
+        nl: >-
+          Je gebruikers ID is:
+    OneTimePassword:
+      COPY:
+        en: >-
+          One-time password:
+        nl: >-
+          Eénmalig wachtwoord:
+    PinNotVerified:
+      Title:
+        COPY:
+          en: >-
+            Note: your PIN has not been verified yet.
+          nl: >-
+            Opmerking: Je PIN is nog niet geverifieerd
+      Description:
+        COPY:
+          en: >-
+            If you can't login with the credentials above, scan again and enter the correct PIN code.
+          nl: >-
+            Als je niet kunt inloggen met bovenstaande gegevens, scan dan opnieuw en geef de correcte PIN code in.
+    CloseButton:
+      COPY:
+        en: Close
+        nl: Sluiten
   ConfirmDelete:
     Title:
       COPY:
@@ -3359,11 +3408,6 @@ SHARED:
         COPY:
           en: "Close"
           nl: "Sluiten"
-  OneTimeCode:
-    CloseButton:
-      COPY:
-        en: "Close"
-        nl: "Sluiten"
   WelcomeToApp:
     Title:
       COPY:

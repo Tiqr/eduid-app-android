@@ -152,6 +152,15 @@
   <string name="DeleteAccount_Disclaimer_COPY">"Ga voorzichtig te werk, want je verliest de unieke eduID ID's die momenteel aan je e-mailadres zijn gekoppeld."</string>
   <string name="DeleteAccount_LongDescription_COPY">"Je kunt je eduID account verwijderen wanneer je maar wilt.\nLet op, je verliest de unieke eduID nummers die aan je e-mailadres zijn gekoppeld. Wanneer je je opnieuw registreert voor eduID met hetzelfde e-mailadres, krijg je een nieuw eduID nummer. Sommige diensten gebruiken deze nummers om je uniek te identificeren, dus voor die diensten word je dan gezien als een nieuwe gebruiker. Houd er rekening mee dat het verwijderen van je eduID niet betekent dat alle diensten die je met je eduID hebt gebruikt, ook je gegevens zullen verwijderen."</string>
   <string name="DeleteAccount_DeleteAccountButton_COPY">"Verwijder je account"</string>
+  <string name="OneTimePassword_GenerateError_Title_COPY">"Kan OTP niet genereren"</string>
+  <string name="OneTimePassword_GenerateError_Description_COPY">"Er is iets misgegaan bij het genereren van je eenmalige wachtwoord."</string>
+  <string name="OneTimePassword_Title_COPY">"Je lijkt offline te zijn"</string>
+  <string name="OneTimePassword_Description_COPY">"Geen paniek! Klik op de QR code op de website. Je zult gevraagd worden om de volgende eenmalige gegevens in te geven:"</string>
+  <string name="OneTimePassword_YourId_COPY">"Je gebruikers ID is:"</string>
+  <string name="OneTimePassword_OneTimePassword_COPY">"Eénmalig wachtwoord:"</string>
+  <string name="OneTimePassword_PinNotVerified_Title_COPY">"Opmerking: Je PIN is nog niet geverifieerd"</string>
+  <string name="OneTimePassword_PinNotVerified_Description_COPY">"Als je niet kunt inloggen met bovenstaande gegevens, scan dan opnieuw en geef de correcte PIN code in."</string>
+  <string name="OneTimePassword_CloseButton_COPY">"Sluiten"</string>
   <string name="ConfirmDelete_Title_COPY">"Je account voor alle eeuwigheid verwijderen?"</string>
   <string name="ConfirmDelete_Disclaimer_COPY">"Er is geen manier om deze actie ongedaan te maken."</string>
   <string name="ConfirmDelete_TypeNameToConfirm_COPY">"Als je wilt doorgaan, typ dan je volledige naam zoals bekend in je eduID account ter bevestiging."</string>
@@ -682,7 +691,6 @@
   <string name="Generic_RequestError_Title_COPY">"Het verzoek kan niet worden voltooid"</string>
   <string name="Generic_RequestError_Description_COPY">"Onverwachte fout: %1$s, probeer het opnieuw."</string>
   <string name="Generic_RequestError_CloseButton_COPY">"Sluiten"</string>
-  <string name="OneTimeCode_CloseButton_COPY">"Sluiten"</string>
   <string name="WelcomeToApp_Title_COPY">"Welkom! Gebruik deze app voor"</string>
   <string name="WelcomeToApp_Quickly_Text_COPY">"op educatieve diensten"</string>
   <string name="WelcomeToApp_Quickly_Highlight_COPY">"Snel inloggen"</string>

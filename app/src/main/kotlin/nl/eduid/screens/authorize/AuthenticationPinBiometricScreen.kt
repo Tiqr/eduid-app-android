@@ -55,6 +55,7 @@ import timber.log.Timber
 fun AuthenticationPinBiometricScreen(
     viewModel: EduIdAuthenticationViewModel,
     goToAuthenticationComplete: (AuthenticationChallenge?, String) -> Unit,
+    goToOneTimePassword: (AuthenticationChallenge?, String) -> Unit,
     onCancel: () -> Unit,
 ) = EduIdTopAppBar(
     withBackIcon = false
@@ -74,6 +75,9 @@ fun AuthenticationPinBiometricScreen(
             goToAuthenticationComplete(authChallenge, pin)
         },
         clearCompleteChallenge = viewModel::clearCompleteChallenge,
+        goToOneTimePassword = { pin ->
+            goToOneTimePassword(authChallenge, pin)
+        },
         goHomeOnFail = onCancel,
     )
 }
@@ -84,12 +88,13 @@ private fun AuthenticationPinBiometricContent(
     challengeComplete: ChallengeCompleteResult<ChallengeCompleteFailure>? = null,
     isPinInvalid: Boolean = false,
     padding: PaddingValues = PaddingValues(),
-    onBiometricResult: (BiometricSignIn) -> Unit = {},
-    submitPin: (String) -> Unit = {},
-    onCancel: () -> Unit = {},
-    goToAuthenticationComplete: (String) -> Unit = {},
-    clearCompleteChallenge: () -> Unit = {},
-    goHomeOnFail: () -> Unit = {},
+    onBiometricResult: (BiometricSignIn) -> Unit,
+    submitPin: (String) -> Unit,
+    onCancel: () -> Unit,
+    goToAuthenticationComplete: (String) -> Unit ,
+    goToOneTimePassword: (String) -> Unit,
+    clearCompleteChallenge: () -> Unit,
+    goHomeOnFail: () -> Unit,
 ) {
     var isCheckingSecret by rememberSaveable { mutableStateOf(false) }
     var pinValue by rememberSaveable { mutableStateOf("") }
@@ -108,8 +113,7 @@ private fun AuthenticationPinBiometricContent(
                     AuthenticationCompleteFailure.Reason.UNKNOWN,
                     AuthenticationCompleteFailure.Reason.CONNECTION,
                     -> {
-                        Timber.e("This should be a fallback to OTP")
-                        TODO()
+                        goToOneTimePassword(pinValue)
                     }
 
                     AuthenticationCompleteFailure.Reason.INVALID_RESPONSE -> {
@@ -250,5 +254,12 @@ private fun PreviewAuthorizePinBiometricScreen() = EduidAppAndroidTheme {
     AuthenticationPinBiometricContent(
         shouldPromptBiometric = false,
         isPinInvalid = false,
+        goToAuthenticationComplete = {},
+        submitPin = {},
+        clearCompleteChallenge = {},
+        onBiometricResult = {},
+        goHomeOnFail = {},
+        goToOneTimePassword = {},
+        onCancel = {}
     )
 }
