@@ -388,12 +388,12 @@ SHARED:
         en: Verified date of birth
     LinkedAccountCreatedAt:
       COPY:
-        nl: "op "
-        en: "on "
+        nl: "• op "
+        en: "• on "
     LinkedAccountValidUntil:
       COPY:
-        nl: "geldig tot "
-        en: "valid until "
+        nl: "• geldig tot "
+        en: "• valid until "
     ManageYourVerifiedInformation:
       COPY:
         nl: "Beheer jouw geverifieerde gegevens"
@@ -720,7 +720,7 @@ SHARED:
             nl: "Reden: Je sessie is verlopen."
     Description:
       COPY:
-        en: The following information has been added to your eduID and can now be shared.!
+        en: The following information has been added to your eduID and can now be shared.
         nl: De volgende gegevens zijn toegevoegd aan je eduID en kan gedeeld worden.
     FullName:
       COPY:

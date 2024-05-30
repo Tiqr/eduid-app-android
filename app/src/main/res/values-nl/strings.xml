@@ -69,8 +69,8 @@
   <string name="Profile_VerifiedGivenName_COPY">"Geverifieerde voornaam"</string>
   <string name="Profile_VerifiedFamilyName_COPY">"Geverifieerde achternaam"</string>
   <string name="Profile_VerifiedDateOfBirth_COPY">"Geverifieerde geboortedatum"</string>
-  <string name="Profile_LinkedAccountCreatedAt_COPY">"op "</string>
-  <string name="Profile_LinkedAccountValidUntil_COPY">"geldig tot "</string>
+  <string name="Profile_LinkedAccountCreatedAt_COPY">"• op "</string>
+  <string name="Profile_LinkedAccountValidUntil_COPY">"• geldig tot "</string>
   <string name="Profile_ManageYourVerifiedInformation_COPY">"Beheer jouw geverifieerde gegevens"</string>
   <string name="Profile_VerifyNow_Title_COPY">"Sommige diensten eisen dat jouw identiteit geverifieerd is door een vertrouwde instelling."</string>
   <string name="Profile_VerifyNow_Button_COPY">"Verifïeer mijn identiteit"</string>
