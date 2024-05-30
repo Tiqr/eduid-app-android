@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -92,6 +93,7 @@ fun PinInputField(
                                 1.dp, Color(0xFFC3C6CF)
                             ), shape = OutlinedTextFieldDefaults.shape
                         )
+                        .wrapContentHeight()
                         .weight(1f)
                 )
             }
