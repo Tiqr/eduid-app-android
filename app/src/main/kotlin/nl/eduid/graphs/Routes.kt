@@ -196,6 +196,24 @@ sealed class Account(val route: String) {
 
     }
 
+    object OneTimePassword : Account("one_time_password") {
+        private const val challengeArg = "challenge_arg"
+        const val pinArg = "pin_arg"
+
+        val routeWithArgs = "$route/{$challengeArg}/{$pinArg}"
+        val arguments = listOf(navArgument(challengeArg) {
+            type = NavType.StringType
+            nullable = false
+            defaultValue = ""
+        }, navArgument(pinArg) {
+            type = NavType.StringType
+            nullable = false
+            defaultValue = ""
+        })
+        fun buildRoute(encodedChallenge: String, pin: String): String = "${route}/$encodedChallenge/$pin"
+    }
+
+
     //https://eduid.nl/tiqrenroll/?metadata=https%3A%2F%2Flogin.test2.eduid.nl%2Ftiqr%2Fmetadata%3Fenrollment_key%3Dd47fa31400084edc043f8c547c5ed3f6b18d69f5a71f422519911f034b865f96153c8fc1507d81bc05aba95d095489a8d0400909f8aab348e2ac1786b28db572
     object DeepLink : Account("deeplinks") {
         const val enrollPattern = "https://eduid.nl/tiqrenroll/?metadata="

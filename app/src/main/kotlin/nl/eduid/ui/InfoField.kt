@@ -244,12 +244,12 @@ fun ExpandableVerifiedInfoField(
                         style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
                     )
                     VerifiedRowInfo(
-                        R.string.Profile_VerifiedOnNoPlaceholder_COPY,
-                        confirmedByInstitution.createdStamp.getDateString()
+                        R.string.Profile_LinkedAccountCreatedAt_COPY,
+                        confirmedByInstitution?.createdStamp?.getDateString().orEmpty()
                     )
                     VerifiedRowInfo(
-                        R.string.Profile_VerifiedValidUntil_COPY,
-                        confirmedByInstitution.expiryStamp.getDateString()
+                        R.string.Profile_LinkedAccountValidUntil_COPY,
+                        confirmedByInstitution?.expiryStamp?.getDateString().orEmpty()
                     )
                     HorizontalDivider(thickness = 2.dp, color = MaterialTheme.colorScheme.onSurface)
                     TextButton(

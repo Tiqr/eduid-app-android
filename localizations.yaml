@@ -366,14 +366,6 @@ SHARED:
       COPY:
         en: Your identity
         nl: Jouw identiteit
-    VerifiedOnNoPlaceholder:
-      COPY:
-        en: "• on "
-        nl: "• op "
-    VerifiedValidUntil:
-      COPY:
-        en: "• valid until "
-        nl: "• geldig tot "
     Verified:
       COPY:
         nl: geverifieerd
@@ -396,12 +388,12 @@ SHARED:
         en: Verified date of birth
     LinkedAccountCreatedAt:
       COPY:
-        nl: "op "
-        en: "on "
+        nl: "• op "
+        en: "• on "
     LinkedAccountValidUntil:
       COPY:
-        nl: "geldig tot "
-        en: "valid until "
+        nl: "• geldig tot "
+        en: "• valid until "
     ManageYourVerifiedInformation:
       COPY:
         nl: "Beheer jouw geverifieerde gegevens"
@@ -790,6 +782,55 @@ SHARED:
       COPY:
         en: Delete your account
         nl: Verwijder je account
+  OneTimePassword:
+    GenerateError:
+      Title:
+        COPY:
+          en: Cannot generate OTP
+          nl: Kan OTP niet genereren
+      Description:
+        COPY:
+          en: Something went wrong when generating your one time password.
+          nl: Er is iets misgegaan bij het genereren van je eenmalige wachtwoord.
+    Title:
+      COPY:
+        en: You appear to be offline
+        nl: Je lijkt offline te zijn
+    Description:
+      COPY:
+        en: >-
+          Don't worry! Click the QR code on the website. You will be asked to enter the following one-time credentials:
+        nl: >-
+          Geen paniek! Klik op de QR code op de website. Je zult gevraagd worden om de volgende eenmalige gegevens in te geven:
+    YourId:
+      COPY:
+        en: >-
+          Your ID is:
+        nl: >-
+          Je gebruikers ID is:
+    OneTimePassword:
+      COPY:
+        en: >-
+          One-time password:
+        nl: >-
+          Eénmalig wachtwoord:
+    PinNotVerified:
+      Title:
+        COPY:
+          en: >-
+            Note: your PIN has not been verified yet.
+          nl: >-
+            Opmerking: Je PIN is nog niet geverifieerd
+      Description:
+        COPY:
+          en: >-
+            If you can't login with the credentials above, scan again and enter the correct PIN code.
+          nl: >-
+            Als je niet kunt inloggen met bovenstaande gegevens, scan dan opnieuw en geef de correcte PIN code in.
+    CloseButton:
+      COPY:
+        en: Close
+        nl: Sluiten
   ConfirmDelete:
     Title:
       COPY:
@@ -874,12 +915,12 @@ SHARED:
         nl: Beveiliging
     SubTitle:
       COPY:
-        en: We provide different methods to sign in using your eduID account.
-        nl: We bieden verschillende methoden om in te loggen met je eduID.
-    SecondSubTitle:
+        en: How you sign in with eduID
+        nl: Hoe je inlogt met eduID
+    OtherMethods:
       COPY:
-        en: Sign-in methods
-        nl: Aanmeldmethoden
+        en: Other methods
+        nl: Andere methoden
     AddPassword:
       COPY:
         en: Add a password
@@ -890,12 +931,12 @@ SHARED:
         nl: "• • • • • • • • • •"
     ChangePassword:
       COPY:
-        en: Change your password
-        nl: Wijzig uw wachtwoord
+        en: Password
+        nl: Wachtwoord
     TwoFAKey:
       COPY:
-        en: 2FA key
-        nl: 2FA sleutel
+        en: Security key
+        nl: Beveiligingssleutel
     ProvidedBy:
       COPY:
         en: Provided by
@@ -910,8 +951,8 @@ SHARED:
         nl: Niet ondersteund
     UseMagicLink:
       COPY:
-        en: Send a magic link to
-        nl: Stuur magische link naar
+        en: Magic link email
+        nl: Magische link e-mail
     AddSecurityKeyInfo:
       COPY:
         en: >-
@@ -3367,11 +3408,6 @@ SHARED:
         COPY:
           en: "Close"
           nl: "Sluiten"
-  OneTimeCode:
-    CloseButton:
-      COPY:
-        en: "Close"
-        nl: "Sluiten"
   WelcomeToApp:
     Title:
       COPY:
@@ -3461,32 +3497,32 @@ SHARED:
         COPY:
           en: >-
             When you study in the Netherlands and you want to use eduID to logon to an educational services,
-            we need to be sure it's you and not someone impersonating you
-            You must therefore add the following information to your eduID
+            we need to be sure it is you and not someone impersonating you.
             
-            • Validation of your full name by a third party
             
-            • Proof of being a student
-            
-            • Your current institution
+            You must therefore add the following information to your eduID:
+                • Validation of your full name by a third party
+                • Proof of being a student
+                • Your current institution
           nl: >-
             Wanneer je in Nederland studeert en je wilt met eduID inloggen bij een onderwijsdienst,
             moeten we er zeker van zijn dat jij het bent en niet iemand die zich voordoet als jij.
-            Daarom moet je de volgende gegevens toevoegen aan jouw eduID
             
-            • Validatie van je volledige naam door een derde partij
             
-            • Bewijs dat je student bent
-            
-            • Je huidige instelling
+            Daarom moet je de volgende gegevens toevoegen aan jouw eduID:
+                • Validatie van je volledige naam door een derde partij
+                • Bewijs dat je student bent
+                • Je huidige instelling
       MainTextFirstBoldPart:
         COPY:
           en: When you study in the Netherlands
           nl: Wanneer je in Nederland studeert
       MainTextSecondBoldPart:
         COPY:
-          en: You must therefore add the following information to your eduID
-          nl: Daarom moet je de volgende gegevens toevoegen aan jouw eduID
+          en: >-
+            You must therefore add the following information to your eduID:
+          nl: >-
+            Daarom moet je de volgende gegevens toevoegen aan jouw eduID:
       AddInformationText:
         COPY:
           en: Add this information by connecting your school/institution via SURFconext
@@ -3507,21 +3543,17 @@ SHARED:
       MainExplanationText:
         COPY:
           en: |
-            eduID is a central account for users
-            associated with Dutch education and research. It is yours and exists independent
-            of an educational institution.
+            eduID is a central account for users associated with Dutch education and research. It is yours and exists independent of an educational institution.
             
             • Use it to login to several services connected to SURFconext.
             • Users without an institution account can also request an eduID.
             • eduID is a lifelong account. It stays valid after you graduate.
           nl: |
-            eduID is een centraal account voor gebruikers
-             verbonden aan het Nederlandse onderwijs en onderzoek.
-             Het is van jou en bestaat onafhankelijk van een onderwijsinstelling.
+            eduID is een centraal account voor gebruikers verbonden aan het Nederlandse onderwijs en onderzoek. Het is van jou en bestaat onafhankelijk van een onderwijsinstelling.
             
-             • Hiermee log je in op verschillende diensten die zijn aangesloten op SURFconext.
-             • Gebruikers zonder instellingsaccount kunnen ook een eduID aanvragen.
-             • eduID is een levenslang account. Het blijft geldig nadat je bent afgestudeerd.
+            • Hiermee log je in op verschillende diensten die zijn aangesloten op SURFconext.
+            • Gebruikers zonder instellingsaccount kunnen ook een eduID aanvragen.
+            • eduID is een levenslang account. Het blijft geldig nadat je bent afgestudeerd.
       CreateEduidButton:
         COPY:
           en: Create a new eduID

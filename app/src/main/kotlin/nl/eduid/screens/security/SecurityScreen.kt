@@ -95,12 +95,12 @@ fun SecurityScreenContent(
             subtitle = stringResource(R.string.Security_ProvidedBy_COPY) + " $provider",
             onClick = on2FaClicked,
             endIcon = R.drawable.shield_tick_blue,
-            label = stringResource(R.string.Security_SecondSubTitle_COPY)
+            label = stringResource(R.string.Security_OtherMethods_COPY)
         )
         Spacer(Modifier.height(16.dp))
     } ?: run {
         Text(
-            text = stringResource(R.string.Security_SecondSubTitle_COPY),
+            text = stringResource(R.string.Security_OtherMethods_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.SemiBold,

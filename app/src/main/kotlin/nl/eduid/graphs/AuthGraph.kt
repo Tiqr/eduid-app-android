@@ -9,6 +9,8 @@ import nl.eduid.screens.authorize.AuthenticationCompletedScreen
 import nl.eduid.screens.authorize.AuthenticationPinBiometricScreen
 import nl.eduid.screens.authorize.EduIdAuthenticationViewModel
 import nl.eduid.screens.authorize.RequestAuthenticationScreen
+import nl.eduid.screens.onetimepassword.OneTimePasswordScreen
+import org.tiqr.data.viewmodel.AuthenticationViewModel
 
 fun NavGraphBuilder.authenticationFlow(navController: NavHostController) {
     navigation(
@@ -42,13 +44,32 @@ fun NavGraphBuilder.authenticationFlow(navController: NavHostController) {
                             )
                         )
                     }
-                }) { navController.popBackStack() }
+                },
+                goToOneTimePassword = { challenge, pin ->
+                    if (challenge != null) {
+                        val encodedChallenge = viewModel.encodeChallenge(challenge)
+                        navController.goToWithPopCurrent(
+                            Account.OneTimePassword.buildRoute(
+                                encodedChallenge = encodedChallenge,
+                                pin = pin
+                            )
+                        )
+                    }
+                }
+                ) { navController.popBackStack() }
         }
         composable(
             route = Account.AuthenticationCompleted.routeWithArgs,
             arguments = Account.AuthenticationCompleted.arguments,
         ) { _ ->
             AuthenticationCompletedScreen { navController.popBackStack() }
+        }
+        composable(
+            route = Account.OneTimePassword.routeWithArgs,
+            arguments = Account.OneTimePassword.arguments,
+        ) { entry ->
+            val viewModel = hiltViewModel<EduIdAuthenticationViewModel>(entry)
+            OneTimePasswordScreen(viewModel = viewModel) { navController.popBackStack() }
         }
     }
 }

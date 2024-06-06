@@ -3,6 +3,9 @@ package nl.eduid.screens.authorize
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.liveData
+import androidx.lifecycle.map
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,6 +18,7 @@ import org.tiqr.data.model.AuthenticationCompleteRequest
 import org.tiqr.data.model.ChallengeCompleteFailure
 import org.tiqr.data.model.ChallengeCompleteResult
 import org.tiqr.data.model.SecretCredential
+import org.tiqr.data.model.SecretType
 import org.tiqr.data.repository.AuthenticationRepository
 import timber.log.Timber
 import javax.inject.Inject
@@ -29,6 +33,19 @@ class EduIdAuthenticationViewModel @Inject constructor(
     val challenge = MutableLiveData<AuthenticationChallenge?>()
     val challengeComplete =
         MutableLiveData<ChallengeCompleteResult<ChallengeCompleteFailure>?>(null)
+
+    private val _otpGenerate = MutableLiveData<SecretCredential>()
+    val otp = _otpGenerate.switchMap { credential ->
+        liveData {
+            challenge.value?.let { challenge ->
+                challenge.identity?.let {
+                    emit(repository.completeOtp(credential, it, challenge))
+                }
+            }
+        }
+    }
+
+    val userId = challenge.map { it?.identity?.identifier }
 
     init {
         val authorizeChallenge =
@@ -47,7 +64,10 @@ class EduIdAuthenticationViewModel @Inject constructor(
 //            )
             null
         }
-
+        val pin = savedStateHandle.get<String>(Account.OneTimePassword.pinArg)
+        if (pin != null) {
+            generateOTP(pin)
+        }
     }
 
     fun clearCompleteChallenge() {
@@ -66,6 +86,15 @@ class EduIdAuthenticationViewModel @Inject constructor(
         val challengeResult: ChallengeCompleteResult<ChallengeCompleteFailure> =
             repository.completeChallenge(challengeRequest)
         challengeComplete.postValue(challengeResult)
+    }
+
+    /**
+     * Perform OTP generation
+     */
+    private fun generateOTP(password: String) {
+        val type =
+            if (password == SecretType.BIOMETRIC.key) SecretType.BIOMETRIC else SecretType.PIN
+        _otpGenerate.value = SecretCredential(password = password, type = type)
     }
 
 }

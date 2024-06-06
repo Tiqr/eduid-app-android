@@ -15,6 +15,7 @@ import nl.eduid.graphs.RequestEduIdLinkSent.LOGIN_REASON
 import nl.eduid.graphs.RequestEduIdLinkSent.reasonArg
 import nl.eduid.screens.accountlinked.AccountLinkedScreen
 import nl.eduid.screens.accountlinked.ResultAccountLinked
+import nl.eduid.screens.authorize.EduIdAuthenticationViewModel
 import nl.eduid.screens.biometric.EnableBiometricScreen
 import nl.eduid.screens.biometric.EnableBiometricViewModel
 import nl.eduid.screens.contbrowser.ContinueInBrowserScreen
@@ -64,6 +65,7 @@ import nl.eduid.screens.twofactorkey.TwoFactorKeyViewModel
 import nl.eduid.screens.twofactorkeydelete.TwoFactorKeyDeleteScreen
 import nl.eduid.screens.twofactorkeydelete.TwoFactorKeyDeleteViewModel
 import org.tiqr.data.model.EnrollmentChallenge
+import org.tiqr.data.viewmodel.AuthenticationViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -74,6 +76,7 @@ fun MainGraph(
 ) {
     composable(Graph.HOME_PAGE) {//region Home
         val viewModel = hiltViewModel<HomePageViewModel>(it)
+
         HomePageScreen(viewModel = viewModel,
             onScanForAuthorization = { navController.navigate(Account.ScanQR.routeForAuth) },
             onActivityClicked = { navController.navigate(Graph.DATA_AND_ACTIVITY) },
