@@ -15,7 +15,6 @@ import nl.eduid.graphs.RequestEduIdLinkSent.LOGIN_REASON
 import nl.eduid.graphs.RequestEduIdLinkSent.reasonArg
 import nl.eduid.screens.accountlinked.AccountLinkedScreen
 import nl.eduid.screens.accountlinked.ResultAccountLinked
-import nl.eduid.screens.authorize.EduIdAuthenticationViewModel
 import nl.eduid.screens.biometric.EnableBiometricScreen
 import nl.eduid.screens.biometric.EnableBiometricViewModel
 import nl.eduid.screens.contbrowser.ContinueInBrowserScreen
@@ -56,7 +55,7 @@ import nl.eduid.screens.requestidlinksent.RequestEduIdEmailSentScreen
 import nl.eduid.screens.requestidstart.RequestEduIdStartScreen
 import nl.eduid.screens.scan.ScanScreen
 import nl.eduid.screens.scan.StatelessScanViewModel
-import nl.eduid.screens.security.SecurityScreen
+import nl.eduid.screens.security.SecurityRoute
 import nl.eduid.screens.security.SecurityViewModel
 import nl.eduid.screens.start.WelcomeStartScreen
 import nl.eduid.screens.start.WelcomeStartViewModel
@@ -65,7 +64,6 @@ import nl.eduid.screens.twofactorkey.TwoFactorKeyViewModel
 import nl.eduid.screens.twofactorkeydelete.TwoFactorKeyDeleteScreen
 import nl.eduid.screens.twofactorkeydelete.TwoFactorKeyDeleteViewModel
 import org.tiqr.data.model.EnrollmentChallenge
-import org.tiqr.data.viewmodel.AuthenticationViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -476,7 +474,7 @@ fun MainGraph(
         action = Intent.ACTION_VIEW
     })) {//region Home - Security
         val viewModel = hiltViewModel<SecurityViewModel>(it)
-        SecurityScreen(
+        SecurityRoute(
             viewModel = viewModel,
             goBack = { navController.popBackStack() },
             onConfigurePasswordClick = { navController.navigate(Graph.CONFIGURE_PASSWORD) },

@@ -12,11 +12,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
+import androidx.compose.material.icons.outlined.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -35,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -140,6 +144,90 @@ fun InfoField(
         shape = RoundedCornerShape(6.dp),
         width = 2.dp
     )
+)
+
+@Composable
+fun EditableSecurityField(
+    leadingIcon: Int,
+    title: String,
+    subtitle: String? = null,
+    annotatedSubtitle: AnnotatedString? = null,
+    modifier: Modifier = Modifier,
+) = ListItem(colors = ListItemDefaults.colors(
+    containerColor = MaterialTheme.colorScheme.surface,
+    headlineColor = MaterialTheme.colorScheme.onSurface,
+    supportingColor = MaterialTheme.colorScheme.onSurfaceVariant,
+    trailingIconColor = MaterialTheme.colorScheme.onSurface,
+    leadingIconColor = MaterialTheme.colorScheme.onSurface,
+), leadingContent = {
+    Icon(
+        painter = painterResource(id = leadingIcon),
+        contentDescription = "",
+    )
+},
+    headlineContent = {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
+        )
+    }, supportingContent = {
+        Column {
+            subtitle?.let {
+                Text(text = it)
+            }
+            annotatedSubtitle?.let {
+                Text(it)
+            }
+        }
+    }, trailingContent = {
+        Icon(
+            imageVector = Icons.Outlined.KeyboardArrowRight,
+            contentDescription = "",
+        )
+    }, modifier = modifier
+        .fillMaxWidth()
+        .border(
+            color = MaterialTheme.colorScheme.onSurface,
+            shape = RoundedCornerShape(6.dp),
+            width = 2.dp
+        )
+)
+
+@Composable
+fun AddSecurityField(
+    leadingIcon: Int,
+    title: String,
+    modifier: Modifier = Modifier,
+) = ListItem(colors = ListItemDefaults.colors(
+    containerColor = MaterialTheme.colorScheme.surface,
+    headlineColor = MaterialTheme.colorScheme.onSurfaceVariant,
+    trailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+    leadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+), leadingContent = {
+    Icon(
+        painter = painterResource(id = leadingIcon),
+        contentDescription = "",
+    )
+},
+    headlineContent = {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
+        )
+    }, trailingContent = {
+        Icon(
+            imageVector = Icons.Outlined.Add,
+            contentDescription = "",
+            modifier = Modifier.size(32.dp)
+        )
+    }, modifier = modifier
+        .fillMaxWidth()
+        .height(72.dp)
+        .border(
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            shape = RoundedCornerShape(6.dp),
+            width = 1.dp
+        )
 )
 
 @Composable
@@ -308,6 +396,11 @@ private fun Preview_InfoFields() = EduidAppAndroidTheme {
         InfoField(
             title = "Vetinari", subtitle = "First name"
         )
+        EditableSecurityField(
+            leadingIcon = R.drawable.ic_security_email_link,
+            title = "Magic link email", subtitle = "librarian@unseenuniveristy.disk"
+        )
+        AddSecurityField(leadingIcon = R.drawable.ic_security_key, title = "Add security key")
         VerifiedInfoField(
             title = "Vetinari", subtitle = "Verified family name",
         )

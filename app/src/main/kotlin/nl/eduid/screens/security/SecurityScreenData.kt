@@ -6,6 +6,8 @@ data class SecurityScreenData(
     val isLoading: Boolean = false,
     val errorData: ErrorData? = null,
     val twoFAProvider: String? = null,
+    val lastChangedPassword: String? = null,
     val email: String = "",
+
     val hasPassword: Boolean = false,
 )
