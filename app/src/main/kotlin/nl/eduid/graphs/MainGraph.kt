@@ -40,6 +40,8 @@ import nl.eduid.screens.oauth.OAuthScreen
 import nl.eduid.screens.oauth.OAuthViewModel
 import nl.eduid.screens.personalinfo.PersonalInfoRoute
 import nl.eduid.screens.personalinfo.PersonalInfoViewModel
+import nl.eduid.screens.personalinfo.verified.VerifiedPersonalInfoRoute
+import nl.eduid.screens.personalinfo.verified.VerifiedPersonalInfoViewModel
 import nl.eduid.screens.pinsetup.NextStep
 import nl.eduid.screens.pinsetup.RegistrationPinSetupScreen
 import nl.eduid.screens.pinsetup.RegistrationPinSetupViewModel
@@ -373,7 +375,11 @@ fun MainGraph(
         PersonalInfoRoute(
             viewModel = viewModel,
             onEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
-            onNameClicked = { name, canEditFamilyName -> navController.navigate(EditName.Form.routeWithArgs(name, canEditFamilyName)) },
+            onNameClicked = { name, canEditFamilyName ->
+                navController.navigate(EditName.Form.routeWithArgs(
+                        name, canEditFamilyName
+                    ))
+            },
             onManageAccountClicked = { dateString ->
                 navController.navigate(
                     ManageAccountRoute.routeWithArgs(
@@ -381,8 +387,23 @@ fun MainGraph(
                     )
                 )
             },
-        ) { navController.popBackStack() }
+            openVerifiedInformation = { account ->
+                navController.navigate(VerifiedPersonalInfoRoute.routeWithAccount(account))
+            },
+            goBack = navController::popBackStack,
+        )
     }
+    composable(//region VerifiedPersonalInfoRoute
+        route = VerifiedPersonalInfoRoute.routeWithArgs,
+        arguments = VerifiedPersonalInfoRoute.arguments
+    ) { entry ->
+        val viewModel = hiltViewModel<VerifiedPersonalInfoViewModel>(entry)
+        VerifiedPersonalInfoRoute(viewModel = viewModel) {
+            navController.popBackStack()
+        }
+//
+    }//endregion
+
     composable(Graph.EDIT_EMAIL) {//region Edit email
         val viewModel = hiltViewModel<EditEmailViewModel>(it)
         EditEmailScreen(

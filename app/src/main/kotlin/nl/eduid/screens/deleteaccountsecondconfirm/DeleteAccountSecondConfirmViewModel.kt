@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.R
-import nl.eduid.di.model.UnauthorizedException
+import nl.eduid.di.assist.UnauthorizedException
 import nl.eduid.di.repository.StorageRepository
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import org.tiqr.data.repository.IdentityRepository

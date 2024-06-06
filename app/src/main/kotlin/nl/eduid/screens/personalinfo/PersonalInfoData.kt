@@ -1,8 +1,10 @@
 package nl.eduid.screens.personalinfo
 
+import androidx.compose.runtime.Stable
 import nl.eduid.di.model.ConfirmedName
 import nl.eduid.di.model.SelfAssertedName
 
+@Stable
 data class PersonalInfo(
     val name: String = "",
     val seflAssertedName: SelfAssertedName = SelfAssertedName(),
@@ -16,10 +18,13 @@ data class PersonalInfo(
 
     data class InstitutionAccount(
         val id: String,
+        val linkedAccountJson: String,
         val role: String,
         val roleProvider: String,
         val institution: String,
         val affiliationString: String,
+        val givenName: String? = null,
+        val familyName: String? = null,
         val createdStamp: Long,
         val expiryStamp: Long,
     )
@@ -51,13 +56,17 @@ data class PersonalInfo(
                 institutionAccounts = generateInstitutionAccountList(),
             )
         }
+
         fun generateInstitutionAccountList() = listOf(
             InstitutionAccount(
                 id = "1",
+                linkedAccountJson = "{'id': '1', 'type': 'institution', 'name': 'Unseen University'}",
                 role = "Librarian",
                 roleProvider = "Library",
                 institution = "Unseen University",
                 affiliationString = "Librarian",
+                givenName = "Horace",
+                familyName = "Worblehat",
                 createdStamp = System.currentTimeMillis(),
                 expiryStamp = System.currentTimeMillis()
             )

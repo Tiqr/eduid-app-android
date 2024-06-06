@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -62,7 +63,7 @@ fun ConnectionCard(
     confirmedByInstitution: PersonalInfo.InstitutionAccount,
     modifier: Modifier = Modifier,
     expandedPreview: Boolean = false,
-    openVerifiedInformation: () -> Unit = {},
+    openVerifiedInformation: (String) -> Unit = {},
 ) {
     var isExpanded by remember { mutableStateOf(expandedPreview) }
     val containerColor = if (isExpanded) {
@@ -115,10 +116,17 @@ fun ConnectionCard(
                         confirmedByInstitution.expiryStamp.getDateString()
                     )
                     HorizontalDivider(thickness = 2.dp, color = MaterialTheme.colorScheme.onSurface)
-                    TextButton(onClick = openVerifiedInformation) {
+                    TextButton(
+                        onClick = { openVerifiedInformation(confirmedByInstitution.linkedAccountJson) },
+                        shape = RoundedCornerShape(CornerSize(6.dp)),
+                        contentPadding = PaddingValues(0.dp)
+                    ) {
                         Text(
                             stringResource(id = R.string.Profile_ManageYourVerifiedInformation_COPY),
-                            textDecoration = TextDecoration.Underline
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                fontWeight = FontWeight.Normal,
+                                textDecoration = TextDecoration.Underline
+                            ),
                         )
                     }
                 }

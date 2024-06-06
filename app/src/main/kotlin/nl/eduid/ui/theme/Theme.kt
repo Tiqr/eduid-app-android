@@ -22,7 +22,6 @@ private val LightColors = lightColorScheme(
     onSecondary = ColorMain_Green_400,
     tertiaryContainer = ColorScale_Gray_100,
     onTertiaryContainer = ColorScale_Gray_300,
-    
 )
 
 @Composable

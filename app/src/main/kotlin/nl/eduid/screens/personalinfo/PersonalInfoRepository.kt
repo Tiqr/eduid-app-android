@@ -5,6 +5,7 @@ import android.os.Environment
 import android.util.AtomicFile
 import androidx.core.util.writeText
 import nl.eduid.di.api.EduIdApi
+import nl.eduid.di.assist.UnauthorizedException
 import nl.eduid.di.assist.processResponse
 import nl.eduid.di.model.ConfirmDeactivationCode
 import nl.eduid.di.model.ConfirmPhoneCode
@@ -16,7 +17,7 @@ import nl.eduid.di.model.RequestPhoneCode
 import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.di.model.Token
 import nl.eduid.di.model.TokenResponse
-import nl.eduid.di.model.UnauthorizedException
+import nl.eduid.di.model.UrlResponse
 import nl.eduid.di.model.UserDetails
 import timber.log.Timber
 import java.io.File
@@ -27,6 +28,16 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
 
     suspend fun getUserDetailsResult(): Result<UserDetails> {
         val response = eduIdApi.getUserDetails()
+        return processResponse(response = response)
+    }
+
+    suspend fun removeConnectionResult(linkedAccount: LinkedAccount): Result<UserDetails> {
+        val response = eduIdApi.removeConnection(linkedAccount)
+        return processResponse(response = response)
+    }
+
+    suspend fun getStartLinkAccountResult(): Result<UrlResponse?> {
+        val response = eduIdApi.getStartLinkAccount()
         return processResponse(response = response)
     }
 
@@ -195,31 +206,6 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
         null
     }
 
-    suspend fun removeConnection(linkedAccount: LinkedAccount): UserDetails? = try {
-        val response = eduIdApi.removeConnection(linkedAccount)
-        if (response.isSuccessful) {
-            response.body()
-        } else {
-            if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
-                Timber.e("Unauthorized removeConnection call")
-                throw UnauthorizedException("Unauthorized removeConnection call")
-            } else {
-                Timber.w(
-                    "Failed to remove connection for [${response.code()}/${response.message()}]${
-                        response.errorBody()?.string()
-                    }"
-                )
-                null
-            }
-        }
-    } catch (e: UnauthorizedException) {
-        //propagate unauthorized exception, capture everything else.
-        throw e
-    } catch (e: Exception) {
-        Timber.e(e, "Failed to remove connection for ${linkedAccount.institutionIdentifier}")
-        null
-    }
-
     suspend fun updateName(selfAssertedName: SelfAssertedName): UserDetails? = try {
         val response = eduIdApi.updateName(selfAssertedName)
         if (response.isSuccessful) {
@@ -269,31 +255,6 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
         null
     }
 
-
-    suspend fun getStartLinkAccount(): String? = try {
-        val response = eduIdApi.getStartLinkAccount()
-        if (response.isSuccessful) {
-            response.body()?.url
-        } else {
-            if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
-                Timber.e("Unauthorized getStartLinkAccount call")
-                throw UnauthorizedException("Unauthorized getStartLinkAccount call")
-            } else {
-                Timber.w(
-                    "Failed to retrieve start link account URL: [${response.code()}/${response.message()}]${
-                        response.errorBody()?.string()
-                    }"
-                )
-                null
-            }
-
-        }
-    } catch (e: UnauthorizedException) {
-        throw e
-    } catch (e: Exception) {
-        Timber.e(e, "Failed to retrieve start link account URL")
-        null
-    }
 
     @SuppressLint("SimpleDateFormat")
     suspend fun downloadPersonalData(): Boolean = try {

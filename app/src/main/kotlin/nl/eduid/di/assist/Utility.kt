@@ -1,6 +1,5 @@
 package nl.eduid.di.assist
 
-import nl.eduid.di.model.UnauthorizedException
 import retrofit2.Response
 import timber.log.Timber
 import java.io.IOException

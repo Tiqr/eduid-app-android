@@ -32,6 +32,7 @@ val ColorScale_Gray_500 = Color(94, 104, 115)
  *
  * */
 val ColorScale_Gray_100 = Color(244, 246, 248)
+val ColorScale_Gray_200 = Color(0x00EAECF0)
 
 /**
  * As onTertiaryContainer, for the labels of disabled buttons
@@ -43,7 +44,7 @@ val ColorScale_Gray_400 = Color(0xFF8C969F)
 
 /**
  * as onSurface.
- * By default used by top app bar back navigation icon & headline content color in List Item
+ * By default used by top app bar back navigation icon & headline content color in List`` Item
  * */
 val ColorSupport_Blue_400 = Color(0xFF0077C8)
 val ColorSupport_Blue_100 = Color(0xFFDFF4FF)

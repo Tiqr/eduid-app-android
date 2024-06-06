@@ -4,78 +4,82 @@ import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flattenConcat
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.di.assist.DataAssistant
 import nl.eduid.di.assist.SaveableResult
-import nl.eduid.di.model.ConfirmedName
-import nl.eduid.di.model.SelfAssertedName
-import nl.eduid.di.model.UnauthorizedException
+import nl.eduid.di.assist.toErrorData
 import nl.eduid.di.model.UserDetails
+import nl.eduid.di.model.mapToPersonalInfo
 import javax.inject.Inject
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class PersonalInfoViewModel @Inject constructor(
     private val assistant: DataAssistant,
+    private val moshi: Moshi,
 ) : ViewModel() {
-    private val stateFromNetwork: Flow<UiState> = assistant.observableDetails.map { it ->
+    private val _errorData: MutableStateFlow<ErrorData?> = MutableStateFlow(null)
+    private val _isProcessing: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val _linkUrl: MutableStateFlow<Intent?> = MutableStateFlow(null)
+    val uiState = assistant.observableDetails.map { it ->
         when (it) {
             is SaveableResult.Success -> {
                 val personalInfo = mapUserDetailsToPersonalInfo(it.data)
-                UiState(isLoading = false, personalInfo = personalInfo)
+                if (it.saveError != null) {
+                    _errorData.emit(it.saveError.toErrorData())
+                }
+                UiState(
+                    isLoading = false,
+                    personalInfo = personalInfo,
+                )
             }
 
-            is SaveableResult.LoadError -> if (it.exception is UnauthorizedException) {
-                UiState(
-                    isLoading = false, errorData = ErrorData(
-                        titleId = R.string.ResponseErrors_UnauthorizedTitle_COPY,
-                        messageId = R.string.ResponseErrors_UnauthorizedText_COPY
-                    )
-                )
-            } else {
-                UiState(
-                    isLoading = false, errorData = ErrorData(
+            is SaveableResult.LoadError -> {
+                _errorData.emit(it.exception.toErrorData())
+                UiState(isLoading = false)
+            }
+
+            null -> {
+                _errorData.emit(
+                    ErrorData(
                         titleId = R.string.ResponseErrors_UnauthorizedTitle_COPY,
                         messageId = R.string.ResponseErrors_PersonalDetailsRetrieveError_COPY
                     )
                 )
+                UiState(isLoading = false)
             }
-
-            null -> UiState(
-                isLoading = false, errorData = ErrorData(
-                    titleId = R.string.ResponseErrors_UnauthorizedTitle_COPY,
-                    messageId = R.string.ResponseErrors_PersonalDetailsRetrieveError_COPY
-                )
-            )
         }
-
-    }
-
-    private val uiStateInternal: MutableStateFlow<UiState> =
-        MutableStateFlow(UiState(isLoading = true))
-
-    val uiState =
-        flowOf(stateFromNetwork, uiStateInternal).flattenConcat().distinctUntilChanged().stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(3_000),
-            initialValue = UiState(isLoading = true),
-        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(3_000),
+        initialValue = UiState(isLoading = true),
+    )
+    val errorData = _errorData.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(3_000),
+        initialValue = null,
+    )
+    val isProcessing = _isProcessing.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(3_000),
+        initialValue = false,
+    )
+    val linkUrl = _linkUrl.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(3_000),
+        initialValue = null,
+    )
 
     private suspend fun mapUserDetailsToPersonalInfo(userDetails: UserDetails): PersonalInfo {
-        var personalInfo = convertToUiData(userDetails)
+        var personalInfo = userDetails.mapToPersonalInfo(moshi)
         val nameMap = mutableMapOf<String, String>()
         for (account in userDetails.linkedAccounts) {
             val mappedName = assistant.getInstitutionName(account.schacHomeOrganization)
@@ -102,61 +106,28 @@ class PersonalInfoViewModel @Inject constructor(
         return personalInfo
     }
 
-    fun clearErrorData() {
-        uiStateInternal.value = uiState.value.copy(errorData = null)
-    }
+    fun clearErrorData() = _errorData.update { null }
 
-    fun removeConnection(index: Int) = viewModelScope.launch {
-        val details = assistant.observableDetails.map { it.mapToFirst() }.first()
-        if (details == null) return@launch
-
-        uiStateInternal.value = uiState.value.copy(isLoading = true)
-        try {
-            val linkedAccount = details.linkedAccounts[index]
-            val newDetails = assistant.removeConnection(linkedAccount)
-            uiStateInternal.value = newDetails?.let { updatedDetails ->
-                val personalInfo = mapUserDetailsToPersonalInfo(updatedDetails)
-                uiState.value.copy(isLoading = false, personalInfo = personalInfo)
-            } ?: uiState.value.copy(
-                isLoading = false, errorData = ErrorData(
-                    titleId = R.string.Generic_RequestError_Title_COPY,
-                    messageId = R.string.ResponseErrors_GeneralRequestError_COPY,
-                )
-            )
-        } catch (e: UnauthorizedException) {
-            uiStateInternal.value = uiState.value.copy(
-                isLoading = false, errorData = ErrorData(
-                    titleId = R.string.Generic_RequestError_Title_COPY,
-                    messageId = R.string.ResponseErrors_UnauthorizedText_COPY
-                )
-            )
-        }
+    fun removeConnection(institutionId: String) = viewModelScope.launch {
+        _isProcessing.update { true }
+        assistant.removeConnection(institutionId)
+        _isProcessing.update { false }
     }
 
     fun requestLinkUrl() = viewModelScope.launch {
-        uiStateInternal.value = uiState.value.copy(isLoading = true, linkUrl = null)
-        try {
-            val response = assistant.getStartLinkAccount()
-            uiStateInternal.value = if (response != null) {
-                uiState.value.copy(
-                    linkUrl = createLaunchIntent(response), isLoading = false
-                )
-            } else {
-                uiState.value.copy(
-                    isLoading = false, errorData = ErrorData(
-                        titleId = R.string.Generic_RequestError_Title_COPY,
-                        messageId = R.string.ResponseErrors_GeneralRequestError_COPY
-                    )
+        _isProcessing.update { true }
+        val url = assistant.getStartLinkAccount()
+        if (url != null) {
+            _linkUrl.update { createLaunchIntent(url) }
+        } else {
+            _errorData.update {
+                ErrorData(
+                    titleId = R.string.ResponseErrors_UnauthorizedTitle_COPY,
+                    messageId = R.string.Profile_AccountLinkError_Title_COPY
                 )
             }
-        } catch (e: UnauthorizedException) {
-            uiStateInternal.value = uiState.value.copy(
-                isLoading = false, errorData = ErrorData(
-                    titleId = R.string.Generic_RequestError_Title_COPY,
-                    messageId = R.string.ResponseErrors_UnauthorizedText_COPY
-                )
-            )
         }
+        _isProcessing.update { false }
     }
 
     private fun createLaunchIntent(url: String): Intent {
@@ -164,65 +135,4 @@ class PersonalInfoViewModel @Inject constructor(
         intent.data = Uri.parse(url)
         return intent
     }
-
-    private fun convertToUiData(userDetails: UserDetails): PersonalInfo {
-        val dateCreated = userDetails.created * 1000
-        val linkedAccounts = userDetails.linkedAccounts
-
-        val familyNameConfirmer = linkedAccounts.firstOrNull { it.familyName != null }
-        val givenNameConfirmer = linkedAccounts.firstOrNull { it.givenName != null }
-
-        val affiliationProvider = linkedAccounts.firstOrNull()
-        val nameProvider = affiliationProvider?.schacHomeOrganization
-        val name: String = affiliationProvider?.let {
-            "${it.givenName} ${it.familyName}"
-        } ?: "${userDetails.chosenName} ${userDetails.familyName}"
-
-        val email: String = userDetails.email
-
-        val institutionAccounts = linkedAccounts.mapNotNull { account ->
-            account.eduPersonAffiliations.firstOrNull()?.let { affiliation ->
-                //Just in case affiliation is not in the email format
-                val role = if (affiliation.indexOf("@") > 0) {
-                    affiliation.substring(0, affiliation.indexOf("@"))
-                } else {
-                    affiliation
-                }
-                PersonalInfo.InstitutionAccount(
-                    id = account.institutionIdentifier,
-                    role = role,
-                    roleProvider = account.schacHomeOrganization,
-                    institution = account.schacHomeOrganization,
-                    affiliationString = affiliation,
-                    createdStamp = account.createdAt,
-                    expiryStamp = account.expiresAt,
-                )
-            }
-        }
-
-        return PersonalInfo(
-            name = name,
-            seflAssertedName = SelfAssertedName(
-                familyName = userDetails.familyName,
-                givenName = userDetails.givenName,
-                chosenName = userDetails.chosenName
-            ),
-            confirmedName = ConfirmedName(
-                familyName = familyNameConfirmer?.familyName,
-                familyNameConfirmedBy = familyNameConfirmer?.institutionIdentifier,
-                givenName = givenNameConfirmer?.givenName,
-                givenNameConfirmedBy = givenNameConfirmer?.institutionIdentifier
-            ),
-            nameProvider = nameProvider,
-            email = email,
-            institutionAccounts = institutionAccounts,
-            dateCreated = dateCreated,
-        )
-    }
-}
-
-fun SaveableResult<UserDetails>?.mapToFirst(): UserDetails? = when (this) {
-    is SaveableResult.Success -> this.data
-    is SaveableResult.LoadError -> null
-    else -> null
 }
