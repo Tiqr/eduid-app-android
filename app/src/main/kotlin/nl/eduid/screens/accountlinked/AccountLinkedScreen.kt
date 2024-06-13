@@ -63,13 +63,14 @@ fun AccountLinkedScreen(
 
             ResultAccountLinked.OK -> {
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                val errorData by viewModel.errorData.collectAsStateWithLifecycle()
                 AccountLinkedContent(
                     personalInfo = uiState.personalInfo,
                     isLoading = uiState.isLoading,
-                    errorData = uiState.errorData,
+                    errorData = errorData,
                     dismissError = viewModel::clearErrorData,
                     continueToHome = continueToHome,
-                    removeConnection = { index -> viewModel.removeConnection(index) },
+                    removeConnection = { institutionId -> viewModel.removeConnection(institutionId) },
                 )
             }
         }
@@ -127,7 +128,7 @@ private fun AccountLinkedContent(
     errorData: ErrorData? = null,
     dismissError: () -> Unit = {},
     continueToHome: () -> Unit = {},
-    removeConnection: (Int) -> Unit = {},
+    removeConnection: (String) -> Unit = {},
 ) = Column(
     modifier = Modifier
         .verticalScroll(rememberScrollState())
@@ -192,12 +193,12 @@ private fun AccountLinkedContent(
         )
         Spacer(Modifier.height(6.dp))
     }
-    personalInfo.institutionAccounts.forEachIndexed { index, account ->
+    personalInfo.institutionAccounts.forEach { account ->
         ConnectionCardOld(
             title = account.role,
             subtitle = stringResource(R.string.Profile_InstitutionAt_COPY, account.roleProvider),
             institutionInfo = account,
-            onRemoveConnection = { removeConnection(index) },
+            onRemoveConnection = { removeConnection(account.id) },
         )
     }
     PrimaryButton(

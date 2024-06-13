@@ -13,7 +13,7 @@ import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.di.assist.DataAssistant
 import nl.eduid.di.model.SelfAssertedName
-import nl.eduid.di.model.UnauthorizedException
+import nl.eduid.di.assist.UnauthorizedException
 import nl.eduid.graphs.EditName
 import javax.inject.Inject
 

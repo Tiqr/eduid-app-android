@@ -28,8 +28,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -37,6 +39,7 @@ import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -45,14 +48,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.flowWithLifecycle
+import com.theapache64.rebugger.Rebugger
+import kotlinx.coroutines.flow.filterNotNull
 import nl.eduid.R
 import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.screens.firsttimedialog.LinkAccountContract
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.ConnectionCard
 import nl.eduid.ui.EduIdTopAppBar
+import nl.eduid.ui.ExpandableVerifiedInfoField
 import nl.eduid.ui.InfoField
-import nl.eduid.ui.VerifiedInfoField
 import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.theme.ColorSupport_Blue_100
 import nl.eduid.ui.theme.EduidAppAndroidTheme
@@ -62,74 +68,110 @@ import nl.eduid.ui.theme.LinkAccountCard
 fun PersonalInfoRoute(
     viewModel: PersonalInfoViewModel,
     onEmailClicked: () -> Unit,
-    onNameClicked: (SelfAssertedName, Boolean) -> Unit = { _, _ -> },
+    onNameClicked: (SelfAssertedName, Boolean) -> Unit,
     onManageAccountClicked: (dateString: String) -> Unit,
-    openVerifiedInformation: () -> Unit = {},
+    openVerifiedInformation: (String) -> Unit,
     goBack: () -> Unit,
 ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val errorData by viewModel.errorData.collectAsStateWithLifecycle()
+    val isProcessing by viewModel.isProcessing.collectAsStateWithLifecycle()
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
     var isGettingLinkUrl by rememberSaveable { mutableStateOf(false) }
+    val onEmail = remember(viewModel) { { onEmailClicked() } }
+    val onBack = remember(viewModel) { { goBack() } }
+    val onName = remember(viewModel) {
+        { onNameClicked(uiState.personalInfo.seflAssertedName, !uiState.personalInfo.isVerified) }
+    }
+    val addLink = remember(viewModel) {
+        {
+            viewModel.requestLinkUrl()
+            isGettingLinkUrl = true
+        }
+    }
+    val createdAtDate = stringResource(R.string.ManageAccount_CreatedAt_COPY)
+    val onManage = remember(viewModel) {
+        { onManageAccountClicked(uiState.personalInfo.dateCreated.getDateTimeString(createdAtDate)) }
+    }
+    val isLoading by remember {
+        derivedStateOf {
+            uiState.isLoading || isProcessing
+        }
+    }
     val launcher =
         rememberLauncherForActivityResult(contract = LinkAccountContract(), onResult = { _ ->
             /**We don't have to explicitly handle the result intent. The deep linking will
              * automatically open the [AccountLinkedScreen()] and ensure the backstack is correct.*/
         })
 
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    if (isGettingLinkUrl && uiState.haveValidLinkIntent()) {
-        LaunchedEffect(key1 = viewModel) {
-            isGettingLinkUrl = false
-            launcher.launch(uiState.linkUrl)
+    if (isGettingLinkUrl) {
+        LaunchedEffect(viewModel, lifecycle) {
+            viewModel.linkUrl.filterNotNull().flowWithLifecycle(lifecycle).collect {
+                launcher.launch(it)
+                isGettingLinkUrl = false
+            }
         }
     }
 
-    uiState.errorData?.let {
+    errorData?.let { error ->
         val context = LocalContext.current
         AlertDialogWithSingleButton(
-            title = it.title(context),
-            explanation = it.message(context),
+            title = error.title(context),
+            explanation = error.message(context),
             buttonLabel = stringResource(R.string.Button_OK_COPY),
             onDismiss = viewModel::clearErrorData
         )
     }
-
     PersonalInfoScreen(
-        personalInfo = uiState.personalInfo,
-        isLoading = uiState.isLoading,
-        modifier = Modifier
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState()),
-        onNameClicked = onNameClicked,
-        onEmailClicked = onEmailClicked,
-        onManageAccountClicked = onManageAccountClicked,
+        uiState = uiState,
+        isLoading = isLoading,
+        modifier = Modifier,
+        onNameClicked = onName,
+        onEmailClicked = onEmail,
+        onManageAccountClicked = onManage,
         openVerifiedInformation = openVerifiedInformation,
-        goBack = goBack,
-    ) {
-        isGettingLinkUrl = true
-        viewModel.requestLinkUrl()
-    }
+        addLinkToAccount = addLink,
+        goBack = onBack,
+    )
 }
 
 @Composable
 fun PersonalInfoScreen(
-    personalInfo: PersonalInfo,
+    uiState: UiState,
     isLoading: Boolean,
     modifier: Modifier = Modifier,
-    onNameClicked: (SelfAssertedName, Boolean) -> Unit = { _, _ -> },
-    onEmailClicked: () -> Unit = {},
-    onManageAccountClicked: (dateString: String) -> Unit = {},
-    openVerifiedInformation: () -> Unit = {},
-    goBack: () -> Unit = {},
-    addLinkToAccount: () -> Unit = {},
+    onNameClicked: () -> Unit,
+    onEmailClicked: () -> Unit,
+    onManageAccountClicked: () -> Unit,
+    openVerifiedInformation: (String) -> Unit,
+    addLinkToAccount: () -> Unit,
+    goBack: () -> Unit,
 ) = EduIdTopAppBar(
     onBackClicked = goBack,
 ) {
+    Rebugger(
+        trackMap = mapOf(
+            "uiState" to uiState,
+            "isLoading" to isLoading,
+            "modifier" to modifier,
+            "onNameClicked" to onNameClicked,
+            "onEmailClicked" to onEmailClicked,
+            "onManageAccountClicked" to onManageAccountClicked,
+            "openVerifiedInformation" to openVerifiedInformation,
+            "addLinkToAccount" to addLinkToAccount,
+            "goBack" to goBack
+        )
+    )
     Column(
         modifier = modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
             .padding(it)
             .systemBarsPadding()
             .padding(horizontal = 24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+
         Text(
             style = MaterialTheme.typography.titleLarge.copy(
                 textAlign = TextAlign.Start, color = MaterialTheme.colorScheme.onSecondary
@@ -143,16 +185,16 @@ fun PersonalInfoScreen(
             style = MaterialTheme.typography.bodyLarge,
             text = stringResource(R.string.Profile_Info_COPY),
         )
-        if (!personalInfo.isVerified) {
+        if (!uiState.personalInfo.isVerified) {
             NotVerifiedIdentity(
-                selfAssertedName = personalInfo.seflAssertedName,
+                selfAssertedName = uiState.personalInfo.seflAssertedName,
                 isLoading = isLoading,
                 addLinkToAccount = addLinkToAccount,
                 onNameClicked = onNameClicked
             )
         } else {
             VerifiedIdentity(
-                personalInfo = personalInfo,
+                personalInfo = uiState.personalInfo,
                 isLoading = isLoading,
                 onNameClicked = onNameClicked,
                 openVerifiedInformation = openVerifiedInformation
@@ -164,14 +206,14 @@ fun PersonalInfoScreen(
             text = stringResource(R.string.Profile_ContactDetails_COPY),
             modifier = Modifier.padding(top = 16.dp)
         )
-        InfoField(title = personalInfo.email,
+        InfoField(title = uiState.personalInfo.email,
             subtitle = stringResource(R.string.Profile_Email_COPY),
             modifier = Modifier.clickable {
                 onEmailClicked()
             })
 
-        if (personalInfo.institutionAccounts.isNotEmpty()) {
-            RoleAndInstitutions(openVerifiedInformation, personalInfo.institutionAccounts)
+        if (uiState.personalInfo.institutionAccounts.isNotEmpty()) {
+            RoleAndInstitutions(openVerifiedInformation, uiState.personalInfo.institutionAccounts)
         }
 
         LinkAccountCard(
@@ -187,15 +229,8 @@ fun PersonalInfoScreen(
                 .background(MaterialTheme.colorScheme.tertiaryContainer)
                 .padding(vertical = 12.dp, horizontal = 24.dp),
         ) {
-            val dateFormat = stringResource(id = R.string.ManageAccount_CreatedAt_COPY)
             OutlinedButton(
-                onClick = {
-                    onManageAccountClicked(
-                        personalInfo.dateCreated.getDateTimeString(
-                            dateFormat
-                        )
-                    )
-                },
+                onClick = onManageAccountClicked,
                 shape = RoundedCornerShape(CornerSize(6.dp)),
                 modifier = Modifier
                     .sizeIn(minHeight = 48.dp)
@@ -222,7 +257,7 @@ fun PersonalInfoScreen(
 
 @Composable
 private fun ColumnScope.RoleAndInstitutions(
-    openVerifiedInformation: () -> Unit,
+    openVerifiedInformation: (String) -> Unit,
     institutionAccounts: List<PersonalInfo.InstitutionAccount>,
 ) {
     Text(
@@ -244,7 +279,7 @@ private fun ColumnScope.NotVerifiedIdentity(
     selfAssertedName: SelfAssertedName,
     isLoading: Boolean,
     addLinkToAccount: () -> Unit,
-    onNameClicked: (SelfAssertedName, Boolean) -> Unit,
+    onNameClicked: () -> Unit,
 ) {
     NotVerifiedBanner(addLinkToAccount)
 
@@ -278,12 +313,12 @@ private fun ColumnScope.NotVerifiedIdentity(
     InfoField(title = selfAssertedName.chosenName.orEmpty(),
         subtitle = stringResource(R.string.Profile_FirstName_COPY),
         modifier = Modifier.clickable {
-            onNameClicked(selfAssertedName, true)
+            onNameClicked()
         })
     InfoField(title = selfAssertedName.familyName.orEmpty(),
         subtitle = stringResource(R.string.Profile_LastName_COPY),
         modifier = Modifier.clickable {
-            onNameClicked(selfAssertedName, true)
+            onNameClicked()
         })
 }
 
@@ -291,8 +326,8 @@ private fun ColumnScope.NotVerifiedIdentity(
 private fun ColumnScope.VerifiedIdentity(
     personalInfo: PersonalInfo,
     isLoading: Boolean,
-    onNameClicked: (SelfAssertedName, Boolean) -> Unit,
-    openVerifiedInformation: () -> Unit = {},
+    onNameClicked: () -> Unit,
+    openVerifiedInformation: (String) -> Unit = {},
 ) {
     Row(
         modifier = Modifier
@@ -333,9 +368,9 @@ private fun ColumnScope.VerifiedIdentity(
     InfoField(title = personalInfo.seflAssertedName.chosenName.orEmpty(),
         subtitle = stringResource(R.string.Profile_FirstName_COPY),
         modifier = Modifier.clickable {
-            onNameClicked(personalInfo.seflAssertedName, false)
+            onNameClicked()
         })
-    VerifiedInfoField(
+    ExpandableVerifiedInfoField(
         title = personalInfo.confirmedName.givenName.orEmpty(),
         subtitle = stringResource(R.string.Profile_VerifiedGivenName_COPY),
         confirmedByInstitution = personalInfo.institutionAccounts.first {
@@ -343,7 +378,7 @@ private fun ColumnScope.VerifiedIdentity(
         },
         openVerifiedInformation = openVerifiedInformation
     )
-    VerifiedInfoField(
+    ExpandableVerifiedInfoField(
         title = personalInfo.confirmedName.familyName.orEmpty(),
         subtitle = stringResource(R.string.Profile_VerifiedFamilyName_COPY),
         confirmedByInstitution = personalInfo.institutionAccounts.first {
@@ -405,10 +440,14 @@ private fun ColumnScope.NotVerifiedBanner(addLinkToAccount: () -> Unit = {}) {
 @Preview(locale = "nl", showBackground = true)
 @Composable
 private fun Preview_PersonalInfoScreen() = EduidAppAndroidTheme {
-    PersonalInfoScreen(
-        personalInfo = PersonalInfo.demoData(),
+    PersonalInfoScreen(uiState = UiState(PersonalInfo.demoData()),
         isLoading = false,
-    )
+        onNameClicked = { },
+        onEmailClicked = {},
+        onManageAccountClicked = {},
+        openVerifiedInformation = { _ -> },
+        addLinkToAccount = {},
+        goBack = {})
 }
 
 @Preview(locale = "en", showBackground = true)
@@ -421,7 +460,7 @@ private fun Preview_VerifiedIdentity() = EduidAppAndroidTheme {
     ) {
         VerifiedIdentity(personalInfo = PersonalInfo.verifiedDemoData(),
             isLoading = false,
-            onNameClicked = { _, _ -> })
+            onNameClicked = {})
     }
 }
 

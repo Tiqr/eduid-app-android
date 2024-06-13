@@ -40,8 +40,8 @@ import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
 import nl.eduid.ui.annotatedStringWithBoldParts
 import nl.eduid.ui.theme.AlertWarningBackground
-import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.ColorMain_Green_400
+import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -76,9 +76,11 @@ fun FirstTimeDialogScreen(
 
     if (isGettingLinkUrl && viewModel.uiState.haveValidLinkIntent()) {
         LaunchedEffect(key1 = viewModel) {
-            isGettingLinkUrl = false
-            launcher.launch(viewModel.uiState.linkUrl)
-            isLinkingStarted = true
+            viewModel.uiState.linkUrl?.let { intent ->
+                isGettingLinkUrl = false
+                launcher.launch(intent)
+                isLinkingStarted = true
+            }
         }
     }
 

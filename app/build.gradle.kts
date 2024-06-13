@@ -125,7 +125,7 @@ android {
         abortOnError = false
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.10"
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
     packaging {
         resources.excludes.addAll(
@@ -159,6 +159,7 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     debugImplementation("androidx.compose.ui:ui-tooling")
+    implementation(libs.rebugger)
     implementation(libs.androidx.compose.activity)
     implementation(libs.androidx.compose.navigation)
     implementation(libs.androidx.compose.hilt.navigation)
@@ -195,18 +196,6 @@ dependencies {
 
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.retrofit.converter.scalars)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.testing.core)
-    androidTestImplementation(libs.androidx.testing.junit)
-    androidTestImplementation(libs.androidx.testing.rules)
-    androidTestImplementation(libs.androidx.testing.epsresso)
-    androidTestImplementation(libs.androidx.testing.uiautomator)
-    androidTestImplementation(libs.kotlinx.coroutines.test)
-
-    androidTestImplementation(libs.dagger.hilt.testing)
-    kspAndroidTest(libs.dagger.hilt.compiler)
 }
 
 // Disable analytics

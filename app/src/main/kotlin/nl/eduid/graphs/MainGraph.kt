@@ -15,7 +15,6 @@ import nl.eduid.graphs.RequestEduIdLinkSent.LOGIN_REASON
 import nl.eduid.graphs.RequestEduIdLinkSent.reasonArg
 import nl.eduid.screens.accountlinked.AccountLinkedScreen
 import nl.eduid.screens.accountlinked.ResultAccountLinked
-import nl.eduid.screens.authorize.EduIdAuthenticationViewModel
 import nl.eduid.screens.biometric.EnableBiometricScreen
 import nl.eduid.screens.biometric.EnableBiometricViewModel
 import nl.eduid.screens.contbrowser.ContinueInBrowserScreen
@@ -41,6 +40,8 @@ import nl.eduid.screens.oauth.OAuthScreen
 import nl.eduid.screens.oauth.OAuthViewModel
 import nl.eduid.screens.personalinfo.PersonalInfoRoute
 import nl.eduid.screens.personalinfo.PersonalInfoViewModel
+import nl.eduid.screens.personalinfo.verified.VerifiedPersonalInfoRoute
+import nl.eduid.screens.personalinfo.verified.VerifiedPersonalInfoViewModel
 import nl.eduid.screens.pinsetup.NextStep
 import nl.eduid.screens.pinsetup.RegistrationPinSetupScreen
 import nl.eduid.screens.pinsetup.RegistrationPinSetupViewModel
@@ -54,7 +55,7 @@ import nl.eduid.screens.requestidlinksent.RequestEduIdEmailSentScreen
 import nl.eduid.screens.requestidstart.RequestEduIdStartScreen
 import nl.eduid.screens.scan.ScanScreen
 import nl.eduid.screens.scan.StatelessScanViewModel
-import nl.eduid.screens.security.SecurityScreen
+import nl.eduid.screens.security.SecurityRoute
 import nl.eduid.screens.security.SecurityViewModel
 import nl.eduid.screens.start.WelcomeStartScreen
 import nl.eduid.screens.start.WelcomeStartViewModel
@@ -63,7 +64,6 @@ import nl.eduid.screens.twofactorkey.TwoFactorKeyViewModel
 import nl.eduid.screens.twofactorkeydelete.TwoFactorKeyDeleteScreen
 import nl.eduid.screens.twofactorkeydelete.TwoFactorKeyDeleteViewModel
 import org.tiqr.data.model.EnrollmentChallenge
-import org.tiqr.data.viewmodel.AuthenticationViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -376,7 +376,11 @@ fun MainGraph(
         PersonalInfoRoute(
             viewModel = viewModel,
             onEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
-            onNameClicked = { name, canEditFamilyName -> navController.navigate(EditName.Form.routeWithArgs(name, canEditFamilyName)) },
+            onNameClicked = { name, canEditFamilyName ->
+                navController.navigate(EditName.Form.routeWithArgs(
+                        name, canEditFamilyName
+                    ))
+            },
             onManageAccountClicked = { dateString ->
                 navController.navigate(
                     ManageAccountRoute.routeWithArgs(
@@ -384,8 +388,23 @@ fun MainGraph(
                     )
                 )
             },
-        ) { navController.popBackStack() }
+            openVerifiedInformation = { account ->
+                navController.navigate(VerifiedPersonalInfoRoute.routeWithAccount(account))
+            },
+            goBack = navController::popBackStack,
+        )
     }
+    composable(//region VerifiedPersonalInfoRoute
+        route = VerifiedPersonalInfoRoute.routeWithArgs,
+        arguments = VerifiedPersonalInfoRoute.arguments
+    ) { entry ->
+        val viewModel = hiltViewModel<VerifiedPersonalInfoViewModel>(entry)
+        VerifiedPersonalInfoRoute(viewModel = viewModel) {
+            navController.popBackStack()
+        }
+//
+    }//endregion
+
     composable(Graph.EDIT_EMAIL) {//region Edit email
         val viewModel = hiltViewModel<EditEmailViewModel>(it)
         EditEmailScreen(
@@ -455,7 +474,7 @@ fun MainGraph(
         action = Intent.ACTION_VIEW
     })) {//region Home - Security
         val viewModel = hiltViewModel<SecurityViewModel>(it)
-        SecurityScreen(
+        SecurityRoute(
             viewModel = viewModel,
             goBack = { navController.popBackStack() },
             onConfigurePasswordClick = { navController.navigate(Graph.CONFIGURE_PASSWORD) },

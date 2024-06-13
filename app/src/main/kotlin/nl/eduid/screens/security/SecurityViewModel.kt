@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.di.assist.DataAssistant
-import nl.eduid.di.model.UnauthorizedException
+import nl.eduid.di.assist.UnauthorizedException
 import nl.eduid.di.model.UserDetails
 import nl.eduid.graphs.Security
 import org.tiqr.data.repository.IdentityRepository
@@ -73,11 +73,7 @@ class SecurityViewModel @Inject constructor(
     private suspend fun fillUserData(userDetails: UserDetails?, isChangeEmail: Boolean = false) =
         if (userDetails != null) {
             val identity = identity.identity(userDetails.id).firstOrNull()
-            val provider = if (identity != null) {
-                identity.identityProvider.displayName
-            } else {
-                null
-            }
+            val provider = identity?.identityProvider?.displayName
             uiState.copy(
                 isLoading = false, errorData = null, email = userDetails.email,
                 twoFAProvider = provider,

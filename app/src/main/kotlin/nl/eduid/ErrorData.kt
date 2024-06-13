@@ -2,7 +2,9 @@ package nl.eduid
 
 import android.content.Context
 import androidx.annotation.StringRes
+import androidx.compose.runtime.Stable
 
+@Stable
 data class ErrorData(
     val title: String = "",
     val message: String = "",

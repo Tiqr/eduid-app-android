@@ -53,6 +53,26 @@ object AccountLinked {
     val uriPatternExpired = "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/expired"
 }
 
+object VerifiedPersonalInfoRoute {
+    private const val route = "verified_personal_info"
+    const val verifiedByAccountArg = "verified_by"
+    const val routeWithArgs = "$route/{$verifiedByAccountArg}"
+    val arguments = listOf(navArgument(verifiedByAccountArg) {
+        type = NavType.StringType
+        nullable = false
+        defaultValue = ""
+    })
+
+    fun routeWithAccount(verifiedByAccount: String) =
+        "${route}/$verifiedByAccount"
+
+    fun decodeInstitutionId(entry: NavBackStackEntry): String {
+        val institutionId = entry.arguments?.getString(verifiedByAccountArg) ?: ""
+        return Uri.decode(institutionId)
+    }
+
+}
+
 object RequestEduIdLinkSent {
     private const val route = "request_edu_id_link_sent"
     const val LOGIN_REASON = "magiclink_for_login"

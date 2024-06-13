@@ -1,6 +1,7 @@
 package nl.eduid.di.model
 
 import android.os.Parcelable
+import androidx.compose.runtime.Stable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
@@ -161,6 +162,7 @@ data class Scope(val name: String, val descriptions: Description?) : Parcelable 
 @JsonClass(generateAdapter = true)
 data class Description(val en: String?, val nl: String?) : Parcelable
 
+@Stable
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class SelfAssertedName(
