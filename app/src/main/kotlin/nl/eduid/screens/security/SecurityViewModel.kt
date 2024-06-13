@@ -73,11 +73,7 @@ class SecurityViewModel @Inject constructor(
     private suspend fun fillUserData(userDetails: UserDetails?, isChangeEmail: Boolean = false) =
         if (userDetails != null) {
             val identity = identity.identity(userDetails.id).firstOrNull()
-            val provider = if (identity != null) {
-                identity.identityProvider.displayName
-            } else {
-                null
-            }
+            val provider = identity?.identityProvider?.displayName
             uiState.copy(
                 isLoading = false, errorData = null, email = userDetails.email,
                 twoFAProvider = provider,
