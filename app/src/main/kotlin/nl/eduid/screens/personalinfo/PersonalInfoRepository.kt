@@ -24,8 +24,9 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
-class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
-
+class PersonalInfoRepository(
+    private val eduIdApi: EduIdApi,
+) {
     suspend fun getUserDetailsResult(): Result<UserDetails> {
         val response = eduIdApi.getUserDetails()
         return processResponse(response = response)
@@ -49,7 +50,7 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
             Timber.w(
                 "User details not available [${response.code()}/${response.message()}]${
                     response.errorBody()?.string()
-                }"
+                }",
             )
             null
         }
@@ -70,13 +71,13 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
                 Timber.w(
                     "User details not available [${response.code()}/${response.message()}]${
                         response.errorBody()?.string()
-                    }"
+                    }",
                 )
                 null
             }
         }
     } catch (e: UnauthorizedException) {
-        //propagate unauthorized exception, capture everything else.
+        // propagate unauthorized exception, capture everything else.
         throw e
     } catch (e: Exception) {
         Timber.e(e, "Failed to retrieve user details")
@@ -91,7 +92,7 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
             Timber.w(
                 "Failed to start enrollment [${response.code()}/${response.message()}]${
                     response.errorBody()?.string()
-                }"
+                }",
             )
             null
         }
@@ -112,13 +113,13 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
                 Timber.w(
                     "Failed to change email to $email: [${response.code()}/${response.message()}]${
                         response.errorBody()?.string()
-                    }"
+                    }",
                 )
                 response.code()
             }
         }
     } catch (e: UnauthorizedException) {
-        //propagate unauthorized exception, capture everything else.
+        // propagate unauthorized exception, capture everything else.
         throw e
     } catch (e: Exception) {
         Timber.e(e, "Failed to change email")
@@ -137,25 +138,54 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
                 Timber.w(
                     "Failed to confirm email [${response.code()}/${response.message()}]${
                         response.errorBody()?.string()
-                    }"
+                    }",
                 )
                 null
             }
         }
     } catch (e: UnauthorizedException) {
-        //propagate unauthorized exception, capture everything else.
+        // propagate unauthorized exception, capture everything else.
         throw e
     } catch (e: Exception) {
         Timber.e(e, "Failed to confirm email change")
         null
     }
 
+    suspend fun revokeToken(revokeToken: TokenResponse?): UserDetails? = try {
+        val existingTokens = getTokensForUser()
+        val updatedTokens = existingTokens?.filter { it != revokeToken } ?: emptyList()
+
+        val response = eduIdApi.putTokens(updatedTokens)
+        if (response.isSuccessful) {
+            response.body()
+        } else {
+            if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
+                Timber.e("Unauthorized removeService call")
+                throw UnauthorizedException("Unauthorized removeService call")
+            } else {
+                Timber.w(
+                    "Failed to remove connection for [${response.code()}/${response.message()}]${
+                        response.errorBody()?.string()
+                    }",
+                )
+                null
+            }
+        }
+    } catch (e: UnauthorizedException) {
+        // propagate unauthorized exception, capture everything else.
+        throw e
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to revoke token $revokeToken")
+        null
+    }
+
     suspend fun removeService(serviceId: String): UserDetails? = try {
         val tokens = getTokensForUser()
         val tokensForService = tokens?.filter { token ->
-            token.clientId == serviceId && token.scopes?.any { scope ->
-                scope.name != "openid" && scope.hasValidDescription()
-            } ?: false
+            token.clientId == serviceId &&
+                token.scopes?.any { scope ->
+                    scope.name != "openid" && scope.hasValidDescription()
+                } ?: false
         }
         val tokensRequest = tokensForService?.map { serviceToken ->
             Token(serviceToken.id, serviceToken.type)
@@ -163,8 +193,9 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
 
         val response = eduIdApi.removeService(
             DeleteServiceRequest(
-                serviceProviderEntityId = serviceId, tokens = tokensRequest
-            )
+                serviceProviderEntityId = serviceId,
+                tokens = tokensRequest,
+            ),
         )
         if (response.isSuccessful) {
             response.body()
@@ -176,20 +207,20 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
                 Timber.w(
                     "Failed to remove connection for [${response.code()}/${response.message()}]${
                         response.errorBody()?.string()
-                    }"
+                    }",
                 )
                 null
             }
         }
     } catch (e: UnauthorizedException) {
-        //propagate unauthorized exception, capture everything else.
+        // propagate unauthorized exception, capture everything else.
         throw e
     } catch (e: Exception) {
         Timber.e(e, "Failed to remove service with id $serviceId")
         null
     }
 
-    private suspend fun getTokensForUser(): List<TokenResponse>? = try {
+    suspend fun getTokensForUser(): List<TokenResponse>? = try {
         val tokenResponse = eduIdApi.getTokens()
         if (tokenResponse.isSuccessful) {
             tokenResponse.body()
@@ -197,7 +228,7 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
             Timber.w(
                 "Failed to remove connection for [${tokenResponse.code()}/${tokenResponse.message()}]${
                     tokenResponse.errorBody()?.string()
-                }"
+                }",
             )
             null
         }
@@ -218,13 +249,13 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
                 Timber.w(
                     "Failed to update name [${response.code()}/${response.message()}]${
                         response.errorBody()?.string()
-                    }"
+                    }",
                 )
                 null
             }
         }
     } catch (e: UnauthorizedException) {
-        //propagate unauthorized exception, capture everything else.
+        // propagate unauthorized exception, capture everything else.
         throw e
     } catch (e: Exception) {
         Timber.e(e, "Failed update name")
@@ -243,7 +274,7 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
                 Timber.w(
                     "Institution name lookup failed. [${response.code()}/${response.message()}]${
                         response.errorBody()?.string()
-                    }"
+                    }",
                 )
                 null
             }
@@ -254,7 +285,6 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
         Timber.e(e, "Failed to retrieve institution name")
         null
     }
-
 
     @SuppressLint("SimpleDateFormat")
     suspend fun downloadPersonalData(): Boolean = try {
@@ -267,7 +297,7 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
                 val now = Calendar.getInstance().time
                 val format = SimpleDateFormat("dMy")
                 val timestamp = format.format(now)
-                val file = AtomicFile(File(downloadFolder, "eduid_export_${timestamp}.json"))
+                val file = AtomicFile(File(downloadFolder, "eduid_export_$timestamp.json"))
                 file.writeText(personalDataJson)
                 true
             } else {
@@ -277,7 +307,7 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
             Timber.w(
                 "Failed to get personal data [${response.code()}/${response.message()}]${
                     response.errorBody()?.string()
-                }"
+                }",
             )
             false
         }
@@ -302,7 +332,7 @@ class PersonalInfoRepository(private val eduIdApi: EduIdApi) {
             Timber.w(
                 "Failed to send password link: [${response.code()}/${response.message()}]${
                     response.errorBody()?.string()
-                }"
+                }",
             )
             null
         }

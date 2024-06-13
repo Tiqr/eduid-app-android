@@ -132,11 +132,11 @@ private fun TwoFABlock(
 ) = Column(
     Modifier.fillMaxWidth()
 ) {
-    InfoRow(
+    InfoRowOld(
         label = stringResource(R.string.TwoFactorKeys_Label_Account_COPY),
         value = keyInfo.account,
     )
-    InfoRow(
+    InfoRowOld(
         label = stringResource(R.string.TwoFactorKeys_Label_UniqueKeyId_COPY),
         value = keyInfo.uniqueKey,
     )

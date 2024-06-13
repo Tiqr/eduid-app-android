@@ -242,21 +242,21 @@ private fun InstitutionInfoBlock(
 ) = Column(
     Modifier.fillMaxWidth()
 ) {
-    InfoRow(
+    InfoRowOld(
         label = stringResource(R.string.Profile_VerifiedBy_COPY, institutionInfo.institution)
                 + stringResource(
             R.string.Profile_VerifiedOn_COPY, institutionInfo.createdStamp.getDateString()
         )
     )
-    InfoRow(
+    InfoRowOld(
         label = stringResource(R.string.Profile_Institution_COPY),
         value = institutionInfo.institution
     )
-    InfoRow(
+    InfoRowOld(
         label = stringResource(R.string.Profile_Affiliations_COPY),
         value = institutionInfo.affiliationString
     )
-    InfoRow(
+    InfoRowOld(
         label = stringResource(R.string.Profile_Expires_COPY),
         value = institutionInfo.expiryStamp.getDateString()
     )

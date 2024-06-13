@@ -16,12 +16,7 @@ import nl.eduid.ui.theme.ColorScale_Gray_500
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
-fun AlertDialogWithSingleButton(
-    title: String,
-    explanation: String,
-    buttonLabel: String,
-    onDismiss: () -> Unit = {},
-) {
+fun AlertDialogWithSingleButton(title: String, explanation: String, buttonLabel: String, onDismiss: () -> Unit = {}) {
     val openDialog = remember { mutableStateOf(true) }
 
     if (openDialog.value) {
@@ -105,11 +100,7 @@ fun AlertDialogWithTwoButton(
 }
 
 @Composable
-fun DeleteServiceDialog(
-    service: String,
-    onDismiss: () -> Unit = {},
-    onConfirm: () -> Unit = {},
-) {
+fun DeleteServiceDialog(service: String, onDismiss: () -> Unit = {}, onConfirm: () -> Unit = {}) {
     val openDialog = remember { mutableStateOf(true) }
 
     if (openDialog.value) {
@@ -119,7 +110,7 @@ fun DeleteServiceDialog(
         }, title = {
             TwoColorTitle(
                 firstPart = stringResource(id = R.string.DeleteService_Title_COPY),
-                secondPart = "$service?"
+                secondPart = "$service?",
             )
         }, text = {
             Text(
@@ -133,14 +124,55 @@ fun DeleteServiceDialog(
                 onClick = {
                     openDialog.value = false
                     onConfirm()
-                })
+                },
+            )
         }, dismissButton = {
             SecondaryButton(
                 text = stringResource(id = R.string.Button_Cancel_COPY),
                 onClick = {
                     openDialog.value = false
                     onDismiss()
-                })
+                },
+            )
+        })
+    }
+}
+
+@Composable
+fun RevokeTokenDialog(token: String, onDismiss: () -> Unit = {}, onConfirm: () -> Unit = {}) {
+    val openDialog = remember { mutableStateOf(true) }
+
+    if (openDialog.value) {
+        AlertDialog(onDismissRequest = {
+            openDialog.value = false
+            onDismiss()
+        }, title = {
+            TwoColorTitle(
+                firstPart = stringResource(id = R.string.RevokeAccessToken_Title_COPY),
+                secondPart = "",
+            )
+        }, text = {
+            Text(
+                text = stringResource(id = R.string.RevokeAccessToken_Description_COPY, token),
+                style = MaterialTheme.typography.bodyLarge.copy(color = ColorScale_Gray_500),
+            )
+        }, confirmButton = {
+            PrimaryButton(
+                text = stringResource(id = R.string.RevokeAccessToken_Button_Confirm_COPY),
+                buttonBackgroundColor = ColorAlertRed,
+                onClick = {
+                    openDialog.value = false
+                    onConfirm()
+                },
+            )
+        }, dismissButton = {
+            SecondaryButton(
+                text = stringResource(id = R.string.RevokeAccessToken_Button_Cancel_COPY),
+                onClick = {
+                    openDialog.value = false
+                    onDismiss()
+                },
+            )
         })
     }
 }
@@ -149,6 +181,12 @@ fun DeleteServiceDialog(
 @Composable
 private fun Preview_DeleteService() = EduidAppAndroidTheme {
     DeleteServiceDialog(
-        service = "service"
+        service = "service",
     )
+}
+
+@Preview
+@Composable
+private fun Preview_RevokeToken() = EduidAppAndroidTheme {
+    RevokeTokenDialog(token = "eduid mobile app")
 }
