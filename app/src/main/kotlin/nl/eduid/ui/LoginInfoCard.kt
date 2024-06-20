@@ -151,7 +151,7 @@ fun LoginInfoCard(
                             text = stringResource(id = R.string.DataActivity_Details_Delete_COPY),
                         )
                     }
-                    serviceProviderInfo?.scopeAccessGrant?.let { scopeGranted ->
+                    serviceProviderInfo?.availableTokens?.forEach { scopeGranted ->
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
                         Text(stringResource(R.string.DataActivity_Details_Access_COPY), style = MaterialTheme.typography.labelSmall)
                         Text(scopeGranted.scopeDescription.orEmpty(), style = MaterialTheme.typography.labelSmall)
@@ -187,6 +187,7 @@ fun LoginInfoCard(
                                 text = stringResource(id = R.string.DataActivity_Details_Revoke_COPY),
                             )
                         }
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
                     }
                 }
             }
@@ -408,12 +409,14 @@ private fun PreviewLoginInfoCard() = EduidAppAndroidTheme {
                     firstLoginStamp = 0L,
                     uniqueId = "15a6dObf-fOfd-466d-a3b1-ff19df2dcc3e",
                     serviceProviderEntityId = "service provider id",
-                    scopeAccessGrant = ScopeAccessGrant(
-                        clientId = "test.eduid.nl",
-                        forProviderName = "eduid mobile app",
-                        scopeDescription = "Allow this app to read and update your eduID data",
-                        grantedOn = "2024-06-13T14:25:57.054+00:00",
-                        expireAt = "2024-06-13T14:25:57.054+00:00",
+                    availableTokens = listOf(
+                        ScopeAccessGrant(
+                            clientId = "test.eduid.nl",
+                            forProviderName = "eduid mobile app",
+                            scopeDescription = "Allow this app to read and update your eduID data",
+                            grantedOn = "2024-06-13T14:25:57.054+00:00",
+                            expireAt = "2024-06-13T14:25:57.054+00:00",
+                        ),
                     ),
                 ),
             isExpanded = true,

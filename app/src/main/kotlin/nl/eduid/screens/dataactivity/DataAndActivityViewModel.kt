@@ -169,38 +169,37 @@ class DataAndActivityViewModel
                     uniqueId = service.value,
                     serviceProviderEntityId = service.serviceProviderEntityId,
                     providerLogoUrl = service.serviceLogoUrl,
-                    scopeAccessGrant = scopeAccessGrant,
+                    availableTokens = scopeAccessGrant,
                 )
             }
 
-        private fun scopeAccessGrant(tokens: List<TokenResponse>?, service: EduIdPerServiceProvider): ScopeAccessGrant? {
-            val tokensForService = tokens?.firstOrNull {
+        private fun scopeAccessGrant(tokens: List<TokenResponse>?, service: EduIdPerServiceProvider): List<ScopeAccessGrant> {
+            val allTokensForService = tokens?.filter {
                 it.clientId == service.serviceProviderEntityId &&
                     it.scopes?.any { scope ->
                         scope.hasValidDescription() && scope.name != "openid"
                     } ?: false
-            }
-            val isDutch = locale.toLanguageTag().startsWith("nl", true)
-            val scopeAccessGrant = tokensForService?.let {
+            } ?: emptyList()
+            return allTokensForService.map { tokensForService ->
+                val isDutch = locale.toLanguageTag().startsWith("nl", true)
                 ScopeAccessGrant(
-                    clientId = it.clientId,
+                    clientId = tokensForService.clientId,
                     forProviderName = service.serviceName,
-                    token = it,
+                    token = tokensForService,
                     scopeDescription = if (isDutch) {
-                        it.scopes
+                        tokensForService.scopes
                             ?.firstOrNull()
                             ?.descriptions
                             ?.nl
                     } else {
-                        it.scopes
+                        tokensForService.scopes
                             ?.firstOrNull()
                             ?.descriptions
                             ?.en
                     },
-                    grantedOn = it.createdAt,
-                    expireAt = it.expiresIn,
+                    grantedOn = tokensForService.createdAt,
+                    expireAt = tokensForService.expiresIn,
                 )
             }
-            return scopeAccessGrant
         }
     }

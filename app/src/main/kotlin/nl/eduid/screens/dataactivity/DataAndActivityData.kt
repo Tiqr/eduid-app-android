@@ -9,11 +9,11 @@ data class ServiceProvider(
     val createdStamp: Long?,
     val firstLoginStamp: Long?,
     val uniqueId: String?,
-    val scopeAccessGrant: ScopeAccessGrant? = null,
+    val availableTokens: List<ScopeAccessGrant>? = null,
     val serviceProviderEntityId: String,
     val providerLogoUrl: String? = null,
 ) {
-    val hasDataAccess: Boolean = scopeAccessGrant != null
+    val hasDataAccess: Boolean = !availableTokens.isNullOrEmpty()
 }
 
 @Stable
