@@ -10,6 +10,7 @@ import nl.eduid.di.assist.processResponse
 import nl.eduid.di.model.ConfirmDeactivationCode
 import nl.eduid.di.model.ConfirmPhoneCode
 import nl.eduid.di.model.DeleteServiceRequest
+import nl.eduid.di.model.DeleteTokensRequest
 import nl.eduid.di.model.EmailChangeRequest
 import nl.eduid.di.model.EnrollResponse
 import nl.eduid.di.model.LinkedAccount
@@ -151,11 +152,10 @@ class PersonalInfoRepository(
         null
     }
 
-    suspend fun revokeToken(revokeToken: TokenResponse?): UserDetails? = try {
-        val existingTokens = getTokensForUser()
-        val updatedTokens = existingTokens?.filter { it != revokeToken } ?: emptyList()
+    suspend fun revokeToken(revokeToken: TokenResponse): UserDetails? = try {
+        val deleteRequest = DeleteTokensRequest(listOf(Token(revokeToken.id, revokeToken.type)))
 
-        val response = eduIdApi.putTokens(updatedTokens)
+        val response = eduIdApi.removeTokens(deleteRequest)
         if (response.isSuccessful) {
             response.body()
         } else {

@@ -135,6 +135,12 @@ data class DeleteServiceRequest(
 
 @Parcelize
 @JsonClass(generateAdapter = true)
+data class DeleteTokensRequest(
+    val tokens: List<Token>,
+) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
 data class Token(
     val id: String,
     val type: String,

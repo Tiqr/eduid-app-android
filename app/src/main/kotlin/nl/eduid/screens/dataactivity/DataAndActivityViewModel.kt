@@ -100,7 +100,7 @@ class DataAndActivityViewModel
         fun revokeToken() = viewModelScope.launch {
             try {
                 if (uiState.revokeToken?.token != null) {
-                    val deleteToken = uiState.revokeToken?.token
+                    val deleteToken = uiState.revokeToken?.token!!
                     uiState = UiState(isLoading = true, errorData = null)
                     val userDetails = assistant.updateTokens(deleteToken)
                     val tokens = assistant.getTokensForUser()
@@ -174,9 +174,11 @@ class DataAndActivityViewModel
             }
 
         private fun scopeAccessGrant(tokens: List<TokenResponse>?, service: EduIdPerServiceProvider): ScopeAccessGrant? {
-            val tokensForService: TokenResponse? = tokens?.firstOrNull {
+            val tokensForService = tokens?.firstOrNull {
                 it.clientId == service.serviceProviderEntityId &&
-                    it.type == "ACCESS"
+                    it.scopes?.any { scope ->
+                        scope.hasValidDescription() && scope.name != "openid"
+                    } ?: false
             }
             val isDutch = locale.toLanguageTag().startsWith("nl", true)
             val scopeAccessGrant = tokensForService?.let {

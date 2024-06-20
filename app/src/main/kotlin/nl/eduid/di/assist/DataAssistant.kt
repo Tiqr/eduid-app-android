@@ -89,7 +89,7 @@ class DataAssistant
             throw e
         }
 
-        suspend fun updateTokens(revokeToken: TokenResponse?): UserDetails? = try {
+        suspend fun updateTokens(revokeToken: TokenResponse): UserDetails? = try {
             infoRepository.revokeToken(revokeToken)
         } catch (e: UnauthorizedException) {
             storageRepository.clearInvalidAuth()

@@ -3,6 +3,7 @@ package nl.eduid.di.api
 import nl.eduid.di.model.ConfirmDeactivationCode
 import nl.eduid.di.model.ConfirmPhoneCode
 import nl.eduid.di.model.DeleteServiceRequest
+import nl.eduid.di.model.DeleteTokensRequest
 import nl.eduid.di.model.EmailChangeRequest
 import nl.eduid.di.model.EnrollResponse
 import nl.eduid.di.model.InstitutionNameResponse
@@ -69,11 +70,6 @@ interface EduIdApi {
     @GET("/mobile/api/sp/tokens")
     suspend fun getTokens(): Response<List<TokenResponse>>
 
-    @PUT("/mobile/api/sp/tokens")
-    suspend fun putTokens(
-        @Body tokens: List<TokenResponse>,
-    ): Response<UserDetails>
-
     @GET("/mobile/api/sp/institution/names")
     suspend fun getInstitutionName(
         @Query("schac_home") schac_home: String,
@@ -97,6 +93,11 @@ interface EduIdApi {
     @PUT("/mobile/api/sp/service")
     suspend fun removeService(
         @Body serviceId: DeleteServiceRequest,
+    ): Response<UserDetails>
+
+    @PUT("/mobile/api/sp/tokens")
+    suspend fun removeTokens(
+        @Body tokens: DeleteTokensRequest,
     ): Response<UserDetails>
 
     @GET("/mobile/api/sp/personal")
