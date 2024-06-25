@@ -33,7 +33,6 @@ data class ConfirmDeactivationCode(
     val verificationCode: String,
 ) : Parcelable
 
-
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class UrlResponse(
@@ -72,10 +71,10 @@ data class UserDetails(
     val loginOptions: List<String>,
     val registration: Registration?,
 ) : Parcelable {
-
     fun isRecoveryRequired(): Boolean = registration?.status != "FINALIZED"
 
     fun hasPasswordSet(): Boolean = loginOptions.contains("usePassword")
+
     fun hasAppRegistered(): Boolean = loginOptions.contains("useApp")
 }
 
@@ -110,7 +109,7 @@ data class Registration(
     val phoneNumber: String?,
     val phoneVerified: Boolean?,
     val recoveryCode: Boolean?,
-    //FINALIZED - is completed
+    // FINALIZED - is completed
     val status: String?,
 ) : Parcelable
 
@@ -136,6 +135,12 @@ data class DeleteServiceRequest(
 
 @Parcelize
 @JsonClass(generateAdapter = true)
+data class DeleteTokensRequest(
+    val tokens: List<Token>,
+) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
 data class Token(
     val id: String,
     val type: String,
@@ -145,6 +150,8 @@ data class Token(
 @JsonClass(generateAdapter = true)
 data class TokenResponse(
     val id: String,
+    val expiresIn: String,
+    val createdAt: String,
     val clientName: String,
     val clientId: String,
     val type: String,
@@ -153,14 +160,19 @@ data class TokenResponse(
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-data class Scope(val name: String, val descriptions: Description?) : Parcelable {
-    fun hasValidDescription(): Boolean =
-        descriptions != null && (descriptions.en != null || descriptions.nl != null)
+data class Scope(
+    val name: String,
+    val descriptions: Description?,
+) : Parcelable {
+    fun hasValidDescription(): Boolean = descriptions != null && (descriptions.en != null || descriptions.nl != null)
 }
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-data class Description(val en: String?, val nl: String?) : Parcelable
+data class Description(
+    val en: String?,
+    val nl: String?,
+) : Parcelable
 
 @Stable
 @Parcelize
@@ -170,7 +182,6 @@ data class SelfAssertedName(
     val givenName: String? = null,
     val chosenName: String? = null,
 ) : Parcelable
-
 
 @Parcelize
 @JsonClass(generateAdapter = true)
@@ -183,5 +194,7 @@ data class ConfirmedName(
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-data class UpdatePasswordRequest(val newPassword: String, val hash: String) :
-    Parcelable
+data class UpdatePasswordRequest(
+    val newPassword: String,
+    val hash: String,
+) : Parcelable
