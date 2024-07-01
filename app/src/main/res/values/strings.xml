@@ -83,7 +83,7 @@
   <string name="Profile_Name_COPY">"Name"</string>
   <string name="Profile_Validated_COPY">"Validated information"</string>
   <string name="Profile_FirstAndLastName_COPY">"First and last name"</string>
-  <string name="Profile_FirstAndLastNameInfo_COPY">"Your first and lastname are not yet verified by a third party"</string>
+  <string name="Profile_FirstAndLastNameInfo_COPY">"Your first and last name are not yet verified by a third party"</string>
   <string name="Profile_Verify_COPY">"Verify"</string>
   <string name="Profile_Student_COPY">"Proof of student"</string>
   <string name="Profile_StudentInfo_COPY">"You have not yet proven that you are a student in the Netherlands."</string>
@@ -360,7 +360,7 @@
   <string name="Password_DeletePassword_COPY">"Delete password"</string>
   <string name="Password_DeletePasswordConfirmation_COPY">"Are you sure that you want to delete your password? Login with a password will be no longer possible."</string>
   <string name="Password_Back_COPY">"/security"</string>
-  <string name="Password_PasswordDisclaimer_COPY">"Make sure it's at least 15 characters OR at least 8 characters including a number and a uppercase letter."</string>
+  <string name="Password_PasswordDisclaimer_COPY">"Make sure it's at least 15 characters OR at least 8 characters including a number and an uppercase letter."</string>
   <string name="Password_InvalidCurrentPassword_COPY">"Your current password is invalid."</string>
   <string name="Password_PasswordResetHashExpired_COPY">"Your password reset link has expired. "</string>
   <string name="Password_ForgotPassword_COPY">"Help! I forgot my current password"</string>
@@ -384,7 +384,7 @@
   <string name="Webauthn_CredentialNamePlaceholder_COPY">"e.g. my red Yubikey"</string>
   <string name="Webauthn_Test_COPY">"Test"</string>
   <string name="Webauthn_TestInfo_COPY">"Click the &lt;strong&gt;test&lt;/strong&gt; button to test one of your security keys. You will be redirected to the eduID login screen."</string>
-  <string name="Webauthn_TestFlash_COPY">"You successfully tested your security key to authenticate"</string>
+  <string name="Webauthn_TestFlash_COPY">"You successfully tested your security key to authenticate."</string>
   <string name="RememberMe_Yes_COPY">"Yes"</string>
   <string name="RememberMe_No_COPY">"No"</string>
   <string name="RememberMe_Header_COPY">"Stay signed in?"</string>

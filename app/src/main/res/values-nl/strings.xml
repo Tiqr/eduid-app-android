@@ -34,7 +34,7 @@
   <string name="RegistrationCheck_LogoutStatus_COPY">"Om het uitlogproces te voltooien, moet je de browser nu afsluiten."</string>
   <string name="RegistrationCheck_LoginAgain_COPY">"Opnieuw inloggen"</string>
   <string name="RegistrationCheck_DeleteTitle_COPY">"Jouw eduID is verwijderd"</string>
-  <string name="RegistrationCheck_DeleteStatus_COPY">"Om het verwijderen van je eduID te voltooien, moet je jouw browser nu afsluiten."</string>
+  <string name="RegistrationCheck_DeleteStatus_COPY">"Om het verwijderen van je eduID te voltooien, moet je deze browser nu afsluiten."</string>
   <string name="RegistrationCheck_RegisterAgain_COPY">"Opnieuw registreren"</string>
   <string name="NotFound_Title_COPY">"Oeps…"</string>
   <string name="NotFound_Title2_COPY">"Er is iets fout gegaan (404)."</string>
@@ -101,11 +101,11 @@
   <string name="Profile_VerifiedOn_COPY">"op %1$s"</string>
   <string name="Profile_Proceed_COPY">"Doorgaan"</string>
   <string name="Profile_VerifyFirstAndLastName_AddInstitution_COPY">"Verifieer naam"</string>
-  <string name="Profile_VerifyFirstAndLastName_AddInstitutionConfirmation_COPY">"Als je doorgaat word je gevraagd in te loggen via de onderwijsinstelling die je wilt koppelen. Selecteer eerst welke instelling je wilt koppelen en log daarna in.&lt;br/&gt; &lt;br/&gt;Nadat je succesvol bent ingelogd kom je hier weer terug."</string>
+  <string name="Profile_VerifyFirstAndLastName_AddInstitutionConfirmation_COPY">"Als je doorgaat word je gevraagd in te loggen via de onderwijsinstelling die je wilt koppelen. Selecteer eerst de instelling die je wilt koppelen en log daarna in.&lt;br/&gt; &lt;br/&gt;Nadat je succesvol bent ingelogd kom je hier weer terug."</string>
   <string name="Profile_VerifyStudent_AddInstitution_COPY">"Bewijs student"</string>
-  <string name="Profile_VerifyStudent_AddInstitutionConfirmation_COPY">"Als je doorgaat word je gevraagd in te loggen via de onderwijsinstelling die je wilt koppelen. Selecteer eerst welke instelling je wilt koppelen en log daarna in.&lt;br/&gt; &lt;br/&gt;Nadat je succesvol bent ingelogd kom je hier weer terug."</string>
+  <string name="Profile_VerifyStudent_AddInstitutionConfirmation_COPY">"Als je doorgaat word je gevraagd in te loggen via de onderwijsinstelling die je wilt koppelen. Selecteer eerst de instelling die je wilt koppelen en log daarna in.&lt;br/&gt; &lt;br/&gt;Nadat je succesvol bent ingelogd kom je hier weer terug."</string>
   <string name="Profile_VerifyParty_AddInstitution_COPY">"Koppel instelling"</string>
-  <string name="Profile_VerifyParty_AddInstitutionConfirmation_COPY">"Als je doorgaat word je gevraagd in te loggen via de onderwijsinstelling die je wilt koppelen. Selecteer eerst welke instelling je wilt koppelen en log daarna in.&lt;br/&gt; &lt;br/&gt;Nadat je succesvol bent ingelogd kom je hier weer terug."</string>
+  <string name="Profile_VerifyParty_AddInstitutionConfirmation_COPY">"Als je doorgaat word je gevraagd in te loggen via de onderwijsinstelling die je wilt koppelen. Selecteer eerst de instelling die je wilt koppelen en log daarna in.&lt;br/&gt; &lt;br/&gt;Nadat je succesvol bent ingelogd kom je hier weer terug."</string>
   <string name="EppnAlreadyLinked_Title_COPY">"Koppeling niet gemaakt!"</string>
   <string name="EppnAlreadyLinked_Info_COPY">"Je eduID kon niet worden gekoppeld. Het vertrouwde account waarmee je zojuist bent ingelogd, is al aan een ander eduID-account gekoppeld: %1$s."</string>
   <string name="EppnAlreadyLinked_RetryButton_COPY">"Opnieuw proberen"</string>
@@ -223,8 +223,8 @@
   <string name="Security_Tiqr_AlreadyEnrolled_Description_COPY">"Dit account is al aan een toestel gekoppeld voor 2FA.\nWil je 2FA op het bestaande toestel deactiveren en hier toevoegen?\n"</string>
   <string name="PasswordResetLink_Title_AddPassword_COPY">"Voeg een wachtwoord toe"</string>
   <string name="PasswordResetLink_Title_ChangePassword_COPY">"Wachtwoord wijzigen of verwijderen"</string>
-  <string name="PasswordResetLink_Description_AddPassword_COPY">"We sturen je een email om een wachtwoord in te stellen."</string>
-  <string name="PasswordResetLink_Description_ChangePassword_COPY">"We sturen je een email om je huidige wachtwoord opnieuw in te stellen of te verwijderen."</string>
+  <string name="PasswordResetLink_Description_AddPassword_COPY">"We sturen je een e-mail om een wachtwoord in te stellen."</string>
+  <string name="PasswordResetLink_Description_ChangePassword_COPY">"We sturen je een e-mail om je huidige wachtwoord opnieuw in te stellen of te verwijderen."</string>
   <string name="PasswordResetLink_Button_Cancel_COPY">"Annuleer"</string>
   <string name="PasswordResetLink_Button_SendEmail_COPY">"Stuur email"</string>
   <string name="ChangePassword_Title_AddPassword_COPY">"Voeg een wachtwoord toe"</string>
@@ -296,7 +296,7 @@
   <string name="DataActivity_NoServices_COPY">"Je bent nog niet ingelogd geweest op een dienst via eduID."</string>
   <string name="DataActivity_Name_COPY">"Naam"</string>
   <string name="DataActivity_Add_COPY">"Nieuwe instelling koppelen"</string>
-  <string name="DataActivity_Access_COPY">"Heeft toegang tot je data"</string>
+  <string name="DataActivity_Access_COPY">"Heeft toegang tot je gegevens"</string>
   <string name="DataActivity_Details_On_COPY">"op"</string>
   <string name="DataActivity_Details_Login_COPY">"Logingegevens"</string>
   <string name="DataActivity_Details_Delete_COPY">"Verwijder deze logingegevens"</string>
@@ -310,7 +310,7 @@
   <string name="DataActivity_Details_Expires_COPY">"Toegang vervalt op: "</string>
   <string name="DataActivity_Details_Revoke_COPY">"Deze toegangsrechten intrekken"</string>
   <string name="DeleteService_Title_COPY">"Verwijder logingegevens van "</string>
-  <string name="DeleteService_Description_COPY">"Het verwijderen van deze logingegevens betekent dat eduID deze informatie verwijderd van jouw eduID account. Je hebt nog steeds een account bij de dienst zichzelf. Als je die ook wil verwijderen, doe je dat bij de dienst."</string>
+  <string name="DeleteService_Description_COPY">"Het verwijderen van deze logingegevens betekent dat eduID deze informatie verwijderd van jouw eduID account. Je hebt nog steeds een account bij de dienst zelf. Als je die ook wil verwijderen, doe je dat bij de dienst."</string>
   <string name="DeleteService_Button_Confirm_COPY">"Ja, verwijder"</string>
   <string name="DeleteService_Button_Cancel_COPY">"Annuleer"</string>
   <string name="DeleteService_Error_COPY">"Fout bij verwijderen dienst"</string>
@@ -419,7 +419,7 @@
   <string name="Recovery_BackupCode_COPY">"Vraag een herstelcode aan."</string>
   <string name="Recovery_BackupCodeInfo_COPY">"De code kan worden gebruikt om in te loggen."</string>
   <string name="Recovery_Save_COPY">"Bewaar de code ergens veilig."</string>
-  <string name="Recovery_Active_COPY">"Deze code is nu actief, maar je kan op elk moment een nieuwe code aanmaken binnen mijn eduID."</string>
+  <string name="Recovery_Active_COPY">"Deze code is nu actief, maar je kan op elk moment een nieuwe code aanmaken binnen Mijn eduID."</string>
   <string name="Recovery_Copy_COPY">"Kopieer de code"</string>
   <string name="Recovery_Copied_COPY">"Gekopieerd"</string>
   <string name="Recovery_Continue_COPY">"Mijn code is veilig. Doorgaan"</string>
@@ -429,7 +429,7 @@
   <string name="PhoneVerification_Text_COPY">"We sturen je een code om je nummer te verifiëren."</string>
   <string name="PhoneVerification_Verify_COPY">"Verifieer dit telefoonnummer"</string>
   <string name="PhoneVerification_PlaceHolder_COPY">"+31 612345678"</string>
-  <string name="PhoneVerification_PhoneIncorrect_COPY">"Verificatie code is onjuist"</string>
+  <string name="PhoneVerification_PhoneIncorrect_COPY">"Telefoonnummer is onjuist"</string>
   <string name="Congrats_Header_COPY">"Succes"</string>
   <string name="Congrats_Info_COPY">"Je kunt nu de eduID app gebruiken om snel in te loggen bij diensten waarvoor je moet inloggen met je eduID."</string>
   <string name="Congrats_Next_COPY">"Verder naar %1$s"</string>
@@ -438,7 +438,7 @@
   <string name="Deactivate_RecoveryCode_COPY">"Herstelcode"</string>
   <string name="Deactivate_RecoveryCodeInfo_COPY">"Vul de &lt;strong&gt;herstelcode&lt;/strong&gt; in die je tijdens de eduID app registratie hebt bewaard."</string>
   <string name="Deactivate_VerificationCode_COPY">"SMS verificatiecode"</string>
-  <string name="Deactivate_CodeIncorrect_COPY">"Verkeerde verificatiecode"</string>
+  <string name="Deactivate_CodeIncorrect_COPY">"Verkeerde herstelcode"</string>
   <string name="Deactivate_Next_COPY">"Volgende"</string>
   <string name="Deactivate_DeactivateApp_COPY">"Deactiveer"</string>
   <string name="Deactivate_SendSms_COPY">"Druk op volgende om een SMS met een verificatiecode naar je geregistreerde telefoonnummer te sturen."</string>
@@ -448,7 +448,7 @@
   <string name="BackupCodes_PhoneNumber_COPY">"Mobiel nummer"</string>
   <string name="BackupCodes_StartTiqrAuthentication_COPY">"Wijzig"</string>
   <string name="BackupCodes_Code_COPY">"Code"</string>
-  <string name="UseApp_Header_COPY">"Controleer je eduID-app"</string>
+  <string name="UseApp_Header_COPY">"Controleer je eduID app"</string>
   <string name="UseApp_Info_COPY">"We hebben een pushmelding naar je app gestuurd om te verifiëren dat jij het bent die probeert in te loggen."</string>
   <string name="UseApp_Scan_COPY">"Scan deze QR-code met je eduID app"</string>
   <string name="UseApp_NoNotification_COPY">"Geen melding?"</string>
@@ -466,7 +466,7 @@
   <string name="UseApp_ResponseIncorrect_COPY">"De code is niet juist."</string>
   <string name="UseApp_SuspendedResult_COPY">"De verficatie van je eduID app is mislukt. "</string>
   <string name="UseApp_AccountNotSuspended_COPY">"Je kan het opnieuw proberen."</string>
-  <string name="UseApp_AccountSuspended_COPY">"Je zal %1$s %2$s moeten wachten totdat je het opnieuw kan proberen."</string>
+  <string name="UseApp_AccountSuspended_COPY">"Je zal %1$s %2$s moeten wachten voordat je het opnieuw kan proberen."</string>
   <string name="UseApp_Minutes_COPY">"minuten"</string>
   <string name="UseApp_Minute_COPY">"minuut"</string>
   <string name="CreateFromInstitution_Title_COPY">"Maak een eduID van je instelling"</string>
@@ -475,20 +475,20 @@
   <string name="CreateFromInstitution_Info_COPY">"Als je verder gaat, wordt je gevraagd om in te loggen bij de instelling die je aan je eduID wilt koppelen. Na een succesvolle login kom je hier terug."</string>
   <string name="CreateFromInstitution_StartFlow_COPY">"Start registratie"</string>
   <string name="CreateFromInstitution_Welcome_COPY">"Je eduID account is aangemaakt"</string>
-  <string name="CreateFromInstitution_WelcomeExisting_COPY">"Je eduID account is gekoppeld aan de vertrouwde instellingsaccount"</string>
+  <string name="CreateFromInstitution_WelcomeExisting_COPY">"Je eduID account is gekoppeld aan je instellingsaccount"</string>
   <string name="LinkFromInstitution_Header_COPY">"Hi %1$s"</string>
-  <string name="LinkFromInstitution_Info_COPY">"Je bent succesvol ingelogd bij je instelling. Voer nu je persoonlijke email in, dit wordt je eduID email."</string>
+  <string name="LinkFromInstitution_Info_COPY">"Je bent succesvol ingelogd bij je instelling. Voer nu je persoonlijke e-mail in, dit wordt je eduID e-mail."</string>
   <string name="LinkFromInstitution_Email_COPY">"Je e-mail"</string>
   <string name="LinkFromInstitution_EmailPlaceholder_COPY">"e.g. user@gmail.com"</string>
-  <string name="LinkFromInstitution_EmailForbidden_COPY">"Het aanmaken van een eduID-account met deze email is niet toegestaan, neem contact op met &lt;a href=&quot;mailto:help@eduid.nl&quot;&gt;help@eduid.nl&lt;/a&gt; als je denkt dat het e-maildomein geldig is."</string>
+  <string name="LinkFromInstitution_EmailForbidden_COPY">"Het aanmaken van een eduID-account met deze e-mail is niet toegestaan, neem contact op met &lt;a href=&quot;mailto:help@eduid.nl&quot;&gt;help@eduid.nl&lt;/a&gt; als je denkt dat het e-maildomein geldig is."</string>
   <string name="LinkFromInstitution_EmailInUse1_COPY">"Dit e-mailadres is al in gebruik."</string>
   <string name="LinkFromInstitution_EmailInUse2_COPY">"Probeer een andere, of "</string>
   <string name="LinkFromInstitution_EmailInUse3_COPY">" koppel met dit eduID account."</string>
   <string name="LinkFromInstitution_InvalidEmail_COPY">"Ongeldig e-mailadres"</string>
-  <string name="LinkFromInstitution_InstitutionDomainNameWarning_COPY">"Het lijkt erop dat je een instellings e-mailadres hebt ingevoerd. Houd er rekening mee dat wanneer je niet meer studeert of werkt bij die instelling, je geen toegang meer hebt tot dat e-mail adres."</string>
+  <string name="LinkFromInstitution_InstitutionDomainNameWarning_COPY">"Het lijkt erop dat je een instellings e-mailadres hebt ingevoerd. Houd er rekening mee dat wanneer je niet meer studeert of werkt bij die instelling, je geen toegang meer hebt tot dat e-mailadres."</string>
   <string name="LinkFromInstitution_InstitutionDomainNameWarning2_COPY">"We raden je aan om je persoonlijke e-mailadres te gebruiken voor eduID."</string>
   <string name="LinkFromInstitution_AllowedDomainNamesError_COPY">"Domeinnaam %1$s niet toegestaan."</string>
-  <string name="LinkFromInstitution_AllowedDomainNamesError2_COPY">"eduID is beperkt om alleen te worden gebruikt door toegestane domeinen."</string>
+  <string name="LinkFromInstitution_AllowedDomainNamesError2_COPY">"eduID is beperkt om alleen te worden gebruikt voor toegestane domeinen."</string>
   <string name="LinkFromInstitution_AgreeWithTerms_COPY">"&lt;span&gt;Ik ga akkoord met &lt;a tabindex='-1' href='https://eduid.nl/gebruiksvoorwaarden/' target='_blank'&gt;de voorwaarden.&lt;/a&gt; En ik begrijp &lt;a tabindex='-1' href='https://eduid.nl/privacy/' target='_blank'&gt;de privacyverklaring&lt;/a&gt;.&lt;/span&gt;"</string>
   <string name="LinkFromInstitution_RequestEduIdButton_COPY">"Vraag je eduID aan"</string>
   <string name="PollFromInstitution_Header_COPY">"Open je mailbox!"</string>
@@ -499,7 +499,7 @@
   <string name="PollFromInstitution_LoggedIn_COPY">"Inloggen geslaagd!"</string>
   <string name="PollFromInstitution_LoggedInInfo_COPY">"Je kan dit tabblad / venster sluiten."</string>
   <string name="PollFromInstitution_TimeOutReached_COPY">"Timeout!"</string>
-  <string name="PollFromInstitution_TimeOutReachedInfo_COPY">"Je magische link is verlopen. Ga terug naar de dienst waar je heen wou en probeer het opnieuw."</string>
+  <string name="PollFromInstitution_TimeOutReachedInfo_COPY">"Je magische link is verlopen. Ga terug naar de dienst waar je heen wilt en probeer het opnieuw."</string>
   <string name="PollFromInstitution_Resend_COPY">"E-mail nog steeds niet gevonden?"</string>
   <string name="PollFromInstitution_ResendLink_COPY">" Stuur de e-mail opnieuw."</string>
   <string name="PollFromInstitution_MailResend_COPY">"Check je inbox. We hebben je de e-mail met de magische link opnieuw verzonden."</string>
@@ -542,13 +542,13 @@
   <string name="Login_RequiredAttribute_COPY">"%1$s is verplicht"</string>
   <string name="Login_EmailInUse1_COPY">"Dit e-mailadres is al in gebruik."</string>
   <string name="Login_EmailInUse2_COPY">"Probeer een andere, of "</string>
-  <string name="Login_EmailInUse3_COPY">" login met dit eduID account."</string>
+  <string name="Login_EmailInUse3_COPY">" log in met dit eduID account."</string>
   <string name="Login_EmailForbidden_COPY">"Het aanmaken van een eduID-account met deze email is niet toegestaan, neem contact op met &lt;a href=&quot;mailto:help@eduid.nl&quot;&gt;help@eduid.nl&lt;/a&gt; als je denkt dat het e-maildomein geldig is."</string>
   <string name="Login_EmailNotFound1_COPY">"We konden geen eduID vinden met deze mail."</string>
   <string name="Login_EmailNotFound2_COPY">"Probeer een andere, of "</string>
   <string name="Login_EmailNotFound3_COPY">"maak een nieuw eduID account aan."</string>
   <string name="Login_EmailOrPasswordIncorrect_COPY">"E-mailadres of wachtwoord is niet juist"</string>
-  <string name="Login_InstitutionDomainNameWarning_COPY">"Het lijkt erop dat je een instellings e-mailadres hebt ingevoerd. Houd er rekening mee dat wanneer je niet meer studeert of werkt bij die instelling, je geen toegang meer hebt tot dat e-mail adres."</string>
+  <string name="Login_InstitutionDomainNameWarning_COPY">"Het lijkt erop dat je een instellings e-mailadres hebt ingevoerd. Houd er rekening mee dat wanneer je niet meer studeert of werkt bij die instelling, je geen toegang meer hebt tot dat e-mailadres."</string>
   <string name="Login_InstitutionDomainNameWarning2_COPY">"We raden je aan om je persoonlijke e-mailadres te gebruiken voor eduID."</string>
   <string name="Login_AllowedDomainNamesError_COPY">"Domeinnaam %1$s niet toegestaan."</string>
   <string name="Login_AllowedDomainNamesError2_COPY">"eduID is beperkt om alleen te worden gebruikt door toegestane domeinen."</string>
@@ -560,7 +560,7 @@
   <string name="Login_Next_COPY">"Volgende"</string>
   <string name="Login_UseOtherAccount_COPY">"Gebruik een andere login"</string>
   <string name="Login_NoAppAccess_COPY">"Heb je de app niet bij de hand?"</string>
-  <string name="Login_NoMailAccess_COPY">"Kun je niet bij je email?"</string>
+  <string name="Login_NoMailAccess_COPY">"Kun je niet bij je e-mail?"</string>
   <string name="Login_ForgotPassword_COPY">"Wachtwoord vergeten?"</string>
   <string name="Login_UseAnother_COPY">"Gebruik een andere"</string>
   <string name="Login_OptionsLink_COPY">"inlogmethode."</string>
@@ -574,8 +574,8 @@
   <string name="Options_UsePassword_COPY">"Gebruik &lt;strong&gt;een wachtwoord&lt;/strong&gt;."</string>
   <string name="MagicLink_OpenMailTitle_COPY">"Open de mail app"</string>
   <string name="MagicLink_OpenMailDisclaimer_COPY">"Kun je de mail niet vinden? Kijk ook in de spam folder"</string>
-  <string name="MagicLink_Header_COPY">"Controleer je email"</string>
-  <string name="MagicLink_Info_COPY">"Om in te loggen, klik op de link in de email die verstuurd is aan %1$s."</string>
+  <string name="MagicLink_Header_COPY">"Controleer je e-mail"</string>
+  <string name="MagicLink_Info_COPY">"Om in te loggen, klik op de link in de e-mail die verstuurd is aan %1$s."</string>
   <string name="MagicLink_Awaiting_COPY">"Wachten tot je op de link klikt…"</string>
   <string name="MagicLink_OpenGMail_COPY">"Open Gmail.com"</string>
   <string name="MagicLink_OpenOutlook_COPY">"Open Outlook.com"</string>
@@ -583,7 +583,7 @@
   <string name="MagicLink_LoggedIn_COPY">"Inloggen geslaagd!"</string>
   <string name="MagicLink_LoggedInInfo_COPY">"Je kan dit tabblad / venster sluiten."</string>
   <string name="MagicLink_TimeOutReached_COPY">"Timeout!"</string>
-  <string name="MagicLink_TimeOutReachedInfo_COPY">"Je magische link is verlopen. Ga terug naar de dienst waar je heen wou en probeer het opnieuw."</string>
+  <string name="MagicLink_TimeOutReachedInfo_COPY">"Je magische link is verlopen. Ga terug naar de dienst waar je heen wilt en probeer het opnieuw."</string>
   <string name="MagicLink_Resend_COPY">"E-mail nog steeds niet gevonden?"</string>
   <string name="MagicLink_ResendLink_COPY">" Stuur de e-mail opnieuw."</string>
   <string name="MagicLink_MailResend_COPY">"Check je inbox. We hebben je de e-mail met de magische link opnieuw verzonden."</string>
@@ -612,7 +612,7 @@
   <string name="WebAuthn_BrowserPrompt_COPY">"Klik op de onderstaande knop om een beveligingssleutel toe te voegen aan je eduID-account. Volg daarbij de instructies van je browser op."</string>
   <string name="WebAuthn_Start_COPY">"Start"</string>
   <string name="WebAuthn_Header_COPY">"Log in met een beveiligingssleutel"</string>
-  <string name="WebAuthn_Explanation_COPY">"Er wordt een nieuw venster geopend. Volg de instricties om in te loggen."</string>
+  <string name="WebAuthn_Explanation_COPY">"Er wordt een nieuw venster geopend. Volg de instructies om in te loggen."</string>
   <string name="WebAuthn_Next_COPY">"Log in met een beveiligingssleutel"</string>
   <string name="WebAuthn_Error_COPY">"De beveligingssleutel kan niet gebruikt worden."</string>
   <string name="UseLink_Header_COPY">"Vraag een magische link aan"</string>
@@ -638,14 +638,14 @@
   <string name="StepUpVerification_Linked_institution_COPY">"Je eduID-account is gekoppeld aan een vertrouwde instelling."</string>
   <string name="StepUpVerification_Validate_names_COPY">"Je voornaam en achternaam zijn geverifieerd door een vertrouwde instelling."</string>
   <string name="StepUpVerification_Affiliation_student_COPY">"Je hebt aangetoont dat je onderwijs volgt doordat je eduID-account is gekoppeld aan een vertrouwde instelling."</string>
-  <string name="NudgeApp_New_COPY">"J eduID is aangemaakt!"</string>
+  <string name="NudgeApp_New_COPY">"Je eduID is aangemaakt!"</string>
   <string name="NudgeApp_Header_COPY">"Wil je de volgende keer sneller en veiliger inloggen?"</string>
   <string name="NudgeApp_Info_COPY">"Installeer de &lt;strong&gt;eduID app&lt;/strong&gt; en log veiliger in zonder wachtwoord of het openen van je email. Het kost je maar een minuut."</string>
   <string name="NudgeApp_No_COPY">"Nee bedankt"</string>
   <string name="NudgeApp_NoLink_COPY">"/proceed"</string>
   <string name="NudgeApp_Yes_COPY">"Installeer nu"</string>
   <string name="NudgeApp_YesLink_COPY">"/eduid-app"</string>
-  <string name="AppRequired_Header_COPY">"Login met de eduID app"</string>
+  <string name="AppRequired_Header_COPY">"Log in met de eduID app"</string>
   <string name="AppRequired_Info_COPY">"Dienst &lt;strong&gt;%1$s&lt;/strong&gt; heeft een login verzocht met de eduID app om je identiteit te bevestigen."</string>
   <string name="AppRequired_Info2_COPY">"Download de &lt;strong&gt;eduID-app&lt;/strong&gt; en log veilig in zonder wachtwoord of toegang tot je e-mail. Het duurt maar een minuut. Klik op &lt;strong&gt;Doorgaan&lt;/strong&gt; voor de volgende stap."</string>
   <string name="AppRequired_Cancel_COPY">"/cancel"</string>
@@ -722,7 +722,7 @@
   <string name="CreateEduID_Create_MainTitleLabel_COPY">"Maak een nieuw eduID aan"</string>
   <string name="CreateEduID_Created_MainTitleLabel_COPY">"Je eduID is aangemaakt"</string>
   <string name="CreateEduID_Created_MainText_COPY">"Om deze app veilig te kunnen gebruiken, hebben we een pincode nodig en een telefoonnummer voor het geval je het vergeet"</string>
-  <string name="CreateEduID_EnterPersonalInfo_EmailFieldTitle_COPY">"Je emailaddres"</string>
+  <string name="CreateEduID_EnterPersonalInfo_EmailFieldTitle_COPY">"Je e-mailadres"</string>
   <string name="CreateEduID_EnterPersonalInfo_EmailFieldPlaceHolder_COPY">"e.g. timbernerslee@gmail.com"</string>
   <string name="CreateEduID_EnterPersonalInfo_Agreement_COPY">"Ik ga akkoord met de servicevoorwaarden. Ik begrijp ook het privacybeleid"</string>
   <string name="CreateEduID_EnterPhoneNumber_PhoneFieldTitle_COPY">"Vul je telefoonnummer in"</string>
@@ -766,7 +766,7 @@
   <string name="ResponseErrors_SMSErrorText_COPY">"Je hebt een verkeerde verificatiecombinatie ingevoerd"</string>
   <string name="ResponseErrors_UnknownErrorTitle_COPY">"Onbekende fout"</string>
   <string name="ResponseErrors_UnknownErrorText_COPY">"Er is een onbekende fout opgetreden met de volgende statuscode"</string>
-  <string name="ResponseErrors_ExistingUserAndDeviceTitle_COPY">"Reeds geassocieerd"</string>
+  <string name="ResponseErrors_ExistingUserAndDeviceTitle_COPY">"Reeds gekoppeld"</string>
   <string name="ResponseErrors_ExistingUserAndDeviceText_COPY">"Dit account is al gekoppeld aan een ander apparaat. Verwijder eerst jouw andere apparaat uit je account voordat je een nieuw apparaat registreert."</string>
   <string name="ResponseErrors_PersonalDetailsRetrieveError_COPY">"Ophalen van persoonlijke informatie mislukt"</string>
   <string name="ResponseErrors_ActivityHistoryRetrieveError_COPY">"Ophalen van account activiteit mislukt"</string>
