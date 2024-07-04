@@ -710,7 +710,10 @@
   <string name="CreateEduID_FirstTimeDialog_ConnectButtonTitle_COPY">"Connect your school/institution"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextTitle_FirstPart_COPY">"Are you studying in NL?"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextTitle_SecondPart_COPY">"Connect your institution!"</string>
-  <string name="CreateEduID_FirstTimeDialog_MainText_COPY">"When you study in the Netherlands and you want to use eduID to logon to an educational services, we need to be sure it is you and not someone impersonating you.\n\nYou must therefore add the following information to your eduID:\n    • Validation of your full name by a third party\n    • Proof of being a student\n    • Your current institution"</string>
+  <string name="CreateEduID_FirstTimeDialog_MainText_COPY">"When you study in the Netherlands and you want to use eduID to logon to an educational services, we need to be sure it is you and not someone impersonating you.\n\nYou must therefore add the following information to your eduID:"</string>
+  <string name="CreateEduID_FirstTimeDialog_MainTextPoint1_COPY">"Validation of your full name by a third party"</string>
+  <string name="CreateEduID_FirstTimeDialog_MainTextPoint2_COPY">"Proof of being a student"</string>
+  <string name="CreateEduID_FirstTimeDialog_MainTextPoint3_COPY">"Your current institution"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextFirstBoldPart_COPY">"When you study in the Netherlands"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextSecondBoldPart_COPY">"You must therefore add the following information to your eduID:"</string>
   <string name="CreateEduID_FirstTimeDialog_AddInformationText_COPY">"Add this information by connecting your school/institution via SURFconext"</string>

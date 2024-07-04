@@ -710,7 +710,10 @@
   <string name="CreateEduID_FirstTimeDialog_ConnectButtonTitle_COPY">"Sluit je school/instelling aan"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextTitle_FirstPart_COPY">"Studeer je in Nederland?"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextTitle_SecondPart_COPY">"Sluit dan je instelling aan!"</string>
-  <string name="CreateEduID_FirstTimeDialog_MainText_COPY">"Wanneer je in Nederland studeert en je wilt met eduID inloggen bij een onderwijsdienst, moeten we er zeker van zijn dat jij het bent en niet iemand die zich voordoet als jij.\n\nDaarom moet je de volgende gegevens toevoegen aan jouw eduID:\n    • Validatie van je volledige naam door een derde partij\n    • Bewijs dat je student bent\n    • Je huidige instelling"</string>
+  <string name="CreateEduID_FirstTimeDialog_MainText_COPY">"Wanneer je in Nederland studeert en je wilt met eduID inloggen bij een onderwijsdienst, moeten we er zeker van zijn dat jij het bent en niet iemand die zich voordoet als jij.\n\nDaarom moet je de volgende gegevens toevoegen aan jouw eduID:"</string>
+  <string name="CreateEduID_FirstTimeDialog_MainTextPoint1_COPY">"Validatie van je volledige naam door een derde partij"</string>
+  <string name="CreateEduID_FirstTimeDialog_MainTextPoint2_COPY">"Bewijs dat je student bent"</string>
+  <string name="CreateEduID_FirstTimeDialog_MainTextPoint3_COPY">"Je huidige instelling"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextFirstBoldPart_COPY">"Wanneer je in Nederland studeert"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextSecondBoldPart_COPY">"Daarom moet je de volgende gegevens toevoegen aan jouw eduID:"</string>
   <string name="CreateEduID_FirstTimeDialog_AddInformationText_COPY">"Voeg deze informatie toe door je school/instelling aan te sluiten via SURFconext"</string>

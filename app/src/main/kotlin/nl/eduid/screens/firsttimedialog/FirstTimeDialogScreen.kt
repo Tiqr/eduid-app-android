@@ -4,9 +4,11 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,52 +47,55 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FirstTimeDialogScreen(
-    viewModel: LinkAccountViewModel,
-    goToAccountLinked: () -> Unit,
-    skipThis: () -> Unit,
-) = Scaffold(modifier = Modifier.systemBarsPadding(), topBar = {
-    CenterAlignedTopAppBar(
-        title = {},
-        actions = {
-            Image(painter = painterResource(R.drawable.close_x_icon),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(width = 48.dp, height = 48.dp)
-                    .clickable {
-                        skipThis()
-                    })
-        },
-        modifier = Modifier.padding(horizontal = 30.dp),
-    )
-}) { paddingValues ->
-    var isGettingLinkUrl by rememberSaveable { mutableStateOf(false) }
-    var isLinkingStarted by rememberSaveable { mutableStateOf(false) }
-    val launcher =
-        rememberLauncherForActivityResult(contract = LinkAccountContract(), onResult = { _ ->
-            if (isLinkingStarted) {
-                goToAccountLinked()
-                isLinkingStarted = false
-            }
-        })
+fun FirstTimeDialogScreen(viewModel: LinkAccountViewModel, goToAccountLinked: () -> Unit, skipThis: () -> Unit) =
+    Scaffold(modifier = Modifier.systemBarsPadding(), topBar = {
+        CenterAlignedTopAppBar(
+            title = {},
+            actions = {
+                Image(
+                    painter = painterResource(R.drawable.close_x_icon),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(width = 48.dp, height = 48.dp)
+                        .clickable {
+                            skipThis()
+                        },
+                )
+            },
+            modifier = Modifier.padding(horizontal = 30.dp),
+        )
+    }) { paddingValues ->
+        var isGettingLinkUrl by rememberSaveable { mutableStateOf(false) }
+        var isLinkingStarted by rememberSaveable { mutableStateOf(false) }
+        val launcher =
+            rememberLauncherForActivityResult(contract = LinkAccountContract(), onResult = { _ ->
+                if (isLinkingStarted) {
+                    goToAccountLinked()
+                    isLinkingStarted = false
+                }
+            })
 
-    if (isGettingLinkUrl && viewModel.uiState.haveValidLinkIntent()) {
-        LaunchedEffect(key1 = viewModel) {
-            viewModel.uiState.linkUrl?.let { intent ->
-                isGettingLinkUrl = false
-                launcher.launch(intent)
-                isLinkingStarted = true
+        if (isGettingLinkUrl && viewModel.uiState.haveValidLinkIntent()) {
+            LaunchedEffect(key1 = viewModel) {
+                viewModel.uiState.linkUrl?.let { intent ->
+                    isGettingLinkUrl = false
+                    launcher.launch(intent)
+                    isLinkingStarted = true
+                }
             }
         }
-    }
 
-    FirstTimeDialogContent(
-        uiState = viewModel.uiState, paddingValues = paddingValues, onClick = {
-            isGettingLinkUrl = true
-            viewModel.requestLinkUrl()
-        }, skipThis = skipThis, dismissError = viewModel::dismissError
-    )
-}
+        FirstTimeDialogContent(
+            uiState = viewModel.uiState,
+            paddingValues = paddingValues,
+            onClick = {
+                isGettingLinkUrl = true
+                viewModel.requestLinkUrl()
+            },
+            skipThis = skipThis,
+            dismissError = viewModel::dismissError,
+        )
+    }
 
 @Composable
 private fun FirstTimeDialogContent(
@@ -106,7 +111,7 @@ private fun FirstTimeDialogContent(
             title = uiState.errorData.title(context),
             explanation = uiState.errorData.message(context),
             buttonLabel = stringResource(R.string.Button_OK_COPY),
-            onDismiss = dismissError
+            onDismiss = dismissError,
         )
     }
 
@@ -114,12 +119,12 @@ private fun FirstTimeDialogContent(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(paddingValues)
+            .padding(paddingValues),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .weight(1f)
+                .weight(1f),
         ) {
             Text(
                 text = stringResource(R.string.CreateEduID_FirstTimeDialog_MainTextTitle_FirstPart_COPY),
@@ -131,7 +136,8 @@ private fun FirstTimeDialogContent(
             Text(
                 text = stringResource(R.string.CreateEduID_FirstTimeDialog_MainTextTitle_SecondPart_COPY),
                 style = MaterialTheme.typography.titleMedium.copy(
-                    color = ColorMain_Green_400, textAlign = TextAlign.Center
+                    color = ColorMain_Green_400,
+                    textAlign = TextAlign.Center,
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -141,23 +147,28 @@ private fun FirstTimeDialogContent(
             Spacer(Modifier.height(40.dp))
 
             Box(Modifier.background(color = AlertWarningBackground)) {
-                Text(
-                    style = MaterialTheme.typography.bodyLarge,
-                    text = annotatedStringWithBoldParts(
-                        stringResource(id = R.string.CreateEduID_FirstTimeDialog_MainText_COPY),
-                        stringResource(id = R.string.CreateEduID_FirstTimeDialog_MainTextFirstBoldPart_COPY),
-                        stringResource(id = R.string.CreateEduID_FirstTimeDialog_MainTextSecondBoldPart_COPY),
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 24.dp)
-                )
+                Column(modifier = Modifier.padding(vertical = 24.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        style = MaterialTheme.typography.bodyLarge,
+                        text = annotatedStringWithBoldParts(
+                            stringResource(id = R.string.CreateEduID_FirstTimeDialog_MainText_COPY),
+                            stringResource(id = R.string.CreateEduID_FirstTimeDialog_MainTextFirstBoldPart_COPY),
+                            stringResource(id = R.string.CreateEduID_FirstTimeDialog_MainTextSecondBoldPart_COPY),
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 24.dp),
+                    )
+                    InfoAddedToEduId(R.string.CreateEduID_FirstTimeDialog_MainTextPoint1_COPY)
+                    InfoAddedToEduId(R.string.CreateEduID_FirstTimeDialog_MainTextPoint2_COPY)
+                    InfoAddedToEduId(R.string.CreateEduID_FirstTimeDialog_MainTextPoint3_COPY)
+                }
             }
         }
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
+                .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
         ) {
             Text(
                 style = MaterialTheme.typography.bodyLarge,
@@ -165,13 +176,13 @@ private fun FirstTimeDialogContent(
                     stringResource(id = R.string.CreateEduID_FirstTimeDialog_AddInformationText_COPY),
                     stringResource(id = R.string.CreateEduID_FirstTimeDialog_AddInformationBoldPart_COPY),
                 ),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
             Spacer(Modifier.height(8.dp))
             PrimaryButton(
                 text = stringResource(R.string.CreateEduID_FirstTimeDialog_ConnectButtonTitle_COPY),
                 onClick = onClick,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
             Spacer(Modifier.height(24.dp))
             SecondaryButton(
@@ -183,8 +194,24 @@ private fun FirstTimeDialogContent(
     }
 }
 
+@Composable
+private fun InfoAddedToEduId(labelResId: Int) = Row(
+    modifier = Modifier
+        .fillMaxWidth()
+        .padding(start = 48.dp, end = 24.dp),
+    horizontalArrangement = Arrangement.Start,
+) {
+    Text(
+        text = "• ",
+        style = MaterialTheme.typography.bodyLarge,
+    )
+    Text(
+        text = stringResource(labelResId),
+        style = MaterialTheme.typography.bodyLarge,
+    )
+}
 
-@Preview()
+@Preview
 @Composable
 private fun PreviewFirstTimeDialogScreen() {
     EduidAppAndroidTheme {
