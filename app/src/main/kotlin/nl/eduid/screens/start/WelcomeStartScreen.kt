@@ -172,7 +172,7 @@ private fun WelcomeStartContent(
     }
 }
 
-@Preview()
+@Preview(locale = "nl")
 @Composable
 private fun PreviewStartScreen() {
     EduidAppAndroidTheme {

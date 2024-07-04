@@ -3412,7 +3412,7 @@ SHARED:
     Title:
       COPY:
         en: Welcome! Use this app to
-        nl: Welkom! Gebruik deze app voor
+        nl: Welkom! Gebruik deze app om
     Quickly:
       Text:
         COPY:
@@ -3421,16 +3421,16 @@ SHARED:
       Highlight:
         COPY:
           en: Quickly login
-          nl: Snel inloggen
+          nl: In te loggen
     ViewWhat:
       Text:
         COPY:
           en: what details of your eduID get shared with those services
-          nl: welke gegevens van je eduID met die diensten worden gedeeld
+          nl: welke gegevens van je eduID worden gedeeld met die diensten
       Highlight:
         COPY:
           en: View
-          nl: Bekijk
+          nl: Te bekijken
     VerifyYour:
       Text:
         COPY:
@@ -3439,7 +3439,7 @@ SHARED:
       Highlight:
         COPY:
           en: Verify your identity
-          nl: Verifieer jouw identiteit
+          nl: Je identiteit te verifiëren
     GotItButton:
       COPY:
         en: OK, got it!
