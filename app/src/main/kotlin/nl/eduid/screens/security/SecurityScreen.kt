@@ -22,6 +22,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
+import nl.eduid.flags.FeatureFlag
+import nl.eduid.flags.RuntimeBehavior
 import nl.eduid.ui.AddSecurityField
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EditableSecurityField
@@ -44,7 +46,7 @@ fun SecurityRoute(
         onConfigurePasswordClicked = onConfigurePasswordClick,
         onEditEmailClicked = onEditEmailClicked,
         on2FaClicked = on2FaClicked,
-        dismissError = viewModel::dismissError
+        dismissError = viewModel::dismissError,
     )
 }
 
@@ -62,7 +64,7 @@ fun SecurityScreenContent(
         .padding(padding)
         .systemBarsPadding()
         .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
-    verticalArrangement = Arrangement.spacedBy(16.dp)
+    verticalArrangement = Arrangement.spacedBy(16.dp),
 ) {
     if (securityInfo.errorData != null) {
         val context = LocalContext.current
@@ -70,14 +72,14 @@ fun SecurityScreenContent(
             title = securityInfo.errorData.title(context),
             explanation = securityInfo.errorData.message(context),
             buttonLabel = stringResource(R.string.Button_OK_COPY),
-            onDismiss = dismissError
+            onDismiss = dismissError,
         )
     }
 
     Text(
         style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onSecondary),
         text = stringResource(R.string.Security_Title_COPY),
-        modifier = Modifier.padding(top = 16.dp)
+        modifier = Modifier.padding(top = 16.dp),
     )
     Text(
         style = MaterialTheme.typography.titleLarge,
@@ -86,53 +88,66 @@ fun SecurityScreenContent(
     if (securityInfo.isLoading) {
         Spacer(Modifier.height(24.dp))
         LinearProgressIndicator(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
     }
     securityInfo.twoFAProvider?.let {
-        EditableSecurityField(title = stringResource(R.string.Security_TwoFAKey_COPY),
+        EditableSecurityField(
+            title = stringResource(R.string.Security_TwoFAKey_COPY),
             annotatedSubtitle = buildAnnotatedString {
                 append(stringResource(R.string.Security_ProvidedBy_COPY))
                 append(" ")
                 pushStyle(
-                    MaterialTheme.typography.bodyLarge.copy(
-                        fontWeight = FontWeight.SemiBold
-                    ).toSpanStyle()
+                    MaterialTheme.typography.bodyLarge
+                        .copy(
+                            fontWeight = FontWeight.SemiBold,
+                        ).toSpanStyle(),
                 )
                 append(it)
             },
             leadingIcon = R.drawable.ic_security_key,
-            modifier = Modifier.clickable { on2FaClicked() })
+            modifier = Modifier.clickable { on2FaClicked() },
+        )
     }
     if (securityInfo.hasPassword) {
-        EditableSecurityField(title = stringResource(R.string.Security_ChangePassword_COPY),
+        EditableSecurityField(
+            title = stringResource(R.string.Security_ChangePassword_COPY),
             subtitle = "****",
             leadingIcon = R.drawable.ic_security_password,
-            modifier = Modifier.clickable { onConfigurePasswordClicked() })
+            modifier = Modifier.clickable { onConfigurePasswordClicked() },
+        )
     }
 
-    EditableSecurityField(title = stringResource(R.string.Security_UseMagicLink_COPY),
+    EditableSecurityField(
+        title = stringResource(R.string.Security_UseMagicLink_COPY),
         subtitle = securityInfo.email,
         leadingIcon = R.drawable.ic_security_email_link,
-        modifier = Modifier.clickable { onEditEmailClicked() })
-
-    Text(
-        text = stringResource(R.string.Security_OtherMethods_COPY),
-        style = MaterialTheme.typography.bodyLarge,
+        modifier = Modifier.clickable { onEditEmailClicked() },
     )
 
-    AddSecurityField(title = stringResource(R.string.Webauthn_SetTitle_COPY),
-        leadingIcon = R.drawable.ic_security_key,
-        modifier = Modifier.clickable { on2FaClicked() })
+    if (!securityInfo.hasPassword || RuntimeBehavior.isFeatureEnabled(FeatureFlag.SHOW_ADD_SECURITY_KEY)) {
+        Text(
+            text = stringResource(R.string.Security_OtherMethods_COPY),
+            style = MaterialTheme.typography.bodyLarge,
+        )
+    }
+
+    if(RuntimeBehavior.isFeatureEnabled(FeatureFlag.SHOW_ADD_SECURITY_KEY)){
+        AddSecurityField(
+            title = stringResource(R.string.Webauthn_SetTitle_COPY),
+            leadingIcon = R.drawable.ic_security_key,
+            modifier = Modifier.clickable { on2FaClicked() },
+        )
+    }
 
     if (!securityInfo.hasPassword) {
-        AddSecurityField(title = stringResource(R.string.Password_AddTitle_COPY),
+        AddSecurityField(
+            title = stringResource(R.string.Password_AddTitle_COPY),
             leadingIcon = R.drawable.ic_security_password,
-            modifier = Modifier.clickable { onConfigurePasswordClicked() })
-
+            modifier = Modifier.clickable { onConfigurePasswordClicked() },
+        )
     }
 }
-
 
 @Preview
 @Composable
@@ -142,7 +157,7 @@ private fun PreviewSecurityScreenContent() = EduidAppAndroidTheme {
             twoFAProvider = "test.eduid.nl",
             email = "librarian@unseenuniveristy.disk",
             hasPassword = true,
-        )
+        ),
     )
 }
 
@@ -152,6 +167,6 @@ private fun Preview_OnlyEmailSecurityScreenContent() = EduidAppAndroidTheme {
     SecurityScreenContent(
         securityInfo = SecurityScreenData(
             email = "librarian@unseenuniveristy.disk",
-        )
+        ),
     )
 }
