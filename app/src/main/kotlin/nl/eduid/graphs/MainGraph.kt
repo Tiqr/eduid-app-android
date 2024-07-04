@@ -70,7 +70,7 @@ import org.tiqr.data.model.EnrollmentChallenge
 fun MainGraph(
     navController: NavHostController,
 ) = NavHost(
-    navController = navController, startDestination = Graph.HOME_PAGE
+    navController = navController, startDestination = Graph.WELCOME_START
 ) {
     composable(Graph.HOME_PAGE) {//region Home
         val viewModel = hiltViewModel<HomePageViewModel>(it)
