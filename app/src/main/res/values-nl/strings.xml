@@ -700,7 +700,7 @@
   <string name="WelcomeToApp_VerifyYour_Highlight_COPY">"Je identiteit te verifiëren"</string>
   <string name="WelcomeToApp_GotItButton_COPY">"Ok, begrepen!"</string>
   <string name="WelcomeToApp_ReturnBrowserTitle_COPY">"Keer terug naar je webbrowser"</string>
-  <string name="WelcomeToApp_ReturnBrowserText_COPY">"Ga verder in je browser om de verbinding van deze app met jouw edulD account te voltooien"</string>
+  <string name="WelcomeToApp_ReturnBrowserText_COPY">"Ga verder in je browser om de verbinding van deze app met jouw eduID account te voltooien"</string>
   <string name="CreateEduID_ErrorCreateFailed_Title_COPY">"Je eduID aanmaken is niet gelukt!"</string>
   <string name="CreateEduID_ErrorCreateFailed_Message_COPY">"Het account aanmaken is mislukt. Probeer het nogmaals."</string>
   <string name="CreateEduID_LandingPage_MainText_COPY">"Jouw account voor Onderwijs en Onderzoek"</string>

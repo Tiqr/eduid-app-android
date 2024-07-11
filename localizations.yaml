@@ -1533,7 +1533,7 @@ SHARED:
     Description:
       COPY:
         en: >-
-          Deleting these login details means edulD removes this information from your edulD account. You still have an account at the service itself. If you want that removed, please do so at the service.
+          Deleting these login details means eduID removes this information from your eduID account. You still have an account at the service itself. If you want that removed, please do so at the service.
         nl: >-
           Het verwijderen van deze logingegevens betekent dat eduID deze informatie verwijderd van jouw eduID account. Je hebt nog steeds een account bij de dienst zelf. Als je die ook wil verwijderen, doe je dat bij de dienst.
     Button:
@@ -3319,7 +3319,7 @@ SHARED:
         nl: Kies een PIN
     PinScreenEnterTitle:
       COPY:
-        en: Enter your edulD PIN
+        en: Enter your eduID PIN
         nl: PIN invoeren
     FirstPinScreenText:
       COPY:
@@ -3450,8 +3450,8 @@ SHARED:
         nl: Keer terug naar je webbrowser
     ReturnBrowserText:
       COPY:
-        en: Continue in your browser to finish the connection of this app to your edulD account
-        nl: Ga verder in je browser om de verbinding van deze app met jouw edulD account te voltooien
+        en: Continue in your browser to finish the connection of this app to your eduID account
+        nl: Ga verder in je browser om de verbinding van deze app met jouw eduID account te voltooien
   CreateEduID:
     ErrorCreateFailed:
       Title:

@@ -41,6 +41,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -142,7 +143,14 @@ private fun RequestEduIdFormContent(
                 modifier = Modifier.fillMaxWidth()
             )
         }
-
+        Text(
+            stringResource(R.string.CreateEduID_EnterPersonalInfo_EmailFieldTitle_COPY),
+            style = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                fontWeight = FontWeight.SemiBold
+            ),
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
         OutlinedTextField(
             value = inputFormData.email,
             keyboardOptions = KeyboardOptions(
@@ -155,7 +163,6 @@ private fun RequestEduIdFormContent(
             }),
             isError = (inputFormData.email.length > 2 && !inputFormData.emailValid),
             onValueChange = onEmailChange,
-            label = { Text(stringResource(R.string.CreateEduID_EnterPersonalInfo_EmailFieldTitle_COPY)) },
             placeholder = { Text(stringResource(R.string.CreateEduID_EnterPersonalInfo_EmailFieldPlaceHolder_COPY)) },
             modifier = Modifier
                 .fillMaxWidth()
@@ -164,6 +171,14 @@ private fun RequestEduIdFormContent(
 
         Spacer(modifier = Modifier.height(8.dp))
 
+        Text(
+            stringResource(R.string.Login_GivenName_COPY),
+            style = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                fontWeight = FontWeight.SemiBold
+            ),
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
         OutlinedTextField(
             value = inputFormData.firstName,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
@@ -173,13 +188,20 @@ private fun RequestEduIdFormContent(
                 )
             }),
             onValueChange = onFirstNameChange,
-            label = { Text(stringResource(R.string.Login_GivenName_COPY)) },
             placeholder = { Text(stringResource(R.string.Login_GivenNamePlaceholder_COPY)) },
             modifier = Modifier
                 .fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
 
+        Text(
+            stringResource(R.string.Login_FamilyName_COPY),
+            style = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                fontWeight = FontWeight.SemiBold
+            ),
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
         OutlinedTextField(
             value = inputFormData.lastName,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -187,7 +209,6 @@ private fun RequestEduIdFormContent(
                 focusManager.clearFocus()
             }),
             onValueChange = onLastNameChange,
-            label = { Text(stringResource(R.string.Login_FamilyName_COPY)) },
             placeholder = { Text(stringResource(R.string.Login_FamilyNamePlaceholder_COPY)) },
             modifier = Modifier
                 .fillMaxWidth()

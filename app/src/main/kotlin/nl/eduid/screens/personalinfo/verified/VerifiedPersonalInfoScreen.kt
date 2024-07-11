@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.HorizontalDivider
@@ -98,7 +100,7 @@ fun VerifiedPersonalInfoScreen(
 ) { padding ->
     Column(
         modifier = modifier
-            .padding(padding)
+            .verticalScroll(rememberScrollState())
             .systemBarsPadding()
             .padding(horizontal = 24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -110,6 +112,7 @@ fun VerifiedPersonalInfoScreen(
             text = stringResource(R.string.YourVerifiedInformation_Title_COPY),
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(padding)
                 .padding(top = 16.dp)
         )
         if (isLoading) {
@@ -187,7 +190,12 @@ fun VerifiedPersonalInfoScreen(
             )
         )
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    onRemoveConnection()
+                }
+                .padding(vertical = 24.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -196,20 +204,20 @@ fun VerifiedPersonalInfoScreen(
                 contentDescription = "",
                 modifier = Modifier.size(24.dp)
             )
-            Text(style = MaterialTheme.typography.bodyLarge, text = buildAnnotatedString {
-                pushStyle(
-                    MaterialTheme.typography.bodyLarge.copy(
-                        fontWeight = FontWeight.SemiBold,
-                        textDecoration = TextDecoration.Underline,
-                        color = MaterialTheme.colorScheme.primary
-                    ).toSpanStyle()
-                )
-                append(stringResource(R.string.YourVerifiedInformation_RemoveThisInformation_COPY))
-                pop()
-                append(stringResource(id = R.string.YourVerifiedInformation_FromYourEduID_COPY))
-            }, modifier = Modifier.clickable {
-                onRemoveConnection()
-            })
+            Text(
+                style = MaterialTheme.typography.bodyLarge, text = buildAnnotatedString {
+                    pushStyle(
+                        MaterialTheme.typography.bodyLarge.copy(
+                            fontWeight = FontWeight.SemiBold,
+                            textDecoration = TextDecoration.Underline,
+                            color = MaterialTheme.colorScheme.primary
+                        ).toSpanStyle()
+                    )
+                    append(stringResource(R.string.YourVerifiedInformation_RemoveThisInformation_COPY))
+                    pop()
+                    append(stringResource(id = R.string.YourVerifiedInformation_FromYourEduID_COPY))
+                }, modifier = Modifier
+            )
         }
     }
 }

@@ -1,18 +1,15 @@
 package nl.eduid.screens.editname
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
@@ -36,13 +33,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.flowWithLifecycle
@@ -133,41 +129,36 @@ fun EditNameFormContent(
     val submitEnable by remember(isGivenNameValid, isFamilyNameValid) {
         derivedStateOf { isGivenNameValid && isFamilyNameValid }
     }
-    val isKeyboardOpen by rememberUpdatedState(WindowInsets.isImeVisible)
     Column(
         horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()
     ) {
         val keyboardController = LocalSoftwareKeyboardController.current
         val focusRequester = remember { FocusRequester() }
-        AnimatedVisibility(
-            !isKeyboardOpen, Modifier.fillMaxWidth()
-        ) {
-            TwoColorTitle(
-                firstPart = stringResource(R.string.EditName_Title_Edit_COPY),
-                secondPart = stringResource(R.string.EditName_Title_YourName_COPY)
-            )
-            Spacer(Modifier.height(12.dp))
-        }
+        TwoColorTitle(
+            firstPart = stringResource(R.string.EditName_Title_Edit_COPY),
+            secondPart = stringResource(R.string.EditName_Title_YourName_COPY)
+        )
+        Spacer(Modifier.height(12.dp))
         if (inProgress) {
             LinearProgressIndicator(
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(Modifier.height(12.dp))
         }
-
-        Text(
-            style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
-            text = stringResource(R.string.Email_Info_COPY),
-            modifier = Modifier.fillMaxWidth()
-        )
         Spacer(Modifier.height(12.dp))
 
+        Text(
+            stringResource(R.string.Login_GivenName_COPY),
+            style = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                fontWeight = FontWeight.SemiBold
+            ),
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
         OutlinedTextField(
             value = givenName,
             isError = !isGivenNameValid,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             onValueChange = onGivenNameChange,
-            label = { Text(stringResource(R.string.Login_GivenName_COPY)) },
             placeholder = { Text(stringResource(R.string.Login_GivenNamePlaceholder_COPY)) },
             modifier = Modifier
                 .fillMaxWidth()
@@ -175,13 +166,20 @@ fun EditNameFormContent(
         )
         Spacer(Modifier.height(12.dp))
         if (canEditFamilyName) {
+            Text(
+                stringResource(R.string.Login_FamilyName_COPY),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    fontWeight = FontWeight.SemiBold
+                ),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
             OutlinedTextField(
                 value = familyName,
                 isError = !isFamilyNameValid,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
                 onValueChange = onFamilyNameChange,
-                label = { Text(stringResource(R.string.Login_FamilyName_COPY)) },
                 placeholder = { Text(stringResource(R.string.Login_FamilyNamePlaceholder_COPY)) },
                 modifier = Modifier.fillMaxWidth()
             )

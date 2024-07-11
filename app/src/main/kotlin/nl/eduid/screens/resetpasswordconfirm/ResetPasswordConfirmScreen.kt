@@ -20,8 +20,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -45,6 +45,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -59,11 +60,9 @@ import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
-import nl.eduid.ui.theme.ColorScale_Gray_500
-import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.ColorScale_Gray_Black
 import nl.eduid.ui.theme.ColorMain_Green_400
-import nl.eduid.ui.theme.TextGrey
+import nl.eduid.ui.theme.ColorScale_Gray_Black
+import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
 fun ResetPasswordConfirmScreen(
@@ -186,6 +185,14 @@ fun ResetPasswordConfirmScreenContent(
             val coroutineScope = rememberCoroutineScope()
             val focusManager = LocalFocusManager.current
             Spacer(Modifier.height(8.dp))
+            Text(
+                stringResource(R.string.ChangePassword_Label_NewPassword_COPY),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    fontWeight = FontWeight.SemiBold
+                ),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
             OutlinedTextField(
                 value = newPasswordInput,
                 visualTransformation = PasswordVisualTransformation(),
@@ -194,7 +201,6 @@ fun ResetPasswordConfirmScreenContent(
                 ),
                 keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
                 onValueChange = { onNewPasswordChange(it) },
-                label = { Text(stringResource(R.string.ChangePassword_Label_NewPassword_COPY)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .onFocusEvent { event ->
@@ -206,6 +212,14 @@ fun ResetPasswordConfirmScreenContent(
                     }
             )
             Spacer(Modifier.height(16.dp))
+            Text(
+                stringResource(R.string.ChangePassword_Label_RepeatPassword_COPY),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    fontWeight = FontWeight.SemiBold
+                ),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
             OutlinedTextField(
                 value = confirmPasswordInput,
                 visualTransformation = PasswordVisualTransformation(),
@@ -217,7 +231,6 @@ fun ResetPasswordConfirmScreenContent(
                     focusManager.clearFocus()
                 }),
                 onValueChange = { onConfirmPasswordChange(it) },
-                label = { Text(stringResource(R.string.ChangePassword_Label_RepeatPassword_COPY)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .onFocusEvent { event ->
