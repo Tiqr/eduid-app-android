@@ -172,7 +172,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
         AnimatedVisibility(
             !isKeyboardOpen, Modifier.fillMaxWidth()
         ) {
-            Column() {
+            Column {
                 Spacer(Modifier.height(18.dp))
                 Text(
                     text = stringResource(R.string.ConfirmDelete_TypeNameToConfirm_COPY),
@@ -184,12 +184,19 @@ private fun DeleteAccountSecondConfirmScreenContent(
                 Spacer(Modifier.height(24.dp))
             }
         }
+        Text(
+            stringResource(R.string.ConfirmDelete_YourFullNameLabel_COPY),
+            style = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                fontWeight = FontWeight.SemiBold
+            ),
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
         OutlinedTextField(
             value = fullNameInput,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
             onValueChange = { onInputChange(it) },
-            label = { Text(stringResource(R.string.ConfirmDelete_YourFullNameLabel_COPY)) },
             placeholder = { Text(stringResource(R.string.ConfirmDelete_Placeholder_COPY)) },
             modifier = Modifier
                 .fillMaxWidth()
