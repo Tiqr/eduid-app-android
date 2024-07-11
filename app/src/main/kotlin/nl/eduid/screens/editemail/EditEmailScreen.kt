@@ -32,11 +32,11 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -137,13 +137,21 @@ fun EditEmailScreenContent(
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(12.dp))
+        Text(
+            stringResource(R.string.Email_NewEmail_COPY),
+            style = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                fontWeight = FontWeight.SemiBold
+            ),
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
+
         OutlinedTextField(
             value = uiState.email,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
             isError = !uiState.isEmailValid,
             onValueChange = { onEmailTextChange(it) },
-            label = { Text(stringResource(R.string.Email_NewEmail_COPY)) },
             placeholder = { Text(stringResource(R.string.CreateEduID_EnterPersonalInfo_EmailFieldPlaceHolder_COPY)) },
             modifier = Modifier
                 .fillMaxWidth()
