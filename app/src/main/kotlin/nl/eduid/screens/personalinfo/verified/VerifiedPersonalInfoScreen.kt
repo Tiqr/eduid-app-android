@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.HorizontalDivider
@@ -98,7 +100,7 @@ fun VerifiedPersonalInfoScreen(
 ) { padding ->
     Column(
         modifier = modifier
-            .padding(padding)
+            .verticalScroll(rememberScrollState())
             .systemBarsPadding()
             .padding(horizontal = 24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -110,6 +112,7 @@ fun VerifiedPersonalInfoScreen(
             text = stringResource(R.string.YourVerifiedInformation_Title_COPY),
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(padding)
                 .padding(top = 16.dp)
         )
         if (isLoading) {
