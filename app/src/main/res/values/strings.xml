@@ -310,7 +310,7 @@
   <string name="DataActivity_Details_Expires_COPY">"Access expires on: "</string>
   <string name="DataActivity_Details_Revoke_COPY">"Revoke these access right"</string>
   <string name="DeleteService_Title_COPY">"Delete login details of "</string>
-  <string name="DeleteService_Description_COPY">"Deleting these login details means edulD removes this information from your edulD account. You still have an account at the service itself. If you want that removed, please do so at the service."</string>
+  <string name="DeleteService_Description_COPY">"Deleting these login details means eduID removes this information from your eduID account. You still have an account at the service itself. If you want that removed, please do so at the service."</string>
   <string name="DeleteService_Button_Confirm_COPY">"Yes, delete"</string>
   <string name="DeleteService_Button_Cancel_COPY">"Cancel"</string>
   <string name="DeleteService_Error_COPY">"Cannot remove service"</string>
@@ -669,7 +669,7 @@
   <string name="PinAndBioMetrics_SkipAlertTitle_COPY">"Proceed without using biometric access?"</string>
   <string name="PinAndBioMetrics_SkipAlertText_COPY">"This permanently disables this feature"</string>
   <string name="PinAndBioMetrics_FirstPinScreenSelectTitle_COPY">"Select a PIN code"</string>
-  <string name="PinAndBioMetrics_PinScreenEnterTitle_COPY">"Enter your edulD PIN"</string>
+  <string name="PinAndBioMetrics_PinScreenEnterTitle_COPY">"Enter your eduID PIN"</string>
   <string name="PinAndBioMetrics_FirstPinScreenText_COPY">"To use the eduID app you need a PIN code"</string>
   <string name="PinAndBioMetrics_SecondPinScreenSelectTitle_COPY">"Repeat selected PIN"</string>
   <string name="PinAndBioMetrics_SecondPinScreenText_COPY">"Please enter your PIN code again"</string>
@@ -700,7 +700,7 @@
   <string name="WelcomeToApp_VerifyYour_Highlight_COPY">"Verify your identity"</string>
   <string name="WelcomeToApp_GotItButton_COPY">"OK, got it!"</string>
   <string name="WelcomeToApp_ReturnBrowserTitle_COPY">"Return to your web browser"</string>
-  <string name="WelcomeToApp_ReturnBrowserText_COPY">"Continue in your browser to finish the connection of this app to your edulD account"</string>
+  <string name="WelcomeToApp_ReturnBrowserText_COPY">"Continue in your browser to finish the connection of this app to your eduID account"</string>
   <string name="CreateEduID_ErrorCreateFailed_Title_COPY">"Could not create your eduID account!"</string>
   <string name="CreateEduID_ErrorCreateFailed_Message_COPY">"The account creation has failed. Please try again."</string>
   <string name="CreateEduID_LandingPage_MainText_COPY">"Your account for Education and Research"</string>
