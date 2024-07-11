@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,6 +37,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -144,12 +146,19 @@ fun EditNameFormContent(
         }
         Spacer(Modifier.height(12.dp))
 
+        Text(
+            stringResource(R.string.Login_GivenName_COPY),
+            style = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                fontWeight = FontWeight.SemiBold
+            ),
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
         OutlinedTextField(
             value = givenName,
             isError = !isGivenNameValid,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             onValueChange = onGivenNameChange,
-            label = { Text(stringResource(R.string.Login_GivenName_COPY)) },
             placeholder = { Text(stringResource(R.string.Login_GivenNamePlaceholder_COPY)) },
             modifier = Modifier
                 .fillMaxWidth()
@@ -157,13 +166,20 @@ fun EditNameFormContent(
         )
         Spacer(Modifier.height(12.dp))
         if (canEditFamilyName) {
+            Text(
+                stringResource(R.string.Login_FamilyName_COPY),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    fontWeight = FontWeight.SemiBold
+                ),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
             OutlinedTextField(
                 value = familyName,
                 isError = !isFamilyNameValid,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
                 onValueChange = onFamilyNameChange,
-                label = { Text(stringResource(R.string.Login_FamilyName_COPY)) },
                 placeholder = { Text(stringResource(R.string.Login_FamilyNamePlaceholder_COPY)) },
                 modifier = Modifier.fillMaxWidth()
             )
