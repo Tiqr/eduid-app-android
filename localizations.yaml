@@ -1228,8 +1228,8 @@ SHARED:
           nl: Gebruik biometrie
     DeleteKey:
       COPY:
-        en: Sleutel verwijderen
-        nl: Delete key
+        en: Delete key
+        nl: Sleutel verwijderen
   ConfirmDeleteKey:
     Title:
       COPY:

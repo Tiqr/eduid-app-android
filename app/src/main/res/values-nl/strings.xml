@@ -248,7 +248,7 @@
   <string name="TwoFactorKeys_Label_Account_COPY">"Account"</string>
   <string name="TwoFactorKeys_Label_UniqueKeyId_COPY">"Uniek SleutelID"</string>
   <string name="TwoFactorKeys_Label_UseBiometrics_COPY">"Gebruik biometrie"</string>
-  <string name="TwoFactorKeys_DeleteKey_COPY">"Delete key"</string>
+  <string name="TwoFactorKeys_DeleteKey_COPY">"Sleutel verwijderen"</string>
   <string name="ConfirmDeleteKey_Title_COPY">"Verwijder sleutel"</string>
   <string name="ConfirmDeleteKey_Subtitle_COPY">"Dit kan niet ongedaan worden gemaakt"</string>
   <string name="ConfirmDeleteKey_Description_COPY">"Weet je zeker dat je deze sleutel wil verwijderen?"</string>

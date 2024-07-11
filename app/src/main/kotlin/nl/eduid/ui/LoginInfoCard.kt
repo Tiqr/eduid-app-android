@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.Button
@@ -75,15 +74,16 @@ fun LoginInfoCard(
 ) {
     var isExpanded by remember { mutableStateOf(isExpanded) }
     val containerColor = if (isExpanded) ColorSupport_Blue_100 else MaterialTheme.colorScheme.surface
+    val borderColor = if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
     val titleColor = if (isExpanded) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant
 
     ListItem(
         colors =
-            ListItemDefaults.colors(
-                containerColor = containerColor,
-                headlineColor = titleColor,
-                trailingIconColor = titleColor,
-            ),
+        ListItemDefaults.colors(
+            containerColor = containerColor,
+            headlineColor = titleColor,
+            trailingIconColor = titleColor,
+        ),
         headlineContent = {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -138,8 +138,8 @@ fun LoginInfoCard(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
-                            imageVector = Icons.Outlined.Delete,
-                            contentDescription = "",
+                            painter = painterResource(id = R.drawable.ic_delete_icon),
+                            contentDescription = null,
                             modifier = Modifier.size(24.dp),
                         )
                         Text(
@@ -174,8 +174,8 @@ fun LoginInfoCard(
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Icon(
-                                imageVector = Icons.Outlined.Delete,
-                                contentDescription = "",
+                                painter = painterResource(id = R.drawable.ic_delete_icon),
+                                contentDescription = null,
                                 modifier = Modifier.size(24.dp),
                             )
                             Text(
@@ -193,14 +193,15 @@ fun LoginInfoCard(
             }
         },
         modifier =
-            modifier
-                .border(
-                    color = MaterialTheme.colorScheme.onBackground,
-                    shape = RoundedCornerShape(6.dp),
-                    width = 2.dp,
-                ).clickable {
-                    isExpanded = !isExpanded
-                },
+        modifier
+            .border(
+                color = borderColor,
+                shape = RoundedCornerShape(6.dp),
+                width = 2.dp,
+            )
+            .clickable {
+                isExpanded = !isExpanded
+            },
     )
 }
 
@@ -217,46 +218,49 @@ fun LoginInfoCardOld(
     Spacer(Modifier.height(6.dp))
     Box(
         modifier =
-            Modifier
-                .clip(RoundedCornerShape(6.dp))
-                .border(
-                    width = 3.dp,
-                    color = BlueButton,
-                ).sizeIn(minHeight = 72.dp)
-                .fillMaxWidth()
-                .clickable {
-                    if (serviceProviderInfo != null) {
-                        isOpen.value = !isOpen.value
-                    }
-                }.background(InfoTabDarkFill)
-                .animateContentSize(),
+        Modifier
+            .clip(RoundedCornerShape(6.dp))
+            .border(
+                width = 3.dp,
+                color = BlueButton,
+            )
+            .sizeIn(minHeight = 72.dp)
+            .fillMaxWidth()
+            .clickable {
+                if (serviceProviderInfo != null) {
+                    isOpen.value = !isOpen.value
+                }
+            }
+            .background(InfoTabDarkFill)
+            .animateContentSize(),
     ) {
         ConstraintLayout(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(start = 18.dp, end = 18.dp, top = 12.dp, bottom = 12.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(start = 18.dp, end = 18.dp, top = 12.dp, bottom = 12.dp),
         ) {
             val (startImage, titleArea, endImage, expandedArea) = createRefs()
             Box(
                 modifier =
-                    Modifier
-                        .constrainAs(startImage) {
-                            top.linkTo(titleArea.top)
-                            bottom.linkTo(titleArea.bottom)
-                            start.linkTo(parent.start)
-                        }.height(48.dp),
+                Modifier
+                    .constrainAs(startImage) {
+                        top.linkTo(titleArea.top)
+                        bottom.linkTo(titleArea.bottom)
+                        start.linkTo(parent.start)
+                    }
+                    .height(48.dp),
             ) {
                 if (startIconLargeUrl.isNotBlank()) {
                     AsyncImage(
                         model = startIconLargeUrl,
                         contentDescription = null,
                         modifier =
-                            Modifier
-                                .align(Alignment.Center)
-                                .padding(end = 12.dp)
-                                .heightIn(max = 48.dp)
-                                .widthIn(max = 48.dp),
+                        Modifier
+                            .align(Alignment.Center)
+                            .padding(end = 12.dp)
+                            .heightIn(max = 48.dp)
+                            .widthIn(max = 48.dp),
                     )
                 }
             }
@@ -264,50 +268,50 @@ fun LoginInfoCardOld(
             Column(
                 horizontalAlignment = Alignment.Start,
                 modifier =
-                    Modifier.constrainAs(titleArea) {
-                        top.linkTo(parent.top)
-                        start.linkTo(startImage.end)
-                        end.linkTo(endImage.start)
-                        width = Dimension.fillToConstraints
-                    },
+                Modifier.constrainAs(titleArea) {
+                    top.linkTo(parent.top)
+                    start.linkTo(startImage.end)
+                    end.linkTo(endImage.start)
+                    width = Dimension.fillToConstraints
+                },
             ) {
                 Text(
                     text =
-                        title.replaceFirstChar {
-                            if (it.isLowerCase()) {
-                                it.titlecase(
-                                    Locale.getDefault(),
-                                )
-                            } else {
-                                it.toString()
-                            }
-                        },
+                    title.replaceFirstChar {
+                        if (it.isLowerCase()) {
+                            it.titlecase(
+                                Locale.getDefault(),
+                            )
+                        } else {
+                            it.toString()
+                        }
+                    },
                     style =
-                        MaterialTheme.typography.bodyLarge.copy(
-                            textAlign = TextAlign.Start,
-                            fontWeight = FontWeight.Bold,
-                            lineHeight = 20.sp,
-                        ),
+                    MaterialTheme.typography.bodyLarge.copy(
+                        textAlign = TextAlign.Start,
+                        fontWeight = FontWeight.Bold,
+                        lineHeight = 20.sp,
+                    ),
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(
                     text = subtitle,
                     style =
-                        MaterialTheme.typography.bodySmall.copy(
-                            textAlign = TextAlign.Start,
-                            color = ColorScale_Gray_500,
-                        ),
+                    MaterialTheme.typography.bodySmall.copy(
+                        textAlign = TextAlign.Start,
+                        color = ColorScale_Gray_500,
+                    ),
                 )
             }
             if (isOpen.value && serviceProviderInfo != null) {
                 Column(
                     horizontalAlignment = Alignment.Start,
                     modifier =
-                        Modifier.constrainAs(expandedArea) {
-                            top.linkTo(titleArea.bottom, margin = 24.dp)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                        },
+                    Modifier.constrainAs(expandedArea) {
+                        top.linkTo(titleArea.bottom, margin = 24.dp)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    },
                 ) {
                     ServiceProviderBlock(serviceProviderInfo, onDeleteButtonClicked)
                 }
@@ -316,12 +320,13 @@ fun LoginInfoCardOld(
                 painter = painterResource(R.drawable.chevron_down),
                 contentDescription = "",
                 modifier =
-                    Modifier
-                        .constrainAs(endImage) {
-                            top.linkTo(titleArea.top)
-                            bottom.linkTo(titleArea.bottom)
-                            end.linkTo(parent.end)
-                        }.padding(start = 12.dp),
+                Modifier
+                    .constrainAs(endImage) {
+                        top.linkTo(titleArea.top)
+                        bottom.linkTo(titleArea.bottom)
+                        end.linkTo(parent.end)
+                    }
+                    .padding(start = 12.dp),
             )
         }
     }
@@ -355,27 +360,27 @@ private fun ServiceProviderBlock(serviceProviderInfo: ServiceProvider, onDeleteB
         border = BorderStroke(1.dp, Color.Red),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = ColorAlertRed),
         modifier =
-            Modifier
-                .sizeIn(minHeight = 48.dp)
-                .fillMaxWidth(),
+        Modifier
+            .sizeIn(minHeight = 48.dp)
+            .fillMaxWidth(),
     ) {
         Text(
             text = stringResource(R.string.DataActivity_Details_Delete_COPY),
             style =
-                MaterialTheme.typography.bodyLarge.copy(
-                    color = ColorAlertRed,
-                    fontWeight = FontWeight.SemiBold,
-                ),
+            MaterialTheme.typography.bodyLarge.copy(
+                color = ColorAlertRed,
+                fontWeight = FontWeight.SemiBold,
+            ),
         )
     }
     Spacer(Modifier.height(24.dp))
     Text(
         text = stringResource(R.string.DataActivity_Details_DeleteDisclaimer_COPY),
         style =
-            MaterialTheme.typography.bodySmall.copy(
-                textAlign = TextAlign.Start,
-                color = ColorScale_Gray_Black,
-            ),
+        MaterialTheme.typography.bodySmall.copy(
+            textAlign = TextAlign.Start,
+            color = ColorScale_Gray_Black,
+        ),
     )
     Spacer(Modifier.height(32.dp))
 }
@@ -387,14 +392,14 @@ private fun PreviewLoginInfoCard() = EduidAppAndroidTheme {
         LoginInfoCard(
             title = "My eduid",
             serviceProviderInfo =
-                ServiceProvider(
-                    providerName = "Provider name",
-                    createdStamp = 0L,
-                    firstLoginStamp = 0L,
-                    uniqueId = "15a6dObf-fOfd-466d-a3b1-ff19df2dcc3e",
-                    serviceProviderEntityId = "service provider id",
-                    providerLogoUrl = "https://static.surfconext.nl/media/sp/eduid.png",
-                ),
+            ServiceProvider(
+                providerName = "Provider name",
+                createdStamp = 0L,
+                firstLoginStamp = 0L,
+                uniqueId = "15a6dObf-fOfd-466d-a3b1-ff19df2dcc3e",
+                serviceProviderEntityId = "service provider id",
+                providerLogoUrl = "https://static.surfconext.nl/media/sp/eduid.png",
+            ),
             isExpanded = false,
             modifier = Modifier
                 .fillMaxWidth()
@@ -403,22 +408,22 @@ private fun PreviewLoginInfoCard() = EduidAppAndroidTheme {
         LoginInfoCard(
             title = "eduID invite with a very long name",
             serviceProviderInfo =
-                ServiceProvider(
-                    providerName = "Provider name",
-                    createdStamp = 0L,
-                    firstLoginStamp = 0L,
-                    uniqueId = "15a6dObf-fOfd-466d-a3b1-ff19df2dcc3e",
-                    serviceProviderEntityId = "service provider id",
-                    availableTokens = listOf(
-                        ScopeAccessGrant(
-                            clientId = "test.eduid.nl",
-                            forProviderName = "eduid mobile app",
-                            scopeDescription = "Allow this app to read and update your eduID data",
-                            grantedOn = "2024-06-13T14:25:57.054+00:00",
-                            expireAt = "2024-06-13T14:25:57.054+00:00",
-                        ),
+            ServiceProvider(
+                providerName = "Provider name",
+                createdStamp = 0L,
+                firstLoginStamp = 0L,
+                uniqueId = "15a6dObf-fOfd-466d-a3b1-ff19df2dcc3e",
+                serviceProviderEntityId = "service provider id",
+                availableTokens = listOf(
+                    ScopeAccessGrant(
+                        clientId = "test.eduid.nl",
+                        forProviderName = "eduid mobile app",
+                        scopeDescription = "Allow this app to read and update your eduID data",
+                        grantedOn = "2024-06-13T14:25:57.054+00:00",
+                        expireAt = "2024-06-13T14:25:57.054+00:00",
                     ),
                 ),
+            ),
             isExpanded = true,
             modifier = Modifier.fillMaxWidth(),
         )
@@ -426,14 +431,14 @@ private fun PreviewLoginInfoCard() = EduidAppAndroidTheme {
             title = "My eduid",
             subtitle = "on Date",
             serviceProviderInfo =
-                ServiceProvider(
-                    providerName = "Provider name",
-                    createdStamp = 0L,
-                    firstLoginStamp = 0L,
-                    uniqueId = "15a6dObf-fOfd-466d-a3b1-ff19df2dcc3e",
-                    serviceProviderEntityId = "service provider id",
-                    providerLogoUrl = "https://static.surfconext.nl/media/sp/eduid.png",
-                ),
+            ServiceProvider(
+                providerName = "Provider name",
+                createdStamp = 0L,
+                firstLoginStamp = 0L,
+                uniqueId = "15a6dObf-fOfd-466d-a3b1-ff19df2dcc3e",
+                serviceProviderEntityId = "service provider id",
+                providerLogoUrl = "https://static.surfconext.nl/media/sp/eduid.png",
+            ),
             isExpanded = true,
         )
     }
