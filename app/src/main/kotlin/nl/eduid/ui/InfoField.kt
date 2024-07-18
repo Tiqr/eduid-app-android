@@ -333,11 +333,11 @@ fun ExpandableVerifiedInfoField(
                     )
                     VerifiedRowInfo(
                         R.string.Profile_LinkedAccountCreatedAt_COPY,
-                        confirmedByInstitution?.createdStamp?.getDateString().orEmpty()
+                        confirmedByInstitution.createdStamp.getShortDateString()
                     )
                     VerifiedRowInfo(
                         R.string.Profile_LinkedAccountValidUntil_COPY,
-                        confirmedByInstitution?.expiryStamp?.getDateString().orEmpty()
+                        confirmedByInstitution.expiryStamp.getShortDateString()
                     )
                     HorizontalDivider(thickness = 2.dp, color = MaterialTheme.colorScheme.onSurface)
                     TextButton(
