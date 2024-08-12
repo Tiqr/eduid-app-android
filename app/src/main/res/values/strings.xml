@@ -220,7 +220,7 @@
   <string name="Security_Tiqr_EnrollmentIncomplete_Title_COPY">"Enrollment incomplete"</string>
   <string name="Security_Tiqr_EnrollmentIncomplete_Description_COPY">"Enrollment is incomplete, either recovery was not complete or access was revoked"</string>
   <string name="Security_Tiqr_AlreadyEnrolled_Title_COPY">"Already enrolled on a different device"</string>
-  <string name="Security_Tiqr_AlreadyEnrolled_Description_COPY">"This account already has a device setup for \nWould you like to deactivate existing enrollment to enroll on this device?\n"</string>
+  <string name="Security_Tiqr_AlreadyEnrolled_Description_COPY">"This account already has a eduid app registration\nWould you like to deactivate the existing app registration and add this device?\n"</string>
   <string name="PasswordResetLink_Title_AddPassword_COPY">"Add password"</string>
   <string name="PasswordResetLink_Title_ChangePassword_COPY">"Change or delete password"</string>
   <string name="PasswordResetLink_Description_AddPassword_COPY">"We will send you an email instantly with a link to add a password."</string>
@@ -555,7 +555,7 @@
   <string name="Login_PasswordDisclaimer_COPY">"Make sure it's at least 15 characters long OR at least 8 characters when including a number and an UpperCase letter."</string>
   <string name="Login_AlreadyGuestAccount_COPY">"Already have an eduID?"</string>
   <string name="Login_UsePasswordLink_COPY">"Type a password anyway"</string>
-  <string name="Login_UseWebAuthnLink_COPY">"Or use a passkeyy"</string>
+  <string name="Login_UseWebAuthnLink_COPY">"Or use a passkey"</string>
   <string name="Login_AgreeWithTerms_COPY">"&lt;span&gt;I agree with &lt;a tabindex='-1' href='https://eduid.nl/terms-of-use/' target='_blank'&gt;the terms of service.&lt;/a&gt; I also understand &lt;a tabindex='-1' href='https://eduid.nl/privacy_policy/' target='_blank'&gt;the privacy policy&lt;/a&gt;.&lt;/span&gt;"</string>
   <string name="Login_Next_COPY">"Next"</string>
   <string name="Login_UseOtherAccount_COPY">"Use another account"</string>

@@ -220,7 +220,7 @@
   <string name="Security_Tiqr_EnrollmentIncomplete_Title_COPY">"Toevoegen incompleet"</string>
   <string name="Security_Tiqr_EnrollmentIncomplete_Description_COPY">"Toevoegen is incompleet, recovery was niet compleet of toegang is uitgeschakeld"</string>
   <string name="Security_Tiqr_AlreadyEnrolled_Title_COPY">"Al toegevoegd aan een ander toestel"</string>
-  <string name="Security_Tiqr_AlreadyEnrolled_Description_COPY">"Dit account is al aan een toestel gekoppeld voor .\nWil je  op het bestaande toestel deactiveren en hier toevoegen?\n"</string>
+  <string name="Security_Tiqr_AlreadyEnrolled_Description_COPY">"Voor dit account is al een eduID app geregistreerd.\nWil je de bestaande eduID app registratie verwijderen en hier toevoegen?\n"</string>
   <string name="PasswordResetLink_Title_AddPassword_COPY">"Voeg een wachtwoord toe"</string>
   <string name="PasswordResetLink_Title_ChangePassword_COPY">"Wachtwoord wijzigen of verwijderen"</string>
   <string name="PasswordResetLink_Description_AddPassword_COPY">"We sturen je een e-mail om een wachtwoord in te stellen."</string>
