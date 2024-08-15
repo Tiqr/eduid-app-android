@@ -30,7 +30,7 @@ import nl.eduid.screens.editemail.EditEmailScreen
 import nl.eduid.screens.editemail.EditEmailViewModel
 import nl.eduid.screens.editname.EditNameFormScreen
 import nl.eduid.screens.editname.EditNameFormViewModel
-import nl.eduid.screens.firsttimedialog.FirstTimeDialogScreen
+import nl.eduid.screens.firsttimedialog.FirstTimeDialogRoute
 import nl.eduid.screens.firsttimedialog.LinkAccountViewModel
 import nl.eduid.screens.homepage.HomePageScreen
 import nl.eduid.screens.homepage.HomePageViewModel
@@ -70,7 +70,7 @@ import org.tiqr.data.model.EnrollmentChallenge
 fun MainGraph(
     navController: NavHostController,
 ) = NavHost(
-    navController = navController, startDestination = Graph.HOME_PAGE
+    navController = navController, startDestination = Graph.FIRST_TIME_DIALOG
 ) {
     composable(Graph.HOME_PAGE) {//region Home
         val viewModel = hiltViewModel<HomePageViewModel>(it)
@@ -104,21 +104,18 @@ fun MainGraph(
     ) { entry ->
         val viewModel = hiltViewModel<StatelessScanViewModel>(entry)
         val isEnrolment = entry.arguments?.getBoolean(Account.ScanQR.isEnrolment, false) ?: false
-        ScanScreen(viewModel = viewModel,
-            isEnrolment = isEnrolment,
-            goBack = { navController.popBackStack() },
-            goToNext = { challenge ->
-                val encodedChallenge = viewModel.encodeChallenge(challenge)
-                if (challenge is EnrollmentChallenge) {
-                    navController.goToWithPopCurrent(
-                        "${Account.EnrollPinSetup.route}/$encodedChallenge"
-                    )
-                } else {
-                    navController.goToWithPopCurrent(
-                        "${Account.RequestAuthentication.route}/$encodedChallenge"
-                    )
-                }
-            })
+        ScanScreen(viewModel = viewModel, isEnrolment = isEnrolment, goBack = { navController.popBackStack() }, goToNext = { challenge ->
+            val encodedChallenge = viewModel.encodeChallenge(challenge)
+            if (challenge is EnrollmentChallenge) {
+                navController.goToWithPopCurrent(
+                    "${Account.EnrollPinSetup.route}/$encodedChallenge"
+                )
+            } else {
+                navController.goToWithPopCurrent(
+                    "${Account.RequestAuthentication.route}/$encodedChallenge"
+                )
+            }
+        })
     }//endregion
 
     composable(
@@ -127,9 +124,7 @@ fun MainGraph(
         arguments = Account.EnrollPinSetup.arguments,
     ) { entry ->
         val viewModel = hiltViewModel<RegistrationPinSetupViewModel>(entry)
-        RegistrationPinSetupScreen(
-            viewModel = viewModel,
-            closePinSetupFlow = { navController.popBackStack() }) { nextStep ->
+        RegistrationPinSetupScreen(viewModel = viewModel, closePinSetupFlow = { navController.popBackStack() }) { nextStep ->
             when (nextStep) {
                 NextStep.RecoveryInBrowser -> {
                     navController.navigate(Graph.CONTINUE_RECOVERY_IN_BROWSER)
@@ -138,8 +133,7 @@ fun MainGraph(
                 is NextStep.PromptBiometric -> {
                     navController.navigate(
                         WithChallenge.EnableBiometric.buildRouteForEnrolment(
-                            encodedChallenge = viewModel.encodeChallenge(nextStep.challenge),
-                            pin = nextStep.pin
+                            encodedChallenge = viewModel.encodeChallenge(nextStep.challenge), pin = nextStep.pin
                         )
                     ) {
                         popUpTo(Graph.HOME_PAGE)
@@ -223,8 +217,7 @@ fun MainGraph(
         route = RequestEduIdLinkSent.routeWithArgs, arguments = RequestEduIdLinkSent.arguments
     ) { entry ->
         RequestEduIdEmailSentScreen(
-            userEmail = RequestEduIdLinkSent.decodeEmailFromEntry(entry),
-            reason = entry.arguments?.getString(reasonArg) ?: ""
+            userEmail = RequestEduIdLinkSent.decodeEmailFromEntry(entry), reason = entry.arguments?.getString(reasonArg) ?: ""
         ) { navController.popBackStack() }
     }//endregion
     composable(//region Account-Created
@@ -274,25 +267,20 @@ fun MainGraph(
     }
 
     composable(
-        route = PhoneNumberRecovery.ConfirmCode.routeWithArgs,
-        arguments = PhoneNumberRecovery.ConfirmCode.arguments
+        route = PhoneNumberRecovery.ConfirmCode.routeWithArgs, arguments = PhoneNumberRecovery.ConfirmCode.arguments
     ) { entry ->
         val viewModel = hiltViewModel<ConfirmCodeViewModel>(entry)
-        val isDeactivation =
-            entry.arguments?.getBoolean(PhoneNumberRecovery.ConfirmCode.isDeactivationArg, false)
-                ?: false
-        ConfirmCodeScreen(viewModel = viewModel,
-            phoneNumber = PhoneNumberRecovery.ConfirmCode.decodeFromEntry(entry),
-            goToStartScreen = {
-                if (isDeactivation) {
-                    navController.popBackStack()
-                } else {
-                    navController.navigate(Graph.WELCOME_START) {
-                        //Flow for phone number recovery completed, remove from stack entirely
-                        popUpTo(PhoneNumberRecovery.RequestCode.route) { inclusive = true }
-                    }
+        val isDeactivation = entry.arguments?.getBoolean(PhoneNumberRecovery.ConfirmCode.isDeactivationArg, false) ?: false
+        ConfirmCodeScreen(viewModel = viewModel, phoneNumber = PhoneNumberRecovery.ConfirmCode.decodeFromEntry(entry), goToStartScreen = {
+            if (isDeactivation) {
+                navController.popBackStack()
+            } else {
+                navController.navigate(Graph.WELCOME_START) {
+                    //Flow for phone number recovery completed, remove from stack entirely
+                    popUpTo(PhoneNumberRecovery.RequestCode.route) { inclusive = true }
                 }
-            }) { navController.popBackStack() }
+            }
+        }) { navController.popBackStack() }
     }
     //endregion
 
@@ -316,7 +304,7 @@ fun MainGraph(
     }
     composable(Graph.FIRST_TIME_DIALOG) { entry ->
         val viewModel = hiltViewModel<LinkAccountViewModel>(entry)
-        FirstTimeDialogScreen(viewModel = viewModel,
+        FirstTimeDialogRoute(viewModel = viewModel,
             goToAccountLinked = { navController.goToWithPopCurrent(AccountLinked.route) },
             skipThis = {
                 navController.navigate(Graph.HOME_PAGE) {
@@ -377,9 +365,11 @@ fun MainGraph(
             viewModel = viewModel,
             onEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
             onNameClicked = { name, canEditFamilyName ->
-                navController.navigate(EditName.Form.routeWithArgs(
+                navController.navigate(
+                    EditName.Form.routeWithArgs(
                         name, canEditFamilyName
-                    ))
+                    )
+                )
             },
             onManageAccountClicked = { dateString ->
                 navController.navigate(
@@ -395,8 +385,7 @@ fun MainGraph(
         )
     }
     composable(//region VerifiedPersonalInfoRoute
-        route = VerifiedPersonalInfoRoute.routeWithArgs,
-        arguments = VerifiedPersonalInfoRoute.arguments
+        route = VerifiedPersonalInfoRoute.routeWithArgs, arguments = VerifiedPersonalInfoRoute.arguments
     ) { entry ->
         val viewModel = hiltViewModel<VerifiedPersonalInfoViewModel>(entry)
         VerifiedPersonalInfoRoute(viewModel = viewModel) {
