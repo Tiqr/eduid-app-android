@@ -16,16 +16,6 @@ fun Long.getDateTimeString(pattern: String = "EEE dd MMM yyyy - HH:MM"): String 
 }
 
 @SuppressLint("SimpleDateFormat")
-fun Long.getDateString(pattern: String = "EEEE, MMMM dd, yyyy"): String = try {
-    val sdf = SimpleDateFormat(pattern)
-    val netDate = Date(this)
-    sdf.format(netDate)
-} catch (e: Exception) {
-    Timber.e(e, "Failed to format date")
-    ""
-}
-
-@SuppressLint("SimpleDateFormat")
 fun Long.getShortDateString(pattern: String = "MMMM dd, yyyy"): String = try {
     val sdf = SimpleDateFormat(pattern)
     val netDate = Date(this)

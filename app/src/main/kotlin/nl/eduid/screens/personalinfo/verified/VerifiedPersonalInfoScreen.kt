@@ -41,7 +41,7 @@ import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.VerifiedInfoField
-import nl.eduid.ui.getDateString
+import nl.eduid.ui.getShortDateString
 import nl.eduid.ui.theme.ColorScale_Gray_200
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
@@ -156,7 +156,7 @@ fun VerifiedPersonalInfoScreen(
                         fontWeight = FontWeight.SemiBold
                     ).toSpanStyle()
                 )
-                append(verifier?.createdStamp?.getDateString() ?: "")
+                append(verifier?.createdStamp?.getShortDateString() ?: "")
             },
         )
         Text(
@@ -168,7 +168,7 @@ fun VerifiedPersonalInfoScreen(
                         fontWeight = FontWeight.SemiBold
                     ).toSpanStyle()
                 )
-                append(verifier?.expiryStamp?.getDateString() ?: "")
+                append(verifier?.expiryStamp?.getShortDateString() ?: "")
             },
         )
         verifier?.givenName?.let {

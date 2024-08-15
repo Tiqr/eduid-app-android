@@ -99,7 +99,10 @@ fun LoginInfoCard(
                     HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
                     Text(stringResource(R.string.DataActivity_Details_Login_COPY), style = MaterialTheme.typography.labelSmall)
                     serviceProviderInfo?.firstLoginStamp?.let {
-                        InfoRow(stringResource(R.string.DataActivity_Details_FirstLogin_COPY), it.getDateString())
+                        InfoRow(
+                            stringResource(R.string.DataActivity_Details_FirstLogin_COPY),
+                            it.getShortDateString()
+                        )
                     }
                     serviceProviderInfo?.uniqueId?.let {
                         InfoRow(stringResource(R.string.DataActivity_Details_UniqueEduID_COPY), it)
