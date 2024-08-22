@@ -22,12 +22,14 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -50,6 +52,8 @@ fun EduIdTopAppBar(
 ) {
     val topBarState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(topBarState)
+    val topAppBarColors = TopAppBarDefaults.centerAlignedTopAppBarColors()
+        .copy(scrolledContainerColor = Color.White)
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         snackbarHost = {
@@ -66,7 +70,8 @@ fun EduIdTopAppBar(
         },
         topBar = {
             CenterAlignedTopAppBar(
-                modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
+                colors = topAppBarColors,
+                modifier = Modifier.padding(top = 0.dp, bottom = 8.dp),
                 navigationIcon = {
                     if (withBackIcon) {
                         IconButton(
