@@ -31,6 +31,7 @@ fun CheckToSAndPrivacyPolicy(
                 .width(16.dp)
         )
         HtmlText(
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
             text = stringResource(id = R.string.LinkFromInstitution_AgreeWithTerms_COPY),
             modifier = Modifier
                 .wrapContentWidth()

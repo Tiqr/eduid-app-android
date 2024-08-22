@@ -53,6 +53,7 @@ import nl.eduid.screens.info.AboutInfo
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.AlertDialogWithTwoButton
 import nl.eduid.ui.PrimaryButton
+import nl.eduid.ui.theme.BlueText
 import nl.eduid.ui.theme.ColorMain_Green_400
 import nl.eduid.ui.theme.SmallActionGray
 import org.tiqr.data.model.EnrollmentChallenge
@@ -235,6 +236,7 @@ fun HomePageNoAccountContent(
 
             Text(
                 text = stringResource(R.string.CreateEduID_LandingPage_MainText_COPY),
+                color = BlueText,
                 style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
                 modifier = Modifier
                     .fillMaxWidth()

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -13,7 +14,7 @@ private val LightColors = lightColorScheme(
     surface = Color.White,
     onSurface = ColorSupport_Blue_400,
     background = Color.White,
-    onBackground = ColorScale_Gray_500,
+    onBackground = ColorScale_Gray_Black,
     onSurfaceVariant = ColorScale_Gray_500,
     primary = ColorSupport_Blue_400,
     onPrimaryContainer = ColorScale_Gray_Black,
@@ -22,6 +23,13 @@ private val LightColors = lightColorScheme(
     onSecondary = ColorMain_Green_400,
     tertiaryContainer = ColorScale_Gray_100,
     onTertiaryContainer = ColorScale_Gray_300,
+)
+
+@Composable
+fun outlinedTextColors() = OutlinedTextFieldDefaults.colors().copy(
+    focusedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+    unfocusedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+    errorTextColor = MaterialTheme.colorScheme.onPrimaryContainer
 )
 
 @Composable

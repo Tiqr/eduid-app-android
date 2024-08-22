@@ -49,6 +49,7 @@ import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.outlinedTextColors
 
 @Composable
 fun PhoneRequestCodeScreen(
@@ -157,6 +158,7 @@ private fun PhoneRequestCodeContent(
         )
 
         OutlinedTextField(
+            colors = outlinedTextColors(),
             value = uiState.input,
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done, keyboardType = KeyboardType.Number

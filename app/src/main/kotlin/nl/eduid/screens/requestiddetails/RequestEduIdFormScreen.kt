@@ -23,6 +23,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -53,7 +54,9 @@ import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.CheckToSAndPrivacyPolicy
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
+import nl.eduid.ui.theme.ColorScale_Gray_Black
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.outlinedTextColors
 
 @Composable
 fun RequestEduIdFormScreen(
@@ -94,8 +97,7 @@ fun RequestEduIdFormScreen(
 
 @Composable
 @OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class,
-    ExperimentalFoundationApi::class, ExperimentalLayoutApi::class
+    ExperimentalLayoutApi::class
 )
 private fun RequestEduIdFormContent(
     inputFormData: InputForm,
@@ -125,7 +127,7 @@ private fun RequestEduIdFormContent(
             !isKeyboardOpen,
             Modifier.fillMaxWidth()
         ) {
-            Column() {
+            Column {
                 Text(
                     text = stringResource(R.string.CreateEduID_Create_MainTitleLabel_COPY),
                     style = MaterialTheme.typography.titleLarge.copy(
@@ -152,6 +154,7 @@ private fun RequestEduIdFormContent(
             modifier = Modifier.padding(vertical = 8.dp)
         )
         OutlinedTextField(
+            colors = outlinedTextColors(),
             value = inputFormData.email,
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next, keyboardType = KeyboardType.Email
@@ -180,6 +183,7 @@ private fun RequestEduIdFormContent(
             modifier = Modifier.padding(vertical = 8.dp)
         )
         OutlinedTextField(
+            colors = outlinedTextColors(),
             value = inputFormData.firstName,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions(onNext = {
@@ -203,6 +207,7 @@ private fun RequestEduIdFormContent(
             modifier = Modifier.padding(vertical = 8.dp)
         )
         OutlinedTextField(
+            colors = outlinedTextColors(),
             value = inputFormData.lastName,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = {

@@ -48,8 +48,7 @@ fun RequestEduIdStartScreen(
             Text(
                 text = stringResource(R.string.CreateEduID_Explanation_MainTitleLabel_COPY),
                 style = MaterialTheme.typography.titleLarge.copy(
-                    textAlign = TextAlign.Start,
-                    color = ColorScale_Gray_Black
+                    textAlign = TextAlign.Start
                 ),
                 modifier = Modifier
                     .fillMaxWidth()

@@ -86,11 +86,11 @@ fun SecurityScreenContent(
         text = stringResource(R.string.Security_SubTitle_COPY),
     )
     if (securityInfo.isLoading) {
-        Spacer(Modifier.height(24.dp))
         LinearProgressIndicator(
             modifier = Modifier.fillMaxWidth(),
         )
     }
+    Spacer(Modifier.height(8.dp))
     securityInfo.twoFAProvider?.let {
         EditableSecurityField(
             title = stringResource(R.string.Security_TwoFAKey_COPY),
