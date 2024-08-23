@@ -110,9 +110,10 @@ fun FirstTimeDialogScreen(goToAccountLinked: () -> Unit, skipThis: () -> Unit) {
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp),
             )
+            Spacer(Modifier.height(8.dp))
             Text(
                 text = stringResource(R.string.CreateEduID_FirstTimeDialog_MainTextTitle_SecondPart_COPY),
-                style = MaterialTheme.typography.titleMedium.copy(
+                style = MaterialTheme.typography.titleLarge.copy(
                     color = MaterialTheme.colorScheme.onSecondary,
                     textAlign = TextAlign.Center,
                 ),

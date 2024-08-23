@@ -52,6 +52,7 @@ import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
 import nl.eduid.ui.TwoColorTitle
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.outlinedTextColors
 
 @Composable
 fun EditEmailScreen(
@@ -147,6 +148,7 @@ fun EditEmailScreenContent(
         )
 
         OutlinedTextField(
+            colors = outlinedTextColors(),
             value = uiState.email,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),

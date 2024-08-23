@@ -353,7 +353,10 @@ private fun ColumnScope.VerifiedIdentity(
                 tint = MaterialTheme.colorScheme.onPrimary
             )
             Text(
-                style = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onPrimary),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontWeight = FontWeight.SemiBold
+                ),
                 text = stringResource(R.string.Profile_Verified_COPY),
                 modifier = Modifier.padding(horizontal = 8.dp)
             )

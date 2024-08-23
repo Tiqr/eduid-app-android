@@ -63,6 +63,7 @@ import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.ColorMain_Green_400
 import nl.eduid.ui.theme.ColorScale_Gray_Black
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.outlinedTextColors
 
 @Composable
 fun ResetPasswordConfirmScreen(
@@ -194,6 +195,7 @@ fun ResetPasswordConfirmScreenContent(
                 modifier = Modifier.padding(vertical = 8.dp)
             )
             OutlinedTextField(
+                colors = outlinedTextColors(),
                 value = newPasswordInput,
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(

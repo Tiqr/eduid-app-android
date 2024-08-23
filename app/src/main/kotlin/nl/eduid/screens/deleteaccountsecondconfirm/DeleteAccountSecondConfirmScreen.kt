@@ -56,6 +56,7 @@ import nl.eduid.ui.theme.ColorMain_Green_400
 import nl.eduid.ui.theme.ColorScale_Gray_Black
 import nl.eduid.ui.theme.ColorSupport_Blue_100
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.outlinedTextColors
 
 @Composable
 fun DeleteAccountSecondConfirmScreen(
@@ -193,6 +194,7 @@ private fun DeleteAccountSecondConfirmScreenContent(
             modifier = Modifier.padding(vertical = 8.dp)
         )
         OutlinedTextField(
+            colors = outlinedTextColors(),
             value = fullNameInput,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),

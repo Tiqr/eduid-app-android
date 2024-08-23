@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.android.awaitFrame
 import nl.eduid.R
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.outlinedTextColors
 
 
 @Composable
@@ -108,6 +109,7 @@ fun PinInputField(
             )
         }
         OutlinedTextField(
+            colors = outlinedTextColors(),
             value = pinCode,
             enabled = isInputEnabled,
             onValueChange = {

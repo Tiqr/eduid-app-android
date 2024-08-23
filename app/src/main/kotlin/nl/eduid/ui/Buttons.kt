@@ -93,7 +93,10 @@ fun PrimaryButtonWithIcon(
         maxLines = 2,
         softWrap = true,
         overflow = TextOverflow.Ellipsis,
-        style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onPrimary),
+        style = MaterialTheme.typography.bodyMedium.copy(
+            color = MaterialTheme.colorScheme.onPrimary,
+            fontWeight = FontWeight.SemiBold
+        ),
     )
 }
 

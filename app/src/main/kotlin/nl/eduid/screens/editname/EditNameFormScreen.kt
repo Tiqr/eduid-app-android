@@ -52,6 +52,7 @@ import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.SecondaryButton
 import nl.eduid.ui.TwoColorTitle
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.outlinedTextColors
 
 @Composable
 fun EditNameFormScreen(
@@ -155,6 +156,7 @@ fun EditNameFormContent(
             modifier = Modifier.padding(vertical = 8.dp)
         )
         OutlinedTextField(
+            colors = outlinedTextColors(),
             value = givenName,
             isError = !isGivenNameValid,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
