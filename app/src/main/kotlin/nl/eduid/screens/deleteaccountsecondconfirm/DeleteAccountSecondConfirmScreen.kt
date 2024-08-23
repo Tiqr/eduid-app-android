@@ -23,7 +23,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -69,11 +68,6 @@ fun DeleteAccountSecondConfirmScreen(
 ) {
     var waitingForVmEvent by rememberSaveable { mutableStateOf(false) }
     val owner = LocalLifecycleOwner.current
-    val outlinedTextColors = OutlinedTextFieldDefaults.colors().copy(
-        focusedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
-        unfocusedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
-        errorTextColor = MaterialTheme.colorScheme.onPrimaryContainer
-    )
 
     if (waitingForVmEvent && viewModel.uiState.isDeleted != null) {
         val currentOnAccountDeleted by rememberUpdatedState(onAccountDeleted)
