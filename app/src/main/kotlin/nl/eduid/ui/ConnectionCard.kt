@@ -109,11 +109,11 @@ fun ConnectionCard(
                     )
                     VerifiedRowInfo(
                         R.string.Profile_LinkedAccountCreatedAt_COPY,
-                        confirmedByInstitution.createdStamp.getDateString()
+                        confirmedByInstitution.createdStamp.getShortDateString()
                     )
                     VerifiedRowInfo(
                         R.string.Profile_LinkedAccountValidUntil_COPY,
-                        confirmedByInstitution.expiryStamp.getDateString()
+                        confirmedByInstitution.expiryStamp.getShortDateString()
                     )
                     HorizontalDivider(thickness = 2.dp, color = MaterialTheme.colorScheme.onSurface)
                     TextButton(
@@ -245,7 +245,7 @@ private fun InstitutionInfoBlock(
     InfoRowOld(
         label = stringResource(R.string.Profile_VerifiedBy_COPY, institutionInfo.institution)
                 + stringResource(
-            R.string.Profile_VerifiedOn_COPY, institutionInfo.createdStamp.getDateString()
+            R.string.Profile_VerifiedOn_COPY, institutionInfo.createdStamp.getShortDateString()
         )
     )
     InfoRowOld(
@@ -258,7 +258,7 @@ private fun InstitutionInfoBlock(
     )
     InfoRowOld(
         label = stringResource(R.string.Profile_Expires_COPY),
-        value = institutionInfo.expiryStamp.getDateString()
+        value = institutionInfo.expiryStamp.getShortDateString()
     )
     Button(
         shape = RoundedCornerShape(CornerSize(6.dp)),

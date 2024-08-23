@@ -16,7 +16,7 @@ fun Long.getDateTimeString(pattern: String = "EEE dd MMM yyyy - HH:MM"): String 
 }
 
 @SuppressLint("SimpleDateFormat")
-fun Long.getDateString(pattern: String = "EEEE, MMMM dd, yyyy"): String = try {
+fun Long.getShortDateString(pattern: String = "MMMM dd, yyyy"): String = try {
     val sdf = SimpleDateFormat(pattern)
     val netDate = Date(this)
     sdf.format(netDate)
@@ -25,6 +25,9 @@ fun Long.getDateString(pattern: String = "EEEE, MMMM dd, yyyy"): String = try {
     ""
 }
 
+/**
+ * grantedOn & expireAt for a scope are not returned as dates, but as Strings. Ergo, this formatting
+ * */
 @SuppressLint("SimpleDateFormat")
 fun String.formatStringDate(): String = try {
     val parse = SimpleDateFormat("yyyy-M-dd'T'HH:mm:ss.SSSXXX")
