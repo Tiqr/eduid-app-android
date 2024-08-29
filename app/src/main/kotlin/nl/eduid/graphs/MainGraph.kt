@@ -82,10 +82,10 @@ fun MainGraph(
             onSecurityClicked = { navController.navigate(Security.Settings.route) },
             onEnrollWithQR = { navController.navigate(Account.ScanQR.routeForEnrol) },
             launchOAuth = { navController.navigate(Graph.OAUTH) },
-            goToRegistrationPinSetup = { challenge ->
+            goToRegistrationPinSetup = { challenge, isScanFlow ->
                 val encodeChallenge = viewModel.encodeChallenge(challenge)
                 navController.navigate(
-                    "${Account.EnrollPinSetup.route}/$encodeChallenge"
+                    "${Account.EnrollPinSetup.route}/$encodeChallenge/$isScanFlow"
                 )
             },
             goToConfirmDeactivation = { phoneNumber ->
@@ -106,9 +106,10 @@ fun MainGraph(
         val isEnrolment = entry.arguments?.getBoolean(Account.ScanQR.isEnrolment, false) ?: false
         ScanScreen(viewModel = viewModel, isEnrolment = isEnrolment, goBack = { navController.popBackStack() }, goToNext = { challenge ->
             val encodedChallenge = viewModel.encodeChallenge(challenge)
+            val isScanFlow = true
             if (challenge is EnrollmentChallenge) {
                 navController.goToWithPopCurrent(
-                    "${Account.EnrollPinSetup.route}/$encodedChallenge"
+                    "${Account.EnrollPinSetup.route}/$encodedChallenge/$isScanFlow"
                 )
             } else {
                 navController.goToWithPopCurrent(
@@ -124,7 +125,8 @@ fun MainGraph(
         arguments = Account.EnrollPinSetup.arguments,
     ) { entry ->
         val viewModel = hiltViewModel<RegistrationPinSetupViewModel>(entry)
-        RegistrationPinSetupScreen(viewModel = viewModel, closePinSetupFlow = { navController.popBackStack() }) { nextStep ->
+        val isScanFlow = entry.arguments?.getBoolean(Account.EnrollPinSetup.isScanFlow, false) ?: false
+        RegistrationPinSetupScreen(viewModel = viewModel, isScanFlow = isScanFlow, closePinSetupFlow = { navController.popBackStack() }) { nextStep ->
             when (nextStep) {
                 NextStep.RecoveryInBrowser -> {
                     navController.navigate(Graph.CONTINUE_RECOVERY_IN_BROWSER)
@@ -133,11 +135,16 @@ fun MainGraph(
                 is NextStep.PromptBiometric -> {
                     navController.navigate(
                         WithChallenge.EnableBiometric.buildRouteForEnrolment(
-                            encodedChallenge = viewModel.encodeChallenge(nextStep.challenge), pin = nextStep.pin
+                            encodedChallenge = viewModel.encodeChallenge(nextStep.challenge),
+                            pin = nextStep.pin,
+                            isScanFlow = isScanFlow
                         )
                     ) {
                         popUpTo(Graph.HOME_PAGE)
                     }
+                }
+                is NextStep.Welcome -> {
+                    navController.navigate(WelcomeStart.routeWithScanFlowArg(isScanFlow))
                 }
 
                 NextStep.Recovery -> navController.navigate(PhoneNumberRecovery.RequestCode.route) {
@@ -177,11 +184,14 @@ fun MainGraph(
         route = WithChallenge.EnableBiometric.routeWithArgs, arguments = WithChallenge.arguments
     ) { entry ->
         val viewModel = hiltViewModel<EnableBiometricViewModel>(entry)
+        val isScanFlow = entry.arguments?.getBoolean(WithChallenge.isScanFlowArg, false) ?: false
         EnableBiometricScreen(viewModel = viewModel, goToNext = { shouldAskForRecovery ->
             if (shouldAskForRecovery) {
                 navController.navigate(PhoneNumberRecovery.RequestCode.route) {
                     popUpTo(Graph.HOME_PAGE)
                 }
+            } else if (isScanFlow) {
+                navController.navigate(WelcomeStart.routeWithScanFlowArg(true))
             } else {
                 //Continue recovery via web
                 navController.navigate(Graph.CONTINUE_RECOVERY_IN_BROWSER)
@@ -275,7 +285,7 @@ fun MainGraph(
             if (isDeactivation) {
                 navController.popBackStack()
             } else {
-                navController.navigate(Graph.WELCOME_START) {
+                navController.navigate(WelcomeStart.routeWithScanFlowArg(false)) {
                     //Flow for phone number recovery completed, remove from stack entirely
                     popUpTo(PhoneNumberRecovery.RequestCode.route) { inclusive = true }
                 }
@@ -285,14 +295,17 @@ fun MainGraph(
     //endregion
 
     //region Welcome-FirstTime
-    composable(Graph.WELCOME_START) { entry ->
+    composable(
+        route = WelcomeStart.routeWithArgs, arguments = WelcomeStart.arguments
+    ) { entry ->
         val viewModel = hiltViewModel<WelcomeStartViewModel>(entry)
+        val isScanFlow = WelcomeStart.decodeScanFlowArg(entry)
         WelcomeStartScreen(
             viewModel,
         ) { accountIsAlreadyLinked ->
-            if (accountIsAlreadyLinked) {
+            if (accountIsAlreadyLinked || isScanFlow) {
                 navController.navigate(Graph.HOME_PAGE) {
-                    //Clear existing home page that has no account
+                    // Clear existing home page that has no account
                     popUpTo(Graph.HOME_PAGE) {
                         inclusive = true
                     }

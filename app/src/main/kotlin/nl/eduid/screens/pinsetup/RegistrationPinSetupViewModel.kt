@@ -68,7 +68,7 @@ class RegistrationPinSetupViewModel @Inject constructor(
         }
     }
 
-    fun submitPin(context: Context, currentStep: PinStep) {
+    fun submitPin(context: Context, isScanFlow: Boolean, currentStep: PinStep) {
         uiState = uiState.copy(isProcessing = true)
         if (currentStep is PinStep.PinCreate) {
             val createdPin = uiState.pinValue
@@ -86,14 +86,14 @@ class RegistrationPinSetupViewModel @Inject constructor(
             val createdPin = uiState.pinValue
             val pinConfirmed = confirmPin == createdPin
             if (pinConfirmed) {
-                enroll(context, createdPin)
+                enroll(context, isScanFlow, createdPin)
             } else {
                 uiState = uiState.copy(isPinInvalid = true, isProcessing = false)
             }
         }
     }
 
-    private fun enroll(context: Context, password: String) = viewModelScope.launch {
+    private fun enroll(context: Context, isScanFlow: Boolean, password: String) = viewModelScope.launch {
         val currentChallenge = challenge ?: return@launch
         val result =
             enrollRepository.completeChallenge(
@@ -113,7 +113,7 @@ class RegistrationPinSetupViewModel @Inject constructor(
             }
 
             ChallengeCompleteResult.Success -> {
-                val nextStep = calculateNextStep(context, currentChallenge)
+                val nextStep = calculateNextStep(context, isScanFlow, currentChallenge)
                 uiState =
                     uiState.copy(
                         nextStep = nextStep,
@@ -125,6 +125,7 @@ class RegistrationPinSetupViewModel @Inject constructor(
 
     private suspend fun calculateNextStep(
         context: Context,
+        isScanFlow: Boolean,
         currentChallenge: EnrollmentChallenge,
     ): NextStep {
         return if (context.biometricUsable() && currentChallenge.identity.biometricOfferUpgrade) {
@@ -134,6 +135,8 @@ class RegistrationPinSetupViewModel @Inject constructor(
                 checkRecovery.shouldAppDoRecoveryForIdentity(currentChallenge.identity.identifier)
             if (shouldAppDoRecovery) {
                 NextStep.Recovery
+            } else if (isScanFlow) {
+                NextStep.Welcome
             } else {
                 NextStep.RecoveryInBrowser
             }
