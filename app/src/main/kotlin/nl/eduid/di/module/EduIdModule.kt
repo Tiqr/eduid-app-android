@@ -20,6 +20,7 @@ import nl.eduid.di.auth.TokenProvider
 import nl.eduid.di.repository.EduIdRepository
 import nl.eduid.di.repository.StorageRepository
 import nl.eduid.env.EnvironmentProvider
+import nl.eduid.network.ConnectivityInterceptor
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -31,9 +32,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-/**
- * Module which serves the repositories.
- */
+/** Module which serves the repositories. */
 @Module
 @InstallIn(SingletonComponent::class)
 internal object RepositoryModule {
@@ -86,7 +85,7 @@ internal object RepositoryModule {
         okHttpClient: OkHttpClient,
     ): OkHttpClient {
         val builder = okHttpClient.newBuilder()
-        if (BuildConfig.BUILD_TYPE == "debug") {
+        if (BuildConfig.DEBUG) {
             builder.addInterceptor(loggingInterceptor)
         }
 
@@ -115,7 +114,20 @@ internal object RepositoryModule {
 
     @Provides
     @Singleton
-    internal fun provideOkHttpClientBuilder(): OkHttpClient {
-        return OkHttpClient.Builder().connectTimeout(15, TimeUnit.SECONDS).build()
-    }
+    internal fun provideOkHttpClientBuilder(
+        tokenAuthenticator: TokenAuthenticator,
+        tokenInterceptor: TokenInterceptor,
+    ): OkHttpClient.Builder = OkHttpClient.Builder()
+        .apply {
+            if (BuildConfig.DEBUG) {
+                addInterceptor(
+                    HttpLoggingInterceptor().apply {
+                        level = HttpLoggingInterceptor.Level.BODY
+                    },
+                )
+            }
+        }
+        .addInterceptor(ConnectivityInterceptor())
+        .connectTimeout(15, TimeUnit.SECONDS)
+
 }
