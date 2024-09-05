@@ -17,5 +17,4 @@ sealed class NextStep {
     data class PromptBiometric(val challenge: Challenge, val pin: String) : NextStep()
     object Recovery : NextStep()
     object RecoveryInBrowser : NextStep()
-    object Welcome: NextStep()
 }

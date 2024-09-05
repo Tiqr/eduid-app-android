@@ -13,6 +13,7 @@ object Graph {
     const val REQUEST_EDU_ID_ACCOUNT = "request_edu_id_account"
     const val REQUEST_EDU_ID_FORM = "request_edu_id_details"
 
+    const val WELCOME_START = "start"
     const val FIRST_TIME_DIALOG = "first_time_dialog"
     const val CONTINUE_RECOVERY_IN_BROWSER = "continue_recovery_in_browser"
     const val PERSONAL_INFO = "personal_info"
@@ -125,26 +126,6 @@ sealed class PhoneNumberRecovery(val route: String) {
     }
 }
 
-object WelcomeStart {
-    private const val route = "welcome_start"
-    const val isScanFlowArg = "is_scan_flow"
-    const val routeWithArgs = "$route/{$isScanFlowArg}"
-    val arguments = listOf(navArgument(isScanFlowArg) {
-        type = NavType.BoolType
-        nullable = false
-        defaultValue = false
-    })
-
-    fun routeWithScanFlowArg(isScanFlow: Boolean) =
-        "${route}/$isScanFlow"
-
-    fun decodeScanFlowArg(entry: NavBackStackEntry): Boolean {
-        return entry.arguments?.getBoolean(isScanFlowArg, false) ?: false
-    }
-
-}
-
-
 sealed class Account(val route: String) {
 
     object ScanQR : Account("scan") {
@@ -162,17 +143,12 @@ sealed class Account(val route: String) {
 
     object EnrollPinSetup : Account("enroll_pin_setup") {
         const val enrollChallenge = "enroll_challenge_arg"
-        const val isScanFlow = "is_scan_flow"
 
-        val routeWithArgs = "$route/{$enrollChallenge}/{$isScanFlow}"
+        val routeWithArgs = "$route/{$enrollChallenge}"
         val arguments = listOf(navArgument(enrollChallenge) {
             type = NavType.StringType
             nullable = false
             defaultValue = ""
-        }, navArgument(isScanFlow) {
-            type = NavType.BoolType
-            nullable = false
-            defaultValue = false
         })
     }
 
@@ -250,9 +226,8 @@ sealed class WithChallenge(val route: String) {
         const val challengeArg = "challenge_arg"
         const val pinArg = "pin_arg"
         const val isEnrolmentArg = "is_enrolment_arg"
-        const val isScanFlowArg = "is_scan_flow_arg"
 
-        const val args = "{$challengeArg}/{$pinArg}/{$isEnrolmentArg}/{$isScanFlowArg}"
+        const val args = "{$challengeArg}/{$pinArg}/{$isEnrolmentArg}"
         val arguments = listOf(navArgument(challengeArg) {
             type = NavType.StringType
             nullable = false
@@ -265,21 +240,17 @@ sealed class WithChallenge(val route: String) {
             type = NavType.BoolType
             nullable = false
             defaultValue = true
-        }, navArgument(isScanFlowArg) {
-            type = NavType.BoolType
-            nullable = false
-            defaultValue = false
         })
     }
 
     object EnableBiometric : WithChallenge("enable_biometric") {
         val routeWithArgs = "$route/$args"
-        fun buildRouteForEnrolment(encodedChallenge: String, pin: String, isScanFlow: Boolean): String =
-            "$route/$encodedChallenge/$pin/true/$isScanFlow"
+        fun buildRouteForEnrolment(encodedChallenge: String, pin: String): String =
+            "$route/$encodedChallenge/$pin/true"
 
         @SuppressWarnings("unused")
-        fun buildRouteForAuthentication(encodedChallenge: String, pin: String, isScanFlow: Boolean): String =
-            "$route/$encodedChallenge/$pin/false/$isScanFlow"
+        fun buildRouteForAuthentication(encodedChallenge: String, pin: String): String =
+            "$route/$encodedChallenge/$pin/false"
 
     }
 }

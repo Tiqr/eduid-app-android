@@ -13,7 +13,7 @@ fun HomePageScreen(
     onSecurityClicked: () -> Unit,
     onEnrollWithQR: () -> Unit,
     launchOAuth: () -> Unit,
-    goToRegistrationPinSetup: (EnrollmentChallenge, Boolean) -> Unit,
+    goToRegistrationPinSetup: (EnrollmentChallenge) -> Unit,
     goToConfirmDeactivation: (String) -> Unit,
     onGoToRequestEduIdAccount: () -> Unit,
 ) {

@@ -66,7 +66,7 @@ fun HomePageNoAccountContent(
     onGoToScan: () -> Unit = {},
     onGoToRequestEduId: () -> Unit = {},
     onGoToSignIn: () -> Unit = {},
-    onGoToRegistrationPinSetup: (EnrollmentChallenge, /* isScanFlow: */ Boolean) -> Unit = { _, _ -> },
+    onGoToRegistrationPinSetup: (EnrollmentChallenge) -> Unit = {},
     onGoToConfirmDeactivation: (String) -> Unit = {},
 ) {
     val sheetState = rememberModalBottomSheetState()
@@ -181,7 +181,7 @@ fun HomePageNoAccountContent(
                     onGoToRegistrationPinSetup
                 )
                 LaunchedEffect(viewModel.uiState) {
-                    currentGoToRegistrationPinSetup(viewModel.uiState.currentChallenge as EnrollmentChallenge, /* isScanFlow = */ false)
+                    currentGoToRegistrationPinSetup(viewModel.uiState.currentChallenge as EnrollmentChallenge)
                     viewModel.clearCurrentChallenge()
                     waitingForVmEvent = false
                 }

@@ -26,9 +26,8 @@ import nl.eduid.ui.EduIdTopAppBar
 @Composable
 fun RegistrationPinSetupScreen(
     viewModel: RegistrationPinSetupViewModel,
-    isScanFlow: Boolean,
     closePinSetupFlow: () -> Unit,
-    goToNextStep: (NextStep) -> Unit
+    goToNextStep: (NextStep) -> Unit,
 ) {
     BackHandler { viewModel.handleBackNavigation(closePinSetupFlow) }
     //Because the same screen is being used for creating the PIN as well as confirming the PIN
@@ -42,7 +41,6 @@ fun RegistrationPinSetupScreen(
             uiState = viewModel.uiState,
             padding = it,
             goToNextStep = goToNextStep,
-            isScanFlow = isScanFlow,
             viewModel = viewModel,
         )
     }
@@ -52,7 +50,6 @@ fun RegistrationPinSetupScreen(
 private fun RegistrationPinSetupContent(
     uiState: UiState,
     padding: PaddingValues = PaddingValues(),
-    isScanFlow: Boolean,
     goToNextStep: (NextStep) -> Unit = {},
     viewModel: RegistrationPinSetupViewModel,
 ) {
@@ -129,7 +126,7 @@ private fun RegistrationPinSetupContent(
                 viewModel.onPinChange(pin, step)
             },
             onClick = {
-                viewModel.submitPin(context, isScanFlow, uiState.pinStep)
+                viewModel.submitPin(context, uiState.pinStep)
                 enrollmentInProgress = uiState.pinStep == PinStep.PinConfirm
             },
             isProcessing = uiState.isProcessing
