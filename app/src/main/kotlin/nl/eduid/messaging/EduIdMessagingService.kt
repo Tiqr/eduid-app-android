@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import nl.eduid.R
+import org.tiqr.data.repository.NotificationCacheRepository
 import org.tiqr.data.repository.base.TokenRegistrarRepository
 import timber.log.Timber
 import javax.inject.Inject
@@ -33,13 +34,16 @@ class EduIdMessagingService : FirebaseMessagingService() {
     private val scope = CoroutineScope(Dispatchers.IO + job)
 
     @Inject
-    internal lateinit var repository: TokenRegistrarRepository
+    internal lateinit var tokenRegistrarRepository: TokenRegistrarRepository
+
+    @Inject
+    internal lateinit var notificationCacheRepository: NotificationCacheRepository
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
 
         scope.launch {
-            repository.registerDeviceToken(token)
+            tokenRegistrarRepository.registerDeviceToken(token)
         }
     }
 
@@ -96,8 +100,11 @@ class EduIdMessagingService : FirebaseMessagingService() {
                 .setColor(resources.getColor(R.color.primaryColor))
                 .build()
                 .apply {
-                    Timber.e("Sending notification")
-                    notificationManager.notify(0, this)
+                    val identifier = System.currentTimeMillis().toInt()
+                    Timber.e("Sending notification with ID: $identifier")
+                    val authenticationTimeout = message.data["authenticationTimeout"]?.toIntOrNull() ?: 150
+                    notificationManager.notify(identifier, this)
+                    notificationCacheRepository.saveLastNotificationData(challenge, authenticationTimeout, identifier)
                 }
         }
     }
