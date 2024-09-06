@@ -3,6 +3,7 @@ package nl.eduid.screens.homepage
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,6 +25,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,6 +41,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -69,7 +73,7 @@ fun HomePageNoAccountContent(
     onGoToRegistrationPinSetup: (EnrollmentChallenge) -> Unit = {},
     onGoToConfirmDeactivation: (String) -> Unit = {},
 ) {
-    val sheetState = rememberModalBottomSheetState()
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showBottomSheet by remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
@@ -88,6 +92,7 @@ fun HomePageNoAccountContent(
                     }
                 },
                 title = {},
+                colors = TopAppBarDefaults.topAppBarColors().copy(containerColor = Color.Transparent, scrolledContainerColor = Color.Transparent)
             )
         },
     ) { paddingValues ->
@@ -189,6 +194,7 @@ fun HomePageNoAccountContent(
         }
         if (showBottomSheet) {
             ModalBottomSheet(
+                windowInsets = WindowInsets(bottom = 0),
                 onDismissRequest = {
                     showBottomSheet = false
                 },
