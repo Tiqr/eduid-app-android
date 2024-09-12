@@ -91,6 +91,7 @@ internal object RepositoryModule {
 
         return builder.addInterceptor(tokenInterceptor)
             .authenticator(tokenAuthenticator)
+            .addInterceptor(ConnectivityInterceptor())
             .build()
     }
 
@@ -114,20 +115,7 @@ internal object RepositoryModule {
 
     @Provides
     @Singleton
-    internal fun provideOkHttpClientBuilder(
-        tokenAuthenticator: TokenAuthenticator,
-        tokenInterceptor: TokenInterceptor,
-    ): OkHttpClient.Builder = OkHttpClient.Builder()
-        .apply {
-            if (BuildConfig.DEBUG) {
-                addInterceptor(
-                    HttpLoggingInterceptor().apply {
-                        level = HttpLoggingInterceptor.Level.BODY
-                    },
-                )
-            }
-        }
-        .addInterceptor(ConnectivityInterceptor())
-        .connectTimeout(15, TimeUnit.SECONDS)
-
+    internal fun provideOkHttpClientBuilder(): OkHttpClient {
+        return OkHttpClient.Builder().connectTimeout(15, TimeUnit.SECONDS).build()
+    }
 }
