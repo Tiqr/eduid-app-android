@@ -43,6 +43,7 @@ import javax.inject.Inject
 class OAuthViewModel @Inject constructor(
     private val repository: StorageRepository,
     private val assistant: AuthenticationAssistant,
+    private val environmentProvider: EnvironmentProvider,
     moshi: Moshi,
     @ApplicationContext context: Context,
 ) : ViewModel() {
@@ -210,7 +211,7 @@ class OAuthViewModel @Inject constructor(
 
     private fun loadConfigurationFromResources(resources: Resources): Configuration {
         val source =
-            resources.openRawResource(EnvironmentProvider.getCurrent().authConfig).bufferedReader()
+            resources.openRawResource(environmentProvider.getCurrent().authConfig).bufferedReader()
                 .use { it.readText() }
         return try {
             configAdapter.fromJson(source) ?: Configuration.EMPTY

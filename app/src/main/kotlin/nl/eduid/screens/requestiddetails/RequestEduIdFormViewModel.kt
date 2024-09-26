@@ -26,6 +26,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RequestEduIdFormViewModel @Inject constructor(
     private val eduIdRepo: EduIdRepository,
+    private val environmentProvider: EnvironmentProvider,
 ) : ViewModel() {
     var inputForm by mutableStateOf(InputForm())
         private set
@@ -101,13 +102,13 @@ class RequestEduIdFormViewModel @Inject constructor(
 
     private fun getClientIdFromOAuthConfig(resources: Resources): String {
         val source =
-            resources.openRawResource(EnvironmentProvider.getCurrent().authConfig).bufferedReader()
+            resources.openRawResource(environmentProvider.getCurrent().authConfig).bufferedReader()
                 .use { it.readText() }
         return try {
             JSONObject(source).get("client_id").toString()
         } catch (e: IOException) {
             Timber.e(e, "Failed to parse configurations")
-            EnvironmentProvider.getCurrent().clientId
+            environmentProvider.getCurrent().clientId
         }
     }
 }

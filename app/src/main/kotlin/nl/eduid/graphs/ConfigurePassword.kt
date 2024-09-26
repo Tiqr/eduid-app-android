@@ -12,7 +12,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import nl.eduid.env.EnvironmentProvider
 import nl.eduid.graphs.ConfigurePassword.Form
 import nl.eduid.graphs.ConfigurePassword.Request
 import nl.eduid.screens.resetpassword.ResetPasswordScreen
@@ -22,6 +21,7 @@ import nl.eduid.screens.resetpasswordconfirm.ResetPasswordConfirmViewModel
 
 fun NavGraphBuilder.configurePasswordFlow(
     navController: NavHostController,
+    baseUrl: String,
     onConfigDone: () -> Unit,
 ) {
     navigation(
@@ -44,9 +44,9 @@ fun NavGraphBuilder.configurePasswordFlow(
         }
         composable(
             Form.routeWithArgs, arguments = Form.arguments, deepLinks = listOf(navDeepLink {
-                uriPattern = Form.resetPassword
+                uriPattern = Form.getResetPassword(baseUrl)
             }, navDeepLink {
-                uriPattern = Form.addPassword
+                uriPattern = Form.getAddPassword(baseUrl)
             })
         ) { entry ->
             val deepLinkIntent: Intent? =
@@ -75,8 +75,8 @@ fun NavGraphBuilder.configurePasswordFlow(
 }
 
 sealed class ConfigurePassword(val route: String) {
-    object Request : ConfigurePassword("request_hash_for_password_config")
-    object Form : ConfigurePassword("form_configure_password") {
+    data object Request : ConfigurePassword("request_hash_for_password_config")
+    data object Form : ConfigurePassword("form_configure_password") {
         const val passwordHashArg = "h"
         val routeWithArgs = "${route}?$passwordHashArg={$passwordHashArg}"
         val arguments = listOf(navArgument(passwordHashArg) {
@@ -84,9 +84,11 @@ sealed class ConfigurePassword(val route: String) {
             nullable = false
             defaultValue = ""
         })
-        val resetPassword =
-            "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/reset-password?$passwordHashArg={$passwordHashArg}"
-        val addPassword =
-            "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/add-password?$passwordHashArg={$passwordHashArg}"
+
+        fun getResetPassword(baseUrl: String) =
+            "$baseUrl/client/mobile/reset-password?$passwordHashArg={$passwordHashArg}"
+
+        fun getAddPassword(baseUrl: String) =
+            "$baseUrl/client/mobile/add-password?$passwordHashArg={$passwordHashArg}"
     }
 }

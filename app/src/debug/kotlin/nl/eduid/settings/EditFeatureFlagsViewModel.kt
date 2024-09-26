@@ -27,8 +27,9 @@ class EditFeatureFlagsViewModel @Inject constructor(
     private val storage: StorageRepository,
     private val identity: IdentityRepository,
     private val db: DatabaseService,
+    private val runtimeBehavior: RuntimeBehavior,
 ) : ViewModel() {
-    val editableProvider = RuntimeBehavior.getEditableProvider()
+    val editableProvider = runtimeBehavior.getEditableProvider()
     var uiState by mutableStateOf(UiState())
         private set
 

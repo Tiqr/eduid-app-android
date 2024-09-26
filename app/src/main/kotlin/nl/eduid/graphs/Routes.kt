@@ -5,7 +5,6 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import nl.eduid.di.model.SelfAssertedName
-import nl.eduid.env.EnvironmentProvider
 import java.io.UnsupportedEncodingException
 
 object Graph {
@@ -33,24 +32,22 @@ object OAuth {
 
 object RequestEduIdCreated {
     const val route = "request_edu_id_created"
-    val uriPatternHttps = "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/created"
+    fun getUriPatternHttps(baseUrl: String) = "$baseUrl/client/mobile/created"
     val customScheme = "eduid:///client/mobile/created"
 
     /**
-     * After the account is created, the server redirects with the production URL, not the environment
-     * dependent URL.  The production `.well-known/assetlinks.json` does not include the signature from the testing variant
-     * We do not have the production signing, so we must match both environment dependent link *and* production
-     * environment redirect link.
-     * */
+     * After the account is created, the server redirects with the production URL, not the environment dependent URL. The production
+     * `.well-known/assetlinks.json` does not include the signature from the testing variant We do not have the production signing, so we
+     * must match both environment dependent link *and* production environment redirect link.
+     */
     val uriProdPatternHttps = "https://login.eduid.nl/client/mobile/created"
 }
 
 object AccountLinked {
     const val route = "account_linked"
-    val uriPatternOK = "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/account-linked"
-    val uriPatternFailed =
-        "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/eppn-already-linked"
-    val uriPatternExpired = "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/expired"
+    fun getUriPatternOK(baseUrl: String) = "$baseUrl/client/mobile/account-linked"
+    fun getUriPatternFailed(baseUrl: String) = "$baseUrl/client/mobile/eppn-already-linked"
+    fun getUriPatternExpired(baseUrl: String) = "$baseUrl/client/mobile/expired"
 }
 
 object VerifiedPersonalInfoRoute {
@@ -210,6 +207,7 @@ sealed class Account(val route: String) {
             nullable = false
             defaultValue = ""
         })
+
         fun buildRoute(encodedChallenge: String, pin: String): String = "${route}/$encodedChallenge/$pin"
     }
 
@@ -306,8 +304,9 @@ sealed class Security(val route: String) {
             nullable = false
             defaultValue = ""
         })
-        val confirmEmail =
-            "${EnvironmentProvider.getCurrent().baseUrl}/client/mobile/update-email?$confirmEmailHash={$confirmEmailHash}"
+
+        fun getConfirmEmail(baseUrl: String) =
+            "$baseUrl/client/mobile/update-email?$confirmEmailHash={$confirmEmailHash}"
     }
 }
 

@@ -22,8 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
-import nl.eduid.flags.FeatureFlag
-import nl.eduid.flags.RuntimeBehavior
 import nl.eduid.ui.AddSecurityField
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EditableSecurityField
@@ -125,14 +123,14 @@ fun SecurityScreenContent(
         modifier = Modifier.clickable { onEditEmailClicked() },
     )
 
-    if (!securityInfo.hasPassword || RuntimeBehavior.isFeatureEnabled(FeatureFlag.SHOW_ADD_SECURITY_KEY)) {
+    if (!securityInfo.hasPassword || securityInfo.showAddSecurityKey) {
         Text(
             text = stringResource(R.string.Security_OtherMethods_COPY),
             style = MaterialTheme.typography.bodyLarge,
         )
     }
 
-    if(RuntimeBehavior.isFeatureEnabled(FeatureFlag.SHOW_ADD_SECURITY_KEY)){
+    if (securityInfo.showAddSecurityKey) {
         AddSecurityField(
             title = stringResource(R.string.Webauthn_SetTitle_COPY),
             leadingIcon = R.drawable.ic_security_key,
