@@ -123,6 +123,15 @@ SHARED:
       COPY:
         en: Click on one of the environments to use it in the app for communicating
         nl: Klik op een van de omgevingen om die te gebruiken voor de communicatie
+  FeatureFlags:
+    Title:
+      COPY:
+        en: Feature flags
+        nl: Feature flags
+    IdentityVerification:
+      COPY:
+        en: Identity verification
+        nl: Identiteits verification
   PromptForOAuth:
     Title:
       COPY:
@@ -770,12 +779,12 @@ SHARED:
       COPY:
         en: >-
           You can delete your eduID whenever you want.
-          
+
           When you re-register for a new eduID with that same email address, you will receive a new eduID number. Some services use this unique number to identify you, so for those services you will be treated as a new user.
           Please note that deleting your eduID account does not mean all services you accessed with that eduID account will also have your data removed.
         nl: >-
           Je kunt je eduID account verwijderen wanneer je maar wilt.
-          
+
           Let op, je verliest de unieke eduID nummers die aan je e-mailadres zijn gekoppeld. Wanneer je je opnieuw registreert voor eduID met hetzelfde e-mailadres, krijg je een nieuw eduID nummer. Sommige diensten gebruiken deze nummers om je uniek te identificeren, dus voor die diensten word je dan gezien als een nieuwe gebruiker.
           Houd er rekening mee dat het verwijderen van je eduID niet betekent dat alle diensten die je met je eduID hebt gebruikt, ook je gegevens zullen verwijderen.
     DeleteAccountButton:
@@ -935,8 +944,8 @@ SHARED:
         nl: Wachtwoord
     TwoFAKey:
       COPY:
-        en: Security key
-        nl: Beveiligingssleutel
+        en: Login with app
+        nl: Inloggen met app
     ProvidedBy:
       COPY:
         en: Provided by
@@ -956,11 +965,11 @@ SHARED:
     AddSecurityKeyInfo:
       COPY:
         en: >-
-          You can add security keys to your eduID account which can be used to
+          You can add a passkey to your eduID account which can be used to
           login. You can use, for example, the built-in sensor of your device
           (TouchID, FaceID) or a separate hardware key (YubiKey).
         nl: >-
-          Je kunt een beveiligingssleutel toevoegen aan je eduID account waarmee
+          Je kunt een passkey toevoegen aan je eduID account waarmee
           je kunt inloggen. Dit kan bijv. de ingebouwde sensor van je apparaat
           zijn (TouchID, FaceID) of een los hardwaretoken (YubiKey).
     RememberMeInfo:
@@ -1101,11 +1110,11 @@ SHARED:
         Description:
           COPY:
             en: |
-              This account already has a device setup for 2FA
-              Would you like to deactivate existing enrollment to enroll on this device?
+              This account already has a eduid app registration
+              Would you like to deactivate the existing app registration and add this device?
             nl: |
-              Dit account is al aan een toestel gekoppeld voor 2FA.
-              Wil je 2FA op het bestaande toestel deactiveren en hier toevoegen?
+              Voor dit account is al een eduID app geregistreerd.
+              Wil je de bestaande eduID app registratie verwijderen en hier toevoegen?
   PasswordResetLink:
     Title:
       AddPassword:
@@ -1552,14 +1561,14 @@ SHARED:
   RevokeAccessToken:
     Title:
       COPY:
-        en: Revoke access token
-        nl: Beveiligingssleutel intrekken
+        en: Revoke access
+        nl: Toegang intrekken
     Description:
       COPY:
         en: >-
-          Are you sure you want to revoke the API access token for %1{{s}}?
+          Are you sure you want to revoke the API access for %1{{s}}?
         nl: >-
-          Weet je zeker dat de API access beveiligingssleutel voor %1{{s}} wilt intrekken?
+          Weet je zeker dat de API access voor %1{{s}} wilt intrekken?
     Button:
       Confirm:
         COPY:
@@ -1571,8 +1580,8 @@ SHARED:
           nl: Annuleer
     Error:
       COPY:
-        en: Cannot remove access token
-        nl: Fout bij verwijderen van beveiligingssleutel
+        en: Cannot remove access
+        nl: Fout bij verwijderen van toegang
   Institution:
     Title:
       COPY:
@@ -1645,16 +1654,16 @@ SHARED:
   Credential:
     Title:
       COPY:
-        en: Edit security key
-        nl: Bewerk beveiligingssleutel
+        en: Edit passkey
+        nl: Bewerk passkey
     Info:
       COPY:
-        en: You added this security key on %1{{s}} at %2{{s}}:%3{{s}}
-        nl: 'Je hebt deze key toegevoegd op %1{{s}} om %2{{s}}: %3{{s}}'
+        en: You added this passkey on %1{{s}} at %2{{s}}:%3{{s}}
+        nl: 'Je hebt deze passkey toegevoegd op %1{{s}} om %2{{s}}: %3{{s}}'
     Name:
       COPY:
-        en: Security key name
-        nl: Naam
+        en: Passkey name
+        nl: Passkey naam
     Cancel:
       COPY:
         en: Cancel
@@ -1665,29 +1674,29 @@ SHARED:
         nl: Bewaar
     Deleted:
       COPY:
-        en: Your security key %1{{s}} has been deleted
-        nl: Je key %1{{s}} is verwijderd
+        en: Your passkey %1{{s}} has been deleted
+        nl: Je passkey %1{{s}} is verwijderd
     Updated:
       COPY:
-        en: Your security key %1{{s}} has been updated
-        nl: Je key %1{{s}} is bewaard
+        en: Your passkey %1{{s}} has been updated
+        nl: Je passkey %1{{s}} is bewaard
     Back:
       COPY:
         en: /weauthn
         nl: /weauthn
     DeleteCredential:
       COPY:
-        en: Delete security key
-        nl: Verwijder key
+        en: Delete passkey
+        nl: Verwijder passkey
     DeleteCredentialConfirmation:
       COPY:
         en: >-
-          Are you sure you want to delete your security key %1{{s}}? The
-          secuirity key will be deleted from your eduID account, but will not be
+          Are you sure you want to delete your passkey %1{{s}}? The
+          passkey will be deleted from your eduID account, but will not be
           removed from your browser and / or Yubikey device.
         nl: >-
-          Weet je zeker dat je de beveiligingssleutel %1{{s}} wilt verwijderen?
-          De beveiligingssleutel wordt verwijderd uit je eduID account, maar
+          Weet je zeker dat je de passkey %1{{s}} wilt verwijderen?
+          De passkey wordt verwijderd uit je eduID account, maar
           wordt niet verwijderd uit je browser en / of van je YubiKey-apparaat.
   Password:
     AddTitle:
@@ -1832,25 +1841,25 @@ SHARED:
   Webauthn:
     SetTitle:
       COPY:
-        en: Add security key
-        nl: Beveiligingssleutel toevoegen
+        en: Add passkey
+        nl: Passkey toevoegen
     UpdateTitle:
       COPY:
-        en: Add security key
-        nl: Beveiligingssleutel toevoegen
+        en: Add passkey
+        nl: Passkey toevoegen
     PublicKeys:
       COPY:
         en: Your public tokens
         nl: Je publieke keys
     NoPublicKeys:
       COPY:
-        en: 'You have not added any security keys. '
-        nl: Je hebt nog geen keys toegevoegd.
+        en: 'You have not added any passkey. '
+        nl: Je hebt nog geen passkey toegevoegd.
     NameRequired:
       COPY:
-        en: Before you can add a new security key you must give it a name.
+        en: Before you can add a new passkey you must give it a name.
         nl: >-
-          Voordat je een beveiligingssleutel kan toevoegen, moet je deze eerst
+          Voordat je een passkey kan toevoegen, moet je deze eerst
           een naam geven.
     Revoke:
       COPY:
@@ -1866,10 +1875,10 @@ SHARED:
           You can choose to use a Bluetooth security key, USB security key or
           the security key built into your device.
         nl: >-
-          Een beveiligingssleutel is een los of ingebouwd apparaat dat strikt
+          Een passkey is een los of ingebouwd apparaat dat strikt
           persoonlijk van jou is, waarmee je kunt bewijzen dat jij de
           rechtmatige gebruiker van je eduID-account bent. Nadat je een
-          beveiligingssleutel hebt toegevoegd aan je eduID-account kun je deze
+          passkey hebt toegevoegd aan je eduID-account kun je deze
           gebruiken om mee in te loggen, naast een magische link of wachtwoord.
     Back:
       COPY:
@@ -1881,12 +1890,12 @@ SHARED:
         nl: Start
     UpdateUpdate:
       COPY:
-        en: Add device
-        nl: Voeg deze beveiligingssleutel toe
+        en: Add passkey
+        nl: Voeg deze passkey toe
     CredentialName:
       COPY:
-        en: Security key
-        nl: Naam van beveiligingssleutel
+        en: Passkey name
+        nl: Naam van passkey
     CredentialNamePlaceholder:
       COPY:
         en: e.g. my red Yubikey
@@ -1898,11 +1907,11 @@ SHARED:
     TestInfo:
       COPY:
         en: >-
-          Click the <strong>test</strong> button to test one of your security
-          keys. You will be redirected to the eduID login screen.
+          Click the <strong>test</strong> button to test one of your passkeys.
+           You will be redirected to the eduID login screen.
         nl: >-
           Druk op de <strong>test</strong>knop om een 1 van je
-          beveiligingssleutels te testen. Je wordt doorgestuurd naar het eduID
+          passkeys te testen. Je wordt doorgestuurd naar het eduID
           loginscherm.
     TestFlash:
       COPY:
@@ -2553,13 +2562,13 @@ SHARED:
         en: >-
           We offer 3 ways to sign-in:</br><ol><li>You can receive a magic link
           sent to your email address.</li><li>You can use a password. You must
-          first set this up in My eduID.</li><li>You can use a security key. You
+          first set this up in My eduID.</li><li>You can use a passkey. You
           must first set this up in My eduID.</li></ol>
         nl: >-
           We bieden drie manieren om in te loggen:</br><ol><li>Je kunt een
           magische link ontvangen op je e-mailadres.</li><li>Je kunt een
           wachtwoord gebruiken. Dit dien je eerst in Mijn eduID in te
-          stellen.</li><li>Je kunt een beveiligingssleutel gebruiken. Dit dien
+          stellen.</li><li>Je kunt een passkey gebruiken. Dit dien
           je eerst in Mijn eduID in te stellen.</li></ol>
     Email:
       COPY:
@@ -2595,8 +2604,8 @@ SHARED:
         nl: Mail een magische link
     LoginWebAuthn:
       COPY:
-        en: Login with security key
-        nl: Login in met een beveiligingssleutel
+        en: Login with passkey
+        nl: Login in met een passkey
     UsePassword:
       COPY:
         en: type a password.
@@ -2751,8 +2760,8 @@ SHARED:
         nl: Gebruik toch een wachtwoord
     UseWebAuthnLink:
       COPY:
-        en: Or use a security key
-        nl: Of gebruik een beveiligingssleutel
+        en: Or use a passkey
+        nl: Of gebruik een passkey
     AgreeWithTerms:
       COPY:
         en: >-
@@ -2818,8 +2827,8 @@ SHARED:
         nl: Gebruik de <strong>eduID app</strong> om in te loggen met je mobiel.
     UseWebAuthn:
       COPY:
-        en: Use your <strong>security key</strong>.
-        nl: Gebruik je <strong>beveiligingssleutel</strong>.
+        en: Use your <strong>passkey</strong>.
+        nl: Gebruik je <strong>passkey</strong>.
     UseLink:
       COPY:
         en: Get a <strong>magic link</strong> sent to your inbox.
@@ -3022,8 +3031,8 @@ SHARED:
         nl: Start
     Header:
       COPY:
-        en: Sign in with a security key
-        nl: Log in met een beveiligingssleutel
+        en: Sign in with a passkey
+        nl: Log in met een passkey
     Explanation:
       COPY:
         en: >-
@@ -3034,12 +3043,12 @@ SHARED:
           loggen.
     Next:
       COPY:
-        en: Log in with a security key
-        nl: Log in met een beveiligingssleutel
+        en: Log in with a passkey
+        nl: Log in met een passkey
     Error:
       COPY:
-        en: Currently you can not use your security key to login.
-        nl: De beveligingssleutel kan niet gebruikt worden.
+        en: Currently you can not use your passkey to login.
+        nl: De passkey kan niet gebruikt worden.
   UseLink:
     Header:
       COPY:
@@ -3498,14 +3507,14 @@ SHARED:
           en: >-
             When you study in the Netherlands and you want to use eduID to logon to an educational services,
             we need to be sure it is you and not someone impersonating you.
-            
-            
+
+
             You must therefore add the following information to your eduID:
           nl: >-
             Wanneer je in Nederland studeert en je wilt met eduID inloggen bij een onderwijsdienst,
             moeten we er zeker van zijn dat jij het bent en niet iemand die zich voordoet als jij.
-            
-            
+
+
             Daarom moet je de volgende gegevens toevoegen aan jouw eduID:
       MainTextPoint1:
         COPY:
@@ -3551,13 +3560,13 @@ SHARED:
         COPY:
           en: |
             eduID is a central account for users associated with Dutch education and research. It is yours and exists independent of an educational institution.
-            
+
             • Use it to login to several services connected to SURFconext.
             • Users without an institution account can also request an eduID.
             • eduID is a lifelong account. It stays valid after you graduate.
           nl: |
             eduID is een centraal account voor gebruikers verbonden aan het Nederlandse onderwijs en onderzoek. Het is van jou en bestaat onafhankelijk van een onderwijsinstelling.
-            
+
             • Hiermee log je in op verschillende diensten die zijn aangesloten op SURFconext.
             • Gebruikers zonder instellingsaccount kunnen ook een eduID aanvragen.
             • eduID is een levenslang account. Het blijft geldig nadat je bent afgestudeerd.
@@ -3607,11 +3616,11 @@ SHARED:
         COPY:
           en: |
             Let's add a recovery phonenumber. If you can't access eduID with the app or via email, you can use this to sign in to your eduID Account.
-            
+
             We will text you a code to verify your number.
           nl: |
             Laten we een hersteltelefoonnummer toevoegen. Als je met de app of via e-mail geen toegang hebt tot eduID, kun je hiermee inloggen op je eduID Account.
-            
+
             We sturen je een code om je nummer te verifiëren.
       BoldRange:
         COPY:
