@@ -3854,3 +3854,63 @@ SHARED:
             COPY:
               en: "Authorization code exchange failed: %1{{s}}."
               nl: "Autorisatiecode-uitwisseling mislukt: %1{{s}}."
+  VerifyIdentity:
+    Title:
+      FirstLine:
+        COPY:
+          en: Verify your identity
+          nl: Verifieer jouw identiteit
+      SecondLine:
+        COPY:
+          en: Quick and easy
+          nl: Snel en eenvoudig
+    Subtitle:
+      COPY:
+        en: Please verify that you are who you say you are.
+        nl: Verifieer dat je bent wie je zegt dat je bent.
+    VerifyViaDutchInstitution:
+      Title:
+        COPY:
+          en: Verify via a Dutch educational institution
+          nl: Verifieer via een Nederlandse onderwijsinstelling
+      Button:
+        COPY:
+          en: Select your institution
+          nl: Selecteer je instelling
+    VerifyWithBankingApp:
+      Title:
+        COPY:
+          en: Verify with a Dutch banking app
+          nl: Verifieer met een Nederlandse bank app
+      Button:
+        COPY:
+          en: Select your bank
+          nl: Selecteer je bank
+    VerifyWithAEuropianId:
+      Title:
+        COPY:
+          en: Verify with a European ID
+          nl: Verifieer met een Europees ID
+      Button:
+        COPY:
+          en: Use a European ID
+          nl: Selecteer een Europees ID
+    OtherOptions:
+      COPY:
+        en: Other options…
+        nl: Meer opties…
+    VisitSupport:
+      Full:
+        COPY:
+          en: If you can’t use any of these methods, please visit our support pages
+          nl: "Kun je deze opties niet gebruiken, bezoek dan onze support pagina's"
+      HighlightedPart:
+        COPY:
+          en: "support pages"
+          nl: "support pagina's"
+      Link:
+        COPY:
+          en: "https://eduid.nl/help-en/"
+          nl: "https://eduid.nl/help/"
+    
+    
