@@ -44,6 +44,7 @@ import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
+import nl.eduid.ui.SecondaryButton
 import nl.eduid.ui.theme.ColorAlertRed
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.ColorScale_Gray_Black
@@ -160,12 +161,11 @@ private fun TwoFactorKeyDeleteScreenContent(
         modifier = Modifier
             .fillMaxWidth(),
     ) {
-        PrimaryButton(
+        SecondaryButton(
             enabled = !inProgress,
             text = stringResource(id = R.string.Button_Cancel_COPY),
             modifier = Modifier.widthIn(min = 140.dp),
             onClick = goBack,
-            buttonBackgroundColor = Color.Transparent,
         )
         PrimaryButton(
             enabled = !inProgress,
