@@ -14,6 +14,8 @@ import nl.eduid.R
 import nl.eduid.di.assist.DataAssistant
 import nl.eduid.di.assist.UnauthorizedException
 import nl.eduid.di.model.UserDetails
+import nl.eduid.flags.FeatureFlag
+import nl.eduid.flags.RuntimeBehavior
 import nl.eduid.graphs.Security
 import org.tiqr.data.repository.IdentityRepository
 import javax.inject.Inject
@@ -22,9 +24,10 @@ import javax.inject.Inject
 class SecurityViewModel @Inject constructor(
     private val assistant: DataAssistant,
     private val identity: IdentityRepository,
+    runtimeBehavior: RuntimeBehavior,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    var uiState: SecurityScreenData by mutableStateOf(SecurityScreenData())
+    var uiState: SecurityScreenData by mutableStateOf(SecurityScreenData(showAddSecurityKey = runtimeBehavior.isFeatureEnabled(FeatureFlag.SHOW_ADD_SECURITY_KEY)))
         private set
 
     init {

@@ -69,6 +69,7 @@ import org.tiqr.data.model.EnrollmentChallenge
 @Composable
 fun MainGraph(
     navController: NavHostController,
+    baseUrl: String,
 ) = NavHost(
     navController = navController, startDestination = Graph.HOME_PAGE
 ) {
@@ -222,7 +223,7 @@ fun MainGraph(
     }//endregion
     composable(//region Account-Created
         route = RequestEduIdCreated.route, deepLinks = listOf(navDeepLink {
-            uriPattern = RequestEduIdCreated.uriPatternHttps
+            uriPattern = RequestEduIdCreated.getUriPatternHttps(baseUrl)
         }, navDeepLink {
             uriPattern = RequestEduIdCreated.uriProdPatternHttps
         }, navDeepLink {
@@ -328,13 +329,13 @@ fun MainGraph(
     composable(//region Account Linked
         route = AccountLinked.route, deepLinks = listOf(
             navDeepLink {
-                uriPattern = AccountLinked.uriPatternOK
+                uriPattern = AccountLinked.getUriPatternOK(baseUrl)
             },
             navDeepLink {
-                uriPattern = AccountLinked.uriPatternFailed
+                uriPattern = AccountLinked.getUriPatternFailed(baseUrl)
             },
             navDeepLink {
-                uriPattern = AccountLinked.uriPatternExpired
+                uriPattern = AccountLinked.getUriPatternExpired(baseUrl)
             },
         )
     ) { entry ->
@@ -459,7 +460,7 @@ fun MainGraph(
     }//endregion
 
     composable(Security.Settings.route, deepLinks = listOf(navDeepLink {
-        uriPattern = Security.ConfirmEmail.confirmEmail
+        uriPattern = Security.ConfirmEmail.getConfirmEmail(baseUrl)
         action = Intent.ACTION_VIEW
     })) {//region Home - Security
         val viewModel = hiltViewModel<SecurityViewModel>(it)
@@ -495,7 +496,7 @@ fun MainGraph(
             })
     }
     //region Configure Password: add, change or remove
-    configurePasswordFlow(navController) { navController.navigate(Security.Settings.route) }
+    configurePasswordFlow(navController, baseUrl) { navController.navigate(Security.Settings.route) }
     //endregion
 }
 

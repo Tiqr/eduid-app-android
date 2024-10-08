@@ -3,11 +3,11 @@ package nl.eduid
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +27,7 @@ class MainComposeActivity : ComponentActivity() {
         setContent {
             EduidAppAndroidTheme {
                 navController = rememberNavController().also {
-                    MainGraph(navController = it)
+                    MainGraph(navController = it, baseUrl = viewModel.baseUrl)
                 }
 
             }
@@ -48,5 +48,13 @@ class MainComposeActivity : ComponentActivity() {
                 navController?.navigate(Uri.parse(challenge))
             }
         }
+        if (BuildConfig.DEBUG) {
+            Toast.makeText(
+                this,
+                getString(R.string.editflags_environment_info, viewModel.environmentName),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
     }
 }

@@ -20,6 +20,7 @@ import nl.eduid.di.auth.TokenProvider
 import nl.eduid.di.repository.EduIdRepository
 import nl.eduid.di.repository.StorageRepository
 import nl.eduid.env.EnvironmentProvider
+import nl.eduid.flags.RuntimeBehavior
 import nl.eduid.network.ConnectivityInterceptor
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import okhttp3.OkHttpClient
@@ -70,6 +71,18 @@ internal object RepositoryModule {
 
     @Provides
     @Singleton
+    internal fun providesRuntimeBehavior(
+        @ApplicationContext context: Context,
+    ) = RuntimeBehavior(context)
+
+    @Provides
+    @Singleton
+    internal fun providesEnvironmentProvider(
+        behavior: RuntimeBehavior
+    ) = EnvironmentProvider(behavior)
+
+    @Provides
+    @Singleton
     internal fun providesTokenProvider(
         repository: StorageRepository,
         assistant: AuthenticationAssistant,
@@ -105,12 +118,13 @@ internal object RepositoryModule {
     @EduIdScope
     internal fun provideEduIdRetrofit(
         @EduIdScope client: Lazy<OkHttpClient>, moshi: Moshi,
+        environmentProvider: EnvironmentProvider
     ): Retrofit {
         return Retrofit.Builder().callFactory { client.get().newCall(it) }
             .addCallAdapterFactory(ApiResponseAdapterFactory.create())
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl(EnvironmentProvider.getCurrent().baseUrl).build()
+            .baseUrl(environmentProvider.getCurrent().baseUrl).build()
     }
 
     @Provides

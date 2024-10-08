@@ -1,14 +1,17 @@
 package nl.eduid.flags
 
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import nl.eduid.BuildConfig
 import java.util.concurrent.CopyOnWriteArrayList
+import javax.inject.Inject
 
-object RuntimeBehavior {
+
+class RuntimeBehavior @Inject constructor(@ApplicationContext context: Context) {
 
     private val providers = CopyOnWriteArrayList<FeatureFlagProvider>()
 
-    fun initialize(context: Context) {
+    init {
         if (BuildConfig.BUILD_TYPE == "debug") {
             addProvider(LocalFeatureFlagProvider(context))
         } else {
@@ -24,7 +27,7 @@ object RuntimeBehavior {
     }
 
     fun getEditableProvider() =
-        providers.filterIsInstance(EditableFeatureFlagProvider::class.java).first()
+        providers.filterIsInstance<EditableFeatureFlagProvider>().first()
 
     private fun addProvider(provider: FeatureFlagProvider) {
         providers.add(provider)
