@@ -2,6 +2,12 @@
 
 ## [Unreleased](https://github.com/SURFnet/eduid-app-android/tree/HEAD)
 
+# 0.1.25
+- Update screen layouts
+- Update texts and translations
+- Improve on-boarding flow
+- Remove FIDO key
+
 # 0.1.21
 - Update translations
 - Show version number in info screen
