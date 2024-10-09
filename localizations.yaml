@@ -3912,5 +3912,36 @@ SHARED:
         COPY:
           en: "https://eduid.nl/help-en/"
           nl: "https://eduid.nl/help/"
+  SelectYourBank:
+    Title:
+      COPY:
+        en: Select your bank
+        nl: Selecteer je bank
+    Subtitle:
+      Full:
+        COPY:
+          en: With iDIN, we receive your name and date of birth from your bank. This way, we can be sure it is you. You are not making a payment
+          nl: Met iDIN controleren we via jouw bank je persoons- en adresgegevens. Zo weten we zeker dat jij het bent. Je doet geen betaling
+      HighlightedPart:
+        COPY:
+          en: You are not making a payment
+          nl: Je doet geen betaling
+    MoreAboutIdin:
+      COPY:
+        en: More about iDIN
+        nl: Meer over iDIN
+    IdinkLink:
+      COPY:
+        en: "https://www.idin.nl/en/"
+        nl: "https://www.idin.nl/"
+    BankNotInList:
+      Full:
+        COPY:
+          en: If your bank is not shown in the list, please select another method
+          nl: Staat jouw bank niet in deze lijst, selecteer dan een andere methode
+      HighlightedPart:
+        COPY:
+          en: another method
+          nl: andere methode
     
     
