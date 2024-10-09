@@ -800,6 +800,13 @@
   <string name="VerifyIdentity_VisitSupport_Full_COPY">"If you can’t use any of these methods, please visit our support pages"</string>
   <string name="VerifyIdentity_VisitSupport_HighlightedPart_COPY">"support pages"</string>
   <string name="VerifyIdentity_VisitSupport_Link_COPY">"https://eduid.nl/help-en/"</string>
+  <string name="SelectYourBank_Title_COPY">"Select your bank"</string>
+  <string name="SelectYourBank_Subtitle_Full_COPY">"With iDIN, we receive your name and date of birth from your bank. This way, we can be sure it is you. You are not making a payment"</string>
+  <string name="SelectYourBank_Subtitle_HighlightedPart_COPY">"You are not making a payment"</string>
+  <string name="SelectYourBank_MoreAboutIdin_COPY">"More about iDIN"</string>
+  <string name="SelectYourBank_IdinkLink_COPY">"https://www.idin.nl/en/"</string>
+  <string name="SelectYourBank_BankNotInList_Full_COPY">"If your bank is not shown in the list, please select another method"</string>
+  <string name="SelectYourBank_BankNotInList_HighlightedPart_COPY">"another method"</string>
   <string name="Button_OK_COPY">"OK"</string>
   <string name="Button_Cancel_COPY">"Cancel"</string>
   <string name="Button_Retry_COPY">"Retry"</string>
