@@ -3943,5 +3943,29 @@ SHARED:
         COPY:
           en: another method
           nl: andere methode
-    
-    
+  LinkingSuccess:
+    Title:
+      COPY:
+        en: "Your personal info 🎉"
+        nl: "Jouw persoonlijk informatie 🎉"
+    Subtitle:
+      COPY:
+        en: "The following information has been added to your eduID."
+        nl: "De volgende informatie is toegevoegd aan jouw eduID account."
+    SubtitlePreferInstitution:
+      COPY:
+       en: "Do you want to use the following information to be the default information shared with applications?"
+       nl: "Wil je de volgende informatie, gebruiken als standaardinformatie om met diensten te delen?"
+    Button:
+      Continue:
+        COPY:
+          en: "Continue"
+          nl: "Ga door"
+      YesPlease:
+        COPY:
+          en: "Yes, please"
+          nl: "Ja, graag"
+      NoThanks:
+        COPY:
+          en: "No, thanks"
+          nl: "Nee, bedankt"
