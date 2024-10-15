@@ -807,6 +807,12 @@
   <string name="SelectYourBank_IdinkLink_COPY">"https://www.idin.nl/"</string>
   <string name="SelectYourBank_BankNotInList_Full_COPY">"Staat jouw bank niet in deze lijst, selecteer dan een andere methode"</string>
   <string name="SelectYourBank_BankNotInList_HighlightedPart_COPY">"andere methode"</string>
+  <string name="LinkingSuccess_Title_COPY">"Jouw persoonlijk informatie 🎉"</string>
+  <string name="LinkingSuccess_Subtitle_COPY">"De volgende informatie is toegevoegd aan jouw eduID account."</string>
+  <string name="LinkingSuccess_SubtitlePreferInstitution_COPY">"Wil je de volgende informatie, gebruiken als standaardinformatie om met diensten te delen?"</string>
+  <string name="LinkingSuccess_Button_Continue_COPY">"Ga door"</string>
+  <string name="LinkingSuccess_Button_YesPlease_COPY">"Ja, graag"</string>
+  <string name="LinkingSuccess_Button_NoThanks_COPY">"Nee, bedankt"</string>
   <string name="Button_OK_COPY">"OK"</string>
   <string name="Button_Cancel_COPY">"Annuleren"</string>
   <string name="Button_Retry_COPY">"Nogmaals"</string>
