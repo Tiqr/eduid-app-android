@@ -3969,3 +3969,17 @@ SHARED:
         COPY:
           en: "No, thanks"
           nl: "Nee, bedankt"
+  ExternalAccountLinkingError:
+    Title:
+      COPY:
+        en: "Something went wrong"
+        nl: "Er is iets fout gegaan"
+    Subtitle:
+      COPY:
+        en: "We’re sorry, we were unable to retrieve the requested information."
+        nl: "Helaas konden we de gevraagde informatie niet ophalen."
+    TryAnotherOption:
+      COPY:
+        en: "Please try another option"
+        nl: "Probeer een andere optie"
+    
