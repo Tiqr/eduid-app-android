@@ -813,6 +813,9 @@
   <string name="LinkingSuccess_Button_Continue_COPY">"Continue"</string>
   <string name="LinkingSuccess_Button_YesPlease_COPY">"Yes, please"</string>
   <string name="LinkingSuccess_Button_NoThanks_COPY">"No, thanks"</string>
+  <string name="ExternalAccountLinkingError_Title_COPY">"Something went wrong"</string>
+  <string name="ExternalAccountLinkingError_Subtitle_COPY">"We’re sorry, we were unable to retrieve the requested information."</string>
+  <string name="ExternalAccountLinkingError_TryAnotherOption_COPY">"Please try another option"</string>
   <string name="Button_OK_COPY">"OK"</string>
   <string name="Button_Cancel_COPY">"Cancel"</string>
   <string name="Button_Retry_COPY">"Retry"</string>

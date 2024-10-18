@@ -813,6 +813,9 @@
   <string name="LinkingSuccess_Button_Continue_COPY">"Ga door"</string>
   <string name="LinkingSuccess_Button_YesPlease_COPY">"Ja, graag"</string>
   <string name="LinkingSuccess_Button_NoThanks_COPY">"Nee, bedankt"</string>
+  <string name="ExternalAccountLinkingError_Title_COPY">"Er is iets fout gegaan"</string>
+  <string name="ExternalAccountLinkingError_Subtitle_COPY">"Helaas konden we de gevraagde informatie niet ophalen."</string>
+  <string name="ExternalAccountLinkingError_TryAnotherOption_COPY">"Probeer een andere optie"</string>
   <string name="Button_OK_COPY">"OK"</string>
   <string name="Button_Cancel_COPY">"Annuleren"</string>
   <string name="Button_Retry_COPY">"Nogmaals"</string>
