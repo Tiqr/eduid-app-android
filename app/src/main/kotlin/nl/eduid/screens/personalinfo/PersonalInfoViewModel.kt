@@ -77,6 +77,7 @@ class PersonalInfoViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(3_000),
         initialValue = null,
     )
+    val hasLinkedInstitution = uiState.map { it.personalInfo.institutionAccounts.isNotEmpty() }
 
     private suspend fun mapUserDetailsToPersonalInfo(userDetails: UserDetails): PersonalInfo {
         var personalInfo = userDetails.mapToPersonalInfo(moshi)
