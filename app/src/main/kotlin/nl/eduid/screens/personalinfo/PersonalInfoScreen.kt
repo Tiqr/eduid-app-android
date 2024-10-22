@@ -185,72 +185,78 @@ fun PersonalInfoScreen(
             style = MaterialTheme.typography.bodyLarge,
             text = stringResource(R.string.Profile_Info_COPY),
         )
-        if (!uiState.personalInfo.isVerified) {
-            NotVerifiedIdentity(
-                selfAssertedName = uiState.personalInfo.seflAssertedName,
-                isLoading = isLoading,
-                addLinkToAccount = addLinkToAccount,
-                onNameClicked = onNameClicked
-            )
-        } else {
-            VerifiedIdentity(
-                personalInfo = uiState.personalInfo,
-                isLoading = isLoading,
-                onNameClicked = onNameClicked,
-                openVerifiedInformation = openVerifiedInformation
-            )
-        }
-
-        Text(
-            style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onSecondary),
-            text = stringResource(R.string.Profile_ContactDetails_COPY),
-            modifier = Modifier.padding(top = 16.dp)
-        )
-        InfoField(title = uiState.personalInfo.email,
-            subtitle = stringResource(R.string.Profile_Email_COPY),
-            modifier = Modifier.clickable {
-                onEmailClicked()
-            })
-
-        if (uiState.personalInfo.institutionAccounts.isNotEmpty()) {
-            RoleAndInstitutions(openVerifiedInformation, uiState.personalInfo.institutionAccounts)
-        }
-
-        LinkAccountCard(
-            title = R.string.Profile_AddRoleAndInstitution_COPY,
-            subtitle = R.string.Profile_AddViaSurfconext_COPY,
-            enabled = !isLoading,
-            addLinkToAccount = addLinkToAccount
-        )
-        val configuration = LocalConfiguration.current
-        Surface(
-            modifier = Modifier
-                .requiredWidth(configuration.screenWidthDp.dp)
-                .background(MaterialTheme.colorScheme.tertiaryContainer)
-                .padding(vertical = 12.dp, horizontal = 24.dp),
-        ) {
-            OutlinedButton(
-                onClick = onManageAccountClicked,
-                shape = RoundedCornerShape(CornerSize(6.dp)),
-                modifier = Modifier
-                    .sizeIn(minHeight = 48.dp)
-                    .fillMaxWidth()
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.cog_icon),
-                    alignment = CenterStart,
-                    contentDescription = "",
-                    modifier = Modifier.padding(horizontal = 24.dp)
+        if (!isLoading) {
+            if (!uiState.personalInfo.isVerified) {
+                NotVerifiedIdentity(
+                    selfAssertedName = uiState.personalInfo.seflAssertedName,
+                    isLoading = isLoading,
+                    addLinkToAccount = addLinkToAccount,
+                    onNameClicked = onNameClicked
                 )
-                Text(
-                    text = stringResource(R.string.Profile_ManageYourAccount_COPY),
-                    style = MaterialTheme.typography.bodyLarge.copy(
-                        textAlign = TextAlign.Start,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    ),
+            } else {
+                VerifiedIdentity(
+                    personalInfo = uiState.personalInfo,
+                    isLoading = isLoading,
+                    onNameClicked = onNameClicked,
+                    openVerifiedInformation = openVerifiedInformation
                 )
             }
+
+            Text(
+                style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onSecondary),
+                text = stringResource(R.string.Profile_ContactDetails_COPY),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            InfoField(title = uiState.personalInfo.email,
+                subtitle = stringResource(R.string.Profile_Email_COPY),
+                modifier = Modifier.clickable {
+                    onEmailClicked()
+                })
+
+            if (uiState.personalInfo.institutionAccounts.isNotEmpty()) {
+                RoleAndInstitutions(openVerifiedInformation, uiState.personalInfo.institutionAccounts)
+            }
+
+            LinkAccountCard(
+                title = R.string.Profile_AddRoleAndInstitution_COPY,
+                subtitle = R.string.Profile_AddViaSurfconext_COPY,
+                enabled = !isLoading,
+                addLinkToAccount = addLinkToAccount
+            )
+            val configuration = LocalConfiguration.current
+            Surface(
+                modifier = Modifier
+                    .requiredWidth(configuration.screenWidthDp.dp)
+                    .background(MaterialTheme.colorScheme.tertiaryContainer)
+                    .padding(vertical = 12.dp, horizontal = 24.dp),
+            ) {
+                OutlinedButton(
+                    onClick = onManageAccountClicked,
+                    shape = RoundedCornerShape(CornerSize(6.dp)),
+                    modifier = Modifier
+                        .sizeIn(minHeight = 48.dp)
+                        .fillMaxWidth()
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.cog_icon),
+                        alignment = CenterStart,
+                        contentDescription = "",
+                        modifier = Modifier.padding(horizontal = 24.dp)
+                    )
+                    Text(
+                        text = stringResource(R.string.Profile_ManageYourAccount_COPY),
+                        style = MaterialTheme.typography.bodyLarge.copy(
+                            textAlign = TextAlign.Start,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        ),
+                    )
+                }
+            }
+        } else {
+            LinearProgressIndicator(
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 }
@@ -361,12 +367,6 @@ private fun ColumnScope.VerifiedIdentity(
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
         }
-    }
-
-    if (isLoading) {
-        LinearProgressIndicator(
-            modifier = Modifier.fillMaxWidth()
-        )
     }
     InfoField(title = personalInfo.seflAssertedName.chosenName.orEmpty(),
         subtitle = stringResource(R.string.Profile_FirstName_COPY),
