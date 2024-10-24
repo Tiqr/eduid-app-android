@@ -62,11 +62,9 @@ fun OAuthScreen(
     var oAuthUiStages by rememberSaveable { mutableStateOf(OAuthUiStages()) }
     val activity = LocalContext.current
     Timber.e("Current activity is launching oauth: ${activity.hashCode()}")
-//    Timber.w("Started OAuthScreen with state: $uiState.\n\t IsAuthorizationLaunched: ${oAuthUiStages.isAuthorizationLaunched}.\n\t IsFetchingToken: ${oAuthUiStages.isFetchingToken}")
     val context = LocalContext.current
     val launcher =
         rememberLauncherForActivityResult(contract = OAuthContract(), onResult = { intent ->
-//            Timber.e("1 - Received intent fro AppAuth")
             viewModel.continueWithFetchToken(intent)
             //Move to the next stage for fetching the token
             oAuthUiStages = OAuthUiStages(

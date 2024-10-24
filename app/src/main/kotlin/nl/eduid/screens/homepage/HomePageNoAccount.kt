@@ -288,11 +288,11 @@ fun HomePageNoAccountContent(
                     onClick = {
                         if (isAuthorizedForDataAccess) {
                             viewModel.startEnrollmentAfterSignIn()
+                            waitingForVmEvent = true
                         } else {
                             wasOAuthTriggered = true
                             onGoToSignIn()
                         }
-                        waitingForVmEvent = true
                     },
                     modifier = Modifier
                         .fillMaxWidth()
