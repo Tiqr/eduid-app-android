@@ -3895,6 +3895,15 @@ SHARED:
         COPY:
           en: Use a European ID
           nl: Selecteer een Europees ID
+      Subtitle:
+        Full:
+          COPY:
+            en: We support the National digital ID’s of  Belgium, Denmark, Germany, Estonia, Italy, Croatia, Lithuania, Latvia, Luxembourg, Malta, Portugal, Slovakia, Spain, Czech Republic and Sweden.
+            nl: Dit kan met de inlogmiddelen van België, Denemarken, Duitsland, Estland, Italië, Kroatië, Litouwen, Letland, Liechtenstein, Luxemburg, Malta, Oostenrijk, Polen, Portugal, Slowakije, Slovenië, Spanje, Tsjechië en Zweden
+        BoldPart:
+          COPY:
+            en: Belgium, Denmark, Germany, Estonia, Italy, Croatia, Lithuania, Latvia, Luxembourg, Malta, Portugal, Slovakia, Spain, Czech Republic and Sweden
+            nl: België, Denemarken, Duitsland, Estland, Italië, Kroatië, Litouwen, Letland, Liechtenstein, Luxemburg, Malta, Oostenrijk, Polen, Portugal, Slowakije, Slovenië, Spanje, Tsjechië en Zweden
     OtherOptions:
       COPY:
         en: Other options…
