@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.os.Environment
 import android.util.AtomicFile
 import androidx.core.util.writeText
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import nl.eduid.di.api.EduIdApi
 import nl.eduid.di.assist.UnauthorizedException
 import nl.eduid.di.assist.processResponse
@@ -21,10 +23,12 @@ import nl.eduid.di.model.Token
 import nl.eduid.di.model.TokenResponse
 import nl.eduid.di.model.UrlResponse
 import nl.eduid.di.model.UserDetails
+import nl.eduid.di.model.VerifyIssuer
 import timber.log.Timber
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import kotlin.jvm.Throws
 
 class PersonalInfoRepository(
     private val eduIdApi: EduIdApi,
@@ -189,9 +193,9 @@ class PersonalInfoRepository(
         val tokens = getTokensForUser()
         val tokensForService = tokens?.filter { token ->
             token.clientId == serviceId &&
-                token.scopes?.any { scope ->
-                    scope.name != "openid" && scope.hasValidDescription()
-                } ?: false
+                    token.scopes?.any { scope ->
+                        scope.name != "openid" && scope.hasValidDescription()
+                    } ?: false
         }
         val tokensRequest = tokensForService?.map { serviceToken ->
             Token(serviceToken.id, serviceToken.type)
@@ -377,5 +381,10 @@ class PersonalInfoRepository(
     } catch (e: Exception) {
         Timber.e(e, "Failed to deactivate app")
         false
+    }
+
+    @Throws(Exception::class)
+    suspend fun getVerifyIssuers(): List<VerifyIssuer>? = withContext(Dispatchers.IO) {
+        eduIdApi.getVerifyIssuers().body()
     }
 }

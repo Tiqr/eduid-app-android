@@ -190,6 +190,7 @@ dependencies {
     implementation(libs.permission)
     implementation(libs.coil)
     implementation(libs.coilCompose)
+    implementation(libs.coilSvg)
     implementation(libs.betterLink)
 
     ksp(libs.moshi.codegen)

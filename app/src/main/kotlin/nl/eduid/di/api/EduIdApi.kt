@@ -16,6 +16,7 @@ import nl.eduid.di.model.TokenResponse
 import nl.eduid.di.model.UpdatePasswordRequest
 import nl.eduid.di.model.UrlResponse
 import nl.eduid.di.model.UserDetails
+import nl.eduid.di.model.VerifyIssuer
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -127,4 +128,7 @@ interface EduIdApi {
         @Query("idpScoping") idpScoping: IdpScoping,
         @Query("bankId") bankId: String?
     ): Response<UrlResponse>
+
+    @GET("/mobile/api/sp/idin/issuers")
+    suspend fun getVerifyIssuers(): Response<List<VerifyIssuer>>
 }

@@ -347,3 +347,7 @@ sealed class EditName(val route: String) {
 object VerifyIdentityRoute {
     const val route = "verify_identity"
 }
+
+object SelectYourBankRoute {
+    const val route = "select_your_bank"
+}

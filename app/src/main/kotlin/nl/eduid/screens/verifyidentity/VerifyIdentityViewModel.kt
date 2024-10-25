@@ -8,9 +8,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.R
@@ -75,9 +72,17 @@ class VerifyIdentityViewModel @Inject constructor(
         requestLink(LinkType.EIDAS)
     }
 
+    fun expandMoreOptions() {
+        uiState = uiState.copy(moreOptionsExpanded = true)
+    }
+
     private fun createLaunchIntent(url: String): Intent {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(url)
         return intent
+    }
+
+    fun clearLaunchIntent() {
+        uiState = uiState.copy(launchIntent = null)
     }
 }

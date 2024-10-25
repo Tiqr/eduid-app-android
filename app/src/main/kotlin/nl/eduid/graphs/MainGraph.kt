@@ -57,6 +57,8 @@ import nl.eduid.screens.scan.ScanScreen
 import nl.eduid.screens.scan.StatelessScanViewModel
 import nl.eduid.screens.security.SecurityRoute
 import nl.eduid.screens.security.SecurityViewModel
+import nl.eduid.screens.selectyourbank.SelectYourBankScreen
+import nl.eduid.screens.selectyourbank.SelectYourBankViewModel
 import nl.eduid.screens.start.WelcomeStartScreen
 import nl.eduid.screens.start.WelcomeStartViewModel
 import nl.eduid.screens.twofactorkey.TwoFactorKeyScreen
@@ -509,7 +511,15 @@ fun MainGraph(
         val viewModel = hiltViewModel<VerifyIdentityViewModel>(it)
         VerifyIdentityScreen(
             viewModel = viewModel,
-            goToBankSelectionScreen = { /* TODO */ },
+            goToBankSelectionScreen = { navController.navigate(SelectYourBankRoute.route) },
+            goBack = { navController.popBackStack() }
+        )
+    }
+
+    composable(SelectYourBankRoute.route) {
+        val viewModel = hiltViewModel<SelectYourBankViewModel>(it)
+        SelectYourBankScreen(
+            viewModel = viewModel,
             goBack = { navController.popBackStack() }
         )
     }
