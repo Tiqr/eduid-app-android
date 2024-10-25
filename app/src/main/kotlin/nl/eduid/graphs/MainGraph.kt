@@ -507,11 +507,13 @@ fun MainGraph(
     //region Verify identity
     composable(VerifyIdentityRoute.route) {
         val viewModel = hiltViewModel<VerifyIdentityViewModel>(it)
-        VerifyIdentityScreen(viewModel = viewModel) {
-            navController.popBackStack()
-        }
+        VerifyIdentityScreen(
+            viewModel = viewModel,
+            goToBankSelectionScreen = { /* TODO */ },
+            goBack = { navController.popBackStack() }
+        )
     }
-    //endregion
+//endregion
 }
 
 fun NavController.goToEmailSent(email: String, reason: String = LOGIN_REASON) = navigate(

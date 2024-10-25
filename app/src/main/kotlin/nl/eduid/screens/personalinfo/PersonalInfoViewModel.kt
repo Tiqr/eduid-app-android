@@ -19,16 +19,20 @@ import nl.eduid.di.assist.SaveableResult
 import nl.eduid.di.assist.toErrorData
 import nl.eduid.di.model.UserDetails
 import nl.eduid.di.model.mapToPersonalInfo
+import nl.eduid.flags.FeatureFlag
+import nl.eduid.flags.RuntimeBehavior
 import javax.inject.Inject
 
 @HiltViewModel
 class PersonalInfoViewModel @Inject constructor(
     private val assistant: DataAssistant,
     private val moshi: Moshi,
+    private val runtimeBehavior: RuntimeBehavior
 ) : ViewModel() {
     private val _errorData: MutableStateFlow<ErrorData?> = MutableStateFlow(null)
     private val _isProcessing: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val _linkUrl: MutableStateFlow<Intent?> = MutableStateFlow(null)
+
     val uiState = assistant.observableDetails.map { it ->
         when (it) {
             is SaveableResult.Success -> {
@@ -78,6 +82,8 @@ class PersonalInfoViewModel @Inject constructor(
         initialValue = null,
     )
     val hasLinkedInstitution = uiState.map { it.personalInfo.institutionAccounts.isNotEmpty() }
+
+    val identityVerificationEnabled = runtimeBehavior.isFeatureEnabled(FeatureFlag.ENABLE_IDENTITY_VERIFICATION)
 
     private suspend fun mapUserDetailsToPersonalInfo(userDetails: UserDetails): PersonalInfo {
         var personalInfo = userDetails.mapToPersonalInfo(moshi)

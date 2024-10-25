@@ -67,7 +67,10 @@ fun VerifiedPersonalInfoRoute(
             title = it.title(context),
             explanation = it.message(context),
             buttonLabel = stringResource(R.string.Button_OK_COPY),
-            onDismiss = viewModel::clearErrorData
+            onDismiss =  {
+                viewModel.clearErrorData()
+                goBack()
+            }
         )
     }
     if (waitingForVmEvent) {

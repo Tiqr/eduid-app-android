@@ -198,3 +198,12 @@ data class UpdatePasswordRequest(
     val newPassword: String,
     val hash: String,
 ) : Parcelable
+
+enum class IdpScoping {
+    @Json(name = "eherkenning")
+    EHERKENNING,
+    @Json(name = "idin")
+    IDIN,
+    @Json(name = "studielink")
+    STUDIELINK
+}

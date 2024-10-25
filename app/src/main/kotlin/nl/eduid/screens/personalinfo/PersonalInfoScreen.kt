@@ -92,7 +92,7 @@ fun PersonalInfoRoute(
     }
     val addLink = remember(viewModel) {
         {
-            if (hasLinkedInstitution || !RuntimeBehavior.isFeatureEnabled(FeatureFlag.ENABLE_IDENTITY_VERIFICATION)) {
+            if (hasLinkedInstitution || !viewModel.identityVerificationEnabled) {
                 viewModel.requestLinkUrl()
                 isGettingLinkUrl = true
             } else {
@@ -130,7 +130,10 @@ fun PersonalInfoRoute(
             title = error.title(context),
             explanation = error.message(context),
             buttonLabel = stringResource(R.string.Button_OK_COPY),
-            onDismiss = viewModel::clearErrorData
+            onDismiss = {
+                viewModel.clearErrorData()
+                goBack()
+            }
         )
     }
     PersonalInfoScreen(
