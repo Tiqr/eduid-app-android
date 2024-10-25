@@ -796,6 +796,8 @@
   <string name="VerifyIdentity_VerifyWithBankingApp_Button_COPY">"Select your bank"</string>
   <string name="VerifyIdentity_VerifyWithAEuropianId_Title_COPY">"Verify with a European ID"</string>
   <string name="VerifyIdentity_VerifyWithAEuropianId_Button_COPY">"Use a European ID"</string>
+  <string name="VerifyIdentity_VerifyWithAEuropianId_Subtitle_Full_COPY">"We support the National digital ID’s of  Belgium, Denmark, Germany, Estonia, Italy, Croatia, Lithuania, Latvia, Luxembourg, Malta, Portugal, Slovakia, Spain, Czech Republic and Sweden."</string>
+  <string name="VerifyIdentity_VerifyWithAEuropianId_Subtitle_BoldPart_COPY">"Belgium, Denmark, Germany, Estonia, Italy, Croatia, Lithuania, Latvia, Luxembourg, Malta, Portugal, Slovakia, Spain, Czech Republic and Sweden"</string>
   <string name="VerifyIdentity_OtherOptions_COPY">"Other options…"</string>
   <string name="VerifyIdentity_VisitSupport_Full_COPY">"If you can’t use any of these methods, please visit our support pages"</string>
   <string name="VerifyIdentity_VisitSupport_HighlightedPart_COPY">"support pages"</string>

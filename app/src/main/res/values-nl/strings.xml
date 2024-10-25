@@ -796,6 +796,8 @@
   <string name="VerifyIdentity_VerifyWithBankingApp_Button_COPY">"Selecteer je bank"</string>
   <string name="VerifyIdentity_VerifyWithAEuropianId_Title_COPY">"Verifieer met een Europees ID"</string>
   <string name="VerifyIdentity_VerifyWithAEuropianId_Button_COPY">"Selecteer een Europees ID"</string>
+  <string name="VerifyIdentity_VerifyWithAEuropianId_Subtitle_Full_COPY">"Dit kan met de inlogmiddelen van België, Denemarken, Duitsland, Estland, Italië, Kroatië, Litouwen, Letland, Liechtenstein, Luxemburg, Malta, Oostenrijk, Polen, Portugal, Slowakije, Slovenië, Spanje, Tsjechië en Zweden"</string>
+  <string name="VerifyIdentity_VerifyWithAEuropianId_Subtitle_BoldPart_COPY">"België, Denemarken, Duitsland, Estland, Italië, Kroatië, Litouwen, Letland, Liechtenstein, Luxemburg, Malta, Oostenrijk, Polen, Portugal, Slowakije, Slovenië, Spanje, Tsjechië en Zweden"</string>
   <string name="VerifyIdentity_OtherOptions_COPY">"Meer opties…"</string>
   <string name="VerifyIdentity_VisitSupport_Full_COPY">"Kun je deze opties niet gebruiken, bezoek dan onze support pagina's"</string>
   <string name="VerifyIdentity_VisitSupport_HighlightedPart_COPY">"support pagina's"</string>
