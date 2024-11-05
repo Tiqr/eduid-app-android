@@ -226,6 +226,7 @@
                     android:scheme="https" />
             </intent-filter>
 
+            <!-- EPPN already linked -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -238,6 +239,7 @@
                     android:scheme="https" />
             </intent-filter>
 
+            <!-- Session expired -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -261,6 +263,19 @@
                     android:path="/client/mobile/created"
                     android:scheme="eduid" />
 
+            </intent-filter>
+
+            <!-- External account linking error -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*.eduid.nl"
+                    android:path="/client/mobile/external-account-linked-error"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
 

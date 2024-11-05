@@ -205,7 +205,7 @@ enum class IdpScoping {
     STUDIELINK;
 
     /**
-     * @Json doesn't work, so we override toString instead
+     * @Json doesn't work on enum values for serialization, so we override toString instead
      */
     override fun toString(): String {
         return when (this) {

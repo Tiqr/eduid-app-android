@@ -351,3 +351,8 @@ object VerifyIdentityRoute {
 object SelectYourBankRoute {
     const val route = "select_your_bank"
 }
+
+object ExternalAccountLinkedError {
+    const val route = "external_account_linked_error"
+    fun getUriPattern(baseUrl: String) = "$baseUrl/client/mobile/external-account-linked-error"
+}
