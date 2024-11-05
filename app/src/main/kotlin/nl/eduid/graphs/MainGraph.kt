@@ -63,6 +63,8 @@ import nl.eduid.screens.twofactorkey.TwoFactorKeyScreen
 import nl.eduid.screens.twofactorkey.TwoFactorKeyViewModel
 import nl.eduid.screens.twofactorkeydelete.TwoFactorKeyDeleteScreen
 import nl.eduid.screens.twofactorkeydelete.TwoFactorKeyDeleteViewModel
+import nl.eduid.screens.verifyidentity.VerifyIdentityScreen
+import nl.eduid.screens.verifyidentity.VerifyIdentityViewModel
 import org.tiqr.data.model.EnrollmentChallenge
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -382,6 +384,9 @@ fun MainGraph(
             openVerifiedInformation = { account ->
                 navController.navigate(VerifiedPersonalInfoRoute.routeWithAccount(account))
             },
+            goToVerifyIdentity = {
+                navController.navigate(VerifyIdentityRoute.route)
+            },
             goBack = navController::popBackStack,
         )
     }
@@ -498,6 +503,17 @@ fun MainGraph(
     //region Configure Password: add, change or remove
     configurePasswordFlow(navController, baseUrl) { navController.navigate(Security.Settings.route) }
     //endregion
+
+    //region Verify identity
+    composable(VerifyIdentityRoute.route) {
+        val viewModel = hiltViewModel<VerifyIdentityViewModel>(it)
+        VerifyIdentityScreen(
+            viewModel = viewModel,
+            goToBankSelectionScreen = { /* TODO */ },
+            goBack = { navController.popBackStack() }
+        )
+    }
+//endregion
 }
 
 fun NavController.goToEmailSent(email: String, reason: String = LOGIN_REASON) = navigate(

@@ -84,7 +84,7 @@ fun ScanScreen(
     topBar = {
         TopAppBar(
             title = {},
-            colors = TopAppBarDefaults.smallTopAppBarColors(
+            colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = Color.Transparent
             ),
             navigationIcon = {

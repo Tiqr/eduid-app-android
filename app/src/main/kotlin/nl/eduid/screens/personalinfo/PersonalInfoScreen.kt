@@ -8,11 +8,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -53,6 +56,8 @@ import com.theapache64.rebugger.Rebugger
 import kotlinx.coroutines.flow.filterNotNull
 import nl.eduid.R
 import nl.eduid.di.model.SelfAssertedName
+import nl.eduid.flags.FeatureFlag
+import nl.eduid.flags.RuntimeBehavior
 import nl.eduid.screens.firsttimedialog.LinkAccountContract
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.ConnectionCard
@@ -71,10 +76,12 @@ fun PersonalInfoRoute(
     onNameClicked: (SelfAssertedName, Boolean) -> Unit,
     onManageAccountClicked: (dateString: String) -> Unit,
     openVerifiedInformation: (String) -> Unit,
+    goToVerifyIdentity: () -> Unit,
     goBack: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val errorData by viewModel.errorData.collectAsStateWithLifecycle()
+    val hasLinkedInstitution by viewModel.hasLinkedInstitution.collectAsStateWithLifecycle(false)
     val isProcessing by viewModel.isProcessing.collectAsStateWithLifecycle()
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     var isGettingLinkUrl by rememberSaveable { mutableStateOf(false) }
@@ -83,10 +90,14 @@ fun PersonalInfoRoute(
     val onName = remember(viewModel) {
         { onNameClicked(uiState.personalInfo.seflAssertedName, !uiState.personalInfo.isVerified) }
     }
-    val addLink = remember(viewModel) {
+    val addLink = remember(hasLinkedInstitution) {
         {
-            viewModel.requestLinkUrl()
-            isGettingLinkUrl = true
+            if (hasLinkedInstitution || !viewModel.identityVerificationEnabled) {
+                viewModel.requestLinkUrl()
+                isGettingLinkUrl = true
+            } else {
+                goToVerifyIdentity()
+            }
         }
     }
     val createdAtDate = stringResource(R.string.ManageAccount_CreatedAt_COPY)
@@ -119,7 +130,10 @@ fun PersonalInfoRoute(
             title = error.title(context),
             explanation = error.message(context),
             buttonLabel = stringResource(R.string.Button_OK_COPY),
-            onDismiss = viewModel::clearErrorData
+            onDismiss = {
+                viewModel.clearErrorData()
+                goBack()
+            }
         )
     }
     PersonalInfoScreen(
@@ -185,72 +199,76 @@ fun PersonalInfoScreen(
             style = MaterialTheme.typography.bodyLarge,
             text = stringResource(R.string.Profile_Info_COPY),
         )
-        if (!uiState.personalInfo.isVerified) {
-            NotVerifiedIdentity(
-                selfAssertedName = uiState.personalInfo.seflAssertedName,
-                isLoading = isLoading,
-                addLinkToAccount = addLinkToAccount,
-                onNameClicked = onNameClicked
-            )
-        } else {
-            VerifiedIdentity(
-                personalInfo = uiState.personalInfo,
-                isLoading = isLoading,
-                onNameClicked = onNameClicked,
-                openVerifiedInformation = openVerifiedInformation
-            )
-        }
-
-        Text(
-            style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onSecondary),
-            text = stringResource(R.string.Profile_ContactDetails_COPY),
-            modifier = Modifier.padding(top = 16.dp)
-        )
-        InfoField(title = uiState.personalInfo.email,
-            subtitle = stringResource(R.string.Profile_Email_COPY),
-            modifier = Modifier.clickable {
-                onEmailClicked()
-            })
-
-        if (uiState.personalInfo.institutionAccounts.isNotEmpty()) {
-            RoleAndInstitutions(openVerifiedInformation, uiState.personalInfo.institutionAccounts)
-        }
-
-        LinkAccountCard(
-            title = R.string.Profile_AddRoleAndInstitution_COPY,
-            subtitle = R.string.Profile_AddViaSurfconext_COPY,
-            enabled = !isLoading,
-            addLinkToAccount = addLinkToAccount
-        )
-        val configuration = LocalConfiguration.current
-        Surface(
-            modifier = Modifier
-                .requiredWidth(configuration.screenWidthDp.dp)
-                .background(MaterialTheme.colorScheme.tertiaryContainer)
-                .padding(vertical = 12.dp, horizontal = 24.dp),
-        ) {
-            OutlinedButton(
-                onClick = onManageAccountClicked,
-                shape = RoundedCornerShape(CornerSize(6.dp)),
-                modifier = Modifier
-                    .sizeIn(minHeight = 48.dp)
-                    .fillMaxWidth()
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.cog_icon),
-                    alignment = CenterStart,
-                    contentDescription = "",
-                    modifier = Modifier.padding(horizontal = 24.dp)
+        if (!isLoading) {
+            if (!uiState.personalInfo.isVerified) {
+                NotVerifiedIdentity(
+                    selfAssertedName = uiState.personalInfo.seflAssertedName,
+                    isLoading = isLoading,
+                    addLinkToAccount = addLinkToAccount,
+                    onNameClicked = onNameClicked
                 )
-                Text(
-                    text = stringResource(R.string.Profile_ManageYourAccount_COPY),
-                    style = MaterialTheme.typography.bodyLarge.copy(
-                        textAlign = TextAlign.Start,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    ),
+            } else {
+                VerifiedIdentity(
+                    personalInfo = uiState.personalInfo,
+                    onNameClicked = onNameClicked,
+                    openVerifiedInformation = openVerifiedInformation
                 )
             }
+
+            Text(
+                style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onSecondary),
+                text = stringResource(R.string.Profile_ContactDetails_COPY),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            InfoField(title = uiState.personalInfo.email,
+                subtitle = stringResource(R.string.Profile_Email_COPY),
+                modifier = Modifier.clickable {
+                    onEmailClicked()
+                })
+
+            if (uiState.personalInfo.institutionAccounts.isNotEmpty()) {
+                RoleAndInstitutions(openVerifiedInformation, uiState.personalInfo.institutionAccounts)
+            }
+
+            LinkAccountCard(
+                title = R.string.Profile_AddRoleAndInstitution_COPY,
+                subtitle = R.string.Profile_AddViaSurfconext_COPY,
+                addLinkToAccount = addLinkToAccount
+            )
+            val configuration = LocalConfiguration.current
+            Surface(
+                modifier = Modifier
+                    .requiredWidth(configuration.screenWidthDp.dp)
+                    .background(MaterialTheme.colorScheme.tertiaryContainer)
+                    .padding(vertical = 12.dp, horizontal = 24.dp),
+            ) {
+                OutlinedButton(
+                    onClick = onManageAccountClicked,
+                    shape = RoundedCornerShape(CornerSize(6.dp)),
+                    modifier = Modifier
+                        .sizeIn(minHeight = 48.dp)
+                        .fillMaxWidth()
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.cog_icon),
+                        alignment = CenterStart,
+                        contentDescription = "",
+                        modifier = Modifier.padding(horizontal = 24.dp)
+                    )
+                    Text(
+                        text = stringResource(R.string.Profile_ManageYourAccount_COPY),
+                        style = MaterialTheme.typography.bodyLarge.copy(
+                            textAlign = TextAlign.Start,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        ),
+                    )
+                }
+            }
+        } else {
+            LinearProgressIndicator(
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 }
@@ -325,7 +343,6 @@ private fun ColumnScope.NotVerifiedIdentity(
 @Composable
 private fun ColumnScope.VerifiedIdentity(
     personalInfo: PersonalInfo,
-    isLoading: Boolean,
     onNameClicked: () -> Unit,
     openVerifiedInformation: (String) -> Unit = {},
 ) {
@@ -362,12 +379,6 @@ private fun ColumnScope.VerifiedIdentity(
             )
         }
     }
-
-    if (isLoading) {
-        LinearProgressIndicator(
-            modifier = Modifier.fillMaxWidth()
-        )
-    }
     InfoField(title = personalInfo.seflAssertedName.chosenName.orEmpty(),
         subtitle = stringResource(R.string.Profile_FirstName_COPY),
         modifier = Modifier.clickable {
@@ -392,22 +403,25 @@ private fun ColumnScope.VerifiedIdentity(
 }
 
 @Composable
-private fun ColumnScope.NotVerifiedBanner(addLinkToAccount: () -> Unit = {}) {
+private fun NotVerifiedBanner(addLinkToAccount: () -> Unit = {}) {
     val configuration = LocalConfiguration.current
     Column(
         modifier = Modifier
             .requiredWidth(configuration.screenWidthDp.dp)
             .background(ColorSupport_Blue_100)
             .padding(vertical = 12.dp, horizontal = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)
+            modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Image(
-                painter = painterResource(R.drawable.shield_tick_blue),
-                contentDescription = "",
-            )
+            Column {
+                Spacer(modifier = Modifier.size(4.dp))
+                Image(
+                    painter = painterResource(R.drawable.shield_tick_blue),
+                    contentDescription = ""
+                )
+            }
             Text(
                 style = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.SemiBold,
@@ -416,25 +430,27 @@ private fun ColumnScope.NotVerifiedBanner(addLinkToAccount: () -> Unit = {}) {
                 text = stringResource(R.string.Profile_VerifyNow_Title_COPY),
             )
         }
-        OutlinedButton(
-            onClick = addLinkToAccount,
-            shape = RoundedCornerShape(CornerSize(6.dp)),
-            colors = ButtonDefaults.outlinedButtonColors(
-                contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                disabledContentColor = MaterialTheme.colorScheme.onTertiaryContainer
-            ),
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .sizeIn(minHeight = 48.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.Profile_VerifyNow_Button_COPY),
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
+        Row {
+            Spacer(modifier = Modifier.width(33.dp))
+            OutlinedButton(
+                onClick = addLinkToAccount,
+                shape = RoundedCornerShape(CornerSize(6.dp)),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    disabledContentColor = MaterialTheme.colorScheme.onTertiaryContainer
                 ),
-            )
+                modifier = Modifier
+                    .sizeIn(minHeight = 40.dp),
+            ) {
+                Text(
+                    text = stringResource(R.string.Profile_VerifyNow_Button_COPY),
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    ),
+                )
+            }
         }
     }
 }
@@ -461,9 +477,10 @@ private fun Preview_VerifiedIdentity() = EduidAppAndroidTheme {
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier.background(MaterialTheme.colorScheme.background)
     ) {
-        VerifiedIdentity(personalInfo = PersonalInfo.verifiedDemoData(),
-            isLoading = false,
-            onNameClicked = {})
+        VerifiedIdentity(
+            personalInfo = PersonalInfo.verifiedDemoData(),
+            onNameClicked = {}
+        )
     }
 }
 

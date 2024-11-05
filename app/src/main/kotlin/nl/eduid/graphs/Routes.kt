@@ -343,3 +343,7 @@ sealed class EditName(val route: String) {
         }
     }
 }
+
+object VerifyIdentityRoute {
+    const val route = "verify_identity"
+}

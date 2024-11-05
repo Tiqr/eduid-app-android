@@ -137,7 +137,7 @@ fun HomePageWithAccountContent(
         }
         if (showBottomSheet) {
             ModalBottomSheet(
-                windowInsets = WindowInsets(bottom = 0),
+                contentWindowInsets = { WindowInsets(bottom = 0) },
                 onDismissRequest = {
                     showBottomSheet = false
                 },

@@ -13,6 +13,7 @@ import nl.eduid.di.model.DeleteServiceRequest
 import nl.eduid.di.model.DeleteTokensRequest
 import nl.eduid.di.model.EmailChangeRequest
 import nl.eduid.di.model.EnrollResponse
+import nl.eduid.di.model.IdpScoping
 import nl.eduid.di.model.LinkedAccount
 import nl.eduid.di.model.RequestPhoneCode
 import nl.eduid.di.model.SelfAssertedName
@@ -40,6 +41,11 @@ class PersonalInfoRepository(
 
     suspend fun getStartLinkAccountResult(): Result<UrlResponse?> {
         val response = eduIdApi.getStartLinkAccount()
+        return processResponse(response = response)
+    }
+
+    suspend fun getExternalAccountLinkResult(idpScoping: IdpScoping, bankId: String?): Result<UrlResponse?> {
+        val response = eduIdApi.getStartExternalAccountLink(idpScoping, bankId)
         return processResponse(response = response)
     }
 

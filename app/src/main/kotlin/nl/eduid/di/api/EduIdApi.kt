@@ -6,6 +6,7 @@ import nl.eduid.di.model.DeleteServiceRequest
 import nl.eduid.di.model.DeleteTokensRequest
 import nl.eduid.di.model.EmailChangeRequest
 import nl.eduid.di.model.EnrollResponse
+import nl.eduid.di.model.IdpScoping
 import nl.eduid.di.model.InstitutionNameResponse
 import nl.eduid.di.model.LinkedAccount
 import nl.eduid.di.model.RequestEduIdAccount
@@ -120,4 +121,10 @@ interface EduIdApi {
     suspend fun checkHashIsValid(
         @Query("hash") hash: String,
     ): Response<Boolean>
+
+    @GET("/mobile/api/sp/verify/link")
+    suspend fun getStartExternalAccountLink(
+        @Query("idpScoping") idpScoping: IdpScoping,
+        @Query("bankId") bankId: String?
+    ): Response<UrlResponse>
 }

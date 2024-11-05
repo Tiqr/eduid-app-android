@@ -194,7 +194,7 @@ fun HomePageNoAccountContent(
         }
         if (showBottomSheet) {
             ModalBottomSheet(
-                windowInsets = WindowInsets(bottom = 0),
+                contentWindowInsets = { WindowInsets(bottom = 0) },
                 onDismissRequest = {
                     showBottomSheet = false
                 },
@@ -288,11 +288,11 @@ fun HomePageNoAccountContent(
                     onClick = {
                         if (isAuthorizedForDataAccess) {
                             viewModel.startEnrollmentAfterSignIn()
+                            waitingForVmEvent = true
                         } else {
                             wasOAuthTriggered = true
                             onGoToSignIn()
                         }
-                        waitingForVmEvent = true
                     },
                     modifier = Modifier
                         .fillMaxWidth()
