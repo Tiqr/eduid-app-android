@@ -27,14 +27,6 @@ constructor(
     private val cachedDetails = MutableStateFlow<SaveableResult<UserDetails>?>(null)
     val observableDetails: Flow<SaveableResult<UserDetails>?> = cachedDetails.map { knownValue ->
         if (knownValue == null) {
-            suspend fun handleError(ex: Throwable): SaveableResult.LoadError {
-                return if (ex is UnauthorizedException) {
-                    storageRepository.clearInvalidAuth()
-                    SaveableResult.LoadError(ex)
-                } else {
-                    SaveableResult.LoadError(DataFetchException("Failed to get user notification settings", ex))
-                }
-            }
             val fromNetwork =  try { loadInCache() } catch (ex: Exception) { return@map handleError(ex) }
             fromNetwork.fold(
                 onSuccess = {
@@ -46,6 +38,15 @@ constructor(
             )
         } else {
             knownValue
+        }
+    }
+
+    private suspend fun handleError(ex: Throwable): SaveableResult.LoadError {
+        return if (ex is UnauthorizedException) {
+            storageRepository.clearInvalidAuth()
+            SaveableResult.LoadError(ex)
+        } else {
+            SaveableResult.LoadError(DataFetchException("Failed to get user notification settings", ex))
         }
     }
 

@@ -90,7 +90,7 @@ fun PersonalInfoRoute(
     val onName = remember(viewModel) {
         { onNameClicked(uiState.personalInfo.seflAssertedName, !uiState.personalInfo.isVerified) }
     }
-    val addLink = remember(viewModel) {
+    val addLink = remember(hasLinkedInstitution) {
         {
             if (hasLinkedInstitution || !viewModel.identityVerificationEnabled) {
                 viewModel.requestLinkUrl()
