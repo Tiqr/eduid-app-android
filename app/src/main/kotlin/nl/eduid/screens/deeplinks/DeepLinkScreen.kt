@@ -51,6 +51,7 @@ fun DeepLinkScreen(
         LaunchedEffect(key1 = dataString) {
             isParsingLinkPayload = true
             val parseResult = viewModel.parseChallenge(dataString)
+            viewModel.clearLastNotificationChallenge()
             if (parseResult is ChallengeParseResult.Failure) {
                 errorData = ErrorData(parseResult.failure.title, parseResult.failure.message)
             } else if (parseResult is ChallengeParseResult.Success) {

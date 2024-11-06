@@ -11,6 +11,7 @@ import org.tiqr.data.model.ChallengeParseResult
 import org.tiqr.data.model.ParseFailure
 import org.tiqr.data.repository.AuthenticationRepository
 import org.tiqr.data.repository.EnrollmentRepository
+import org.tiqr.data.repository.NotificationCacheRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,6 +19,7 @@ class DeepLinkViewModel @Inject constructor(
     private val resources: Resources,
     private val enroll: EnrollmentRepository,
     private val auth: AuthenticationRepository,
+    private val notificationCacheRepository: NotificationCacheRepository,
     moshi: Moshi
 ) : BaseViewModel(moshi) {
 
@@ -33,5 +35,7 @@ class DeepLinkViewModel @Inject constructor(
             )
         }
 
-
+    fun clearLastNotificationChallenge() {
+        notificationCacheRepository.clearLastNotificationChallenge()
+    }
 }
