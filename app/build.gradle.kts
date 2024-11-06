@@ -145,6 +145,7 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.collections.immutable)
     implementation(libs.androidx.core)
 
     implementation(libs.androidx.activity)

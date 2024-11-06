@@ -1,30 +1,22 @@
 package nl.eduid.screens.selectyourbank
 
-import android.widget.Space
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -51,7 +43,6 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
 import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.di.model.VerifyIssuer
@@ -61,7 +52,6 @@ import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.SvgImage
 import nl.eduid.ui.annotatedStringWithBoldParts
 import nl.eduid.ui.theme.AlertWarningBackground
-import nl.eduid.ui.theme.BlueButton
 import nl.eduid.ui.theme.ColorMain_Green_400
 import nl.eduid.ui.theme.ColorSupport_Blue_400
 import nl.eduid.ui.theme.EduidAppAndroidTheme
@@ -76,10 +66,6 @@ fun SelectYourBankScreen(
         // TODO: handle result
     })
 
-
-    LaunchedEffect(viewModel) {
-        viewModel.fetchIssuerList()
-    }
     LaunchedEffect(viewModel.uiState.launchIntent) {
         viewModel.uiState.launchIntent?.let {
             launcher.launch(it)

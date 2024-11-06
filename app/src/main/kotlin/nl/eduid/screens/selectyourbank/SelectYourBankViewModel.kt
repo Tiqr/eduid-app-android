@@ -8,7 +8,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.R
@@ -27,13 +27,13 @@ class SelectYourBankViewModel @Inject constructor(
 
     var uiState: UiState by mutableStateOf(UiState())
 
-    fun fetchIssuerList() {
+    init {
         viewModelScope.launch {
             try {
                 val issuers = repository.getVerifyIssuers()
                 uiState = uiState.copy(
                     isLoading = false,
-                    verifyIssuerList = issuers!!
+                    verifyIssuerList = issuers!!.toImmutableList()
                 )
             } catch (ex: Exception) {
                 uiState = uiState.copy(

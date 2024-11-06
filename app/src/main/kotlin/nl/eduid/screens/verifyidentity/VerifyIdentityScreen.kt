@@ -96,9 +96,7 @@ fun VerifyIdentityScreen(
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
             launcher.launch(intent)
         },
-        expandMoreOptions = {
-            viewModel.expandMoreOptions()
-        },
+        expandMoreOptions = viewModel::expandMoreOptions,
         padding = padding
     )
 }
@@ -218,7 +216,7 @@ fun VerifyIdentityScreenContent(
         } else {
             Spacer(Modifier.height(20.dp))
             OutlinedButton(
-                onClick = { expandMoreOptions() },
+                onClick = expandMoreOptions,
                 shape = RoundedCornerShape(6.dp),
                 border = BorderStroke(width = 1.dp, color =ColorScale_Gray_400),
                 modifier = Modifier
