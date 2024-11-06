@@ -6,6 +6,4 @@
 
     <string name="editflags_edit_test_settings">Test Instellingen Bijwerken</string>
     <string name="editflags_edit_feature_flags">Feature Flags Bijwerken</string>
-    <string name="editflags_environment_info">Werken met de %s-omgeving.</string>
-
 </resources>

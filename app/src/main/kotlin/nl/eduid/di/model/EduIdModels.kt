@@ -200,10 +200,26 @@ data class UpdatePasswordRequest(
 ) : Parcelable
 
 enum class IdpScoping {
-    @Json(name = "eherkenning")
     EHERKENNING,
-    @Json(name = "idin")
     IDIN,
-    @Json(name = "studielink")
-    STUDIELINK
+    STUDIELINK;
+
+    /**
+     * @Json doesn't work on enum values for serialization, so we override toString instead
+     */
+    override fun toString(): String {
+        return when (this) {
+            EHERKENNING -> "eherkenning"
+            IDIN -> "idin"
+            STUDIELINK -> "studielink"
+        }
+    }
 }
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class VerifyIssuer(
+    val id: String?,
+    val name: String?,
+    val logo: String?
+): Parcelable

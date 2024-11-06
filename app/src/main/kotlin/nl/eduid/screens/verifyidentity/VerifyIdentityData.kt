@@ -5,6 +5,7 @@ import nl.eduid.ErrorData
 
 data class VerifyIdentityData(
     val isLoading: Boolean = false,
+    val moreOptionsExpanded: Boolean = false,
     val errorData: ErrorData? = null,
     val launchIntent: Intent? = null
 )

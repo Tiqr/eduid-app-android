@@ -80,11 +80,13 @@ fun VerifyIdentityScreen(
     LaunchedEffect(viewModel.uiState.launchIntent) {
         viewModel.uiState.launchIntent?.let { intent ->
             launcher.launch(intent)
+            viewModel.clearLaunchIntent()
         }
     }
 
     VerifyIdentityScreenContent(
         isLoading = viewModel.uiState.isLoading,
+        moreOptionsExpanded = viewModel.uiState.moreOptionsExpanded,
         errorData = viewModel.uiState.errorData,
         dismissError = viewModel::dismissError,
         goToBankSelectionScreen = goToBankSelectionScreen,
@@ -94,6 +96,7 @@ fun VerifyIdentityScreen(
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
             launcher.launch(intent)
         },
+        expandMoreOptions = viewModel::expandMoreOptions,
         padding = padding
     )
 }
@@ -101,16 +104,16 @@ fun VerifyIdentityScreen(
 @Composable
 fun VerifyIdentityScreenContent(
     isLoading: Boolean,
+    moreOptionsExpanded: Boolean,
     errorData: ErrorData?,
     dismissError: () -> Unit,
     goToBankSelectionScreen: () -> Unit,
     requestInstitutionLink: () -> Unit,
     requestEidasLink: () -> Unit,
+    expandMoreOptions: () -> Unit,
     openSupportUrl: (String) -> Unit,
     padding: PaddingValues = PaddingValues(),
 ) {
-
-    var moreOptionsExpanded by remember { mutableStateOf(false) }
     val supportUrl = stringResource(R.string.VerifyIdentity_VisitSupport_Link_COPY)
     val context = LocalContext.current
 
@@ -213,7 +216,7 @@ fun VerifyIdentityScreenContent(
         } else {
             Spacer(Modifier.height(20.dp))
             OutlinedButton(
-                onClick = { moreOptionsExpanded = true },
+                onClick = expandMoreOptions,
                 shape = RoundedCornerShape(6.dp),
                 border = BorderStroke(width = 1.dp, color =ColorScale_Gray_400),
                 modifier = Modifier
@@ -340,12 +343,14 @@ fun VerifyIdentityScreenContent_Preview() {
     EduidAppAndroidTheme {
         VerifyIdentityScreenContent(
             isLoading = false,
+            moreOptionsExpanded = true,
             errorData = null,
             dismissError = {},
             goToBankSelectionScreen = {},
             requestInstitutionLink = {},
             requestEidasLink = {},
-            openSupportUrl = {}
+            openSupportUrl = {},
+            expandMoreOptions = {}
         )
     }
 }

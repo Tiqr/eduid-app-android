@@ -51,7 +51,7 @@ class MainComposeActivity : ComponentActivity() {
         if (BuildConfig.DEBUG) {
             Toast.makeText(
                 this,
-                getString(R.string.editflags_environment_info, viewModel.environmentName),
+                getString(R.string.environment_info_toast, viewModel.environmentName),
                 Toast.LENGTH_LONG
             ).show()
         }

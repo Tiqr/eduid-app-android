@@ -30,6 +30,7 @@ import nl.eduid.screens.editemail.EditEmailScreen
 import nl.eduid.screens.editemail.EditEmailViewModel
 import nl.eduid.screens.editname.EditNameFormScreen
 import nl.eduid.screens.editname.EditNameFormViewModel
+import nl.eduid.screens.externalaccountlinkederror.ExternalAccountLinkedErrorScreen
 import nl.eduid.screens.firsttimedialog.FirstTimeDialogRoute
 import nl.eduid.screens.firsttimedialog.LinkAccountViewModel
 import nl.eduid.screens.homepage.HomePageScreen
@@ -57,6 +58,8 @@ import nl.eduid.screens.scan.ScanScreen
 import nl.eduid.screens.scan.StatelessScanViewModel
 import nl.eduid.screens.security.SecurityRoute
 import nl.eduid.screens.security.SecurityViewModel
+import nl.eduid.screens.selectyourbank.SelectYourBankScreen
+import nl.eduid.screens.selectyourbank.SelectYourBankViewModel
 import nl.eduid.screens.start.WelcomeStartScreen
 import nl.eduid.screens.start.WelcomeStartViewModel
 import nl.eduid.screens.twofactorkey.TwoFactorKeyScreen
@@ -509,8 +512,31 @@ fun MainGraph(
         val viewModel = hiltViewModel<VerifyIdentityViewModel>(it)
         VerifyIdentityScreen(
             viewModel = viewModel,
-            goToBankSelectionScreen = { /* TODO */ },
+            goToBankSelectionScreen = { navController.navigate(SelectYourBankRoute.route) },
             goBack = { navController.popBackStack() }
+        )
+    }
+
+    composable(SelectYourBankRoute.route) {
+        val viewModel = hiltViewModel<SelectYourBankViewModel>(it)
+        SelectYourBankScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() }
+        )
+    }
+
+    composable(ExternalAccountLinkedError.route, deepLinks = listOf(navDeepLink {
+        uriPattern = ExternalAccountLinkedError.getUriPattern(baseUrl)
+    })) {
+        ExternalAccountLinkedErrorScreen(
+            goBack = {
+                // We don't have a back stack anymore since this screen is always opened from a deeplink,
+                // so we recreate the stack manually
+                navController.popBackStack()
+                navController.navigate(Graph.HOME_PAGE)
+                navController.navigate(Graph.PERSONAL_INFO)
+                navController.navigate(VerifyIdentityRoute.route)
+            }
         )
     }
 //endregion

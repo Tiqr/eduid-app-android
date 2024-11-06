@@ -4,4 +4,6 @@
     <string name="app_name_with_version" translatable="false">eduID &#8226; v%s</string>
     <string name="app_url" translatable="false">https://eduid.nl/</string>
     <string name="surf" translatable="false">Surf/</string>
+
+    <string name="environment_info_toast" translatable="false">Working on the %s environment.</string>
 </resources>

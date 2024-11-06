@@ -8,5 +8,4 @@
     <string name="editflags_open_settings">Open settings</string>
     <string name="editflags_edit_test_settings">Edit Test Settings</string>
     <string name="editflags_edit_feature_flags">Edit Feature Flags</string>
-    <string name="editflags_environment_info">Working on the %s environment.</string>
 </resources>
