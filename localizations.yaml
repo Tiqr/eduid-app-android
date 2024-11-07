@@ -314,18 +314,14 @@ SHARED:
         COPY:
           en: "Could not retrieve URL for linking your current account."
           nl: "De URL kon niet worden opgehaald voor het koppelen van uw huidige account."
-    AddViaSurfconext:
+    AddAnOrganisation:
       COPY:
-        en: "Proceed to add this via SURFconext"
-        nl: "Voeg dit toe via SURFconext"
-    AddRoleAndInstitution:
+        en: "Add an organisation"
+        nl: "Voeg een organisatie toe"
+    OrganisationsHeader:
       COPY:
-        en: "Add role & institution"
-        nl: "Voeg een rol & instelling toe"
-    RoleAndInstitution:
-      COPY:
-        en: "Role & institution"
-        nl: "Rol & instelling"
+        en: "Organisations"
+        nl: "Organisaties"
     Me:
       COPY:
         en: me
@@ -366,8 +362,7 @@ SHARED:
     Info:
       COPY:
         en: >-
-          When you use eduID to logon to other websites, some of your personal
-          information will be shared.
+          When you use eduID to logon to other websites, the following information can be shared.
         nl: >-
           Wanneer je eduID gebruikt om in te loggen op andere websites, kan jouw
           persoonlijke informatie worden gedeeld.
@@ -414,8 +409,8 @@ SHARED:
           nl: Sommige diensten eisen dat jouw identiteit geverifieerd is door een vertrouwde instelling.
       Button:
         COPY:
-          en: Verify identity now
-          nl: Verifïeer mijn identiteit
+          en: Verify now
+          nl: Start verificatie
     FirstName:
       COPY:
         en: First name
@@ -3855,6 +3850,14 @@ SHARED:
               en: "Authorization code exchange failed: %1{{s}}."
               nl: "Autorisatiecode-uitwisseling mislukt: %1{{s}}."
   VerifyIdentity:
+    TitleHasInternalLink:
+      COPY:
+        en: Add an organisation
+        nl: Voeg een organisatie toe
+    SubtitleHasInternalLink:
+      COPY:
+        en: By adding an organisation to your eduID, you prove that you are a student or employee of that organisation. This also verifies your eduID.
+        nl: Door een organisatie toe te voegen, bewijs je dat je een student of medewerker bent van die organisatie. Dit verifïeert ook je eduID.
     Title:
       FirstLine:
         COPY:
@@ -3866,21 +3869,25 @@ SHARED:
           nl: Snel en eenvoudig
     Subtitle:
       COPY:
-        en: Please verify that you are who you say you are.
+        en: Your first and lastname and optionally your date of birth will be added to your eduID.
         nl: Verifieer dat je bent wie je zegt dat je bent.
     VerifyViaDutchInstitution:
       Title:
         COPY:
           en: Verify via a Dutch educational institution
           nl: Verifieer via een Nederlandse onderwijsinstelling
+      TitleHasInternalLink:
+        COPY:
+          en: Add your organisation by logging in
+          nl: Voeg je organisatie toe door in te loggen
       Button:
         COPY:
           en: Select your institution
           nl: Selecteer je instelling
-    VerifyWithBankingApp:
+    VerifyWithBankApp:
       Title:
         COPY:
-          en: Verify with a Dutch banking app
+          en: Verify with a Dutch bank app
           nl: Verifieer met een Nederlandse bank app
       Button:
         COPY:
@@ -3895,15 +3902,6 @@ SHARED:
         COPY:
           en: Use a European ID
           nl: Selecteer een Europees ID
-      Subtitle:
-        Full:
-          COPY:
-            en: We support the National digital ID’s of  Belgium, Denmark, Germany, Estonia, Italy, Croatia, Lithuania, Latvia, Luxembourg, Malta, Portugal, Slovakia, Spain, Czech Republic and Sweden.
-            nl: Dit kan met de inlogmiddelen van België, Denemarken, Duitsland, Estland, Italië, Kroatië, Litouwen, Letland, Liechtenstein, Luxemburg, Malta, Oostenrijk, Polen, Portugal, Slowakije, Slovenië, Spanje, Tsjechië en Zweden
-        BoldPart:
-          COPY:
-            en: Belgium, Denmark, Germany, Estonia, Italy, Croatia, Lithuania, Latvia, Luxembourg, Malta, Portugal, Slovakia, Spain, Czech Republic and Sweden
-            nl: België, Denemarken, Duitsland, Estland, Italië, Kroatië, Litouwen, Letland, Liechtenstein, Luxemburg, Malta, Oostenrijk, Polen, Portugal, Slowakije, Slovenië, Spanje, Tsjechië en Zweden
     OtherOptions:
       COPY:
         en: Other options…
@@ -3956,15 +3954,15 @@ SHARED:
     Title:
       COPY:
         en: "Your personal info 🎉"
-        nl: "Jouw persoonlijk informatie 🎉"
+        nl: "Jouw persoonlijke info 🎉"
     Subtitle:
       COPY:
-        en: "The following information has been added to your eduID."
-        nl: "De volgende informatie is toegevoegd aan jouw eduID account."
+        en: "The following information has been added to your eduID and can now be shared."
+        nl: "De volgende informatie is toegevoegd aan jouw eduID account en kan nu worden gedeeld."
     SubtitlePreferInstitution:
       COPY:
-       en: "Do you want to use the following information to be the default information shared with applications?"
-       nl: "Wil je de volgende informatie, gebruiken als standaardinformatie om met diensten te delen?"
+       en: "We also received new information. Do you want to use this for your eduID?"
+       nl: "We hebben ook nieuwe informatie gekregen. Wil je deze gebruiken voor je eduID?"
     Button:
       Continue:
         COPY:
@@ -3972,11 +3970,11 @@ SHARED:
           nl: "Ga door"
       YesPlease:
         COPY:
-          en: "Yes, please"
+          en: "Yes please"
           nl: "Ja, graag"
       NoThanks:
         COPY:
-          en: "No, thanks"
+          en: "No thanks"
           nl: "Nee, bedankt"
   ExternalAccountLinkingError:
     Title:
