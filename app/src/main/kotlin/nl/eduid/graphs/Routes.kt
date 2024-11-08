@@ -345,7 +345,17 @@ sealed class EditName(val route: String) {
 }
 
 object VerifyIdentityRoute {
-    const val route = "verify_identity"
+    private const val route = "verify_identity"
+    const val isLinkedAccount = "is_linked_account"
+    const val routeWithArgs = "$route?$isLinkedAccount={$isLinkedAccount}"
+
+    val arguments = listOf(navArgument(isLinkedAccount) {
+        type = NavType.BoolType
+        nullable = false
+        defaultValue = false
+    })
+
+    fun routeWithArgs(isLinkedAccount: Boolean) = "$route?${VerifyIdentityRoute.isLinkedAccount}=$isLinkedAccount"
 }
 
 object SelectYourBankRoute {

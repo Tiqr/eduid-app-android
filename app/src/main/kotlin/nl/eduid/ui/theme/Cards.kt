@@ -23,7 +23,6 @@ import nl.eduid.R
 @Composable
 fun LinkAccountCard(
     title: Int,
-    subtitle: Int,
     enabled: Boolean = true,
     addLinkToAccount: () -> Unit = {},
 ) {
@@ -43,14 +42,7 @@ fun LinkAccountCard(
             Text(
                 text = stringResource(title),
                 style = MaterialTheme.typography.bodyLarge.copy(
-                    fontWeight = FontWeight.Bold,
-                )
-            )
-            Text(
-                text = stringResource(subtitle),
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    fontWeight = FontWeight.Light,
-                    fontStyle = FontStyle.Italic
+                    fontWeight = FontWeight.Normal,
                 )
             )
         }
@@ -67,8 +59,7 @@ fun LinkAccountCard(
 private fun Preview_LinkAccountCard() {
     EduidAppAndroidTheme {
         LinkAccountCard(
-            title = R.string.Profile_AddRoleAndInstitution_COPY,
-            subtitle = R.string.Profile_AddViaSurfconext_COPY,
+            title = R.string.Profile_AddAnOrganisation_COPY,
         )
     }
 }

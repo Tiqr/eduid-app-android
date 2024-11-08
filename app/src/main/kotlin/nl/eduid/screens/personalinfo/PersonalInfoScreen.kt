@@ -76,7 +76,7 @@ fun PersonalInfoRoute(
     onNameClicked: (SelfAssertedName, Boolean) -> Unit,
     onManageAccountClicked: (dateString: String) -> Unit,
     openVerifiedInformation: (String) -> Unit,
-    goToVerifyIdentity: () -> Unit,
+    goToVerifyIdentity: (Boolean) -> Unit,
     goBack: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -92,11 +92,11 @@ fun PersonalInfoRoute(
     }
     val addLink = remember(hasLinkedInstitution) {
         {
-            if (hasLinkedInstitution || !viewModel.identityVerificationEnabled) {
+            if (!viewModel.identityVerificationEnabled) {
                 viewModel.requestLinkUrl()
                 isGettingLinkUrl = true
             } else {
-                goToVerifyIdentity()
+                goToVerifyIdentity(hasLinkedInstitution)
             }
         }
     }
@@ -227,12 +227,11 @@ fun PersonalInfoScreen(
                 })
 
             if (uiState.personalInfo.institutionAccounts.isNotEmpty()) {
-                RoleAndInstitutions(openVerifiedInformation, uiState.personalInfo.institutionAccounts)
+                Organisations(openVerifiedInformation, uiState.personalInfo.institutionAccounts)
             }
 
             LinkAccountCard(
-                title = R.string.Profile_AddRoleAndInstitution_COPY,
-                subtitle = R.string.Profile_AddViaSurfconext_COPY,
+                title = R.string.Profile_AddAnOrganisation_COPY,
                 addLinkToAccount = addLinkToAccount
             )
             val configuration = LocalConfiguration.current
@@ -274,12 +273,12 @@ fun PersonalInfoScreen(
 }
 
 @Composable
-private fun ColumnScope.RoleAndInstitutions(
+private fun ColumnScope.Organisations(
     openVerifiedInformation: (String) -> Unit,
     institutionAccounts: List<PersonalInfo.InstitutionAccount>,
 ) {
     Text(
-        text = stringResource(R.string.Profile_RoleAndInstitution_COPY),
+        text = stringResource(R.string.Profile_OrganisationsHeader_COPY),
         style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onSecondary),
         modifier = Modifier.padding(top = 16.dp)
     )
@@ -492,7 +491,7 @@ private fun Preview_RoleAndInstitutions() = EduidAppAndroidTheme {
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier.background(MaterialTheme.colorScheme.background)
     ) {
-        RoleAndInstitutions(institutionAccounts = PersonalInfo.generateInstitutionAccountList(),
+        Organisations(institutionAccounts = PersonalInfo.generateInstitutionAccountList(),
             openVerifiedInformation = {})
     }
 }

@@ -32,10 +32,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -86,6 +82,7 @@ fun VerifyIdentityScreen(
 
     VerifyIdentityScreenContent(
         isLoading = viewModel.uiState.isLoading,
+        isLinkedAccount = viewModel.isLinkedAccount,
         moreOptionsExpanded = viewModel.uiState.moreOptionsExpanded,
         errorData = viewModel.uiState.errorData,
         dismissError = viewModel::dismissError,
@@ -104,6 +101,7 @@ fun VerifyIdentityScreen(
 @Composable
 fun VerifyIdentityScreenContent(
     isLoading: Boolean,
+    isLinkedAccount: Boolean,
     moreOptionsExpanded: Boolean,
     errorData: ErrorData?,
     dismissError: () -> Unit,
@@ -135,26 +133,42 @@ fun VerifyIdentityScreenContent(
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = stringResource(R.string.VerifyIdentity_Title_FirstLine_COPY),
-            style = MaterialTheme.typography.titleLarge.copy(
-                textAlign = TextAlign.Start, color = MaterialTheme.colorScheme.onSecondary
-            ),
-            modifier = Modifier.fillMaxWidth()
-                .padding(top = 16.dp)
-        )
-        Text(
-            text = stringResource(R.string.VerifyIdentity_Title_SecondLine_COPY),
-            style = MaterialTheme.typography.titleLarge.copy(
-                textAlign = TextAlign.Start
-            ),
-            modifier = Modifier.fillMaxWidth()
-                .padding(top = 6.dp)
+        if (isLinkedAccount) {
+            Text(
+                text = stringResource(R.string.VerifyIdentity_TitleHasInternalLink_COPY),
+                style = MaterialTheme.typography.titleLarge.copy(
+                    textAlign = TextAlign.Start, color = MaterialTheme.colorScheme.onSecondary
+                ),
+                modifier = Modifier.fillMaxWidth()
+                    .padding(top = 16.dp)
+            )
+        } else {
+            Text(
+                text = stringResource(R.string.VerifyIdentity_Title_FirstLine_COPY),
+                style = MaterialTheme.typography.titleLarge.copy(
+                    textAlign = TextAlign.Start, color = MaterialTheme.colorScheme.onSecondary
+                ),
+                modifier = Modifier.fillMaxWidth()
+                    .padding(top = 16.dp)
+            )
+            Text(
+                text = stringResource(R.string.VerifyIdentity_Title_SecondLine_COPY),
+                style = MaterialTheme.typography.titleLarge.copy(
+                    textAlign = TextAlign.Start
+                ),
+                modifier = Modifier.fillMaxWidth()
+                    .padding(top = 6.dp)
 
-        )
+            )
+        }
         Spacer(Modifier.height(16.dp))
+        val subtitle = if (isLinkedAccount) {
+            stringResource(R.string.VerifyIdentity_SubtitleHasInternalLink_COPY)
+        } else {
+            stringResource(R.string.VerifyIdentity_Subtitle_COPY)
+        }
         Text(
-            text = stringResource(R.string.VerifyIdentity_Subtitle_COPY),
+            text = subtitle,
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth()
         )
@@ -169,9 +183,9 @@ fun VerifyIdentityScreenContent(
         if (moreOptionsExpanded) {
             Spacer(Modifier.height(20.dp))
             VerifyIdentityControl(
-                title = stringResource(R.string.VerifyIdentity_VerifyWithBankingApp_Title_COPY),
+                title = stringResource(R.string.VerifyIdentity_VerifyWithBankApp_Title_COPY),
                 icon = painterResource(id = R.drawable.ic_verify_bank),
-                buttonTitle = stringResource(R.string.VerifyIdentity_VerifyWithBankingApp_Button_COPY),
+                buttonTitle = stringResource(R.string.VerifyIdentity_VerifyWithBankApp_Button_COPY),
                 isLoading = isLoading,
                 buttonIcon = painterResource(id = R.drawable.ic_idin),
                 onClick = { goToBankSelectionScreen() }
@@ -181,8 +195,6 @@ fun VerifyIdentityScreenContent(
                 title = stringResource(R.string.VerifyIdentity_VerifyWithAEuropianId_Title_COPY),
                 icon = painterResource(id = R.drawable.ic_verify_id),
                 buttonTitle = stringResource(R.string.VerifyIdentity_VerifyWithAEuropianId_Button_COPY),
-                subtitle = stringResource(R.string.VerifyIdentity_VerifyWithAEuropianId_Subtitle_Full_COPY),
-                subtitleBoldPart = stringResource(R.string.VerifyIdentity_VerifyWithAEuropianId_Subtitle_BoldPart_COPY),
                 isLoading = isLoading,
                 buttonIcon = painterResource(id = R.drawable.ic_eidas),
                 onClick = { requestEidasLink() }
@@ -213,7 +225,7 @@ fun VerifyIdentityScreenContent(
                 text = supportLinkText,
                 style = MaterialTheme.typography.bodyLarge.copy(color = ColorScale_Gray_500)
             )
-        } else {
+        } else if (!isLinkedAccount) {
             Spacer(Modifier.height(20.dp))
             OutlinedButton(
                 onClick = expandMoreOptions,
@@ -238,8 +250,6 @@ fun VerifyIdentityControl(
     icon: Painter,
     buttonTitle: String,
     isLoading: Boolean,
-    subtitle: String? = null,
-    subtitleBoldPart: String? = null,
     buttonIcon: Painter? = null,
     onClick: () -> Unit
 ) {
@@ -263,28 +273,6 @@ fun VerifyIdentityControl(
                 painter = icon,
                 contentDescription = null,
                 modifier = Modifier.size(40.dp)
-            )
-        }
-
-        subtitle?.let {
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = buildAnnotatedString {
-                    append(it)
-                    subtitleBoldPart?.let { boldPart ->
-                        val startIndex = it.indexOf(boldPart)
-                        if (startIndex >= 0) {
-                            addStyle(
-                                style = SpanStyle(fontWeight = FontWeight.Bold),
-                                start = startIndex,
-                                end = startIndex + boldPart.length
-                            )
-                        }
-                    }
-                },
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    lineHeight = 22.sp
-                )
             )
         }
 
@@ -343,6 +331,7 @@ fun VerifyIdentityScreenContent_Preview() {
     EduidAppAndroidTheme {
         VerifyIdentityScreenContent(
             isLoading = false,
+            isLinkedAccount = true,
             moreOptionsExpanded = true,
             errorData = null,
             dismissError = {},

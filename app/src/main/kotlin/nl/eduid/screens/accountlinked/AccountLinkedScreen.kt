@@ -185,7 +185,7 @@ private fun AccountLinkedContent(
     Spacer(Modifier.height(16.dp))
     if (personalInfo.institutionAccounts.isNotEmpty()) {
         Text(
-            text = stringResource(R.string.Profile_RoleAndInstitution_COPY),
+            text = stringResource(R.string.Profile_OrganisationsHeader_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.SemiBold,
