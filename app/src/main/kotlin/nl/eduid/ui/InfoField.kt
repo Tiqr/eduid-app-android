@@ -286,7 +286,7 @@ fun ExpandableVerifiedInfoField(
     subtitle: String,
     confirmedByInstitution: PersonalInfo.InstitutionAccount,
     modifier: Modifier = Modifier,
-    openVerifiedInformation: (String) -> Unit = {},
+    openVerifiedInformation: () -> Unit = {},
     expandedPreview: Boolean = false,
 ) {
     var isExpanded by remember { mutableStateOf(expandedPreview) }
@@ -341,7 +341,7 @@ fun ExpandableVerifiedInfoField(
                     )
                     HorizontalDivider(thickness = 2.dp, color = MaterialTheme.colorScheme.onSurface)
                     TextButton(
-                        onClick = { openVerifiedInformation(confirmedByInstitution.linkedAccountJson) },
+                        onClick = { openVerifiedInformation() },
                         shape = RoundedCornerShape(CornerSize(6.dp)),
                         contentPadding = PaddingValues(0.dp)
                     ) {

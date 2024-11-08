@@ -51,23 +51,7 @@ object AccountLinked {
 }
 
 object VerifiedPersonalInfoRoute {
-    private const val route = "verified_personal_info"
-    const val verifiedByAccountArg = "verified_by"
-    const val routeWithArgs = "$route/{$verifiedByAccountArg}"
-    val arguments = listOf(navArgument(verifiedByAccountArg) {
-        type = NavType.StringType
-        nullable = false
-        defaultValue = ""
-    })
-
-    fun routeWithAccount(verifiedByAccount: String) =
-        "${route}/$verifiedByAccount"
-
-    fun decodeInstitutionId(entry: NavBackStackEntry): String {
-        val institutionId = entry.arguments?.getString(verifiedByAccountArg) ?: ""
-        return Uri.decode(institutionId)
-    }
-
+    const val route = "verified_personal_info"
 }
 
 object RequestEduIdLinkSent {

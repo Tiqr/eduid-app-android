@@ -3,7 +3,8 @@ android-sdk-compile = "34"
 android-sdk-target = "34"
 android-sdk-min = "24"
 
-androidGradlePlugin = "8.2.2"
+androidGradlePlugin = "8.7.0"
+coreLibraryDesugaring = "2.0.3"
 hilt = "2.51.1"
 kotlin = "1.9.25"
 ksp = "1.9.25-1.0.20"
@@ -25,7 +26,7 @@ kotlinx-immutable-collections = "0.3.8"
 coil = "2.7.0"
 
 [libraries]
-
+coreLibraryDesugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "coreLibraryDesugaring" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }

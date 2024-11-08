@@ -56,8 +56,6 @@ import com.theapache64.rebugger.Rebugger
 import kotlinx.coroutines.flow.filterNotNull
 import nl.eduid.R
 import nl.eduid.di.model.SelfAssertedName
-import nl.eduid.flags.FeatureFlag
-import nl.eduid.flags.RuntimeBehavior
 import nl.eduid.screens.firsttimedialog.LinkAccountContract
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.ConnectionCard
@@ -75,7 +73,7 @@ fun PersonalInfoRoute(
     onEmailClicked: () -> Unit,
     onNameClicked: (SelfAssertedName, Boolean) -> Unit,
     onManageAccountClicked: (dateString: String) -> Unit,
-    openVerifiedInformation: (String) -> Unit,
+    openVerifiedInformation: () -> Unit,
     goToVerifyIdentity: (Boolean) -> Unit,
     goBack: () -> Unit,
 ) {
@@ -88,7 +86,7 @@ fun PersonalInfoRoute(
     val onEmail = remember(viewModel) { { onEmailClicked() } }
     val onBack = remember(viewModel) { { goBack() } }
     val onName = remember(viewModel) {
-        { onNameClicked(uiState.personalInfo.seflAssertedName, !uiState.personalInfo.isVerified) }
+        { onNameClicked(uiState.personalInfo.selfAssertedName, !uiState.personalInfo.isVerified) }
     }
     val addLink = remember(hasLinkedInstitution) {
         {
@@ -157,7 +155,7 @@ fun PersonalInfoScreen(
     onNameClicked: () -> Unit,
     onEmailClicked: () -> Unit,
     onManageAccountClicked: () -> Unit,
-    openVerifiedInformation: (String) -> Unit,
+    openVerifiedInformation: () -> Unit,
     addLinkToAccount: () -> Unit,
     goBack: () -> Unit,
 ) = EduIdTopAppBar(
@@ -202,79 +200,142 @@ fun PersonalInfoScreen(
         if (!isLoading) {
             if (!uiState.personalInfo.isVerified) {
                 NotVerifiedIdentity(
-                    selfAssertedName = uiState.personalInfo.seflAssertedName,
                     isLoading = isLoading,
                     addLinkToAccount = addLinkToAccount,
-                    onNameClicked = onNameClicked
                 )
             } else {
-                VerifiedIdentity(
-                    personalInfo = uiState.personalInfo,
-                    onNameClicked = onNameClicked,
-                    openVerifiedInformation = openVerifiedInformation
-                )
+                VerifiedIdentity()
             }
-
-            Text(
-                style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onSecondary),
-                text = stringResource(R.string.Profile_ContactDetails_COPY),
-                modifier = Modifier.padding(top = 16.dp)
-            )
-            InfoField(title = uiState.personalInfo.email,
-                subtitle = stringResource(R.string.Profile_Email_COPY),
+            val personalInfo = uiState.personalInfo
+            // We always allow editing the first name
+            InfoField(
+                title = personalInfo.selfAssertedName.chosenName.orEmpty(),
+                subtitle = stringResource(R.string.Profile_FirstName_COPY),
                 modifier = Modifier.clickable {
-                    onEmailClicked()
-                })
-
-            if (uiState.personalInfo.institutionAccounts.isNotEmpty()) {
-                Organisations(openVerifiedInformation, uiState.personalInfo.institutionAccounts)
-            }
-
-            LinkAccountCard(
-                title = R.string.Profile_AddAnOrganisation_COPY,
-                addLinkToAccount = addLinkToAccount
+                    onNameClicked()
+                }
             )
-            val configuration = LocalConfiguration.current
-            Surface(
-                modifier = Modifier
-                    .requiredWidth(configuration.screenWidthDp.dp)
-                    .background(MaterialTheme.colorScheme.tertiaryContainer)
-                    .padding(vertical = 12.dp, horizontal = 24.dp),
-            ) {
-                OutlinedButton(
-                    onClick = onManageAccountClicked,
-                    shape = RoundedCornerShape(CornerSize(6.dp)),
-                    modifier = Modifier
-                        .sizeIn(minHeight = 48.dp)
-                        .fillMaxWidth()
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.cog_icon),
-                        alignment = CenterStart,
-                        contentDescription = "",
-                        modifier = Modifier.padding(horizontal = 24.dp)
+
+            var hasVerifiedGivenName = false
+            var hasVerifiedFamilyName = false
+            // Search in linked internal accounts and then external account
+            for (linkedAccount in personalInfo.linkedInternalAccounts + personalInfo.linkedExternalAccounts) {
+                if (!hasVerifiedGivenName && linkedAccount.givenName != null && linkedAccount.givenName == personalInfo.selfAssertedName.givenName) {
+                    addNameControl(
+                        value = linkedAccount.givenName,
+                        label = stringResource(R.string.Profile_VerifiedGivenName_COPY),
+                        account = linkedAccount,
+                        openVerifiedInformation = openVerifiedInformation
                     )
-                    Text(
-                        text = stringResource(R.string.Profile_ManageYourAccount_COPY),
-                        style = MaterialTheme.typography.bodyLarge.copy(
-                            textAlign = TextAlign.Start,
-                            fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        ),
+                    hasVerifiedGivenName = true
+                }
+                if (!hasVerifiedFamilyName && linkedAccount.familyName != null && linkedAccount.familyName == personalInfo.selfAssertedName.familyName) {
+                    addNameControl(
+                        value = linkedAccount.familyName,
+                        label = stringResource(R.string.Profile_VerifiedFamilyName_COPY),
+                        account = linkedAccount,
+                        openVerifiedInformation = openVerifiedInformation
                     )
+                    hasVerifiedFamilyName = true
                 }
             }
-        } else {
-            LinearProgressIndicator(
-                modifier = Modifier.fillMaxWidth()
+            // It is possible that there's a verified name, but it doesn't match the one in the profile. In this case we still need to show it
+            // So we go through the accounts once more, but do not check for matches anymore
+            if (!hasVerifiedGivenName || !hasVerifiedFamilyName) {
+                for (linkedAccount in (personalInfo.linkedInternalAccounts + personalInfo.linkedExternalAccounts)) {
+                    if (!hasVerifiedGivenName && linkedAccount.givenName != null) {
+                        addNameControl(
+                            value = linkedAccount.givenName,
+                            label = stringResource(R.string.Profile_VerifiedGivenName_COPY),
+                            account = linkedAccount,
+                            openVerifiedInformation = openVerifiedInformation
+                        )
+                        hasVerifiedGivenName = true
+                    }
+                if (!hasVerifiedFamilyName && linkedAccount.familyName != null) {
+                        addNameControl(
+                            value = linkedAccount.familyName,
+                            label = stringResource(R.string.Profile_VerifiedFamilyName_COPY),
+                            account = linkedAccount,
+                            openVerifiedInformation = openVerifiedInformation
+                        )
+                    hasVerifiedFamilyName = true
+                }
+            }
+        }
+        // If there's not verified family name at all, we show the self-asserted one
+        if (!hasVerifiedFamilyName && personalInfo.selfAssertedName.familyName != null) {
+            InfoField(
+                title = personalInfo.selfAssertedName.familyName,
+                subtitle = stringResource(R.string.Profile_LastName_COPY),
+                modifier = Modifier.clickable {
+                    onNameClicked()
+                }
             )
         }
-    }
+
+
+        // Email
+        Text(
+            style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onSecondary),
+            text = stringResource(R.string.Profile_ContactDetails_COPY),
+            modifier = Modifier.padding(top = 16.dp)
+        )
+        InfoField(title = uiState.personalInfo.email,
+            subtitle = stringResource(R.string.Profile_Email_COPY),
+            modifier = Modifier.clickable {
+                onEmailClicked()
+            })
+
+        if (uiState.personalInfo.linkedInternalAccounts.isNotEmpty()) {
+            Organisations(openVerifiedInformation, uiState.personalInfo.linkedInternalAccounts)
+        }
+
+        LinkAccountCard(
+            title = R.string.Profile_AddAnOrganisation_COPY,
+            addLinkToAccount = addLinkToAccount
+        )
+        val configuration = LocalConfiguration.current
+        Surface(
+            modifier = Modifier
+                .requiredWidth(configuration.screenWidthDp.dp)
+                .background(MaterialTheme.colorScheme.tertiaryContainer)
+                .padding(vertical = 12.dp, horizontal = 24.dp),
+        ) {
+            OutlinedButton(
+                onClick = onManageAccountClicked,
+                shape = RoundedCornerShape(CornerSize(6.dp)),
+                modifier = Modifier
+                    .sizeIn(minHeight = 48.dp)
+                    .fillMaxWidth()
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.cog_icon),
+                    alignment = CenterStart,
+                    contentDescription = "",
+                    modifier = Modifier.padding(horizontal = 24.dp)
+                )
+                Text(
+                    text = stringResource(R.string.Profile_ManageYourAccount_COPY),
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        textAlign = TextAlign.Start,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    ),
+                )
+            }
+        }
+    } else {
+    LinearProgressIndicator(
+        modifier = Modifier.fillMaxWidth()
+    )
+}
+}
 }
 
 @Composable
 private fun ColumnScope.Organisations(
-    openVerifiedInformation: (String) -> Unit,
+    openVerifiedInformation: () -> Unit,
     institutionAccounts: List<PersonalInfo.InstitutionAccount>,
 ) {
     Text(
@@ -284,7 +345,7 @@ private fun ColumnScope.Organisations(
     )
     institutionAccounts.forEach { account ->
         ConnectionCard(
-            title = account.role,
+            title = account.role ?: account.id,
             confirmedByInstitution = account,
             openVerifiedInformation = openVerifiedInformation
         )
@@ -292,11 +353,19 @@ private fun ColumnScope.Organisations(
 }
 
 @Composable
+private fun addNameControl(value: String, label: String, account: PersonalInfo.InstitutionAccount, openVerifiedInformation: () -> Unit) {
+    ExpandableVerifiedInfoField(
+        title = value,
+        subtitle = label,
+        confirmedByInstitution = account,
+        openVerifiedInformation = openVerifiedInformation
+    )
+}
+
+@Composable
 private fun ColumnScope.NotVerifiedIdentity(
-    selfAssertedName: SelfAssertedName,
     isLoading: Boolean,
     addLinkToAccount: () -> Unit,
-    onNameClicked: () -> Unit,
 ) {
     NotVerifiedBanner(addLinkToAccount)
 
@@ -327,24 +396,10 @@ private fun ColumnScope.NotVerifiedIdentity(
             modifier = Modifier.fillMaxWidth()
         )
     }
-    InfoField(title = selfAssertedName.chosenName.orEmpty(),
-        subtitle = stringResource(R.string.Profile_FirstName_COPY),
-        modifier = Modifier.clickable {
-            onNameClicked()
-        })
-    InfoField(title = selfAssertedName.familyName.orEmpty(),
-        subtitle = stringResource(R.string.Profile_LastName_COPY),
-        modifier = Modifier.clickable {
-            onNameClicked()
-        })
 }
 
 @Composable
-private fun ColumnScope.VerifiedIdentity(
-    personalInfo: PersonalInfo,
-    onNameClicked: () -> Unit,
-    openVerifiedInformation: (String) -> Unit = {},
-) {
+private fun ColumnScope.VerifiedIdentity() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -378,27 +433,6 @@ private fun ColumnScope.VerifiedIdentity(
             )
         }
     }
-    InfoField(title = personalInfo.seflAssertedName.chosenName.orEmpty(),
-        subtitle = stringResource(R.string.Profile_FirstName_COPY),
-        modifier = Modifier.clickable {
-            onNameClicked()
-        })
-    ExpandableVerifiedInfoField(
-        title = personalInfo.confirmedName.givenName.orEmpty(),
-        subtitle = stringResource(R.string.Profile_VerifiedGivenName_COPY),
-        confirmedByInstitution = personalInfo.institutionAccounts.first {
-            it.id == personalInfo.confirmedName.givenNameConfirmedBy.orEmpty()
-        },
-        openVerifiedInformation = openVerifiedInformation
-    )
-    ExpandableVerifiedInfoField(
-        title = personalInfo.confirmedName.familyName.orEmpty(),
-        subtitle = stringResource(R.string.Profile_VerifiedFamilyName_COPY),
-        confirmedByInstitution = personalInfo.institutionAccounts.first {
-            it.id == personalInfo.confirmedName.familyNameConfirmedBy.orEmpty()
-        },
-        openVerifiedInformation = openVerifiedInformation
-    )
 }
 
 @Composable
@@ -463,7 +497,7 @@ private fun Preview_PersonalInfoScreen() = EduidAppAndroidTheme {
         onNameClicked = { },
         onEmailClicked = {},
         onManageAccountClicked = {},
-        openVerifiedInformation = { _ -> },
+        openVerifiedInformation = {},
         addLinkToAccount = {},
         goBack = {})
 }
@@ -476,10 +510,7 @@ private fun Preview_VerifiedIdentity() = EduidAppAndroidTheme {
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier.background(MaterialTheme.colorScheme.background)
     ) {
-        VerifiedIdentity(
-            personalInfo = PersonalInfo.verifiedDemoData(),
-            onNameClicked = {}
-        )
+        VerifiedIdentity()
     }
 }
 

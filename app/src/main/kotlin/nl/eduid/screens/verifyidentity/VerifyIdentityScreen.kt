@@ -173,8 +173,13 @@ fun VerifyIdentityScreenContent(
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(16.dp))
+        val instituteButtonTitle = if (isLinkedAccount) {
+            stringResource(R.string.VerifyIdentity_VerifyViaDutchInstitution_TitleHasInternalLink_COPY)
+        } else {
+            stringResource(R.string.VerifyIdentity_VerifyViaDutchInstitution_Title_COPY)
+        }
         VerifyIdentityControl(
-            title = stringResource(R.string.VerifyIdentity_VerifyViaDutchInstitution_Title_COPY),
+            title = instituteButtonTitle,
             icon = painterResource(id = R.drawable.ic_verify_institution),
             buttonTitle = stringResource(R.string.VerifyIdentity_VerifyViaDutchInstitution_Button_COPY),
             isLoading = isLoading,

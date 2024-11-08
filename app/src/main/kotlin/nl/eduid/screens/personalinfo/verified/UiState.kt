@@ -3,6 +3,6 @@ package nl.eduid.screens.personalinfo.verified
 import nl.eduid.screens.personalinfo.PersonalInfo
 
 data class UiState(
-    val verifier: PersonalInfo.InstitutionAccount? = null,
+    val accounts: List<PersonalInfo.InstitutionAccount> = emptyList(),
     val isLoading: Boolean = false,
 )

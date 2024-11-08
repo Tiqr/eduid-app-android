@@ -3,8 +3,12 @@ package nl.eduid.di.model
 import com.squareup.moshi.Moshi
 import nl.eduid.screens.personalinfo.PersonalInfo
 import java.net.URLEncoder
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.ZoneOffset
 
-fun LinkedAccount.mapToInstitutionAccount(asJson: String): PersonalInfo.InstitutionAccount? =
+fun LinkedAccount.mapToInstitutionAccount(): PersonalInfo.InstitutionAccount? =
     this.eduPersonAffiliations.firstOrNull()?.let { affiliation ->
         //Just in case affiliation is not in the email format
         val role = if (affiliation.indexOf("@") > 0) {
@@ -14,7 +18,6 @@ fun LinkedAccount.mapToInstitutionAccount(asJson: String): PersonalInfo.Institut
         }
         PersonalInfo.InstitutionAccount(
             id = this.institutionIdentifier,
-            linkedAccountJson = URLEncoder.encode(asJson, Charsets.UTF_8.toString()),
             role = role,
             roleProvider = this.schacHomeOrganization,
             institution = this.schacHomeOrganization,
@@ -26,8 +29,23 @@ fun LinkedAccount.mapToInstitutionAccount(asJson: String): PersonalInfo.Institut
         )
     }
 
+fun ExternalLinkedAccount.mapToInstitutionAccount(): PersonalInfo.InstitutionAccount? =
+    PersonalInfo.InstitutionAccount(
+        id = this.idpScoping ?: "",
+        role = null,
+        roleProvider = null,
+        institution = this.issuer?.name ?: this.idpScoping ?: "",
+        affiliationString = null,
+        givenName = this.givenName,
+        familyName = this.familyName,
+        dateOfBirth = this.dateOfBirth?.let { LocalDate.ofInstant(Instant.ofEpochMilli(it), ZoneOffset.UTC) },
+        createdStamp = this.createdAt,
+        expiryStamp = this.expiresAt,
+    )
 
-fun UserDetails.mapToPersonalInfo(moshi: Moshi): PersonalInfo {
+
+
+fun UserDetails.mapToPersonalInfo(): PersonalInfo {
     val dateCreated = this.created * 1000
     val linkedAccounts = this.linkedAccounts
 
@@ -41,14 +59,16 @@ fun UserDetails.mapToPersonalInfo(moshi: Moshi): PersonalInfo {
     } ?: "${this.chosenName} ${this.familyName}"
 
     val email: String = this.email
-    val adapter = moshi.adapter(LinkedAccount::class.java)
-    val institutionAccounts = linkedAccounts.mapNotNull { account ->
-        account.mapToInstitutionAccount(adapter.toJson(account))
+    val linkedInternalAccounts = linkedAccounts.mapNotNull { account ->
+        account.mapToInstitutionAccount()
+    }
+    val linkedExternalAccounts = this.externalLinkedAccounts.mapNotNull { account ->
+        account.mapToInstitutionAccount()
     }
 
     return PersonalInfo(
         name = name,
-        seflAssertedName = SelfAssertedName(
+        selfAssertedName = SelfAssertedName(
             familyName = this.familyName,
             givenName = this.givenName,
             chosenName = this.chosenName
@@ -61,7 +81,8 @@ fun UserDetails.mapToPersonalInfo(moshi: Moshi): PersonalInfo {
         ),
         nameProvider = nameProvider,
         email = email,
-        institutionAccounts = institutionAccounts,
+        linkedInternalAccounts = linkedInternalAccounts,
+        linkedExternalAccounts = linkedExternalAccounts,
         dateCreated = dateCreated,
     )
 }

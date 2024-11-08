@@ -63,6 +63,7 @@ data class UserDetails(
     val usePublicKey: Boolean,
     val forgottenPassword: Boolean,
     val linkedAccounts: List<LinkedAccount>,
+    val externalLinkedAccounts: List<ExternalLinkedAccount>,
     val schacHomeOrganization: String,
     val uid: String,
     val rememberMe: Boolean,
@@ -102,6 +103,29 @@ data class LinkedAccount(
     val createdAt: Long,
     val expiresAt: Long,
 ) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class ExternalLinkedAccount(
+    val idpScoping: String?,
+    val issuer: ExternalLinkedAccountIssuer?,
+    val subjectIssuer: String?,
+    val firstName: String?,
+    val preferredLastName: String?,
+    val legalLastName: String?,
+    val familyName: String?,
+    val givenName: String?,
+    val dateOfBirth: Long?,
+    val createdAt: Long,
+    val expiresAt: Long
+) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class ExternalLinkedAccountIssuer(
+    val id: String,
+    val name: String
+): Parcelable
 
 @Parcelize
 @JsonClass(generateAdapter = true)
