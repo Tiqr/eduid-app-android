@@ -49,6 +49,10 @@
   <string name="YourVerifiedInformation_ValidUntil_COPY">"Valid until "</string>
   <string name="YourVerifiedInformation_RemoveThisInformation_COPY">"Remove this information"</string>
   <string name="YourVerifiedInformation_FromYourEduID_COPY">" from you eduID"</string>
+  <string name="YourVerifiedInformation_ConfirmRemoval_Title_COPY">"Delete this information?"</string>
+  <string name="YourVerifiedInformation_ConfirmRemoval_Description_COPY">"Some applications you want to login to with eduID require validated information. By deleting this information you will not be able to login to those applications.\n\n You might be prompted to validate your information again if you want to access them again."</string>
+  <string name="YourVerifiedInformation_ConfirmRemoval_Button_Cancel_COPY">"Cancel"</string>
+  <string name="YourVerifiedInformation_ConfirmRemoval_Button_YesDelete_COPY">"Yes, delete"</string>
   <string name="Profile_YouAreLoggedIn_COPY">"You are logged in"</string>
   <string name="Profile_ManageYourAccount_COPY">"Manage your account"</string>
   <string name="Profile_AccountLinkError_Title_COPY">"Could not retrieve URL for linking your current account."</string>
