@@ -5,17 +5,44 @@ on:
     paths:
     - 'localizations.yaml'
 jobs:
-  sync:
+  sync-myconext:
     runs-on: ubuntu-latest
     if: ${{ !contains(github.event.head_commit.message, '#AUTO#') }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@master
-      - name: Create PR for new translation in iOS app-repo
+      - name: Get token for myconext repo
+        uses: actions/create-github-app-token@v1
+        id: app-token-myconext
+        with:
+          app-id: ${{ secrets.SYNC_APP_ID }}
+          private-key: ${{ secrets.SYNC_PRIVATE_KEY }}
+          owner: OpenConext
+      - name: Create PR for new translation in Openconext-myconext
         uses: BetaHuhn/repo-file-sync-action@v1
         with:
-          GH_PAT: ${{ secrets.GH_PAT }}
+          GH_INSTALLATION_TOKEN: ${{ steps.app-token-myconext.outputs.token }}
           COMMIT_PREFIX: "#AUTO#"
+          CONFIG_PATH: .github/sync-myconext.yml
+  sync-eduid-app-ios:
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, '#AUTO#') }}
+    steps:  
+      - name: Checkout Repository
+        uses: actions/checkout@master
+      - name: Get token for eduid-app-ios repo
+        uses: actions/create-github-app-token@v1
+        id: app-token-eduid-app-ios
+        with:
+          app-id: ${{ secrets.SYNC_APP_ID }}
+          private-key: ${{ secrets.SYNC_PRIVATE_KEY }}
+          owner: Tiqr
+      - name: Create PR for new translation in eduid-app-ios
+        uses: BetaHuhn/repo-file-sync-action@v1
+        with:
+          GH_INSTALLATION_TOKEN: ${{ steps.app-token-eduid-app-ios.outputs.token }}
+          COMMIT_PREFIX: "#AUTO#"
+          CONFIG_PATH: .github/sync-eduid-app-ios.yml
   localicious:
     runs-on: ubuntu-latest
     permissions:
