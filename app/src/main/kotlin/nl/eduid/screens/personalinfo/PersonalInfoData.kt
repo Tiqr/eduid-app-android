@@ -1,6 +1,8 @@
 package nl.eduid.screens.personalinfo
 
 import androidx.compose.runtime.Stable
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import nl.eduid.di.model.ConfirmedName
 import nl.eduid.di.model.SelfAssertedName
 import java.time.LocalDate
@@ -12,8 +14,8 @@ data class PersonalInfo(
     val confirmedName: ConfirmedName = ConfirmedName(),
     val nameProvider: String? = null,
     val email: String = "",
-    val linkedInternalAccounts: List<InstitutionAccount> = emptyList(),
-    val linkedExternalAccounts: List<InstitutionAccount> = emptyList(),
+    val linkedInternalAccounts: ImmutableList<InstitutionAccount> = emptyList<InstitutionAccount>().toImmutableList(),
+    val linkedExternalAccounts: ImmutableList<InstitutionAccount> = emptyList<InstitutionAccount>().toImmutableList(),
     val dateCreated: Long = 0,
 ) {
     val isVerified = linkedInternalAccounts.isNotEmpty() || linkedExternalAccounts.isNotEmpty()
@@ -38,8 +40,7 @@ data class PersonalInfo(
                 selfAssertedName = SelfAssertedName("Pratchett", "Terence David John", "Terry"),
                 confirmedName = ConfirmedName(),
                 nameProvider = "Universiteit van Amsterdam",
-                email = "r.v.hamersdonksveer@uva.nl",
-                linkedInternalAccounts = emptyList(),
+                email = "r.v.hamersdonksveer@uva.nl"
             )
         }
 
@@ -71,7 +72,7 @@ data class PersonalInfo(
                 createdStamp = System.currentTimeMillis(),
                 expiryStamp = System.currentTimeMillis()
             )
-        )
+        ).toImmutableList()
     }
 
 }

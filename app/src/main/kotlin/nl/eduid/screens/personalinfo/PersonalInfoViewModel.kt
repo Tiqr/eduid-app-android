@@ -4,8 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -39,9 +39,35 @@ class PersonalInfoViewModel @Inject constructor(
                 if (it.saveError != null) {
                     _errorData.emit(it.saveError.toErrorData())
                 }
+                var verifiedFirstNameAccount: PersonalInfo.InstitutionAccount? = null
+                var verifiedLastNameAccount: PersonalInfo.InstitutionAccount? = null
+                // Search in linked internal accounts and then external account
+                for (linkedAccount in personalInfo.linkedInternalAccounts + personalInfo.linkedExternalAccounts) {
+                    if (verifiedFirstNameAccount == null && linkedAccount.givenName != null && linkedAccount.givenName == personalInfo.selfAssertedName.givenName) {
+                        verifiedFirstNameAccount = linkedAccount
+                    }
+                    if (verifiedLastNameAccount == null && linkedAccount.familyName != null && linkedAccount.familyName == personalInfo.selfAssertedName.familyName) {
+                        verifiedLastNameAccount = linkedAccount
+                    }
+                }
+                // It is possible that there's a verified name, but it doesn't match the one in the profile. In this case we still need to show it
+                // So we go through the accounts once more, but do not check for matches anymore
+                if (verifiedFirstNameAccount == null || verifiedLastNameAccount != null) {
+                    for (linkedAccount in (personalInfo.linkedInternalAccounts + personalInfo.linkedExternalAccounts)) {
+                        if (verifiedFirstNameAccount == null && linkedAccount.givenName != null) {
+                            verifiedFirstNameAccount = linkedAccount
+                        }
+                        if (verifiedLastNameAccount == null && linkedAccount.familyName != null) {
+                            verifiedLastNameAccount = linkedAccount
+                        }
+                    }
+                }
+
                 UiState(
                     isLoading = false,
                     personalInfo = personalInfo,
+                    verifiedFirstNameAccount = verifiedFirstNameAccount,
+                    verifiedLastNameAccount =  verifiedLastNameAccount
                 )
             }
 
@@ -109,7 +135,7 @@ class PersonalInfoViewModel @Inject constructor(
                             roleProvider = nameMap[institution.roleProvider]
                                 ?: institution.roleProvider
                         )
-                    })
+                    }.toImmutableList())
             }
         }
         return personalInfo

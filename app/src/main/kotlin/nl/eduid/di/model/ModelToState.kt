@@ -1,6 +1,7 @@
 package nl.eduid.di.model
 
 import com.squareup.moshi.Moshi
+import kotlinx.collections.immutable.toImmutableList
 import nl.eduid.screens.personalinfo.PersonalInfo
 import java.net.URLEncoder
 import java.time.Instant
@@ -61,10 +62,10 @@ fun UserDetails.mapToPersonalInfo(): PersonalInfo {
     val email: String = this.email
     val linkedInternalAccounts = linkedAccounts.mapNotNull { account ->
         account.mapToInstitutionAccount()
-    }
+    }.toImmutableList()
     val linkedExternalAccounts = this.externalLinkedAccounts.mapNotNull { account ->
         account.mapToInstitutionAccount()
-    }
+    }.toImmutableList()
 
     return PersonalInfo(
         name = name,

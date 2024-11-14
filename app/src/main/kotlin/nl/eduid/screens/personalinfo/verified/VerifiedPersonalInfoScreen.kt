@@ -38,6 +38,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.collections.immutable.ImmutableList
 import nl.eduid.R
 import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.ui.AlertDialogWithSingleButton
@@ -91,7 +92,7 @@ fun VerifiedPersonalInfoRoute(
 
 @Composable
 fun VerifiedPersonalInfoScreen(
-    accounts: List<PersonalInfo.InstitutionAccount>,
+    accounts: ImmutableList<PersonalInfo.InstitutionAccount>,
     isLoading: Boolean,
     onRemoveConnection: (String) -> Unit,
     goBack: () -> Unit,

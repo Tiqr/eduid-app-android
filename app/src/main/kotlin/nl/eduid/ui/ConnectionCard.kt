@@ -117,7 +117,7 @@ fun ConnectionCard(
                     )
                     HorizontalDivider(thickness = 2.dp, color = MaterialTheme.colorScheme.onSurface)
                     TextButton(
-                        onClick = { openVerifiedInformation() },
+                        onClick = openVerifiedInformation,
                         shape = RoundedCornerShape(CornerSize(6.dp)),
                         contentPadding = PaddingValues(0.dp)
                     ) {
