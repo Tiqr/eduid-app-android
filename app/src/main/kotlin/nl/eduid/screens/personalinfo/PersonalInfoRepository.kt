@@ -17,6 +17,7 @@ import nl.eduid.di.model.EmailChangeRequest
 import nl.eduid.di.model.EnrollResponse
 import nl.eduid.di.model.IdpScoping
 import nl.eduid.di.model.LinkedAccount
+import nl.eduid.di.model.LinkedAccountUpdateRequest
 import nl.eduid.di.model.RequestPhoneCode
 import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.di.model.Token
@@ -38,8 +39,8 @@ class PersonalInfoRepository(
         return processResponse(response = response)
     }
 
-    suspend fun removeConnectionResult(linkedAccount: LinkedAccount): Result<UserDetails> {
-        val response = eduIdApi.removeConnection(linkedAccount)
+    suspend fun removeConnectionResult(updateRequest: LinkedAccountUpdateRequest): Result<UserDetails> {
+        val response = eduIdApi.removeConnection(updateRequest)
         return processResponse(response = response)
     }
 

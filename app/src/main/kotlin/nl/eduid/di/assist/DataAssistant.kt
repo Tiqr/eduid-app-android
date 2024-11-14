@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import nl.eduid.di.model.IdpScoping
 import nl.eduid.di.model.LinkedAccount
+import nl.eduid.di.model.LinkedAccountUpdateRequest
 import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.di.model.TokenResponse
 import nl.eduid.di.model.UserDetails
@@ -103,23 +104,30 @@ constructor(
         throw e
     }
 
-    suspend fun removeConnection(institutionId: String) = withContext(dispatcher) {
+    suspend fun removeConnection(subjectId: String) = withContext(dispatcher) {
         val currentDetails = currentCachedSettings() ?: fetchDetails()
         val linkedAccount =
-            currentDetails?.linkedAccounts?.firstOrNull { it.institutionIdentifier == institutionId }
+            currentDetails?.linkedAccounts?.firstOrNull { it.subjectId == subjectId }
         linkedAccount?.let {
-            val updatedDetails = infoRepository.removeConnectionResult(it)
+            val updateRequest = LinkedAccountUpdateRequest(
+                eduPersonPrincipalName = it.eduPersonPrincipalName,
+                subjectId = it.subjectId,
+                external = false,
+                idpScoping = null
+            )
+            val updatedDetails = infoRepository.removeConnectionResult(updateRequest)
             forwardWithFallback(updatedDetails, currentDetails, "Remove connection")
         }
-    }
-
-    suspend fun removeConnection(linkedAccount: LinkedAccount?) = withContext(dispatcher) {
-        linkedAccount?.let {
-            val knownDetails = currentCachedSettings() ?: fetchDetails()
-            val updatedDetails = infoRepository.removeConnectionResult(it)
-            if (knownDetails != null) {
-                forwardWithFallback(updatedDetails, knownDetails, "Remove connection")
-            }
+        val externalAccount = currentDetails?.externalLinkedAccounts?.firstOrNull { it.subjectId == subjectId }
+        externalAccount?.let {
+            val updateRequest = LinkedAccountUpdateRequest(
+                eduPersonPrincipalName = null,
+                subjectId = it.subjectId,
+                external = true,
+                idpScoping = it.idpScoping
+            )
+            val updatedDetails = infoRepository.removeConnectionResult(updateRequest)
+            forwardWithFallback(updatedDetails, currentDetails, "Remove external connection")
         }
     }
 

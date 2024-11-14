@@ -1,5 +1,8 @@
 package nl.eduid.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -7,12 +10,17 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.window.DialogProperties
 import nl.eduid.R
 import nl.eduid.ui.theme.ColorAlertRed
+import nl.eduid.ui.theme.ColorMain_Green_400
 import nl.eduid.ui.theme.ColorScale_Gray_500
+import nl.eduid.ui.theme.ColorScale_Gray_Black
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -53,49 +61,57 @@ fun AlertDialogWithTwoButton(
     explanation: String,
     dismissButtonLabel: String,
     confirmButtonLabel: String,
+    isDestroyAction: Boolean,
     onDismiss: () -> Unit = {},
     onConfirm: () -> Unit = {},
 ) {
     val openDialog = remember { mutableStateOf(true) }
 
     if (openDialog.value) {
-        AlertDialog(onDismissRequest = {
-            // Dismiss the dialog when the user clicks outside the dialog or on the back
-            // button. If you want to disable that functionality, simply use an empty
-            // onDismissRequest.
-            openDialog.value = false
-            onDismiss()
-        }, title = {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleLarge,
-            )
-        }, text = {
-            Text(
-                text = explanation,
-                style = MaterialTheme.typography.bodyLarge,
-            )
-        }, confirmButton = {
-            TextButton(onClick = {
-                openDialog.value = false
-                onConfirm()
-            }) {
-                Text(
-                    text = confirmButtonLabel,
-                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
-                )
-            }
-        }, dismissButton = {
-            TextButton(onClick = {
+        Box( // Box for scrim
+            modifier = Modifier
+                .background(Color.Black.copy(alpha = 0.2f))
+                .fillMaxSize()
+        ) {
+            AlertDialog(onDismissRequest = {
+                // Dismiss the dialog when the user clicks outside the dialog or on the back
+                // button. If you want to disable that functionality, simply use an empty
+                // onDismissRequest.
                 openDialog.value = false
                 onDismiss()
-            }) {
+            }, title = {
                 Text(
-                    text = dismissButtonLabel,
-                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge,
                 )
-            }
-        })
+            }, text = {
+                Text(
+                    text = explanation,
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+            }, confirmButton = {
+                PrimaryButton(
+                    onClick = {
+                        openDialog.value = false
+                        onConfirm()
+                    },
+                    text = confirmButtonLabel,
+                    buttonBackgroundColor = if (isDestroyAction) ColorAlertRed else ColorMain_Green_400
+                )
+            }, dismissButton = {
+                SecondaryButton(
+                    onClick = {
+                        openDialog.value = false
+                        onDismiss()
+                    },
+                    text = dismissButtonLabel,
+                )
+            },
+                containerColor = Color.White,
+                titleContentColor = ColorScale_Gray_Black,
+                textContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        }
     }
 }
 

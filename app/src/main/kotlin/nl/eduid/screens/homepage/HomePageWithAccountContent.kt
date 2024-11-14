@@ -133,6 +133,7 @@ fun HomePageWithAccountContent(
                 dismissButtonLabel = stringResource(R.string.Button_Cancel_COPY),
                 confirmButtonLabel = stringResource(R.string.PinAndBioMetrics_SignIn_COPY),
                 onDismiss = viewModel::clearPromptForAuthTrigger,
+                isDestroyAction = false,
                 onConfirm = {
                     viewModel.clearPromptForAuthTrigger()
                     launchOAuth()

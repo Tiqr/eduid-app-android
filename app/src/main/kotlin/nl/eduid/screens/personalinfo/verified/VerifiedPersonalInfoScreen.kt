@@ -42,6 +42,7 @@ import kotlinx.collections.immutable.ImmutableList
 import nl.eduid.R
 import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.ui.AlertDialogWithSingleButton
+import nl.eduid.ui.AlertDialogWithTwoButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.VerifiedInfoField
 import nl.eduid.ui.getShortDateString
@@ -56,6 +57,7 @@ fun VerifiedPersonalInfoRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val errorData by viewModel.errorData.collectAsStateWithLifecycle()
     var waitingForVmEvent by rememberSaveable { mutableStateOf(false) }
+    var showConfirmRemovalDialogForSubjectId by rememberSaveable { mutableStateOf(null as String?) }
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val onBack = remember(viewModel) { { goBack() } }
     errorData?.let {
@@ -81,13 +83,29 @@ fun VerifiedPersonalInfoRoute(
     VerifiedPersonalInfoScreen(
         accounts = uiState.accounts,
         isLoading = uiState.isLoading,
-        onRemoveConnection = { institutionId ->
-            // TODO #1: Add confirmation dialog
-            // TODO #2: Make it work with external accounts
-            viewModel.removeConnection(institutionId)
+        onRemoveConnection = { subjectId ->
+            showConfirmRemovalDialogForSubjectId = subjectId
         },
         goBack = onBack
     )
+
+    if (showConfirmRemovalDialogForSubjectId != null) {
+        AlertDialogWithTwoButton(
+            title = stringResource(R.string.YourVerifiedInformation_ConfirmRemoval_Title_COPY),
+            explanation = stringResource(R.string.YourVerifiedInformation_ConfirmRemoval_Description_COPY),
+            dismissButtonLabel = stringResource(R.string.YourVerifiedInformation_ConfirmRemoval_Button_Cancel_COPY),
+            confirmButtonLabel = stringResource(R.string.YourVerifiedInformation_ConfirmRemoval_Button_YesDelete_COPY),
+            onDismiss = {
+                showConfirmRemovalDialogForSubjectId = null
+            },
+            isDestroyAction = true,
+            onConfirm = {
+                viewModel.removeConnection(showConfirmRemovalDialogForSubjectId!!)
+                showConfirmRemovalDialogForSubjectId = null
+                waitingForVmEvent = true
+            }
+        )
+    }
 }
 
 @Composable
@@ -207,7 +225,7 @@ fun VerifiedPersonalInfoScreen(
                     .padding(vertical = 4.dp)
                     .fillMaxWidth()
                     .clickable {
-                        onRemoveConnection(account.id)
+                        onRemoveConnection(account.subjectId)
                     },
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically

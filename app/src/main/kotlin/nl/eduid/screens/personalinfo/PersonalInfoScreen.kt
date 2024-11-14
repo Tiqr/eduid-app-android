@@ -315,7 +315,7 @@ private fun ColumnScope.Organisations(
     )
     institutionAccounts.forEach { account ->
         ConnectionCard(
-            title = account.role ?: account.id,
+            title = account.role ?: account.subjectId,
             confirmedByInstitution = account,
             openVerifiedInformation = openVerifiedInformation
         )
@@ -351,13 +351,13 @@ private fun ColumnScope.NotVerifiedIdentity(
             text = stringResource(R.string.Profile_YourIdentity_COPY),
         )
         Text(
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.bodyLarge.copy(fontSize = 12.sp),
             text = stringResource(R.string.Profile_NotVerified_COPY),
             modifier = Modifier
                 .background(
                     MaterialTheme.colorScheme.tertiaryContainer, RoundedCornerShape(6.dp)
                 )
-                .padding(8.dp)
+                .padding(horizontal = 9.dp, vertical = 3.dp)
         )
     }
 

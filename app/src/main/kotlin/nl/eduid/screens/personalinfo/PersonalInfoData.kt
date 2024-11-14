@@ -21,7 +21,7 @@ data class PersonalInfo(
     val isVerified = linkedInternalAccounts.isNotEmpty() || linkedExternalAccounts.isNotEmpty()
 
     data class InstitutionAccount(
-        val id: String,
+        val subjectId: String,
         val role: String?,
         val roleProvider: String?,
         val institution: String,
@@ -62,7 +62,7 @@ data class PersonalInfo(
 
         fun generateInstitutionAccountList() = listOf(
             InstitutionAccount(
-                id = "1",
+                subjectId = "1",
                 role = "Librarian",
                 roleProvider = "Library",
                 institution = "Unseen University",
