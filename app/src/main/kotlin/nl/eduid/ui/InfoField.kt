@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -295,14 +296,25 @@ fun ExpandableVerifiedInfoField(
     } else {
         MaterialTheme.colorScheme.surface
     }
-    ListItem(colors = ListItemDefaults.colors(
+    var listModifier: Modifier = Modifier
+    if (!isExpanded) {
+        listModifier = listModifier.height(72.dp)
+    }
+    ListItem(
+        colors = ListItemDefaults.colors(
         containerColor = containerColor,
         trailingIconColor = MaterialTheme.colorScheme.onSurface
     ),
         leadingContent = {
-            Image(
-                painter = painterResource(id = R.drawable.shield_tick_blue), contentDescription = ""
-            )
+            Column(
+                modifier = Modifier.height(56.dp),
+                verticalArrangement = Arrangement.Center
+            ) {
+
+                Image(
+                    painter = painterResource(id = R.drawable.shield_tick_blue), contentDescription = ""
+                )
+            }
         },
         headlineContent = {
             Text(
@@ -357,19 +369,24 @@ fun ExpandableVerifiedInfoField(
             }
         },
         trailingContent = {
-            if (isExpanded) {
-                Icon(
-                    imageVector = Icons.Outlined.KeyboardArrowUp,
-                    contentDescription = "",
-                )
-            } else {
-                Icon(
-                    imageVector = Icons.Outlined.KeyboardArrowDown,
-                    contentDescription = "",
-                )
+            Column(
+                modifier = Modifier.height(56.dp),
+                verticalArrangement = Arrangement.Center
+            ) {
+                if (isExpanded) {
+                    Icon(
+                        imageVector = Icons.Outlined.KeyboardArrowUp,
+                        contentDescription = "",
+                    )
+                } else {
+                    Icon(
+                        imageVector = Icons.Outlined.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
             }
         },
-        modifier = modifier
+        modifier = listModifier
             .border(
                 color = MaterialTheme.colorScheme.onSurface,
                 shape = RoundedCornerShape(6.dp),
