@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -50,6 +52,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -178,9 +181,16 @@ private fun AccountContent(
     onSecurityClicked: () -> Unit = {},
     onActivityClicked: () -> Unit = {},
 ) {
+    val bottomPadding = paddingValues.calculateBottomPadding()
+    val paddingValuesWithoutBottom = PaddingValues(
+        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+        end = paddingValues.calculateEndPadding(LayoutDirection.Ltr),
+        top = paddingValues.calculateTopPadding(),
+        bottom = 0.dp
+    )
     ConstraintLayout(
         modifier = Modifier
-            .padding(paddingValues)
+            .padding(paddingValuesWithoutBottom)
             .fillMaxSize()
     ) {
         val (title, bottomColumn) = createRefs()
@@ -271,7 +281,7 @@ private fun AccountContent(
                         modifier = Modifier.weight(1f)
                     )
                 }
-                Spacer(Modifier.height(40.dp))
+                Spacer(Modifier.height(40.dp + bottomPadding))
             }
         }
     }

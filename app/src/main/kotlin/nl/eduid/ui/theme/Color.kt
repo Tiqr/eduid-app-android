@@ -32,7 +32,7 @@ val ColorScale_Gray_500 = Color(94, 104, 115)
  *
  * */
 val ColorScale_Gray_100 = Color(244, 246, 248)
-val ColorScale_Gray_200 = Color(0x00EAECF0)
+val ColorScale_Gray_200 = Color(0xFFEAECF0)
 
 /**
  * As onTertiaryContainer, for the labels of disabled buttons

@@ -4,7 +4,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -36,6 +38,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.collections.immutable.ImmutableList
 import nl.eduid.R
 import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.ui.AlertDialogWithSingleButton
@@ -55,19 +58,13 @@ fun VerifiedPersonalInfoRoute(
     var waitingForVmEvent by rememberSaveable { mutableStateOf(false) }
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val onBack = remember(viewModel) { { goBack() } }
-    val remove = remember(viewModel) {
-        {
-            waitingForVmEvent = true
-            viewModel.removeConnection()
-        }
-    }
     errorData?.let {
         val context = LocalContext.current
         AlertDialogWithSingleButton(
             title = it.title(context),
             explanation = it.message(context),
             buttonLabel = stringResource(R.string.Button_OK_COPY),
-            onDismiss =  {
+            onDismiss = {
                 viewModel.clearErrorData()
                 goBack()
             }
@@ -82,18 +79,22 @@ fun VerifiedPersonalInfoRoute(
     }
 
     VerifiedPersonalInfoScreen(
-        verifier = uiState.verifier,
+        accounts = uiState.accounts,
         isLoading = uiState.isLoading,
-        onRemoveConnection = remove,
+        onRemoveConnection = { institutionId ->
+            // TODO #1: Add confirmation dialog
+            // TODO #2: Make it work with external accounts
+            viewModel.removeConnection(institutionId)
+        },
         goBack = onBack
     )
 }
 
 @Composable
 fun VerifiedPersonalInfoScreen(
-    verifier: PersonalInfo.InstitutionAccount?,
+    accounts: ImmutableList<PersonalInfo.InstitutionAccount>,
     isLoading: Boolean,
-    onRemoveConnection: () -> Unit,
+    onRemoveConnection: (String) -> Unit,
     goBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) = EduIdTopAppBar(
@@ -103,8 +104,7 @@ fun VerifiedPersonalInfoScreen(
         modifier = modifier
             .verticalScroll(rememberScrollState())
             .systemBarsPadding()
-            .padding(horizontal = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(horizontal = 24.dp)
     ) {
         Text(
             style = MaterialTheme.typography.titleLarge.copy(
@@ -116,15 +116,18 @@ fun VerifiedPersonalInfoScreen(
                 .padding(padding)
                 .padding(top = 16.dp)
         )
+        Spacer(Modifier.size(20.dp))
         if (isLoading) {
             LinearProgressIndicator(
                 modifier = Modifier.fillMaxWidth()
             )
+            Spacer(Modifier.size(16.dp))
         }
         Text(
             style = MaterialTheme.typography.bodyLarge,
             text = stringResource(R.string.YourVerifiedInformation_Subtitle_COPY),
         )
+        Spacer(Modifier.size(24.dp))
         Row(
             modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -139,87 +142,98 @@ fun VerifiedPersonalInfoScreen(
                 text = stringResource(R.string.YourVerifiedInformation_ExplainIcon_COPY),
             )
         }
-        HorizontalDivider(
-            color = ColorScale_Gray_200, modifier = Modifier.padding(vertical = 8.dp)
-        )
-        Text(
-            style = MaterialTheme.typography.labelLarge.copy(
-                color = MaterialTheme.colorScheme.onSecondary
-            ), text = stringResource(
-                R.string.YourVerifiedInformation_FromInstitution_COPY,
-                verifier?.institution.orEmpty()
-            ), modifier = Modifier.fillMaxWidth()
-        )
-        Text(
-            style = MaterialTheme.typography.bodyLarge,
-            text = buildAnnotatedString {
-                append(stringResource(R.string.YourVerifiedInformation_ReceivedOn_COPY))
-                pushStyle(
-                    MaterialTheme.typography.bodyLarge.copy(
-                        fontWeight = FontWeight.SemiBold
-                    ).toSpanStyle()
-                )
-                append(verifier?.createdStamp?.getShortDateString() ?: "")
-            },
-        )
-        Text(
-            style = MaterialTheme.typography.bodyLarge,
-            text = buildAnnotatedString {
-                append(stringResource(R.string.YourVerifiedInformation_ValidUntil_COPY))
-                pushStyle(
-                    MaterialTheme.typography.bodyLarge.copy(
-                        fontWeight = FontWeight.SemiBold
-                    ).toSpanStyle()
-                )
-                append(verifier?.expiryStamp?.getShortDateString() ?: "")
-            },
-        )
-        verifier?.givenName?.let {
-            VerifiedInfoField(
-                title = it, subtitle = stringResource(R.string.Profile_VerifiedGivenName_COPY)
-            )
-        }
-        verifier?.familyName?.let {
-            VerifiedInfoField(
-                title = it, subtitle = stringResource(R.string.Profile_VerifiedFamilyName_COPY)
-            )
-        }
-        VerifiedInfoField(
-            title = verifier?.role.orEmpty(), subtitle = stringResource(
-                id = R.string.YourVerifiedInformation_AtInstitution_COPY,
-                verifier?.institution.orEmpty()
-            )
-        )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    onRemoveConnection()
-                }
-                .padding(vertical = 24.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_delete_icon),
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
+        for (account in accounts) {
+            Spacer(Modifier.size(32.dp))
+            HorizontalDivider(color = ColorScale_Gray_200, thickness = 2.dp)
+            Spacer(Modifier.size(24.dp))
             Text(
-                style = MaterialTheme.typography.bodyLarge, text = buildAnnotatedString {
+                style = MaterialTheme.typography.labelLarge.copy(
+                    color = MaterialTheme.colorScheme.onSecondary
+                ), text = stringResource(
+                    R.string.YourVerifiedInformation_FromInstitution_COPY,
+                    account.institution
+                ), modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(Modifier.size(12.dp))
+            Text(
+                style = MaterialTheme.typography.bodyLarge,
+                text = buildAnnotatedString {
+                    append(stringResource(R.string.YourVerifiedInformation_ReceivedOn_COPY))
                     pushStyle(
                         MaterialTheme.typography.bodyLarge.copy(
-                            fontWeight = FontWeight.SemiBold,
-                            textDecoration = TextDecoration.Underline,
-                            color = MaterialTheme.colorScheme.primary
+                            fontWeight = FontWeight.SemiBold
                         ).toSpanStyle()
                     )
-                    append(stringResource(R.string.YourVerifiedInformation_RemoveThisInformation_COPY))
-                    pop()
-                    append(stringResource(id = R.string.YourVerifiedInformation_FromYourEduID_COPY))
-                }, modifier = Modifier
+                    append(account.createdStamp.getShortDateString())
+                },
             )
+            Spacer(Modifier.size(4.dp))
+            Text(
+                style = MaterialTheme.typography.bodyLarge,
+                text = buildAnnotatedString {
+                    append(stringResource(R.string.YourVerifiedInformation_ValidUntil_COPY))
+                    pushStyle(
+                        MaterialTheme.typography.bodyLarge.copy(
+                            fontWeight = FontWeight.SemiBold
+                        ).toSpanStyle()
+                    )
+                    append(account.expiryStamp.getShortDateString())
+                },
+            )
+            Spacer(Modifier.size(24.dp))
+            account.givenName?.let {
+                VerifiedInfoField(
+                    title = it, subtitle = stringResource(R.string.Profile_VerifiedGivenName_COPY)
+                )
+                Spacer(Modifier.size(24.dp))
+            }
+            account.familyName?.let {
+                VerifiedInfoField(
+                    title = it, subtitle = stringResource(R.string.Profile_VerifiedFamilyName_COPY)
+                )
+                Spacer(Modifier.size(24.dp))
+            }
+            account.role?.let {
+                VerifiedInfoField(
+                    title = it, subtitle = stringResource(
+                        id = R.string.YourVerifiedInformation_AtInstitution_COPY,
+                        account.institution
+                    )
+                )
+                Spacer(Modifier.size(24.dp))
+            }
+            Row(
+                modifier = Modifier
+                    .padding(vertical = 4.dp)
+                    .fillMaxWidth()
+                    .clickable {
+                        onRemoveConnection(account.id)
+                    },
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_delete_icon),
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
+                Text(
+                    style = MaterialTheme.typography.bodySmall, text = buildAnnotatedString {
+                        pushStyle(
+                            MaterialTheme.typography.bodySmall.copy(
+                                fontWeight = FontWeight.SemiBold,
+                                textDecoration = TextDecoration.Underline,
+                                color = MaterialTheme.colorScheme.primary
+                            ).toSpanStyle()
+                        )
+                        append(stringResource(R.string.YourVerifiedInformation_RemoveThisInformation_COPY))
+                        pop()
+                        append(stringResource(id = R.string.YourVerifiedInformation_FromYourEduID_COPY))
+                    }, modifier = Modifier
+                )
+            }
         }
+        Spacer(Modifier.height(16.dp))
     }
 }
 
@@ -228,7 +242,7 @@ fun VerifiedPersonalInfoScreen(
 @Composable
 private fun Preview_VerifiedPersonalInfoScreen() = EduidAppAndroidTheme {
     VerifiedPersonalInfoScreen(
-        verifier = PersonalInfo.generateInstitutionAccountList().first(),
+        accounts = PersonalInfo.generateInstitutionAccountList(),
         isLoading = false,
         onRemoveConnection = {},
         goBack = {},

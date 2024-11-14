@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,10 +15,12 @@ import nl.eduid.R
 import nl.eduid.di.assist.DataAssistant
 import nl.eduid.di.assist.UnauthorizedException
 import nl.eduid.di.model.IdpScoping
+import nl.eduid.graphs.VerifyIdentityRoute
 import javax.inject.Inject
 
 @HiltViewModel
 class VerifyIdentityViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     val assistant: DataAssistant
 ) : ViewModel() {
 
@@ -25,6 +28,8 @@ class VerifyIdentityViewModel @Inject constructor(
         INSTITUTION,
         EIDAS
     }
+
+    val isLinkedAccount: Boolean = savedStateHandle[VerifyIdentityRoute.isLinkedAccount] ?: false
 
     var uiState by mutableStateOf(VerifyIdentityData(isLoading = false))
         private set

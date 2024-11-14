@@ -384,23 +384,20 @@ fun MainGraph(
                     )
                 )
             },
-            openVerifiedInformation = { account ->
-                navController.navigate(VerifiedPersonalInfoRoute.routeWithAccount(account))
+            openVerifiedInformation = {
+                navController.navigate(VerifiedPersonalInfoRoute.route)
             },
-            goToVerifyIdentity = {
-                navController.navigate(VerifyIdentityRoute.route)
+            goToVerifyIdentity = { isLinkedAccount ->
+                navController.navigate(VerifyIdentityRoute.routeWithArgs(isLinkedAccount))
             },
             goBack = navController::popBackStack,
         )
     }
-    composable(//region VerifiedPersonalInfoRoute
-        route = VerifiedPersonalInfoRoute.routeWithArgs, arguments = VerifiedPersonalInfoRoute.arguments
-    ) { entry ->
+    composable(VerifiedPersonalInfoRoute.route) { entry ->
         val viewModel = hiltViewModel<VerifiedPersonalInfoViewModel>(entry)
         VerifiedPersonalInfoRoute(viewModel = viewModel) {
             navController.popBackStack()
         }
-//
     }//endregion
 
     composable(Graph.EDIT_EMAIL) {//region Edit email
@@ -508,7 +505,7 @@ fun MainGraph(
     //endregion
 
     //region Verify identity
-    composable(VerifyIdentityRoute.route) {
+    composable(VerifyIdentityRoute.routeWithArgs, arguments = VerifyIdentityRoute.arguments) {
         val viewModel = hiltViewModel<VerifyIdentityViewModel>(it)
         VerifyIdentityScreen(
             viewModel = viewModel,
@@ -535,7 +532,7 @@ fun MainGraph(
                 navController.popBackStack()
                 navController.navigate(Graph.HOME_PAGE)
                 navController.navigate(Graph.PERSONAL_INFO)
-                navController.navigate(VerifyIdentityRoute.route)
+                navController.navigate(VerifyIdentityRoute.routeWithArgs(false))
             }
         )
     }

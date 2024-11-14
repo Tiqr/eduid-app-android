@@ -31,6 +31,7 @@ import nl.eduid.screens.personalinfo.PersonalInfoViewModel
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.ConnectionCardOld
 import nl.eduid.ui.EduIdTopAppBar
+import nl.eduid.ui.InfoField
 import nl.eduid.ui.InfoFieldOld
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.ColorMain_Green_400
@@ -61,7 +62,7 @@ fun AccountLinkedScreen(
                 continueToHome = continueToHome
             )
 
-            ResultAccountLinked.OK -> {
+            is ResultAccountLinked.Success -> {
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
                 val errorData by viewModel.errorData.collectAsStateWithLifecycle()
                 AccountLinkedContent(
@@ -149,19 +150,13 @@ private fun AccountLinkedContent(
         style = MaterialTheme.typography.titleLarge.copy(
             textAlign = TextAlign.Start, color = ColorMain_Green_400
         ),
-        text = stringResource(R.string.NameUpdated_Title_YourSchool_COPY),
-        modifier = Modifier.fillMaxWidth()
-    )
-    Spacer(Modifier.height(12.dp))
-    Text(
-        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
-        text = stringResource(R.string.NameUpdated_Title_ContactedSuccessfully_COPY),
+        text = stringResource(R.string.LinkingSuccess_Title_COPY),
         modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(12.dp))
     Text(
         style = MaterialTheme.typography.bodyLarge,
-        text = stringResource(R.string.NameUpdated_Description_COPY),
+        text = stringResource(R.string.LinkingSuccess_Subtitle_COPY),
         modifier = Modifier.fillMaxWidth()
     )
     if (isLoading) {
@@ -183,9 +178,9 @@ private fun AccountLinkedContent(
         endIcon = R.drawable.shield_tick_blue,
     )
     Spacer(Modifier.height(16.dp))
-    if (personalInfo.institutionAccounts.isNotEmpty()) {
+    if (personalInfo.linkedInternalAccounts.isNotEmpty()) {
         Text(
-            text = stringResource(R.string.Profile_RoleAndInstitution_COPY),
+            text = stringResource(R.string.Profile_OrganisationsHeader_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.SemiBold,
@@ -193,10 +188,10 @@ private fun AccountLinkedContent(
         )
         Spacer(Modifier.height(6.dp))
     }
-    personalInfo.institutionAccounts.forEach { account ->
+    personalInfo.linkedInternalAccounts.forEach { account ->
         ConnectionCardOld(
-            title = account.role,
-            subtitle = stringResource(R.string.Profile_InstitutionAt_COPY, account.roleProvider),
+            title = account.role ?: account.id,
+            subtitle = stringResource(R.string.Profile_InstitutionAt_COPY, account.roleProvider ?: account.institution),
             institutionInfo = account,
             onRemoveConnection = { removeConnection(account.id) },
         )

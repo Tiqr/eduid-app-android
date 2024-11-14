@@ -4,8 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -26,23 +26,48 @@ import javax.inject.Inject
 @HiltViewModel
 class PersonalInfoViewModel @Inject constructor(
     private val assistant: DataAssistant,
-    private val moshi: Moshi,
     private val runtimeBehavior: RuntimeBehavior
 ) : ViewModel() {
     private val _errorData: MutableStateFlow<ErrorData?> = MutableStateFlow(null)
     private val _isProcessing: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val _linkUrl: MutableStateFlow<Intent?> = MutableStateFlow(null)
 
-    val uiState = assistant.observableDetails.map { it ->
+    val uiState = assistant.observableDetails.map {
         when (it) {
             is SaveableResult.Success -> {
                 val personalInfo = mapUserDetailsToPersonalInfo(it.data)
                 if (it.saveError != null) {
                     _errorData.emit(it.saveError.toErrorData())
                 }
+                var verifiedFirstNameAccount: PersonalInfo.InstitutionAccount? = null
+                var verifiedLastNameAccount: PersonalInfo.InstitutionAccount? = null
+                // Search in linked internal accounts and then external account
+                for (linkedAccount in personalInfo.linkedInternalAccounts + personalInfo.linkedExternalAccounts) {
+                    if (verifiedFirstNameAccount == null && linkedAccount.givenName != null && linkedAccount.givenName == personalInfo.selfAssertedName.givenName) {
+                        verifiedFirstNameAccount = linkedAccount
+                    }
+                    if (verifiedLastNameAccount == null && linkedAccount.familyName != null && linkedAccount.familyName == personalInfo.selfAssertedName.familyName) {
+                        verifiedLastNameAccount = linkedAccount
+                    }
+                }
+                // It is possible that there's a verified name, but it doesn't match the one in the profile. In this case we still need to show it
+                // So we go through the accounts once more, but do not check for matches anymore
+                if (verifiedFirstNameAccount == null || verifiedLastNameAccount != null) {
+                    for (linkedAccount in (personalInfo.linkedInternalAccounts + personalInfo.linkedExternalAccounts)) {
+                        if (verifiedFirstNameAccount == null && linkedAccount.givenName != null) {
+                            verifiedFirstNameAccount = linkedAccount
+                        }
+                        if (verifiedLastNameAccount == null && linkedAccount.familyName != null) {
+                            verifiedLastNameAccount = linkedAccount
+                        }
+                    }
+                }
+
                 UiState(
                     isLoading = false,
                     personalInfo = personalInfo,
+                    verifiedFirstNameAccount = verifiedFirstNameAccount,
+                    verifiedLastNameAccount =  verifiedLastNameAccount
                 )
             }
 
@@ -81,12 +106,15 @@ class PersonalInfoViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(3_000),
         initialValue = null,
     )
-    val hasLinkedInstitution = uiState.map { it.personalInfo.institutionAccounts.isNotEmpty() }
+    val hasLinkedInstitution = uiState.map {
+        it.personalInfo.linkedInternalAccounts.isNotEmpty() ||
+            it.personalInfo.linkedExternalAccounts.isNotEmpty()
+    }
 
     val identityVerificationEnabled = runtimeBehavior.isFeatureEnabled(FeatureFlag.ENABLE_IDENTITY_VERIFICATION)
 
     private suspend fun mapUserDetailsToPersonalInfo(userDetails: UserDetails): PersonalInfo {
-        var personalInfo = userDetails.mapToPersonalInfo(moshi)
+        var personalInfo = userDetails.mapToPersonalInfo()
         val nameMap = mutableMapOf<String, String>()
         for (account in userDetails.linkedAccounts) {
             val mappedName = assistant.getInstitutionName(account.schacHomeOrganization)
@@ -102,12 +130,12 @@ class PersonalInfoViewModel @Inject constructor(
                 }
                 //Update UI data to include mapped institution names
                 personalInfo =
-                    personalInfo.copy(institutionAccounts = personalInfo.institutionAccounts.map { institution ->
+                    personalInfo.copy(linkedInternalAccounts = personalInfo.linkedInternalAccounts.map { institution ->
                         institution.copy(
                             roleProvider = nameMap[institution.roleProvider]
                                 ?: institution.roleProvider
                         )
-                    })
+                    }.toImmutableList())
             }
         }
         return personalInfo

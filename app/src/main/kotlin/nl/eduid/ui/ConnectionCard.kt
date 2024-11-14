@@ -63,7 +63,7 @@ fun ConnectionCard(
     confirmedByInstitution: PersonalInfo.InstitutionAccount,
     modifier: Modifier = Modifier,
     expandedPreview: Boolean = false,
-    openVerifiedInformation: (String) -> Unit = {},
+    openVerifiedInformation: () -> Unit = {},
 ) {
     var isExpanded by remember { mutableStateOf(expandedPreview) }
     val containerColor = if (isExpanded) {
@@ -117,7 +117,7 @@ fun ConnectionCard(
                     )
                     HorizontalDivider(thickness = 2.dp, color = MaterialTheme.colorScheme.onSurface)
                     TextButton(
-                        onClick = { openVerifiedInformation(confirmedByInstitution.linkedAccountJson) },
+                        onClick = openVerifiedInformation,
                         shape = RoundedCornerShape(CornerSize(6.dp)),
                         contentPadding = PaddingValues(0.dp)
                     ) {
@@ -252,10 +252,12 @@ private fun InstitutionInfoBlock(
         label = stringResource(R.string.Profile_Institution_COPY),
         value = institutionInfo.institution
     )
-    InfoRowOld(
-        label = stringResource(R.string.Profile_Affiliations_COPY),
-        value = institutionInfo.affiliationString
-    )
+    if (institutionInfo.affiliationString != null) {
+        InfoRowOld(
+            label = stringResource(R.string.Profile_Affiliations_COPY),
+            value = institutionInfo.affiliationString
+        )
+    }
     InfoRowOld(
         label = stringResource(R.string.Profile_Expires_COPY),
         value = institutionInfo.expiryStamp.getShortDateString()

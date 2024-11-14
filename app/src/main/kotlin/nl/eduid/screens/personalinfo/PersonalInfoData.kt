@@ -1,30 +1,34 @@
 package nl.eduid.screens.personalinfo
 
 import androidx.compose.runtime.Stable
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import nl.eduid.di.model.ConfirmedName
 import nl.eduid.di.model.SelfAssertedName
+import java.time.LocalDate
 
 @Stable
 data class PersonalInfo(
     val name: String = "",
-    val seflAssertedName: SelfAssertedName = SelfAssertedName(),
+    val selfAssertedName: SelfAssertedName = SelfAssertedName(),
     val confirmedName: ConfirmedName = ConfirmedName(),
     val nameProvider: String? = null,
     val email: String = "",
-    val institutionAccounts: List<InstitutionAccount> = emptyList(),
+    val linkedInternalAccounts: ImmutableList<InstitutionAccount> = emptyList<InstitutionAccount>().toImmutableList(),
+    val linkedExternalAccounts: ImmutableList<InstitutionAccount> = emptyList<InstitutionAccount>().toImmutableList(),
     val dateCreated: Long = 0,
 ) {
-    val isVerified = institutionAccounts.isNotEmpty()
+    val isVerified = linkedInternalAccounts.isNotEmpty() || linkedExternalAccounts.isNotEmpty()
 
     data class InstitutionAccount(
         val id: String,
-        val linkedAccountJson: String,
-        val role: String,
-        val roleProvider: String,
+        val role: String?,
+        val roleProvider: String?,
         val institution: String,
-        val affiliationString: String,
+        val affiliationString: String? = null,
         val givenName: String? = null,
         val familyName: String? = null,
+        val dateOfBirth: LocalDate? = null,
         val createdStamp: Long,
         val expiryStamp: Long,
     )
@@ -33,18 +37,17 @@ data class PersonalInfo(
         fun demoData(): PersonalInfo {
             return PersonalInfo(
                 name = "R. van Hamersdonksveer",
-                seflAssertedName = SelfAssertedName("Pratchett", "Terence David John", "Terry"),
+                selfAssertedName = SelfAssertedName("Pratchett", "Terence David John", "Terry"),
                 confirmedName = ConfirmedName(),
                 nameProvider = "Universiteit van Amsterdam",
-                email = "r.v.hamersdonksveer@uva.nl",
-                institutionAccounts = emptyList(),
+                email = "r.v.hamersdonksveer@uva.nl"
             )
         }
 
         fun verifiedDemoData(): PersonalInfo {
             return PersonalInfo(
                 name = "R. van Hamersdonksveer",
-                seflAssertedName = SelfAssertedName("Pratchett", "Terence David John", "Terry"),
+                selfAssertedName = SelfAssertedName("Pratchett", "Terence David John", "Terry"),
                 confirmedName = ConfirmedName(
                     familyName = "Pratchett",
                     familyNameConfirmedBy = "1",
@@ -53,14 +56,13 @@ data class PersonalInfo(
                 ),
                 nameProvider = "Universiteit van Amsterdam",
                 email = "r.v.hamersdonksveer@uva.nl",
-                institutionAccounts = generateInstitutionAccountList(),
+                linkedInternalAccounts = generateInstitutionAccountList(),
             )
         }
 
         fun generateInstitutionAccountList() = listOf(
             InstitutionAccount(
                 id = "1",
-                linkedAccountJson = "{'id': '1', 'type': 'institution', 'name': 'Unseen University'}",
                 role = "Librarian",
                 roleProvider = "Library",
                 institution = "Unseen University",
@@ -70,7 +72,7 @@ data class PersonalInfo(
                 createdStamp = System.currentTimeMillis(),
                 expiryStamp = System.currentTimeMillis()
             )
-        )
+        ).toImmutableList()
     }
 
 }
