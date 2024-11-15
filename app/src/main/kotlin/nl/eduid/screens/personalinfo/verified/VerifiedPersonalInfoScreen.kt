@@ -48,6 +48,7 @@ import nl.eduid.ui.VerifiedInfoField
 import nl.eduid.ui.getShortDateString
 import nl.eduid.ui.theme.ColorScale_Gray_200
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.util.normalizedIssuerName
 
 @Composable
 fun VerifiedPersonalInfoRoute(
@@ -171,7 +172,7 @@ fun VerifiedPersonalInfoScreen(
                     color = MaterialTheme.colorScheme.onSecondary
                 ), text = stringResource(
                     R.string.YourVerifiedInformation_FromInstitution_COPY,
-                    account.institution
+                    account.institution.normalizedIssuerName()
                 ), modifier = Modifier.fillMaxWidth()
             )
             Spacer(Modifier.size(12.dp))
@@ -217,7 +218,7 @@ fun VerifiedPersonalInfoScreen(
                 VerifiedInfoField(
                     title = it, subtitle = stringResource(
                         id = R.string.YourVerifiedInformation_AtInstitution_COPY,
-                        account.institution
+                        account.institution.normalizedIssuerName()
                     )
                 )
                 Spacer(Modifier.size(24.dp))

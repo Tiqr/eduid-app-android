@@ -1,12 +1,9 @@
 package nl.eduid.di.model
 
-import com.squareup.moshi.Moshi
 import kotlinx.collections.immutable.toImmutableList
 import nl.eduid.screens.personalinfo.PersonalInfo
-import java.net.URLEncoder
 import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneId
 import java.time.ZoneOffset
 
 fun LinkedAccount.mapToInstitutionAccount(): PersonalInfo.InstitutionAccount? =

@@ -55,6 +55,7 @@ import nl.eduid.ui.theme.ColorAlertRed
 import nl.eduid.ui.theme.ColorScale_Gray_500
 import nl.eduid.ui.theme.ColorSupport_Blue_100
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.util.normalizedIssuerName
 import java.util.Locale
 
 @Composable
@@ -103,7 +104,7 @@ fun ConnectionCard(
                     Text(
                         text = stringResource(
                             id = R.string.Profile_VerifiedBy_COPY,
-                            confirmedByInstitution.institution
+                            confirmedByInstitution.institution.normalizedIssuerName()
                         ),
                         style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
                     )
@@ -243,7 +244,7 @@ private fun InstitutionInfoBlock(
     Modifier.fillMaxWidth()
 ) {
     InfoRowOld(
-        label = stringResource(R.string.Profile_VerifiedBy_COPY, institutionInfo.institution)
+        label = stringResource(R.string.Profile_VerifiedBy_COPY, institutionInfo.institution.normalizedIssuerName())
                 + stringResource(
             R.string.Profile_VerifiedOn_COPY, institutionInfo.createdStamp.getShortDateString()
         )

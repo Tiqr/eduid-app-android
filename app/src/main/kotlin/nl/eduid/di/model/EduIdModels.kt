@@ -134,7 +134,7 @@ data class ExternalLinkedAccount(
 @JsonClass(generateAdapter = true)
 data class ExternalLinkedAccountIssuer(
     val id: String,
-    val name: String
+    val name: String?
 ) : Parcelable
 
 @Parcelize
