@@ -106,8 +106,18 @@ data class LinkedAccount(
 
 @Parcelize
 @JsonClass(generateAdapter = true)
+data class LinkedAccountUpdateRequest(
+    val eduPersonPrincipalName: String?,
+    val subjectId: String?,
+    val external: Boolean,
+    val idpScoping: String?
+) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
 data class ExternalLinkedAccount(
     val idpScoping: String?,
+    val subjectId: String?,
     val issuer: ExternalLinkedAccountIssuer?,
     val subjectIssuer: String?,
     val firstName: String?,
@@ -125,7 +135,7 @@ data class ExternalLinkedAccount(
 data class ExternalLinkedAccountIssuer(
     val id: String,
     val name: String
-): Parcelable
+) : Parcelable
 
 @Parcelize
 @JsonClass(generateAdapter = true)
@@ -246,4 +256,4 @@ data class VerifyIssuer(
     val id: String?,
     val name: String?,
     val logo: String?
-): Parcelable
+) : Parcelable

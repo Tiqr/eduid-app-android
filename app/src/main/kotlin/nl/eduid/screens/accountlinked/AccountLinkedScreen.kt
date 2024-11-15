@@ -190,10 +190,10 @@ private fun AccountLinkedContent(
     }
     personalInfo.linkedInternalAccounts.forEach { account ->
         ConnectionCardOld(
-            title = account.role ?: account.id,
+            title = account.role ?: account.subjectId,
             subtitle = stringResource(R.string.Profile_InstitutionAt_COPY, account.roleProvider ?: account.institution),
             institutionInfo = account,
-            onRemoveConnection = { removeConnection(account.id) },
+            onRemoveConnection = { removeConnection(account.subjectId) },
         )
     }
     PrimaryButton(

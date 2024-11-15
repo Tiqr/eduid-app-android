@@ -158,6 +158,7 @@ private fun ScanContent(
                 dismissButtonLabel = stringResource(R.string.Button_Cancel_COPY),
                 onDismiss = dismissErrorDialog,
                 confirmButtonLabel = stringResource(R.string.Button_Retry_COPY),
+                isDestroyAction = false,
                 onConfirm = retryErrorDialog
             )
         }

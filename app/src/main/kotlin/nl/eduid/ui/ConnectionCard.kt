@@ -264,7 +264,7 @@ private fun InstitutionInfoBlock(
     )
     Button(
         shape = RoundedCornerShape(CornerSize(6.dp)),
-        onClick = { onDeleteButtonClicked(institutionInfo.id) },
+        onClick = { onDeleteButtonClicked(institutionInfo.subjectId) },
         border = BorderStroke(1.dp, Color.Red),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = ColorAlertRed),
         modifier = Modifier

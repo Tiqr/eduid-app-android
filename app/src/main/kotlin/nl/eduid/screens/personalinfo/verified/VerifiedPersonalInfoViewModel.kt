@@ -72,10 +72,10 @@ class VerifiedPersonalInfoViewModel @Inject constructor(
 
     fun clearErrorData() = _errorData.update { null }
 
-    fun removeConnection(institutionId: String) {
+    fun removeConnection(subjectId: String) {
         viewModelScope.launch {
             _isProcessing.update { true }
-            assistant.removeConnection(institutionId)
+            assistant.removeConnection(subjectId)
             _isProcessing.update { false }
         }
     }

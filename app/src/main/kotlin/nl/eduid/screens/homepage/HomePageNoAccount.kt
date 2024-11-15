@@ -134,6 +134,7 @@ fun HomePageNoAccountContent(
                             waitingForVmEvent = false
                             viewModel.clearPreEnrollCheck()
                         },
+                        isDestroyAction = true,
                         onConfirm = {
                             //Continue to wait for the the VM event
                             //sent when the request for the deactivation code was requested successfully.

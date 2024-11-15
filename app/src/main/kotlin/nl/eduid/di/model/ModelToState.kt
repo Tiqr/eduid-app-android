@@ -18,7 +18,7 @@ fun LinkedAccount.mapToInstitutionAccount(): PersonalInfo.InstitutionAccount? =
             affiliation
         }
         PersonalInfo.InstitutionAccount(
-            id = this.institutionIdentifier,
+            subjectId = this.subjectId ?: this.institutionIdentifier,
             role = role,
             roleProvider = this.schacHomeOrganization,
             institution = this.schacHomeOrganization,
@@ -32,7 +32,7 @@ fun LinkedAccount.mapToInstitutionAccount(): PersonalInfo.InstitutionAccount? =
 
 fun ExternalLinkedAccount.mapToInstitutionAccount(): PersonalInfo.InstitutionAccount? =
     PersonalInfo.InstitutionAccount(
-        id = this.idpScoping ?: "",
+        subjectId = this.subjectId ?: "",
         role = null,
         roleProvider = null,
         institution = this.issuer?.name ?: this.idpScoping ?: "",

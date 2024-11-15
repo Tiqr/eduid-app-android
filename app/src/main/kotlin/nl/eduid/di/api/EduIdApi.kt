@@ -9,6 +9,7 @@ import nl.eduid.di.model.EnrollResponse
 import nl.eduid.di.model.IdpScoping
 import nl.eduid.di.model.InstitutionNameResponse
 import nl.eduid.di.model.LinkedAccount
+import nl.eduid.di.model.LinkedAccountUpdateRequest
 import nl.eduid.di.model.RequestEduIdAccount
 import nl.eduid.di.model.RequestPhoneCode
 import nl.eduid.di.model.SelfAssertedName
@@ -89,7 +90,7 @@ interface EduIdApi {
 
     @PUT("/mobile/api/sp/institution")
     suspend fun removeConnection(
-        @Body account: LinkedAccount,
+        @Body updateRequest: LinkedAccountUpdateRequest,
     ): Response<UserDetails>
 
     @PUT("/mobile/api/sp/service")
