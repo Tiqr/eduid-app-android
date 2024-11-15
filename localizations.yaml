@@ -4013,5 +4013,13 @@ SHARED:
       COPY:
         en: "Please try another option"
         nl: "Probeer een andere optie"
+  ReferenceNames:
+    Idin:
+      COPY:
+        en: "iDIN"
+        nl: "iDIN"
+    Eherkenning:
+      COPY:
+        en: "eIDAS"
+        nl: "eIDAS"
     
-
