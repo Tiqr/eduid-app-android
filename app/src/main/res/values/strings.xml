@@ -822,6 +822,8 @@
   <string name="ExternalAccountLinkingError_Title_COPY">"Something went wrong"</string>
   <string name="ExternalAccountLinkingError_Subtitle_COPY">"We’re sorry, we were unable to retrieve the requested information."</string>
   <string name="ExternalAccountLinkingError_TryAnotherOption_COPY">"Please try another option"</string>
+  <string name="ReferenceNames_Idin_COPY">"iDIN"</string>
+  <string name="ReferenceNames_Eherkenning_COPY">"eIDAS"</string>
   <string name="Button_OK_COPY">"OK"</string>
   <string name="Button_Cancel_COPY">"Cancel"</string>
   <string name="Button_Retry_COPY">"Retry"</string>
