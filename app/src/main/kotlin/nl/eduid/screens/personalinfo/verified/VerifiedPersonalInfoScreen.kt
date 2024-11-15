@@ -57,7 +57,7 @@ fun VerifiedPersonalInfoRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val errorData by viewModel.errorData.collectAsStateWithLifecycle()
     var waitingForVmEvent by rememberSaveable { mutableStateOf(false) }
-    var showConfirmRemovalDialogForSubjectId by rememberSaveable { mutableStateOf(null as String?) }
+    var showConfirmRemovalDialogForSubjectId by rememberSaveable { mutableStateOf<String?>(null) }
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val onBack = remember(viewModel) { { goBack() } }
     errorData?.let {
@@ -100,9 +100,11 @@ fun VerifiedPersonalInfoRoute(
             },
             isDestroyAction = true,
             onConfirm = {
-                viewModel.removeConnection(showConfirmRemovalDialogForSubjectId!!)
-                showConfirmRemovalDialogForSubjectId = null
-                waitingForVmEvent = true
+                showConfirmRemovalDialogForSubjectId?.let { subjectId ->
+                    viewModel.removeConnection(subjectId)
+                    showConfirmRemovalDialogForSubjectId = null
+                    waitingForVmEvent = true
+                }
             }
         )
     }
