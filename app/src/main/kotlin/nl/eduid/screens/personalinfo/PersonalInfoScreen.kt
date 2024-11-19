@@ -65,9 +65,12 @@ import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.ExpandableVerifiedInfoField
 import nl.eduid.ui.InfoField
 import nl.eduid.ui.getDateTimeString
+import nl.eduid.ui.getShortDateString
 import nl.eduid.ui.theme.ColorSupport_Blue_100
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.LinkAccountCard
+import java.time.LocalDate
+import java.time.ZoneOffset
 
 @Composable
 fun PersonalInfoRoute(
@@ -218,7 +221,7 @@ fun PersonalInfoScreen(
                 }
             )
             uiState.verifiedFirstNameAccount?.let { firstNameAccount ->
-                addNameControl(
+                NameControl(
                     value = firstNameAccount.givenName ?: personalInfo.name,
                     label = stringResource(R.string.Profile_VerifiedGivenName_COPY),
                     account = firstNameAccount,
@@ -227,7 +230,7 @@ fun PersonalInfoScreen(
             }
 
             uiState.verifiedLastNameAccount?.let { lastNameAccount ->
-                addNameControl(
+                NameControl(
                     value = lastNameAccount.familyName ?: personalInfo.selfAssertedName.familyName.orEmpty(),
                     label = stringResource(R.string.Profile_VerifiedFamilyName_COPY),
                     account = lastNameAccount,
@@ -245,6 +248,19 @@ fun PersonalInfoScreen(
                     }
                 )
             }
+
+            uiState.verifiedDateOfBirthAccount?.let { dateOfBirthAccount ->
+                dateOfBirthAccount.dateOfBirth?.let { dateOfBirth ->
+                    NameControl(
+                        value = dateOfBirth.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli().getShortDateString(),
+                        label = stringResource(R.string.Profile_VerifiedDateOfBirth_COPY),
+                        account = dateOfBirthAccount,
+                        openVerifiedInformation = openVerifiedInformation
+                    )
+                }
+            }
+
+
             // Email
             Text(
                 style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onSecondary),
@@ -315,15 +331,17 @@ private fun ColumnScope.Organisations(
     )
     institutionAccounts.forEach { account ->
         ConnectionCard(
-            title = account.role ?: account.subjectId,
+            institutionName = account.institution,
+            role = account.role ?: account.subjectId,
             confirmedByInstitution = account,
+            isExpandable = true,
             openVerifiedInformation = openVerifiedInformation
         )
     }
 }
 
 @Composable
-private fun addNameControl(value: String, label: String, account: PersonalInfo.InstitutionAccount, openVerifiedInformation: () -> Unit) {
+private fun NameControl(value: String, label: String, account: PersonalInfo.InstitutionAccount, openVerifiedInformation: () -> Unit) {
     ExpandableVerifiedInfoField(
         title = value,
         subtitle = label,

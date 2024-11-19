@@ -8,7 +8,6 @@ import nl.eduid.di.model.EmailChangeRequest
 import nl.eduid.di.model.EnrollResponse
 import nl.eduid.di.model.IdpScoping
 import nl.eduid.di.model.InstitutionNameResponse
-import nl.eduid.di.model.LinkedAccount
 import nl.eduid.di.model.LinkedAccountUpdateRequest
 import nl.eduid.di.model.RequestEduIdAccount
 import nl.eduid.di.model.RequestPhoneCode
@@ -77,6 +76,12 @@ interface EduIdApi {
     suspend fun getInstitutionName(
         @Query("schac_home") schac_home: String,
     ): Response<InstitutionNameResponse>
+
+    @PUT("/mobile/api/sp/prefer-linked-account")
+    suspend fun preferLinkedAccount(
+        @Body request: LinkedAccountUpdateRequest,
+    ): Response<InstitutionNameResponse>
+
 
     @GET("/mobile/api/sp/confirm-email")
     suspend fun confirmEmail(

@@ -37,12 +37,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
 import nl.eduid.ui.theme.ColorAlertRed
+import nl.eduid.ui.theme.ColorMain_Green_400
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
 fun PrimaryButton(
-    text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true,
+    text: String, onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     buttonBackgroundColor: Color = MaterialTheme.colorScheme.onSecondary,
+    buttonTextColor: Color = Color.White
 ) = Button(
     onClick = onClick,
     enabled = enabled,
@@ -57,7 +61,9 @@ fun PrimaryButton(
     Text(
         text = text,
         overflow = TextOverflow.Ellipsis,
-        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
+        style = MaterialTheme.typography.bodyLarge.copy(
+            fontWeight = FontWeight.SemiBold, color = buttonTextColor
+        ),
     )
 }
 

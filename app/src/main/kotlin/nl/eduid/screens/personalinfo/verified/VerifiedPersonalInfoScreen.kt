@@ -49,6 +49,7 @@ import nl.eduid.ui.getShortDateString
 import nl.eduid.ui.theme.ColorScale_Gray_200
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.util.normalizedIssuerName
+import java.time.ZoneOffset
 
 @Composable
 fun VerifiedPersonalInfoRoute(
@@ -82,6 +83,7 @@ fun VerifiedPersonalInfoRoute(
     }
 
     VerifiedPersonalInfoScreen(
+        personalInfo = uiState.personalInfo,
         accounts = uiState.accounts,
         isLoading = uiState.isLoading,
         onRemoveConnection = { subjectId ->
@@ -113,6 +115,7 @@ fun VerifiedPersonalInfoRoute(
 
 @Composable
 fun VerifiedPersonalInfoScreen(
+    personalInfo: PersonalInfo?,
     accounts: ImmutableList<PersonalInfo.InstitutionAccount>,
     isLoading: Boolean,
     onRemoveConnection: (String) -> Unit,
@@ -204,13 +207,26 @@ fun VerifiedPersonalInfoScreen(
             Spacer(Modifier.size(24.dp))
             account.givenName?.let {
                 VerifiedInfoField(
-                    title = it, subtitle = stringResource(R.string.Profile_VerifiedGivenName_COPY)
+                    title = it,
+                    subtitle = stringResource(R.string.Profile_VerifiedGivenName_COPY),
+                    isDefault = it == personalInfo?.confirmedName?.givenName
                 )
+
                 Spacer(Modifier.size(24.dp))
             }
             account.familyName?.let {
                 VerifiedInfoField(
-                    title = it, subtitle = stringResource(R.string.Profile_VerifiedFamilyName_COPY)
+                    title = it,
+                    subtitle = stringResource(R.string.Profile_VerifiedFamilyName_COPY),
+                    isDefault = it == personalInfo?.confirmedName?.familyName
+                )
+                Spacer(Modifier.size(24.dp))
+            }
+            account.dateOfBirth?.let { dateOfBirth ->
+                VerifiedInfoField(
+                    title = dateOfBirth.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli().getShortDateString(),
+                    subtitle = stringResource(R.string.Profile_VerifiedDateOfBirth_COPY),
+                    isDefault = personalInfo?.dateOfBirth == dateOfBirth
                 )
                 Spacer(Modifier.size(24.dp))
             }
@@ -219,7 +235,8 @@ fun VerifiedPersonalInfoScreen(
                     title = it, subtitle = stringResource(
                         id = R.string.YourVerifiedInformation_AtInstitution_COPY,
                         account.institution.normalizedIssuerName()
-                    )
+                    ),
+                    isDefault = true
                 )
                 Spacer(Modifier.size(24.dp))
             }
@@ -263,6 +280,7 @@ fun VerifiedPersonalInfoScreen(
 @Composable
 private fun Preview_VerifiedPersonalInfoScreen() = EduidAppAndroidTheme {
     VerifiedPersonalInfoScreen(
+        personalInfo = PersonalInfo.demoData(),
         accounts = PersonalInfo.generateInstitutionAccountList(),
         isLoading = false,
         onRemoveConnection = {},

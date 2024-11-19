@@ -4,6 +4,7 @@ import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import nl.eduid.di.model.ConfirmedName
+import nl.eduid.di.model.LinkedAccountUpdateRequest
 import nl.eduid.di.model.SelfAssertedName
 import java.time.LocalDate
 
@@ -14,6 +15,7 @@ data class PersonalInfo(
     val confirmedName: ConfirmedName = ConfirmedName(),
     val nameProvider: String? = null,
     val email: String = "",
+    val dateOfBirth: LocalDate? = null,
     val linkedInternalAccounts: ImmutableList<InstitutionAccount> = emptyList<InstitutionAccount>().toImmutableList(),
     val linkedExternalAccounts: ImmutableList<InstitutionAccount> = emptyList<InstitutionAccount>().toImmutableList(),
     val dateCreated: Long = 0,
@@ -31,6 +33,7 @@ data class PersonalInfo(
         val dateOfBirth: LocalDate? = null,
         val createdStamp: Long,
         val expiryStamp: Long,
+        val updateRequest: LinkedAccountUpdateRequest
     )
 
     companion object {
@@ -70,7 +73,8 @@ data class PersonalInfo(
                 givenName = "Horace",
                 familyName = "Worblehat",
                 createdStamp = System.currentTimeMillis(),
-                expiryStamp = System.currentTimeMillis()
+                expiryStamp = System.currentTimeMillis(),
+                updateRequest = LinkedAccountUpdateRequest("1", "1", false, null)
             )
         ).toImmutableList()
     }

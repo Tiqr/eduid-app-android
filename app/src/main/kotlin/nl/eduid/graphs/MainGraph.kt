@@ -311,7 +311,7 @@ fun MainGraph(
     composable(Graph.FIRST_TIME_DIALOG) { entry ->
         val viewModel = hiltViewModel<LinkAccountViewModel>(entry)
         FirstTimeDialogRoute(viewModel = viewModel,
-            goToAccountLinked = { navController.goToWithPopCurrent(AccountLinked.route) },
+            goToAccountLinked = { navController.goToWithPopCurrent(AccountLinked.routeWithRegistrationFlowParam(true)) },
             skipThis = {
                 navController.navigate(Graph.HOME_PAGE) {
                     //Clear existing home page that has no account
@@ -332,7 +332,8 @@ fun MainGraph(
         })
     }
     composable(//region Account Linked
-        route = AccountLinked.route, deepLinks = listOf(
+        route = AccountLinked.routeWithArgs,
+        deepLinks = listOf(
             navDeepLink {
                 uriPattern = AccountLinked.getUriPatternOK(baseUrl)
             },
@@ -342,7 +343,8 @@ fun MainGraph(
             navDeepLink {
                 uriPattern = AccountLinked.getUriPatternExpired(baseUrl)
             },
-        )
+        ),
+        arguments = AccountLinked.arguments
     ) { entry ->
         val deepLinkIntent: Intent? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             entry.arguments?.getParcelable(
@@ -360,7 +362,13 @@ fun MainGraph(
         AccountLinkedScreen(
             viewModel = viewModel,
             result = result,
-            continueToHome = { navController.goToWithPopCurrent(Graph.HOME_PAGE) },
+            continueToHome = {
+                navController.goToWithPopCurrent(Graph.HOME_PAGE)
+            },
+            continueToPersonalInfo = {
+                navController.goToWithPopCurrent(Graph.HOME_PAGE) //Clear the entire backstack
+                navController.navigate(Graph.PERSONAL_INFO)
+            }
         )
     }//endregion
     //endregion

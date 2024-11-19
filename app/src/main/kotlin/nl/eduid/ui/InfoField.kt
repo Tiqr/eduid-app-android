@@ -236,6 +236,7 @@ fun AddSecurityField(
 fun VerifiedInfoField(
     title: String,
     subtitle: String,
+    isDefault: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
     ListItem(
@@ -267,11 +268,13 @@ fun VerifiedInfoField(
             )
         },
         trailingContent = {
-            Icon(
-                painter = painterResource(R.drawable.homepage_info_icon),
-                tint = MaterialTheme.colorScheme.onSecondary,
-                contentDescription = "",
-            )
+            if (isDefault) {
+                Icon(
+                    painter = painterResource(R.drawable.homepage_info_icon),
+                    tint = MaterialTheme.colorScheme.onSecondary,
+                    contentDescription = "",
+                )
+            }
         },
         modifier = modifier
             .border(

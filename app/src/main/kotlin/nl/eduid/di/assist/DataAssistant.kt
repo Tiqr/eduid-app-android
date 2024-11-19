@@ -1,6 +1,7 @@
 package nl.eduid.di.assist
 
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.firstOrNull
@@ -28,7 +29,7 @@ constructor(
     private val cachedDetails = MutableStateFlow<SaveableResult<UserDetails>?>(null)
     val observableDetails: Flow<SaveableResult<UserDetails>?> = cachedDetails.map { knownValue ->
         if (knownValue == null) {
-            val fromNetwork =  try { loadInCache() } catch (ex: Exception) { return@map handleError(ex) }
+            val fromNetwork = try { loadInCache() } catch (ex: Exception) { return@map handleError(ex) }
             fromNetwork.fold(
                 onSuccess = {
                     SaveableResult.Success(it)
@@ -40,6 +41,16 @@ constructor(
         } else {
             knownValue
         }
+    }
+
+    suspend fun refreshDetails() = withContext(dispatcher) {
+        val fromNetwork = loadInCache()
+        cachedDetails.emit(
+            fromNetwork.fold(
+                onSuccess = { SaveableResult.Success(it) },
+                onFailure = { handleError(it) }
+            )
+        )
     }
 
     private suspend fun handleError(ex: Throwable): SaveableResult.LoadError {
@@ -142,6 +153,16 @@ constructor(
                 null
             },
         )
+    }
+
+    suspend fun preferLinkedAccount(request: LinkedAccountUpdateRequest) = withContext(dispatcher) {
+        if (infoRepository.preferLinkedAccount(request)) {
+            // Also refresh the details, if it was a success, so we have the latest data
+            refreshDetails()
+            true
+        } else {
+            false
+        }
     }
 
     suspend fun getExternalAccountLinkResult(idpScoping: IdpScoping, bankId: String?): String? = withContext(dispatcher) {
