@@ -14,6 +14,7 @@ import androidx.navigation.navDeepLink
 import nl.eduid.graphs.RequestEduIdLinkSent.LOGIN_REASON
 import nl.eduid.graphs.RequestEduIdLinkSent.reasonArg
 import nl.eduid.screens.accountlinked.AccountLinkedScreen
+import nl.eduid.screens.accountlinked.AccountLinkedViewModel
 import nl.eduid.screens.accountlinked.ResultAccountLinked
 import nl.eduid.screens.biometric.EnableBiometricScreen
 import nl.eduid.screens.biometric.EnableBiometricViewModel
@@ -364,7 +365,7 @@ fun MainGraph(
         val fullUri = deepLinkIntent?.data ?: Uri.EMPTY
         val result = ResultAccountLinked.fromRedirectUrl(fullUri)
 
-        val viewModel = hiltViewModel<PersonalInfoViewModel>(entry)
+        val viewModel = hiltViewModel<AccountLinkedViewModel>(entry)
         AccountLinkedScreen(
             viewModel = viewModel,
             result = result,

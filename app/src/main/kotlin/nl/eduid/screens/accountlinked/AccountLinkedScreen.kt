@@ -53,7 +53,7 @@ import java.util.Locale
 
 @Composable
 fun AccountLinkedScreen(
-    viewModel: PersonalInfoViewModel,
+    viewModel: AccountLinkedViewModel,
     result: ResultAccountLinked,
     continueToHome: () -> Unit,
     continueToPersonalInfo: () -> Unit
@@ -65,9 +65,6 @@ fun AccountLinkedScreen(
         if (accountLinked) {
             continueToPersonalInfo()
         }
-    }
-    LaunchedEffect(viewModel) {
-        viewModel.refreshPersonalInfo()
     }
     Column(
         modifier = Modifier

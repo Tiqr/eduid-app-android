@@ -34,15 +34,12 @@ class PersonalInfoViewModel @Inject constructor(
 ) : ViewModel() {
     private val _errorData: MutableStateFlow<ErrorData?> = MutableStateFlow(null)
     private val _isProcessing: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val _accountLinked: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val _linkUrl: MutableStateFlow<Intent?> = MutableStateFlow(null)
-
-    val isRegistrationFlow: Boolean = savedStateHandle.get<Boolean>(AccountLinked.isRegistrationFlowArg) ?: false
 
     val uiState = assistant.observableDetails.map {
         when (it) {
             is SaveableResult.Success -> {
-                val personalInfo = mapUserDetailsToPersonalInfo(it.data)
+                val personalInfo = PersonalInfo.fromUserDetails(it.data, assistant)
                 if (it.saveError != null) {
                     _errorData.emit(it.saveError.toErrorData())
                 }
@@ -116,11 +113,6 @@ class PersonalInfoViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(3_000),
         initialValue = false,
     )
-    val accountLinked = _accountLinked.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(3_000),
-        initialValue = false,
-    )
     val linkUrl = _linkUrl.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(3_000),
@@ -132,34 +124,6 @@ class PersonalInfoViewModel @Inject constructor(
     }
 
     val identityVerificationEnabled = runtimeBehavior.isFeatureEnabled(FeatureFlag.ENABLE_IDENTITY_VERIFICATION)
-
-    private suspend fun mapUserDetailsToPersonalInfo(userDetails: UserDetails): PersonalInfo {
-        var personalInfo = userDetails.mapToPersonalInfo()
-        val nameMap = mutableMapOf<String, String>()
-        for (account in userDetails.linkedAccounts) {
-            val mappedName = assistant.getInstitutionName(account.schacHomeOrganization)
-            mappedName?.let {
-                //If name found, add to list of mapped names
-                nameMap[account.schacHomeOrganization] = mappedName
-                //Get name provider from FIRST linked account
-                if (account.schacHomeOrganization == userDetails.linkedAccounts.firstOrNull()?.schacHomeOrganization) {
-                    personalInfo = personalInfo.copy(
-                        nameProvider = nameMap[account.schacHomeOrganization]
-                            ?: personalInfo.nameProvider
-                    )
-                }
-                //Update UI data to include mapped institution names
-                personalInfo =
-                    personalInfo.copy(linkedInternalAccounts = personalInfo.linkedInternalAccounts.map { institution ->
-                        institution.copy(
-                            roleProvider = nameMap[institution.roleProvider]
-                                ?: institution.roleProvider
-                        )
-                    }.toImmutableList())
-            }
-        }
-        return personalInfo
-    }
 
     fun clearErrorData() = _errorData.update { null }
 
@@ -183,42 +147,5 @@ class PersonalInfoViewModel @Inject constructor(
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(url)
         return intent
-    }
-
-    fun findLinkedAccount(personalInfo: PersonalInfo?, institutionId: String?): PersonalInfo.InstitutionAccount? {
-        val completeList = (personalInfo?.linkedInternalAccounts ?: listOf()) + (personalInfo?.linkedExternalAccounts ?: listOf())
-        completeList.forEach {
-            if (it.institution == institutionId || it.subjectId == institutionId) {
-                return it
-            }
-        }
-        return completeList.firstOrNull()
-    }
-
-    fun isFirstLinkedAccount(personalInfo: PersonalInfo): Boolean {
-        return personalInfo.linkedInternalAccounts.size + personalInfo.linkedExternalAccounts.size < 2
-    }
-
-    fun preferLinkedAccount(linkedAccount: PersonalInfo.InstitutionAccount) {
-        _isProcessing.update { true }
-        viewModelScope.launch {
-            if (assistant.preferLinkedAccount(linkedAccount.updateRequest)) {
-                _accountLinked.update { true }
-            } else {
-                _errorData.update {
-                    ErrorData(
-                        titleId = R.string.ExternalAccountLinkingError_Title_COPY,
-                        messageId = R.string.ExternalAccountLinkingError_Subtitle_COPY
-                    )
-                }
-            }
-            _isProcessing.update { false }
-        }
-    }
-
-    fun refreshPersonalInfo() {
-        viewModelScope.launch {
-            assistant.refreshDetails()
-        }
     }
 }

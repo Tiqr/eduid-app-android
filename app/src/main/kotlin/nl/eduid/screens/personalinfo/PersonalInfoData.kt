@@ -1,11 +1,15 @@
 package nl.eduid.screens.personalinfo
 
+import android.app.Person
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
+import nl.eduid.di.assist.DataAssistant
 import nl.eduid.di.model.ConfirmedName
 import nl.eduid.di.model.LinkedAccountUpdateRequest
 import nl.eduid.di.model.SelfAssertedName
+import nl.eduid.di.model.UserDetails
+import nl.eduid.di.model.mapToPersonalInfo
 import java.time.LocalDate
 
 @Stable
@@ -22,6 +26,7 @@ data class PersonalInfo(
 ) {
     val isVerified = linkedInternalAccounts.isNotEmpty() || linkedExternalAccounts.isNotEmpty()
 
+
     data class InstitutionAccount(
         val subjectId: String,
         val role: String?,
@@ -37,6 +42,35 @@ data class PersonalInfo(
     )
 
     companion object {
+        suspend fun fromUserDetails(userDetails: UserDetails, assistant: DataAssistant): PersonalInfo {
+            var personalInfo = userDetails.mapToPersonalInfo()
+            val nameMap = mutableMapOf<String, String>()
+            for (account in userDetails.linkedAccounts) {
+                val mappedName = assistant.getInstitutionName(account.schacHomeOrganization)
+                mappedName?.let {
+                    //If name found, add to list of mapped names
+                    nameMap[account.schacHomeOrganization] = mappedName
+                    //Get name provider from FIRST linked account
+                    if (account.schacHomeOrganization == userDetails.linkedAccounts.firstOrNull()?.schacHomeOrganization) {
+                        personalInfo = personalInfo.copy(
+                            nameProvider = nameMap[account.schacHomeOrganization]
+                                ?: personalInfo.nameProvider
+                        )
+                    }
+                    //Update UI data to include mapped institution names
+                    personalInfo =
+                        personalInfo.copy(linkedInternalAccounts = personalInfo.linkedInternalAccounts.map { institution ->
+                            institution.copy(
+                                roleProvider = nameMap[institution.roleProvider]
+                                    ?: institution.roleProvider
+                            )
+                        }.toImmutableList())
+                }
+            }
+            return personalInfo
+
+        }
+
         fun demoData(): PersonalInfo {
             return PersonalInfo(
                 name = "R. van Hamersdonksveer",
