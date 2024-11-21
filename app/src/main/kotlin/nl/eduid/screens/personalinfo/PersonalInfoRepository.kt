@@ -384,6 +384,14 @@ class PersonalInfoRepository(
         false
     }
 
+    suspend fun preferLinkedAccount(linkedAccountUpdateRequest: LinkedAccountUpdateRequest) = try {
+        val response = eduIdApi.preferLinkedAccount(linkedAccountUpdateRequest)
+        response.isSuccessful
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to prefer linked account!")
+        false
+    }
+
     @Throws(Exception::class)
     suspend fun getVerifyIssuers(): List<VerifyIssuer>? = withContext(Dispatchers.IO) {
         eduIdApi.getVerifyIssuers().body()

@@ -2,6 +2,7 @@ package nl.eduid.screens.personalinfo
 
 import android.content.Intent
 import android.net.Uri
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,14 +18,17 @@ import nl.eduid.R
 import nl.eduid.di.assist.DataAssistant
 import nl.eduid.di.assist.SaveableResult
 import nl.eduid.di.assist.toErrorData
+import nl.eduid.di.model.LinkedAccountUpdateRequest
 import nl.eduid.di.model.UserDetails
 import nl.eduid.di.model.mapToPersonalInfo
 import nl.eduid.flags.FeatureFlag
 import nl.eduid.flags.RuntimeBehavior
+import nl.eduid.graphs.AccountLinked
 import javax.inject.Inject
 
 @HiltViewModel
 class PersonalInfoViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val assistant: DataAssistant,
     private val runtimeBehavior: RuntimeBehavior
 ) : ViewModel() {
@@ -35,12 +39,13 @@ class PersonalInfoViewModel @Inject constructor(
     val uiState = assistant.observableDetails.map {
         when (it) {
             is SaveableResult.Success -> {
-                val personalInfo = mapUserDetailsToPersonalInfo(it.data)
+                val personalInfo = PersonalInfo.fromUserDetails(it.data, assistant)
                 if (it.saveError != null) {
                     _errorData.emit(it.saveError.toErrorData())
                 }
                 var verifiedFirstNameAccount: PersonalInfo.InstitutionAccount? = null
                 var verifiedLastNameAccount: PersonalInfo.InstitutionAccount? = null
+                var verifiedDateOfBirthAccount: PersonalInfo.InstitutionAccount? = null
                 // Search in linked internal accounts and then external account
                 for (linkedAccount in personalInfo.linkedInternalAccounts + personalInfo.linkedExternalAccounts) {
                     if (verifiedFirstNameAccount == null && linkedAccount.givenName != null && linkedAccount.givenName == personalInfo.selfAssertedName.givenName) {
@@ -49,8 +54,11 @@ class PersonalInfoViewModel @Inject constructor(
                     if (verifiedLastNameAccount == null && linkedAccount.familyName != null && linkedAccount.familyName == personalInfo.selfAssertedName.familyName) {
                         verifiedLastNameAccount = linkedAccount
                     }
+                    if (verifiedDateOfBirthAccount == null && linkedAccount.dateOfBirth != null && linkedAccount.dateOfBirth == personalInfo.dateOfBirth) {
+                        verifiedDateOfBirthAccount = linkedAccount
+                    }
                 }
-                // It is possible that there's a verified name, but it doesn't match the one in the profile. In this case we still need to show it
+                // It is possible that there's a verified name / birth date, but it doesn't match the one in the profile. In this case we still need to show it
                 // So we go through the accounts once more, but do not check for matches anymore
                 if (verifiedFirstNameAccount == null || verifiedLastNameAccount != null) {
                     for (linkedAccount in (personalInfo.linkedInternalAccounts + personalInfo.linkedExternalAccounts)) {
@@ -60,6 +68,9 @@ class PersonalInfoViewModel @Inject constructor(
                         if (verifiedLastNameAccount == null && linkedAccount.familyName != null) {
                             verifiedLastNameAccount = linkedAccount
                         }
+                        if (verifiedDateOfBirthAccount == null && linkedAccount.dateOfBirth != null) {
+                            verifiedDateOfBirthAccount = linkedAccount
+                        }
                     }
                 }
 
@@ -67,7 +78,8 @@ class PersonalInfoViewModel @Inject constructor(
                     isLoading = false,
                     personalInfo = personalInfo,
                     verifiedFirstNameAccount = verifiedFirstNameAccount,
-                    verifiedLastNameAccount =  verifiedLastNameAccount
+                    verifiedLastNameAccount = verifiedLastNameAccount,
+                    verifiedDateOfBirthAccount = verifiedDateOfBirthAccount
                 )
             }
 
@@ -108,46 +120,12 @@ class PersonalInfoViewModel @Inject constructor(
     )
     val hasLinkedInstitution = uiState.map {
         it.personalInfo.linkedInternalAccounts.isNotEmpty() ||
-            it.personalInfo.linkedExternalAccounts.isNotEmpty()
+                it.personalInfo.linkedExternalAccounts.isNotEmpty()
     }
 
     val identityVerificationEnabled = runtimeBehavior.isFeatureEnabled(FeatureFlag.ENABLE_IDENTITY_VERIFICATION)
 
-    private suspend fun mapUserDetailsToPersonalInfo(userDetails: UserDetails): PersonalInfo {
-        var personalInfo = userDetails.mapToPersonalInfo()
-        val nameMap = mutableMapOf<String, String>()
-        for (account in userDetails.linkedAccounts) {
-            val mappedName = assistant.getInstitutionName(account.schacHomeOrganization)
-            mappedName?.let {
-                //If name found, add to list of mapped names
-                nameMap[account.schacHomeOrganization] = mappedName
-                //Get name provider from FIRST linked account
-                if (account.schacHomeOrganization == userDetails.linkedAccounts.firstOrNull()?.schacHomeOrganization) {
-                    personalInfo = personalInfo.copy(
-                        nameProvider = nameMap[account.schacHomeOrganization]
-                            ?: personalInfo.nameProvider
-                    )
-                }
-                //Update UI data to include mapped institution names
-                personalInfo =
-                    personalInfo.copy(linkedInternalAccounts = personalInfo.linkedInternalAccounts.map { institution ->
-                        institution.copy(
-                            roleProvider = nameMap[institution.roleProvider]
-                                ?: institution.roleProvider
-                        )
-                    }.toImmutableList())
-            }
-        }
-        return personalInfo
-    }
-
     fun clearErrorData() = _errorData.update { null }
-
-    fun removeConnection(institutionId: String) = viewModelScope.launch {
-        _isProcessing.update { true }
-        assistant.removeConnection(institutionId)
-        _isProcessing.update { false }
-    }
 
     fun requestLinkUrl() = viewModelScope.launch {
         _isProcessing.update { true }

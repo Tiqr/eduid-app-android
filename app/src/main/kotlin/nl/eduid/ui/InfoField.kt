@@ -52,6 +52,7 @@ import nl.eduid.ui.theme.BlueButton
 import nl.eduid.ui.theme.ColorScale_Gray_500
 import nl.eduid.ui.theme.ColorSupport_Blue_100
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.util.normalizedIssuerName
 import java.util.Locale
 
 @Composable
@@ -235,6 +236,7 @@ fun AddSecurityField(
 fun VerifiedInfoField(
     title: String,
     subtitle: String,
+    isDefault: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
     ListItem(
@@ -266,11 +268,13 @@ fun VerifiedInfoField(
             )
         },
         trailingContent = {
-            Icon(
-                painter = painterResource(R.drawable.homepage_info_icon),
-                tint = MaterialTheme.colorScheme.onSecondary,
-                contentDescription = "",
-            )
+            if (isDefault) {
+                Icon(
+                    painter = painterResource(R.drawable.homepage_info_icon),
+                    tint = MaterialTheme.colorScheme.onSecondary,
+                    contentDescription = "",
+                )
+            }
         },
         modifier = modifier
             .border(
@@ -339,7 +343,7 @@ fun ExpandableVerifiedInfoField(
                     Text(
                         text = stringResource(
                             id = R.string.Profile_VerifiedBy_COPY,
-                            confirmedByInstitution.institution
+                            confirmedByInstitution.institution.normalizedIssuerName()
                         ),
                         style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
                     )

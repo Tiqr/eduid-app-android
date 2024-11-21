@@ -16,6 +16,7 @@ import nl.eduid.di.assist.DataAssistant
 import nl.eduid.di.assist.SaveableResult
 import nl.eduid.di.assist.toErrorData
 import nl.eduid.di.model.mapToInstitutionAccount
+import nl.eduid.di.model.mapToPersonalInfo
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,6 +34,7 @@ class VerifiedPersonalInfoViewModel @Inject constructor(
                     _errorData.emit(details.saveError.toErrorData())
                 }
                 UiState(
+                    personalInfo = details.data.mapToPersonalInfo(),
                     isLoading = false,
                     accounts = (details.data.linkedAccounts.mapNotNull { it.mapToInstitutionAccount() } +
                             details.data.externalLinkedAccounts.mapNotNull { it.mapToInstitutionAccount() }).toImmutableList()

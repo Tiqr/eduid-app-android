@@ -8,4 +8,5 @@ data class UiState(
     val isLoading: Boolean = false,
     val verifiedLastNameAccount: PersonalInfo.InstitutionAccount? = null,
     val verifiedFirstNameAccount: PersonalInfo.InstitutionAccount? = null,
+    val verifiedDateOfBirthAccount: PersonalInfo.InstitutionAccount? = null,
 )

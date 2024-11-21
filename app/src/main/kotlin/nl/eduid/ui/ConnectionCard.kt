@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -54,14 +55,18 @@ import nl.eduid.ui.theme.BlueButton
 import nl.eduid.ui.theme.ColorAlertRed
 import nl.eduid.ui.theme.ColorScale_Gray_500
 import nl.eduid.ui.theme.ColorSupport_Blue_100
+import nl.eduid.ui.theme.ColorSupport_Blue_400
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.util.normalizedIssuerName
 import java.util.Locale
 
 @Composable
 fun ConnectionCard(
-    title: String,
+    institutionName: String,
+    role: String,
     confirmedByInstitution: PersonalInfo.InstitutionAccount,
     modifier: Modifier = Modifier,
+    isExpandable: Boolean,
     expandedPreview: Boolean = false,
     openVerifiedInformation: () -> Unit = {},
 ) {
@@ -76,10 +81,21 @@ fun ConnectionCard(
             containerColor = containerColor,
             trailingIconColor = MaterialTheme.colorScheme.onSurface
         ),
-        leadingContent = {},
+        leadingContent = {
+            Column(
+                verticalArrangement = Arrangement.Center
+            ) {
+                Icon(
+                    modifier = Modifier.size(32.dp),
+                    painter = painterResource(R.drawable.ic_school_building),
+                    tint = ColorSupport_Blue_400,
+                    contentDescription = null
+                )
+            }
+        },
         headlineContent = {
             Text(
-                text = title,
+                text = institutionName,
                 modifier = Modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurface
@@ -89,10 +105,7 @@ fun ConnectionCard(
         supportingContent = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
-                    text = stringResource(
-                        id = R.string.YourVerifiedInformation_AtInstitution_COPY,
-                        confirmedByInstitution.institution
-                    ),
+                    text = role,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 4.dp),
@@ -103,7 +116,7 @@ fun ConnectionCard(
                     Text(
                         text = stringResource(
                             id = R.string.Profile_VerifiedBy_COPY,
-                            confirmedByInstitution.institution
+                            confirmedByInstitution.institution.normalizedIssuerName()
                         ),
                         style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
                     )
@@ -133,16 +146,18 @@ fun ConnectionCard(
             }
         },
         trailingContent = {
-            if (isExpanded) {
-                Icon(
-                    imageVector = Icons.Outlined.KeyboardArrowUp,
-                    contentDescription = "",
-                )
-            } else {
-                Icon(
-                    imageVector = Icons.Outlined.KeyboardArrowDown,
-                    contentDescription = "",
-                )
+            if (isExpandable) {
+                if (isExpanded) {
+                    Icon(
+                        imageVector = Icons.Outlined.KeyboardArrowUp,
+                        contentDescription = "",
+                    )
+                } else {
+                    Icon(
+                        imageVector = Icons.Outlined.KeyboardArrowDown,
+                        contentDescription = "",
+                    )
+                }
             }
         },
         modifier = modifier
@@ -152,7 +167,9 @@ fun ConnectionCard(
                 width = 2.dp
             )
             .clickable {
-                isExpanded = !isExpanded
+                if (isExpandable) {
+                    isExpanded = !isExpanded
+                }
             }
     )
 }
@@ -243,7 +260,7 @@ private fun InstitutionInfoBlock(
     Modifier.fillMaxWidth()
 ) {
     InfoRowOld(
-        label = stringResource(R.string.Profile_VerifiedBy_COPY, institutionInfo.institution)
+        label = stringResource(R.string.Profile_VerifiedBy_COPY, institutionInfo.institution.normalizedIssuerName())
                 + stringResource(
             R.string.Profile_VerifiedOn_COPY, institutionInfo.createdStamp.getShortDateString()
         )
@@ -285,11 +302,15 @@ private fun InstitutionInfoBlock(
 private fun Preview_ConnectionCard() = EduidAppAndroidTheme {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         ConnectionCard(
-            title = "Librarian",
+            institutionName = "University of Amsterdam",
+            role = "Librarian",
+            isExpandable = false,
             confirmedByInstitution = generateInstitutionAccountList()[0],
         )
         ConnectionCard(
-            title = "Librarian",
+            institutionName = "University of Amsterdam",
+            role = "Librarian",
+            isExpandable = true,
             confirmedByInstitution = generateInstitutionAccountList()[0],
             expandedPreview = true,
         )

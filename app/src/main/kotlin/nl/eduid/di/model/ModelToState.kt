@@ -1,12 +1,9 @@
 package nl.eduid.di.model
 
-import com.squareup.moshi.Moshi
 import kotlinx.collections.immutable.toImmutableList
 import nl.eduid.screens.personalinfo.PersonalInfo
-import java.net.URLEncoder
 import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneId
 import java.time.ZoneOffset
 
 fun LinkedAccount.mapToInstitutionAccount(): PersonalInfo.InstitutionAccount? =
@@ -27,6 +24,12 @@ fun LinkedAccount.mapToInstitutionAccount(): PersonalInfo.InstitutionAccount? =
             familyName = this.familyName,
             createdStamp = this.createdAt,
             expiryStamp = this.expiresAt,
+            updateRequest = LinkedAccountUpdateRequest(
+                eduPersonPrincipalName = this.eduPersonPrincipalName,
+                subjectId = this.subjectId,
+                external = false,
+                idpScoping = null
+            )
         )
     }
 
@@ -42,6 +45,12 @@ fun ExternalLinkedAccount.mapToInstitutionAccount(): PersonalInfo.InstitutionAcc
         dateOfBirth = this.dateOfBirth?.let { LocalDate.ofInstant(Instant.ofEpochMilli(it), ZoneOffset.UTC) },
         createdStamp = this.createdAt,
         expiryStamp = this.expiresAt,
+        updateRequest = LinkedAccountUpdateRequest(
+            eduPersonPrincipalName = null,
+            subjectId = this.subjectId,
+            external = true,
+            idpScoping = this.idpScoping
+        )
     )
 
 
@@ -60,6 +69,8 @@ fun UserDetails.mapToPersonalInfo(): PersonalInfo {
     } ?: "${this.chosenName} ${this.familyName}"
 
     val email: String = this.email
+    val dateOfBirth: LocalDate? = this.dateOfBirth?.let { LocalDate.ofInstant(Instant.ofEpochMilli(it), ZoneOffset.UTC) }
+
     val linkedInternalAccounts = linkedAccounts.mapNotNull { account ->
         account.mapToInstitutionAccount()
     }.toImmutableList()
@@ -80,6 +91,7 @@ fun UserDetails.mapToPersonalInfo(): PersonalInfo {
             givenName = givenNameConfirmer?.givenName,
             givenNameConfirmedBy = givenNameConfirmer?.institutionIdentifier
         ),
+        dateOfBirth = dateOfBirth,
         nameProvider = nameProvider,
         email = email,
         linkedInternalAccounts = linkedInternalAccounts,

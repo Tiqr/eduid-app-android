@@ -59,6 +59,7 @@ data class UserDetails(
     val givenName: String,
     val chosenName: String,
     val familyName: String,
+    val dateOfBirth: Long?,
     val usePassword: Boolean,
     val usePublicKey: Boolean,
     val forgottenPassword: Boolean,
@@ -134,7 +135,7 @@ data class ExternalLinkedAccount(
 @JsonClass(generateAdapter = true)
 data class ExternalLinkedAccountIssuer(
     val id: String,
-    val name: String
+    val name: String?
 ) : Parcelable
 
 @Parcelize
@@ -150,8 +151,8 @@ data class Registration(
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class InstitutionNameResponse(
-    val displayNameEn: String,
-    val displayNameNl: String,
+    val displayNameEn: String?,
+    val displayNameNl: String?,
 ) : Parcelable
 
 @Parcelize

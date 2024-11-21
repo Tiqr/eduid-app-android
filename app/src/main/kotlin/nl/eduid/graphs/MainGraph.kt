@@ -14,6 +14,7 @@ import androidx.navigation.navDeepLink
 import nl.eduid.graphs.RequestEduIdLinkSent.LOGIN_REASON
 import nl.eduid.graphs.RequestEduIdLinkSent.reasonArg
 import nl.eduid.screens.accountlinked.AccountLinkedScreen
+import nl.eduid.screens.accountlinked.AccountLinkedViewModel
 import nl.eduid.screens.accountlinked.ResultAccountLinked
 import nl.eduid.screens.biometric.EnableBiometricScreen
 import nl.eduid.screens.biometric.EnableBiometricViewModel
@@ -311,7 +312,7 @@ fun MainGraph(
     composable(Graph.FIRST_TIME_DIALOG) { entry ->
         val viewModel = hiltViewModel<LinkAccountViewModel>(entry)
         FirstTimeDialogRoute(viewModel = viewModel,
-            goToAccountLinked = { navController.goToWithPopCurrent(AccountLinked.route) },
+            goToAccountLinked = { navController.goToWithPopCurrent(AccountLinked.routeWithRegistrationFlowParam(true)) },
             skipThis = {
                 navController.navigate(Graph.HOME_PAGE) {
                     //Clear existing home page that has no account
@@ -332,9 +333,16 @@ fun MainGraph(
         })
     }
     composable(//region Account Linked
-        route = AccountLinked.route, deepLinks = listOf(
+        route = AccountLinked.routeWithArgs,
+        deepLinks = listOf(
             navDeepLink {
-                uriPattern = AccountLinked.getUriPatternOK(baseUrl)
+                uriPattern = AccountLinked.getUriPatternInternalLinkOK(baseUrl)
+            },
+            navDeepLink {
+                uriPattern = AccountLinked.getUriPatternExternalLinkOK(baseUrl)
+            },
+            navDeepLink {
+                uriPattern = AccountLinked.getUriPatternExternalLinkOKCustomScheme()
             },
             navDeepLink {
                 uriPattern = AccountLinked.getUriPatternFailed(baseUrl)
@@ -342,7 +350,8 @@ fun MainGraph(
             navDeepLink {
                 uriPattern = AccountLinked.getUriPatternExpired(baseUrl)
             },
-        )
+        ),
+        arguments = AccountLinked.arguments
     ) { entry ->
         val deepLinkIntent: Intent? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             entry.arguments?.getParcelable(
@@ -356,11 +365,17 @@ fun MainGraph(
         val fullUri = deepLinkIntent?.data ?: Uri.EMPTY
         val result = ResultAccountLinked.fromRedirectUrl(fullUri)
 
-        val viewModel = hiltViewModel<PersonalInfoViewModel>(entry)
+        val viewModel = hiltViewModel<AccountLinkedViewModel>(entry)
         AccountLinkedScreen(
             viewModel = viewModel,
             result = result,
-            continueToHome = { navController.goToWithPopCurrent(Graph.HOME_PAGE) },
+            continueToHome = {
+                navController.goToWithPopCurrent(Graph.HOME_PAGE)
+            },
+            continueToPersonalInfo = {
+                navController.goToWithPopCurrent(Graph.HOME_PAGE) //Clear the entire backstack
+                navController.navigate(Graph.PERSONAL_INFO)
+            }
         )
     }//endregion
     //endregion

@@ -5,6 +5,9 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import nl.eduid.di.model.SelfAssertedName
+import nl.eduid.graphs.RequestEduIdLinkSent.LOGIN_REASON
+import nl.eduid.graphs.RequestEduIdLinkSent.emailArg
+import nl.eduid.graphs.RequestEduIdLinkSent.reasonArg
 import java.io.UnsupportedEncodingException
 
 object Graph {
@@ -45,9 +48,24 @@ object RequestEduIdCreated {
 
 object AccountLinked {
     const val route = "account_linked"
-    fun getUriPatternOK(baseUrl: String) = "$baseUrl/client/mobile/account-linked"
+    fun getUriPatternInternalLinkOK(baseUrl: String) = "$baseUrl/client/mobile/account-linked"
+    fun getUriPatternExternalLinkOK(baseUrl: String) = "$baseUrl/client/mobile/external-account-linked"
+    fun getUriPatternExternalLinkOKCustomScheme() = "eduid:///client/mobile/external-account-linked"
     fun getUriPatternFailed(baseUrl: String) = "$baseUrl/client/mobile/eppn-already-linked"
     fun getUriPatternExpired(baseUrl: String) = "$baseUrl/client/mobile/expired"
+
+    const val isRegistrationFlowArg = "is_registration_flow"
+
+    const val routeWithArgs = "${route}?isRegistrationFlow={$isRegistrationFlowArg}"
+    val arguments = listOf(navArgument(isRegistrationFlowArg) {
+        type = NavType.BoolType
+        nullable = false
+        defaultValue = false
+    })
+
+    fun routeWithRegistrationFlowParam(isRegistrationFlow: Boolean) =
+        "$route/isRegistrationFlow=$isRegistrationFlow"
+
 }
 
 object VerifiedPersonalInfoRoute {
