@@ -277,10 +277,30 @@
                     android:path="/client/mobile/external-account-linked-error"
                     android:scheme="https" />
             </intent-filter>
+
+            <!-- External account linking success -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*.eduid.nl"
+                    android:scheme="https"
+                    android:path="/client/mobile/external-account-linked"
+                    tools:ignore="IntentFilterUniqueDataAttributes" />
+                <data
+                    android:scheme="eduid"
+                    android:host="*"
+                    android:path="/client/mobile/external-account-linked"
+                    tools:ignore="IntentFilterUniqueDataAttributes" />
+            </intent-filter>
         </activity>
 
         <activity
             android:name="net.openid.appauth.RedirectUriReceiverActivity"
+            tools:node="replace"
             android:exported="true">
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />

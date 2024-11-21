@@ -48,7 +48,9 @@ object RequestEduIdCreated {
 
 object AccountLinked {
     const val route = "account_linked"
-    fun getUriPatternOK(baseUrl: String) = "$baseUrl/client/mobile/account-linked"
+    fun getUriPatternInternalLinkOK(baseUrl: String) = "$baseUrl/client/mobile/account-linked"
+    fun getUriPatternExternalLinkOK(baseUrl: String) = "$baseUrl/client/mobile/external-account-linked"
+    fun getUriPatternExternalLinkOKCustomScheme() = "eduid:///client/mobile/external-account-linked"
     fun getUriPatternFailed(baseUrl: String) = "$baseUrl/client/mobile/eppn-already-linked"
     fun getUriPatternExpired(baseUrl: String) = "$baseUrl/client/mobile/expired"
 

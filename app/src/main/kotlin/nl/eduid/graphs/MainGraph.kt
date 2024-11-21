@@ -335,7 +335,13 @@ fun MainGraph(
         route = AccountLinked.routeWithArgs,
         deepLinks = listOf(
             navDeepLink {
-                uriPattern = AccountLinked.getUriPatternOK(baseUrl)
+                uriPattern = AccountLinked.getUriPatternInternalLinkOK(baseUrl)
+            },
+            navDeepLink {
+                uriPattern = AccountLinked.getUriPatternExternalLinkOK(baseUrl)
+            },
+            navDeepLink {
+                uriPattern = AccountLinked.getUriPatternExternalLinkOKCustomScheme()
             },
             navDeepLink {
                 uriPattern = AccountLinked.getUriPatternFailed(baseUrl)
