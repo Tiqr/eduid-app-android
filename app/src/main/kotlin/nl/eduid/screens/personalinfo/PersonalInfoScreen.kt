@@ -275,9 +275,8 @@ fun PersonalInfoScreen(
                     onEmailClicked()
                 })
 
-            if (uiState.personalInfo.linkedInternalAccounts.isNotEmpty()) {
-                Organisations(openVerifiedInformation, uiState.personalInfo.linkedInternalAccounts)
-            }
+            // Organisations
+            Organisations(openVerifiedInformation, uiState.personalInfo.linkedInternalAccounts)
 
             LinkAccountCard(
                 title = R.string.Profile_AddAnOrganisation_COPY,
