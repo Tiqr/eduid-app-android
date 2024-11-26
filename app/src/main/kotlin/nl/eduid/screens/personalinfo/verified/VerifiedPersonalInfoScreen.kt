@@ -43,6 +43,7 @@ import nl.eduid.R
 import nl.eduid.screens.personalinfo.PersonalInfo
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.AlertDialogWithTwoButton
+import nl.eduid.ui.ConnectionCard
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.VerifiedInfoField
 import nl.eduid.ui.getShortDateString
@@ -50,6 +51,7 @@ import nl.eduid.ui.theme.ColorScale_Gray_200
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.util.normalizedIssuerName
 import java.time.ZoneOffset
+import java.util.Locale
 
 @Composable
 fun VerifiedPersonalInfoRoute(
@@ -209,7 +211,7 @@ fun VerifiedPersonalInfoScreen(
                 VerifiedInfoField(
                     title = it,
                     subtitle = stringResource(R.string.Profile_VerifiedGivenName_COPY),
-                    isDefault = it == personalInfo?.confirmedName?.givenName
+                    isDefault = it == personalInfo?.selfAssertedName?.givenName
                 )
 
                 Spacer(Modifier.size(24.dp))
@@ -218,7 +220,7 @@ fun VerifiedPersonalInfoScreen(
                 VerifiedInfoField(
                     title = it,
                     subtitle = stringResource(R.string.Profile_VerifiedFamilyName_COPY),
-                    isDefault = it == personalInfo?.confirmedName?.familyName
+                    isDefault = it == personalInfo?.selfAssertedName?.familyName
                 )
                 Spacer(Modifier.size(24.dp))
             }
@@ -231,12 +233,12 @@ fun VerifiedPersonalInfoScreen(
                 Spacer(Modifier.size(24.dp))
             }
             account.role?.let {
-                VerifiedInfoField(
-                    title = it, subtitle = stringResource(
-                        id = R.string.YourVerifiedInformation_AtInstitution_COPY,
-                        account.institution.normalizedIssuerName()
-                    ),
-                    isDefault = true
+                ConnectionCard(
+                    institutionName = account.institution,
+                    role = account.role.capitalize(Locale.getDefault()),
+                    confirmedByInstitution = account,
+                    isExpandable = false,
+                    openVerifiedInformation = {}
                 )
                 Spacer(Modifier.size(24.dp))
             }
