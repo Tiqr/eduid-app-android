@@ -46,6 +46,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -71,6 +72,7 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.LinkAccountCard
 import java.time.LocalDate
 import java.time.ZoneOffset
+import java.util.Locale
 
 @Composable
 fun PersonalInfoRoute(
@@ -273,9 +275,8 @@ fun PersonalInfoScreen(
                     onEmailClicked()
                 })
 
-            if (uiState.personalInfo.linkedInternalAccounts.isNotEmpty()) {
-                Organisations(openVerifiedInformation, uiState.personalInfo.linkedInternalAccounts)
-            }
+            // Organisations
+            Organisations(openVerifiedInformation, uiState.personalInfo.linkedInternalAccounts)
 
             LinkAccountCard(
                 title = R.string.Profile_AddAnOrganisation_COPY,
@@ -332,7 +333,7 @@ private fun ColumnScope.Organisations(
     institutionAccounts.forEach { account ->
         ConnectionCard(
             institutionName = account.institution,
-            role = account.role ?: account.subjectId,
+            role = (account.role ?: account.subjectId).capitalize(Locale.getDefault()),
             confirmedByInstitution = account,
             isExpandable = true,
             openVerifiedInformation = openVerifiedInformation

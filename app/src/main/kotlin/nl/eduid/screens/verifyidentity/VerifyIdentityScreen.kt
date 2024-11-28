@@ -70,7 +70,8 @@ fun VerifyIdentityScreen(
     onBackClicked = goBack
 ) { padding ->
     val launcher = rememberLauncherForActivityResult(contract = ExternalAccountLinkingContract(), onResult = { _ ->
-        // TODO: handle result
+        /**We don't have to explicitly handle the result intent. The deep linking will
+         * automatically open the [AccountLinkedScreen()] and ensure the backstack is correct.*/
     })
 
     LaunchedEffect(viewModel.uiState.launchIntent) {
