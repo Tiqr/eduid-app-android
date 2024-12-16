@@ -2,6 +2,12 @@
 
 ## [Unreleased](https://github.com/SURFnet/eduid-app-android/tree/HEAD)
 
+# 0.2.0
+- Allow logging in without opening the push notification
+- Allow validation using eIDAS and iDIN
+- Improve layout(s)
+- Update translations
+
 # 0.1.25
 - Update screen layouts
 - Update texts and translations
