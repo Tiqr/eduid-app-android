@@ -20,6 +20,6 @@ enum class FeatureFlag(
         key = "enable_identity_verification",
         title = "Enable Identity Verification",
         explanation = "When on, it will enable the user to verify their identity via a third party",
-        defaultValue = false,
+        defaultValue = true,
     ),
 }
