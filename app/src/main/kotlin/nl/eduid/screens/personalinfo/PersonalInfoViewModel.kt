@@ -123,8 +123,6 @@ class PersonalInfoViewModel @Inject constructor(
                 it.personalInfo.linkedExternalAccounts.isNotEmpty()
     }
 
-    val identityVerificationEnabled = runtimeBehavior.isFeatureEnabled(FeatureFlag.ENABLE_IDENTITY_VERIFICATION)
-
     fun clearErrorData() = _errorData.update { null }
 
     fun requestLinkUrl() = viewModelScope.launch {

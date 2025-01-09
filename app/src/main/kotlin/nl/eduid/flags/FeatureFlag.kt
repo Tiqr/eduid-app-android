@@ -15,11 +15,5 @@ enum class FeatureFlag(
         title = "Show 'Add a security key' button",
         explanation = "When on, it will show the `Add a security key` on the Security screen",
         defaultValue = false,
-    ),
-    ENABLE_IDENTITY_VERIFICATION(
-        key = "enable_identity_verification",
-        title = "Enable Identity Verification",
-        explanation = "When on, it will enable the user to verify their identity via a third party",
-        defaultValue = true,
-    ),
+    )
 }
