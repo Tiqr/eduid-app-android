@@ -97,12 +97,7 @@ fun PersonalInfoRoute(
     }
     val addLink = remember(hasLinkedInstitution) {
         {
-            if (!viewModel.identityVerificationEnabled) {
-                viewModel.requestLinkUrl()
-                isGettingLinkUrl = true
-            } else {
-                goToVerifyIdentity(hasLinkedInstitution)
-            }
+            goToVerifyIdentity(hasLinkedInstitution)
         }
     }
     val createdAtDate = stringResource(R.string.ManageAccount_CreatedAt_COPY)
