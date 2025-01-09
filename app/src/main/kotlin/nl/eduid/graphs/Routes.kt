@@ -5,9 +5,6 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import nl.eduid.di.model.SelfAssertedName
-import nl.eduid.graphs.RequestEduIdLinkSent.LOGIN_REASON
-import nl.eduid.graphs.RequestEduIdLinkSent.emailArg
-import nl.eduid.graphs.RequestEduIdLinkSent.reasonArg
 import java.io.UnsupportedEncodingException
 
 object Graph {
@@ -334,15 +331,7 @@ sealed class EditName(val route: String) {
         })
 
         fun routeWithArgs(selfAssertedName: SelfAssertedName, canEditFamilyName: Boolean) =
-            "${route}/${Uri.encode(selfAssertedName.chosenName)}/${Uri.encode(selfAssertedName.familyName)}/${canEditFamilyName}"
-
-        fun decodeIdFromEntry(entry: NavBackStackEntry): SelfAssertedName {
-            val choseName = entry.arguments?.getString(chosenName) ?: ""
-            val familyName = entry.arguments?.getString(familyName) ?: ""
-            return SelfAssertedName(
-                familyName = Uri.decode(familyName), chosenName = Uri.decode(choseName)
-            )
-        }
+            "${route}/${Uri.encode(selfAssertedName.chosenName ?: "")}/${Uri.encode(selfAssertedName.familyName ?: "")}/${canEditFamilyName}"
     }
 }
 
