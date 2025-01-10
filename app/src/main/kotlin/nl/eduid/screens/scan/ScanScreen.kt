@@ -65,7 +65,6 @@ fun ScanScreen(
     )
 ) = Scaffold(
     modifier = Modifier
-        .systemBarsPadding()
         .onKeyEvent { keyEvent ->
             //This will only work if the screen has a focused child. Which will prompt they keyboard.
             //The other solution is to listen to key events on the MainComposeActivity but then we need to learn the currently displayed screen,
