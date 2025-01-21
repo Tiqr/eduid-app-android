@@ -1,6 +1,7 @@
 package nl.eduid.di.repository
 
 import android.content.Context
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -61,6 +62,17 @@ class StorageRepository(private val context: Context) {
         preferences[PreferencesKeys.CLIENT_ID]
     }
 
+    val didDeactivateLinkedDevice: Flow<Boolean> = context.dataStore.data.catch { exception ->
+        if (exception is IOException) {
+            Timber.e(exception, "Error reading preferences.")
+            emit(emptyPreferences())
+        } else {
+            throw exception
+        }
+    }.map { preferences ->
+        preferences[PreferencesKeys.DID_DEACTIVATE_LINKED_DEVICE] ?: false
+    }
+
     val lastKnownConfigHash: Flow<Int?> = context.dataStore.data.catch { exception ->
         if (exception is IOException) {
             Timber.e(exception, "Error reading preferences.")
@@ -100,10 +112,15 @@ class StorageRepository(private val context: Context) {
         settings[PreferencesKeys.LAST_KNOWN_CONFIG_HASH] = configHash
     }
 
+    suspend fun setDidDeactivateLinkedDevice(newValue: Boolean) = context.dataStore.edit { settings ->
+        settings[PreferencesKeys.DID_DEACTIVATE_LINKED_DEVICE] = newValue
+    }
+
     private object PreferencesKeys {
         val CURRENT_AUTHSTATE = stringPreferencesKey("current_authstate")
         val CURRENT_AUTHREQUEST = stringPreferencesKey("current_authrequest")
         val CLIENT_ID = stringPreferencesKey("currentClientId")
+        val DID_DEACTIVATE_LINKED_DEVICE = booleanPreferencesKey("did_deactivate_linked_device")
         val LAST_KNOWN_CONFIG_HASH = intPreferencesKey("last_known_configuration_hash")
     }
 

@@ -97,8 +97,10 @@ fun HomePageNoAccountContent(
         },
     ) { paddingValues ->
         val isAuthorizedForDataAccess by viewModel.isAuthorizedForDataAccess.observeAsState(false)
+        val didDeactivateLinkedDevice by viewModel.didDeactivateLinkedDevice.observeAsState(false)
         var waitingForVmEvent by rememberSaveable { mutableStateOf(false) }
         var wasOAuthTriggered by rememberSaveable { mutableStateOf(false) }
+        var deactivationTriggered by rememberSaveable { mutableStateOf(false) }
         val waitToComplete by remember { derivedStateOf { viewModel.uiState.inProgress || waitingForVmEvent } }
 
         if (waitingForVmEvent) {
@@ -165,20 +167,24 @@ fun HomePageNoAccountContent(
             }
 
             viewModel.uiState.deactivateFor?.let {
-                val currentConfirmDeactivation by rememberUpdatedState(onGoToConfirmDeactivation)
-                LaunchedEffect(viewModel.uiState) {
-                    currentConfirmDeactivation(it.phoneNumber)
-                    viewModel.clearDeactivation()
-                    waitingForVmEvent = false
+                if (!deactivationTriggered) { // Avoiding an infinite loop. Pressing the sign-in button will reset this flag
+                    val currentConfirmDeactivation by rememberUpdatedState(onGoToConfirmDeactivation)
+                    LaunchedEffect(viewModel.uiState) {
+                        currentConfirmDeactivation(it.phoneNumber)
+                        viewModel.clearDeactivation()
+                        deactivationTriggered = true
+                        waitingForVmEvent = true
+                    }
                 }
             }
 
-            if (isAuthorizedForDataAccess && wasOAuthTriggered) {
+            if ((isAuthorizedForDataAccess && wasOAuthTriggered) || (didDeactivateLinkedDevice && deactivationTriggered)) {
                 LaunchedEffect(viewModel.uiState) {
                     if (viewModel.uiState.canAutomaticallyTriggerEnroll()) {
                         Timber.e("Automatically starting enrollment now")
                         viewModel.startEnrollmentAfterSignIn()
                         wasOAuthTriggered = false
+                        deactivationTriggered = false
                     }
                 }
             }
@@ -287,11 +293,13 @@ fun HomePageNoAccountContent(
                     text = stringResource(R.string.CreateEduID_LandingPage_SignInButton_COPY),
                     enabled = !waitToComplete,
                     onClick = {
+                        deactivationTriggered = false
                         if (isAuthorizedForDataAccess) {
                             viewModel.startEnrollmentAfterSignIn()
                             waitingForVmEvent = true
                         } else {
                             wasOAuthTriggered = true
+                            waitingForVmEvent = true
                             onGoToSignIn()
                         }
                     },
