@@ -45,6 +45,8 @@ class HomePageViewModel @Inject constructor(
 ) : BaseViewModel(moshi) {
 
     val isAuthorizedForDataAccess = repository.isAuthorized.asLiveData()
+    val didDeactivateLinkedDevice = repository.didDeactivateLinkedDevice.asLiveData()
+
     var uiState by mutableStateOf(UiState())
         private set
     var isEnrolledState: IsEnrolled by mutableStateOf(IsEnrolled.Unknown)

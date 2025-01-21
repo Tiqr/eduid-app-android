@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.R
+import nl.eduid.di.repository.StorageRepository
 import nl.eduid.graphs.PhoneNumberRecovery
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import nl.eduid.screens.recovery.UiState
@@ -17,6 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ConfirmCodeViewModel @Inject constructor(
+    private val storageRepository: StorageRepository,
     private val repository: PersonalInfoRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -42,7 +44,9 @@ class ConfirmCodeViewModel @Inject constructor(
         } else {
             repository.confirmPhoneCode(uiState.input)
         }
-
+        if (success && isDeactivation) {
+            storageRepository.setDidDeactivateLinkedDevice(true)
+        }
         val newState = if (success) {
             uiState.copy(inProgress = false, errorData = null, isCompleted = Unit)
         } else {
