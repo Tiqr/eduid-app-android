@@ -312,7 +312,6 @@ fun MainGraph(
     composable(Graph.FIRST_TIME_DIALOG) { entry ->
         val viewModel = hiltViewModel<LinkAccountViewModel>(entry)
         FirstTimeDialogRoute(viewModel = viewModel,
-            goToAccountLinked = { navController.goToWithPopCurrent(AccountLinked.routeWithRegistrationFlowParam(true)) },
             skipThis = {
                 navController.navigate(Graph.HOME_PAGE) {
                     //Clear existing home page that has no account

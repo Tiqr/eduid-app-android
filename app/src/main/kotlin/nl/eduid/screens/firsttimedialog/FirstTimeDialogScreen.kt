@@ -50,12 +50,14 @@ import nl.eduid.ui.theme.AlertWarningBackground
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
-fun FirstTimeDialogRoute(viewModel: LinkAccountViewModel, goToAccountLinked: () -> Unit, skipThis: () -> Unit) {
+fun FirstTimeDialogRoute(viewModel: LinkAccountViewModel, skipThis: () -> Unit) {
     var isGettingLinkUrl by rememberSaveable { mutableStateOf(false) }
     var isLinkingStarted by rememberSaveable { mutableStateOf(false) }
     val launcher = rememberLauncherForActivityResult(contract = LinkAccountContract(), onResult = { _ ->
         if (isLinkingStarted) {
-            goToAccountLinked()
+            // This part is called when the user came back to the app without linking anything
+            // (otherwise we would go via a deeplink to the success / error screen).
+            // In this case we do nothing. The user can choose to link again, or just press on the skip button.
             isLinkingStarted = false
         }
     })
