@@ -66,6 +66,10 @@ ANDROID:
         COPY:
           en: Failed to initialize AppData. Please retry.
           nl: AppData kan niet worden geïnitialiseerd. Probeer het opnieuw.
+      NoSupportedBrowserFound:
+        COPY:
+          en: "Failed to initialize AppData. No supported browser found."
+          nl: "AppData kan niet worden geïnitialiseerd. Geen ondersteunde browser gevonden."
       WithException:
         COPY:
           en: "Failed to initialize AppData. Reason: %1{{s}}"

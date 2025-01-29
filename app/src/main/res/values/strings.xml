@@ -838,5 +838,6 @@
   <string name="Profile_You_COPY">"you"</string>
   <string name="ManageAccount_CreatedAt_COPY">"EEEE, dd MMMM yyyy 'at' HH:MM"</string>
   <string name="AppData_InitializationError_Generic_COPY">"Failed to initialize AppData. Please retry."</string>
+  <string name="AppData_InitializationError_NoSupportedBrowserFound_COPY">"Failed to initialize AppData. No supported browser found."</string>
   <string name="AppData_InitializationError_WithException_COPY">"Failed to initialize AppData. Reason: %1$s"</string>
 </resources>

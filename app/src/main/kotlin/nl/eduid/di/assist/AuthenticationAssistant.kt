@@ -2,8 +2,19 @@ package nl.eduid.di.assist
 
 import android.content.Context
 import android.net.Uri
-import net.openid.appauth.*
+import net.openid.appauth.AppAuthConfiguration
+import net.openid.appauth.AuthState
+import net.openid.appauth.AuthorizationException
+import net.openid.appauth.AuthorizationResponse
+import net.openid.appauth.AuthorizationService
+import net.openid.appauth.AuthorizationServiceConfiguration
+import net.openid.appauth.ClientAuthentication
+import net.openid.appauth.RegistrationRequest
+import net.openid.appauth.RegistrationResponse
+import net.openid.appauth.TokenResponse
 import net.openid.appauth.browser.BrowserAllowList
+import net.openid.appauth.browser.Browsers
+import net.openid.appauth.browser.VersionRange
 import net.openid.appauth.browser.VersionedBrowserMatcher
 import net.openid.appauth.connectivity.DefaultConnectionBuilder
 import nl.eduid.screens.oauth.Configuration
@@ -118,7 +129,14 @@ class AuthenticationAssistant {
                 BrowserAllowList(
                     VersionedBrowserMatcher.CHROME_BROWSER,
                     VersionedBrowserMatcher.FIREFOX_BROWSER,
-                    VersionedBrowserMatcher.SAMSUNG_BROWSER
+                    VersionedBrowserMatcher.SAMSUNG_BROWSER,
+                    // Huawei phones usually don't have Chrome but have their own browser instead, so we need to whitelist that as well:
+                    VersionedBrowserMatcher(
+                        "com.huawei.browser",
+                        "OOzdSEud0D3ocrJZnneyTsxFgkMlYaQEp4A6gX-j4DBVe7Lecf_KLydHcjA6Q0apfZUcFGIK1UqAwcl8cd6I8w==",
+                        false,
+                        VersionRange.ANY_VERSION
+                    )
                 )
             )
             builder.setConnectionBuilder(DefaultConnectionBuilder.INSTANCE)
