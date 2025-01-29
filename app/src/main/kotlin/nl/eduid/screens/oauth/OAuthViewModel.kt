@@ -1,5 +1,6 @@
 package nl.eduid.screens.oauth
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
@@ -69,10 +70,17 @@ class OAuthViewModel @Inject constructor(
             uiState = UiState(OAuthStep.Initialized(authorizationIntent))
         } catch (e: Exception) {
             val argument = e.message ?: e.localizedMessage
+            val messageId = if (e is ActivityNotFoundException) {
+                R.string.AppData_InitializationError_NoSupportedBrowserFound_COPY
+            } else if (argument == null) {
+                R.string.AppData_InitializationError_Generic_COPY
+            } else {
+                R.string.AppData_InitializationError_WithException_COPY
+            }
             uiState = UiState(
                 OAuthStep.Error, ErrorData(
                     titleId = R.string.Generic_RequestError_Title_COPY,
-                    messageId = if (argument == null) R.string.AppData_InitializationError_Generic_COPY else R.string.AppData_InitializationError_WithException_COPY,
+                    messageId = messageId,
                     messageArg = argument
                 )
             )

@@ -838,5 +838,6 @@
   <string name="Profile_You_COPY">"Zelf"</string>
   <string name="ManageAccount_CreatedAt_COPY">"EEEE, dd MMMM yyyy 'om' HH:MM"</string>
   <string name="AppData_InitializationError_Generic_COPY">"AppData kan niet worden geïnitialiseerd. Probeer het opnieuw."</string>
+  <string name="AppData_InitializationError_NoSupportedBrowserFound_COPY">"AppData kan niet worden geïnitialiseerd. Geen ondersteunde browser gevonden."</string>
   <string name="AppData_InitializationError_WithException_COPY">"AppData kan niet worden geïnitialiseerd. Reden: %1$s"</string>
 </resources>
