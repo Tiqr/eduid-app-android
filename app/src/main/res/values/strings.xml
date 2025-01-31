@@ -802,6 +802,7 @@
   <string name="VerifyIdentity_VerifyWithBankApp_Button_COPY">"Select your bank"</string>
   <string name="VerifyIdentity_VerifyWithAEuropianId_Title_COPY">"Verify with a European ID"</string>
   <string name="VerifyIdentity_VerifyWithAEuropianId_Button_COPY">"Use a European ID"</string>
+  <string name="VerifyIdentity_ICantUseTheseMethods_COPY">"I can't use these methods"</string>
   <string name="VerifyIdentity_OtherOptions_COPY">"Other options…"</string>
   <string name="VerifyIdentity_VisitSupport_Full_COPY">"If you can’t use any of these methods, please visit our support pages"</string>
   <string name="VerifyIdentity_VisitSupport_HighlightedPart_COPY">"support pages"</string>
@@ -824,6 +825,16 @@
   <string name="ExternalAccountLinkingError_TryAnotherOption_COPY">"Please try another option"</string>
   <string name="ReferenceNames_Idin_COPY">"iDIN"</string>
   <string name="ReferenceNames_Eherkenning_COPY">"eIDAS"</string>
+  <string name="ConfirmIdentityWithId_Title_FirstLine_COPY">"Confirm your identity"</string>
+  <string name="ConfirmIdentityWithId_Title_SecondLine_COPY">"with your ID"</string>
+  <string name="ConfirmIdentityWithId_Description_ServiceDesk_COPY">"You can also confirm your identity at one of our eduID Service Desks."</string>
+  <string name="ConfirmIdentityWithId_Description_Steps_Header_COPY">"Follow these steps:"</string>
+  <string name="ConfirmIdentityWithId_Description_Steps_Step1_COPY">"Enter your full name as it appears on your ID (first and last name)."</string>
+  <string name="ConfirmIdentityWithId_Description_Steps_Step2_COPY">"Generate a personal verification code."</string>
+  <string name="ConfirmIdentityWithId_Description_Steps_Step3_COPY">"Present your code and ID to an eduID Service Desk. They will verify your identity manually."</string>
+  <string name="ConfirmIdentityWithId_ValidDocumentsDisclaimer_List_COPY">"Accepted IDs:\n- Passports\n- EEA* ID cards\n- Dutch driver's licenses\n- Dutch residence permits.\n\nPlease note: copies, public transport cards, and student cards are not valid IDs.\n"</string>
+  <string name="ConfirmIdentityWithId_ValidDocumentsDisclaimer_Asterisk_COPY">"*EEA: all EU member states plus Liechtenstein, Norway, and Iceland."</string>
+  <string name="ConfirmIdentityWithId_EnterDetailsButton_COPY">"Enter your details"</string>
   <string name="Button_OK_COPY">"OK"</string>
   <string name="Button_Cancel_COPY">"Cancel"</string>
   <string name="Button_Retry_COPY">"Retry"</string>
