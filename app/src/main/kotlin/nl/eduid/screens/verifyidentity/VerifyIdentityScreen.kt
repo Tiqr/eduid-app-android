@@ -69,6 +69,7 @@ import timber.log.Timber
 fun VerifyIdentityScreen(
     viewModel: VerifyIdentityViewModel,
     goToBankSelectionScreen: () -> Unit,
+    goToFallbackMethodScreen: () -> Unit,
     goBack: () -> Unit,
 ) = EduIdTopAppBar(
     onBackClicked = goBack
@@ -93,6 +94,7 @@ fun VerifyIdentityScreen(
         errorData = viewModel.uiState.errorData,
         dismissError = viewModel::dismissError,
         goToBankSelectionScreen = goToBankSelectionScreen,
+        goToFallbackMethodScreen = goToFallbackMethodScreen,
         requestInstitutionLink = viewModel::requestInstitutionLink,
         requestEidasLink = viewModel::requestEidasLink,
         openSupportUrl = {
@@ -113,6 +115,7 @@ fun VerifyIdentityScreenContent(
     errorData: ErrorData?,
     dismissError: () -> Unit,
     goToBankSelectionScreen: () -> Unit,
+    goToFallbackMethodScreen: () -> Unit,
     requestInstitutionLink: () -> Unit,
     requestEidasLink: () -> Unit,
     expandMoreOptions: () -> Unit,
@@ -267,7 +270,7 @@ fun VerifyIdentityScreenContent(
                 SecondaryButton(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(R.string.VerifyIdentity_ICantUseTheseMethods_COPY),
-                    onClick = { openSupportUrl(supportUrl) }
+                    onClick = goToFallbackMethodScreen
                 )
             }
         }
@@ -367,6 +370,7 @@ fun VerifyIdentityScreenContent_Preview() {
             errorData = null,
             dismissError = {},
             goToBankSelectionScreen = {},
+            goToFallbackMethodScreen = {},
             requestInstitutionLink = {},
             requestEidasLink = {},
             openSupportUrl = {},
