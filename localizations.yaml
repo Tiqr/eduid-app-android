@@ -4030,7 +4030,7 @@ SHARED:
       COPY:
         en: "eIDAS"
         nl: "eIDAS"
-  ConfirmIdentityWithId:
+  ConfirmIdentityWithIdIntro:
     Title:
       FirstLine:
         COPY:
@@ -4090,4 +4090,35 @@ SHARED:
         COPY:
             en: Enter your details
             nl: Naar gegevens invullen
-            
+  ConfirmIdentityWithIdInput:
+    Title:
+      FirstLine:
+        COPY:
+          en: Confirm your identity
+          nl: Bevestig wie je bent
+      SecondLine:
+        COPY:
+          en: with your ID
+          nl: met je identiteitsbewijs
+    Explanation:
+      COPY:
+        en: Enter your details as they appear on your ID. Names must be in Roman characters.
+        nl: Vul je gegevens in zoals die op je identiteitsbewijs staan.
+    InputField:
+      LastName:
+        COPY:
+          en: Last name
+          nl: Achternaam
+      FirstNames:
+        COPY:
+            en: First name(s)
+            nl: Voornamen
+      DateOfBirth:
+        COPY:
+          en: Date of birth
+          nl: Geboortedatum
+    GenerateVerificationCodeButton:
+        COPY:
+            en: Generate verification code
+            nl: Genereer controlecode
+

@@ -64,7 +64,7 @@ fun VerifyWithIdIntroScreenContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(R.string.ConfirmIdentityWithId_Title_FirstLine_COPY),
+            text = stringResource(R.string.ConfirmIdentityWithIdIntro_Title_FirstLine_COPY),
             style = MaterialTheme.typography.titleLarge.copy(
                 textAlign = TextAlign.Start, color = MaterialTheme.colorScheme.onSecondary
             ),
@@ -73,7 +73,7 @@ fun VerifyWithIdIntroScreenContent(
                 .padding(top = 16.dp)
         )
         Text(
-            text = stringResource(R.string.ConfirmIdentityWithId_Title_SecondLine_COPY),
+            text = stringResource(R.string.ConfirmIdentityWithIdIntro_Title_SecondLine_COPY),
             style = MaterialTheme.typography.titleLarge.copy(
                 textAlign = TextAlign.Start
             ),
@@ -84,21 +84,21 @@ fun VerifyWithIdIntroScreenContent(
         )
         Spacer(Modifier.height(16.dp))
         Text(
-            text = stringResource(R.string.ConfirmIdentityWithId_Description_ServiceDesk_COPY),
+            text = stringResource(R.string.ConfirmIdentityWithIdIntro_Description_ServiceDesk_COPY),
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(16.dp))
         Text(
-            text = stringResource(R.string.ConfirmIdentityWithId_Description_Steps_Header_COPY),
+            text = stringResource(R.string.ConfirmIdentityWithIdIntro_Description_Steps_Header_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(16.dp))
         val steps = listOf(
-            R.string.ConfirmIdentityWithId_Description_Steps_Step1_COPY,
-            R.string.ConfirmIdentityWithId_Description_Steps_Step2_COPY,
-            R.string.ConfirmIdentityWithId_Description_Steps_Step3_COPY
+            R.string.ConfirmIdentityWithIdIntro_Description_Steps_Step1_COPY,
+            R.string.ConfirmIdentityWithIdIntro_Description_Steps_Step2_COPY,
+            R.string.ConfirmIdentityWithIdIntro_Description_Steps_Step3_COPY
         )
         steps.forEachIndexed { index, step ->
             Row {
@@ -133,7 +133,7 @@ fun VerifyWithIdIntroScreenContent(
             )
             Text(
                 style = MaterialTheme.typography.bodyLarge,
-                text = stringResource(R.string.ConfirmIdentityWithId_ValidDocumentsDisclaimer_List_COPY),
+                text = stringResource(R.string.ConfirmIdentityWithIdIntro_ValidDocumentsDisclaimer_List_COPY),
                 modifier = Modifier
                     .constrainAs(topText) {
                         start.linkTo(image.end, margin = 12.dp)
@@ -144,7 +144,7 @@ fun VerifyWithIdIntroScreenContent(
             )
             Text(
                 style = MaterialTheme.typography.bodySmall,
-                text = stringResource(R.string.ConfirmIdentityWithId_ValidDocumentsDisclaimer_Asterisk_COPY),
+                text = stringResource(R.string.ConfirmIdentityWithIdIntro_ValidDocumentsDisclaimer_Asterisk_COPY),
                 modifier = Modifier
                     .constrainAs(bottomText) {
                         start.linkTo(image.end, margin = 12.dp)
@@ -158,7 +158,7 @@ fun VerifyWithIdIntroScreenContent(
         Spacer(Modifier.height(72.dp))
         PrimaryButton(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.ConfirmIdentityWithId_EnterDetailsButton_COPY),
+            text = stringResource(R.string.ConfirmIdentityWithIdIntro_EnterDetailsButton_COPY),
             onClick = goToEnterDetails
         )
     }
