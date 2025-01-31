@@ -69,6 +69,7 @@ import nl.eduid.screens.twofactorkeydelete.TwoFactorKeyDeleteScreen
 import nl.eduid.screens.twofactorkeydelete.TwoFactorKeyDeleteViewModel
 import nl.eduid.screens.verifyidentity.VerifyIdentityScreen
 import nl.eduid.screens.verifyidentity.VerifyIdentityViewModel
+import nl.eduid.screens.verifywithid.input.VerifyWithIdInputScreen
 import nl.eduid.screens.verifywithid.intro.VerifyWithIdIntroScreen
 import org.tiqr.data.model.EnrollmentChallenge
 
@@ -541,7 +542,14 @@ fun MainGraph(
     composable(VerifyIdentityWithIdIntro.route) {
         VerifyWithIdIntroScreen(
             goBack = { navController.popBackStack() },
-            goToEnterDetails = {
+            goToEnterDetails = { navController.navigate(VerifyIdentityWithIdInput.route) }
+        )
+    }
+
+    composable(VerifyIdentityWithIdInput.route) {
+        VerifyWithIdInputScreen(
+            goBack = { navController.popBackStack() },
+            goToGeneratedCode = {
                 TODO("Not implemented yet")
             }
         )

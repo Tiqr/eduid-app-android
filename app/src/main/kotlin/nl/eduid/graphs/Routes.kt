@@ -357,6 +357,10 @@ object VerifyIdentityWithIdIntro {
     const val route = "verify_identity_with_id_intro"
 }
 
+object VerifyIdentityWithIdInput {
+    const val route = "verify_identity_with_id_input"
+}
+
 object ExternalAccountLinkedError {
     const val route = "external_account_linked_error"
     fun getUriPattern(baseUrl: String) = "$baseUrl/client/mobile/external-account-linked-error"
