@@ -841,6 +841,8 @@
   <string name="ConfirmIdentityWithIdInput_InputField_LastName_COPY">"Achternaam"</string>
   <string name="ConfirmIdentityWithIdInput_InputField_FirstNames_COPY">"Voornamen"</string>
   <string name="ConfirmIdentityWithIdInput_InputField_DateOfBirth_COPY">"Geboortedatum"</string>
+  <string name="ConfirmIdentityWithIdInput_InputField_DateSelector_Confirm_COPY">"Bevestigen"</string>
+  <string name="ConfirmIdentityWithIdInput_InputField_DateSelector_Cancel_COPY">"Annuleren"</string>
   <string name="ConfirmIdentityWithIdInput_GenerateVerificationCodeButton_COPY">"Genereer controlecode"</string>
   <string name="Button_OK_COPY">"OK"</string>
   <string name="Button_Cancel_COPY">"Annuleren"</string>

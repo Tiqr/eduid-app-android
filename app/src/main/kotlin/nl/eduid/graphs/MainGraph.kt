@@ -70,6 +70,7 @@ import nl.eduid.screens.twofactorkeydelete.TwoFactorKeyDeleteViewModel
 import nl.eduid.screens.verifyidentity.VerifyIdentityScreen
 import nl.eduid.screens.verifyidentity.VerifyIdentityViewModel
 import nl.eduid.screens.verifywithid.input.VerifyWithIdInputScreen
+import nl.eduid.screens.verifywithid.input.VerifyWithIdInputViewModel
 import nl.eduid.screens.verifywithid.intro.VerifyWithIdIntroScreen
 import org.tiqr.data.model.EnrollmentChallenge
 
@@ -79,7 +80,7 @@ fun MainGraph(
     navController: NavHostController,
     baseUrl: String,
 ) = NavHost(
-    navController = navController, startDestination = Graph.HOME_PAGE
+    navController = navController, startDestination = VerifyIdentityWithIdInput.route
 ) {
     composable(Graph.HOME_PAGE) {//region Home
         val viewModel = hiltViewModel<HomePageViewModel>(it)
@@ -547,7 +548,9 @@ fun MainGraph(
     }
 
     composable(VerifyIdentityWithIdInput.route) {
+        val viewModel = hiltViewModel<VerifyWithIdInputViewModel>(it)
         VerifyWithIdInputScreen(
+            viewModel = viewModel,
             goBack = { navController.popBackStack() },
             goToGeneratedCode = {
                 TODO("Not implemented yet")
