@@ -4117,17 +4117,12 @@ SHARED:
         COPY:
           en: Date of birth
           nl: Geboortedatum
-      DateSelector:
-        Confirm:
-          COPY:
-            en: Confirm
-            nl: Bevestigen
-        Cancel:
-          COPY:
-            en: Cancel
-            nl: Annuleren
     GenerateVerificationCodeButton:
         COPY:
             en: Generate verification code
             nl: Genereer controlecode
+    GenerateError:
+      COPY:
+        en: Could not generate control code
+        nl: Genereren van controlecode mislukt
 

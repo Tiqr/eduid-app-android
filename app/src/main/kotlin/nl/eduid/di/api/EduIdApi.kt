@@ -2,6 +2,8 @@ package nl.eduid.di.api
 
 import nl.eduid.di.model.ConfirmDeactivationCode
 import nl.eduid.di.model.ConfirmPhoneCode
+import nl.eduid.di.model.ControlCode
+import nl.eduid.di.model.ControlCodeRequest
 import nl.eduid.di.model.DeleteServiceRequest
 import nl.eduid.di.model.DeleteTokensRequest
 import nl.eduid.di.model.EmailChangeRequest
@@ -137,4 +139,7 @@ interface EduIdApi {
 
     @GET("/mobile/api/sp/idin/issuers")
     suspend fun getVerifyIssuers(): Response<List<VerifyIssuer>>
+
+    @POST("/mobile/api/sp/control-code")
+    suspend fun createControlCode(@Body request: ControlCodeRequest): Response<ControlCode>
 }

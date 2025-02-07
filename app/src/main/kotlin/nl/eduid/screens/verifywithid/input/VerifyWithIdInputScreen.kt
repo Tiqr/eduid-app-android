@@ -1,9 +1,6 @@
 package nl.eduid.screens.verifywithid.input
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -16,20 +13,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.SelectableDates
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextFieldColors
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -41,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -52,54 +38,55 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import nl.eduid.ErrorData
 import nl.eduid.R
+import nl.eduid.di.model.ControlCode
+import nl.eduid.di.model.ControlCodeRequest
+import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.outlinedTextColors
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
 
 
 @Composable
 fun VerifyWithIdInputScreen(
     viewModel: VerifyWithIdInputViewModel,
     goBack: () -> Unit,
-    goToGeneratedCode: () -> Unit
+    goToGeneratedCode: (ControlCode) -> Unit
 ) = EduIdTopAppBar(
     onBackClicked = goBack
 ) { padding ->
 
+    LaunchedEffect(viewModel.uiState.createdControlCode) {
+        viewModel.uiState.createdControlCode?.let {
+            goToGeneratedCode(it)
+        }
+    }
+
     VerifyWithIdInputScreenContent(
-        goToGeneratedCode = goToGeneratedCode,
         padding = padding,
-        generateCode = viewModel::generateCode
+        isLoading = viewModel.uiState.isLoading,
+        errorData = viewModel.uiState.errorData,
+        generateCode = viewModel::generateCode,
+        dismissError = viewModel::dismissError
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VerifyWithIdInputScreenContent(
-    goToGeneratedCode: () -> Unit,
     padding: PaddingValues = PaddingValues(),
-    generateCode: (GenerateCodePayload) -> Unit
+    isLoading: Boolean,
+    errorData: ErrorData?,
+    generateCode: (ControlCodeRequest) -> Unit,
+    dismissError: () -> Unit
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
-    val dateState = rememberDatePickerState(selectableDates = object: SelectableDates {
-        // Only dates in the past are selectable
-        override fun isSelectableDate(utcTimeMillis: Long): Boolean = Date(utcTimeMillis).before(Date())
-
-        override fun isSelectableYear(year: Int): Boolean {
-            return year <= Calendar.getInstance().get(Calendar.YEAR)
-        }
-    })
-    var showDatePicker by remember { mutableStateOf(false) }
 
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
+    var dateOfBirth by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -163,8 +150,9 @@ fun VerifyWithIdInputScreenContent(
         OutlinedTextField(
             colors = outlinedTextColors(),
             value = lastName,
+            enabled = !isLoading,
             keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Next, keyboardType = KeyboardType.Email
+                imeAction = ImeAction.Next, keyboardType = KeyboardType.Text
             ),
             keyboardActions = KeyboardActions(onNext = {
                 focusManager.moveFocus(
@@ -194,13 +182,14 @@ fun VerifyWithIdInputScreenContent(
         OutlinedTextField(
             colors = outlinedTextColors(),
             value = firstName,
+            enabled = !isLoading,
             keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Next, keyboardType = KeyboardType.Email
+                imeAction = ImeAction.Next, keyboardType = KeyboardType.Text
             ),
             keyboardActions = KeyboardActions(onNext = {
-                focusManager.clearFocus()
-                keyboardController?.hide()
-                showDatePicker = true
+                focusManager.moveFocus(
+                    FocusDirection.Down
+                )
             }),
             onValueChange = {
                 firstName = it
@@ -221,81 +210,47 @@ fun VerifyWithIdInputScreenContent(
                 fontWeight = FontWeight.SemiBold
             )
         )
-        Surface(
-            onClick = {
-                showDatePicker = true
+        OutlinedTextField(
+            colors = outlinedTextColors(),
+            value = dateOfBirth,
+            enabled = !isLoading,
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Done, keyboardType = KeyboardType.Text
+            ),
+            keyboardActions = KeyboardActions(onNext = {
+                focusManager.clearFocus()
+            }),
+            onValueChange = {
+                dateOfBirth = it
             },
-        ) {
-            val selectedDate = dateState.selectedDateMillis
-            val dateText = if (selectedDate == null) {
-                ""
-            } else {
-                SimpleDateFormat.getDateInstance().format(Date(selectedDate))
-            }
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = dateText,
-                enabled = false,
-                colors = outlinedTextColors().copy(
-                    disabledTextColor = outlinedTextColors().unfocusedTextColor,
-                    disabledContainerColor = outlinedTextColors().unfocusedContainerColor,
-                    disabledPrefixColor = outlinedTextColors().unfocusedPrefixColor,
-                    disabledIndicatorColor = outlinedTextColors().unfocusedIndicatorColor,
-                    disabledSuffixColor = outlinedTextColors().unfocusedSuffixColor,
-                    disabledLabelColor = outlinedTextColors().unfocusedLabelColor,
-                    disabledPlaceholderColor = outlinedTextColors().unfocusedPlaceholderColor,
-                    disabledLeadingIconColor = outlinedTextColors().unfocusedLeadingIconColor,
-                    disabledTrailingIconColor = outlinedTextColors().unfocusedTrailingIconColor,
-                    disabledSupportingTextColor = outlinedTextColors().unfocusedSupportingTextColor,
-                ),
-                onValueChange = {},
-                placeholder = {},
-            )
-        }
-
-        Spacer(Modifier.height(72.dp))
+            modifier = Modifier
+                .fillMaxWidth()
+                .focusRequester(focusRequester)
+        )
+        Spacer(Modifier.height(36.dp))
         PrimaryButton(
-            enabled = firstName.isNotEmpty() && lastName.isNotEmpty() && dateState.selectedDateMillis != null,
+            enabled = !isLoading && firstName.isNotEmpty() && lastName.isNotEmpty() && dateOfBirth.isNotEmpty(),
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.ConfirmIdentityWithIdInput_GenerateVerificationCodeButton_COPY),
             onClick = {
-                val payload = GenerateCodePayload(
+                val payload = ControlCodeRequest(
                     firstName = firstName,
                     lastName = lastName,
-                    birthDateMillis = dateState.selectedDateMillis!!
+                    dayOfBirth = dateOfBirth
                 )
                 generateCode(payload)
             }
         )
     }
-    if (showDatePicker) {
-        val stateWhenOpening = remember { dateState.selectedDateMillis }
-        DatePickerDialog(
-            onDismissRequest = {
-                dateState.selectedDateMillis = stateWhenOpening
-                showDatePicker = false
-            },
-            dismissButton = {
-                TextButton(onClick = {
-                    dateState.selectedDateMillis = stateWhenOpening
-                    showDatePicker = false
-                }) {
-                    Text(text = stringResource(R.string.ConfirmIdentityWithIdInput_InputField_DateSelector_Cancel_COPY))
 
-                }
-            },
-            confirmButton = {
-                TextButton(onClick = {
-                    showDatePicker = false
-                }) {
-                    Text(text = stringResource(R.string.ConfirmIdentityWithIdInput_InputField_DateSelector_Confirm_COPY))
-                }
-            },
-        ) {
-            DatePicker(
-                state = dateState
-            )
-        }
+    errorData?.let {
+        val context = LocalContext.current
+        AlertDialogWithSingleButton(
+            title = errorData.title(context),
+            explanation = errorData.message(context),
+            buttonLabel = stringResource(R.string.Button_OK_COPY),
+            onDismiss = dismissError
+        )
     }
 }
 
@@ -304,8 +259,10 @@ fun VerifyWithIdInputScreenContent(
 fun VerifyWithIdInputScreenContent_Preview() {
     EduidAppAndroidTheme {
         VerifyWithIdInputScreenContent(
-            goToGeneratedCode = {},
-            generateCode = { _ -> }
+            isLoading = false,
+            generateCode = { _ -> },
+            errorData = null,
+            dismissError = {}
         )
     }
 }

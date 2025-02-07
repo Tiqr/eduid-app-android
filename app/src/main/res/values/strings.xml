@@ -841,9 +841,8 @@
   <string name="ConfirmIdentityWithIdInput_InputField_LastName_COPY">"Last name"</string>
   <string name="ConfirmIdentityWithIdInput_InputField_FirstNames_COPY">"First name(s)"</string>
   <string name="ConfirmIdentityWithIdInput_InputField_DateOfBirth_COPY">"Date of birth"</string>
-  <string name="ConfirmIdentityWithIdInput_InputField_DateSelector_Confirm_COPY">"Confirm"</string>
-  <string name="ConfirmIdentityWithIdInput_InputField_DateSelector_Cancel_COPY">"Cancel"</string>
   <string name="ConfirmIdentityWithIdInput_GenerateVerificationCodeButton_COPY">"Generate verification code"</string>
+  <string name="ConfirmIdentityWithIdInput_GenerateError_COPY">"Could not generate control code"</string>
   <string name="Button_OK_COPY">"OK"</string>
   <string name="Button_Cancel_COPY">"Cancel"</string>
   <string name="Button_Retry_COPY">"Retry"</string>
