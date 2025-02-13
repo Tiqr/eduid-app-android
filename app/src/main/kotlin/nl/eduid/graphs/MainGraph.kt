@@ -69,6 +69,9 @@ import nl.eduid.screens.twofactorkeydelete.TwoFactorKeyDeleteScreen
 import nl.eduid.screens.twofactorkeydelete.TwoFactorKeyDeleteViewModel
 import nl.eduid.screens.verifyidentity.VerifyIdentityScreen
 import nl.eduid.screens.verifyidentity.VerifyIdentityViewModel
+import nl.eduid.screens.verifywithid.input.VerifyWithIdInputScreen
+import nl.eduid.screens.verifywithid.input.VerifyWithIdInputViewModel
+import nl.eduid.screens.verifywithid.intro.VerifyWithIdIntroScreen
 import org.tiqr.data.model.EnrollmentChallenge
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -77,7 +80,7 @@ fun MainGraph(
     navController: NavHostController,
     baseUrl: String,
 ) = NavHost(
-    navController = navController, startDestination = Graph.HOME_PAGE
+    navController = navController, startDestination = VerifyIdentityWithIdInput.route
 ) {
     composable(Graph.HOME_PAGE) {//region Home
         val viewModel = hiltViewModel<HomePageViewModel>(it)
@@ -524,6 +527,7 @@ fun MainGraph(
         VerifyIdentityScreen(
             viewModel = viewModel,
             goToBankSelectionScreen = { navController.navigate(SelectYourBankRoute.route) },
+            goToFallbackMethodScreen = { navController.navigate(VerifyIdentityWithIdIntro.route) },
             goBack = { navController.popBackStack() }
         )
     }
@@ -535,6 +539,25 @@ fun MainGraph(
             goBack = { navController.popBackStack() }
         )
     }
+
+    composable(VerifyIdentityWithIdIntro.route) {
+        VerifyWithIdIntroScreen(
+            goBack = { navController.popBackStack() },
+            goToEnterDetails = { navController.navigate(VerifyIdentityWithIdInput.route) }
+        )
+    }
+
+    composable(VerifyIdentityWithIdInput.route) {
+        val viewModel = hiltViewModel<VerifyWithIdInputViewModel>(it)
+        VerifyWithIdInputScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
+            goToGeneratedCode = {
+                TODO("Not implemented yet")
+            }
+        )
+    }
+
 
     composable(ExternalAccountLinkedError.route, deepLinks = listOf(navDeepLink {
         uriPattern = ExternalAccountLinkedError.getUriPattern(baseUrl)

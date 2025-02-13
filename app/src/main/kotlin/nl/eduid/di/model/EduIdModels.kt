@@ -258,3 +258,21 @@ data class VerifyIssuer(
     val name: String?,
     val logo: String?
 ) : Parcelable
+
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class ControlCodeRequest(
+    val firstName: String,
+    val lastName: String,
+    val dayOfBirth: String
+) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class ControlCode(
+    val firstName: String?,
+    val lastName: String?,
+    val dayOfBirth: String?,
+    val code: String,
+) : Parcelable

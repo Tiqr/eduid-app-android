@@ -11,6 +11,8 @@ import nl.eduid.di.assist.UnauthorizedException
 import nl.eduid.di.assist.processResponse
 import nl.eduid.di.model.ConfirmDeactivationCode
 import nl.eduid.di.model.ConfirmPhoneCode
+import nl.eduid.di.model.ControlCode
+import nl.eduid.di.model.ControlCodeRequest
 import nl.eduid.di.model.DeleteServiceRequest
 import nl.eduid.di.model.DeleteTokensRequest
 import nl.eduid.di.model.EmailChangeRequest
@@ -25,6 +27,7 @@ import nl.eduid.di.model.TokenResponse
 import nl.eduid.di.model.UrlResponse
 import nl.eduid.di.model.UserDetails
 import nl.eduid.di.model.VerifyIssuer
+import retrofit2.Response
 import timber.log.Timber
 import java.io.File
 import java.text.SimpleDateFormat
@@ -395,5 +398,18 @@ class PersonalInfoRepository(
     @Throws(Exception::class)
     suspend fun getVerifyIssuers(): List<VerifyIssuer>? = withContext(Dispatchers.IO) {
         eduIdApi.getVerifyIssuers().body()
+    }
+
+    @Throws(Exception::class)
+    suspend fun createControlCode(request: ControlCodeRequest): ControlCode = withContext(Dispatchers.IO)  {
+        eduIdApi.createControlCode(request).bodyOrThrow()
+    }
+}
+
+private fun <T> Response<T>.bodyOrThrow(): T {
+    return if (isSuccessful) {
+        body()!!
+    } else {
+        throw Exception("Request failed. Response: [${code()}/${message()}]${errorBody()?.string()}")
     }
 }

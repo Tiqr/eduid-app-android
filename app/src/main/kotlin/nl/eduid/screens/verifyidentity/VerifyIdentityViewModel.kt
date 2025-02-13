@@ -15,12 +15,15 @@ import nl.eduid.R
 import nl.eduid.di.assist.DataAssistant
 import nl.eduid.di.assist.UnauthorizedException
 import nl.eduid.di.model.IdpScoping
+import nl.eduid.flags.FeatureFlag
+import nl.eduid.flags.RuntimeBehavior
 import nl.eduid.graphs.VerifyIdentityRoute
 import javax.inject.Inject
 
 @HiltViewModel
 class VerifyIdentityViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    runtimeBehavior: RuntimeBehavior,
     val assistant: DataAssistant
 ) : ViewModel() {
 
@@ -30,6 +33,8 @@ class VerifyIdentityViewModel @Inject constructor(
     }
 
     val isLinkedAccount: Boolean = savedStateHandle[VerifyIdentityRoute.isLinkedAccount] ?: false
+
+    val fallbackMethodEnabled = runtimeBehavior.isFeatureEnabled(FeatureFlag.FALLBACK_METHOD)
 
     var uiState by mutableStateOf(VerifyIdentityData(isLoading = false))
         private set
