@@ -66,6 +66,7 @@ fun VerifyWithIdInputScreen(
 
     VerifyWithIdInputScreenContent(
         padding = padding,
+        editCode = viewModel.uiState.editCode,
         isLoading = viewModel.uiState.isLoading,
         errorData = viewModel.uiState.errorData,
         generateCode = viewModel::generateCode,
@@ -76,6 +77,7 @@ fun VerifyWithIdInputScreen(
 @Composable
 fun VerifyWithIdInputScreenContent(
     padding: PaddingValues = PaddingValues(),
+    editCode: ControlCode?,
     isLoading: Boolean,
     errorData: ErrorData?,
     generateCode: (ControlCodeRequest) -> Unit,
@@ -84,9 +86,9 @@ fun VerifyWithIdInputScreenContent(
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
 
-    var firstName by remember { mutableStateOf("") }
-    var lastName by remember { mutableStateOf("") }
-    var dateOfBirth by remember { mutableStateOf("") }
+    var firstName by remember { mutableStateOf(editCode?.firstName ?: "") }
+    var lastName by remember { mutableStateOf(editCode?.lastName ?: "") }
+    var dateOfBirth by remember { mutableStateOf(editCode?.dayOfBirth ?: "") }
 
     Column(
         modifier = Modifier
@@ -260,6 +262,7 @@ fun VerifyWithIdInputScreenContent_Preview() {
     EduidAppAndroidTheme {
         VerifyWithIdInputScreenContent(
             isLoading = false,
+            editCode = ControlCode(firstName = "First name", lastName = "Last name", dayOfBirth = "01-01-2000", code = "123456"),
             generateCode = { _ -> },
             errorData = null,
             dismissError = {}

@@ -6,6 +6,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import nl.eduid.di.assist.DataAssistant
 import nl.eduid.di.model.ConfirmedName
+import nl.eduid.di.model.ControlCode
 import nl.eduid.di.model.LinkedAccountUpdateRequest
 import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.di.model.UserDetails
@@ -23,6 +24,7 @@ data class PersonalInfo(
     val linkedInternalAccounts: ImmutableList<InstitutionAccount> = emptyList<InstitutionAccount>().toImmutableList(),
     val linkedExternalAccounts: ImmutableList<InstitutionAccount> = emptyList<InstitutionAccount>().toImmutableList(),
     val dateCreated: Long = 0,
+    val controlCode: ControlCode? = null
 ) {
     val isVerified = linkedInternalAccounts.isNotEmpty() || linkedExternalAccounts.isNotEmpty()
 

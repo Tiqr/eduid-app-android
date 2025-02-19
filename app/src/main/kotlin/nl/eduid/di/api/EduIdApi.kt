@@ -142,4 +142,7 @@ interface EduIdApi {
 
     @POST("/mobile/api/sp/control-code")
     suspend fun createControlCode(@Body request: ControlCodeRequest): Response<ControlCode>
+
+    @DELETE("/mobile/api/sp/control-code")
+    suspend fun deleteControlCode(): Response<UserDetails>
 }

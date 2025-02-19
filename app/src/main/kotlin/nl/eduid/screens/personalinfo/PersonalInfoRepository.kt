@@ -404,6 +404,12 @@ class PersonalInfoRepository(
     suspend fun createControlCode(request: ControlCodeRequest): ControlCode = withContext(Dispatchers.IO)  {
         eduIdApi.createControlCode(request).bodyOrThrow()
     }
+
+    @Throws(Exception::class)
+    suspend fun deleteControlCode(): Result<UserDetails> = withContext(Dispatchers.IO)  {
+        val response = eduIdApi.deleteControlCode()
+        processResponse(response = response)
+    }
 }
 
 private fun <T> Response<T>.bodyOrThrow(): T {

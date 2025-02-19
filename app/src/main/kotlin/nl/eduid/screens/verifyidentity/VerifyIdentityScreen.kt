@@ -137,9 +137,9 @@ fun VerifyIdentityScreenContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(padding)
-            .systemBarsPadding()
-            .verticalScroll(rememberScrollState()),
+            .systemBarsPadding(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Column(

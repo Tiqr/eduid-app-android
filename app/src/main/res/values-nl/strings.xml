@@ -77,6 +77,8 @@
   <string name="Profile_LinkedAccountCreatedAt_COPY">"• op "</string>
   <string name="Profile_LinkedAccountValidUntil_COPY">"• geldig tot "</string>
   <string name="Profile_ManageYourVerifiedInformation_COPY">"Beheer jouw geverifieerde gegevens"</string>
+  <string name="Profile_VerifyWithControlCode_Title_COPY">"Bevestig je identiteit bij een eduID Service Desk. Dit doe je door je identiteitsbewijs en controlecode te laten zien."</string>
+  <string name="Profile_VerifyWithControlCode_Button_COPY">"Toon code"</string>
   <string name="Profile_VerifyNow_Title_COPY">"Sommige diensten eisen dat jouw identiteit geverifieerd is door een vertrouwde instelling."</string>
   <string name="Profile_VerifyNow_Button_COPY">"Start verificatie"</string>
   <string name="Profile_FirstName_COPY">"Voornaam"</string>
@@ -751,6 +753,7 @@
   <string name="ResponseErrors_UnauthorizedTitle_COPY">"Gegevens kunnen niet laden"</string>
   <string name="ResponseErrors_UnauthorizedText_COPY">"Verzoek kan niet worden voltooid, log in en geef toegang"</string>
   <string name="ResponseErrors_RequestSMSError_COPY">"Kan geen sms-code aanvragen, probeer het opnieuw."</string>
+  <string name="ResponseErrors_RemoveControlCodeError_COPY">"Kan de controlecode niet verwijderen, probeer het opnieuw."</string>
   <string name="ResponseErrors_PasswordUpdateError_COPY">"Wachtwoord kan niet worden bijgewerkt"</string>
   <string name="ResponseErrors_InvalidPasswordError_COPY">"Het gekozen wachtwoord is ongeldig"</string>
   <string name="ResponseErrors_PasswordMismatchError_COPY">"Wachtwoorden zijn niet hetzelfde"</string>
@@ -843,6 +846,20 @@
   <string name="ConfirmIdentityWithIdInput_InputField_DateOfBirth_COPY">"Geboortedatum"</string>
   <string name="ConfirmIdentityWithIdInput_GenerateVerificationCodeButton_COPY">"Genereer controlecode"</string>
   <string name="ConfirmIdentityWithIdInput_GenerateError_COPY">"Genereren van controlecode mislukt"</string>
+  <string name="ConfirmIdentityWithIdCode_Title_COPY">"Je controlecode"</string>
+  <string name="ConfirmIdentityWithIdCode_Explanation_COPY">"Je krijgt ook een e-mail met deze code. De code is 14 dagen geldig en is bedoeld voor:"</string>
+  <string name="ConfirmIdentityWithIdCode_LastName_COPY">"Achternaam"</string>
+  <string name="ConfirmIdentityWithIdCode_FirstNames_COPY">"Voornamen"</string>
+  <string name="ConfirmIdentityWithIdCode_DateOfBirth_COPY">"Geboortedatum"</string>
+  <string name="ConfirmIdentityWithIdCode_MadeATypo_Label_COPY">"Typfout gemaakt?"</string>
+  <string name="ConfirmIdentityWithIdCode_MadeATypo_Link_COPY">"Pas gegevens aan"</string>
+  <string name="ConfirmIdentityWithIdCode_WhatsNext_COPY">"Wat moet je nu doen?"</string>
+  <string name="ConfirmIdentityWithIdCode_ScheduleAnAppointment_COPY">"Maak een afspraak met een eduID Service Desk (digitaal of op locatie). Laat tijdens je afspraak je controlecode en identiteisbewijs zien."</string>
+  <string name="ConfirmIdentityWithIdCode_ShowServiceDesksButton_COPY">"Bekijk eduID Service Desks"</string>
+  <string name="ConfirmIdentityWithIdCode_ServiceDeskUrl_COPY">"https://eduid.nl/servicedesk"</string>
+  <string name="ConfirmIdentityWithIdCode_GoToHomePageButton_COPY">"Terug naar overzicht"</string>
+  <string name="ConfirmIdentityWithIdCode_ProveIdentityOtherWay_COPY">"Wil je toch op een andere manier bewijzen wie je bent? Verwijder dan eerst je controlecode."</string>
+  <string name="ConfirmIdentityWithIdCode_DeleteVerificationCodeButton_COPY">"Verwijder controlecode"</string>
   <string name="Button_OK_COPY">"OK"</string>
   <string name="Button_Cancel_COPY">"Annuleren"</string>
   <string name="Button_Retry_COPY">"Nogmaals"</string>

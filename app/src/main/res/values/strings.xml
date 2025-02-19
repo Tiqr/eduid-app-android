@@ -77,6 +77,8 @@
   <string name="Profile_LinkedAccountCreatedAt_COPY">"• on "</string>
   <string name="Profile_LinkedAccountValidUntil_COPY">"• valid until "</string>
   <string name="Profile_ManageYourVerifiedInformation_COPY">"Manage your verified information"</string>
+  <string name="Profile_VerifyWithControlCode_Title_COPY">"Verify your identity at an eduID Service Desk by presenting your ID and verification code."</string>
+  <string name="Profile_VerifyWithControlCode_Button_COPY">"Show code"</string>
   <string name="Profile_VerifyNow_Title_COPY">"Some services require your identity to be verified by a trusted party."</string>
   <string name="Profile_VerifyNow_Button_COPY">"Verify now"</string>
   <string name="Profile_FirstName_COPY">"First name"</string>
@@ -751,6 +753,7 @@
   <string name="ResponseErrors_UnauthorizedTitle_COPY">"Cannot load data"</string>
   <string name="ResponseErrors_UnauthorizedText_COPY">"Cannot complete request, please sign in and grant access."</string>
   <string name="ResponseErrors_RequestSMSError_COPY">"Could not request SMS code, please retry."</string>
+  <string name="ResponseErrors_RemoveControlCodeError_COPY">"Could not remove control code, please retry."</string>
   <string name="ResponseErrors_PasswordUpdateError_COPY">"Cannot update password"</string>
   <string name="ResponseErrors_InvalidPasswordError_COPY">"Chosen password is invalid"</string>
   <string name="ResponseErrors_PasswordMismatchError_COPY">"Passwords do not match"</string>
@@ -843,6 +846,20 @@
   <string name="ConfirmIdentityWithIdInput_InputField_DateOfBirth_COPY">"Date of birth"</string>
   <string name="ConfirmIdentityWithIdInput_GenerateVerificationCodeButton_COPY">"Generate verification code"</string>
   <string name="ConfirmIdentityWithIdInput_GenerateError_COPY">"Could not generate control code"</string>
+  <string name="ConfirmIdentityWithIdCode_Title_COPY">"Your verification code"</string>
+  <string name="ConfirmIdentityWithIdCode_Explanation_COPY">"You will also receive an email with this code. The code is valid for 14 days and is intended for: "</string>
+  <string name="ConfirmIdentityWithIdCode_LastName_COPY">"Last name"</string>
+  <string name="ConfirmIdentityWithIdCode_FirstNames_COPY">"First name(s)"</string>
+  <string name="ConfirmIdentityWithIdCode_DateOfBirth_COPY">"Date of birth"</string>
+  <string name="ConfirmIdentityWithIdCode_MadeATypo_Label_COPY">"Made a typo?"</string>
+  <string name="ConfirmIdentityWithIdCode_MadeATypo_Link_COPY">"Edit your details"</string>
+  <string name="ConfirmIdentityWithIdCode_WhatsNext_COPY">"What's next?"</string>
+  <string name="ConfirmIdentityWithIdCode_ScheduleAnAppointment_COPY">"Schedule an appointment with an eduID Service Desk (online or in person). During your appointment, show your verification code and ID."</string>
+  <string name="ConfirmIdentityWithIdCode_ShowServiceDesksButton_COPY">"Show eduID Service Desks"</string>
+  <string name="ConfirmIdentityWithIdCode_ServiceDeskUrl_COPY">"https://eduid.nl/servicedesk-en"</string>
+  <string name="ConfirmIdentityWithIdCode_GoToHomePageButton_COPY">"Go to homepage"</string>
+  <string name="ConfirmIdentityWithIdCode_ProveIdentityOtherWay_COPY">"Want to prove your identity another way? Make sure to delete your verification code first."</string>
+  <string name="ConfirmIdentityWithIdCode_DeleteVerificationCodeButton_COPY">"Delete verification code"</string>
   <string name="Button_OK_COPY">"OK"</string>
   <string name="Button_Cancel_COPY">"Cancel"</string>
   <string name="Button_Retry_COPY">"Retry"</string>

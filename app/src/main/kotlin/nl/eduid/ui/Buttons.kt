@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import nl.eduid.R
 import nl.eduid.ui.theme.ColorAlertRed
 import nl.eduid.ui.theme.ColorMain_Green_400
+import nl.eduid.ui.theme.ColorScale_Gray_400
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
@@ -46,7 +47,8 @@ fun PrimaryButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     buttonBackgroundColor: Color = MaterialTheme.colorScheme.onSecondary,
-    buttonTextColor: Color = Color.White
+    buttonTextColor: Color = Color.White,
+    buttonDisabledTextColor: Color = ColorScale_Gray_400,
 ) = Button(
     onClick = onClick,
     enabled = enabled,
@@ -62,7 +64,8 @@ fun PrimaryButton(
         text = text,
         overflow = TextOverflow.Ellipsis,
         style = MaterialTheme.typography.bodyLarge.copy(
-            fontWeight = FontWeight.SemiBold, color = buttonTextColor
+            fontWeight = FontWeight.SemiBold,
+            color = if (enabled) buttonTextColor else buttonDisabledTextColor
         ),
     )
 }

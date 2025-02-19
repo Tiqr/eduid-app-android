@@ -51,6 +51,7 @@ constructor(
                 onFailure = { handleError(it) }
             )
         )
+        return@withContext fromNetwork.getOrNull()
     }
 
     private suspend fun handleError(ex: Throwable): SaveableResult.LoadError {

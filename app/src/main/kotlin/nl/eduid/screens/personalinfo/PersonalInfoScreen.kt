@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,14 +15,12 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -46,10 +43,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,8 +53,11 @@ import androidx.lifecycle.flowWithLifecycle
 import com.theapache64.rebugger.Rebugger
 import kotlinx.coroutines.flow.filterNotNull
 import nl.eduid.R
+import nl.eduid.di.model.ControlCode
 import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.screens.firsttimedialog.LinkAccountContract
+import nl.eduid.screens.personalinfo.banners.ControlCodeBanner
+import nl.eduid.screens.personalinfo.banners.NotVerifiedBanner
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.ConnectionCard
 import nl.eduid.ui.EduIdTopAppBar
@@ -67,10 +65,8 @@ import nl.eduid.ui.ExpandableVerifiedInfoField
 import nl.eduid.ui.InfoField
 import nl.eduid.ui.getDateTimeString
 import nl.eduid.ui.getShortDateString
-import nl.eduid.ui.theme.ColorSupport_Blue_100
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.LinkAccountCard
-import java.time.LocalDate
 import java.time.ZoneOffset
 import java.util.Locale
 
@@ -82,6 +78,7 @@ fun PersonalInfoRoute(
     onManageAccountClicked: (dateString: String) -> Unit,
     openVerifiedInformation: () -> Unit,
     goToVerifyIdentity: (Boolean) -> Unit,
+    goToCode: (ControlCode) -> Unit,
     goBack: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -146,6 +143,7 @@ fun PersonalInfoRoute(
         openVerifiedInformation = openVerifiedInformation,
         addLinkToAccount = addLink,
         goBack = onBack,
+        goToCode = goToCode
     )
 }
 
@@ -159,6 +157,7 @@ fun PersonalInfoScreen(
     onManageAccountClicked: () -> Unit,
     openVerifiedInformation: () -> Unit,
     addLinkToAccount: () -> Unit,
+    goToCode: (ControlCode) -> Unit,
     goBack: () -> Unit,
 ) = EduIdTopAppBar(
     onBackClicked = goBack,
@@ -204,6 +203,8 @@ fun PersonalInfoScreen(
                 NotVerifiedIdentity(
                     isLoading = isLoading,
                     addLinkToAccount = addLinkToAccount,
+                    controlCode = uiState.personalInfo.controlCode,
+                    goToCode = goToCode
                 )
             } else {
                 VerifiedIdentity()
@@ -347,11 +348,17 @@ private fun NameControl(value: String, label: String, account: PersonalInfo.Inst
 }
 
 @Composable
-private fun ColumnScope.NotVerifiedIdentity(
+private fun NotVerifiedIdentity(
+    controlCode: ControlCode?,
     isLoading: Boolean,
     addLinkToAccount: () -> Unit,
+    goToCode: (ControlCode) -> Unit
 ) {
-    NotVerifiedBanner(addLinkToAccount)
+    if (controlCode == null) {
+        NotVerifiedBanner(addLinkToAccount)
+    } else {
+        ControlCodeBanner(controlCode, goToCode)
+    }
 
     Row(
         modifier = Modifier
@@ -383,7 +390,7 @@ private fun ColumnScope.NotVerifiedIdentity(
 }
 
 @Composable
-private fun ColumnScope.VerifiedIdentity() {
+private fun VerifiedIdentity() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -423,59 +430,6 @@ private fun ColumnScope.VerifiedIdentity() {
     }
 }
 
-@Composable
-private fun NotVerifiedBanner(addLinkToAccount: () -> Unit = {}) {
-    val configuration = LocalConfiguration.current
-    Column(
-        modifier = Modifier
-            .requiredWidth(configuration.screenWidthDp.dp)
-            .background(ColorSupport_Blue_100)
-            .padding(vertical = 12.dp, horizontal = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Column {
-                Spacer(modifier = Modifier.size(4.dp))
-                Image(
-                    painter = painterResource(R.drawable.shield_tick_blue),
-                    contentDescription = ""
-                )
-            }
-            Text(
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
-                ),
-                text = stringResource(R.string.Profile_VerifyNow_Title_COPY),
-            )
-        }
-        Row {
-            Spacer(modifier = Modifier.width(33.dp))
-            OutlinedButton(
-                onClick = addLinkToAccount,
-                shape = RoundedCornerShape(CornerSize(6.dp)),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    disabledContentColor = MaterialTheme.colorScheme.onTertiaryContainer
-                ),
-                modifier = Modifier
-                    .sizeIn(minHeight = 40.dp),
-            ) {
-                Text(
-                    text = stringResource(R.string.Profile_VerifyNow_Button_COPY),
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.bodyLarge.copy(
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    ),
-                )
-            }
-        }
-    }
-}
-
 @Preview(locale = "en", showBackground = true)
 @Preview(locale = "nl", showBackground = true)
 @Composable
@@ -487,7 +441,9 @@ private fun Preview_PersonalInfoScreen() = EduidAppAndroidTheme {
         onManageAccountClicked = {},
         openVerifiedInformation = {},
         addLinkToAccount = {},
-        goBack = {})
+        goBack = {},
+        goToCode = {}
+    )
 }
 
 @Preview(locale = "en", showBackground = true)

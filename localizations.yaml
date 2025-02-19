@@ -430,6 +430,15 @@ SHARED:
       COPY:
         nl: "Beheer jouw geverifieerde gegevens"
         en: "Manage your verified information"
+    VerifyWithControlCode:
+      Title:
+        COPY:
+          en: "Verify your identity at an eduID Service Desk by presenting your ID and verification code."
+          nl: "Bevestig je identiteit bij een eduID Service Desk. Dit doe je door je identiteitsbewijs en controlecode te laten zien."
+      Button:
+        COPY:
+          en: "Show code"
+          nl: "Toon code"
     VerifyNow:
       Title:
         COPY:
@@ -3712,6 +3721,10 @@ SHARED:
       COPY:
         en: Could not request SMS code, please retry.
         nl: Kan geen sms-code aanvragen, probeer het opnieuw.
+    RemoveControlCodeError:
+        COPY:
+            en: Could not remove control code, please retry.
+            nl: Kan de controlecode niet verwijderen, probeer het opnieuw.
     PasswordUpdateError:
       COPY:
         en: Cannot update password
@@ -4125,4 +4138,63 @@ SHARED:
       COPY:
         en: Could not generate control code
         nl: Genereren van controlecode mislukt
+  ConfirmIdentityWithIdCode:
+    Title:
+      COPY:
+        en: "Your verification code"
+        nl: "Je controlecode"
+    Explanation:
+      COPY:
+        en: "You will also receive an email with this code. The code is valid for 14 days and is intended for: "
+        nl: "Je krijgt ook een e-mail met deze code. De code is 14 dagen geldig en is bedoeld voor:"
+    LastName:
+      COPY:
+        en: Last name
+        nl: Achternaam
+    FirstNames:
+      COPY:
+        en: First name(s)
+        nl: Voornamen
+    DateOfBirth:
+      COPY:
+        en: Date of birth
+        nl: Geboortedatum
+    MadeATypo:
+      Label:
+        COPY:
+          en: Made a typo?
+          nl: Typfout gemaakt?
+      Link:
+        COPY:
+          en: "Edit your details"
+          nl: "Pas gegevens aan"
+    WhatsNext:
+      COPY:
+        en: "What's next?"
+        nl: "Wat moet je nu doen?"
+    ScheduleAnAppointment:
+      COPY:
+        en: "Schedule an appointment with an eduID Service Desk (online or in person). During your appointment, show your verification code and ID."
+        nl: "Maak een afspraak met een eduID Service Desk (digitaal of op locatie). Laat tijdens je afspraak je controlecode en identiteisbewijs zien."
+    ShowServiceDesksButton:
+      COPY:
+        en: "Show eduID Service Desks"
+        nl: "Bekijk eduID Service Desks"
+    ServiceDeskUrl:
+      COPY:
+        en: "https://eduid.nl/servicedesk-en"
+        nl: "https://eduid.nl/servicedesk"
+    GoToHomePageButton:
+      COPY:
+        en: "Go to homepage"
+        nl: "Terug naar overzicht"
+    ProveIdentityOtherWay:
+      COPY:
+        en: "Want to prove your identity another way? Make sure to delete your verification code first."
+        nl: "Wil je toch op een andere manier bewijzen wie je bent? Verwijder dan eerst je controlecode."
+    DeleteVerificationCodeButton:
+      COPY:
+        en: "Delete verification code"
+        nl: "Verwijder controlecode"
+
 
