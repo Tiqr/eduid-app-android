@@ -91,6 +91,7 @@ fun UserDetails.mapToPersonalInfo(): PersonalInfo {
             givenName = givenNameConfirmer?.givenName,
             givenNameConfirmedBy = givenNameConfirmer?.institutionIdentifier
         ),
+        controlCode = this.controlCode,
         dateOfBirth = dateOfBirth,
         nameProvider = nameProvider,
         email = email,

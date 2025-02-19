@@ -63,6 +63,7 @@ data class UserDetails(
     val usePassword: Boolean,
     val usePublicKey: Boolean,
     val forgottenPassword: Boolean,
+    val controlCode: ControlCode?,
     val linkedAccounts: List<LinkedAccount>,
     val externalLinkedAccounts: List<ExternalLinkedAccount>,
     val schacHomeOrganization: String,

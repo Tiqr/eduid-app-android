@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
+import nl.eduid.di.model.ControlCode
 import nl.eduid.graphs.RequestEduIdLinkSent.LOGIN_REASON
 import nl.eduid.graphs.RequestEduIdLinkSent.reasonArg
 import nl.eduid.screens.accountlinked.AccountLinkedScreen
@@ -69,8 +70,10 @@ import nl.eduid.screens.twofactorkeydelete.TwoFactorKeyDeleteScreen
 import nl.eduid.screens.twofactorkeydelete.TwoFactorKeyDeleteViewModel
 import nl.eduid.screens.verifyidentity.VerifyIdentityScreen
 import nl.eduid.screens.verifyidentity.VerifyIdentityViewModel
+import nl.eduid.screens.verifywithid.code.VerifyWithIdCodeViewModel
 import nl.eduid.screens.verifywithid.input.VerifyWithIdInputScreen
 import nl.eduid.screens.verifywithid.input.VerifyWithIdInputViewModel
+import nl.eduid.screens.verifywithid.intro.VerifyWithIdCodeScreen
 import nl.eduid.screens.verifywithid.intro.VerifyWithIdIntroScreen
 import org.tiqr.data.model.EnrollmentChallenge
 
@@ -80,7 +83,8 @@ fun MainGraph(
     navController: NavHostController,
     baseUrl: String,
 ) = NavHost(
-    navController = navController, startDestination = VerifyIdentityWithIdInput.route
+    navController = navController,
+    startDestination = Graph.HOME_PAGE,
 ) {
     composable(Graph.HOME_PAGE) {//region Home
         val viewModel = hiltViewModel<HomePageViewModel>(it)
@@ -407,6 +411,9 @@ fun MainGraph(
             goToVerifyIdentity = { isLinkedAccount ->
                 navController.navigate(VerifyIdentityRoute.routeWithArgs(isLinkedAccount))
             },
+            goToCode = { code ->
+                navController.navigate(VerifyIdentityWithIdCode.routeWithArgs(code))
+            },
             goBack = navController::popBackStack,
         )
     }
@@ -547,13 +554,34 @@ fun MainGraph(
         )
     }
 
-    composable(VerifyIdentityWithIdInput.route) {
+    composable(
+        route = VerifyIdentityWithIdInput.routeWithArgs,
+        arguments = VerifyIdentityWithIdInput.arguments
+    ) {
         val viewModel = hiltViewModel<VerifyWithIdInputViewModel>(it)
         VerifyWithIdInputScreen(
             viewModel = viewModel,
-            goBack = { navController.popBackStack() },
-            goToGeneratedCode = {
-                TODO("Not implemented yet")
+            goBack = {
+                navController.goToWithPopCurrent(VerifyIdentityWithIdIntro.route)
+             },
+            goToGeneratedCode = { code ->
+                val route = VerifyIdentityWithIdCode.routeWithArgs(code)
+                navController.navigate(route)
+            }
+        )
+    }
+    composable(
+        route = VerifyIdentityWithIdCode.routeWithArgs,
+        arguments = VerifyIdentityWithIdCode.arguments) {
+        val viewModel = hiltViewModel<VerifyWithIdCodeViewModel>(it)
+        VerifyWithIdCodeScreen(
+            viewModel = viewModel,
+            goToPersonalInfo = {
+                navController.goToWithPopCurrent(Graph.HOME_PAGE) //Clear the entire backstack
+                navController.navigate(Graph.PERSONAL_INFO)
+            },
+            editCode = { controlCode ->
+                navController.navigate(VerifyIdentityWithIdInput.routeWithArgs(controlCode))
             }
         )
     }

@@ -4,7 +4,12 @@ import android.net.Uri
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapter
+import nl.eduid.di.model.ControlCode
 import nl.eduid.di.model.SelfAssertedName
+import org.tiqr.data.model.AuthenticationChallenge
+import timber.log.Timber
 import java.io.UnsupportedEncodingException
 
 object Graph {
@@ -359,6 +364,69 @@ object VerifyIdentityWithIdIntro {
 
 object VerifyIdentityWithIdInput {
     const val route = "verify_identity_with_id_input"
+
+    const val codeArg = "code"
+    const val routeWithArgs = "${route}?$codeArg={$codeArg}"
+
+    val arguments = listOf(navArgument(codeArg) {
+        type = NavType.StringType
+        nullable = true
+    })
+
+    fun routeWithArgs(code: ControlCode): String {
+        val moshi = Moshi.Builder().build()
+        val adapter = moshi.adapter(ControlCode::class.java)
+        val jsonCode = adapter.toJson(code)
+        val encodedCode = Uri.encode(jsonCode)
+        return "$route?$codeArg=$encodedCode"
+    }
+
+    fun deserializeCode(encodedCode: String?): ControlCode? {
+        if (encodedCode == null) {
+            return null
+        }
+        try {
+            val moshi = Moshi.Builder().build()
+            val adapter = moshi.adapter(ControlCode::class.java)
+            val jsonCode = Uri.decode(encodedCode)
+            return adapter.fromJson(jsonCode)
+        } catch (ex: Exception) {
+            Timber.w(ex, "Could not decode ControlCode!")
+            return null
+        }
+    }
+}
+
+object VerifyIdentityWithIdCode {
+    const val route = "verify_identity_with_id_code"
+
+    const val codeArg = "code"
+    const val routeWithArgs = "${route}?$codeArg={$codeArg}"
+
+    val arguments = listOf(navArgument(codeArg) {
+        type = NavType.StringType
+        nullable = false
+    })
+
+    fun routeWithArgs(code: ControlCode): String {
+        val moshi = Moshi.Builder().build()
+        val adapter = moshi.adapter(ControlCode::class.java)
+        val jsonCode = adapter.toJson(code)
+        val encodedCode = Uri.encode(jsonCode)
+        return "${route}?${codeArg}=$encodedCode"
+    }
+
+    fun deserializeCode(encodedCode: String?): ControlCode? {
+        try {
+            val moshi = Moshi.Builder().build()
+            val adapter = moshi.adapter(ControlCode::class.java)
+            val jsonCode = Uri.decode(encodedCode)
+            return adapter.fromJson(jsonCode)
+        } catch (ex: Exception) {
+            Timber.w(ex, "Could not decode ControlCode!")
+            return null
+        }
+    }
 }
 
 object ExternalAccountLinkedError {
