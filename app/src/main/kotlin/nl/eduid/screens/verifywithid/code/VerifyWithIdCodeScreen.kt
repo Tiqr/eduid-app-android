@@ -251,6 +251,7 @@ fun VerifyWithIdCodeScreenContent(
                 Text(
                     text = labelAndLink,
                     style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
