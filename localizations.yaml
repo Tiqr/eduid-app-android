@@ -1,3 +1,4 @@
+# yamllint disable rule:line-length
 ANDROID:
   Button:
     OK:
@@ -3722,9 +3723,9 @@ SHARED:
         en: Could not request SMS code, please retry.
         nl: Kan geen sms-code aanvragen, probeer het opnieuw.
     RemoveControlCodeError:
-        COPY:
-            en: Could not remove control code, please retry.
-            nl: Kan de controlecode niet verwijderen, probeer het opnieuw.
+      COPY:
+        en: Could not remove control code, please retry.
+        nl: Kan de controlecode niet verwijderen, probeer het opnieuw.
     PasswordUpdateError:
       COPY:
         en: Cannot update password
@@ -4006,8 +4007,8 @@ SHARED:
         nl: "De volgende informatie is toegevoegd aan jouw eduID account en kan nu worden gedeeld."
     SubtitlePreferInstitution:
       COPY:
-       en: "We also received new information. Do you want to use this for your eduID?"
-       nl: "We hebben ook nieuwe informatie gekregen. Wil je deze gebruiken voor je eduID?"
+        en: "We also received new information. Do you want to use this for your eduID?"
+        nl: "We hebben ook nieuwe informatie gekregen. Wil je deze gebruiken voor je eduID?"
     Button:
       Continue:
         COPY:
@@ -4100,9 +4101,9 @@ SHARED:
           en: "*EEA: all EU member states plus Liechtenstein, Norway, and Iceland."
           nl: "*EEA: alle EU-lidstaten + Liechtenstein, Noorwegen en IJsland."
     EnterDetailsButton:
-        COPY:
-            en: Enter your details
-            nl: Naar gegevens invullen
+      COPY:
+        en: Enter your details
+        nl: Naar gegevens invullen
   ServiceDesk:
     ConfirmIdentityHeader:
       COPY:
