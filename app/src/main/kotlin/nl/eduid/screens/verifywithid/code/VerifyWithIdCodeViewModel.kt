@@ -67,6 +67,7 @@ class VerifyWithIdCodeViewModel @Inject constructor(
         viewModelScope.launch {
             val newUserDetails = repository.deleteControlCode()
             if (newUserDetails.isSuccess) {
+                assistant.refreshDetails()
                 uiState = uiState.copy(codeDeleted = true)
                 return@launch
             }
