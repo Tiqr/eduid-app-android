@@ -113,7 +113,18 @@ private fun AuthenticationPinBiometricContent(
                     AuthenticationCompleteFailure.Reason.UNKNOWN,
                     AuthenticationCompleteFailure.Reason.CONNECTION,
                     -> {
-                        goToOneTimePassword(pinValue)
+                        try {
+                            goToOneTimePassword(pinValue)
+                        } catch (ex: IllegalArgumentException) {
+                            AlertDialogWithSingleButton(
+                                title = stringResource(R.string.OneTimePassword_GenerateError_Title_COPY),
+                                explanation = stringResource(R.string.OneTimePassword_GenerateError_Description_COPY),
+                                buttonLabel = stringResource(R.string.Button_OK_COPY),
+                                onDismiss = {
+                                    goHomeOnFail()
+                                    clearCompleteChallenge()
+                                })
+                        }
                     }
 
                     AuthenticationCompleteFailure.Reason.INVALID_RESPONSE -> {
