@@ -41,7 +41,7 @@ class VerifyWithIdInputViewModel @Inject constructor(
                 uiState = uiState.copy(createdControlCode = response)
             } catch (ex: Exception) {
                 uiState = uiState.copy(isLoading = false, errorData = ErrorData(
-                    titleId = R.string.ConfirmIdentityWithIdInput_GenerateError_COPY,
+                    titleId = R.string.ResponseErrors_GenerateControlCodeError_COPY,
                     message = ex.message ?: "Unknown error"
                 ))
             }

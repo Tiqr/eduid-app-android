@@ -787,6 +787,7 @@
   <string name="ResponseErrors_AccountCreateError_COPY">"Could not create eduid account for email %1$s."</string>
   <string name="ResponseErrors_EmailDomainForbidden_Title_COPY">"Email domain is forbidden"</string>
   <string name="ResponseErrors_EmailDomainForbidden_Description_COPY">"The email domain used in %1$s is not allowed."</string>
+  <string name="ResponseErrors_GenerateControlCodeError_COPY">"Could not generate control code"</string>
   <string name="ResponseErrors_Auth_Invalid_Title_COPY">"Authorization invalid"</string>
   <string name="ResponseErrors_Auth_Invalid_Description_COPY">"Did not receive valid authentication."</string>
   <string name="ResponseErrors_Auth_Failed_Title_COPY">"Authorization failed"</string>
@@ -830,14 +831,6 @@
   <string name="ReferenceNames_Eherkenning_COPY">"eIDAS"</string>
   <string name="ConfirmIdentityWithIdIntro_Title_FirstLine_COPY">"Confirm your identity"</string>
   <string name="ConfirmIdentityWithIdIntro_Title_SecondLine_COPY">"with your ID"</string>
-  <string name="ConfirmIdentityWithIdIntro_Description_ServiceDesk_COPY">"You can also confirm your identity at one of our eduID Service Desks."</string>
-  <string name="ConfirmIdentityWithIdIntro_Description_Steps_Header_COPY">"Follow these steps:"</string>
-  <string name="ConfirmIdentityWithIdIntro_Description_Steps_Step1_COPY">"Enter your full name as it appears on your ID (first and last name)."</string>
-  <string name="ConfirmIdentityWithIdIntro_Description_Steps_Step2_COPY">"Generate a personal verification code."</string>
-  <string name="ConfirmIdentityWithIdIntro_Description_Steps_Step3_COPY">"Present your code and ID to an eduID Service Desk. They will verify your identity manually."</string>
-  <string name="ConfirmIdentityWithIdIntro_ValidDocumentsDisclaimer_List_COPY">"Accepted IDs:\n- Passports\n- EEA* ID cards\n- Dutch driver's licenses\n- Dutch residence permits.\n\nPlease note: copies, public transport cards, and student cards are not valid IDs.\n"</string>
-  <string name="ConfirmIdentityWithIdIntro_ValidDocumentsDisclaimer_Asterisk_COPY">"*EEA: all EU member states plus Liechtenstein, Norway, and Iceland."</string>
-  <string name="ConfirmIdentityWithIdIntro_EnterDetailsButton_COPY">"Enter your details"</string>
   <string name="ServiceDesk_ConfirmIdentityHeader_COPY">"You need to manually confirm your identity"</string>
   <string name="ServiceDesk_ConfirmIdentity_COPY">"You must confirm your identity at one of our eduID Service Desks.&quot;"</string>
   <string name="ServiceDesk_StepsHeader_COPY">"Follow these steps:"</string>
@@ -852,7 +845,7 @@
   <string name="ServiceDesk_ResidencePermit_COPY">"Dutch residence permits"</string>
   <string name="ServiceDesk_Note_COPY">"Please note: copies, public transport passes and student cards are not valid ID's"</string>
   <string name="ServiceDesk_EeaNote_COPY">"&lt;sup&gt;*&lt;/sup&gt;EEA: all EU member states plus Liechtenstein, Norway and Iceland"</string>
-  <string name="ServiceDesk_Next_COPY">"Open website to enter your name"</string>
+  <string name="ServiceDesk_Next_COPY">"Enter your details"</string>
   <string name="ServiceDesk_IdCard_Information_COPY">"Enter your details as they appear on your ID. Names must be in Roman characters."</string>
   <string name="ServiceDesk_IdCard_LastName_COPY">"Last name"</string>
   <string name="ServiceDesk_IdCard_FirstName_COPY">"First name(s)"</string>

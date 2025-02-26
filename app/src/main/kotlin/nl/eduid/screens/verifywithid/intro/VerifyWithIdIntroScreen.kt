@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.core.text.parseAsHtml
 import nl.eduid.R
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
@@ -83,21 +84,21 @@ fun VerifyWithIdIntroScreenContent(
         )
         Spacer(Modifier.height(16.dp))
         Text(
-            text = stringResource(R.string.ConfirmIdentityWithIdIntro_Description_ServiceDesk_COPY),
+            text = stringResource(R.string.ServiceDesk_ConfirmIdentity_COPY),
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(16.dp))
         Text(
-            text = stringResource(R.string.ConfirmIdentityWithIdIntro_Description_Steps_Header_COPY),
+            text = stringResource(R.string.ServiceDesk_StepsHeader_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(16.dp))
         val steps = listOf(
-            R.string.ConfirmIdentityWithIdIntro_Description_Steps_Step1_COPY,
-            R.string.ConfirmIdentityWithIdIntro_Description_Steps_Step2_COPY,
-            R.string.ConfirmIdentityWithIdIntro_Description_Steps_Step3_COPY
+            R.string.ServiceDesk_Step1_COPY,
+            R.string.ServiceDesk_Step2_COPY,
+            R.string.ServiceDesk_Step3_COPY
         )
         steps.forEachIndexed { index, step ->
             Row {
@@ -130,9 +131,19 @@ fun VerifyWithIdIntroScreenContent(
                         start.linkTo(parent.start, margin = 12.dp)
                     }
             )
+            val validDocumentsTextComponents = listOf(
+                stringResource(R.string.ServiceDesk_AcceptedIds_COPY),
+                "-" + stringResource(R.string.ServiceDesk_Passports_COPY),
+                "-" + stringResource(R.string.ServiceDesk_Eea_COPY).parseAsHtml(),
+                "-" + stringResource(R.string.ServiceDesk_DriverLicense_COPY),
+                "-" + stringResource(R.string.ServiceDesk_ResidencePermit_COPY),
+                "",
+                stringResource(R.string.ServiceDesk_Note_COPY),
+                ""
+            ).joinToString(separator = "\n")
             Text(
                 style = MaterialTheme.typography.bodyLarge,
-                text = stringResource(R.string.ConfirmIdentityWithIdIntro_ValidDocumentsDisclaimer_List_COPY),
+                text = validDocumentsTextComponents,
                 modifier = Modifier
                     .constrainAs(topText) {
                         start.linkTo(image.end, margin = 12.dp)
@@ -141,9 +152,10 @@ fun VerifyWithIdIntroScreenContent(
                         width = Dimension.fillToConstraints
                     }
             )
+
             Text(
                 style = MaterialTheme.typography.bodySmall,
-                text = stringResource(R.string.ConfirmIdentityWithIdIntro_ValidDocumentsDisclaimer_Asterisk_COPY),
+                text = stringResource(R.string.ServiceDesk_EeaNote_COPY).parseAsHtml().toString(),
                 modifier = Modifier
                     .constrainAs(bottomText) {
                         start.linkTo(image.end, margin = 12.dp)
@@ -157,7 +169,7 @@ fun VerifyWithIdIntroScreenContent(
         Spacer(Modifier.height(72.dp))
         PrimaryButton(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.ConfirmIdentityWithIdIntro_EnterDetailsButton_COPY),
+            text = stringResource(R.string.ServiceDesk_Next_COPY),
             onClick = goToEnterDetails
         )
     }

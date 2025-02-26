@@ -3863,6 +3863,10 @@ SHARED:
         COPY:
           en: "The email domain used in %1{{s}} is not allowed."
           nl: "Het e-maildomein gebruikt in %1{{s}} is niet toegestaan."
+    GenerateControlCodeError:
+      COPY:
+        en: Could not generate control code
+        nl: Kan geen controlecode genereren
     Auth:
       Invalid:
         Title:
@@ -4054,56 +4058,6 @@ SHARED:
         COPY:
           en: with your ID
           nl: met je identiteitsbewijs
-    Description:
-      ServiceDesk:
-        COPY:
-          en: You can also confirm your identity at one of our eduID Service Desks.
-          nl: Je kunt je identiteit ook bevestigen via een van onze eduID Service Desks.
-      Steps:
-        Header:
-          COPY:
-            en: "Follow these steps:"
-            nl: "Volg deze stappen:"
-        Step1:
-          COPY:
-            en: Enter your full name as it appears on your ID (first and last name).
-            nl: Vul je volledige naam in zoals die op je identiteitsbewijs staat (voornamen en achternaam).
-        Step2:
-          COPY:
-            en: Generate a personal verification code.
-            nl: Genereer een persoonlijke controlecode.
-        Step3:
-          COPY:
-            en: Present your code and ID to an eduID Service Desk. They will verify your identity manually.
-            nl: Laat je controlecode en identiteitsbewijs zien aan een eduID Service Desk. Die bevestigt zo je identiteit.
-    ValidDocumentsDisclaimer:
-      List:
-        COPY:
-          en: |
-            Accepted IDs:
-            - Passports
-            - EEA* ID cards
-            - Dutch driver's licenses
-            - Dutch residence permits.
-
-            Please note: copies, public transport cards, and student cards are not valid IDs.
-
-          nl: |
-            Geldige identiteitsbewijzen:
-            -  paspoorten
-            -  EEA* ID-kaarten
-            -  Nederlandse rijbewijzen
-            -  Nederlandse verblijfsvergunningen
-
-            Let op: kopieën, OV-kaarten en studentenkaarten zijn geen geldige identiteitsbewijzen.
-      Asterisk:
-        COPY:
-          en: "*EEA: all EU member states plus Liechtenstein, Norway, and Iceland."
-          nl: "*EEA: alle EU-lidstaten + Liechtenstein, Noorwegen en IJsland."
-    EnterDetailsButton:
-      COPY:
-        en: Enter your details
-        nl: Naar gegevens invullen
   ServiceDesk:
     ConfirmIdentityHeader:
       COPY:
@@ -4163,7 +4117,7 @@ SHARED:
         nl: "<sup>*</sup>EEA: alle EU-lidstaten + Liechtenstein, Noorwegen en IJsland."
     Next:
       COPY:
-        en: "Open website to enter your name"
+        en: "Enter your details"
         nl: "Naar gegevens invullen"
     IdCard:
       Information:
