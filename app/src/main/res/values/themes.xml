@@ -5,6 +5,7 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        <item name="android:windowSplashScreenBackground" tools:ignore="NewApi">@color/ic_launcher_background</item>
     </style>
 
     <style name="ComposeAppTheme" parent="AppTheme" />
