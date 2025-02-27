@@ -103,7 +103,7 @@ fun VerifyWithIdInputScreenContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(R.string.ConfirmIdentityWithIdInput_Title_FirstLine_COPY),
+            text = stringResource(R.string.ConfirmIdentityWithIdIntro_Title_FirstLine_COPY),
             style = MaterialTheme.typography.titleLarge.copy(
                 textAlign = TextAlign.Start, color = MaterialTheme.colorScheme.onSecondary
             ),
@@ -112,7 +112,7 @@ fun VerifyWithIdInputScreenContent(
                 .padding(top = 16.dp)
         )
         Text(
-            text = stringResource(R.string.ConfirmIdentityWithIdInput_Title_SecondLine_COPY),
+            text = stringResource(R.string.ConfirmIdentityWithIdIntro_Title_SecondLine_COPY),
             style = MaterialTheme.typography.titleLarge.copy(
                 textAlign = TextAlign.Start
             ),
@@ -133,7 +133,7 @@ fun VerifyWithIdInputScreenContent(
         Spacer(Modifier.height(32.dp))
 
         Text(
-            text = stringResource(R.string.ConfirmIdentityWithIdInput_Explanation_COPY),
+            text = stringResource(R.string.ServiceDesk_IdCard_Information_COPY),
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth()
         )
@@ -146,7 +146,7 @@ fun VerifyWithIdInputScreenContent(
                 .fillMaxWidth()
                 .align(Alignment.Start)
                 .padding(vertical = 8.dp),
-            text = stringResource(R.string.ConfirmIdentityWithIdInput_InputField_LastName_COPY),
+            text = stringResource(R.string.ServiceDesk_IdCard_LastName_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
                 fontWeight = FontWeight.SemiBold
@@ -178,7 +178,7 @@ fun VerifyWithIdInputScreenContent(
                 .fillMaxWidth()
                 .align(Alignment.Start)
                 .padding(vertical = 8.dp),
-            text = stringResource(R.string.ConfirmIdentityWithIdInput_InputField_FirstNames_COPY),
+            text = stringResource(R.string.ServiceDesk_IdCard_FirstName_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
                 fontWeight = FontWeight.SemiBold
@@ -209,7 +209,7 @@ fun VerifyWithIdInputScreenContent(
                 .fillMaxWidth()
                 .align(Alignment.Start)
                 .padding(vertical = 8.dp),
-            text = stringResource(R.string.ConfirmIdentityWithIdInput_InputField_DateOfBirth_COPY),
+            text = stringResource(R.string.ServiceDesk_IdCard_DayOfBirth_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
                 fontWeight = FontWeight.SemiBold
@@ -236,7 +236,7 @@ fun VerifyWithIdInputScreenContent(
         PrimaryButton(
             enabled = !isLoading && firstName.isNotEmpty() && lastName.isNotEmpty() && dateOfBirth.isNotEmpty(),
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.ConfirmIdentityWithIdInput_GenerateVerificationCodeButton_COPY),
+            text = stringResource(R.string.ServiceDesk_IdCard_GenerateControlCode_COPY),
             onClick = {
                 val payload = ControlCodeRequest(
                     firstName = firstName,
@@ -265,7 +265,7 @@ fun VerifyWithIdInputScreenContent_Preview() {
     EduidAppAndroidTheme {
         VerifyWithIdInputScreenContent(
             isLoading = false,
-            editCode = ControlCode(firstName = "First name", lastName = "Last name", dayOfBirth = "01-01-2000", code = "123456"),
+            editCode = ControlCode(firstName = "First name", lastName = "Last name", dayOfBirth = "01-01-2000", code = "123456", createdAt = System.currentTimeMillis()),
             generateCode = { _ -> },
             errorData = null,
             dismissError = {}
