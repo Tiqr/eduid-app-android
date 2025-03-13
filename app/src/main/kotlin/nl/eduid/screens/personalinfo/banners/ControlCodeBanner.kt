@@ -58,7 +58,7 @@ fun ControlCodeBanner(
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 ),
-                text = stringResource(R.string.Profile_VerifyWithControlCode_Title_COPY),
+                text = stringResource(R.string.ServiceDesk_ControlCode_Banner_COPY),
             )
         }
         Row {
@@ -74,7 +74,7 @@ fun ControlCodeBanner(
                     .sizeIn(minHeight = 40.dp),
             ) {
                 Text(
-                    text = stringResource(R.string.Profile_VerifyWithControlCode_Button_COPY),
+                    text = stringResource(R.string.ServiceDesk_ControlCode_ShowCode_COPY),
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.bodyLarge.copy(
                         fontWeight = FontWeight.SemiBold,
