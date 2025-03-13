@@ -751,6 +751,7 @@
   <string name="ResponseErrors_UnauthorizedTitle_COPY">"Gegevens kunnen niet laden"</string>
   <string name="ResponseErrors_UnauthorizedText_COPY">"Verzoek kan niet worden voltooid, log in en geef toegang."</string>
   <string name="ResponseErrors_RequestSMSError_COPY">"Kan geen sms-code aanvragen, probeer het opnieuw."</string>
+  <string name="ResponseErrors_RemoveControlCodeError_COPY">"Kan de controlecode niet verwijderen, probeer het opnieuw."</string>
   <string name="ResponseErrors_PasswordUpdateError_COPY">"Wachtwoord kan niet worden bijgewerkt"</string>
   <string name="ResponseErrors_InvalidPasswordError_COPY">"Het gekozen wachtwoord is ongeldig"</string>
   <string name="ResponseErrors_PasswordMismatchError_COPY">"Wachtwoorden zijn niet hetzelfde"</string>

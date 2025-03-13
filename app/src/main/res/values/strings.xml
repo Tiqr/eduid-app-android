@@ -751,6 +751,7 @@
   <string name="ResponseErrors_UnauthorizedTitle_COPY">"Cannot load info"</string>
   <string name="ResponseErrors_UnauthorizedText_COPY">"Cannot complete request, please log in and grant access."</string>
   <string name="ResponseErrors_RequestSMSError_COPY">"Could not request SMS code, please retry."</string>
+  <string name="ResponseErrors_RemoveControlCodeError_COPY">"Could not remove control code, please retry."</string>
   <string name="ResponseErrors_PasswordUpdateError_COPY">"Cannot update password"</string>
   <string name="ResponseErrors_InvalidPasswordError_COPY">"Chosen password is invalid"</string>
   <string name="ResponseErrors_PasswordMismatchError_COPY">"Passwords do not match"</string>
