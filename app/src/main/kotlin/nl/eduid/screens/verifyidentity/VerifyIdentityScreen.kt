@@ -269,7 +269,7 @@ fun VerifyIdentityScreenContent(
             ) {
                 SecondaryButton(
                     modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(R.string.VerifyIdentity_ICantUseTheseMethods_COPY),
+                    text = stringResource(R.string.ServiceDesk_ControlCode_CantUse_COPY),
                     onClick = goToFallbackMethodScreen
                 )
             }

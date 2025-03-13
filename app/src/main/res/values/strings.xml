@@ -111,8 +111,11 @@
   <string name="Profile_VerifyStudent_AddInstitutionConfirmation_COPY">"When you proceed you will be asked to login at the institution you want to connect to your eduID. First, select which institution you want to connect; then, login at that institution.&lt;br/&gt;&lt;br/&gt;After a successful login you will come back here."</string>
   <string name="Profile_VerifyParty_AddInstitution_COPY">"Connect institution"</string>
   <string name="Profile_VerifyParty_AddInstitutionConfirmation_COPY">"When you proceed you will be asked to login at the institution you want to connect to your eduID. First, select which institution you want to connect; then, login at that institution.&lt;br/&gt;&lt;br/&gt;After a successful login you will come back here."</string>
-  <string name="EppnAlreadyLinked_Title_COPY">"Account not connected!"</string>
+  <string name="EppnAlreadyLinked_Title_AccountNotConnected_COPY">"Account not connected!"</string>
+  <string name="EppnAlreadyLinked_Title_VerificationFailed_COPY">"Verification failed!"</string>
   <string name="EppnAlreadyLinked_Info_COPY">"Your eduID could not be connected. The account with which you just logged in, is already connected to a different eduID: %1$s."</string>
+  <string name="EppnAlreadyLinked_InfoExternalAccountWithoutEmail_COPY">"Your eduID could not be verified. The external account with which you just logged in, is already linked to a different eduID account."</string>
+  <string name="EppnAlreadyLinked_InfoExternalAccountWithEmail_COPY">"Your eduID could not be verified. The external account with which you just logged in, is already linked to a different eduID account: %1$s"</string>
   <string name="EppnAlreadyLinked_RetryButton_COPY">"Retry"</string>
   <string name="Edit_Title_COPY">"Name"</string>
   <string name="Edit_Info_COPY">"Please provide your full name."</string>
@@ -708,7 +711,7 @@
   <string name="WelcomeToApp_ReturnBrowserText_COPY">"Continue in your browser to finish the connection of this app to your eduID"</string>
   <string name="CreateEduID_ErrorCreateFailed_Title_COPY">"Could not create your eduID account"</string>
   <string name="CreateEduID_ErrorCreateFailed_Message_COPY">"Something went wrong while creating your account. Please try again."</string>
-  <string name="CreateEduID_LandingPage_MainText_COPY">"Verifiy who you are in the field of education and research"</string>
+  <string name="CreateEduID_LandingPage_MainText_COPY">"Verify who you are in the field of education and research"</string>
   <string name="CreateEduID_LandingPage_SignInButton_COPY">"Log in"</string>
   <string name="CreateEduID_LandingPage_ScanQrButton_COPY">"Scan QR code"</string>
   <string name="CreateEduID_LandingPage_NoEduIdButton_COPY">"I don't have an eduID"</string>
@@ -864,6 +867,7 @@
   <string name="ServiceDesk_ControlCode_Banner_COPY">"Verify your identity at an eduID Service Desk by presenting your ID and verification code."</string>
   <string name="ServiceDesk_ControlCode_ShowCode_COPY">"Show code"</string>
   <string name="ServiceDesk_ControlCode_ValidityCode_COPY">"Your code is valid for &#37;1$s more days."</string>
+  <string name="ServiceDesk_ControlCode_CantUse_COPY">"I can't use any of the above methods"</string>
   <string name="Button_OK_COPY">"OK"</string>
   <string name="Button_Cancel_COPY">"Cancel"</string>
   <string name="Button_Retry_COPY">"Retry"</string>
@@ -879,4 +883,5 @@
   <string name="ManageAccount_CreatedAt_COPY">"EEEE, dd MMMM yyyy 'at' HH:MM"</string>
   <string name="AppData_InitializationError_Generic_COPY">"Failed to initialize AppData. Please retry."</string>
   <string name="AppData_InitializationError_WithException_COPY">"Failed to initialize AppData. Reason: %1$s"</string>
+  <string name="AppData_InitializationError_NoSupportedBrowserFound_COPY">"Failed to initialize AppData. No supported browser found."</string>
 </resources>

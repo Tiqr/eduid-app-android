@@ -354,6 +354,12 @@ fun MainGraph(
                 uriPattern = AccountLinked.getUriPatternFailed(baseUrl)
             },
             navDeepLink {
+                uriPattern = AccountLinked.getUriPatternSubjectAlreadyLinked(baseUrl)
+            },
+            navDeepLink {
+                uriPattern = AccountLinked.getUriPatternSubjectAlreadyLinkedCustomScheme()
+            },
+            navDeepLink {
                 uriPattern = AccountLinked.getUriPatternExpired(baseUrl)
             },
         ),

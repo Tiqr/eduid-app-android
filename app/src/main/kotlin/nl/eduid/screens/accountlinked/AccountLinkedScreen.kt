@@ -73,10 +73,19 @@ fun AccountLinkedScreen(
     ) {
 
         when (result) {
-            is ResultAccountLinked.FailedAlreadyLinkedResult -> AccountFailedLinkContent(
+            is ResultAccountLinked.FailedInstitutionAlreadyLinkedResult -> AccountFailedLinkContent(
                 explanation = stringResource(
-                    R.string.NameUpdated_Title_FailReason_AlreadyLinked_COPY, result.withEmail
+                    R.string.EppnAlreadyLinked_Info_COPY, result.withEmail
                 ), continueToHome = continueToHome
+            )
+
+            is ResultAccountLinked.FailedExternalAccountAlreadyLinkedResult -> AccountFailedLinkContent(
+                overrideTitle = stringResource(R.string.EppnAlreadyLinked_Title_VerificationFailed_COPY),
+                explanation = if (result.withEmail == null) {
+                    stringResource(R.string.EppnAlreadyLinked_InfoExternalAccountWithoutEmail_COPY)
+                } else {
+                    stringResource(R.string.EppnAlreadyLinked_InfoExternalAccountWithEmail_COPY, result.withEmail)
+                }, continueToHome = continueToHome
             )
 
             ResultAccountLinked.FailedExpired -> AccountFailedLinkContent(
@@ -113,6 +122,7 @@ fun AccountLinkedScreen(
 @Composable
 private fun AccountFailedLinkContent(
     explanation: String,
+    overrideTitle: String? = null,
     continueToHome: () -> Unit = {},
 ) = Column(
     modifier = Modifier
@@ -126,19 +136,31 @@ private fun AccountFailedLinkContent(
         modifier = Modifier.fillMaxSize()
     ) {
         Spacer(Modifier.height(36.dp))
-        Text(
-            style = MaterialTheme.typography.titleLarge.copy(
-                textAlign = TextAlign.Start, color = ColorMain_Green_400
-            ),
-            text = stringResource(R.string.NameUpdated_Title_YourSchool_COPY),
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(Modifier.height(12.dp))
-        Text(
-            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
-            text = stringResource(R.string.NameUpdated_Title_ContactedError_COPY),
-            modifier = Modifier.fillMaxWidth()
-        )
+        if (overrideTitle != null) {
+            Text(
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Start,
+                    color = ColorMain_Green_400
+                ),
+                text = overrideTitle,
+                modifier = Modifier.fillMaxWidth()
+            )
+        } else {
+            Text(
+                style = MaterialTheme.typography.titleLarge.copy(
+                    textAlign = TextAlign.Start, color = ColorMain_Green_400
+                ),
+                text = stringResource(R.string.NameUpdated_Title_YourSchool_COPY),
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(Modifier.height(12.dp))
+            Text(
+                style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
+                text = stringResource(R.string.NameUpdated_Title_ContactedError_COPY),
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
         Spacer(Modifier.height(12.dp))
         Text(
             text = explanation,

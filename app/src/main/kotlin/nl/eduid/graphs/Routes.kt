@@ -55,6 +55,8 @@ object AccountLinked {
     fun getUriPatternExternalLinkOKCustomScheme() = "eduid:///client/mobile/external-account-linked"
     fun getUriPatternFailed(baseUrl: String) = "$baseUrl/client/mobile/eppn-already-linked"
     fun getUriPatternExpired(baseUrl: String) = "$baseUrl/client/mobile/expired"
+    fun getUriPatternSubjectAlreadyLinked(baseUrl: String) = "$baseUrl/client/mobile/verify-already-used"
+    fun getUriPatternSubjectAlreadyLinkedCustomScheme() = "eduid:///client/mobile/verify-already-used"
 
     const val isRegistrationFlowArg = "is_registration_flow"
 

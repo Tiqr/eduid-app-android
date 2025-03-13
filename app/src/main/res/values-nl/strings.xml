@@ -111,8 +111,11 @@
   <string name="Profile_VerifyStudent_AddInstitutionConfirmation_COPY">"Als je doorgaat word je gevraagd in te loggen via de onderwijsinstelling die je wilt koppelen. Selecteer eerst de instelling die je wilt koppelen en log daarna in.&lt;br/&gt; &lt;br/&gt;Nadat je succesvol bent ingelogd kom je hier weer terug."</string>
   <string name="Profile_VerifyParty_AddInstitution_COPY">"Koppel instelling"</string>
   <string name="Profile_VerifyParty_AddInstitutionConfirmation_COPY">"Als je doorgaat word je gevraagd in te loggen via de onderwijsinstelling die je wilt koppelen. Selecteer eerst de instelling die je wilt koppelen en log daarna in.&lt;br/&gt; &lt;br/&gt;Nadat je succesvol bent ingelogd kom je hier weer terug."</string>
-  <string name="EppnAlreadyLinked_Title_COPY">"Koppeling niet gemaakt!"</string>
+  <string name="EppnAlreadyLinked_Title_AccountNotConnected_COPY">"Koppeling niet gemaakt!"</string>
+  <string name="EppnAlreadyLinked_Title_VerificationFailed_COPY">"Verificatie mislukt!"</string>
   <string name="EppnAlreadyLinked_Info_COPY">"Je eduID kon niet worden gekoppeld. Het account waarmee je zojuist bent ingelogd, is al aan een ander eduID gekoppeld: %1$s."</string>
+  <string name="EppnAlreadyLinked_InfoExternalAccountWithoutEmail_COPY">"Je eduID kon niet worden geverifïeerd. Het externe account waarmee je zojuist bent ingelogd, is al aan een ander eduID-account gekoppeld."</string>
+  <string name="EppnAlreadyLinked_InfoExternalAccountWithEmail_COPY">"Je eduID kon niet worden geverifïeerd. Het externe account waarmee je zojuist bent ingelogd, is al aan een ander eduID-account gekoppeld: %1$s"</string>
   <string name="EppnAlreadyLinked_RetryButton_COPY">"Opnieuw proberen"</string>
   <string name="Edit_Title_COPY">"Aanpassen profielgegevens"</string>
   <string name="Edit_Info_COPY">"Vul je volledige naam in."</string>
@@ -864,6 +867,7 @@
   <string name="ServiceDesk_ControlCode_Banner_COPY">"Bevestig je identiteit bij een eduID Service Desk. Dit doe je door je identiteitsbewijs en controlecode te laten zien."</string>
   <string name="ServiceDesk_ControlCode_ShowCode_COPY">"Toon code"</string>
   <string name="ServiceDesk_ControlCode_ValidityCode_COPY">"Je code is nog geldig voor &#37;1$s dagen."</string>
+  <string name="ServiceDesk_ControlCode_CantUse_COPY">"Ik kan geen van bovenstaande manieren gebruiken"</string>
   <string name="Button_OK_COPY">"OK"</string>
   <string name="Button_Cancel_COPY">"Annuleren"</string>
   <string name="Button_Retry_COPY">"Probeer opnieuw"</string>
@@ -879,4 +883,5 @@
   <string name="ManageAccount_CreatedAt_COPY">"EEEE, dd MMMM yyyy 'om' HH:MM"</string>
   <string name="AppData_InitializationError_Generic_COPY">"AppData kan niet worden geïnitialiseerd. Probeer het opnieuw."</string>
   <string name="AppData_InitializationError_WithException_COPY">"AppData kan niet worden geïnitialiseerd. Reden: %1$s"</string>
+  <string name="AppData_InitializationError_NoSupportedBrowserFound_COPY">"AppData kan niet worden geïnitialiseerd. Geen ondersteunde browser gevonden."</string>
 </resources>
