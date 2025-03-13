@@ -276,4 +276,5 @@ data class ControlCode(
     val lastName: String?,
     val dayOfBirth: String?,
     val code: String,
+    val createdAt: Long
 ) : Parcelable

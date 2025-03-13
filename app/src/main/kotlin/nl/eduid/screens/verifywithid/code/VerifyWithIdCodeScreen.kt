@@ -85,6 +85,7 @@ fun VerifyWithIdCodeScreen(
         firstName = viewModel.controlCode.firstName,
         lastName = viewModel.controlCode.lastName,
         dayOfBirth = viewModel.controlCode.dayOfBirth,
+        createdAt = viewModel.controlCode.createdAt,
         editVerificationCode = {
             editCode(viewModel.controlCode)
         },
@@ -106,6 +107,7 @@ fun VerifyWithIdCodeScreenContent(
     firstName: String?,
     lastName: String?,
     dayOfBirth: String?,
+    createdAt: Long,
     editVerificationCode: () -> Unit,
     deleteVerificationCode: () -> Unit,
     openShowServiceDesksUrl: (String) -> Unit,
@@ -121,7 +123,7 @@ fun VerifyWithIdCodeScreenContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(R.string.ConfirmIdentityWithIdCode_Title_COPY),
+            text = stringResource(R.string.ServiceDesk_ControlCode_YourControlCode_COPY),
             style = MaterialTheme.typography.titleLarge.copy(
                 textAlign = TextAlign.Start, color = MaterialTheme.colorScheme.onSecondary
             ),
@@ -148,8 +150,10 @@ fun VerifyWithIdCodeScreenContent(
             )
         }
         Spacer(Modifier.height(24.dp))
+        val oneDayInMs = 1000 * 60 * 60 * 24
+        val validForDays = 14 - (System.currentTimeMillis() - createdAt) / oneDayInMs
         Text(
-            text = stringResource(R.string.ConfirmIdentityWithIdCode_Explanation_COPY),
+            text = stringResource(R.string.ServiceDesk_ControlCode_Info_COPY, validForDays),
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth()
         )
@@ -173,7 +177,7 @@ fun VerifyWithIdCodeScreenContent(
                         .fillMaxWidth()
                         .align(Alignment.Start)
                         .padding(vertical = 8.dp),
-                    text = stringResource(R.string.ConfirmIdentityWithIdInput_InputField_LastName_COPY),
+                    text = stringResource(R.string.ServiceDesk_IdCard_LastName_COPY),
                     style = MaterialTheme.typography.bodyLarge.copy(
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                         fontWeight = FontWeight.SemiBold
@@ -193,7 +197,7 @@ fun VerifyWithIdCodeScreenContent(
                         .fillMaxWidth()
                         .align(Alignment.Start)
                         .padding(vertical = 8.dp),
-                    text = stringResource(R.string.ConfirmIdentityWithIdInput_InputField_FirstNames_COPY),
+                    text = stringResource(R.string.ServiceDesk_IdCard_FirstName_COPY),
                     style = MaterialTheme.typography.bodyLarge.copy(
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                         fontWeight = FontWeight.SemiBold
@@ -212,7 +216,7 @@ fun VerifyWithIdCodeScreenContent(
                         .fillMaxWidth()
                         .align(Alignment.Start)
                         .padding(vertical = 8.dp),
-                    text = stringResource(R.string.ConfirmIdentityWithIdInput_InputField_DateOfBirth_COPY),
+                    text = stringResource(R.string.ServiceDesk_IdCard_DayOfBirth_COPY),
                     style = MaterialTheme.typography.bodyLarge.copy(
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                         fontWeight = FontWeight.SemiBold
@@ -226,8 +230,8 @@ fun VerifyWithIdCodeScreenContent(
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(Modifier.height(24.dp))
-                val label = stringResource(R.string.ConfirmIdentityWithIdCode_MadeATypo_Label_COPY)
-                val linkedPart = stringResource(R.string.ConfirmIdentityWithIdCode_MadeATypo_Link_COPY)
+                val label = stringResource(R.string.ServiceDesk_ControlCode_TypoPrefix_COPY)
+                val linkedPart = stringResource(R.string.ServiceDesk_ControlCode_TypoLink_COPY)
                 val labelAndLink = buildAnnotatedString {
                     append(label)
                     append(" ")
@@ -258,22 +262,22 @@ fun VerifyWithIdCodeScreenContent(
         }
         Spacer(Modifier.height(32.dp))
         Text(
-            text = stringResource(R.string.ConfirmIdentityWithIdCode_WhatsNext_COPY),
+            text = stringResource(R.string.ServiceDesk_ControlCode_Todo_COPY),
             style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(16.dp))
         Text(
-            text = stringResource(R.string.ConfirmIdentityWithIdCode_ScheduleAnAppointment_COPY),
+            text = stringResource(R.string.ServiceDesk_ControlCode_TodoDetails_COPY),
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(24.dp))
-        val serviceDeskUrl = stringResource(R.string.ConfirmIdentityWithIdCode_ServiceDeskUrl_COPY)
+        val serviceDeskUrl = stringResource(R.string.ServiceDesk_ControlCode_ServiceDesksLocations_COPY)
         PrimaryButton(
             enabled = !isLoading,
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.ConfirmIdentityWithIdCode_ShowServiceDesksButton_COPY),
+            text = stringResource(R.string.ServiceDesk_ControlCode_ServiceDesks_COPY),
             onClick = {
                 openShowServiceDesksUrl(serviceDeskUrl)
             }
@@ -282,7 +286,7 @@ fun VerifyWithIdCodeScreenContent(
         SecondaryButton(
             enabled = !isLoading,
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.ConfirmIdentityWithIdCode_GoToHomePageButton_COPY),
+            text = stringResource(R.string.ServiceDesk_ControlCode_Back_COPY),
             onClick = goToPersonalInfo
         )
         Spacer(Modifier.height(20.dp))
@@ -293,7 +297,7 @@ fun VerifyWithIdCodeScreenContent(
         )
         Spacer(Modifier.height(20.dp))
         Text(
-            text = stringResource(R.string.ConfirmIdentityWithIdCode_ProveIdentityOtherWay_COPY),
+            text = stringResource(R.string.ServiceDesk_ControlCode_Rethink_COPY),
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth()
         )
@@ -317,7 +321,7 @@ fun VerifyWithIdCodeScreenContent(
                     .sizeIn(minHeight = 48.dp)
         ) {
             Text(
-                text = stringResource(R.string.ConfirmIdentityWithIdCode_DeleteVerificationCodeButton_COPY),
+                text = stringResource(R.string.ServiceDesk_ControlCode_DeleteControlCode_COPY),
                 style = MaterialTheme.typography.bodyLarge.copy(
                     color = if (isLoading) ColorScale_Gray_400 else ColorAlertRed,
                     fontWeight = FontWeight.SemiBold
@@ -337,6 +341,7 @@ fun VerifyWithIdCodeScreenContent_Preview() {
             firstName = "First name",
             lastName = "Last name",
             dayOfBirth = "1993-12-24",
+            createdAt = System.currentTimeMillis(),
             editVerificationCode = {},
             deleteVerificationCode = {},
             openShowServiceDesksUrl = {},
