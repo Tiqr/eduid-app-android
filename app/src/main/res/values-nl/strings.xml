@@ -392,7 +392,7 @@
   <string name="Webauthn_CredentialNamePlaceholder_COPY">"bijv. mijn gele Yubikey"</string>
   <string name="Webauthn_Test_COPY">"Test"</string>
   <string name="Webauthn_TestInfo_COPY">"Druk op de &lt;strong&gt;test&lt;/strong&gt;knop om een 1 van je passkeys te testen. Je wordt doorgestuurd naar het eduID-loginscherm."</string>
-  <string name="Webauthn_TestFlash_COPY">"Je hebt met succes de beveligingssleutel getest voor inloggen."</string>
+  <string name="Webauthn_TestFlash_COPY">"Je hebt met succes de beveiligingssleutel getest voor inloggen."</string>
   <string name="RememberMe_Yes_COPY">"Ja"</string>
   <string name="RememberMe_No_COPY">"Nee"</string>
   <string name="RememberMe_Header_COPY">"Ingelogd blijven?"</string>
@@ -534,7 +534,7 @@
   <string name="Login_UsePasswordNoWebAuthn_COPY">"Typ een wachtwoord"</string>
   <string name="Login_UseMagicLink_COPY">"Gebruik magische link"</string>
   <string name="Login_UseMagicLinkNoWebAuthn_COPY">"Gebruik magische link."</string>
-  <string name="Login_UseWebAuth_COPY">"Log in in met een beveligingssleutel"</string>
+  <string name="Login_UseWebAuth_COPY">"Log in in met een beveiligingssleutel"</string>
   <string name="Login_UseOr_COPY">" of "</string>
   <string name="Login_RequestEduIdButton_COPY">"eduID aanmaken"</string>
   <string name="Login_RememberMe_COPY">"Ingelogd blijven"</string>
@@ -616,7 +616,7 @@
   <string name="Expired_Back_COPY">"Ga naar eduid.nl"</string>
   <string name="MaxAttempt_Title_COPY">"Maximum aantal pogingen bereikt"</string>
   <string name="MaxAttempt_Info_COPY">"Je hebt het maximale aantal controlepogingen bereikt."</string>
-  <string name="WebAuthn_Info_COPY">"Voeg een beveligingssleutel toe"</string>
+  <string name="WebAuthn_Info_COPY">"Voeg een beveiligingssleutel toe"</string>
   <string name="WebAuthn_BrowserPrompt_COPY">"Druk op de knop hieronder om een beveiligingssleutel toe te voegen aan je eduID. Volg daarbij de instructies van je browser op."</string>
   <string name="WebAuthn_Start_COPY">"Start"</string>
   <string name="WebAuthn_Header_COPY">"Log in met een passkey"</string>
@@ -627,7 +627,7 @@
   <string name="UseLink_Next_COPY">"Stuur een link"</string>
   <string name="UsePassword_Header_COPY">"Voer je wachtwoord in"</string>
   <string name="UsePassword_PasswordIncorrect_COPY">"Wachtwoord is onjuist"</string>
-  <string name="WebAuthnTest_Info_COPY">"Test een beveligingssleutel"</string>
+  <string name="WebAuthnTest_Info_COPY">"Test een beveiligingssleutel"</string>
   <string name="WebAuthnTest_BrowserPrompt_COPY">"Druk op de onderstaande knop om een beveiligingssleutel te testen. Volg daarbij de instructies van je browser op."</string>
   <string name="WebAuthnTest_Start_COPY">"Test"</string>
   <string name="AffiliationMissing_Header_COPY">"Account is gekoppeld, maar…"</string>
