@@ -851,6 +851,10 @@
   <string name="ServiceDesk_IdCard_FirstName_COPY">"Voornamen"</string>
   <string name="ServiceDesk_IdCard_DayOfBirth_COPY">"Geboortedatum"</string>
   <string name="ServiceDesk_IdCard_GenerateControlCode_COPY">"Genereer controlcode"</string>
+  <string name="ServiceDesk_IdCard_SelectPlaceholder_COPY">"Selecteer..."</string>
+  <string name="ServiceDesk_IdCard_DateOfBirth_COPY">"Geboortedag"</string>
+  <string name="ServiceDesk_IdCard_MonthOfBirth_COPY">"Maand"</string>
+  <string name="ServiceDesk_IdCard_YearOfBirth_COPY">"Jaar"</string>
   <string name="ServiceDesk_ControlCode_ControlCode_COPY">"Controlecode"</string>
   <string name="ServiceDesk_ControlCode_YourControlCode_COPY">"Je controlecode"</string>
   <string name="ServiceDesk_ControlCode_Info_COPY">"Je krijgt ook een e-mail met deze code. De code is &#37;1$s dagen geldig en is bedoeld voor:"</string>

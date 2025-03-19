@@ -851,6 +851,10 @@
   <string name="ServiceDesk_IdCard_FirstName_COPY">"First name(s)"</string>
   <string name="ServiceDesk_IdCard_DayOfBirth_COPY">"Date of birth"</string>
   <string name="ServiceDesk_IdCard_GenerateControlCode_COPY">"Generate verification code"</string>
+  <string name="ServiceDesk_IdCard_SelectPlaceholder_COPY">"Select..."</string>
+  <string name="ServiceDesk_IdCard_DateOfBirth_COPY">"Day of birth"</string>
+  <string name="ServiceDesk_IdCard_MonthOfBirth_COPY">"Month"</string>
+  <string name="ServiceDesk_IdCard_YearOfBirth_COPY">"Year"</string>
   <string name="ServiceDesk_ControlCode_ControlCode_COPY">"Verification code"</string>
   <string name="ServiceDesk_ControlCode_YourControlCode_COPY">"Your verification code"</string>
   <string name="ServiceDesk_ControlCode_Info_COPY">"You will also receive an email with this code. The code is valid for &#37;1$s more days and is intended for:"</string>
