@@ -583,7 +583,7 @@
   <string name="MagicLink_OpenMailTitle_COPY">"Open je e-mail"</string>
   <string name="MagicLink_OpenMailDisclaimer_COPY">"Kun je de mail niet vinden? Kijk ook in de spam folder"</string>
   <string name="MagicLink_Header_COPY">"Controleer je e-mail"</string>
-  <string name="MagicLink_Info_COPY">"Druk op de link die we verstuurd hebben naar %1$s."</string>
+  <string name="MagicLink_Info_COPY">"Druk op de link die we verstuurd hebben naar"</string>
   <string name="MagicLink_Awaiting_COPY">"Wachten tot je op de link drukt…"</string>
   <string name="MagicLink_OpenGMail_COPY">"Open gmail.com"</string>
   <string name="MagicLink_OpenOutlook_COPY">"Open outlook.com"</string>
