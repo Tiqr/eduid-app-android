@@ -72,8 +72,14 @@ fun RequestEduIdEmailSentScreen(
             modifier = Modifier.height(16.dp)
         )
 
+        val reasonString = if (reasonExplanation == R.string.MagicLink_Info_COPY) {
+            "${stringResource(reasonExplanation)} $userEmail"
+        } else {
+            stringResource(reasonExplanation, userEmail)
+        }
+
         val annotatedString = annotatedStringWithBoldParts(
-            stringResource(reasonExplanation, userEmail),
+            reasonString,
             userEmail
         )
 
