@@ -289,7 +289,7 @@
   <string name="Account_Info1_COPY">"Je kunt je eduID verwijderen wanneer je maar wilt."</string>
   <string name="Account_Info2_COPY">"Let op: als je je eduID verwijdert, verlies je ook je unieke eduID-nummer dat gekoppeld is aan je e-mailadres. Wanneer je een nieuwe eduID maakt met hetzelfde e-mailadres, krijg je een nieuw eduID-nummer. Door dit nieuwe nummer zien sommige websites jou ook als nieuwe gebruiker."</string>
   <string name="Account_Info3_COPY">"Goed om te weten: als je je eduID verwijdert, betekent dat niet dat alle websites die gekoppeld zijn aan je eduID ook je gegevens verwijderen."</string>
-  <string name="Account_Info4_COPY">"Sluit de browser om je eduID te verwijderen."</string>
+  <string name="Account_Info4_COPY">"Sluit na afloop de browser om je eduID te verwijderen."</string>
   <string name="Account_DeleteAccount_COPY">"Verwijder je eduID"</string>
   <string name="Account_DeleteAccountConfirmation_COPY">"Weet je zeker dat je je eduID wilt verwijderen?"</string>
   <string name="Account_DeleteAccountSure_COPY">"Je eduID voor altijd verwijderen?"</string>
