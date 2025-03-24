@@ -282,7 +282,7 @@
   <string name="Account_Cancel_COPY">"Cancel"</string>
   <string name="Account_DeleteInfo_COPY">"Note: if you delete your eduID, you will also &lt;strong&gt;lose your unique eduID number&lt;/strong&gt; connected to your email address."</string>
   <string name="Account_Data_COPY">"Download information"</string>
-  <string name="Account_PersonalInfo_COPY">"Press the button to download all your personal data from your eduID ."</string>
+  <string name="Account_PersonalInfo_COPY">"Press the button to download all your personal data from your eduID."</string>
   <string name="Account_DownloadData_COPY">"Download"</string>
   <string name="Account_DownloadDataConfirmation_COPY">"The download of your personal info from your eduID account contains all the information we have about you. It also contains technical keys and references."</string>
   <string name="Account_DeleteTitle_COPY">"Deleting your eduID"</string>
@@ -294,7 +294,7 @@
   <string name="Account_DeleteAccountConfirmation_COPY">"Are you sure you want to delete your eduID?"</string>
   <string name="Account_DeleteAccountSure_COPY">"Delete your account forever?"</string>
   <string name="Account_DeleteAccountWarning_COPY">"You won’t be able to undo this action afterwards."</string>
-  <string name="Account_Proceed_COPY">"Type your first and last name exactly as they appear in &lt;strong&gt;Your personal info&lt;/strong&gt; to proceed."</string>
+  <string name="Account_Proceed_COPY">"Type 'delete' if you are sure you want to delete your eduID."</string>
   <string name="Account_Name_COPY">"Your full name"</string>
   <string name="Account_NamePlaceholder_COPY">"Your full name as used on your profile"</string>
   <string name="DataActivity_Title_COPY">"Activity"</string>
@@ -497,7 +497,7 @@
   <string name="LinkFromInstitution_InstitutionDomainNameWarning2_COPY">"We recommend using your personal email address for eduID."</string>
   <string name="LinkFromInstitution_AllowedDomainNamesError_COPY">"Domain name %1$s not allowed."</string>
   <string name="LinkFromInstitution_AllowedDomainNamesError2_COPY">"eduID is restricted to be used only for allowed domains."</string>
-  <string name="LinkFromInstitution_AgreeWithTerms_COPY">"&lt;span&gt;I agree with &lt;a tabindex='-1' href='https://eduid.nl/terms-of-use/' target='_blank'&gt;the terms of service&lt;/a&gt; and I've read&lt;a tabindex='-1' href='https://eduid.nl/privacy_policy/' target='_blank'&gt;the privacy policy&lt;/a&gt;.&lt;/span&gt;"</string>
+  <string name="LinkFromInstitution_AgreeWithTerms_COPY">"&lt;span&gt;I agree with &lt;a tabindex='-1' href='https://eduid.nl/terms-of-use/' target='_blank'&gt;the terms of service&lt;/a&gt; and I've read &lt;a tabindex='-1' href='https://eduid.nl/privacy_policy/' target='_blank'&gt;the privacy policy&lt;/a&gt;.&lt;/span&gt;"</string>
   <string name="LinkFromInstitution_RequestEduIdButton_COPY">"Make an eduID"</string>
   <string name="PollFromInstitution_Header_COPY">"We will send you an email"</string>
   <string name="PollFromInstitution_Awaiting_COPY">"Waiting for you to click the link…"</string>
