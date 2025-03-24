@@ -294,7 +294,7 @@
   <string name="Account_DeleteAccountConfirmation_COPY">"Weet je zeker dat je je eduID wilt verwijderen?"</string>
   <string name="Account_DeleteAccountSure_COPY">"Je eduID voor altijd verwijderen?"</string>
   <string name="Account_DeleteAccountWarning_COPY">"Je kunt deze actie daarna niet meer ongedaan maken."</string>
-  <string name="Account_Proceed_COPY">"Typ je voornamen en achternaam zoals die in &lt;strong&gt;Je persoonlijke gegevens&lt;/strong&gt; staan om verder te gaan"</string>
+  <string name="Account_Proceed_COPY">"Typ 'verwijder' als je er zeker van bent dat je je eduID wil verwijderen."</string>
   <string name="Account_Name_COPY">"Je volledige naam"</string>
   <string name="Account_NamePlaceholder_COPY">"Je volledige naam zoals gebruikt in je profiel"</string>
   <string name="DataActivity_Title_COPY">"Activiteit"</string>
@@ -497,7 +497,7 @@
   <string name="LinkFromInstitution_InstitutionDomainNameWarning2_COPY">"We raden je aan om je persoonlijke e-mailadres te gebruiken voor eduID."</string>
   <string name="LinkFromInstitution_AllowedDomainNamesError_COPY">"Domeinnaam %1$s niet toegestaan."</string>
   <string name="LinkFromInstitution_AllowedDomainNamesError2_COPY">"eduID is beperkt om alleen te worden gebruikt voor toegestane domeinen."</string>
-  <string name="LinkFromInstitution_AgreeWithTerms_COPY">"&lt;span&gt;Ik ga akkoord met &lt;a tabindex='-1' href='https://eduid.nl/gebruiksvoorwaarden/' target='_blank'&gt;de voorwaarden&lt;/a&gt; en ik heb de &lt;a tabindex='-1' href='https://eduid.nl/privacy/' target='_blank'&gt;de privacyverklaring&lt;/a&gt;gelezen.&lt;/span&gt;"</string>
+  <string name="LinkFromInstitution_AgreeWithTerms_COPY">"&lt;span&gt;Ik ga akkoord met &lt;a tabindex='-1' href='https://eduid.nl/gebruiksvoorwaarden/' target='_blank'&gt;de voorwaarden&lt;/a&gt; en ik heb de &lt;a tabindex='-1' href='https://eduid.nl/privacy/' target='_blank'&gt;de privacyverklaring&lt;/a&gt; gelezen.&lt;/span&gt;"</string>
   <string name="LinkFromInstitution_RequestEduIdButton_COPY">"Maak een eduID"</string>
   <string name="PollFromInstitution_Header_COPY">"Je krijgt een e-mail van ons"</string>
   <string name="PollFromInstitution_Awaiting_COPY">"Wachten tot je op de link klikt…"</string>
