@@ -162,8 +162,8 @@
   <string name="DeleteAccount_DeleteAccountButton_COPY">"Delete your account"</string>
   <string name="OneTimePassword_GenerateError_Title_COPY">"Unable to generate a one-time password"</string>
   <string name="OneTimePassword_GenerateError_Description_COPY">"Something went wrong when generating your one-time password."</string>
-  <string name="OneTimePassword_Title_COPY">"You phone appears to be offline"</string>
-  <string name="OneTimePassword_Description_COPY">"No worries, you can still log in another way: 1. Select ‘Enter Code’ under the QR code on your computer. 2. Enter the following code:"</string>
+  <string name="OneTimePassword_Title_COPY">"Your device seems to be offline"</string>
+  <string name="OneTimePassword_Description_COPY">"Fortunately, you can log in another way: 1. Select ‘Enter Code’ under the QR code on your computer. 2. Enter the following code:"</string>
   <string name="OneTimePassword_YourId_COPY">"Your ID is:"</string>
   <string name="OneTimePassword_OneTimePassword_COPY">"One-time code:"</string>
   <string name="OneTimePassword_PinNotVerified_Title_COPY">"Note: your PIN has not been verified yet."</string>
