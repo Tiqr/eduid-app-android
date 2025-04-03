@@ -162,8 +162,8 @@
   <string name="DeleteAccount_DeleteAccountButton_COPY">"Verwijder je account"</string>
   <string name="OneTimePassword_GenerateError_Title_COPY">"Eenmalig wachtwoord aanmaken is mislukt"</string>
   <string name="OneTimePassword_GenerateError_Description_COPY">"Er is iets misgegaan bij het aanmaken van je eenmalige wachtwoord."</string>
-  <string name="OneTimePassword_Title_COPY">"Je telefoon lijkt offline te zijn"</string>
-  <string name="OneTimePassword_Description_COPY">"Gelukkig kun je ook op een andere manier inloggen: 1. Druk op ‘Code invoeren’ onder de QR-code op je computer. 2. Voer daarna deze code in:"</string>
+  <string name="OneTimePassword_Title_COPY">"Je apparaat lijkt offline te zijn"</string>
+  <string name="OneTimePassword_Description_COPY">"Gelukkig kan je ook op een andere manier inloggen: 1. Druk op ‘Code invoeren’ onder de QR-code op je computer. 2. Voer daarna deze code in:"</string>
   <string name="OneTimePassword_YourId_COPY">"Je gebruikers ID is:"</string>
   <string name="OneTimePassword_OneTimePassword_COPY">"Eénmalige code:"</string>
   <string name="OneTimePassword_PinNotVerified_Title_COPY">"Opmerking: Je PIN is nog niet geverifieerd."</string>
