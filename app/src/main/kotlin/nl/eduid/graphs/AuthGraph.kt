@@ -10,6 +10,7 @@ import nl.eduid.screens.authorize.AuthenticationPinBiometricScreen
 import nl.eduid.screens.authorize.EduIdAuthenticationViewModel
 import nl.eduid.screens.authorize.RequestAuthenticationScreen
 import nl.eduid.screens.onetimepassword.OneTimePasswordScreen
+import org.tiqr.data.model.SecretType
 import org.tiqr.data.viewmodel.AuthenticationViewModel
 
 fun NavGraphBuilder.authenticationFlow(navController: NavHostController) {
@@ -51,7 +52,7 @@ fun NavGraphBuilder.authenticationFlow(navController: NavHostController) {
                         navController.goToWithPopCurrent(
                             Account.OneTimePassword.buildRoute(
                                 encodedChallenge = encodedChallenge,
-                                pin = pin
+                                pin = if (pin.isEmpty()) SecretType.BIOMETRIC.key else pin
                             )
                         )
                     }
