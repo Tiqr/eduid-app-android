@@ -95,24 +95,6 @@ private fun OneTimePasswordContent(
                 text = stringResource(R.string.OneTimePassword_Description_COPY),
             )
             Spacer(modifier = Modifier.height(20.dp))
-            Row {
-                Text(
-                    style = MaterialTheme.typography.bodyLarge,
-                    text = stringResource(R.string.OneTimePassword_YourId_COPY),
-                )
-                Text(
-                    style = MaterialTheme.typography.bodyLarge.copy(
-                        fontWeight = FontWeight.Bold
-                    ),
-                    text = userId ?: "",
-                )
-            }
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                style = MaterialTheme.typography.bodyLarge,
-                text = stringResource(R.string.OneTimePassword_OneTimePassword_COPY),
-            )
-            Spacer(modifier = Modifier.height(20.dp))
             if (otp == null) {
                 Spacer(modifier = Modifier.height(20.dp))
                 CircularProgressIndicator(
@@ -130,7 +112,6 @@ private fun OneTimePasswordContent(
                 )
             } else {
                 val otpCode = otp.value
-
                 Row {
                     otpCode.forEachIndexed { index, character ->
                         Text(
@@ -153,6 +134,19 @@ private fun OneTimePasswordContent(
                             Spacer(modifier = Modifier.width(8.dp))
                         }
                     }
+                }
+                Spacer(modifier = Modifier.height(32.dp))
+                Row {
+                    Text(
+                        style = MaterialTheme.typography.bodyLarge,
+                        text = stringResource(R.string.OneTimePassword_YourId_COPY),
+                    )
+                    Text(
+                        style = MaterialTheme.typography.bodyLarge.copy(
+                            fontWeight = FontWeight.Bold
+                        ),
+                        text = " ${userId ?: ""}",
+                    )
                 }
                 Spacer(modifier = Modifier.height(32.dp))
                 Text(
