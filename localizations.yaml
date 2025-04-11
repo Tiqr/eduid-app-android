@@ -830,20 +830,19 @@ SHARED:
         nl: Je apparaat lijkt offline te zijn
     Description:
       COPY:
-        en: >-
-          Fortunately, you can log in another way:
-            1. Select ‘Enter Code’ under the QR code on your computer.
-            2. Enter the following code:
-        nl: >-
-          Gelukkig kan je ook op een andere manier inloggen:
-            1. Druk op ‘Code invoeren’ onder de QR-code op je computer.
-            2. Voer daarna deze code in:
+        en: "Fortunately, you can log in another way:
+          1. Select ‘Enter Code’ under the QR code on your computer.
+          2. Enter the following code:"
+        nl: "Gelukkig kan je ook op een andere manier inloggen:
+          1. Druk op ‘Code invoeren’ onder de QR-code op je computer.
+          2. Voer daarna deze code in:"
+
     YourId:
       COPY:
         en: >-
-          Your ID:
+          Your ID is:
         nl: >-
-          Je ID:
+          Je gebruikers ID is:
     OneTimePassword:
       COPY:
         en: >-
