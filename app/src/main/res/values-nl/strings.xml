@@ -418,6 +418,7 @@
   <string name="Sms_MaxAttemptsPre_COPY">"Maximum aantal pogingen bereikt. Druk"</string>
   <string name="Sms_MaxAttemptsPost_COPY">"om een ander telefoonnummer te gebruiken of de verstuur een nieuwe code"</string>
   <string name="Sms_Here_COPY">" hier "</string>
+  <string name="Sms_MaxAttemptsPostNoReEnter_COPY">"om een nieuwe code te ontvangen"</string>
   <string name="EnrollApp_Header_COPY">"Maak de installatie af in de eduID app"</string>
   <string name="Recovery_Header_COPY">"Herstelmethode instellen"</string>
   <string name="Recovery_Info_COPY">"Lukt het niet om in te loggen op eduID via de app of e-mail? Dan kun je ook met een herstelmethode inloggen."</string>
@@ -440,7 +441,7 @@
   <string name="PhoneVerification_PhoneIncorrect_COPY">"Telefoonnummer is onjuist"</string>
   <string name="Congrats_Header_COPY">"Gelukt"</string>
   <string name="Congrats_Info_COPY">"Je kunt nu de eduID app gebruiken om snel in te loggen bij diensten waarvoor je eduID nodig is."</string>
-  <string name="Congrats_Next_COPY">"Verder naar %1$s"</string>
+  <string name="Congrats_Next_COPY">"Verder"</string>
   <string name="Deactivate_TitleDelete_COPY">"Deactiveer je eduID app"</string>
   <string name="Deactivate_Info_COPY">"Je kunt je eduID app deactiveren als je de app opnieuw wilt installeren of als je een nieuw apparaat hebt."</string>
   <string name="Deactivate_RecoveryCode_COPY">"Herstelcode"</string>
@@ -665,9 +666,9 @@
   <string name="AppRequired_ConfirmLabel_COPY">"Download eduID app"</string>
   <string name="AppRequired_CancelLabel_COPY">"Ik weiger echt"</string>
   <string name="SubContent_WarningTitle_COPY">"Weet je het zeker?"</string>
-  <string name="SubContent_Warning_COPY">"De dienst waarop je inlogt heeft gevraagd om in te loggen met de eduID app. Als je op een andere manier inlogt, ontvangt deze dienst je attributen niet."</string>
+  <string name="SubContent_Warning_COPY">"De dienst waarop je inlogt heeft gevraagd om in te loggen met de eduID app. Als je op een andere manier inlogt, dan is het mogelijk dat deze dienst niet goed werkt of je geen toegang verleent."</string>
   <string name="SubContent_ConfirmLabel_COPY">"Verander manier van inloggen"</string>
-  <string name="SubContent_CancelLabel_COPY">"Dat wist ik niet"</string>
+  <string name="SubContent_CancelLabel_COPY">"Login met de app"</string>
   <string name="PinAndBioMetrics_SetupBiometrics_COPY">"Biometrisch inloggen instellen"</string>
   <string name="PinAndBioMetrics_Skip_COPY">"Overslaan"</string>
   <string name="PinAndBioMetrics_BiometricsApproval_COPY">"Biometrische goedkeuring"</string>

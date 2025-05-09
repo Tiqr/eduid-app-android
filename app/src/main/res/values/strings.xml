@@ -418,6 +418,7 @@
   <string name="Sms_MaxAttemptsPre_COPY">"Max attempts reached. Press"</string>
   <string name="Sms_MaxAttemptsPost_COPY">"to use a different phone number or resend code to receive a new verification"</string>
   <string name="Sms_Here_COPY">" here "</string>
+  <string name="Sms_MaxAttemptsPostNoReEnter_COPY">"to request a new verification"</string>
   <string name="EnrollApp_Header_COPY">"Finish setup in the eduID app"</string>
   <string name="Recovery_Header_COPY">"Set up a recovery method"</string>
   <string name="Recovery_Info_COPY">"Can’t log in to eduID through the app or email? Try using a recovery method instead."</string>
@@ -440,7 +441,7 @@
   <string name="PhoneVerification_PhoneIncorrect_COPY">"Phone number is incorrect"</string>
   <string name="Congrats_Header_COPY">"Success"</string>
   <string name="Congrats_Info_COPY">"You can now use the eduID app to quickly log in to services that require eduID."</string>
-  <string name="Congrats_Next_COPY">"Continue to %1$s"</string>
+  <string name="Congrats_Next_COPY">"Continue"</string>
   <string name="Deactivate_TitleDelete_COPY">"Deactivate your eduID app"</string>
   <string name="Deactivate_Info_COPY">"You can deactivate your eduID app if you want to reinstall this app or if you have a new device."</string>
   <string name="Deactivate_RecoveryCode_COPY">"Recovery code"</string>
@@ -665,9 +666,9 @@
   <string name="AppRequired_ConfirmLabel_COPY">"Get the eduID app"</string>
   <string name="AppRequired_CancelLabel_COPY">"I still refuse"</string>
   <string name="SubContent_WarningTitle_COPY">"Are you sure?"</string>
-  <string name="SubContent_Warning_COPY">"The service you're logging into has explicitly requested you log in using the eduID app. If you log in with a different method, this service will not receive your attributes."</string>
+  <string name="SubContent_Warning_COPY">"The service you're logging into has explicitly requested you log in using the eduID app. If you log in with a different method, this application might not work correctly or allow you access."</string>
   <string name="SubContent_ConfirmLabel_COPY">"Change login option anyway"</string>
-  <string name="SubContent_CancelLabel_COPY">"Did not know that"</string>
+  <string name="SubContent_CancelLabel_COPY">"Log in with the App"</string>
   <string name="PinAndBioMetrics_SetupBiometrics_COPY">"Set up biometric login"</string>
   <string name="PinAndBioMetrics_Skip_COPY">"Skip this"</string>
   <string name="PinAndBioMetrics_BiometricsApproval_COPY">"Biometric approval"</string>
