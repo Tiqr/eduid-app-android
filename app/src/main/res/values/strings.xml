@@ -136,6 +136,7 @@
   <string name="Email_Cancel_COPY">"Cancel"</string>
   <string name="Email_Save_COPY">"Save"</string>
   <string name="Email_Updated_COPY">"An email has been sent to %1$s"</string>
+  <string name="Email_UpdatedVerified_COPY">"A verification email has been sent to %1$s"</string>
   <string name="Email_Confirmed_COPY">"Your email address has been changed to %1$s"</string>
   <string name="Email_Back_COPY">"/personal"</string>
   <string name="Email_EmailEquality_COPY">"Your new email address is the same as your current email"</string>
@@ -198,6 +199,7 @@
   <string name="Security_NotAddedYet_COPY">"Not added to your eduID yet"</string>
   <string name="Security_NotSupported_COPY">"Not supported"</string>
   <string name="Security_UseMagicLink_COPY">"Magic link email"</string>
+  <string name="Security_UseCode_COPY">"Verificationcode email"</string>
   <string name="Security_AddSecurityKeyInfo_COPY">"You can add a passkey to your eduIDto log in. You can use, for example, the built-in sensor of your device (TouchID, FaceID) or a separate hardware key (YubiKey)."</string>
   <string name="Security_RememberMeInfo_COPY">"&lt;strong&gt;Your device is currently remembered. You will be automatically logged in to eduID.&lt;/strong&gt;"</string>
   <string name="Security_NoRememberMeInfo_COPY">"When logging in with your eduID, you can choose to &lt;strong&gt;stay logged in&lt;/strong&gt;. This remembers your login on the device you use at that moment."</string>
@@ -530,7 +532,9 @@
   <string name="Login_FamilyNamePlaceholder_COPY">"e.g. Berners-Lee"</string>
   <string name="Login_GivenNamePlaceholder_COPY">"e.g. Tim"</string>
   <string name="Login_SendMagicLink_COPY">"Send a link"</string>
+  <string name="Login_SendCode_COPY">"Send a code"</string>
   <string name="Login_LoginWebAuthn_COPY">"Log in with passkey"</string>
+  <string name="Login_UseCode_COPY">"Email a login code"</string>
   <string name="Login_UsePassword_COPY">"type a password."</string>
   <string name="Login_UsePasswordNoWebAuthn_COPY">"Type a password."</string>
   <string name="Login_UseMagicLink_COPY">"Email a magic link"</string>
@@ -573,6 +577,7 @@
   <string name="Login_ForgotPassword_COPY">"Forgot your password?"</string>
   <string name="Login_UseAnother_COPY">"Use another"</string>
   <string name="Login_OptionsLink_COPY">"login option."</string>
+  <string name="Login_RateLimited_COPY">"You are still suspended. Try again in &#37;1$s minutes."</string>
   <string name="Options_Header_COPY">"How do you want to login?"</string>
   <string name="Options_NoLogin_COPY">"Still not able to login?"</string>
   <string name="Options_Learn_COPY">"Learn how to"</string>
@@ -581,6 +586,7 @@
   <string name="Options_UseWebAuthn_COPY">"Use your &lt;strong&gt;passkey&lt;/strong&gt;."</string>
   <string name="Options_UseLink_COPY">"Get a &lt;strong&gt;link&lt;/strong&gt; sent to your inbox."</string>
   <string name="Options_UsePassword_COPY">"Use &lt;strong&gt;a password&lt;/strong&gt;."</string>
+  <string name="Options_UseCode_COPY">"Get a &lt;strong&gt;code&lt;/strong&gt; sent to your inbox."</string>
   <string name="MagicLink_OpenMailTitle_COPY">"Open your e-mail"</string>
   <string name="MagicLink_OpenMailDisclaimer_COPY">"Can't find the email? Check the spam folder"</string>
   <string name="MagicLink_Header_COPY">"Check your email"</string>
@@ -613,7 +619,9 @@
   <string name="Success_Title_COPY">"Login almost done!"</string>
   <string name="Success_Info_COPY">"Please go back to the screen where you requested the link and follow the instructions there.&lt;br/&gt;&lt;br/&gt;You can close this tab / window."</string>
   <string name="Expired_Title_COPY">"Your link is invalid"</string>
+  <string name="Expired_CodeTitle_COPY">"Your code is invalid"</string>
   <string name="Expired_Info_COPY">"The link you used is either expired or has already been used."</string>
+  <string name="Expired_CodeInfo_COPY">"The code you used is either expired or has already been used."</string>
   <string name="Expired_Back_COPY">"Go to eduid.nl"</string>
   <string name="MaxAttempt_Title_COPY">"Maximum attempts reached"</string>
   <string name="MaxAttempt_Info_COPY">"You've reached the maximum verification attempts."</string>
@@ -873,6 +881,18 @@
   <string name="ServiceDesk_ControlCode_ShowCode_COPY">"Show code"</string>
   <string name="ServiceDesk_ControlCode_ValidityCode_COPY">"Your code is valid for &#37;1$s more days."</string>
   <string name="ServiceDesk_ControlCode_CantUse_COPY">"I can't use any of the above methods"</string>
+  <string name="UseCode_Header_COPY">"Request a code"</string>
+  <string name="UseCode_Next_COPY">"Send a code"</string>
+  <string name="LoginCode_Header_COPY">"Check your email"</string>
+  <string name="LoginCode_Title_COPY">"One-time verification code"</string>
+  <string name="LoginCode_Info_COPY">"Enter the code sent to &lt;strong&gt;&#37;1$s&lt;/strong&gt;"</string>
+  <string name="LoginCode_Continue_COPY">"Continue"</string>
+  <string name="LoginCode_Resend_COPY">"Problems? "</string>
+  <string name="LoginCode_ResendLink_COPY">"Resend the code"</string>
+  <string name="LoginCode_Error_COPY">"Wrong code. Please try again."</string>
+  <string name="LoginCode_ErrorHeader_COPY">"Maximum attempts reached"</string>
+  <string name="LoginCode_ErrorInfo_COPY">"You've reached the maximum attempts and your account is suspended for 15 minutes."</string>
+  <string name="LoginCode_MailResend_COPY">"Check your inbox again. We've sent another email with a code"</string>
   <string name="Button_OK_COPY">"OK"</string>
   <string name="Button_Cancel_COPY">"Cancel"</string>
   <string name="Button_Retry_COPY">"Retry"</string>
