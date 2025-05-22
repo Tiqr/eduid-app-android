@@ -199,7 +199,7 @@
   <string name="Security_NotAddedYet_COPY">"Not added to your eduID yet"</string>
   <string name="Security_NotSupported_COPY">"Not supported"</string>
   <string name="Security_UseMagicLink_COPY">"Magic link email"</string>
-  <string name="Security_UseCode_COPY">"Verification code email"</string>
+  <string name="Security_UseCode_COPY">"Verificationcode email"</string>
   <string name="Security_AddSecurityKeyInfo_COPY">"You can add a passkey to your eduIDto log in. You can use, for example, the built-in sensor of your device (TouchID, FaceID) or a separate hardware key (YubiKey)."</string>
   <string name="Security_RememberMeInfo_COPY">"&lt;strong&gt;Your device is currently remembered. You will be automatically logged in to eduID.&lt;/strong&gt;"</string>
   <string name="Security_NoRememberMeInfo_COPY">"When logging in with your eduID, you can choose to &lt;strong&gt;stay logged in&lt;/strong&gt;. This remembers your login on the device you use at that moment."</string>
