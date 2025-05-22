@@ -441,6 +441,9 @@
   <string name="PhoneVerification_Verify_COPY">"Send code"</string>
   <string name="PhoneVerification_PlaceHolder_COPY">"+31 612345678"</string>
   <string name="PhoneVerification_PhoneIncorrect_COPY">"Phone number is incorrect"</string>
+  <string name="PhoneVerification_RateLimited_COPY">"Too many attempts"</string>
+  <string name="PhoneVerification_RateLimitedInfo_COPY">"You've entered incorrect verification codes too many times. Please wait before trying again."</string>
+  <string name="PhoneVerification_Ok_COPY">"Ok"</string>
   <string name="Congrats_Header_COPY">"Success"</string>
   <string name="Congrats_Info_COPY">"You can now use the eduID app to quickly log in to services that require eduID."</string>
   <string name="Congrats_Next_COPY">"Continue"</string>
@@ -887,8 +890,8 @@
   <string name="LoginCode_Title_COPY">"One-time verification code"</string>
   <string name="LoginCode_Info_COPY">"Enter the code sent to &lt;strong&gt;&#37;1$s&lt;/strong&gt;"</string>
   <string name="LoginCode_Continue_COPY">"Continue"</string>
-  <string name="LoginCode_Resend_COPY">"Problems? "</string>
-  <string name="LoginCode_ResendLink_COPY">"Resend the code"</string>
+  <string name="LoginCode_Resend_COPY">"Didn’t receive the email? Check your spam folder, or "</string>
+  <string name="LoginCode_ResendLink_COPY">"click to resend"</string>
   <string name="LoginCode_Error_COPY">"Wrong code. Please try again."</string>
   <string name="LoginCode_ErrorHeader_COPY">"Maximum attempts reached"</string>
   <string name="LoginCode_ErrorInfo_COPY">"You've reached the maximum attempts and your account is suspended for 15 minutes."</string>

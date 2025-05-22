@@ -991,7 +991,7 @@ SHARED:
         nl: Link via e-mail
     UseCode:
       COPY:
-        en: Verificationcode email
+        en: Verification code email
         nl: Verificatie-code e-mail
     AddSecurityKeyInfo:
       COPY:
@@ -2164,6 +2164,18 @@ SHARED:
       COPY:
         en: Phone number is incorrect
         nl: Telefoonnummer is onjuist
+    RateLimited:
+      COPY:
+        en: Too many attempts
+        nl: Te veel pogingen
+    RateLimitedInfo:
+      COPY:
+        en: You've entered incorrect verification codes too many times. Please wait before trying again.
+        nl: Je hebt te vaak een onjuiste verificatiecode ingevoerd. Wacht alstublieft even voordat je het opnieuw probeert.
+    Ok:
+      COPY:
+        en: Ok
+        nl: Ok
   Congrats:
     Header:
       COPY:
@@ -4262,12 +4274,12 @@ SHARED:
         nl: "Doorgaan"
     Resend:
       COPY:
-        en: "Problems? "
-        nl: "Problemen? "
+        en: "Didn’t receive the email? Check your spam folder, or "
+        nl: "E-mail niet ontvangen? Controleer uw spamfolder of "
     ResendLink:
       COPY:
-        en: "Resend the code"
-        nl: "Code opnieuw versturen"
+        en: "click to resend"
+        nl: "klik om opnieuw te versturen"
     Error:
       COPY:
         en: "Wrong code. Please try again."

@@ -441,6 +441,9 @@
   <string name="PhoneVerification_Verify_COPY">"Stuur code"</string>
   <string name="PhoneVerification_PlaceHolder_COPY">"+31 612345678"</string>
   <string name="PhoneVerification_PhoneIncorrect_COPY">"Telefoonnummer is onjuist"</string>
+  <string name="PhoneVerification_RateLimited_COPY">"Te veel pogingen"</string>
+  <string name="PhoneVerification_RateLimitedInfo_COPY">"Je hebt te vaak een onjuiste verificatiecode ingevoerd. Wacht alstublieft even voordat je het opnieuw probeert."</string>
+  <string name="PhoneVerification_Ok_COPY">"Ok"</string>
   <string name="Congrats_Header_COPY">"Gelukt"</string>
   <string name="Congrats_Info_COPY">"Je kunt nu de eduID app gebruiken om snel in te loggen bij diensten waarvoor je eduID nodig is."</string>
   <string name="Congrats_Next_COPY">"Verder"</string>
@@ -887,8 +890,8 @@
   <string name="LoginCode_Title_COPY">"Eenmalige verificatiecode"</string>
   <string name="LoginCode_Info_COPY">"Voer de code in die verstuurd is naar &lt;strong&gt;&#37;1$s&lt;/strong&gt;"</string>
   <string name="LoginCode_Continue_COPY">"Doorgaan"</string>
-  <string name="LoginCode_Resend_COPY">"Problemen? "</string>
-  <string name="LoginCode_ResendLink_COPY">"Code opnieuw versturen"</string>
+  <string name="LoginCode_Resend_COPY">"E-mail niet ontvangen? Controleer uw spamfolder of "</string>
+  <string name="LoginCode_ResendLink_COPY">"klik om opnieuw te versturen"</string>
   <string name="LoginCode_Error_COPY">"Verkeerde code. Probeer het opnieuw."</string>
   <string name="LoginCode_ErrorHeader_COPY">"Maximale pogingen bereikt"</string>
   <string name="LoginCode_ErrorInfo_COPY">"Je hebt het maximale aantal pogingen bereikt en je account is voor 15 minuten geschorst."</string>
