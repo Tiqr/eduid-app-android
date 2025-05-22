@@ -135,7 +135,8 @@
   <string name="Email_Update_COPY">"Verstuur"</string>
   <string name="Email_Cancel_COPY">"Annuleer"</string>
   <string name="Email_Save_COPY">"Opslaan"</string>
-  <string name="Email_Updated_COPY">"Een e-email is verzonden naar %1$s"</string>
+  <string name="Email_Updated_COPY">"Een e-mail is verzonden naar %1$s"</string>
+  <string name="Email_UpdatedVerified_COPY">"Een verificatie e-mail is verzonden naar %1$s"</string>
   <string name="Email_Confirmed_COPY">"Je e-mail is gewijzigd naar %1$s"</string>
   <string name="Email_Back_COPY">"/personal"</string>
   <string name="Email_EmailEquality_COPY">"Je nieuwe e-mailadres is hetzelfde als je huidige e-mailadres"</string>
@@ -198,6 +199,7 @@
   <string name="Security_NotAddedYet_COPY">"Nog niet toegevoegd aan je eduID"</string>
   <string name="Security_NotSupported_COPY">"Niet ondersteund"</string>
   <string name="Security_UseMagicLink_COPY">"Link via e-mail"</string>
+  <string name="Security_UseCode_COPY">"Verificatie-code e-mail"</string>
   <string name="Security_AddSecurityKeyInfo_COPY">"Je kunt een passkey toevoegen aan je eduID om in te loggen.\n Dit kan bijv. de ingebouwde sensor van je apparaat\nzijn (TouchID, FaceID) of een los hardwaretoken (YubiKey)."</string>
   <string name="Security_RememberMeInfo_COPY">"&lt;strong&gt;Dit apparaat wordt momenteel onthouden. Je wordt automatisch ingelogd op eduD&lt;/strong&gt;"</string>
   <string name="Security_NoRememberMeInfo_COPY">"Als je inlogt met eduID kun je ervoor kiezen om &lt;strong&gt;ingelogd te blijven&lt;/strong&gt;. Je login wordt onthouden op het apparaat dat je op dat moment gebruikt."</string>
@@ -439,6 +441,9 @@
   <string name="PhoneVerification_Verify_COPY">"Stuur code"</string>
   <string name="PhoneVerification_PlaceHolder_COPY">"+31 612345678"</string>
   <string name="PhoneVerification_PhoneIncorrect_COPY">"Telefoonnummer is onjuist"</string>
+  <string name="PhoneVerification_RateLimited_COPY">"Te veel pogingen"</string>
+  <string name="PhoneVerification_RateLimitedInfo_COPY">"Je hebt te vaak een onjuiste verificatiecode ingevoerd. Wacht alstublieft even voordat je het opnieuw probeert."</string>
+  <string name="PhoneVerification_Ok_COPY">"Ok"</string>
   <string name="Congrats_Header_COPY">"Gelukt"</string>
   <string name="Congrats_Info_COPY">"Je kunt nu de eduID app gebruiken om snel in te loggen bij diensten waarvoor je eduID nodig is."</string>
   <string name="Congrats_Next_COPY">"Verder"</string>
@@ -530,7 +535,9 @@
   <string name="Login_FamilyNamePlaceholder_COPY">"bijv. Berners-Lee"</string>
   <string name="Login_GivenNamePlaceholder_COPY">"bijv. Tim"</string>
   <string name="Login_SendMagicLink_COPY">"Stuur een link"</string>
+  <string name="Login_SendCode_COPY">"Stuur een code"</string>
   <string name="Login_LoginWebAuthn_COPY">"Inloggen in met een passkey"</string>
+  <string name="Login_UseCode_COPY">"E-mail een login code"</string>
   <string name="Login_UsePassword_COPY">"typ een wachtwoord"</string>
   <string name="Login_UsePasswordNoWebAuthn_COPY">"Typ een wachtwoord"</string>
   <string name="Login_UseMagicLink_COPY">"Gebruik magische link"</string>
@@ -573,6 +580,7 @@
   <string name="Login_ForgotPassword_COPY">"Wachtwoord vergeten?"</string>
   <string name="Login_UseAnother_COPY">"Gebruik een andere"</string>
   <string name="Login_OptionsLink_COPY">"inlogmethode."</string>
+  <string name="Login_RateLimited_COPY">"Je bent nog steeds geschorst. Probeer het over &#37;1$s minuten opnieuw."</string>
   <string name="Options_Header_COPY">"Hoe wil je inloggen?"</string>
   <string name="Options_NoLogin_COPY">"Kun je nog niet inloggen?"</string>
   <string name="Options_Learn_COPY">"Zie hoe je jouw"</string>
@@ -581,6 +589,7 @@
   <string name="Options_UseWebAuthn_COPY">"Gebruik je &lt;strong&gt;passkey&lt;/strong&gt;."</string>
   <string name="Options_UseLink_COPY">"Ontvang een &lt;strong&gt;link&lt;/strong&gt; in je inbox."</string>
   <string name="Options_UsePassword_COPY">"Gebruik &lt;strong&gt;een wachtwoord&lt;/strong&gt;."</string>
+  <string name="Options_UseCode_COPY">"Ontvang een &lt;strong&gt;code&lt;/strong&gt; in je inbox."</string>
   <string name="MagicLink_OpenMailTitle_COPY">"Open je e-mail"</string>
   <string name="MagicLink_OpenMailDisclaimer_COPY">"Kun je de mail niet vinden? Kijk ook in de spam folder"</string>
   <string name="MagicLink_Header_COPY">"Controleer je e-mail"</string>
@@ -613,7 +622,9 @@
   <string name="Success_Title_COPY">"Inloggen is bijna klaar!"</string>
   <string name="Success_Info_COPY">"Ga terug naar het scherm waar je de link hebt aangevraagd en volg de instructies daar op.&lt;br/&gt;&lt;br/&gt;Je kunt dit tabblad / venster sluiten."</string>
   <string name="Expired_Title_COPY">"Je link is niet geldig"</string>
+  <string name="Expired_CodeTitle_COPY">"Je code is niet geldig"</string>
   <string name="Expired_Info_COPY">"De link die je hebt gebruikt, is verlopen of al een keer gebruikt."</string>
+  <string name="Expired_CodeInfo_COPY">"De code die je hebt gebruikt, is verlopen of al een keer gebruikt."</string>
   <string name="Expired_Back_COPY">"Ga naar eduid.nl"</string>
   <string name="MaxAttempt_Title_COPY">"Maximum aantal pogingen bereikt"</string>
   <string name="MaxAttempt_Info_COPY">"Je hebt het maximale aantal controlepogingen bereikt."</string>
@@ -873,6 +884,18 @@
   <string name="ServiceDesk_ControlCode_ShowCode_COPY">"Toon code"</string>
   <string name="ServiceDesk_ControlCode_ValidityCode_COPY">"Je code is nog geldig voor &#37;1$s dagen."</string>
   <string name="ServiceDesk_ControlCode_CantUse_COPY">"Ik kan geen van bovenstaande manieren gebruiken"</string>
+  <string name="UseCode_Header_COPY">"Vraag een code aan"</string>
+  <string name="UseCode_Next_COPY">"Verstuur een code"</string>
+  <string name="LoginCode_Header_COPY">"Check je e-mail"</string>
+  <string name="LoginCode_Title_COPY">"Eenmalige verificatiecode"</string>
+  <string name="LoginCode_Info_COPY">"Voer de code in die verstuurd is naar &lt;strong&gt;&#37;1$s&lt;/strong&gt;"</string>
+  <string name="LoginCode_Continue_COPY">"Doorgaan"</string>
+  <string name="LoginCode_Resend_COPY">"E-mail niet ontvangen? Controleer uw spamfolder of "</string>
+  <string name="LoginCode_ResendLink_COPY">"klik om opnieuw te versturen"</string>
+  <string name="LoginCode_Error_COPY">"Verkeerde code. Probeer het opnieuw."</string>
+  <string name="LoginCode_ErrorHeader_COPY">"Maximale pogingen bereikt"</string>
+  <string name="LoginCode_ErrorInfo_COPY">"Je hebt het maximale aantal pogingen bereikt en je account is voor 15 minuten geschorst."</string>
+  <string name="LoginCode_MailResend_COPY">"Check je inbox. We hebben je de e-mail met de code opnieuw verzonden."</string>
   <string name="Button_OK_COPY">"OK"</string>
   <string name="Button_Cancel_COPY">"Annuleren"</string>
   <string name="Button_Retry_COPY">"Probeer opnieuw"</string>
