@@ -142,7 +142,7 @@
   <string name="Email_EmailEquality_COPY">"Your new email address is the same as your current email"</string>
   <string name="Email_DuplicateEmail_COPY">"This email address is already in use."</string>
   <string name="Email_OutstandingPasswordForgotten_COPY">"Outstanding password forgotten request"</string>
-  <string name="Email_OutstandingPasswordForgottenConfirmation_COPY">"A link to reset your password was previously sent to you. This link will no longer be valid if you confirm your email change."</string>
+  <string name="Email_OutstandingPasswordForgottenConfirmation_COPY">"A code to reset your password was previously sent to you. This code will no longer be valid. You will receive a new code to change your email address."</string>
   <string name="NameUpdated_Title_YourSchool_COPY">"Your school or educational institution"</string>
   <string name="NameUpdated_Title_ContactedSuccessfully_COPY">"was connected successfully"</string>
   <string name="NameUpdated_Title_ContactedError_COPY">"could not be connected"</string>
@@ -355,8 +355,8 @@
   <string name="Credential_DeleteCredentialConfirmation_COPY">"Are you sure you want to delete your passkey %1$s? The passkey will be deleted from your eduID, but will not be removed from your browser and / or Yubikey device."</string>
   <string name="Password_AddTitle_COPY">"Add password"</string>
   <string name="Password_UpdateTitle_COPY">"Change password"</string>
-  <string name="Password_AddInfo_COPY">"Do you want to add a password to your eduID? Press &lt;strong&gt;Confirm&lt;/strong&gt; below to instantly receive an email with a link to add a password."</string>
-  <string name="Password_UpdateInfo_COPY">"Do you want to reset or delete your eduID password? Press &lt;strong&gt;Confirm&lt;/strong&gt; below to receive an email with a link. You can use this link to either reset or delete your password."</string>
+  <string name="Password_AddInfo_COPY">"Do you want to add a password to your eduID? Press &lt;strong&gt;Confirm&lt;/strong&gt; below to receive an email with a code. Whereafter you can add a password."</string>
+  <string name="Password_UpdateInfo_COPY">"Do you want to reset or delete your eduID password? Press &lt;strong&gt;Confirm&lt;/strong&gt; below to receive an email with a code. After you fill in the code you can reset or delete your password."</string>
   <string name="Password_ResetTitle_COPY">"Reset your password"</string>
   <string name="Password_NewPassword_COPY">"New password"</string>
   <string name="Password_ConfirmPassword_COPY">"Confirm new password"</string>
@@ -372,12 +372,12 @@
   <string name="Password_Back_COPY">"/security"</string>
   <string name="Password_PasswordDisclaimer_COPY">"Make sure it's at least 15 characters OR at least 8 characters including a number and an uppercase letter."</string>
   <string name="Password_InvalidCurrentPassword_COPY">"Your current password is invalid."</string>
-  <string name="Password_PasswordResetHashExpired_COPY">"Your password reset link has expired. "</string>
+  <string name="Password_PasswordResetHashExpired_COPY">"Your password reset code has expired. "</string>
   <string name="Password_ForgotPassword_COPY">"I forgot my password"</string>
   <string name="Password_PasswordResetSendAgain_COPY">"Send an email to reset my password."</string>
-  <string name="Password_ForgotPasswordConfirmation_COPY">"Forgot your password? Press 'Confirm' below to instantly receive an email with a link to reset your current password."</string>
+  <string name="Password_ForgotPasswordConfirmation_COPY">"Forgot your password? Press 'Confirm' below to instantly receive an email with a code to reset your current password."</string>
   <string name="Password_OutstandingEmailReset_COPY">"Outstanding email address change request"</string>
-  <string name="Password_OutstandingEmailResetConfirmation_COPY">"You have an outstanding new email confirmation link. This link will no longer be valid if you confirm your password forgotten request."</string>
+  <string name="Password_OutstandingEmailResetConfirmation_COPY">"You recently received a code to confirm a new email address. This code will no longer be valid. You will receive a new code to confirm your change password request."</string>
   <string name="Password_Flash_PasswordLink_COPY">"An email has been sent to %1$s with a link to reset your password"</string>
   <string name="Webauthn_SetTitle_COPY">"Add passkey"</string>
   <string name="Webauthn_UpdateTitle_COPY">"Add passkey"</string>
@@ -386,7 +386,7 @@
   <string name="Webauthn_NameRequired_COPY">"Before you can add a new passkey you must give it a name."</string>
   <string name="Webauthn_Revoke_COPY">"Revoke"</string>
   <string name="Webauthn_AddDevice_COPY">"Add device"</string>
-  <string name="Webauthn_Info_COPY">"A passkey is a separate or built-in device that is strictly personal to you, allowing you to prove that you are the owner of your eduID. Once you’ve added a passkey to your eduID, you can use it to log in. You can still log in using an email link or password as well."</string>
+  <string name="Webauthn_Info_COPY">"A passkey is a separate or built-in device that is strictly personal to you, allowing you to prove that you are the owner of your eduID. Once you’ve added a passkey to your eduID, you can use it to log in. You can still log in using an email code or password as well."</string>
   <string name="Webauthn_Back_COPY">"/security"</string>
   <string name="Webauthn_SetUpdate_COPY">"Start"</string>
   <string name="Webauthn_UpdateUpdate_COPY">"Add passkey"</string>
@@ -512,8 +512,8 @@
   <string name="PollFromInstitution_Spam_COPY">"Can't find the email? Check your spam folder."</string>
   <string name="PollFromInstitution_LoggedIn_COPY">"Login succeeded!"</string>
   <string name="PollFromInstitution_LoggedInInfo_COPY">"You can close this tab / window."</string>
-  <string name="PollFromInstitution_TimeOutReached_COPY">"Your link has expired"</string>
-  <string name="PollFromInstitution_TimeOutReachedInfo_COPY">"Go back to the website where you wanted to log in and try again. You will then receive a new link."</string>
+  <string name="PollFromInstitution_TimeOutReached_COPY">"Your code has expired"</string>
+  <string name="PollFromInstitution_TimeOutReachedInfo_COPY">"Go back to the website where you wanted to log in and try again. You will then receive a new code."</string>
   <string name="PollFromInstitution_Resend_COPY">"Still can't find the email?"</string>
   <string name="PollFromInstitution_ResendLink_COPY">"Send the email again."</string>
   <string name="PollFromInstitution_MailResend_COPY">"Check your inbox again. We've sent another email with a link."</string>

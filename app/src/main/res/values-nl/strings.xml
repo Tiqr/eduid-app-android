@@ -142,7 +142,7 @@
   <string name="Email_EmailEquality_COPY">"Je nieuwe e-mailadres is hetzelfde als je huidige e-mailadres"</string>
   <string name="Email_DuplicateEmail_COPY">"Dit e-mailadres is al in gebruik."</string>
   <string name="Email_OutstandingPasswordForgotten_COPY">"Uitstaand reset-verzoek voor wachtwoord"</string>
-  <string name="Email_OutstandingPasswordForgottenConfirmation_COPY">"Er is eerder een link naar je gestuurd om je wachtwoord te resetten. Deze link is niet langer geldig als je deze e-mailwijziging bevestigt."</string>
+  <string name="Email_OutstandingPasswordForgottenConfirmation_COPY">"Er is eerder een code naar je gestuurd om je wachtwoord te resetten. Deze code is niet langer geldig. Je ontvant een nieuwe code om je e-mailwijziging te bevestigt."</string>
   <string name="NameUpdated_Title_YourSchool_COPY">"Je school of onderwijsinstelling"</string>
   <string name="NameUpdated_Title_ContactedSuccessfully_COPY">"is nu gekoppeld"</string>
   <string name="NameUpdated_Title_ContactedError_COPY">"is niet gekoppeld"</string>
@@ -355,8 +355,8 @@
   <string name="Credential_DeleteCredentialConfirmation_COPY">"Weet je zeker dat je de passkey %1$s wilt verwijderen? De passkey wordt verwijderd uit je eduID, maar wordt niet verwijderd uit je browser en / of van je YubiKey-apparaat."</string>
   <string name="Password_AddTitle_COPY">"Voeg wachtwoord toe"</string>
   <string name="Password_UpdateTitle_COPY">"Wijzig wachtwoord"</string>
-  <string name="Password_AddInfo_COPY">"Wil je een wachtwoord toevoegen aan je eduID? Druk dan hieronder op &lt;strong&gt;Bevestigen&lt;/strong&gt; om direct een e-mail te ontvangen met een link om een wachtwoord toe te voegen."</string>
-  <string name="Password_UpdateInfo_COPY">"Wil je het wachtwoord van je eduID resetten of verwijderen? Druk hieronder op &lt;strong&gt;Bevestigen&lt;/strong&gt; om direct een e-mail te ontvangen met een link. Daarmee kun je je wachtwoord opnieuw instellen of verwijderen.\n"</string>
+  <string name="Password_AddInfo_COPY">"Wil je een wachtwoord toevoegen aan je eduID? Druk dan hieronder op &lt;strong&gt;Bevestigen&lt;/strong&gt; en ontvang een e-mail met een code. Daarna kan je een wachtwoord toevoegen."</string>
+  <string name="Password_UpdateInfo_COPY">"Wil je het wachtwoord van je eduID resetten of verwijderen? Druk hieronder op &lt;strong&gt;Bevestigen&lt;/strong&gt; om direct een e-mail te ontvangen met een code. Nadat je de code invult, kun je je wachtwoord opnieuw instellen of verwijderen."</string>
   <string name="Password_ResetTitle_COPY">"Stel je wachtwoord opnieuw in"</string>
   <string name="Password_NewPassword_COPY">"Nieuw wachtwoord"</string>
   <string name="Password_ConfirmPassword_COPY">"Bevestig nieuw wachtwoord"</string>
@@ -372,12 +372,12 @@
   <string name="Password_Back_COPY">"/security"</string>
   <string name="Password_PasswordDisclaimer_COPY">"Kies een wachtwoord van tenminste 8 karakters met minimaal een hoofdletter en een cijfer. Een langer wachtwoord van minimaal 15 karakters mag ook."</string>
   <string name="Password_InvalidCurrentPassword_COPY">"Je huidige wachtwoord is niet correct."</string>
-  <string name="Password_PasswordResetHashExpired_COPY">"De link om je wachtwoord opnieuw in te stellen is verlopen. "</string>
+  <string name="Password_PasswordResetHashExpired_COPY">"De code om je wachtwoord opnieuw in te stellen is verlopen. "</string>
   <string name="Password_ForgotPassword_COPY">"Ik ben mijn wachtwoord vergeten"</string>
   <string name="Password_PasswordResetSendAgain_COPY">"Stuur een e-mail om mijn wachtwoord opnieuw in te stellen."</string>
-  <string name="Password_ForgotPasswordConfirmation_COPY">"Wachtwoord vergeten? Druk hieronder op 'Bevestigen' om direct een e-mail te ontvangen waarmee je je huidige wachtwoord opnieuw kunt instellen."</string>
+  <string name="Password_ForgotPasswordConfirmation_COPY">"Wachtwoord vergeten? Druk hieronder op 'Bevestigen' om direct een e-mail te ontvangen met een code, waarmee je je huidige wachtwoord opnieuw kunt instellen."</string>
   <string name="Password_OutstandingEmailReset_COPY">"Openstaand verzoek om e-mailadres aan te passen"</string>
-  <string name="Password_OutstandingEmailResetConfirmation_COPY">"Je hebt een openstaande bevestigingslink voor een nieuwe e-mail. Deze link is niet langer geldig als je dit verzoek voor een vergeten wachtwoord bevestigt."</string>
+  <string name="Password_OutstandingEmailResetConfirmation_COPY">"Je hebt recent een code ontvangen voor het bevestigen van een nieuwe e-mail. Deze code is niet langer geldig. Je ontvangt een nieuwe code om je wachtwoord te wijzigen."</string>
   <string name="Password_Flash_PasswordLink_COPY">"Een e-mail is verstuurd naar %1$s om je wachtwoord opnieuw in te stellen."</string>
   <string name="Webauthn_SetTitle_COPY">"Passkey toevoegen"</string>
   <string name="Webauthn_UpdateTitle_COPY">"Passkey toevoegen"</string>
@@ -386,7 +386,7 @@
   <string name="Webauthn_NameRequired_COPY">"Voordat je een passkey kan toevoegen, moet je deze eerst een naam geven."</string>
   <string name="Webauthn_Revoke_COPY">"Intrekken"</string>
   <string name="Webauthn_AddDevice_COPY">"Voeg dit apparaat toe"</string>
-  <string name="Webauthn_Info_COPY">"Een passkey is een los of ingebouwd apparaat dat strikt persoonlijk van jou is, waarmee je kunt bewijzen dat jij de eigenaar van je eduID bent. Nadat je een passkey hebt toegevoegd aan je eduID kun je deze gebruiken om mee in te loggen. Ook kun je nog steeds inloggen met een link via e-mail of wachtwoord."</string>
+  <string name="Webauthn_Info_COPY">"Een passkey is een los of ingebouwd apparaat dat strikt persoonlijk van jou is, waarmee je kunt bewijzen dat jij de eigenaar van je eduID bent. Nadat je een passkey hebt toegevoegd aan je eduID kun je deze gebruiken om mee in te loggen. Ook kun je nog steeds inloggen met een code via e-mail of wachtwoord."</string>
   <string name="Webauthn_Back_COPY">"/security"</string>
   <string name="Webauthn_SetUpdate_COPY">"Start"</string>
   <string name="Webauthn_UpdateUpdate_COPY">"Voeg deze passkey toe"</string>
@@ -512,8 +512,8 @@
   <string name="PollFromInstitution_Spam_COPY">"Kan je de e-mail niet vinden? Controleer je spam."</string>
   <string name="PollFromInstitution_LoggedIn_COPY">"Inloggen is gelukt"</string>
   <string name="PollFromInstitution_LoggedInInfo_COPY">"Je kan dit tabblad / venster sluiten."</string>
-  <string name="PollFromInstitution_TimeOutReached_COPY">"Je link is niet meer geldig"</string>
-  <string name="PollFromInstitution_TimeOutReachedInfo_COPY">"Ga terug naar de website waar je wilde inloggen en probeer het opnieuw. Je kijgt dan een nieuwe link toegestuurd."</string>
+  <string name="PollFromInstitution_TimeOutReached_COPY">"Je code is niet meer geldig"</string>
+  <string name="PollFromInstitution_TimeOutReachedInfo_COPY">"Ga terug naar de website waar je wilde inloggen en probeer het opnieuw. Je kijgt dan een nieuwe code toegestuurd."</string>
   <string name="PollFromInstitution_Resend_COPY">"E-mail nog steeds niet gevonden?"</string>
   <string name="PollFromInstitution_ResendLink_COPY">"Stuur de e-mail opnieuw."</string>
   <string name="PollFromInstitution_MailResend_COPY">"Controleer je inbox. We hebben je de e-mail met de link opnieuw verzonden."</string>
