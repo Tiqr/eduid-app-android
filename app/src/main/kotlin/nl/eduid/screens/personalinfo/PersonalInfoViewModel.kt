@@ -30,7 +30,7 @@ import javax.inject.Inject
 class PersonalInfoViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val assistant: DataAssistant,
-    private val runtimeBehavior: RuntimeBehavior
+    runtimeBehavior: RuntimeBehavior
 ) : ViewModel() {
     private val _errorData: MutableStateFlow<ErrorData?> = MutableStateFlow(null)
     private val _isProcessing: MutableStateFlow<Boolean> = MutableStateFlow(false)

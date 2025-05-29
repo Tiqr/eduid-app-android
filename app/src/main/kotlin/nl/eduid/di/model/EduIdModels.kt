@@ -17,8 +17,22 @@ data class RequestEduIdAccount(
 
 @Parcelize
 @JsonClass(generateAdapter = true)
+data class VerifyOneTimeCodeRequest(
+    val hash: String,
+    val code: String,
+) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
 data class RequestPhoneCode(
     val phoneNumber: String,
+) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class CreateWithOneTimeCodeResponse(
+    val status: Int,
+    val hash: String
 ) : Parcelable
 
 @Parcelize

@@ -47,7 +47,8 @@ internal object RepositoryModule {
     @Singleton
     internal fun providesEduIdRepository(
         api: EduIdApi,
-    ) = EduIdRepository(api)
+        runtimeBehavior: RuntimeBehavior
+    ) = EduIdRepository(api, runtimeBehavior)
 
     @Provides
     @Singleton

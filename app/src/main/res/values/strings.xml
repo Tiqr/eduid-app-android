@@ -801,6 +801,12 @@
   <string name="ResponseErrors_EmailDomainForbidden_Title_COPY">"Email domain is forbidden"</string>
   <string name="ResponseErrors_EmailDomainForbidden_Description_COPY">"The email domain used in %1$s is not allowed."</string>
   <string name="ResponseErrors_GenerateControlCodeError_COPY">"Could not generate control code"</string>
+  <string name="ResponseErrors_SendOneTimeCodeError_COPY">"Could not send one-time code"</string>
+  <string name="ResponseErrors_VerifyOneTimeCodeError_COPY">"Could not verify one-time code"</string>
+  <string name="ResponseErrors_EmailCodeError_Title_COPY">"Code verification failed"</string>
+  <string name="ResponseErrors_EmailCodeError_Expired_COPY">"The code has expired"</string>
+  <string name="ResponseErrors_EmailCodeError_Incorrect_COPY">"The code is incorrect"</string>
+  <string name="ResponseErrors_EmailCodeError_RateLimited_COPY">"Too many attempts, please try again later"</string>
   <string name="ResponseErrors_Auth_Invalid_Title_COPY">"Authorization invalid"</string>
   <string name="ResponseErrors_Auth_Invalid_Description_COPY">"Did not receive valid authentication."</string>
   <string name="ResponseErrors_Auth_Failed_Title_COPY">"Authorization failed"</string>
@@ -896,6 +902,11 @@
   <string name="LoginCode_ErrorHeader_COPY">"Maximum attempts reached"</string>
   <string name="LoginCode_ErrorInfo_COPY">"You've reached the maximum attempts and your account is suspended for 15 minutes."</string>
   <string name="LoginCode_MailResend_COPY">"Check your inbox again. We've sent another email with a code"</string>
+  <string name="LogInWithEmailCode_CheckYourEmail_COPY">"Check your email"</string>
+  <string name="LogInWithEmailCode_EnterTheCodeSentTo_COPY">"Enter the code sent to &#37;1$s"</string>
+  <string name="LogInWithEmailCode_Problems_COPY">"Problems?"</string>
+  <string name="LogInWithEmailCode_ResendTheCode_COPY">"Resend the code"</string>
+  <string name="LogInWithEmailCode_CodeHasBeenResent_COPY">"The code has been resent to your email address."</string>
   <string name="Button_OK_COPY">"OK"</string>
   <string name="Button_Cancel_COPY">"Cancel"</string>
   <string name="Button_Retry_COPY">"Retry"</string>

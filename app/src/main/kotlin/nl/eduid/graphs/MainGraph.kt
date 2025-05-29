@@ -32,6 +32,8 @@ import nl.eduid.screens.editemail.EditEmailScreen
 import nl.eduid.screens.editemail.EditEmailViewModel
 import nl.eduid.screens.editname.EditNameFormScreen
 import nl.eduid.screens.editname.EditNameFormViewModel
+import nl.eduid.screens.emailcodeentry.EmailCodeEntryScreen
+import nl.eduid.screens.emailcodeentry.EmailCodeEntryViewModel
 import nl.eduid.screens.externalaccountlinkederror.ExternalAccountLinkedErrorScreen
 import nl.eduid.screens.firsttimedialog.FirstTimeDialogRoute
 import nl.eduid.screens.firsttimedialog.LinkAccountViewModel
@@ -223,9 +225,32 @@ fun MainGraph(
     composable(Graph.REQUEST_EDU_ID_FORM) {
         val viewModel = hiltViewModel<RequestEduIdFormViewModel>(it)
         RequestEduIdFormScreen(viewModel = viewModel,
-            goToEmailLinkSent = { email -> navController.goToEmailSent(email) },
+            goToNextScreen = { email, codeHash ->
+                if (viewModel.loginWithEmailCodeEnabled) {
+                    navController.navigate(EmailCodeEntry.routeWithArgs(email, codeHash!!))
+                } else {
+                    navController.goToEmailSent(email)
+                }
+            },
             onBackClicked = { navController.popBackStack() })
     }
+
+    composable(
+        route = EmailCodeEntry.routeWithArgs,
+        arguments = EmailCodeEntry.arguments
+    ) {
+        val viewModel = hiltViewModel<EmailCodeEntryViewModel>(it)
+        EmailCodeEntryScreen(
+            viewModel = viewModel,
+            onBackClicked = {
+                navController.popBackStack()
+            },
+            goToNextScreen = {
+                // TODO
+            }
+        )
+    }
+
 
     composable(//region MagicLink sent
         route = RequestEduIdLinkSent.routeWithArgs, arguments = RequestEduIdLinkSent.arguments
