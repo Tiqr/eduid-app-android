@@ -4,6 +4,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
+    alias(libs.plugins.compose.compiler)
 }
 
 if (JavaVersion.current() < JavaVersion.VERSION_17) {

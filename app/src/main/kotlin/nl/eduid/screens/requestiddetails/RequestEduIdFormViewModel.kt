@@ -18,6 +18,8 @@ import nl.eduid.di.model.FAIL_EMAIL_IN_USE
 import nl.eduid.di.model.RequestEduIdAccount
 import nl.eduid.di.repository.EduIdRepository
 import nl.eduid.env.EnvironmentProvider
+import nl.eduid.flags.FeatureFlag
+import nl.eduid.flags.RuntimeBehavior
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
@@ -27,7 +29,13 @@ import javax.inject.Inject
 class RequestEduIdFormViewModel @Inject constructor(
     private val eduIdRepo: EduIdRepository,
     private val environmentProvider: EnvironmentProvider,
+    runtimeBehavior: RuntimeBehavior
 ) : ViewModel() {
+
+    val loginWithEmailCodeEnabled = runtimeBehavior.isFeatureEnabled(FeatureFlag.LOG_IN_WITH_EMAIL_CODE)
+
+    var resendOneTimeCodeHash = mutableStateOf<String?>(null)
+
     var inputForm by mutableStateOf(InputForm())
         private set
 
@@ -54,7 +62,7 @@ class RequestEduIdFormViewModel @Inject constructor(
     fun requestNewEduIdAccount(context: Context) = viewModelScope.launch {
         val relyingPartClientId = getClientIdFromOAuthConfig(context.resources)
         inputForm = inputForm.copy(isProcessing = true, requestComplete = false)
-        val responseStatus = eduIdRepo.requestEnroll(
+        val result = eduIdRepo.requestEnroll(
             RequestEduIdAccount(
                 email = inputForm.email,
                 givenName = inputForm.firstName,
@@ -62,7 +70,8 @@ class RequestEduIdFormViewModel @Inject constructor(
                 relyingPartClientId = relyingPartClientId
             )
         )
-        val newData = when (responseStatus) {
+        resendOneTimeCodeHash.value = result.hash
+        val newData = when (result.code) {
             CREATE_EMAIL_SENT -> {
                 inputForm.copy(isProcessing = false, requestComplete = true)
             }

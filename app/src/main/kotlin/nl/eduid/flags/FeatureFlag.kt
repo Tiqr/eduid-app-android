@@ -21,5 +21,11 @@ enum class FeatureFlag(
         title = "Enable 'fallback method'",
         explanation = "When on, the users will have an extra option to validate their identity by going to a service point with their ID",
         defaultValue = false
+    ),
+    LOG_IN_WITH_EMAIL_CODE(
+        key = "log_in_with_email_code",
+        title = "Enable logging in with email code",
+        explanation = "When on, the users will not log in via magic links, but will receive a code in their email which they need to enter manually in the app",
+        defaultValue = false
     )
 }

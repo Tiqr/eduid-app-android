@@ -14,6 +14,7 @@ import nl.eduid.R
 import nl.eduid.di.model.ControlCode
 import nl.eduid.di.model.ControlCodeRequest
 import nl.eduid.graphs.VerifyIdentityWithIdInput
+import nl.eduid.graphs.WithChallenge
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import javax.inject.Inject
 

@@ -4,6 +4,7 @@ import nl.eduid.di.model.ConfirmDeactivationCode
 import nl.eduid.di.model.ConfirmPhoneCode
 import nl.eduid.di.model.ControlCode
 import nl.eduid.di.model.ControlCodeRequest
+import nl.eduid.di.model.CreateWithOneTimeCodeResponse
 import nl.eduid.di.model.DeleteServiceRequest
 import nl.eduid.di.model.DeleteTokensRequest
 import nl.eduid.di.model.EmailChangeRequest
@@ -19,6 +20,7 @@ import nl.eduid.di.model.UpdatePasswordRequest
 import nl.eduid.di.model.UrlResponse
 import nl.eduid.di.model.UserDetails
 import nl.eduid.di.model.VerifyIssuer
+import nl.eduid.di.model.VerifyOneTimeCodeRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -34,6 +36,21 @@ interface EduIdApi {
     @POST("/mobile/api/idp/create")
     suspend fun createNewEduIdAccount(
         @Body request: RequestEduIdAccount,
+    ): Response<Unit>
+
+    @POST("/mobile/api/idp/v2/create")
+    suspend fun createNewEduIdAccountWithOneTimeCode(
+        @Body request: RequestEduIdAccount,
+    ): Response<CreateWithOneTimeCodeResponse>
+
+    @GET("/mobile/api/idp/v2/resend_code_request")
+    suspend fun resendOneTimeCodeRequest(
+        @Query("hash") hash: String,
+    ): Response<Unit>
+
+    @PUT("/mobile/api/idp/v2/verify_code_request")
+    suspend fun verifyOneTimeCodeRequest(
+        @Body request: VerifyOneTimeCodeRequest,
     ): Response<Unit>
 
     @DELETE("/mobile/api/sp/delete")

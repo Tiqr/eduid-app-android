@@ -7,4 +7,5 @@ plugins {
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.google.gms.gradle) apply false
     alias(libs.plugins.kotlinx.serializer) apply false
+    alias(libs.plugins.compose.compiler) apply false
 }

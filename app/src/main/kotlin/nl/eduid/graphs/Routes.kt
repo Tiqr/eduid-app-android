@@ -8,6 +8,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapter
 import nl.eduid.di.model.ControlCode
 import nl.eduid.di.model.SelfAssertedName
+import nl.eduid.graphs.VerifyIdentityRoute.isLinkedAccount
 import org.tiqr.data.model.AuthenticationChallenge
 import timber.log.Timber
 import java.io.UnsupportedEncodingException
@@ -341,6 +342,28 @@ sealed class EditName(val route: String) {
             "${route}/${Uri.encode(selfAssertedName.chosenName ?: "")}/${Uri.encode(selfAssertedName.familyName ?: "")}/${canEditFamilyName}"
     }
 }
+
+
+object EmailCodeEntry {
+    private const val route = "email_code_entry"
+    const val emailArg = "email"
+    const val codeHashArg = "code_hash"
+    const val routeWithArgs = "$route/{$emailArg}/{$codeHashArg}"
+
+    val arguments = listOf(navArgument(emailArg) {
+        type = NavType.StringType
+        nullable = false
+        defaultValue = ""
+    }, navArgument(codeHashArg) {
+        type = NavType.StringType
+        nullable = false
+        defaultValue = ""
+    })
+
+    fun routeWithArgs(email: String, codeHash: String) = "$route/$email/$codeHash"
+}
+
+
 
 object VerifyIdentityRoute {
     private const val route = "verify_identity"
