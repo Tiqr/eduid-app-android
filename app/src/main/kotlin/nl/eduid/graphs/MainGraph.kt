@@ -208,10 +208,11 @@ fun MainGraph(
 
     //region OAuth-Conditional
     composable(
-        route = OAuth.route,
+        route = OAuth.routeWithArgs,
+        arguments = OAuth.arguments
     ) { entry ->
         val viewModel = hiltViewModel<OAuthViewModel>(entry)
-        ExampleAnimation {
+        FadeAnimation {
             OAuthScreen(viewModel = viewModel) {
                 navController.popBackStack()
             }
@@ -243,11 +244,13 @@ fun MainGraph(
         EmailCodeEntryScreen(
             viewModel = viewModel,
             onBackClicked = {
-                navController.popBackStack()
+                // Registration flow is cancelled, go back to the home page
+                navController.navigate(Graph.HOME_PAGE) {
+                    popUpTo(Graph.HOME_PAGE) {
+                        inclusive = true
+                    }
+                }
             },
-            goToNextScreen = {
-                // TODO
-            }
         )
     }
 

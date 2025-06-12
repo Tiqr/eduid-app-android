@@ -12,6 +12,7 @@ import nl.eduid.di.model.EnrollResponse
 import nl.eduid.di.model.IdpScoping
 import nl.eduid.di.model.InstitutionNameResponse
 import nl.eduid.di.model.LinkedAccountUpdateRequest
+import nl.eduid.di.model.OneTimeCodeResponse
 import nl.eduid.di.model.RequestEduIdAccount
 import nl.eduid.di.model.RequestPhoneCode
 import nl.eduid.di.model.SelfAssertedName
@@ -51,7 +52,7 @@ interface EduIdApi {
     @PUT("/mobile/api/idp/v2/verify_code_request")
     suspend fun verifyOneTimeCodeRequest(
         @Body request: VerifyOneTimeCodeRequest,
-    ): Response<Unit>
+    ): Response<OneTimeCodeResponse>
 
     @DELETE("/mobile/api/sp/delete")
     suspend fun deleteAccount(): Response<Unit>

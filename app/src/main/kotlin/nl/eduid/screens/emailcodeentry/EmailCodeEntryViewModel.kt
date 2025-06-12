@@ -1,11 +1,14 @@
 package nl.eduid.screens.emailcodeentry
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,6 +18,7 @@ import nl.eduid.di.repository.EduIdRepository
 import nl.eduid.graphs.EmailCodeEntry
 import timber.log.Timber
 import javax.inject.Inject
+import androidx.core.net.toUri
 
 
 @HiltViewModel
@@ -32,15 +36,17 @@ class EmailCodeEntryViewModel @Inject constructor(
     fun checkEmailCode(code: String) {
         uiState = uiState.copy(isLoading = true)
         viewModelScope.launch(Dispatchers.IO) {
-            val result = eduIdRepository.verifyOneTimeCode(codeHash, code)
+            val codeAndResponse = eduIdRepository.verifyOneTimeCode(codeHash, code)
+            val code = codeAndResponse.first
+            val response = codeAndResponse.second
             val handledCodes = setOf(201, 400, 401, 403)
             uiState = uiState.copy(
                 isLoading = false,
-                isCodeCorrect = result == 201,
-                isCodeExpired = result == 400,
-                isCodeIncorrect = result == 401,
-                isRateLimited = result == 403,
-                errorData = if (result !in handledCodes) {
+                isCodeExpired = code == 400,
+                isCodeIncorrect = code == 401,
+                isRateLimited = code == 403,
+                correctCodeLaunchIntent = response?.url?.let { createLaunchIntent(it) },
+                errorData = if (code !in handledCodes) {
                     ErrorData(
                         titleId = R.string.ResponseErrors_GeneralRequestError_COPY,
                         messageId = R.string.ResponseErrors_VerifyOneTimeCodeError_COPY
@@ -78,14 +84,31 @@ class EmailCodeEntryViewModel @Inject constructor(
             errorData = null
         )
     }
+
+    fun didShowResentEmailToast() {
+        uiState = uiState.copy(didResendEmail = false)
+    }
+
+    fun couldNotParseCorrectCodeUrl() {
+        uiState = uiState.copy(errorData = ErrorData(
+            titleId = R.string.ResponseErrors_GeneralRequestError_COPY,
+            messageId = R.string.ResponseErrors_VerifyOneTimeCodeError_COPY
+        ))
+    }
 }
 
 data class UiState(
     val isLoading: Boolean = false,
     val errorData: ErrorData? = null,
     val isCodeIncorrect: Boolean = false,
-    val isCodeCorrect: Boolean = false,
     val isRateLimited: Boolean = false,
     val isCodeExpired: Boolean = false,
-    val didResendEmail: Boolean = false
+    val didResendEmail: Boolean = false,
+    val correctCodeLaunchIntent: Intent? = null
 )
+
+private fun createLaunchIntent(url: String): Intent {
+    val intent = Intent(Intent.ACTION_VIEW)
+    intent.data = url.toUri()
+    return intent
+}

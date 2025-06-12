@@ -1,6 +1,8 @@
 package nl.eduid.screens.emailcodeentry
 
+import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -53,6 +55,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.android.awaitFrame
 import nl.eduid.ErrorData
 import nl.eduid.R
+import nl.eduid.di.assist.AuthenticationAssistant
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.annotatedStringWithBoldParts
@@ -60,30 +63,42 @@ import nl.eduid.ui.theme.ColorSupport_Blue_400
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextGrey
 import nl.eduid.ui.theme.outlinedTextColors
+import timber.log.Timber
+import androidx.core.net.toUri
+import nl.eduid.screens.firsttimedialog.LinkAccountContract
 
 @Composable
 fun EmailCodeEntryScreen(
     viewModel: EmailCodeEntryViewModel,
     onBackClicked: () -> Unit,
-    goToNextScreen: () -> Unit
 ) = EduIdTopAppBar(
     onBackClicked = onBackClicked
 ) {
     val context = LocalContext.current
-    val didResentEmailText = stringResource(R.string.LogInWithEmailCode_CodeHasBeenResent_COPY)
-    LaunchedEffect(viewModel.uiState.isCodeCorrect) {
-        if (viewModel.uiState.isCodeCorrect) {
-            goToNextScreen()
+    var wasRegistrationLinkOpened by rememberSaveable { mutableStateOf(false) }
+    val launcher = rememberLauncherForActivityResult(contract = RegistrationUrlContract(), onResult = { _ ->
+        if (wasRegistrationLinkOpened) {
+            // This part is called when the user came back to the app without linking anything
+            // (otherwise we would go via a deeplink to the success / error screen).
+            // In this case go back to home.
+            onBackClicked()
+        }
+    })
+    LaunchedEffect(viewModel.uiState.correctCodeLaunchIntent) {
+        viewModel.uiState.correctCodeLaunchIntent?.let { intent ->
+            wasRegistrationLinkOpened = true
+            launcher.launch(intent)
         }
     }
+    val didResendEmailText = stringResource(R.string.LogInWithEmailCode_CodeHasBeenResent_COPY)
     LaunchedEffect(viewModel.uiState.didResendEmail) {
         if (viewModel.uiState.didResendEmail) {
             Toast.makeText(
                 context,
-                didResentEmailText,
+                didResendEmailText,
                 Toast.LENGTH_LONG
             ).show()
-            viewModel.uiState.copy(didResendEmail = false)
+            viewModel.didShowResentEmailToast()
         }
     }
     EmailCodeEntryScreenContent(
@@ -132,30 +147,35 @@ fun EmailCodeEntryScreenContent(
                 title = stringResource(R.string.ResponseErrors_EmailCodeError_Title_COPY)
                 message = stringResource(R.string.ResponseErrors_EmailCodeError_Incorrect_COPY)
             }
+
             isCodeExpired -> {
                 title = stringResource(R.string.ResponseErrors_EmailCodeError_Title_COPY)
                 message = stringResource(R.string.ResponseErrors_EmailCodeError_Expired_COPY)
             }
+
             isRateLimited -> {
                 title = stringResource(R.string.ResponseErrors_EmailCodeError_Title_COPY)
                 message = stringResource(R.string.ResponseErrors_EmailCodeError_RateLimited_COPY)
             }
+
             errorData != null -> {
                 val context = LocalContext.current
                 title = errorData.title(context)
                 message = errorData.message(context)
             }
+
             else -> {
                 throw RuntimeException("Unhandled error state in EmailCodeEntryScreenContent")
             }
         }
         AlertDialogWithSingleButton(
-            title = title ,
+            title = title,
             explanation = message,
             buttonLabel = stringResource(R.string.Generic_RequestError_CloseButton_COPY),
             onDismiss = {
                 dismissError()
-                if (isRateLimited) {
+                if (isRateLimited || isCodeExpired) {
+                    // Dead end
                     onBackClicked()
                 }
                 if (isCodeIncorrect) {
