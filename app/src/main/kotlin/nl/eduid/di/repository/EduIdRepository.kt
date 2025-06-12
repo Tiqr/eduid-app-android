@@ -45,9 +45,9 @@ class EduIdRepository(
                 code = code
             )
         )
-        response.code()
+        Pair(response.code(), response.body())
     } catch (ex: Exception) {
         Timber.w(ex, "Failed to verify one-time code")
-        400
+        Pair(400, null)
     }
 }

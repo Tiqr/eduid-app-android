@@ -30,6 +30,12 @@ data class RequestPhoneCode(
 
 @Parcelize
 @JsonClass(generateAdapter = true)
+data class OneTimeCodeResponse(
+    val url: String?,
+) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
 data class CreateWithOneTimeCodeResponse(
     val status: Int,
     val hash: String

@@ -10,7 +10,7 @@ import androidx.compose.runtime.remember
 
 @ExperimentalAnimationApi
 @Composable
-fun ExampleAnimation(content: @Composable () -> Unit) {
+fun FadeAnimation(content: @Composable () -> Unit) {
     AnimatedVisibility(
         visibleState = remember { MutableTransitionState(false) }
             .apply { targetState = true },

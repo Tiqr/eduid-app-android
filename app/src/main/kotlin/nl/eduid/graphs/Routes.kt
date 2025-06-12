@@ -8,6 +8,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapter
 import nl.eduid.di.model.ControlCode
 import nl.eduid.di.model.SelfAssertedName
+import nl.eduid.graphs.AccountLinked.isRegistrationFlowArg
 import nl.eduid.graphs.VerifyIdentityRoute.isLinkedAccount
 import org.tiqr.data.model.AuthenticationChallenge
 import timber.log.Timber
@@ -34,6 +35,20 @@ object Graph {
 
 object OAuth {
     const val route = "oauth_mobile_eduid"
+    const val overrideUrlArg = "override_url"
+    const val routeWithArgs = "${route}?overrideUrl={$overrideUrlArg}"
+    val arguments = listOf(navArgument(overrideUrlArg) {
+        type = NavType.StringType
+        nullable = true
+    })
+
+    fun routeWithOverrideUrl(overrideUrl: String?): String {
+        return if (overrideUrl.isNullOrEmpty()) {
+            route
+        } else {
+            "$route?overrideUrl=${Uri.encode(overrideUrl)}"
+        }
+    }
 }
 
 object RequestEduIdCreated {
