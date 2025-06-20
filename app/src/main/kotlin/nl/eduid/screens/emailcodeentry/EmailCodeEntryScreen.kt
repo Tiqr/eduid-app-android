@@ -1,8 +1,8 @@
 package nl.eduid.screens.emailcodeentry
 
-import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -27,9 +27,9 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -53,9 +53,10 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.android.awaitFrame
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.R
-import nl.eduid.di.assist.AuthenticationAssistant
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.annotatedStringWithBoldParts
@@ -63,9 +64,6 @@ import nl.eduid.ui.theme.ColorSupport_Blue_400
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.TextGrey
 import nl.eduid.ui.theme.outlinedTextColors
-import timber.log.Timber
-import androidx.core.net.toUri
-import nl.eduid.screens.firsttimedialog.LinkAccountContract
 
 @Composable
 fun EmailCodeEntryScreen(
@@ -138,6 +136,17 @@ fun EmailCodeEntryScreenContent(
 ) {
     var codeValue by rememberSaveable { mutableStateOf("") }
     var shouldShowKeyboard by remember { mutableStateOf(true) }
+
+    var showResendCodeOption by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        coroutineScope.launch {
+            delay(30_000) // 30 seconds
+            showResendCodeOption = true
+        }
+    }
+
 
     if (isCodeIncorrect || isCodeExpired || isRateLimited || errorData != null) {
         val title: String
@@ -231,34 +240,36 @@ fun EmailCodeEntryScreenContent(
         Spacer(
             modifier = Modifier.height(24.dp)
         )
-        val resendEmailPart1 = stringResource(R.string.LogInWithEmailCode_Problems_COPY)
-        val resendEmailPart2 = stringResource(R.string.LogInWithEmailCode_ResendTheCode_COPY)
-        val resendEmailString = buildAnnotatedString {
-            append(resendEmailPart1)
-            append(" ")
-            withLink(
-                LinkAnnotation.Clickable(
-                    "resend_email", linkInteractionListener = {
-                        if (!isCheckingCode) {
-                            resendCode()
-                        }
-                    }, styles = TextLinkStyles(
-                        style = SpanStyle(
-                            color = if (isCheckingCode) TextGrey else ColorSupport_Blue_400,
-                            textDecoration = TextDecoration.Underline
+        AnimatedVisibility(showResendCodeOption) {
+            val resendEmailPart1 = stringResource(R.string.LogInWithEmailCode_Problems_COPY)
+            val resendEmailPart2 = stringResource(R.string.LogInWithEmailCode_ResendTheCode_COPY)
+            val resendEmailString = buildAnnotatedString {
+                append(resendEmailPart1)
+                append(" ")
+                withLink(
+                    LinkAnnotation.Clickable(
+                        "resend_email", linkInteractionListener = {
+                            if (!isCheckingCode) {
+                                resendCode()
+                            }
+                        }, styles = TextLinkStyles(
+                            style = SpanStyle(
+                                color = if (isCheckingCode) TextGrey else ColorSupport_Blue_400,
+                                textDecoration = TextDecoration.Underline
+                            )
                         )
                     )
-                )
-            ) {
-                append(resendEmailPart2)
+                ) {
+                    append(resendEmailPart2)
+                }
             }
+            Text(
+                textAlign = TextAlign.Center,
+                text = resendEmailString,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
-        Text(
-            textAlign = TextAlign.Center,
-            text = resendEmailString,
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.fillMaxWidth()
-        )
         Spacer(
             modifier = Modifier.fillMaxHeight()
         )
