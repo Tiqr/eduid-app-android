@@ -3,7 +3,7 @@ android-sdk-compile = "35"
 android-sdk-target = "35"
 android-sdk-min = "24"
 
-androidGradlePlugin = "8.7.3"
+androidGradlePlugin = "8.11.0"
 coreLibraryDesugaring = "2.1.5"
 hilt = "2.56"
 kotlin = "2.1.20"
