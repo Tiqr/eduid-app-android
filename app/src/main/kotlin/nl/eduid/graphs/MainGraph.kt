@@ -122,6 +122,7 @@ fun MainGraph(
         val isEnrolment = entry.arguments?.getBoolean(Account.ScanQR.isEnrolment, false) ?: false
         ScanScreen(viewModel = viewModel, isEnrolment = isEnrolment, goBack = { navController.popBackStack() }, goToNext = { challenge ->
             val encodedChallenge = viewModel.encodeChallenge(challenge)
+            viewModel.setAsQrEnrollment(challenge is EnrollmentChallenge)
             if (challenge is EnrollmentChallenge) {
                 navController.goToWithPopCurrent(
                     "${Account.EnrollPinSetup.route}/$encodedChallenge"

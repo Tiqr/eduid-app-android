@@ -10,6 +10,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import nl.eduid.BuildConfig
+import nl.eduid.CheckRecovery
 import nl.eduid.di.EduIdScope
 import nl.eduid.di.api.EduIdApi
 import nl.eduid.di.assist.AuthenticationAssistant
@@ -49,6 +50,10 @@ internal object RepositoryModule {
         api: EduIdApi,
         runtimeBehavior: RuntimeBehavior
     ) = EduIdRepository(api, runtimeBehavior)
+
+    @Provides
+    @Singleton
+    internal fun provideCheckRecovery() = CheckRecovery()
 
     @Provides
     @Singleton

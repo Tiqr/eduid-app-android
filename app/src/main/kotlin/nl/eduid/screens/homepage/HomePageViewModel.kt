@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import nl.eduid.BaseViewModel
+import nl.eduid.CheckRecovery
 import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.di.repository.StorageRepository
@@ -40,6 +41,7 @@ class HomePageViewModel @Inject constructor(
     private val enroll: EnrollmentRepository,
     private val auth: AuthenticationRepository,
     private val repository: StorageRepository,
+    private val checkRecovery: CheckRecovery,
     private val personalRepository: PersonalInfoRepository,
     private val identityRepository: IdentityRepository,
 ) : BaseViewModel(moshi) {
@@ -92,6 +94,7 @@ class HomePageViewModel @Inject constructor(
 
     fun startEnrollmentAfterAccountCreation() = viewModelScope.launch {
         uiState = uiState.copy(inProgress = true)
+        checkRecovery.isQrEnrollment = false
         val requireAuth = repository.isAuthorized.firstOrNull()
         if (requireAuth == false) {
             uiState = uiState.copy(inProgress = false, promptForAuth = Unit)
