@@ -4,6 +4,7 @@ import android.content.res.Resources
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import nl.eduid.BaseViewModel
+import nl.eduid.CheckRecovery
 import nl.eduid.R
 import org.tiqr.data.model.ChallengeParseFailure
 import org.tiqr.data.model.ChallengeParseResult
@@ -25,6 +26,7 @@ class StatelessScanViewModel @Inject constructor(
     private val resources: Resources,
     private val enroll: EnrollmentRepository,
     private val auth: AuthenticationRepository,
+    private val checkRecovery: CheckRecovery,
     moshi: Moshi
 ) : BaseViewModel(moshi) {
 
@@ -39,4 +41,8 @@ class StatelessScanViewModel @Inject constructor(
                 )
             )
         }
+
+    fun setAsQrEnrollment(isQrEnrollment: Boolean) {
+        checkRecovery.isQrEnrollment = isQrEnrollment
+    }
 }

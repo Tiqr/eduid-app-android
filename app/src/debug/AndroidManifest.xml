@@ -6,8 +6,9 @@
     <application
         android:name=".EduIdApplication"
         android:allowBackup="false"
+        android:networkSecurityConfig="@xml/network_security_config"
         tools:ignore="DataExtractionRules"
-        tools:replace="android:allowBackup, android:name">
+        tools:replace="android:allowBackup, android:name, android:networkSecurityConfig">
         <activity
             android:name=".TestSettingsActivity"
             android:exported="true"
@@ -15,7 +16,6 @@
             android:label="@string/title_activity_test_settings"
             android:launchMode="singleInstance"
             android:logo="@drawable/settings_icon"
-            android:networkSecurityConfig="@xml/network_security_config"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

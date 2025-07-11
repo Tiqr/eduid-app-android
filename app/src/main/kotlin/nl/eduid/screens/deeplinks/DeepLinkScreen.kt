@@ -55,6 +55,7 @@ fun DeepLinkScreen(
             if (parseResult is ChallengeParseResult.Failure) {
                 errorData = ErrorData(parseResult.failure.title, parseResult.failure.message)
             } else if (parseResult is ChallengeParseResult.Success) {
+                viewModel.checkIfQrEnrolment(parseResult.value)
                 currentGoToNext(parseResult.value)
             }
         }
