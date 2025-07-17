@@ -164,7 +164,7 @@
   <string name="OneTimePassword_GenerateError_Title_COPY">"Eenmalig wachtwoord aanmaken is mislukt"</string>
   <string name="OneTimePassword_GenerateError_Description_COPY">"Er is iets misgegaan bij het aanmaken van je eenmalige wachtwoord."</string>
   <string name="OneTimePassword_Title_COPY">"Je apparaat lijkt offline te zijn"</string>
-  <string name="OneTimePassword_Description_COPY">"Maak je geen zorgen! Klik op de QR-code op de website. Je wordt gevraagd de volgende eenmalige gegevens in te voeren:"</string>
+  <string name="OneTimePassword_Description_COPY">"Gelukkig kan je ook op een andere manier inloggen:\n  1. Druk op ‘Code invoeren’ onder de QR-code op je computer.\n  2. Voer daarna deze code in:"</string>
   <string name="OneTimePassword_YourId_COPY">"Je ID:"</string>
   <string name="OneTimePassword_OneTimePassword_COPY">"Eénmalige code:"</string>
   <string name="OneTimePassword_PinNotVerified_Title_COPY">"Opmerking: Je PIN is nog niet geverifieerd."</string>
