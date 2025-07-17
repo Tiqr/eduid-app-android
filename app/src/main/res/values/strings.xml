@@ -503,7 +503,7 @@
   <string name="LinkFromInstitution_InstitutionDomainNameWarning2_COPY">"We recommend using your personal email address for eduID."</string>
   <string name="LinkFromInstitution_AllowedDomainNamesError_COPY">"Domain name %1$s not allowed."</string>
   <string name="LinkFromInstitution_AllowedDomainNamesError2_COPY">"eduID is restricted to be used only for allowed domains."</string>
-  <string name="LinkFromInstitution_AgreeWithTerms_COPY">"&lt;span&gt;I agree with &lt;a tabindex='-1' href='https://eduid.nl/terms-of-use/' target='_blank'&gt;the terms of service&lt;/a&gt; and I've read &lt;a tabindex='-1' href='https://eduid.nl/privacy_policy/' target='_blank'&gt;the privacy policy&lt;/a&gt;.&lt;/span&gt;"</string>
+  <string name="LinkFromInstitution_AgreeWithTerms_COPY">"&lt;span&gt;I agree with &lt;a tabindex='-1' href='https://eduid.nl/terms-of-use/' target='_blank'&gt;the terms of service&lt;/a&gt; and I've read &lt;a tabindex='-1' href='https://eduid.nl/privacy' target='_blank'&gt;the privacy policy&lt;/a&gt;.&lt;/span&gt;"</string>
   <string name="LinkFromInstitution_RequestEduIdButton_COPY">"Make an eduID"</string>
   <string name="PollFromInstitution_Header_COPY">"We will send you an email"</string>
   <string name="PollFromInstitution_Awaiting_COPY">"Waiting for you to click the link…"</string>
@@ -572,7 +572,7 @@
   <string name="Login_AlreadyGuestAccount_COPY">"Already have an eduID?"</string>
   <string name="Login_UsePasswordLink_COPY">"Type a password anyway"</string>
   <string name="Login_UseWebAuthnLink_COPY">"Or use a passkey"</string>
-  <string name="Login_AgreeWithTerms_COPY">"&lt;span&gt;I agree with &lt;a tabindex='-1' href='https://eduid.nl/terms-of-use/' target='_blank'&gt;the terms of service&lt;/a&gt; and I've read&lt;a tabindex='-1' href='https://eduid.nl/privacy_policy/' target='_blank'&gt;the privacy policy&lt;/a&gt;.&lt;/span&gt;"</string>
+  <string name="Login_AgreeWithTerms_COPY">"&lt;span&gt;I agree with &lt;a tabindex='-1' href='https://eduid.nl/terms-of-use/' target='_blank'&gt;the terms of service&lt;/a&gt; and I've read&lt;a tabindex='-1' href='https://eduid.nl/privacy' target='_blank'&gt;the privacy policy&lt;/a&gt;.&lt;/span&gt;"</string>
   <string name="Login_Next_COPY">"Next"</string>
   <string name="Login_UseOtherAccount_COPY">"Use another account"</string>
   <string name="Login_NoAppAccess_COPY">"No access to your app?"</string>
