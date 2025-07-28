@@ -18,7 +18,7 @@ data class RequestEduIdAccount(
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class VerifyOneTimeCodeRequest(
-    val hash: String,
+    val hash: String?,
     val code: String,
 ) : Parcelable
 
@@ -32,6 +32,7 @@ data class RequestPhoneCode(
 @JsonClass(generateAdapter = true)
 data class OneTimeCodeResponse(
     val url: String?,
+    val hash: String?,
 ) : Parcelable
 
 @Parcelize
@@ -134,6 +135,13 @@ data class LinkedAccountUpdateRequest(
     val external: Boolean,
     val idpScoping: String?
 ) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class GenerateEmailCodeRequest(
+    val email: String
+) : Parcelable
+
 
 @Parcelize
 @JsonClass(generateAdapter = true)

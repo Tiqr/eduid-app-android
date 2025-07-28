@@ -10,6 +10,7 @@ import nl.eduid.di.model.ControlCode
 import nl.eduid.di.model.SelfAssertedName
 import nl.eduid.graphs.AccountLinked.isRegistrationFlowArg
 import nl.eduid.graphs.VerifyIdentityRoute.isLinkedAccount
+import nl.eduid.screens.emailcodeentry.EmailCodeEntryViewModel
 import org.tiqr.data.model.AuthenticationChallenge
 import timber.log.Timber
 import java.io.UnsupportedEncodingException
@@ -363,7 +364,8 @@ object EmailCodeEntry {
     private const val route = "email_code_entry"
     const val emailArg = "email"
     const val codeHashArg = "code_hash"
-    const val routeWithArgs = "$route/{$emailArg}/{$codeHashArg}"
+    const val codeContextArg = "code_context"
+    const val routeWithArgs = "$route/{$codeContextArg}/{$emailArg}?{$codeHashArg}"
 
     val arguments = listOf(navArgument(emailArg) {
         type = NavType.StringType
@@ -371,11 +373,14 @@ object EmailCodeEntry {
         defaultValue = ""
     }, navArgument(codeHashArg) {
         type = NavType.StringType
+        nullable = true
+    }, navArgument(codeContextArg) {
+        type = NavType.StringType
         nullable = false
-        defaultValue = ""
+        defaultValue = EmailCodeEntryViewModel.CodeContext.Registration.name
     })
 
-    fun routeWithArgs(email: String, codeHash: String) = "$route/$email/$codeHash"
+    fun routeWithArgs(email: String, codeHash: String?, codeContext: EmailCodeEntryViewModel.CodeContext) = "$route/${codeContext.name}/$email?$codeHash"
 }
 
 

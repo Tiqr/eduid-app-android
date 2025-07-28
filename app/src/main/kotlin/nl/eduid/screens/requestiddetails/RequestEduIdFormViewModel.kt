@@ -28,11 +28,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RequestEduIdFormViewModel @Inject constructor(
     private val eduIdRepo: EduIdRepository,
-    private val environmentProvider: EnvironmentProvider,
-    runtimeBehavior: RuntimeBehavior
+    private val environmentProvider: EnvironmentProvider
 ) : ViewModel() {
-
-    val loginWithEmailCodeEnabled = runtimeBehavior.isFeatureEnabled(FeatureFlag.LOG_IN_WITH_EMAIL_CODE)
 
     var resendOneTimeCodeHash = mutableStateOf<String?>(null)
 

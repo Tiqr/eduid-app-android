@@ -27,8 +27,18 @@ class EmailCodeEntryViewModel @Inject constructor(
     private val eduIdRepository: EduIdRepository,
 ) : ViewModel() {
 
+    companion object {
+        const val KEY_CODE_RESULT_HASH = "code_result_hash"
+    }
+
+    enum class CodeContext {
+        Registration, ChangeEmail, ChangePassword
+    }
+
     val userEmail: String = savedStateHandle.get<String>(EmailCodeEntry.emailArg) ?: ""
     val codeHash: String = savedStateHandle.get<String>(EmailCodeEntry.codeHashArg) ?: ""
+    val codeContext: CodeContext =
+        CodeContext.valueOf(savedStateHandle.get<String>(EmailCodeEntry.codeContextArg) ?: CodeContext.Registration.name)
 
     var uiState by mutableStateOf(UiState())
         private set
@@ -36,16 +46,28 @@ class EmailCodeEntryViewModel @Inject constructor(
     fun checkEmailCode(code: String) {
         uiState = uiState.copy(isLoading = true)
         viewModelScope.launch(Dispatchers.IO) {
-            val codeAndResponse = eduIdRepository.verifyOneTimeCode(codeHash, code)
+            val codeAndResponse = when (codeContext) {
+                CodeContext.Registration -> {
+                    eduIdRepository.verifyOneTimeCode(codeHash, code)
+                }
+                CodeContext.ChangeEmail -> {
+                    eduIdRepository.verifyEmailCode(code)
+                }
+                else -> {
+                    eduIdRepository.verifyPasswordCode(code)
+                }
+            }
             val code = codeAndResponse.first
             val response = codeAndResponse.second
-            val handledCodes = setOf(201, 400, 401, 403)
+            val handledCodes = setOf(200, 201, 400, 401, 403)
+            val goBackWithHash = response?.hash
             uiState = uiState.copy(
                 isLoading = false,
                 isCodeExpired = code == 400,
                 isCodeIncorrect = code == 401,
                 isRateLimited = code == 403,
-                correctCodeLaunchIntent = response?.url?.let { createLaunchIntent(it) },
+                correctCodeLaunchIntent = if (codeContext == CodeContext.Registration) response?.url?.let { createLaunchIntent(it) } else null,
+                codeIsCorrectContinueWithHash = goBackWithHash,
                 errorData = if (code !in handledCodes) {
                     ErrorData(
                         titleId = R.string.ResponseErrors_GeneralRequestError_COPY,
@@ -88,13 +110,6 @@ class EmailCodeEntryViewModel @Inject constructor(
     fun didShowResentEmailToast() {
         uiState = uiState.copy(didResendEmail = false)
     }
-
-    fun couldNotParseCorrectCodeUrl() {
-        uiState = uiState.copy(errorData = ErrorData(
-            titleId = R.string.ResponseErrors_GeneralRequestError_COPY,
-            messageId = R.string.ResponseErrors_VerifyOneTimeCodeError_COPY
-        ))
-    }
 }
 
 data class UiState(
@@ -104,7 +119,8 @@ data class UiState(
     val isRateLimited: Boolean = false,
     val isCodeExpired: Boolean = false,
     val didResendEmail: Boolean = false,
-    val correctCodeLaunchIntent: Intent? = null
+    val correctCodeLaunchIntent: Intent? = null,
+    val codeIsCorrectContinueWithHash: String? = null
 )
 
 private fun createLaunchIntent(url: String): Intent {

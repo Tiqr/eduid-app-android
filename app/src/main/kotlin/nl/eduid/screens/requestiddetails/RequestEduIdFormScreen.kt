@@ -60,7 +60,7 @@ import nl.eduid.ui.theme.outlinedTextColors
 
 @Composable
 fun RequestEduIdFormScreen(
-    goToNextScreen: (emailAddress: String, codeHash: String?) -> Unit,
+    goToNextScreen: (emailAddress: String, codeHash: String) -> Unit,
     onBackClicked: () -> Unit,
     viewModel: RequestEduIdFormViewModel,
 ) = EduIdTopAppBar(
@@ -80,7 +80,7 @@ fun RequestEduIdFormScreen(
         val currentRequest by rememberUpdatedState(goToNextScreen)
         LaunchedEffect(viewModel) {
             processingRequest = false
-            currentRequest(viewModel.inputForm.email, viewModel.resendOneTimeCodeHash.value)
+            currentRequest(viewModel.inputForm.email, viewModel.resendOneTimeCodeHash.value!!)
         }
     }
     RequestEduIdFormContent(inputFormData = viewModel.inputForm,
