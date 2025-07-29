@@ -61,6 +61,7 @@ import nl.eduid.R
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
+import nl.eduid.ui.theme.ColorAlertRed
 import nl.eduid.ui.theme.ColorMain_Green_400
 import nl.eduid.ui.theme.ColorScale_Gray_Black
 import nl.eduid.ui.theme.EduidAppAndroidTheme
@@ -285,6 +286,7 @@ fun ResetPasswordConfirmScreenContent(
             Spacer(Modifier.height(12.dp))
             PrimaryButton(
                 modifier = Modifier.fillMaxWidth(),
+                buttonTextColor = ColorAlertRed,
                 text = stringResource(R.string.ChangePassword_Button_Delete_COPY),
                 enabled = !inProgress,
                 onClick = onDeletePasswordClicked,

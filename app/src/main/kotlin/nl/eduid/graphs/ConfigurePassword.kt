@@ -16,6 +16,7 @@ import androidx.navigation.navDeepLink
 import nl.eduid.graphs.ConfigurePassword.Form
 import nl.eduid.graphs.ConfigurePassword.Request
 import nl.eduid.screens.emailcodeentry.EmailCodeEntryViewModel
+import nl.eduid.screens.resetpassword.Password
 import nl.eduid.screens.resetpassword.ResetPasswordScreen
 import nl.eduid.screens.resetpassword.ResetPasswordViewModel
 import nl.eduid.screens.resetpasswordconfirm.ResetPasswordConfirmScreen
@@ -37,7 +38,7 @@ fun NavGraphBuilder.configurePasswordFlow(
             LaunchedEffect(savedStateHandle) {
                 savedStateHandle.get<String>(EmailCodeEntryViewModel.KEY_CODE_RESULT_HASH)?.let { hash ->
                     navController.navigate(
-                        Form.routeWithArgs(hash)
+                        Form.routeWithArgs(viewModel.uiState.password,hash)
                     )
                 }
             }
@@ -48,7 +49,11 @@ fun NavGraphBuilder.configurePasswordFlow(
                         EmailCodeEntry.routeWithArgs(
                             email = email,
                             codeHash = null,
-                            codeContext = EmailCodeEntryViewModel.CodeContext.ChangePassword
+                            codeContext = if (viewModel.uiState.password == Password.Change) {
+                                EmailCodeEntryViewModel.CodeContext.ChangePassword
+                            } else {
+                                EmailCodeEntryViewModel.CodeContext.AddPassword
+                            },
                         )
                     )
                 },
@@ -73,7 +78,12 @@ fun NavGraphBuilder.configurePasswordFlow(
                     )
                 }
             val fullUri = deepLinkIntent?.data ?: Uri.EMPTY
-            val isAddPassword = fullUri.path?.contains("add-password") ?: false
+            val typeArg = entry.savedStateHandle.get<String>(Form.typeArg)?.let { Password.valueOf(it) }
+            val isAddPassword = if (typeArg == null) {
+                fullUri.path?.contains("add-password") ?: false
+            }  else {
+                typeArg == Password.Add
+            }
             val viewModel = hiltViewModel<ResetPasswordConfirmViewModel>(entry)
             ResetPasswordConfirmScreen(
                 viewModel = viewModel,
@@ -90,11 +100,17 @@ sealed class ConfigurePassword(val route: String) {
     data object Request : ConfigurePassword("request_hash_for_password_config")
     data object Form : ConfigurePassword("form_configure_password") {
         const val passwordHashArg = "h"
-        val routeWithArgs = "${route}?$passwordHashArg={$passwordHashArg}"
+        const val typeArg = "type"
+
+        val routeWithArgs = "${route}?$passwordHashArg={$passwordHashArg}&$typeArg={$typeArg}"
         val arguments = listOf(navArgument(passwordHashArg) {
             type = NavType.StringType
             nullable = false
             defaultValue = ""
+        }, navArgument(typeArg) {
+            type = NavType.StringType
+            nullable = true
+            defaultValue = Password.Change.name
         })
 
         fun getResetPasswordDeeplink(baseUrl: String) =
@@ -103,8 +119,8 @@ sealed class ConfigurePassword(val route: String) {
         fun getAddPasswordDeeplink(baseUrl: String) =
             "$baseUrl/client/mobile/add-password?$passwordHashArg={$passwordHashArg}"
 
-        fun routeWithArgs(passwordHash: String): String {
-            return "$route?$passwordHashArg=$passwordHash"
+        fun routeWithArgs(type: Password, passwordHash: String): String {
+            return "$route?$passwordHashArg=$passwordHash&$typeArg=${type.name}"
         }
     }
 }
