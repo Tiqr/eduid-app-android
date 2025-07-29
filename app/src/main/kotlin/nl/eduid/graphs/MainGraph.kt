@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -228,11 +229,7 @@ fun MainGraph(
         val viewModel = hiltViewModel<RequestEduIdFormViewModel>(it)
         RequestEduIdFormScreen(viewModel = viewModel,
             goToNextScreen = { email, codeHash ->
-                if (viewModel.loginWithEmailCodeEnabled) {
-                    navController.navigate(EmailCodeEntry.routeWithArgs(email, codeHash!!))
-                } else {
-                    navController.goToEmailSent(email)
-                }
+                navController.navigate(EmailCodeEntry.routeWithArgs(email, codeHash, EmailCodeEntryViewModel.CodeContext.Registration))
             },
             onBackClicked = { navController.popBackStack() })
     }
@@ -251,6 +248,12 @@ fun MainGraph(
                         inclusive = true
                     }
                 }
+            },
+            continueWithHash = { codeHash ->
+                navController.previousBackStackEntry
+                    ?.savedStateHandle
+                    ?.set(EmailCodeEntryViewModel.KEY_CODE_RESULT_HASH, codeHash)
+                navController.popBackStack()
             },
         )
     }
@@ -459,12 +462,23 @@ fun MainGraph(
         }
     }//endregion
 
-    composable(Graph.EDIT_EMAIL) {//region Edit email
+    composable(Graph.EDIT_EMAIL) {
         val viewModel = hiltViewModel<EditEmailViewModel>(it)
+        val savedStateHandle = it.savedStateHandle
+        // Check if a result was returned from the one time email code verification
+        LaunchedEffect(savedStateHandle) {
+            if (savedStateHandle.contains(EmailCodeEntryViewModel.KEY_CODE_RESULT_HASH)) {
+                viewModel.confirmEmailChange(
+                    savedStateHandle.get<String>(EmailCodeEntryViewModel.KEY_CODE_RESULT_HASH)!!
+                )
+            }
+        }
         EditEmailScreen(
             viewModel = viewModel,
             goBack = { navController.popBackStack() },
-            onSaveNewEmailRequested = { email -> navController.goToEmailSent(email) },
+            onSaveNewEmailRequested = { newEmail ->
+                navController.navigate(EmailCodeEntry.routeWithArgs(email = newEmail, codeHash = null, codeContext = EmailCodeEntryViewModel.CodeContext.ChangeEmail))
+            }
         )
     }//endregion
 

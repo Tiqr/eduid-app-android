@@ -9,6 +9,7 @@ import nl.eduid.di.model.DeleteServiceRequest
 import nl.eduid.di.model.DeleteTokensRequest
 import nl.eduid.di.model.EmailChangeRequest
 import nl.eduid.di.model.EnrollResponse
+import nl.eduid.di.model.GenerateEmailCodeRequest
 import nl.eduid.di.model.IdpScoping
 import nl.eduid.di.model.InstitutionNameResponse
 import nl.eduid.di.model.LinkedAccountUpdateRequest
@@ -48,6 +49,16 @@ interface EduIdApi {
     suspend fun resendOneTimeCodeRequest(
         @Query("hash") hash: String,
     ): Response<Unit>
+
+    @PUT("/mobile/api/sp/verify-email-code")
+    suspend fun verifyEmailCode(
+        @Body request: VerifyOneTimeCodeRequest,
+    ): Response<OneTimeCodeResponse>
+
+    @PUT("/mobile/api/sp/verify-password-code")
+    suspend fun verifyPasswordCode(
+        @Body request: VerifyOneTimeCodeRequest,
+    ): Response<OneTimeCodeResponse>
 
     @PUT("/mobile/api/idp/v2/verify_code_request")
     suspend fun verifyOneTimeCodeRequest(
@@ -108,9 +119,9 @@ interface EduIdApi {
         @Query("h") hash: String,
     ): Response<UserDetails>
 
-    @PUT("/mobile/api/sp/email")
-    suspend fun requestEmailChange(
-        @Body email: EmailChangeRequest,
+    @PUT("/mobile/api/sp/generate-email-code")
+    suspend fun generateEmailCode(
+        @Body request: GenerateEmailCodeRequest,
     ): Response<UserDetails>
 
     @PUT("/mobile/api/sp/institution")

@@ -17,6 +17,7 @@ import nl.eduid.di.model.DeleteServiceRequest
 import nl.eduid.di.model.DeleteTokensRequest
 import nl.eduid.di.model.EmailChangeRequest
 import nl.eduid.di.model.EnrollResponse
+import nl.eduid.di.model.GenerateEmailCodeRequest
 import nl.eduid.di.model.IdpScoping
 import nl.eduid.di.model.LinkedAccount
 import nl.eduid.di.model.LinkedAccountUpdateRequest
@@ -117,13 +118,13 @@ class PersonalInfoRepository(
     }
 
     suspend fun changeEmail(email: String): Int? = try {
-        val response = eduIdApi.requestEmailChange(EmailChangeRequest(email))
+        val response = eduIdApi.generateEmailCode(GenerateEmailCodeRequest(email))
         if (response.isSuccessful) {
             response.code()
         } else {
             if (response.code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED) {
-                Timber.e("Unauthorized removeService call")
-                throw UnauthorizedException("Unauthorized removeService call")
+                Timber.e("Unauthorized changeEmail call")
+                throw UnauthorizedException("Unauthorized changeEmail call")
             } else {
                 Timber.w(
                     "Failed to change email to $email: [${response.code()}/${response.message()}]${

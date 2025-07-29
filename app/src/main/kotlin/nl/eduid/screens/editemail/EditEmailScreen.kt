@@ -38,6 +38,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -69,10 +70,15 @@ fun EditEmailScreen(
         val currentGoToEmailSent by rememberUpdatedState(newValue = onSaveNewEmailRequested)
         LaunchedEffect(viewModel, lifecycle) {
             snapshotFlow { viewModel.uiState }.distinctUntilChanged()
-                .filter { it.isCompleted != null }.flowWithLifecycle(lifecycle).collect {
+                .filter { it.oneTimeCodeRequested != null }.flowWithLifecycle(lifecycle).collect {
                     waitForVmEvent = false
                     currentGoToEmailSent(viewModel.uiState.email)
                 }
+        }
+    }
+    LaunchedEffect(viewModel.uiState.updateCompleted, lifecycle) {
+        if (viewModel.uiState.updateCompleted != null) {
+            goBack() // Underlying screen will update automatically
         }
     }
     viewModel.uiState.errorData?.let { errorData ->
@@ -150,9 +156,10 @@ fun EditEmailScreenContent(
         OutlinedTextField(
             colors = outlinedTextColors(),
             value = uiState.email,
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done, keyboardType = KeyboardType.Email),
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
             isError = !uiState.isEmailValid,
+            enabled = !uiState.inProgress,
             onValueChange = { onEmailTextChange(it) },
             placeholder = { Text(stringResource(R.string.CreateEduID_EnterPersonalInfo_EmailFieldPlaceHolder_COPY)) },
             modifier = Modifier

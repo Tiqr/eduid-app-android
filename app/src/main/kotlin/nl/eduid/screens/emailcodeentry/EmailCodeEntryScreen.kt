@@ -69,6 +69,7 @@ import nl.eduid.ui.theme.outlinedTextColors
 fun EmailCodeEntryScreen(
     viewModel: EmailCodeEntryViewModel,
     onBackClicked: () -> Unit,
+    continueWithHash: (String) -> Unit
 ) = EduIdTopAppBar(
     onBackClicked = onBackClicked
 ) {
@@ -86,6 +87,11 @@ fun EmailCodeEntryScreen(
         viewModel.uiState.correctCodeLaunchIntent?.let { intent ->
             wasRegistrationLinkOpened = true
             launcher.launch(intent)
+        }
+    }
+    LaunchedEffect(viewModel.uiState.codeIsCorrectContinueWithHash) {
+        viewModel.uiState.codeIsCorrectContinueWithHash?.let { hash ->
+            continueWithHash(hash)
         }
     }
     val didResendEmailText = stringResource(R.string.LogInWithEmailCode_CodeHasBeenResent_COPY)

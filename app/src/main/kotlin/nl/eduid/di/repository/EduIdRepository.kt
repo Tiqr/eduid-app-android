@@ -12,23 +12,16 @@ import timber.log.Timber
  * Repository to handle enrollment challenges.
  */
 class EduIdRepository(
-    val api: EduIdApi,
-    runtimeBehavior: RuntimeBehavior
+    val api: EduIdApi
 ) {
-    val isLoginWithEmailCodeEnabled = runtimeBehavior.isFeatureEnabled(FeatureFlag.LOG_IN_WITH_EMAIL_CODE)
-
     data class CreateAccountResult(
         val code: Int,
         val hash: String? = null
     )
 
     suspend fun requestEnroll(request: RequestEduIdAccount): CreateAccountResult = try {
-        val response = if (isLoginWithEmailCodeEnabled) {
-            api.createNewEduIdAccountWithOneTimeCode(request)
-        } else {
-            api.createNewEduIdAccount(request)
-        }
-        CreateAccountResult(response.code(), (response.body() as? CreateWithOneTimeCodeResponse)?.hash)
+        val response = api.createNewEduIdAccountWithOneTimeCode(request)
+        CreateAccountResult(response.code(), response.body()?.hash)
     } catch (e: Exception) {
         Timber.e(e, "Failed to create new eduID account")
         CreateAccountResult(418)
@@ -48,6 +41,32 @@ class EduIdRepository(
         Pair(response.code(), response.body())
     } catch (ex: Exception) {
         Timber.w(ex, "Failed to verify one-time code")
+        Pair(400, null)
+    }
+
+    suspend fun verifyEmailCode(code: String) = try {
+        val response = api.verifyEmailCode(
+            VerifyOneTimeCodeRequest(
+                hash = null,
+                code = code
+            )
+        )
+        Pair(response.code(), response.body())
+    } catch (ex: Exception) {
+        Timber.w(ex, "Failed to verify one-time code for email change")
+        Pair(400, null)
+    }
+
+    suspend fun verifyPasswordCode(code: String) = try {
+        val response = api.verifyEmailCode(
+            VerifyOneTimeCodeRequest(
+                hash = null,
+                code = code
+            )
+        )
+        Pair(response.code(), response.body())
+    } catch (ex: Exception) {
+        Timber.w(ex, "Failed to verify one-time code for password change")
         Pair(400, null)
     }
 }
