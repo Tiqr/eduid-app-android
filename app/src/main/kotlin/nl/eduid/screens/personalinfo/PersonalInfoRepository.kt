@@ -339,21 +339,8 @@ class PersonalInfoRepository(
         false
     }
 
-    suspend fun resetPasswordLink(): UserDetails? = try {
-        val response = eduIdApi.resetPasswordLink()
-        if (response.isSuccessful) {
-            response.body()
-        } else {
-            Timber.w(
-                "Failed to send password link: [${response.code()}/${response.message()}]${
-                    response.errorBody()?.string()
-                }",
-            )
-            null
-        }
-    } catch (e: Exception) {
-        Timber.e(e, "Failed to send password link")
-        null
+    suspend fun generatePasswordCode() {
+        eduIdApi.generatePasswordCode()
     }
 
     suspend fun requestDeactivationForKnownPhone() = try {

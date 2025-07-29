@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -119,6 +120,10 @@ fun ResetPasswordConfirmScreen(
     }
 }
 
+enum class Field {
+    NewPassword, ConfirmPassword
+}
+
 @OptIn(
     ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class, ExperimentalLayoutApi::class,
     ExperimentalFoundationApi::class
@@ -146,6 +151,7 @@ fun ResetPasswordConfirmScreenContent(
             .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
     ) {
         val isKeyboardOpen by rememberUpdatedState(WindowInsets.isImeVisible)
+        var lastFieldInView by rememberSaveable { mutableStateOf<Field?>(null) }
         AnimatedVisibility(
             !isKeyboardOpen,
         ) {
@@ -206,7 +212,8 @@ fun ResetPasswordConfirmScreenContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .onFocusEvent { event ->
-                        if (event.isFocused) {
+                        if (event.isFocused && lastFieldInView != Field.NewPassword) {
+                            lastFieldInView = Field.NewPassword
                             coroutineScope.launch {
                                 bringIntoViewRequester.bringIntoView()
                             }
@@ -236,7 +243,8 @@ fun ResetPasswordConfirmScreenContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .onFocusEvent { event ->
-                        if (event.isFocused) {
+                        if (event.isFocused && lastFieldInView != Field.ConfirmPassword) {
+                            lastFieldInView = Field.ConfirmPassword
                             coroutineScope.launch {
                                 bringIntoViewRequester.bringIntoView()
                             }

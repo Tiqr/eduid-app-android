@@ -147,8 +147,8 @@ interface EduIdApi {
         @Body selfName: SelfAssertedName,
     ): Response<UserDetails>
 
-    @PUT("/mobile/api/sp/reset-password-link")
-    suspend fun resetPasswordLink(): Response<UserDetails>
+    @PUT("/mobile/api/sp/generate-password-code")
+    suspend fun generatePasswordCode(): Response<Unit>
 
     @PUT("/mobile/api/sp/update-password")
     suspend fun updatePassword(
