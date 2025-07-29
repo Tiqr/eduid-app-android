@@ -198,7 +198,7 @@
   <string name="Security_ProvidedBy_COPY">"Gedeeld door"</string>
   <string name="Security_NotAddedYet_COPY">"Nog niet toegevoegd aan je eduID"</string>
   <string name="Security_NotSupported_COPY">"Niet ondersteund"</string>
-  <string name="Security_UseMagicLink_COPY">"Link via e-mail"</string>
+  <string name="Security_UseMagicLink_COPY">"Verificatie-code e-mail"</string>
   <string name="Security_UseCode_COPY">"Verificatie-code e-mail"</string>
   <string name="Security_AddSecurityKeyInfo_COPY">"Je kunt een passkey toevoegen aan je eduID om in te loggen.\n Dit kan bijv. de ingebouwde sensor van je apparaat\nzijn (TouchID, FaceID) of een los hardwaretoken (YubiKey)."</string>
   <string name="Security_RememberMeInfo_COPY">"&lt;strong&gt;Dit apparaat wordt momenteel onthouden. Je wordt automatisch ingelogd op eduD&lt;/strong&gt;"</string>
@@ -540,7 +540,7 @@
   <string name="Login_UseCode_COPY">"E-mail een login code"</string>
   <string name="Login_UsePassword_COPY">"typ een wachtwoord"</string>
   <string name="Login_UsePasswordNoWebAuthn_COPY">"Typ een wachtwoord"</string>
-  <string name="Login_UseMagicLink_COPY">"Gebruik magische link"</string>
+  <string name="Login_UseMagicLink_COPY">"Verificatie-code e-mail"</string>
   <string name="Login_UseMagicLinkNoWebAuthn_COPY">"Gebruik magische link."</string>
   <string name="Login_UseWebAuth_COPY">"Log in in met een beveiligingssleutel"</string>
   <string name="Login_UseOr_COPY">" of "</string>
