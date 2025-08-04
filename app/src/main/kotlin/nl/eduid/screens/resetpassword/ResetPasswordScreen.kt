@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.flowWithLifecycle
+import de.charlex.compose.material3.HtmlText
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import nl.eduid.R
@@ -128,12 +129,12 @@ fun ResetPasswordScreenContent(
             )
         }
         Spacer(Modifier.height(12.dp))
-        Text(
+        HtmlText(
             style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Start),
             text = if (password == Password.Add) {
-                stringResource(R.string.PasswordResetLink_Description_AddPassword_COPY)
+                stringResource(R.string.Password_AddInfo_COPY)
             } else {
-                stringResource(R.string.PasswordResetLink_Description_ChangePassword_COPY)
+                stringResource(R.string.Password_UpdateInfo_COPY)
             },
             modifier = Modifier.fillMaxWidth()
         )
@@ -153,7 +154,7 @@ fun ResetPasswordScreenContent(
         PrimaryButton(
             enabled = !inProgress,
             modifier = Modifier.widthIn(min = 140.dp),
-            text = stringResource(R.string.PasswordResetLink_Button_SendEmail_COPY),
+            text = stringResource(R.string.Modal_Confirm_COPY),
             onClick = onResetPasswordClicked,
         )
     }

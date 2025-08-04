@@ -32,7 +32,7 @@ class EmailCodeEntryViewModel @Inject constructor(
     }
 
     enum class CodeContext {
-        Registration, ChangeEmail, ChangePassword
+        Registration, ChangeEmail, ChangePassword, AddPassword
     }
 
     val userEmail: String = savedStateHandle.get<String>(EmailCodeEntry.emailArg) ?: ""

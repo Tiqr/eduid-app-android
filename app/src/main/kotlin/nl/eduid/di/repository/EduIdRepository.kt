@@ -58,7 +58,7 @@ class EduIdRepository(
     }
 
     suspend fun verifyPasswordCode(code: String) = try {
-        val response = api.verifyEmailCode(
+        val response = api.verifyPasswordCode(
             VerifyOneTimeCodeRequest(
                 hash = null,
                 code = code
