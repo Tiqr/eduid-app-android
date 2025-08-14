@@ -89,7 +89,6 @@ fun VerifyIdentityScreen(
     VerifyIdentityScreenContent(
         isLoading = viewModel.uiState.isLoading,
         isLinkedAccount = viewModel.isLinkedAccount,
-        fallbackMethodEnabled = viewModel.fallbackMethodEnabled,
         moreOptionsExpanded = viewModel.uiState.moreOptionsExpanded,
         errorData = viewModel.uiState.errorData,
         dismissError = viewModel::dismissError,
@@ -110,7 +109,6 @@ fun VerifyIdentityScreen(
 fun VerifyIdentityScreenContent(
     isLoading: Boolean,
     isLinkedAccount: Boolean,
-    fallbackMethodEnabled: Boolean,
     moreOptionsExpanded: Boolean,
     errorData: ErrorData?,
     dismissError: () -> Unit,
@@ -217,33 +215,6 @@ fun VerifyIdentityScreenContent(
                     onClick = { requestEidasLink() }
                 )
                 Spacer(Modifier.height(24.dp))
-                if (!fallbackMethodEnabled) {
-                    val fullText = stringResource(R.string.VerifyIdentity_VisitSupport_Full_COPY)
-                    val linkedPart = stringResource(R.string.VerifyIdentity_VisitSupport_HighlightedPart_COPY)
-                    val supportLinkText = buildAnnotatedString {
-                        val partBefore = fullText.split(linkedPart).first()
-                        val partAfter = fullText.split(linkedPart).last()
-                        append(partBefore)
-                        withLink(
-                            link = LinkAnnotation.Clickable(
-                                tag = "support_link",
-                                linkInteractionListener = {
-                                    openSupportUrl(supportUrl)
-                                },
-                                styles = TextLinkStyles(
-                                    style = SpanStyle(color = ColorSupport_Blue_400)
-                                )
-                            ),
-                        ) {
-                            append(linkedPart)
-                        }
-                        append(partAfter)
-                    }
-                    Text(
-                        text = supportLinkText,
-                        style = MaterialTheme.typography.bodyLarge.copy(color = ColorScale_Gray_500)
-                    )
-                }
             } else if (!isLinkedAccount) {
                 Spacer(Modifier.height(20.dp))
                 OutlinedButton(
@@ -261,7 +232,7 @@ fun VerifyIdentityScreenContent(
                 }
             }
         }
-        if (fallbackMethodEnabled && !isLinkedAccount && moreOptionsExpanded) {
+        if (!isLinkedAccount && moreOptionsExpanded) {
             Box(
                 Modifier.background(InfoTabDarkFill)
                     .fillMaxWidth()
@@ -365,7 +336,6 @@ fun VerifyIdentityScreenContent_Preview() {
         VerifyIdentityScreenContent(
             isLoading = false,
             isLinkedAccount = false,
-            fallbackMethodEnabled = true,
             moreOptionsExpanded = true,
             errorData = null,
             dismissError = {},
