@@ -22,12 +22,16 @@ import nl.eduid.di.repository.EduIdRepository
 import nl.eduid.di.repository.StorageRepository
 import nl.eduid.env.EnvironmentProvider
 import nl.eduid.flags.RuntimeBehavior
+import nl.eduid.network.ApiError
 import nl.eduid.network.ConnectivityInterceptor
+import nl.eduid.network.ErrorConverter
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import org.tiqr.data.api.response.ApiResponseAdapterFactory
 import org.tiqr.data.di.DefaultDispatcher
+import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -136,5 +140,12 @@ internal object RepositoryModule {
     @Singleton
     internal fun provideOkHttpClientBuilder(): OkHttpClient {
         return OkHttpClient.Builder().connectTimeout(15, TimeUnit.SECONDS).build()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideApiErrorConverter(@EduIdScope retrofit: Retrofit): ErrorConverter {
+        val converter: Converter<ResponseBody, ApiError> = retrofit.responseBodyConverter(ApiError::class.java, arrayOfNulls<Annotation>(0))
+        return ErrorConverter(converter)
     }
 }

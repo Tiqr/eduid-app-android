@@ -37,6 +37,7 @@ fun NavGraphBuilder.configurePasswordFlow(
             // Check if a result was returned from the one time email code verification
             LaunchedEffect(savedStateHandle) {
                 savedStateHandle.get<String>(EmailCodeEntryViewModel.KEY_CODE_RESULT_HASH)?.let { hash ->
+                    navController.popBackStack() // The user should not be able to return to this screen anymore
                     navController.navigate(
                         Form.routeWithArgs(viewModel.uiState.password,hash)
                     )
