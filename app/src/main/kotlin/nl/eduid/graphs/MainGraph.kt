@@ -241,12 +241,16 @@ fun MainGraph(
         val viewModel = hiltViewModel<EmailCodeEntryViewModel>(it)
         EmailCodeEntryScreen(
             viewModel = viewModel,
-            onBackClicked = {
-                // Registration flow is cancelled, go back to the home page
-                navController.navigate(Graph.HOME_PAGE) {
-                    popUpTo(Graph.HOME_PAGE) {
-                        inclusive = true
+            onBackClicked = { codeContext ->
+                if (codeContext == EmailCodeEntryViewModel.CodeContext.Registration) {
+                    // Registration flow is cancelled, go back to the home page
+                    navController.navigate(Graph.HOME_PAGE) {
+                        popUpTo(Graph.HOME_PAGE) {
+                            inclusive = true
+                        }
                     }
+                } else {
+                    navController.popBackStack(Security.Settings.route, inclusive = false)
                 }
             },
             continueWithHash = { codeHash ->
@@ -574,7 +578,12 @@ fun MainGraph(
             })
     }
     //region Configure Password: add, change or remove
-    configurePasswordFlow(navController, baseUrl) { navController.navigate(Security.Settings.route) }
+    configurePasswordFlow(navController, baseUrl) {
+        navController.navigate(Security.Settings.route) {
+            popUpTo(Security.Settings.route) { inclusive = true
+            }
+        }
+    }
     //endregion
 
     //region Verify identity

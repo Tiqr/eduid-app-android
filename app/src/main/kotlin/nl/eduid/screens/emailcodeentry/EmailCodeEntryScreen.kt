@@ -68,10 +68,8 @@ import nl.eduid.ui.theme.outlinedTextColors
 @Composable
 fun EmailCodeEntryScreen(
     viewModel: EmailCodeEntryViewModel,
-    onBackClicked: () -> Unit,
+    onBackClicked: (EmailCodeEntryViewModel.CodeContext) -> Unit,
     continueWithHash: (String) -> Unit
-) = EduIdTopAppBar(
-    onBackClicked = onBackClicked
 ) {
     val context = LocalContext.current
     var wasRegistrationLinkOpened by rememberSaveable { mutableStateOf(false) }
@@ -80,7 +78,7 @@ fun EmailCodeEntryScreen(
             // This part is called when the user came back to the app without linking anything
             // (otherwise we would go via a deeplink to the success / error screen).
             // In this case go back to home.
-            onBackClicked()
+            onBackClicked(viewModel.codeContext)
         }
     })
     LaunchedEffect(viewModel.uiState.correctCodeLaunchIntent) {
@@ -108,7 +106,9 @@ fun EmailCodeEntryScreen(
     EmailCodeEntryScreenContent(
         userEmail = viewModel.userEmail,
         isCheckingCode = viewModel.uiState.isLoading,
-        onBackClicked = onBackClicked,
+        onBackClicked = {
+            onBackClicked(viewModel.codeContext)
+        },
         submitCode = { code ->
             viewModel.checkEmailCode(code)
         },
