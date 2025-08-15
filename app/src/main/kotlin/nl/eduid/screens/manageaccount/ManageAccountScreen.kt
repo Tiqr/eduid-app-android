@@ -2,6 +2,7 @@ package nl.eduid.screens.manageaccount
 
 import android.app.DownloadManager
 import android.content.Intent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,8 +14,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -30,6 +33,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -145,11 +149,15 @@ private fun ManageAccountScreenContent(
             modifier = Modifier.fillMaxWidth()
         )
     }
-    OutlinedButton(
+
+    Button(
         shape = RoundedCornerShape(CornerSize(6.dp)),
         onClick = onDeleteAccountPressed,
+        border = BorderStroke(1.dp, Color.Red),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = ColorAlertRed),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .sizeIn(minHeight = 56.dp),
     ) {
         Text(
             text = stringResource(R.string.MyAccount_DeleteAccountButton_COPY),

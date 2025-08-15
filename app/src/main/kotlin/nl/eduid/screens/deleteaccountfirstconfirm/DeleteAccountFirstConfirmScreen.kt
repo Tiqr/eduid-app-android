@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import de.charlex.compose.material3.HtmlText
 import nl.eduid.R
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.theme.AlertWarningBackground
@@ -96,8 +97,8 @@ private fun DeleteAccountFirstConfirmScreenContent(
                         end.linkTo(text.start, margin = 12.dp)
                     }
             )
-            Text(
-                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
+            HtmlText(
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Normal),
                 text = stringResource(R.string.DeleteAccount_Disclaimer_COPY),
                 modifier = Modifier
                     .constrainAs(text) {
