@@ -77,7 +77,7 @@ class EditEmailViewModel @Inject constructor(
                 } catch (e: Exception) {
                     uiState = uiState.copy(
                         inProgress = false, errorData = ErrorData(
-                            titleId = R.string.ResponseErrors_PasswordUpdateError_COPY,
+                            titleId = R.string.ResponseErrors_GeneralRequestError_COPY,
                             messageId = R.string.Generic_RequestError_Description_COPY,
                             messageArg = e.message ?: e.javaClass.simpleName,
                         )

@@ -13,12 +13,14 @@ import nl.eduid.R
 import nl.eduid.di.api.EduIdApi
 import nl.eduid.di.model.UpdatePasswordRequest
 import nl.eduid.graphs.ConfigurePassword
+import nl.eduid.network.ErrorConverter
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class ResetPasswordConfirmViewModel @Inject constructor(
     private val eduIdApi: EduIdApi,
+    private val errorConverter: ErrorConverter,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -85,13 +87,17 @@ class ResetPasswordConfirmViewModel @Inject constructor(
                         inProgress = false, isCompleted = Unit, errorData = null
                     )
                 } else {
+                    val apiError = response.errorBody()?.let { errorConverter.parse(it) }
+                    val errorMessage = if (!apiError?.message.isNullOrEmpty()) {
+                        apiError.message
+                    } else {
+                        "[${response.code()}/${response.message()}]${response.errorBody()?.string()}"
+                    }
                     uiState = currentState.copy(
                         inProgress = false, isCompleted = null, errorData = ErrorData(
                             titleId = R.string.ResponseErrors_PasswordUpdateError_COPY,
                             messageId = R.string.Generic_RequestError_Description_COPY,
-                            messageArg = "[${response.code()}/${response.message()}]${
-                                response.errorBody()?.string()
-                            }",
+                            messageArg = errorMessage,
                         )
                     )
                 }
