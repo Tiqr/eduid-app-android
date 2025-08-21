@@ -3,7 +3,7 @@
   <string name="About_Info_COPY">"App information"</string>
   <string name="Sidebar_Home_COPY">"Home"</string>
   <string name="Sidebar_PersonalInfo_COPY">"Personal info"</string>
-  <string name="Sidebar_DataActivity_COPY">"Activity"</string>
+  <string name="Sidebar_DataActivity_COPY">"Data &amp; activity"</string>
   <string name="Sidebar_Security_COPY">"Security"</string>
   <string name="Sidebar_Account_COPY">"Account"</string>
   <string name="Start_Hi_COPY">"Hi %1$s!"</string>
@@ -198,7 +198,7 @@
   <string name="Security_ProvidedBy_COPY">"Provided by"</string>
   <string name="Security_NotAddedYet_COPY">"Not added to your eduID yet"</string>
   <string name="Security_NotSupported_COPY">"Not supported"</string>
-  <string name="Security_UseMagicLink_COPY">"Verification code email"</string>
+  <string name="Security_UseMagicLink_COPY">"Magic link email"</string>
   <string name="Security_UseCode_COPY">"Verification code email"</string>
   <string name="Security_AddSecurityKeyInfo_COPY">"You can add a passkey to your eduIDto log in. You can use, for example, the built-in sensor of your device (TouchID, FaceID) or a separate hardware key (YubiKey)."</string>
   <string name="Security_RememberMeInfo_COPY">"&lt;strong&gt;Your device is currently remembered. You will be automatically logged in to eduID.&lt;/strong&gt;"</string>
@@ -266,7 +266,7 @@
   <string name="ConfirmDeleteKey_Button_Cancel_COPY">"No, back"</string>
   <string name="Home_Home_COPY">"Home"</string>
   <string name="Home_Welcome_COPY">"Welcome %1$s"</string>
-  <string name="Home_DataAndActivity_COPY">"Activity"</string>
+  <string name="Home_DataAndActivity_COPY">"Data &amp; activity"</string>
   <string name="Home_Personal_COPY">"Personal info"</string>
   <string name="Home_Security_COPY">"Security"</string>
   <string name="Home_Account_COPY">"Account"</string>
@@ -540,7 +540,7 @@
   <string name="Login_UseCode_COPY">"Email a login code"</string>
   <string name="Login_UsePassword_COPY">"type a password."</string>
   <string name="Login_UsePasswordNoWebAuthn_COPY">"Type a password."</string>
-  <string name="Login_UseMagicLink_COPY">"Verificatie-code e-mail"</string>
+  <string name="Login_UseMagicLink_COPY">"Email a magic link"</string>
   <string name="Login_UseMagicLinkNoWebAuthn_COPY">"Email a magic link."</string>
   <string name="Login_UseWebAuth_COPY">"Log in with a security key"</string>
   <string name="Login_UseOr_COPY">"or"</string>
