@@ -29,15 +29,13 @@ import javax.inject.Inject
 class RegistrationPinSetupViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     moshi: Moshi,
-    personal: PersonalInfoRepository,
+    private val checkRecovery: CheckRecovery,
     private val enrollRepository: EnrollmentRepository,
 ) : BaseViewModel(moshi) {
     var uiState by mutableStateOf(UiState())
         private set
 
     private val challenge: EnrollmentChallenge?
-    private val checkRecovery =
-        CheckRecovery(personal = personal)
 
     init {
         val enrolChallenge =
@@ -123,19 +121,17 @@ class RegistrationPinSetupViewModel @Inject constructor(
         }
     }
 
-    private suspend fun calculateNextStep(
+    private fun calculateNextStep(
         context: Context,
         currentChallenge: EnrollmentChallenge,
     ): NextStep {
         return if (context.biometricUsable() && currentChallenge.identity.biometricOfferUpgrade) {
             NextStep.PromptBiometric(currentChallenge, uiState.pinConfirmValue)
         } else {
-            val shouldAppDoRecovery =
-                checkRecovery.shouldAppDoRecoveryForIdentity(currentChallenge.identity.identifier)
-            if (shouldAppDoRecovery) {
-                NextStep.Recovery
+            if (checkRecovery.shouldAppDoRecovery()) {
+                return NextStep.Recovery
             } else {
-                NextStep.RecoveryInBrowser
+                return NextStep.RecoveryInBrowser
             }
         }
     }

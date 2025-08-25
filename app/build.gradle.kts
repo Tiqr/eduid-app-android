@@ -4,6 +4,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
+    alias(libs.plugins.compose.compiler)
 }
 
 if (JavaVersion.current() < JavaVersion.VERSION_17) {
@@ -49,6 +50,7 @@ android {
             "tiqr_config_enroll_scheme" to "eduidenroll",
             "tiqr_config_auth_scheme" to "eduidauth",
             "tiqr_config_token_exchange_enabled" to "false",
+            "tiqr_config_in_app_update_check_enabled" to "false", // We handle this manually
             "appAuthRedirectScheme" to "eduid"
         )
         applicationId = "nl.eduid"

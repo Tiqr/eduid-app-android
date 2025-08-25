@@ -15,11 +15,5 @@ enum class FeatureFlag(
         title = "Show 'Add a security key' button",
         explanation = "When on, it will show the `Add a security key` on the Security screen",
         defaultValue = false,
-    ),
-    FALLBACK_METHOD(
-        key = "fallback_method",
-        title = "Enable 'fallback method'",
-        explanation = "When on, the users will have an extra option to validate their identity by going to a service point with their ID",
-        defaultValue = false
     )
 }

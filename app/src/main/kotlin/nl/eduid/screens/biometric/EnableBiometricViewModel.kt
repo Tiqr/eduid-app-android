@@ -24,13 +24,12 @@ import javax.inject.Inject
 class EnableBiometricViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     moshi: Moshi,
-    personal: PersonalInfoRepository,
     private val repository: EnrollmentRepository,
+    private val checkRecovery: CheckRecovery
 ) : BaseViewModel(moshi = moshi) {
     private val challenge: Challenge?
     private val pin: String
-    private val checkRecovery =
-        CheckRecovery(personal = personal)
+
     var shouldAskForRecovery: Boolean? by mutableStateOf(null)
         private set
 
@@ -62,13 +61,13 @@ class EnableBiometricViewModel @Inject constructor(
                 repository.upgradeBiometric(it, challenge.identityProvider, pin)
             }
         }
-        shouldAskForRecovery = checkRecovery.shouldAppDoRecoveryForIdentity(challenge?.identity?.identifier.orEmpty())
+        shouldAskForRecovery = checkRecovery.shouldAppDoRecovery()
     }
 
     fun stopOfferBiometric() = viewModelScope.launch {
         challenge?.identity?.let {
             repository.stopOfferBiometric(it)
         }
-        shouldAskForRecovery = checkRecovery.shouldAppDoRecoveryForIdentity(challenge?.identity?.identifier.orEmpty())
+        shouldAskForRecovery = checkRecovery.shouldAppDoRecovery()
     }
 }

@@ -10,7 +10,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.R
-import nl.eduid.di.api.EduIdApi
 import nl.eduid.di.assist.DataAssistant
 import nl.eduid.di.model.EMAIL_DOMAIN_FORBIDDEN
 import nl.eduid.di.model.FAIL_EMAIL_IN_USE
@@ -18,9 +17,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditEmailViewModel @Inject constructor(
-    private val eduIdApi: EduIdApi,
     private val dataAssistant: DataAssistant,
 ) : ViewModel() {
+
     var uiState by mutableStateOf(UiState())
         private set
 
@@ -37,10 +36,10 @@ class EditEmailViewModel @Inject constructor(
         if (isEmailValid) {
             viewModelScope.launch {
                 try {
-                    uiState = uiState.copy(inProgress = true, isCompleted = null)
+                    uiState = uiState.copy(inProgress = true, oneTimeCodeRequested = null)
                     val response = dataAssistant.changeEmail(newEmail)
                     if (response in 200..299) {
-                        uiState = uiState.copy(inProgress = false, isCompleted = Unit)
+                        uiState = uiState.copy(oneTimeCodeRequested = Unit)
                     } else {
                         val newData = when (response) {
                             FAIL_EMAIL_IN_USE -> {
@@ -78,7 +77,7 @@ class EditEmailViewModel @Inject constructor(
                 } catch (e: Exception) {
                     uiState = uiState.copy(
                         inProgress = false, errorData = ErrorData(
-                            titleId = R.string.ResponseErrors_PasswordUpdateError_COPY,
+                            titleId = R.string.ResponseErrors_GeneralRequestError_COPY,
                             messageId = R.string.Generic_RequestError_Description_COPY,
                             messageArg = e.message ?: e.javaClass.simpleName,
                         )
@@ -89,6 +88,25 @@ class EditEmailViewModel @Inject constructor(
             uiState = uiState.copy(isEmailValid = false)
         }
     }
+
+    fun confirmEmailChange(confirmHash: String) {
+        uiState = uiState.copy(inProgress = true, errorData = null, oneTimeCodeRequested = null)
+        viewModelScope.launch {
+            try {
+                dataAssistant.confirmEmail(confirmHash)
+                uiState = uiState.copy(updateCompleted = Unit)
+            } catch (ex: Exception) {
+                uiState = uiState.copy(
+                    inProgress = false,
+                    errorData = ErrorData(
+                        titleId = R.string.Generic_RequestError_Title_COPY,
+                        messageId = R.string.Email_UpdateError_COPY,
+                        messageArg = ex.message ?: ex.javaClass.simpleName,
+                    )
+                )
+            }
+        }
+    }
 }
 
 data class UiState(
@@ -96,5 +114,6 @@ data class UiState(
     val isEmailValid: Boolean = true,
     val inProgress: Boolean = false,
     val errorData: ErrorData? = null,
-    val isCompleted: Unit? = null,
+    val oneTimeCodeRequested: Unit? = null,
+    val updateCompleted: Unit? = null
 )

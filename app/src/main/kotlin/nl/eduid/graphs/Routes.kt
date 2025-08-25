@@ -8,6 +8,9 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapter
 import nl.eduid.di.model.ControlCode
 import nl.eduid.di.model.SelfAssertedName
+import nl.eduid.graphs.AccountLinked.isRegistrationFlowArg
+import nl.eduid.graphs.VerifyIdentityRoute.isLinkedAccount
+import nl.eduid.screens.emailcodeentry.EmailCodeEntryViewModel
 import org.tiqr.data.model.AuthenticationChallenge
 import timber.log.Timber
 import java.io.UnsupportedEncodingException
@@ -33,6 +36,20 @@ object Graph {
 
 object OAuth {
     const val route = "oauth_mobile_eduid"
+    const val overrideUrlArg = "override_url"
+    const val routeWithArgs = "${route}?overrideUrl={$overrideUrlArg}"
+    val arguments = listOf(navArgument(overrideUrlArg) {
+        type = NavType.StringType
+        nullable = true
+    })
+
+    fun routeWithOverrideUrl(overrideUrl: String?): String {
+        return if (overrideUrl.isNullOrEmpty()) {
+            route
+        } else {
+            "$route?overrideUrl=${Uri.encode(overrideUrl)}"
+        }
+    }
 }
 
 object RequestEduIdCreated {
@@ -55,6 +72,8 @@ object AccountLinked {
     fun getUriPatternExternalLinkOKCustomScheme() = "eduid:///client/mobile/external-account-linked"
     fun getUriPatternFailed(baseUrl: String) = "$baseUrl/client/mobile/eppn-already-linked"
     fun getUriPatternExpired(baseUrl: String) = "$baseUrl/client/mobile/expired"
+    fun getUriPatternSubjectAlreadyLinked(baseUrl: String) = "$baseUrl/client/mobile/verify-already-used"
+    fun getUriPatternSubjectAlreadyLinkedCustomScheme() = "eduid:///client/mobile/verify-already-used"
 
     const val isRegistrationFlowArg = "is_registration_flow"
 
@@ -339,6 +358,32 @@ sealed class EditName(val route: String) {
             "${route}/${Uri.encode(selfAssertedName.chosenName ?: "")}/${Uri.encode(selfAssertedName.familyName ?: "")}/${canEditFamilyName}"
     }
 }
+
+
+object EmailCodeEntry {
+    private const val route = "email_code_entry"
+    const val emailArg = "email"
+    const val codeHashArg = "code_hash"
+    const val codeContextArg = "code_context"
+    const val routeWithArgs = "$route/{$codeContextArg}/{$emailArg}?{$codeHashArg}"
+
+    val arguments = listOf(navArgument(emailArg) {
+        type = NavType.StringType
+        nullable = false
+        defaultValue = ""
+    }, navArgument(codeHashArg) {
+        type = NavType.StringType
+        nullable = true
+    }, navArgument(codeContextArg) {
+        type = NavType.StringType
+        nullable = false
+        defaultValue = EmailCodeEntryViewModel.CodeContext.Registration.name
+    })
+
+    fun routeWithArgs(email: String, codeHash: String?, codeContext: EmailCodeEntryViewModel.CodeContext) = "$route/${codeContext.name}/$email?$codeHash"
+}
+
+
 
 object VerifyIdentityRoute {
     private const val route = "verify_identity"

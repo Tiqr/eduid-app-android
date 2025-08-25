@@ -9,6 +9,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.squareup.moshi.JsonAdapter
@@ -33,6 +34,7 @@ import nl.eduid.R
 import nl.eduid.di.assist.AuthenticationAssistant
 import nl.eduid.di.repository.StorageRepository
 import nl.eduid.env.EnvironmentProvider
+import nl.eduid.graphs.OAuth
 import timber.log.Timber
 import java.io.IOException
 import java.security.MessageDigest
@@ -42,6 +44,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OAuthViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val repository: StorageRepository,
     private val assistant: AuthenticationAssistant,
     private val environmentProvider: EnvironmentProvider,
@@ -54,6 +57,8 @@ class OAuthViewModel @Inject constructor(
     private var service: AuthorizationService? = null
     private val configAdapter: JsonAdapter<Configuration>
     private var configuration: Configuration = Configuration.EMPTY
+    
+    private val overrideUrl = savedStateHandle.get<String?>(OAuth.overrideUrlArg)
 
     init {
         configAdapter = moshi.adapter(Configuration::class.java)

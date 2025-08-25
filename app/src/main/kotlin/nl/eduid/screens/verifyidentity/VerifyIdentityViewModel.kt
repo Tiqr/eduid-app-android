@@ -34,8 +34,6 @@ class VerifyIdentityViewModel @Inject constructor(
 
     val isLinkedAccount: Boolean = savedStateHandle[VerifyIdentityRoute.isLinkedAccount] ?: false
 
-    val fallbackMethodEnabled = runtimeBehavior.isFeatureEnabled(FeatureFlag.FALLBACK_METHOD)
-
     var uiState by mutableStateOf(VerifyIdentityData(isLoading = false))
         private set
 

@@ -13,7 +13,6 @@ import net.openid.appauth.RegistrationRequest
 import net.openid.appauth.RegistrationResponse
 import net.openid.appauth.TokenResponse
 import net.openid.appauth.browser.BrowserAllowList
-import net.openid.appauth.browser.Browsers
 import net.openid.appauth.browser.VersionRange
 import net.openid.appauth.browser.VersionedBrowserMatcher
 import net.openid.appauth.connectivity.DefaultConnectionBuilder

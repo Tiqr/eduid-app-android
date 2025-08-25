@@ -3,10 +3,13 @@ package nl.eduid.screens.homepage
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -36,6 +39,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -66,6 +70,7 @@ import nl.eduid.ui.theme.SmallActionGray
 import nl.eduid.ui.theme.SplashScreenBackgroundColor
 import nl.eduid.ui.theme.ColorScale_Gray_Black
 import nl.eduid.ui.theme.ColorMain_Green_400
+import org.tiqr.data.util.InAppUpdatesUtil
 import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -94,7 +99,7 @@ fun HomePageWithAccountContent(
                 Timber.d("Showing notification permission dialog")
             }
         }
-        LaunchedEffect(lifecycle){
+        LaunchedEffect(lifecycle) {
             if (ContextCompat.checkSelfPermission(context, notificationPermission) != PackageManager.PERMISSION_GRANTED) {
                 permissionLauncher.launch(notificationPermission)
             }
@@ -182,7 +187,10 @@ private fun AccountContent(
     onSecurityClicked: () -> Unit = {},
     onActivityClicked: () -> Unit = {},
 ) {
+    var clickCount by remember { mutableIntStateOf(0) }
+    val interactionSource = remember { MutableInteractionSource() }
     val bottomPadding = paddingValues.calculateBottomPadding()
+    val context = LocalContext.current
     val paddingValuesWithoutBottom = PaddingValues(
         start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
         end = paddingValues.calculateEndPadding(LayoutDirection.Ltr),
@@ -208,6 +216,19 @@ private fun AccountContent(
                 }
             },
             modifier = Modifier
+                .clickable(interactionSource = interactionSource, indication = null) {
+                    clickCount++
+                    if (clickCount % 5 == 0) {
+                        if (InAppUpdatesUtil.isTestingEnabled(context)) {
+                            InAppUpdatesUtil.setTestingEnabled(context, false)
+                            Toast.makeText(context, org.tiqr.data.R.string.app_update_testing_disabled, Toast.LENGTH_LONG).show()
+                        } else {
+                            InAppUpdatesUtil.setTestingEnabled(context, true)
+                            Toast.makeText(context, org.tiqr.data.R.string.app_update_testing_enabled, Toast.LENGTH_LONG).show()
+
+                        }
+                    }
+                }
                 .fillMaxWidth()
                 .constrainAs(title) {
                     top.linkTo(parent.top)

@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import nl.eduid.graphs.MainGraph
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import org.tiqr.data.util.InAppUpdatesUtil
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -34,6 +35,7 @@ class MainComposeActivity : ComponentActivity() {
 
             }
         }
+        InAppUpdatesUtil.checkForUpdates(this)
     }
 
     override fun onResume() {

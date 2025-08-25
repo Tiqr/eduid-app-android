@@ -30,23 +30,16 @@ import javax.inject.Inject
 class PersonalInfoViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val assistant: DataAssistant,
-    private val runtimeBehavior: RuntimeBehavior
+    runtimeBehavior: RuntimeBehavior
 ) : ViewModel() {
     private val _errorData: MutableStateFlow<ErrorData?> = MutableStateFlow(null)
     private val _isProcessing: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val _linkUrl: MutableStateFlow<Intent?> = MutableStateFlow(null)
 
-    val fallbackMethodEnabled = runtimeBehavior.isFeatureEnabled(FeatureFlag.FALLBACK_METHOD)
-
     val uiState = assistant.observableDetails.map {
         when (it) {
             is SaveableResult.Success -> {
                 var personalInfo = PersonalInfo.fromUserDetails(it.data, assistant)
-                if (!fallbackMethodEnabled) {
-                    personalInfo = personalInfo.copy(
-                        controlCode = null
-                    )
-                }
                 if (it.saveError != null) {
                     _errorData.emit(it.saveError.toErrorData())
                 }

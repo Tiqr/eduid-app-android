@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import nl.eduid.ErrorData
 import nl.eduid.R
 import nl.eduid.screens.personalinfo.PersonalInfoRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,19 +38,17 @@ class ResetPasswordViewModel @Inject constructor(
 
     fun resetPasswordLink() = viewModelScope.launch {
         uiState = uiState.copy(inProgress = true, errorData = null)
-        val userDetails = repository.resetPasswordLink()
-        if (userDetails != null) {
+        try {
+            repository.generatePasswordCode()
             uiState =
                 uiState.copy(
-                    inProgress = false,
                     errorData = null,
                     isCompleted = Unit
                 )
-
-        } else {
+        } catch (ex: Exception) {
+            Timber.w(ex, "Failed to send code via email to change the password")
             uiState =
                 uiState.copy(
-                    inProgress = false,
                     errorData = ErrorData(
                         titleId = R.string.Generic_RequestError_Title_COPY,
                         messageId = R.string.ResponseErrors_RequestResetLinkError_COPY,

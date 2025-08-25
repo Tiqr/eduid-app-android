@@ -287,21 +287,42 @@
 
                 <data
                     android:host="*.eduid.nl"
-                    android:scheme="https"
                     android:path="/client/mobile/external-account-linked"
+                    android:scheme="https"
                     tools:ignore="IntentFilterUniqueDataAttributes" />
                 <data
-                    android:scheme="eduid"
                     android:host="*"
                     android:path="/client/mobile/external-account-linked"
+                    android:scheme="eduid"
                     tools:ignore="IntentFilterUniqueDataAttributes" />
+            </intent-filter>
+
+            <!-- Subject already linked -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*.eduid.nl"
+                    android:pathPrefix="/client/mobile/verify-already-used"
+                    android:scheme="https"
+                    tools:ignore="IntentFilterUniqueDataAttributes" />
+
+                <data
+                    android:host="*"
+                    android:path="/client/mobile/verify-already-used"
+                    android:scheme="eduid"
+                    tools:ignore="IntentFilterUniqueDataAttributes" />
+
             </intent-filter>
         </activity>
 
         <activity
             android:name="net.openid.appauth.RedirectUriReceiverActivity"
-            tools:node="replace"
-            android:exported="true">
+            android:exported="true"
+            tools:node="replace">
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 

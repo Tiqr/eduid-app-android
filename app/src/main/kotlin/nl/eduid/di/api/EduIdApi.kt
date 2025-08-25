@@ -4,13 +4,16 @@ import nl.eduid.di.model.ConfirmDeactivationCode
 import nl.eduid.di.model.ConfirmPhoneCode
 import nl.eduid.di.model.ControlCode
 import nl.eduid.di.model.ControlCodeRequest
+import nl.eduid.di.model.CreateWithOneTimeCodeResponse
 import nl.eduid.di.model.DeleteServiceRequest
 import nl.eduid.di.model.DeleteTokensRequest
 import nl.eduid.di.model.EmailChangeRequest
 import nl.eduid.di.model.EnrollResponse
+import nl.eduid.di.model.GenerateEmailCodeRequest
 import nl.eduid.di.model.IdpScoping
 import nl.eduid.di.model.InstitutionNameResponse
 import nl.eduid.di.model.LinkedAccountUpdateRequest
+import nl.eduid.di.model.OneTimeCodeResponse
 import nl.eduid.di.model.RequestEduIdAccount
 import nl.eduid.di.model.RequestPhoneCode
 import nl.eduid.di.model.SelfAssertedName
@@ -19,6 +22,7 @@ import nl.eduid.di.model.UpdatePasswordRequest
 import nl.eduid.di.model.UrlResponse
 import nl.eduid.di.model.UserDetails
 import nl.eduid.di.model.VerifyIssuer
+import nl.eduid.di.model.VerifyOneTimeCodeRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -35,6 +39,31 @@ interface EduIdApi {
     suspend fun createNewEduIdAccount(
         @Body request: RequestEduIdAccount,
     ): Response<Unit>
+
+    @POST("/mobile/api/idp/v2/create")
+    suspend fun createNewEduIdAccountWithOneTimeCode(
+        @Body request: RequestEduIdAccount,
+    ): Response<CreateWithOneTimeCodeResponse>
+
+    @GET("/mobile/api/idp/v2/resend_code_request")
+    suspend fun resendOneTimeCodeRequest(
+        @Query("hash") hash: String,
+    ): Response<Unit>
+
+    @PUT("/mobile/api/sp/verify-email-code")
+    suspend fun verifyEmailCode(
+        @Body request: VerifyOneTimeCodeRequest,
+    ): Response<OneTimeCodeResponse>
+
+    @PUT("/mobile/api/sp/verify-password-code")
+    suspend fun verifyPasswordCode(
+        @Body request: VerifyOneTimeCodeRequest,
+    ): Response<OneTimeCodeResponse>
+
+    @PUT("/mobile/api/idp/v2/verify_code_request")
+    suspend fun verifyOneTimeCodeRequest(
+        @Body request: VerifyOneTimeCodeRequest,
+    ): Response<OneTimeCodeResponse>
 
     @DELETE("/mobile/api/sp/delete")
     suspend fun deleteAccount(): Response<Unit>
@@ -90,9 +119,9 @@ interface EduIdApi {
         @Query("h") hash: String,
     ): Response<UserDetails>
 
-    @PUT("/mobile/api/sp/email")
-    suspend fun requestEmailChange(
-        @Body email: EmailChangeRequest,
+    @PUT("/mobile/api/sp/generate-email-code")
+    suspend fun generateEmailCode(
+        @Body request: GenerateEmailCodeRequest,
     ): Response<UserDetails>
 
     @PUT("/mobile/api/sp/institution")
@@ -118,8 +147,8 @@ interface EduIdApi {
         @Body selfName: SelfAssertedName,
     ): Response<UserDetails>
 
-    @PUT("/mobile/api/sp/reset-password-link")
-    suspend fun resetPasswordLink(): Response<UserDetails>
+    @PUT("/mobile/api/sp/generate-password-code")
+    suspend fun generatePasswordCode(): Response<Unit>
 
     @PUT("/mobile/api/sp/update-password")
     suspend fun updatePassword(

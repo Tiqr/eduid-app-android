@@ -161,7 +161,8 @@ private fun PhoneRequestCodeContent(
             colors = outlinedTextColors(),
             value = uiState.input,
             keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Done, keyboardType = KeyboardType.Number
+                imeAction = ImeAction.Done,
+                keyboardType = KeyboardType.Phone,
             ),
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
             onValueChange = onValueChange,

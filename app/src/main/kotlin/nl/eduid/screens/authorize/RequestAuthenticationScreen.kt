@@ -21,6 +21,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import nl.eduid.R
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
@@ -93,7 +94,8 @@ private fun RequestAuthenticationContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                lineHeight = 36.sp
             )
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,

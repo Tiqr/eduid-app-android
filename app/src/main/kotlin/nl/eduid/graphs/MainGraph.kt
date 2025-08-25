@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -32,6 +33,8 @@ import nl.eduid.screens.editemail.EditEmailScreen
 import nl.eduid.screens.editemail.EditEmailViewModel
 import nl.eduid.screens.editname.EditNameFormScreen
 import nl.eduid.screens.editname.EditNameFormViewModel
+import nl.eduid.screens.emailcodeentry.EmailCodeEntryScreen
+import nl.eduid.screens.emailcodeentry.EmailCodeEntryViewModel
 import nl.eduid.screens.externalaccountlinkederror.ExternalAccountLinkedErrorScreen
 import nl.eduid.screens.firsttimedialog.FirstTimeDialogRoute
 import nl.eduid.screens.firsttimedialog.LinkAccountViewModel
@@ -120,6 +123,7 @@ fun MainGraph(
         val isEnrolment = entry.arguments?.getBoolean(Account.ScanQR.isEnrolment, false) ?: false
         ScanScreen(viewModel = viewModel, isEnrolment = isEnrolment, goBack = { navController.popBackStack() }, goToNext = { challenge ->
             val encodedChallenge = viewModel.encodeChallenge(challenge)
+            viewModel.setAsQrEnrollment(challenge is EnrollmentChallenge)
             if (challenge is EnrollmentChallenge) {
                 navController.goToWithPopCurrent(
                     "${Account.EnrollPinSetup.route}/$encodedChallenge"
@@ -206,10 +210,11 @@ fun MainGraph(
 
     //region OAuth-Conditional
     composable(
-        route = OAuth.route,
+        route = OAuth.routeWithArgs,
+        arguments = OAuth.arguments
     ) { entry ->
         val viewModel = hiltViewModel<OAuthViewModel>(entry)
-        ExampleAnimation {
+        FadeAnimation {
             OAuthScreen(viewModel = viewModel) {
                 navController.popBackStack()
             }
@@ -223,9 +228,40 @@ fun MainGraph(
     composable(Graph.REQUEST_EDU_ID_FORM) {
         val viewModel = hiltViewModel<RequestEduIdFormViewModel>(it)
         RequestEduIdFormScreen(viewModel = viewModel,
-            goToEmailLinkSent = { email -> navController.goToEmailSent(email) },
+            goToNextScreen = { email, codeHash ->
+                navController.navigate(EmailCodeEntry.routeWithArgs(email, codeHash, EmailCodeEntryViewModel.CodeContext.Registration))
+            },
             onBackClicked = { navController.popBackStack() })
     }
+
+    composable(
+        route = EmailCodeEntry.routeWithArgs,
+        arguments = EmailCodeEntry.arguments
+    ) {
+        val viewModel = hiltViewModel<EmailCodeEntryViewModel>(it)
+        EmailCodeEntryScreen(
+            viewModel = viewModel,
+            onBackClicked = { codeContext ->
+                if (codeContext == EmailCodeEntryViewModel.CodeContext.Registration) {
+                    // Registration flow is cancelled, go back to the home page
+                    navController.navigate(Graph.HOME_PAGE) {
+                        popUpTo(Graph.HOME_PAGE) {
+                            inclusive = true
+                        }
+                    }
+                } else {
+                    navController.popBackStack(Security.Settings.route, inclusive = false)
+                }
+            },
+            continueWithHash = { codeHash ->
+                navController.previousBackStackEntry
+                    ?.savedStateHandle
+                    ?.set(EmailCodeEntryViewModel.KEY_CODE_RESULT_HASH, codeHash)
+                navController.popBackStack()
+            },
+        )
+    }
+
 
     composable(//region MagicLink sent
         route = RequestEduIdLinkSent.routeWithArgs, arguments = RequestEduIdLinkSent.arguments
@@ -354,6 +390,12 @@ fun MainGraph(
                 uriPattern = AccountLinked.getUriPatternFailed(baseUrl)
             },
             navDeepLink {
+                uriPattern = AccountLinked.getUriPatternSubjectAlreadyLinked(baseUrl)
+            },
+            navDeepLink {
+                uriPattern = AccountLinked.getUriPatternSubjectAlreadyLinkedCustomScheme()
+            },
+            navDeepLink {
                 uriPattern = AccountLinked.getUriPatternExpired(baseUrl)
             },
         ),
@@ -424,12 +466,23 @@ fun MainGraph(
         }
     }//endregion
 
-    composable(Graph.EDIT_EMAIL) {//region Edit email
+    composable(Graph.EDIT_EMAIL) {
         val viewModel = hiltViewModel<EditEmailViewModel>(it)
+        val savedStateHandle = it.savedStateHandle
+        // Check if a result was returned from the one time email code verification
+        LaunchedEffect(savedStateHandle) {
+            if (savedStateHandle.contains(EmailCodeEntryViewModel.KEY_CODE_RESULT_HASH)) {
+                viewModel.confirmEmailChange(
+                    savedStateHandle.get<String>(EmailCodeEntryViewModel.KEY_CODE_RESULT_HASH)!!
+                )
+            }
+        }
         EditEmailScreen(
             viewModel = viewModel,
             goBack = { navController.popBackStack() },
-            onSaveNewEmailRequested = { email -> navController.goToEmailSent(email) },
+            onSaveNewEmailRequested = { newEmail ->
+                navController.navigate(EmailCodeEntry.routeWithArgs(email = newEmail, codeHash = null, codeContext = EmailCodeEntryViewModel.CodeContext.ChangeEmail))
+            }
         )
     }//endregion
 
@@ -525,7 +578,12 @@ fun MainGraph(
             })
     }
     //region Configure Password: add, change or remove
-    configurePasswordFlow(navController, baseUrl) { navController.navigate(Security.Settings.route) }
+    configurePasswordFlow(navController, baseUrl) {
+        navController.navigate(Security.Settings.route) {
+            popUpTo(Security.Settings.route) { inclusive = true
+            }
+        }
+    }
     //endregion
 
     //region Verify identity

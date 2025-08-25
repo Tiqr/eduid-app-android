@@ -10,7 +10,6 @@ data class UiState(
     val isCompleted: Unit? = null,
 )
 
-sealed class Password {
-    object Add : Password()
-    object Change : Password()
+enum class Password {
+    Add, Change
 }
