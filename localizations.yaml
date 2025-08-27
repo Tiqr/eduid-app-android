@@ -90,15 +90,15 @@ SHARED:
     PersonalInfo:
       COPY:
         en: Personal info
-        nl: Je gegevens
+        nl: Persoonlijke info
     DataActivity:
       COPY:
-        en: Activity
-        nl: Activiteit
+        en: Data & activity
+        nl: Data & activiteit
     Security:
       COPY:
         en: Security
-        nl: Veiligheid
+        nl: Beveiling
     Account:
       COPY:
         en: Account
@@ -987,8 +987,8 @@ SHARED:
         nl: Niet ondersteund
     UseMagicLink:
       COPY:
-        en: Verification code email
-        nl: Verificatie-code e-mail
+        en: Magic link email
+        nl: Link via e-mail
     UseCode:
       COPY:
         en: Verification code email
@@ -1302,12 +1302,12 @@ SHARED:
         nl: Welkom %1{{s}}
     DataAndActivity:
       COPY:
-        en: Activity
-        nl: Activiteit
+        en: Data & activity
+        nl: Data & activiteit
     Personal:
       COPY:
         en: Personal info
-        nl: Je gegevens
+        nl: Persoonlijke info
     Security:
       COPY:
         en: Security
@@ -2661,8 +2661,8 @@ SHARED:
         nl: Typ een wachtwoord
     UseMagicLink:
       COPY:
-        en: Verificatie-code e-mail
-        nl: Verificatie-code e-mail
+        en: Email a magic link
+        nl: Gebruik magische link
     UseMagicLinkNoWebAuthn:
       COPY:
         en: Email a magic link.
