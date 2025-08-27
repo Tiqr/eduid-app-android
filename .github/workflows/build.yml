@@ -61,6 +61,7 @@ jobs:
       - name: Build nl.eduid.testing Bundle for Play store upload
         run: ./gradlew bundleDebug
       - name: Sign nl.eduid.testing Bundle with developer key for Play store upload
+        if: ${{ !startsWith(github.ref_name, 'dependabot/') }}
         id: sign_aab
         uses: r0adkll/sign-android-release@v1
         with:
@@ -70,6 +71,7 @@ jobs:
           keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
           keyPassword: ${{ secrets.KEYPASSWORD }}
       - name: Publish nl.eduid.testing to play store internal test track
+        if: ${{ !startsWith(github.ref_name, 'dependabot/') }}
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
