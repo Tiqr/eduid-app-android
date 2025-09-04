@@ -97,7 +97,7 @@
   <string name="Profile_TrustedInfo_COPY">"Je eduID is nog niet gekoppeld aan een officiële partij."</string>
   <string name="Profile_Link_COPY">"Koppel"</string>
   <string name="Profile_Institution_COPY">"Onderwijs- of onderzoeksinstelling"</string>
-  <string name="Profile_InstitutionAt_COPY">"Door "</string>
+  <string name="Profile_InstitutionAt_COPY">"Door &#37;1$s"</string>
   <string name="Profile_Employee_COPY">"Medewerker"</string>
   <string name="Profile_Affiliations_COPY">"Rol(len)"</string>
   <string name="Profile_Expires_COPY">"Koppeling verloopt"</string>
@@ -198,7 +198,7 @@
   <string name="Security_ProvidedBy_COPY">"Gedeeld door"</string>
   <string name="Security_NotAddedYet_COPY">"Nog niet toegevoegd aan je eduID"</string>
   <string name="Security_NotSupported_COPY">"Niet ondersteund"</string>
-  <string name="Security_UseMagicLink_COPY">"Link via e-mail"</string>
+  <string name="Security_UseMagicLink_COPY">"Verificatie-code e-mail"</string>
   <string name="Security_UseCode_COPY">"Verificatie-code e-mail"</string>
   <string name="Security_AddSecurityKeyInfo_COPY">"Je kunt een passkey toevoegen aan je eduID om in te loggen.\n Dit kan bijv. de ingebouwde sensor van je apparaat\nzijn (TouchID, FaceID) of een los hardwaretoken (YubiKey)."</string>
   <string name="Security_RememberMeInfo_COPY">"&lt;strong&gt;Dit apparaat wordt momenteel onthouden. Je wordt automatisch ingelogd op eduD&lt;/strong&gt;"</string>
@@ -540,7 +540,7 @@
   <string name="Login_UseCode_COPY">"E-mail een login code"</string>
   <string name="Login_UsePassword_COPY">"typ een wachtwoord"</string>
   <string name="Login_UsePasswordNoWebAuthn_COPY">"Typ een wachtwoord"</string>
-  <string name="Login_UseMagicLink_COPY">"Gebruik magische link"</string>
+  <string name="Login_UseMagicLink_COPY">"Verificatie-code e-mail"</string>
   <string name="Login_UseMagicLinkNoWebAuthn_COPY">"Gebruik magische link."</string>
   <string name="Login_UseWebAuth_COPY">"Log in in met een beveiligingssleutel"</string>
   <string name="Login_UseOr_COPY">" of "</string>
@@ -751,7 +751,7 @@
   <string name="CreateEduID_EnterPhoneNumber_PhoneFieldTitle_COPY">"Vul je telefoonnummer in"</string>
   <string name="CreateEduID_EnterPhoneNumber_PhoneFieldPlaceholder_COPY">"0612345678"</string>
   <string name="CreateEduID_EnterPhoneNumber_MainText_COPY">"Lukt het niet om in te loggen in eduID via de app of e-mail? Dan kun je ook met een sms-code inloggen.\n\nWelk telefoonnummer wil je hiervoor gebruiken?\n"</string>
-  <string name="CreateEduID_EnterPhoneNumber_BoldRange_COPY">"34"</string>
+  <string name="CreateEduID_EnterPhoneNumber_BoldRange_COPY">"38"</string>
   <string name="CreateEduID_EnterPhoneNumber_VerifyPhoneNumber_COPY">"Stuur sms-code"</string>
   <string name="CreateEduID_AddInstitution_MainTitle_COPY">"Je onderwijsinstelling is succesvol gekoppeld"</string>
   <string name="CreateEduID_AddInstitution_MainTitleBoldPart_COPY">"Je onderwijsinstelling"</string>
