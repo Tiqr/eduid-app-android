@@ -2,9 +2,9 @@
 <resources>
   <string name="About_Info_COPY">"App-informatie"</string>
   <string name="Sidebar_Home_COPY">"Home"</string>
-  <string name="Sidebar_PersonalInfo_COPY">"Persoonlijke info"</string>
-  <string name="Sidebar_DataActivity_COPY">"Data &amp; activiteit"</string>
-  <string name="Sidebar_Security_COPY">"Beveiling"</string>
+  <string name="Sidebar_PersonalInfo_COPY">"Je gegevens"</string>
+  <string name="Sidebar_DataActivity_COPY">"Activiteit"</string>
+  <string name="Sidebar_Security_COPY">"Veiligheid"</string>
   <string name="Sidebar_Account_COPY">"Account"</string>
   <string name="Start_Hi_COPY">"Hoi %1$s!"</string>
   <string name="Start_Manage_COPY">"Beheer je persoonlijke gegevens, privacy en de beveiliging van je eduID."</string>
@@ -97,7 +97,7 @@
   <string name="Profile_TrustedInfo_COPY">"Je eduID is nog niet gekoppeld aan een officiële partij."</string>
   <string name="Profile_Link_COPY">"Koppel"</string>
   <string name="Profile_Institution_COPY">"Onderwijs- of onderzoeksinstelling"</string>
-  <string name="Profile_InstitutionAt_COPY">"Door "</string>
+  <string name="Profile_InstitutionAt_COPY">"Door &#37;1$s"</string>
   <string name="Profile_Employee_COPY">"Medewerker"</string>
   <string name="Profile_Affiliations_COPY">"Rol(len)"</string>
   <string name="Profile_Expires_COPY">"Koppeling verloopt"</string>
@@ -198,7 +198,7 @@
   <string name="Security_ProvidedBy_COPY">"Gedeeld door"</string>
   <string name="Security_NotAddedYet_COPY">"Nog niet toegevoegd aan je eduID"</string>
   <string name="Security_NotSupported_COPY">"Niet ondersteund"</string>
-  <string name="Security_UseMagicLink_COPY">"Link via e-mail"</string>
+  <string name="Security_UseMagicLink_COPY">"Verificatie-code e-mail"</string>
   <string name="Security_UseCode_COPY">"Verificatie-code e-mail"</string>
   <string name="Security_AddSecurityKeyInfo_COPY">"Je kunt een passkey toevoegen aan je eduID om in te loggen.\n Dit kan bijv. de ingebouwde sensor van je apparaat\nzijn (TouchID, FaceID) of een los hardwaretoken (YubiKey)."</string>
   <string name="Security_RememberMeInfo_COPY">"&lt;strong&gt;Dit apparaat wordt momenteel onthouden. Je wordt automatisch ingelogd op eduD&lt;/strong&gt;"</string>
@@ -266,8 +266,8 @@
   <string name="ConfirmDeleteKey_Button_Cancel_COPY">"Nee, ga terug"</string>
   <string name="Home_Home_COPY">"Home"</string>
   <string name="Home_Welcome_COPY">"Welkom %1$s"</string>
-  <string name="Home_DataAndActivity_COPY">"Data &amp; activiteit"</string>
-  <string name="Home_Personal_COPY">"Persoonlijke info"</string>
+  <string name="Home_DataAndActivity_COPY">"Activiteit"</string>
+  <string name="Home_Personal_COPY">"Je gegevens"</string>
   <string name="Home_Security_COPY">"Beveiliging"</string>
   <string name="Home_Account_COPY">"Account"</string>
   <string name="Home_Institutions_COPY">"Koppelingen"</string>
@@ -540,7 +540,7 @@
   <string name="Login_UseCode_COPY">"E-mail een login code"</string>
   <string name="Login_UsePassword_COPY">"typ een wachtwoord"</string>
   <string name="Login_UsePasswordNoWebAuthn_COPY">"Typ een wachtwoord"</string>
-  <string name="Login_UseMagicLink_COPY">"Gebruik magische link"</string>
+  <string name="Login_UseMagicLink_COPY">"Verificatie-code e-mail"</string>
   <string name="Login_UseMagicLinkNoWebAuthn_COPY">"Gebruik magische link."</string>
   <string name="Login_UseWebAuth_COPY">"Log in in met een beveiligingssleutel"</string>
   <string name="Login_UseOr_COPY">" of "</string>
