@@ -3,7 +3,7 @@
   <string name="About_Info_COPY">"App information"</string>
   <string name="Sidebar_Home_COPY">"Home"</string>
   <string name="Sidebar_PersonalInfo_COPY">"Personal info"</string>
-  <string name="Sidebar_DataActivity_COPY">"Activity"</string>
+  <string name="Sidebar_DataActivity_COPY">"Data &amp; activity"</string>
   <string name="Sidebar_Security_COPY">"Security"</string>
   <string name="Sidebar_Account_COPY">"Account"</string>
   <string name="Start_Hi_COPY">"Hi %1$s!"</string>
@@ -97,7 +97,7 @@
   <string name="Profile_TrustedInfo_COPY">"You eduID is not yet connected to a official party"</string>
   <string name="Profile_Link_COPY">"Connect"</string>
   <string name="Profile_Institution_COPY">"Educational or research institution"</string>
-  <string name="Profile_InstitutionAt_COPY">"At "</string>
+  <string name="Profile_InstitutionAt_COPY">"At &#37;1$s"</string>
   <string name="Profile_Employee_COPY">"Employee"</string>
   <string name="Profile_Affiliations_COPY">"Role(s)"</string>
   <string name="Profile_Expires_COPY">"Connection expires"</string>
@@ -266,7 +266,7 @@
   <string name="ConfirmDeleteKey_Button_Cancel_COPY">"No, back"</string>
   <string name="Home_Home_COPY">"Home"</string>
   <string name="Home_Welcome_COPY">"Welcome %1$s"</string>
-  <string name="Home_DataAndActivity_COPY">"Activity"</string>
+  <string name="Home_DataAndActivity_COPY">"Data &amp; activity"</string>
   <string name="Home_Personal_COPY">"Personal info"</string>
   <string name="Home_Security_COPY">"Security"</string>
   <string name="Home_Account_COPY">"Account"</string>
@@ -751,7 +751,7 @@
   <string name="CreateEduID_EnterPhoneNumber_PhoneFieldTitle_COPY">"Enter your phone number"</string>
   <string name="CreateEduID_EnterPhoneNumber_PhoneFieldPlaceholder_COPY">"0612345678"</string>
   <string name="CreateEduID_EnterPhoneNumber_MainText_COPY">"Having trouble logging in to eduID via the app or email? You can also log in with an SMS code.\n\nWhich phone number would you like to use for this?\n"</string>
-  <string name="CreateEduID_EnterPhoneNumber_BoldRange_COPY">"32"</string>
+  <string name="CreateEduID_EnterPhoneNumber_BoldRange_COPY">"34"</string>
   <string name="CreateEduID_EnterPhoneNumber_VerifyPhoneNumber_COPY">"Send SMS code"</string>
   <string name="CreateEduID_AddInstitution_MainTitle_COPY">"Your educational institution has been successfully connected"</string>
   <string name="CreateEduID_AddInstitution_MainTitleBoldPart_COPY">"Your educational institution"</string>

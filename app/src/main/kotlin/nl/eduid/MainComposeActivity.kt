@@ -17,6 +17,7 @@ import nl.eduid.graphs.MainGraph
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import org.tiqr.data.util.InAppUpdatesUtil
 import timber.log.Timber
+import androidx.core.net.toUri
 
 @AndroidEntryPoint
 class MainComposeActivity : ComponentActivity() {
@@ -45,11 +46,8 @@ class MainComposeActivity : ComponentActivity() {
         }
         if (intent?.dataString == null) {
             viewModel.getLastNotificationChallenge(this)?.let { challenge ->
-                if (intent == null) {
-                    intent = Intent()
-                }
-                intent.setData(Uri.parse(challenge))
-                navController?.navigate(Uri.parse(challenge))
+                val newIntent = Intent(Intent.ACTION_VIEW, challenge.toUri())
+                startActivity(newIntent)
             }
         }
         if (BuildConfig.DEBUG) {

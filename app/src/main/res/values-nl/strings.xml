@@ -2,9 +2,9 @@
 <resources>
   <string name="About_Info_COPY">"App-informatie"</string>
   <string name="Sidebar_Home_COPY">"Home"</string>
-  <string name="Sidebar_PersonalInfo_COPY">"Je gegevens"</string>
-  <string name="Sidebar_DataActivity_COPY">"Activiteit"</string>
-  <string name="Sidebar_Security_COPY">"Veiligheid"</string>
+  <string name="Sidebar_PersonalInfo_COPY">"Persoonlijke info"</string>
+  <string name="Sidebar_DataActivity_COPY">"Data &amp; activiteit"</string>
+  <string name="Sidebar_Security_COPY">"Beveiling"</string>
   <string name="Sidebar_Account_COPY">"Account"</string>
   <string name="Start_Hi_COPY">"Hoi %1$s!"</string>
   <string name="Start_Manage_COPY">"Beheer je persoonlijke gegevens, privacy en de beveiliging van je eduID."</string>
@@ -97,7 +97,7 @@
   <string name="Profile_TrustedInfo_COPY">"Je eduID is nog niet gekoppeld aan een officiële partij."</string>
   <string name="Profile_Link_COPY">"Koppel"</string>
   <string name="Profile_Institution_COPY">"Onderwijs- of onderzoeksinstelling"</string>
-  <string name="Profile_InstitutionAt_COPY">"Door "</string>
+  <string name="Profile_InstitutionAt_COPY">"Door &#37;1$s"</string>
   <string name="Profile_Employee_COPY">"Medewerker"</string>
   <string name="Profile_Affiliations_COPY">"Rol(len)"</string>
   <string name="Profile_Expires_COPY">"Koppeling verloopt"</string>
@@ -266,8 +266,8 @@
   <string name="ConfirmDeleteKey_Button_Cancel_COPY">"Nee, ga terug"</string>
   <string name="Home_Home_COPY">"Home"</string>
   <string name="Home_Welcome_COPY">"Welkom %1$s"</string>
-  <string name="Home_DataAndActivity_COPY">"Activiteit"</string>
-  <string name="Home_Personal_COPY">"Je gegevens"</string>
+  <string name="Home_DataAndActivity_COPY">"Data &amp; activiteit"</string>
+  <string name="Home_Personal_COPY">"Persoonlijke info"</string>
   <string name="Home_Security_COPY">"Beveiliging"</string>
   <string name="Home_Account_COPY">"Account"</string>
   <string name="Home_Institutions_COPY">"Koppelingen"</string>
@@ -751,7 +751,7 @@
   <string name="CreateEduID_EnterPhoneNumber_PhoneFieldTitle_COPY">"Vul je telefoonnummer in"</string>
   <string name="CreateEduID_EnterPhoneNumber_PhoneFieldPlaceholder_COPY">"0612345678"</string>
   <string name="CreateEduID_EnterPhoneNumber_MainText_COPY">"Lukt het niet om in te loggen in eduID via de app of e-mail? Dan kun je ook met een sms-code inloggen.\n\nWelk telefoonnummer wil je hiervoor gebruiken?\n"</string>
-  <string name="CreateEduID_EnterPhoneNumber_BoldRange_COPY">"34"</string>
+  <string name="CreateEduID_EnterPhoneNumber_BoldRange_COPY">"38"</string>
   <string name="CreateEduID_EnterPhoneNumber_VerifyPhoneNumber_COPY">"Stuur sms-code"</string>
   <string name="CreateEduID_AddInstitution_MainTitle_COPY">"Je onderwijsinstelling is succesvol gekoppeld"</string>
   <string name="CreateEduID_AddInstitution_MainTitleBoldPart_COPY">"Je onderwijsinstelling"</string>
