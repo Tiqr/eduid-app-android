@@ -119,7 +119,7 @@ constructor(
     suspend fun removeConnection(subjectId: String) = withContext(dispatcher) {
         val currentDetails = currentCachedSettings() ?: fetchDetails()
         val linkedAccount =
-            currentDetails?.linkedAccounts?.firstOrNull { it.subjectId == subjectId }
+            currentDetails?.linkedAccounts?.firstOrNull { it.subjectId == subjectId || it.institutionIdentifier == subjectId }
         linkedAccount?.let {
             val updateRequest = LinkedAccountUpdateRequest(
                 eduPersonPrincipalName = it.eduPersonPrincipalName,
