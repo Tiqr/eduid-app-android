@@ -68,7 +68,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ steps.sign_apk.outputs.signedReleaseFile }}
-        asset_name: tiqr-${{ github.ref_name }}.apk
+        asset_name: eduid-${{ github.ref_name }}.apk
         asset_content_type: application/zip
   
     - name: Publish to nl.eduid play store test track
