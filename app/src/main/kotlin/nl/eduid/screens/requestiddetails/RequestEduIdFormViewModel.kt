@@ -70,7 +70,19 @@ class RequestEduIdFormViewModel @Inject constructor(
         resendOneTimeCodeHash.value = result.hash
         val newData = when (result.code) {
             CREATE_EMAIL_SENT -> {
-                inputForm.copy(isProcessing = false, requestComplete = true)
+                // The server should always return a hash here, but in case it doesn't, we handle it gracefully
+                if (resendOneTimeCodeHash.value != null) {
+                    inputForm.copy(isProcessing = false, requestComplete = true)
+                } else {
+                    inputForm.copy(
+                        isProcessing = false, errorData = ErrorData(
+                            titleId = R.string.Generic_RequestError_Title_COPY,
+                            messageId = R.string.ResponseErrors_AccountCreateError_COPY,
+                            messageArg = inputForm.email
+                        )
+                    )
+
+                }
             }
 
             FAIL_EMAIL_IN_USE -> {
