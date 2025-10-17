@@ -372,7 +372,7 @@
   <string name="Password_Back_COPY">"/security"</string>
   <string name="Password_PasswordDisclaimer_COPY">"Make sure it's at least 15 characters OR at least 8 characters including a number and an uppercase letter."</string>
   <string name="Password_InvalidCurrentPassword_COPY">"Your current password is invalid."</string>
-  <string name="Password_PasswordResetHashExpired_COPY">"Your password reset code has expired. "</string>
+  <string name="Password_PasswordResetHashExpired_COPY">"Your password code has expired. "</string>
   <string name="Password_ForgotPassword_COPY">"I forgot my password"</string>
   <string name="Password_PasswordResetSendAgain_COPY">"Send an email to reset my password."</string>
   <string name="Password_ForgotPasswordConfirmation_COPY">"Forgot your password? Press 'Confirm' below to instantly receive an email with a code to reset your current password."</string>

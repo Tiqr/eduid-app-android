@@ -372,7 +372,7 @@
   <string name="Password_Back_COPY">"/security"</string>
   <string name="Password_PasswordDisclaimer_COPY">"Kies een wachtwoord van tenminste 8 karakters met minimaal een hoofdletter en een cijfer. Een langer wachtwoord van minimaal 15 karakters mag ook."</string>
   <string name="Password_InvalidCurrentPassword_COPY">"Je huidige wachtwoord is niet correct."</string>
-  <string name="Password_PasswordResetHashExpired_COPY">"De code om je wachtwoord opnieuw in te stellen is verlopen. "</string>
+  <string name="Password_PasswordResetHashExpired_COPY">"De code om je wachtwoord in te stellen is verlopen. "</string>
   <string name="Password_ForgotPassword_COPY">"Ik ben mijn wachtwoord vergeten"</string>
   <string name="Password_PasswordResetSendAgain_COPY">"Stuur een e-mail om mijn wachtwoord opnieuw in te stellen."</string>
   <string name="Password_ForgotPasswordConfirmation_COPY">"Wachtwoord vergeten? Druk hieronder op 'Bevestigen' om direct een e-mail te ontvangen met een code, waarmee je je huidige wachtwoord opnieuw kunt instellen."</string>
