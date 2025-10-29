@@ -751,7 +751,7 @@
   <string name="CreateEduID_EnterPhoneNumber_PhoneFieldTitle_COPY">"Enter your phone number"</string>
   <string name="CreateEduID_EnterPhoneNumber_PhoneFieldPlaceholder_COPY">"0612345678"</string>
   <string name="CreateEduID_EnterPhoneNumber_MainText_COPY">"Having trouble logging in to eduID via the app or email? You can also log in with an SMS code.\n\nWhich phone number would you like to use for this?\n"</string>
-  <string name="CreateEduID_EnterPhoneNumber_BoldRange_COPY">"32"</string>
+  <string name="CreateEduID_EnterPhoneNumber_BoldRange_COPY">"34"</string>
   <string name="CreateEduID_EnterPhoneNumber_VerifyPhoneNumber_COPY">"Send SMS code"</string>
   <string name="CreateEduID_AddInstitution_MainTitle_COPY">"Your educational institution has been successfully connected"</string>
   <string name="CreateEduID_AddInstitution_MainTitleBoldPart_COPY">"Your educational institution"</string>

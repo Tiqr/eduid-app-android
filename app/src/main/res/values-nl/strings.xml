@@ -751,7 +751,7 @@
   <string name="CreateEduID_EnterPhoneNumber_PhoneFieldTitle_COPY">"Vul je telefoonnummer in"</string>
   <string name="CreateEduID_EnterPhoneNumber_PhoneFieldPlaceholder_COPY">"0612345678"</string>
   <string name="CreateEduID_EnterPhoneNumber_MainText_COPY">"Lukt het niet om in te loggen in eduID via de app of e-mail? Dan kun je ook met een sms-code inloggen.\n\nWelk telefoonnummer wil je hiervoor gebruiken?\n"</string>
-  <string name="CreateEduID_EnterPhoneNumber_BoldRange_COPY">"34"</string>
+  <string name="CreateEduID_EnterPhoneNumber_BoldRange_COPY">"38"</string>
   <string name="CreateEduID_EnterPhoneNumber_VerifyPhoneNumber_COPY">"Stuur sms-code"</string>
   <string name="CreateEduID_AddInstitution_MainTitle_COPY">"Je onderwijsinstelling is succesvol gekoppeld"</string>
   <string name="CreateEduID_AddInstitution_MainTitleBoldPart_COPY">"Je onderwijsinstelling"</string>
