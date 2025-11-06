@@ -167,7 +167,7 @@ private fun ConfirmCodeContent(
 //        }
     }
     PrimaryButton(
-        text = stringResource(R.string.PhoneVerification_Verify_COPY),
+        text = stringResource(R.string.Profile_Verify_COPY),
         enabled = uiState.input.isNotEmpty(),
         onClick = onClick,
         modifier = Modifier

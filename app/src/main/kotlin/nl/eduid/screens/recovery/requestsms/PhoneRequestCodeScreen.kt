@@ -173,7 +173,7 @@ private fun PhoneRequestCodeContent(
         )
     }
     PrimaryButton(
-        text = stringResource(R.string.Profile_Verify_COPY),
+        text = stringResource(R.string.PhoneVerification_Verify_COPY),
         onClick = onClick,
         enabled = uiState.input.isNotEmpty(),
         modifier = Modifier
