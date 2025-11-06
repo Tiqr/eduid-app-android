@@ -55,7 +55,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import nl.eduid.R
 import nl.eduid.di.model.ControlCode
 import nl.eduid.di.model.SelfAssertedName
-import nl.eduid.screens.firsttimedialog.LinkAccountContract
+import nl.eduid.screens.personalinfo.LinkAccountContract
 import nl.eduid.screens.personalinfo.banners.ControlCodeBanner
 import nl.eduid.screens.personalinfo.banners.NotVerifiedBanner
 import nl.eduid.ui.AlertDialogWithSingleButton
