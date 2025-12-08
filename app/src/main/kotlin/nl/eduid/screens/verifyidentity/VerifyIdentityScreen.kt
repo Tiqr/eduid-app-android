@@ -161,15 +161,6 @@ fun VerifyIdentityScreenContent(
                     modifier = Modifier.fillMaxWidth()
                         .padding(top = 16.dp)
                 )
-                Text(
-                    text = stringResource(R.string.VerifyIdentity_Title_SecondLine_COPY),
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        textAlign = TextAlign.Start
-                    ),
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(top = 6.dp)
-
-                )
             }
             Spacer(Modifier.height(16.dp))
             val subtitle = if (isLinkedAccount) {
@@ -232,7 +223,7 @@ fun VerifyIdentityScreenContent(
                 }
             }
         }
-        if (!isLinkedAccount && moreOptionsExpanded) {
+        if (!isLinkedAccount && |-) {
             Box(
                 Modifier.background(InfoTabDarkFill)
                     .fillMaxWidth()
