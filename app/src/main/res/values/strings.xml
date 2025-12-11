@@ -885,6 +885,7 @@
   <string name="ServiceDesk_ControlCode_Banner_COPY">"Verify your identity at an eduID Service Desk by presenting your ID and verification code."</string>
   <string name="ServiceDesk_ControlCode_ShowCode_COPY">"Show code"</string>
   <string name="ServiceDesk_ControlCode_ValidityCode_COPY">"Your code is valid for &#37;1$s more days."</string>
+  <string name="ServiceDesk_ControlCode_CantUse_COPY">"I can't use any of the above methods"</string>
   <string name="UseCode_Header_COPY">"Request a code"</string>
   <string name="UseCode_Next_COPY">"Send a code"</string>
   <string name="LoginCode_Header_COPY">"Check your email"</string>
