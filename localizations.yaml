@@ -3992,8 +3992,8 @@ SHARED:
           nl: Neem contact op met de Service Desk
     SupportLink:
       COPY:
-        en: "https://eduid.nl/help-en/"
-        nl: "https://eduid.nl/help/"
+        en: "https://eduid.nl/support/?lang=en"
+        nl: "https://eduid.nl/support/?lang=nl"
   SelectYourBank:
     Title:
       COPY:

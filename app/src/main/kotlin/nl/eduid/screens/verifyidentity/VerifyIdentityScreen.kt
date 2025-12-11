@@ -22,7 +22,6 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -31,7 +30,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -79,6 +77,7 @@ fun VerifyIdentityScreen(
         goToBankSelectionScreen = goToBankSelectionScreen,
         requestInstitutionLink = viewModel::requestInstitutionLink,
         requestEidasLink = viewModel::requestEidasLink,
+        goToFallbackMethodScreen = goToFallbackMethodScreen,
         padding = padding
     )
 }
@@ -91,6 +90,7 @@ fun VerifyIdentityScreenContent(
     goToBankSelectionScreen: () -> Unit,
     requestInstitutionLink: () -> Unit,
     requestEidasLink: () -> Unit,
+    goToFallbackMethodScreen: () -> Unit,
     padding: PaddingValues = PaddingValues(),
 ) {
     val context = LocalContext.current
@@ -163,17 +163,11 @@ fun VerifyIdentityScreenContent(
                     onClick = requestEidasLink
                 )
 
-                val uriHandler = LocalUriHandler.current
-                val supportUrl = stringResource(R.string.VerifyIdentity_SupportLink_COPY)
                 VerifyIdentityOption(
                     title = stringResource(R.string.VerifyIdentity_Button_ContactServiceDesk_COPY),
                     icon = R.drawable.ic_verify_support,
                     isLoading = isLoading,
-                    onClick = {
-                        uriHandler.openUri(
-                            uri = supportUrl,
-                        )
-                    }
+                    onClick = goToFallbackMethodScreen
                 )
             }
             Spacer(Modifier.height(24.dp))
@@ -227,7 +221,7 @@ private fun VerifyIdentityOption(
         contentPadding = PaddingValues(vertical = 12.dp, horizontal = 24.dp),
         modifier = modifier.fillMaxWidth(),
     ) {
-        Box(modifier = Modifier.fillMaxWidth()){
+        Box(modifier = Modifier.fillMaxWidth()) {
             Image(
                 painter = painterResource(icon),
                 contentDescription = null,
@@ -252,7 +246,8 @@ fun VerifyIdentityScreenContent_Preview() {
             dismissError = {},
             goToBankSelectionScreen = {},
             requestInstitutionLink = {},
-            requestEidasLink = {}
+            requestEidasLink = {},
+            goToFallbackMethodScreen = {},
         )
     }
 }
