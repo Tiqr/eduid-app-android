@@ -824,7 +824,7 @@
   <string name="VerifyIdentity_Button_UseADutchBank_COPY">"Use a Dutch bank"</string>
   <string name="VerifyIdentity_Button_UseAEuropeanId_COPY">"Use a European ID"</string>
   <string name="VerifyIdentity_Button_ContactServiceDesk_COPY">"Contact the Service Desk"</string>
-  <string name="VerifyIdentity_SupportLink_COPY">"https://eduid.nl/help-en/"</string>
+  <string name="VerifyIdentity_SupportLink_COPY">"https://eduid.nl/support/?lang=en"</string>
   <string name="SelectYourBank_Title_COPY">"Select your bank"</string>
   <string name="SelectYourBank_Subtitle_Full_COPY">"Through iDIN, we receive your name and date of birth from your bank. This ensures we know who you are. You are not making a payment. Learn more about iDIN."</string>
   <string name="SelectYourBank_Subtitle_HighlightedPart_COPY">"You are not making a payment"</string>
