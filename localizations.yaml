@@ -3989,7 +3989,7 @@ SHARED:
       ContactServiceDesk:
         COPY:
           en: Contact the Service Desk
-          nl: Neem contact op met de Service Desk
+          nl: Contact met de Service Desk
     SupportLink:
       COPY:
         en: "https://eduid.nl/support/?lang=en"

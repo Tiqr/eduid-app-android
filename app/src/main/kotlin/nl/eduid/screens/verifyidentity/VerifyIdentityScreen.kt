@@ -46,7 +46,6 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.HighlightBackground
 import timber.log.Timber
 
-
 @Composable
 fun VerifyIdentityScreen(
     viewModel: VerifyIdentityViewModel,
@@ -54,7 +53,7 @@ fun VerifyIdentityScreen(
     goToFallbackMethodScreen: () -> Unit,
     goBack: () -> Unit,
 ) = EduIdTopAppBar(
-    onBackClicked = goBack
+    onBackClicked = goBack,
 ) { padding ->
     val launcher = rememberLauncherForActivityResult(contract = ExternalAccountLinkingContract(), onResult = { _ ->
         /**
@@ -78,7 +77,7 @@ fun VerifyIdentityScreen(
         requestInstitutionLink = viewModel::requestInstitutionLink,
         requestEidasLink = viewModel::requestEidasLink,
         goToFallbackMethodScreen = goToFallbackMethodScreen,
-        padding = padding
+        padding = padding,
     )
 }
 
@@ -100,7 +99,7 @@ fun VerifyIdentityScreenContent(
             title = errorData.title(context),
             explanation = errorData.message(context),
             buttonLabel = stringResource(R.string.Button_OK_COPY),
-            onDismiss = dismissError
+            onDismiss = dismissError,
         )
     }
 
@@ -110,25 +109,26 @@ fun VerifyIdentityScreenContent(
             .verticalScroll(rememberScrollState())
             .padding(padding)
             .systemBarsPadding(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Column(
-            Modifier.padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
+            Modifier.padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
         ) {
             Text(
                 text = stringResource(R.string.VerifyIdentity_Title_COPY),
                 style = MaterialTheme.typography.titleLarge.copy(
-                    textAlign = TextAlign.Start, color = MaterialTheme.colorScheme.onSecondary
+                    textAlign = TextAlign.Start,
+                    color = MaterialTheme.colorScheme.onSecondary,
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp)
+                    .padding(top = 16.dp),
             )
             Spacer(Modifier.height(16.dp))
             Text(
                 text = stringResource(R.string.VerifyIdentity_Subtitle_COPY),
                 style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
             Spacer(Modifier.height(16.dp))
 
@@ -137,58 +137,54 @@ fun VerifyIdentityScreenContent(
             Column(
                 modifier = Modifier
                     .padding(vertical = 20.dp, horizontal = 10.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 val noInstitution = annotatedStringWithBoldParts(
                     stringResource(R.string.VerifyIdentity_IfYouDontOwnAnAccount_Text_COPY),
-                    stringResource(R.string.VerifyIdentity_IfYouDontOwnAnAccount_BoldPart_COPY)
+                    stringResource(R.string.VerifyIdentity_IfYouDontOwnAnAccount_BoldPart_COPY),
                 )
                 Text(
                     text = noInstitution,
                     style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
 
                 VerifyIdentityOption(
                     title = stringResource(R.string.VerifyIdentity_Button_UseADutchBank_COPY),
                     icon = R.drawable.ic_verify_via_idin,
                     isLoading = isLoading,
-                    onClick = goToBankSelectionScreen
+                    onClick = goToBankSelectionScreen,
                 )
 
                 VerifyIdentityOption(
                     title = stringResource(R.string.VerifyIdentity_Button_UseAEuropeanId_COPY),
                     icon = R.drawable.ic_eidas,
                     isLoading = isLoading,
-                    onClick = requestEidasLink
+                    onClick = requestEidasLink,
                 )
 
                 VerifyIdentityOption(
                     title = stringResource(R.string.VerifyIdentity_Button_ContactServiceDesk_COPY),
                     icon = R.drawable.ic_verify_support,
                     isLoading = isLoading,
-                    onClick = goToFallbackMethodScreen
+                    onClick = goToFallbackMethodScreen,
                 )
             }
             Spacer(Modifier.height(24.dp))
         }
     }
-
 }
 
 @Composable
-private fun HighlightedVerifyIdentityOption(
-    onClick: () -> Unit,
-    isLoading: Boolean
-) = Column(
+private fun HighlightedVerifyIdentityOption(onClick: () -> Unit, isLoading: Boolean) = Column(
     modifier = Modifier
         .background(color = HighlightBackground)
         .padding(vertical = 20.dp, horizontal = 10.dp),
-    verticalArrangement = Arrangement.spacedBy(16.dp)
+    verticalArrangement = Arrangement.spacedBy(16.dp),
 ) {
     val viaInstitution = annotatedStringWithBoldParts(
         stringResource(R.string.VerifyIdentity_DoYouOwnAnAccount_Text_COPY),
-        stringResource(R.string.VerifyIdentity_DoYouOwnAnAccount_BoldPart_COPY)
+        stringResource(R.string.VerifyIdentity_DoYouOwnAnAccount_BoldPart_COPY),
     )
     Text(
         text = viaInstitution,
@@ -198,25 +194,19 @@ private fun HighlightedVerifyIdentityOption(
         text = stringResource(R.string.VerifyIdentity_DoYouOwnAnAccount_Button_COPY),
         enabled = !isLoading,
         onClick = onClick,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     )
 }
 
 @Composable
-private fun VerifyIdentityOption(
-    title: String,
-    icon: Int,
-    isLoading: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+private fun VerifyIdentityOption(title: String, icon: Int, isLoading: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
     OutlinedButton(
         onClick = onClick,
         enabled = !isLoading,
         shape = RoundedCornerShape(CornerSize(6.dp)),
         colors = ButtonDefaults.outlinedButtonColors(
             contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-            disabledContentColor = MaterialTheme.colorScheme.onTertiaryContainer
+            disabledContentColor = MaterialTheme.colorScheme.onTertiaryContainer,
         ),
         contentPadding = PaddingValues(vertical = 12.dp, horizontal = 24.dp),
         modifier = modifier.fillMaxWidth(),
@@ -225,7 +215,7 @@ private fun VerifyIdentityOption(
             Image(
                 painter = painterResource(icon),
                 contentDescription = null,
-                modifier = Modifier.align(Alignment.CenterStart)
+                modifier = Modifier.align(Alignment.CenterStart),
             )
             Text(
                 text = title,
@@ -253,7 +243,6 @@ fun VerifyIdentityScreenContent_Preview() {
 }
 
 class ExternalAccountLinkingContract : ActivityResultContract<Intent, Intent?>() {
-
     override fun createIntent(context: Context, input: Intent): Intent = input
 
     override fun parseResult(resultCode: Int, intent: Intent?): Intent? {
