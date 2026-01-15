@@ -22,7 +22,7 @@
   <string name="HomeView_ActivityButton_COPY">"Activiteit"</string>
   <string name="HomeView_ScanQRButton_COPY">"Scan QR"</string>
   <string name="ScanView_Title_COPY">"Scan de QR-code"</string>
-  <string name="ScanView_MainText_COPY">"&lt;b&gt;Zie je geen QR-code?&lt;/b&gt;&lt;br/&gt;\nGa naar &lt;a href=&quot;https://eduid.nl/security&quot; target=&quot;_blank&quot;&gt;eduid.nl/security&lt;/a&gt; op je computer&lt;br/&gt;\nMaak een QR-code&lt;br/&gt;\nScan de code hier\n"</string>
+  <string name="ScanView_MainText_COPY">"&lt;strong&gt;Zie je geen QR-code?&lt;/strong&gt;&lt;br/&gt;\nGa naar &lt;a href=&quot;https://eduid.nl/security&quot; target=&quot;_blank&quot;&gt;eduid.nl/security&lt;/a&gt; op je computer&lt;br/&gt;\nMaak een QR-code&lt;br/&gt;\nScan de code hier\n"</string>
   <string name="ScanView_MainTextBoldPart_COPY">"Zie je geen QR-code?"</string>
   <string name="ScanView_Flashlight_NotAvailable_COPY">"Zaklamp is niet beschikbaar"</string>
   <string name="ScanView_Flashlight_TurnOn_COPY">"Zet zaklamp aan"</string>
@@ -194,6 +194,8 @@
   <string name="Security_AddPassword_COPY">"Wachtwoord toevoegen"</string>
   <string name="Security_PasswordPlaceholder_COPY">"• • • • • • • • • •"</string>
   <string name="Security_ChangePassword_COPY">"Wachtwoord"</string>
+  <string name="Security_PasswordActivated_COPY">"Geactiveerd op %1$s"</string>
+  <string name="Security_CredentialActivated_COPY">"%1$s: Geactiveerd op %2$s"</string>
   <string name="Security_TwoFAKey_COPY">"Inloggen met app"</string>
   <string name="Security_ProvidedBy_COPY">"Gedeeld door"</string>
   <string name="Security_NotAddedYet_COPY">"Nog niet toegevoegd aan je eduID"</string>
@@ -218,7 +220,7 @@
   <string name="Security_Tiqr_FCM_DIRECT_COPY">"Android"</string>
   <string name="Security_Tiqr_AppCode_COPY">"App-code"</string>
   <string name="Security_Tiqr_LastLogin_COPY">"Laatst ingelogd op"</string>
-  <string name="Security_Tiqr_Activated_COPY">"Geactiveerd op"</string>
+  <string name="Security_Tiqr_Activated_COPY">"Geactiveerd op %1$s"</string>
   <string name="Security_Tiqr_DateTimeOn_COPY">"om"</string>
   <string name="Security_Tiqr_BackupMethod_COPY">"Hersteloptie"</string>
   <string name="Security_Tiqr_Sms_COPY">"sms"</string>
@@ -499,7 +501,7 @@
   <string name="LinkFromInstitution_EmailInUse2_COPY">"Probeer een andere, of "</string>
   <string name="LinkFromInstitution_EmailInUse3_COPY">" koppel met deze eduID."</string>
   <string name="LinkFromInstitution_InvalidEmail_COPY">"Ongeldig e-mailadres"</string>
-  <string name="LinkFromInstitution_InstitutionDomainNameWarning_COPY">"Dit lijkt op een e-mailadres van een onderwijs- of onderzoeks instelling. Let op: als je in de toekomst niet meer studeert of werkt bij deze instelling, heb je geen toegang meer tot dit e-mailadres."</string>
+  <string name="LinkFromInstitution_InstitutionDomainNameWarning_COPY">"Dit lijkt een school- of werkmail. Gebruik een &lt;b&gt;persoonlijk e-mailadres&lt;/b&gt;, omdat dat ook blijft werken als je van school of baan veranderd."</string>
   <string name="LinkFromInstitution_InstitutionDomainNameWarning2_COPY">"We raden je aan om je persoonlijke e-mailadres te gebruiken voor eduID."</string>
   <string name="LinkFromInstitution_AllowedDomainNamesError_COPY">"Domeinnaam %1$s niet toegestaan."</string>
   <string name="LinkFromInstitution_AllowedDomainNamesError2_COPY">"eduID is beperkt om alleen te worden gebruikt voor toegestane domeinen."</string>
@@ -517,8 +519,11 @@
   <string name="PollFromInstitution_Resend_COPY">"E-mail nog steeds niet gevonden?"</string>
   <string name="PollFromInstitution_ResendLink_COPY">"Stuur de e-mail opnieuw."</string>
   <string name="PollFromInstitution_MailResend_COPY">"Controleer je inbox. We hebben je de e-mail met de link opnieuw verzonden."</string>
+  <string name="Login_RequestSuccessHeader_COPY">"Je eduID is aangemaakt"</string>
+  <string name="Login_RequestSuccessInfo_COPY">"We hebben je ook een bevestigingsmail gestuurd."</string>
+  <string name="Login_RequestSuccessNext_COPY">"Volgende"</string>
   <string name="Login_RequestEduId_COPY">"Nog geen eduID?"</string>
-  <string name="Login_RequestEduId2_COPY">"eduID aanmaken"</string>
+  <string name="Login_RequestEduId2_COPY">"Direct aanmaken"</string>
   <string name="Login_LoginEduId_COPY">"Inloggen"</string>
   <string name="Login_Whatis_COPY">"Wat is eduID?"</string>
   <string name="Login_Header_COPY">"Log in met eduID"</string>
@@ -581,6 +586,8 @@
   <string name="Login_UseAnother_COPY">"Gebruik een andere"</string>
   <string name="Login_OptionsLink_COPY">"inlogmethode."</string>
   <string name="Login_RateLimited_COPY">"Je bent nog steeds geschorst. Probeer het over &#37;1$s minuten opnieuw."</string>
+  <string name="Login_TryOtherEmail_COPY">"Probeer een ander emailadres"</string>
+  <string name="Login_OrDivider_COPY">"of"</string>
   <string name="Options_Header_COPY">"Hoe wil je inloggen?"</string>
   <string name="Options_NoLogin_COPY">"Kun je nog niet inloggen?"</string>
   <string name="Options_Learn_COPY">"Zie hoe je jouw"</string>
@@ -655,9 +662,11 @@
   <string name="StepUpExplanation_Linked_institution_COPY">"Je eduID moet gekoppeld zijn aan een officiële instelling."</string>
   <string name="StepUpExplanation_Validate_names_COPY">"Je voornaam en achternaam moeten worden bevestigd door een officiële instelling."</string>
   <string name="StepUpExplanation_Affiliation_student_COPY">"Je moet aantonen dat je student bent. Dit doe je door je eduID te koppelen aan een officiële instelling."</string>
+  <string name="StepUpExplanation_Profile_mfa_COPY">"Je moet inloggen met de eduID app voor multi-factor authenticatie."</string>
   <string name="StepUpVerification_Linked_institution_COPY">"Je eduID is gekoppeld aan een officiële instelling."</string>
   <string name="StepUpVerification_Validate_names_COPY">"Je voornaam en achternaam zijn bevestigd door een officiële instelling."</string>
   <string name="StepUpVerification_Affiliation_student_COPY">"Je hebt aangetoond dat je student bent, doordat je eduID is gekoppeld aan een officiële instelling."</string>
+  <string name="StepUpVerification_Profile_mfa_COPY">"Je bent succesvol ingelogd met de eduID app met multi-factor authenticatie."</string>
   <string name="NudgeApp_New_COPY">"Je eduID is aangemaakt"</string>
   <string name="NudgeApp_Header_COPY">"Wil je de volgende keer sneller en veiliger inloggen?"</string>
   <string name="NudgeApp_Info_COPY">"Met de &lt;strong&gt;eduID app&lt;/strong&gt; log je extra veilig in, zonder wachtwoord. Het installeren van de app is zo gebeurd."</string>
@@ -727,18 +736,9 @@
   <string name="CreateEduID_LandingPage_SignInButton_COPY">"Inloggen"</string>
   <string name="CreateEduID_LandingPage_ScanQrButton_COPY">"QR-code scannen"</string>
   <string name="CreateEduID_LandingPage_NoEduIdButton_COPY">"Ik heb nog geen eduID"</string>
-  <string name="CreateEduID_FirstTimeDialog_ConnectButtonTitle_COPY">"Koppel je onderwijsinstelling"</string>
-  <string name="CreateEduID_FirstTimeDialog_MainTextTitle_FirstPart_COPY">"Studeer je in Nederland?"</string>
-  <string name="CreateEduID_FirstTimeDialog_MainTextTitle_SecondPart_COPY">"Koppel je onderwijsinstelling"</string>
-  <string name="CreateEduID_FirstTimeDialog_MainText_COPY">"We moeten eerst zeker zijn wie je bent. Alleen zo kun je eduID gebruiken voor diensten in het Nederlandse onderwijs."</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextPoint1_COPY">"Je volledige naam, bevestigd door een officiële partij"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextPoint2_COPY">"Bewijs dat je student bent"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextPoint3_COPY">"Je huidige instelling"</string>
-  <string name="CreateEduID_FirstTimeDialog_MainTextFirstBoldPart_COPY">"Wanneer je in Nederland studeert"</string>
-  <string name="CreateEduID_FirstTimeDialog_MainTextSecondBoldPart_COPY">"Voeg deze gegevens toe"</string>
-  <string name="CreateEduID_FirstTimeDialog_AddInformationText_COPY">"Je voegt deze gegevens toe door je onderwijsinstelling te koppelen via SURFconext."</string>
-  <string name="CreateEduID_FirstTimeDialog_AddInformationBoldPart_COPY">"Voeg deze informatie toe"</string>
-  <string name="CreateEduID_FirstTimeDialog_SkipButtonTitle_COPY">"Overslaan"</string>
   <string name="CreateEduID_Explanation_MainTitleLabel_COPY">"Heb je nog geen eduID?"</string>
   <string name="CreateEduID_Explanation_MainExplanationText_COPY">"eduID is een account om te bewijzen wie je bent aan Nederlandse onderwijs- en onderzoekinstellingen. Het is van jou en dus niet van de instellingen zelf.\n\n\n• Log in bij verschillende diensten die zijn aangeloten bij SURFconext.\n• Je kunt een eduID ook al aanmaken als je nog geen account bij een onderwijsinstelling hebt.\n• eduID is je hele leven geldig. Ook nadat je afstudeert.\n"</string>
   <string name="CreateEduID_Explanation_CreateEduidButton_COPY">"Maak een nieuw eduID aan"</string>
