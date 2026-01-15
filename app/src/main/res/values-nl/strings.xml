@@ -823,7 +823,7 @@
   <string name="VerifyIdentity_IfYouDontOwnAnAccount_BoldPart_COPY">"Als je geen account hebt"</string>
   <string name="VerifyIdentity_Button_UseADutchBank_COPY">"Gebruik je bank"</string>
   <string name="VerifyIdentity_Button_UseAEuropeanId_COPY">"Gebruik een Europees ID"</string>
-  <string name="VerifyIdentity_Button_ContactServiceDesk_COPY">"Neem contact op met de Service Desk"</string>
+  <string name="VerifyIdentity_Button_ContactServiceDesk_COPY">"Contact met de Service Desk"</string>
   <string name="VerifyIdentity_SupportLink_COPY">"https://eduid.nl/support/?lang=nl"</string>
   <string name="SelectYourBank_Title_COPY">"Kies je bank"</string>
   <string name="SelectYourBank_Subtitle_Full_COPY">"Via iDIN krijgen we je naam en geboortedatum van je bank. Zo weten we zeker wie je bent. Je doet geen betaling. Meer informatie over iDIN"</string>
