@@ -32,8 +32,6 @@ class VerifyIdentityViewModel @Inject constructor(
         EIDAS
     }
 
-    val isLinkedAccount: Boolean = savedStateHandle[VerifyIdentityRoute.isLinkedAccount] ?: false
-
     var uiState by mutableStateOf(VerifyIdentityData(isLoading = false))
         private set
 
@@ -78,10 +76,6 @@ class VerifyIdentityViewModel @Inject constructor(
 
     fun requestEidasLink() = viewModelScope.launch {
         requestLink(LinkType.EIDAS)
-    }
-
-    fun expandMoreOptions() {
-        uiState = uiState.copy(moreOptionsExpanded = true)
     }
 
     private fun createLaunchIntent(url: String): Intent {

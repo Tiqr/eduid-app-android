@@ -36,8 +36,6 @@ import nl.eduid.screens.editname.EditNameFormViewModel
 import nl.eduid.screens.emailcodeentry.EmailCodeEntryScreen
 import nl.eduid.screens.emailcodeentry.EmailCodeEntryViewModel
 import nl.eduid.screens.externalaccountlinkederror.ExternalAccountLinkedErrorScreen
-import nl.eduid.screens.firsttimedialog.FirstTimeDialogRoute
-import nl.eduid.screens.firsttimedialog.LinkAccountViewModel
 import nl.eduid.screens.homepage.HomePageScreen
 import nl.eduid.screens.homepage.HomePageViewModel
 import nl.eduid.screens.manageaccount.ManageAccountScreen
@@ -339,30 +337,14 @@ fun MainGraph(
         val viewModel = hiltViewModel<WelcomeStartViewModel>(entry)
         WelcomeStartScreen(
             viewModel,
-        ) { accountIsAlreadyLinked ->
-            if (accountIsAlreadyLinked) {
-                navController.navigate(Graph.HOME_PAGE) {
-                    //Clear existing home page that has no account
-                    popUpTo(Graph.HOME_PAGE) {
-                        inclusive = true
-                    }
+        ) { _ ->
+            navController.navigate(Graph.HOME_PAGE) {
+                //Clear existing home page that has no account
+                popUpTo(Graph.HOME_PAGE) {
+                    inclusive = true
                 }
-            } else {
-                navController.goToWithPopCurrent(Graph.FIRST_TIME_DIALOG)
             }
         }
-    }
-    composable(Graph.FIRST_TIME_DIALOG) { entry ->
-        val viewModel = hiltViewModel<LinkAccountViewModel>(entry)
-        FirstTimeDialogRoute(viewModel = viewModel,
-            skipThis = {
-                navController.navigate(Graph.HOME_PAGE) {
-                    //Clear existing home page that has no account
-                    popUpTo(Graph.HOME_PAGE) {
-                        inclusive = true
-                    }
-                }
-            })
     }
     composable(Graph.CONTINUE_RECOVERY_IN_BROWSER) {
         ContinueInBrowserScreen(goHome = {
