@@ -3,7 +3,7 @@
   <string name="About_Info_COPY">"App information"</string>
   <string name="Sidebar_Home_COPY">"Home"</string>
   <string name="Sidebar_PersonalInfo_COPY">"Personal info"</string>
-  <string name="Sidebar_DataActivity_COPY">"Activity"</string>
+  <string name="Sidebar_DataActivity_COPY">"Data &amp; activity"</string>
   <string name="Sidebar_Security_COPY">"Security"</string>
   <string name="Sidebar_Account_COPY">"Account"</string>
   <string name="Start_Hi_COPY">"Hi %1$s!"</string>
@@ -22,7 +22,7 @@
   <string name="HomeView_ActivityButton_COPY">"Activity"</string>
   <string name="HomeView_ScanQRButton_COPY">"Scan QR"</string>
   <string name="ScanView_Title_COPY">"Scan the QR-code"</string>
-  <string name="ScanView_MainText_COPY">"&lt;strong&gt;Don't see a QR code?&lt;/strong&gt;&lt;br/&gt;\nGo to &lt;a href=&quot;https://eduid.nl/security&quot; target=&quot;_blank&quot;&gt;eduid.nl/security&lt;/a&gt; on your computer&lt;br/&gt;\nCreate a QR code&lt;br/&gt;\nScan the code here\n"</string>
+  <string name="ScanView_MainText_COPY">"&lt;b&gt;Don't see a QR code?&lt;/b&gt;&lt;br/&gt;\nGo to &lt;a href=&quot;https://eduid.nl/security&quot; target=&quot;_blank&quot;&gt;eduid.nl/security&lt;/a&gt; on your computer&lt;br/&gt;\nCreate a QR code&lt;br/&gt;\nScan the code here\n"</string>
   <string name="ScanView_MainTextBoldPart_COPY">"Don't see a QR code?"</string>
   <string name="ScanView_Flashlight_NotAvailable_COPY">"Torch isn't available"</string>
   <string name="ScanView_Flashlight_TurnOn_COPY">"Turn on flashlight"</string>
@@ -97,7 +97,7 @@
   <string name="Profile_TrustedInfo_COPY">"You eduID is not yet connected to a official party"</string>
   <string name="Profile_Link_COPY">"Connect"</string>
   <string name="Profile_Institution_COPY">"Educational or research institution"</string>
-  <string name="Profile_InstitutionAt_COPY">"At &#37;1$s"</string>
+  <string name="Profile_InstitutionAt_COPY">"At "</string>
   <string name="Profile_Employee_COPY">"Employee"</string>
   <string name="Profile_Affiliations_COPY">"Role(s)"</string>
   <string name="Profile_Expires_COPY">"Connection expires"</string>
@@ -194,8 +194,6 @@
   <string name="Security_AddPassword_COPY">"Add a password"</string>
   <string name="Security_PasswordPlaceholder_COPY">"• • • • • • • • • •"</string>
   <string name="Security_ChangePassword_COPY">"Password"</string>
-  <string name="Security_PasswordActivated_COPY">"Activated on %1$s"</string>
-  <string name="Security_CredentialActivated_COPY">"%1$s: Activated on %2$s"</string>
   <string name="Security_TwoFAKey_COPY">"Login with app"</string>
   <string name="Security_ProvidedBy_COPY">"Provided by"</string>
   <string name="Security_NotAddedYet_COPY">"Not added to your eduID yet"</string>
@@ -220,7 +218,7 @@
   <string name="Security_Tiqr_FCM_DIRECT_COPY">"Android"</string>
   <string name="Security_Tiqr_AppCode_COPY">"App code"</string>
   <string name="Security_Tiqr_LastLogin_COPY">"Last login"</string>
-  <string name="Security_Tiqr_Activated_COPY">"Activated on %1$s"</string>
+  <string name="Security_Tiqr_Activated_COPY">"Activated on"</string>
   <string name="Security_Tiqr_DateTimeOn_COPY">"on"</string>
   <string name="Security_Tiqr_BackupMethod_COPY">"Recovery method"</string>
   <string name="Security_Tiqr_Sms_COPY">"SMS"</string>
@@ -268,7 +266,7 @@
   <string name="ConfirmDeleteKey_Button_Cancel_COPY">"No, back"</string>
   <string name="Home_Home_COPY">"Home"</string>
   <string name="Home_Welcome_COPY">"Welcome %1$s"</string>
-  <string name="Home_DataAndActivity_COPY">"Activity"</string>
+  <string name="Home_DataAndActivity_COPY">"Data &amp; activity"</string>
   <string name="Home_Personal_COPY">"Personal info"</string>
   <string name="Home_Security_COPY">"Security"</string>
   <string name="Home_Account_COPY">"Account"</string>
@@ -374,7 +372,7 @@
   <string name="Password_Back_COPY">"/security"</string>
   <string name="Password_PasswordDisclaimer_COPY">"Make sure it's at least 15 characters OR at least 8 characters including a number and an uppercase letter."</string>
   <string name="Password_InvalidCurrentPassword_COPY">"Your current password is invalid."</string>
-  <string name="Password_PasswordResetHashExpired_COPY">"Your password code has expired. "</string>
+  <string name="Password_PasswordResetHashExpired_COPY">"Your password reset code has expired. "</string>
   <string name="Password_ForgotPassword_COPY">"I forgot my password"</string>
   <string name="Password_PasswordResetSendAgain_COPY">"Send an email to reset my password."</string>
   <string name="Password_ForgotPasswordConfirmation_COPY">"Forgot your password? Press 'Confirm' below to instantly receive an email with a code to reset your current password."</string>
@@ -501,7 +499,7 @@
   <string name="LinkFromInstitution_EmailInUse2_COPY">"Try another, or "</string>
   <string name="LinkFromInstitution_EmailInUse3_COPY">" connect with this eduID."</string>
   <string name="LinkFromInstitution_InvalidEmail_COPY">"Invalid email address"</string>
-  <string name="LinkFromInstitution_InstitutionDomainNameWarning_COPY">"This looks like a school or work email. Use a &lt;b&gt;personal email&lt;/b&gt;, because that one can still be used when you switch school or job."</string>
+  <string name="LinkFromInstitution_InstitutionDomainNameWarning_COPY">"This appears to be an email address from an educational or research institution. Note: if, in the future, you no longer study or work at this institution, you will lose access to this email address."</string>
   <string name="LinkFromInstitution_InstitutionDomainNameWarning2_COPY">"We recommend using your personal email address for eduID."</string>
   <string name="LinkFromInstitution_AllowedDomainNamesError_COPY">"Domain name %1$s not allowed."</string>
   <string name="LinkFromInstitution_AllowedDomainNamesError2_COPY">"eduID is restricted to be used only for allowed domains."</string>
@@ -519,11 +517,8 @@
   <string name="PollFromInstitution_Resend_COPY">"Still can't find the email?"</string>
   <string name="PollFromInstitution_ResendLink_COPY">"Send the email again."</string>
   <string name="PollFromInstitution_MailResend_COPY">"Check your inbox again. We've sent another email with a link."</string>
-  <string name="Login_RequestSuccessHeader_COPY">"Your eduID has been created"</string>
-  <string name="Login_RequestSuccessInfo_COPY">"We have also sent you a confirmation email."</string>
-  <string name="Login_RequestSuccessNext_COPY">"Next"</string>
   <string name="Login_RequestEduId_COPY">"No eduID yet?"</string>
-  <string name="Login_RequestEduId2_COPY">"Create directly"</string>
+  <string name="Login_RequestEduId2_COPY">"Create an eduID"</string>
   <string name="Login_LoginEduId_COPY">"Login"</string>
   <string name="Login_Whatis_COPY">"What is eduID?"</string>
   <string name="Login_Header_COPY">"Log in with eduID"</string>
@@ -586,8 +581,6 @@
   <string name="Login_UseAnother_COPY">"Use another"</string>
   <string name="Login_OptionsLink_COPY">"login option."</string>
   <string name="Login_RateLimited_COPY">"You are still suspended. Try again in &#37;1$s minutes."</string>
-  <string name="Login_TryOtherEmail_COPY">"Try another email address"</string>
-  <string name="Login_OrDivider_COPY">"or"</string>
   <string name="Options_Header_COPY">"How do you want to login?"</string>
   <string name="Options_NoLogin_COPY">"Still not able to login?"</string>
   <string name="Options_Learn_COPY">"Learn how to"</string>
@@ -662,11 +655,9 @@
   <string name="StepUpExplanation_Linked_institution_COPY">"Your eduID must be connected to an official party."</string>
   <string name="StepUpExplanation_Validate_names_COPY">"Your first name and last name must be verified by an official party."</string>
   <string name="StepUpExplanation_Affiliation_student_COPY">"You need to prove that you are enrolled in education. You can do this by connecting your eduID to an official institution."</string>
-  <string name="StepUpExplanation_Profile_mfa_COPY">"You must log in using the eduID app for multi-factor authentication."</string>
   <string name="StepUpVerification_Linked_institution_COPY">"Your eduID is connected to an official party."</string>
   <string name="StepUpVerification_Validate_names_COPY">"Your first name and last name are verified by an official party."</string>
   <string name="StepUpVerification_Affiliation_student_COPY">"You have proven that you are following education by connecting your eduID account to an official party."</string>
-  <string name="StepUpVerification_Profile_mfa_COPY">"You have successfully logged in using the eduID app with multi-factor authentication."</string>
   <string name="NudgeApp_New_COPY">"Your eduID has been created"</string>
   <string name="NudgeApp_Header_COPY">"Want to log in quicker and more secure next time?"</string>
   <string name="NudgeApp_Info_COPY">"The &lt;strong&gt;eduID app&lt;/strong&gt; allows you to log in extra securely, without needing a password. Installing the app is quick and easy."</string>
@@ -736,9 +727,18 @@
   <string name="CreateEduID_LandingPage_SignInButton_COPY">"Log in"</string>
   <string name="CreateEduID_LandingPage_ScanQrButton_COPY">"Scan QR code"</string>
   <string name="CreateEduID_LandingPage_NoEduIdButton_COPY">"I don't have an eduID"</string>
+  <string name="CreateEduID_FirstTimeDialog_ConnectButtonTitle_COPY">"Connect your educational institution"</string>
+  <string name="CreateEduID_FirstTimeDialog_MainTextTitle_FirstPart_COPY">"Do you study in the Netherlands?"</string>
+  <string name="CreateEduID_FirstTimeDialog_MainTextTitle_SecondPart_COPY">"Connect your educational institution"</string>
+  <string name="CreateEduID_FirstTimeDialog_MainText_COPY">"We need to verify who you are before you can use eduID for services in the Dutch education system."</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextPoint1_COPY">"Your full name, verified by an official party"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextPoint2_COPY">"Proof of being a student"</string>
   <string name="CreateEduID_FirstTimeDialog_MainTextPoint3_COPY">"Your current institution"</string>
+  <string name="CreateEduID_FirstTimeDialog_MainTextFirstBoldPart_COPY">"When you study in the Netherlands"</string>
+  <string name="CreateEduID_FirstTimeDialog_MainTextSecondBoldPart_COPY">"Provide the following information:"</string>
+  <string name="CreateEduID_FirstTimeDialog_AddInformationText_COPY">"You can provide this information by connecting your educational institution through SURFconext."</string>
+  <string name="CreateEduID_FirstTimeDialog_AddInformationBoldPart_COPY">"Add this information"</string>
+  <string name="CreateEduID_FirstTimeDialog_SkipButtonTitle_COPY">"Skip this"</string>
   <string name="CreateEduID_Explanation_MainTitleLabel_COPY">"Don't have an eduID yet?"</string>
   <string name="CreateEduID_Explanation_MainExplanationText_COPY">"eduID is an account for verifying your identity with Dutch education and research institutions. It is yours and not owned by the institutions.\n\n• Log in to various services connected to SURFconext.\n• You can create an eduID even if you don’t yet have an account with an educational institution.\n• eduID is valid for your entire life, even after you graduate.\n"</string>
   <string name="CreateEduID_Explanation_CreateEduidButton_COPY">"Create a new eduID"</string>
@@ -751,7 +751,7 @@
   <string name="CreateEduID_EnterPhoneNumber_PhoneFieldTitle_COPY">"Enter your phone number"</string>
   <string name="CreateEduID_EnterPhoneNumber_PhoneFieldPlaceholder_COPY">"0612345678"</string>
   <string name="CreateEduID_EnterPhoneNumber_MainText_COPY">"Having trouble logging in to eduID via the app or email? You can also log in with an SMS code.\n\nWhich phone number would you like to use for this?\n"</string>
-  <string name="CreateEduID_EnterPhoneNumber_BoldRange_COPY">"34"</string>
+  <string name="CreateEduID_EnterPhoneNumber_BoldRange_COPY">"32"</string>
   <string name="CreateEduID_EnterPhoneNumber_VerifyPhoneNumber_COPY">"Send SMS code"</string>
   <string name="CreateEduID_AddInstitution_MainTitle_COPY">"Your educational institution has been successfully connected"</string>
   <string name="CreateEduID_AddInstitution_MainTitleBoldPart_COPY">"Your educational institution"</string>
@@ -803,7 +803,6 @@
   <string name="ResponseErrors_GenerateControlCodeError_COPY">"Could not generate control code"</string>
   <string name="ResponseErrors_SendOneTimeCodeError_COPY">"Could not send one-time code"</string>
   <string name="ResponseErrors_VerifyOneTimeCodeError_COPY">"Could not verify one-time code"</string>
-  <string name="ResponseErrors_InvalidLinkError_COPY">"Invalid link received, please try again later"</string>
   <string name="ResponseErrors_EmailCodeError_Title_COPY">"Code verification failed"</string>
   <string name="ResponseErrors_EmailCodeError_Expired_COPY">"The code has expired"</string>
   <string name="ResponseErrors_EmailCodeError_Incorrect_COPY">"The code is incorrect"</string>
@@ -814,17 +813,22 @@
   <string name="ResponseErrors_Auth_Failed_Description_COPY">"No authorization state retained - reauthorization required."</string>
   <string name="ResponseErrors_Auth_Failed_TokenFailedDescription_Generic_COPY">"Authorization token code exchange failed."</string>
   <string name="ResponseErrors_Auth_Failed_TokenFailedDescription_WithException_COPY">"Authorization code exchange failed: %1$s."</string>
-  <string name="VerifyIdentity_Title_COPY">"Confirm your identity"</string>
-  <string name="VerifyIdentity_Subtitle_COPY">"Use one of the following services to prove to us who you are"</string>
-  <string name="VerifyIdentity_DoYouOwnAnAccount_Text_COPY">"Do you own an account at a Dutch educational or research institute?"</string>
-  <string name="VerifyIdentity_DoYouOwnAnAccount_BoldPart_COPY">"Do you own"</string>
-  <string name="VerifyIdentity_DoYouOwnAnAccount_Button_COPY">"Use your school or work account"</string>
-  <string name="VerifyIdentity_IfYouDontOwnAnAccount_Text_COPY">"If you don't own an account at a Dutch educational or research insitute, choose one of the following alternatives"</string>
-  <string name="VerifyIdentity_IfYouDontOwnAnAccount_BoldPart_COPY">"If you don't own"</string>
-  <string name="VerifyIdentity_Button_UseADutchBank_COPY">"Use a Dutch bank"</string>
-  <string name="VerifyIdentity_Button_UseAEuropeanId_COPY">"Use a European ID"</string>
-  <string name="VerifyIdentity_Button_ContactServiceDesk_COPY">"Contact the Service Desk"</string>
-  <string name="VerifyIdentity_SupportLink_COPY">"https://eduid.nl/support/?lang=en"</string>
+  <string name="VerifyIdentity_TitleHasInternalLink_COPY">"Add an institution"</string>
+  <string name="VerifyIdentity_SubtitleHasInternalLink_COPY">"By adding an educational or research institution, you prove to eduID that you are a student or employee of that institution."</string>
+  <string name="VerifyIdentity_Title_FirstLine_COPY">"Confirm your identity"</string>
+  <string name="VerifyIdentity_Title_SecondLine_COPY">"Quick and easy"</string>
+  <string name="VerifyIdentity_Subtitle_COPY">"Select a method to confirm who you are. Your first name, surname, and possibly your date of birth will be added to your eduID afterwards."</string>
+  <string name="VerifyIdentity_VerifyViaDutchInstitution_Title_COPY">"Dutch educational or research institution"</string>
+  <string name="VerifyIdentity_VerifyViaDutchInstitution_TitleHasInternalLink_COPY">"Add your institution by logging in"</string>
+  <string name="VerifyIdentity_VerifyViaDutchInstitution_Button_COPY">"Select your institution"</string>
+  <string name="VerifyIdentity_VerifyWithBankApp_Title_COPY">"Dutch bank app"</string>
+  <string name="VerifyIdentity_VerifyWithBankApp_Button_COPY">"Select your bank"</string>
+  <string name="VerifyIdentity_VerifyWithAEuropianId_Title_COPY">"European ID"</string>
+  <string name="VerifyIdentity_VerifyWithAEuropianId_Button_COPY">"Select your country"</string>
+  <string name="VerifyIdentity_OtherOptions_COPY">"Show other options"</string>
+  <string name="VerifyIdentity_VisitSupport_Full_COPY">"Can’t use these methods? Visit our Help page."</string>
+  <string name="VerifyIdentity_VisitSupport_HighlightedPart_COPY">"Help page"</string>
+  <string name="VerifyIdentity_VisitSupport_Link_COPY">"https://eduid.nl/help-en/"</string>
   <string name="SelectYourBank_Title_COPY">"Select your bank"</string>
   <string name="SelectYourBank_Subtitle_Full_COPY">"Through iDIN, we receive your name and date of birth from your bank. This ensures we know who you are. You are not making a payment. Learn more about iDIN."</string>
   <string name="SelectYourBank_Subtitle_HighlightedPart_COPY">"You are not making a payment"</string>
