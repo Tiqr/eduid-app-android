@@ -114,7 +114,7 @@ fun DataAndActivityScreenContent(
     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Icon(
             painter = painterResource(id = R.drawable.ic_key_data_activity_access),
-            contentDescription = "",
+            contentDescription = null,
             tint = MaterialTheme.colorScheme.onSurface,
         )
         Text(
