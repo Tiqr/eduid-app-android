@@ -24,8 +24,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -113,7 +111,7 @@ fun HomePageWithAccountContent(
                 navigationIcon = {
                     IconButton(onClick = { showBottomSheet = true }) {
                         Icon(
-                            imageVector = Icons.Outlined.Info,
+                            painter = painterResource(id = R.drawable.ic_info),
                             tint = SmallActionGray,
                             contentDescription = "",
                             modifier = Modifier.size(width = 46.dp, height = 46.dp)

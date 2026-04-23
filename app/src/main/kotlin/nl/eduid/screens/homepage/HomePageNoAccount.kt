@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -25,7 +23,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -84,7 +81,7 @@ fun HomePageNoAccountContent(
                         modifier = Modifier.padding(start = 8.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Outlined.Info,
+                            painter = painterResource(id = R.drawable.ic_info),
                             tint = SmallActionGray,
                             contentDescription = stringResource(id = R.string.About_Info_COPY),
                             modifier = Modifier.size(width = 46.dp, height = 46.dp)

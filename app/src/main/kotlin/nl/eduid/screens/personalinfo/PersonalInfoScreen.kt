@@ -19,8 +19,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -69,6 +67,7 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 import nl.eduid.ui.theme.LinkAccountCard
 import java.time.ZoneOffset
 import java.util.Locale
+import androidx.compose.ui.platform.LocalLocale
 
 @Composable
 fun PersonalInfoRoute(
@@ -329,7 +328,8 @@ private fun ColumnScope.Organisations(
     institutionAccounts.forEach { account ->
         ConnectionCard(
             institutionName = account.institution,
-            role = (account.role ?: account.subjectId).capitalize(Locale.getDefault()),
+            role = (account.role
+                ?: account.subjectId).replaceFirstChar { if (it.isLowerCase()) it.titlecase(LocalLocale.current.platformLocale) else it.toString() },
             confirmedByInstitution = account,
             isExpandable = true,
             openVerifiedInformation = openVerifiedInformation
@@ -413,7 +413,7 @@ private fun VerifiedIdentity() {
         ) {
             Icon(
                 modifier = Modifier.size(16.dp),
-                imageVector = Icons.Filled.Check,
+                painter = painterResource(id = R.drawable.ic_check),
                 contentDescription = "",
                 tint = MaterialTheme.colorScheme.onPrimary
             )

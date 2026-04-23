@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -22,7 +20,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
@@ -78,7 +75,7 @@ fun EduIdTopAppBar(
                             onClick = onBackClicked, modifier = Modifier.padding(start = 8.dp)
                         ) {
                             Icon(
-                                imageVector = Icons.Filled.ArrowBack,
+                                painter = painterResource(id = R.drawable.ic_back_arrow),
                                 contentDescription = stringResource(R.string.PinAndBioMetrics_Button_Back_COPY),
                                 modifier = Modifier.size(width = 48.dp, height = 48.dp)
                             )

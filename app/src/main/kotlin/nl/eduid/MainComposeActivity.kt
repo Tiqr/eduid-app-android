@@ -45,8 +45,8 @@ class MainComposeActivity : ComponentActivity() {
             Timber.d("Intent captured by MainComposeActivity ${this.hashCode()}: Received: ${intent.dataString}.")
         }
         if (intent?.dataString == null) {
-            viewModel.getLastNotificationChallenge(this)?.let { challenge ->
-                val newIntent = Intent(Intent.ACTION_VIEW, challenge.toUri())
+            viewModel.getLastNotificationChallenge(this)?.let { notificationData ->
+                val newIntent = Intent(Intent.ACTION_VIEW, notificationData.challenge.toUri())
                 startActivity(newIntent)
             }
         }

@@ -1,14 +1,13 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.hilt)
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
     alias(libs.plugins.compose.compiler)
 }
 
-if (JavaVersion.current() < JavaVersion.VERSION_17) {
-    throw GradleException("Please use JDK ${JavaVersion.VERSION_17} or above")
+if (JavaVersion.current() < JavaVersion.VERSION_21) {
+    throw GradleException("Please use JDK ${JavaVersion.VERSION_21} or above")
 }
 
 fun String.runCommand(workingDir: File = file("./")): String {
@@ -50,7 +49,7 @@ android {
             "tiqr_config_enroll_scheme" to "eduidenroll",
             "tiqr_config_auth_scheme" to "eduidauth",
             "tiqr_config_token_exchange_enabled" to "false",
-            "tiqr_config_in_app_update_check_enabled" to "false", // We handle this manually
+            "tiqr_config_in_app_update_check_enabled" to "false",
             "appAuthRedirectScheme" to "eduid"
         )
         applicationId = "nl.eduid"
@@ -87,7 +86,7 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
 
         getByName("debug") {
@@ -99,7 +98,7 @@ android {
             }
             isMinifyEnabled = false
             isShrinkResources = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             isDebuggable = isAppDebuggable
             signingConfig = if (isAppDebuggable) {
                 signingConfigs.getByName("debug")
