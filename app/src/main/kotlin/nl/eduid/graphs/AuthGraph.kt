@@ -1,6 +1,6 @@
 package nl.eduid.graphs
 
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -11,7 +11,6 @@ import nl.eduid.screens.authorize.EduIdAuthenticationViewModel
 import nl.eduid.screens.authorize.RequestAuthenticationScreen
 import nl.eduid.screens.onetimepassword.OneTimePasswordScreen
 import org.tiqr.data.model.SecretType
-import org.tiqr.data.viewmodel.AuthenticationViewModel
 
 fun NavGraphBuilder.authenticationFlow(navController: NavHostController) {
     navigation(

@@ -120,7 +120,7 @@ private fun RequestAuthenticationContent(
     }
 }
 
-@Preview
+@Preview(locale = "nl")
 @Composable
 private fun PreviewRequestAuthorizeContent() = EduidAppAndroidTheme {
     RequestAuthenticationContent("3rd party service")
