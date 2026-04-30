@@ -379,9 +379,9 @@ object EmailCodeEntry {
         defaultValue = EmailCodeEntryViewModel.CodeContext.Registration.name
     })
 
-    fun routeWithArgs(email: String, codeHash: String?, codeContext: EmailCodeEntryViewModel.CodeContext) = "$route/${codeContext.name}/$email?$codeHash"
+    fun routeWithArgs(email: String, codeHash: String?, codeContext: EmailCodeEntryViewModel.CodeContext) =
+        "$route/${codeContext.name}/$email?$codeHash"
 }
-
 
 
 object VerifyIdentityRoute {

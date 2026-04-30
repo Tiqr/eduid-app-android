@@ -17,9 +17,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.KeyboardArrowDown
-import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -149,12 +146,12 @@ fun ConnectionCard(
             if (isExpandable) {
                 if (isExpanded) {
                     Icon(
-                        imageVector = Icons.Outlined.KeyboardArrowUp,
+                        painter = painterResource(id = R.drawable.ic_keyboard_arrow_up),
                         contentDescription = "",
                     )
                 } else {
                     Icon(
-                        imageVector = Icons.Outlined.KeyboardArrowDown,
+                        painter = painterResource(id = R.drawable.ic_keyboard_arrow_down),
                         contentDescription = "",
                     )
                 }

@@ -2,6 +2,7 @@ package nl.eduid.screens.homepage
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -24,8 +25,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -55,6 +54,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_NO
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -112,9 +112,8 @@ fun HomePageWithAccountContent(
                 modifier = Modifier.padding(top = 42.dp, start = 26.dp, end = 26.dp),
                 navigationIcon = {
                     IconButton(onClick = { showBottomSheet = true }) {
-                        Icon(
-                            imageVector = Icons.Outlined.Info,
-                            tint = SmallActionGray,
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_info),
                             contentDescription = "",
                             modifier = Modifier.size(width = 46.dp, height = 46.dp)
                         )

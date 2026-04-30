@@ -18,6 +18,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import nl.eduid.R
 import org.tiqr.data.repository.NotificationCacheRepository
+import org.tiqr.data.repository.NotificationData
 import org.tiqr.data.repository.base.TokenRegistrarRepository
 import timber.log.Timber
 import javax.inject.Inject
@@ -28,6 +29,8 @@ class EduIdMessagingService : FirebaseMessagingService() {
         private const val MESSAGE_TEXT = "text"
         private const val MESSAGE_CHALLENGE = "challenge"
         private const val CHANNEL_ID = "default"
+        const val SERVICE_NAME = "serviceName"
+
     }
 
     private val job = SupervisorJob()
@@ -60,6 +63,7 @@ class EduIdMessagingService : FirebaseMessagingService() {
         val title = getString(R.string.app_name)
         val text = message.data[MESSAGE_TEXT]
         val challenge = message.data[MESSAGE_CHALLENGE]
+        val serviceName = message.data[SERVICE_NAME]
 
         if (!challenge.isNullOrEmpty()) {
             val notificationManager = NotificationManagerCompat.from(this)
@@ -83,6 +87,7 @@ class EduIdMessagingService : FirebaseMessagingService() {
                 //When using only FLAG_ACTIVITY_MULTIPLE_TASK a new separate task does not seem to be created for
 //                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
             }
+            intent.putExtra(SERVICE_NAME, serviceName)
             val flags =
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
 
@@ -104,7 +109,7 @@ class EduIdMessagingService : FirebaseMessagingService() {
                     Timber.e("Sending notification with ID: $identifier")
                     val authenticationTimeout = message.data["authenticationTimeout"]?.toIntOrNull() ?: 150
                     notificationManager.notify(identifier, this)
-                    notificationCacheRepository.saveLastNotificationData(challenge, authenticationTimeout, identifier)
+                    notificationCacheRepository.saveLastNotificationData(NotificationData(challenge, serviceName), authenticationTimeout, identifier)
                 }
         }
     }

@@ -2,7 +2,6 @@ package nl.eduid
 
 import android.content.Intent
 import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -10,14 +9,15 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.core.net.toUri
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import nl.eduid.graphs.MainGraph
+import nl.eduid.messaging.EduIdMessagingService.Companion.SERVICE_NAME
 import nl.eduid.ui.theme.EduidAppAndroidTheme
 import org.tiqr.data.util.InAppUpdatesUtil
 import timber.log.Timber
-import androidx.core.net.toUri
 
 @AndroidEntryPoint
 class MainComposeActivity : ComponentActivity() {
@@ -45,8 +45,10 @@ class MainComposeActivity : ComponentActivity() {
             Timber.d("Intent captured by MainComposeActivity ${this.hashCode()}: Received: ${intent.dataString}.")
         }
         if (intent?.dataString == null) {
-            viewModel.getLastNotificationChallenge(this)?.let { challenge ->
-                val newIntent = Intent(Intent.ACTION_VIEW, challenge.toUri())
+            viewModel.getLastNotificationChallenge(this)?.let { notificationData ->
+                val newIntent = Intent(Intent.ACTION_VIEW, notificationData.challenge.toUri())
+                newIntent.putExtra(SERVICE_NAME, notificationData.serviceName)
+
                 startActivity(newIntent)
             }
         }

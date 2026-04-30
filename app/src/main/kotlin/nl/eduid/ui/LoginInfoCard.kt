@@ -11,9 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.KeyboardArrowDown
-import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -88,7 +85,7 @@ fun LoginInfoCard(
                     )
                 }
                 Icon(
-                    imageVector = if (isExpanded) Icons.Outlined.KeyboardArrowUp else Icons.Outlined.KeyboardArrowDown,
+                    painter = if (isExpanded) painterResource(id = R.drawable.ic_keyboard_arrow_up) else painterResource(id = R.drawable.ic_keyboard_arrow_down),
                     contentDescription = "",
                 )
             }

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,11 +16,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material.icons.outlined.KeyboardArrowDown
-import androidx.compose.material.icons.outlined.KeyboardArrowRight
-import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -183,7 +177,7 @@ fun EditableSecurityField(
         }
     }, trailingContent = {
         Icon(
-            imageVector = Icons.Outlined.KeyboardArrowRight,
+            painter = painterResource(id = R.drawable.ic_keyboard_arrow_right),
             contentDescription = "",
         )
     }, modifier = modifier
@@ -218,7 +212,7 @@ fun AddSecurityField(
         )
     }, trailingContent = {
         Icon(
-            imageVector = Icons.Outlined.Add,
+            painter = painterResource(id = R.drawable.ic_plus),
             contentDescription = "",
             modifier = Modifier.size(32.dp)
         )
@@ -379,12 +373,12 @@ fun ExpandableVerifiedInfoField(
             ) {
                 if (isExpanded) {
                     Icon(
-                        imageVector = Icons.Outlined.KeyboardArrowUp,
+                        painter = painterResource(id = R.drawable.ic_keyboard_arrow_up),
                         contentDescription = "",
                     )
                 } else {
                     Icon(
-                        imageVector = Icons.Outlined.KeyboardArrowDown,
+                        painter = painterResource(id = R.drawable.ic_keyboard_arrow_down),
                         contentDescription = "",
                     )
                 }

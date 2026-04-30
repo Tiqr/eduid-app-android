@@ -13,9 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -89,7 +86,7 @@ fun ScanScreen(
             navigationIcon = {
                 IconButton(onClick = goBack) {
                     Icon(
-                        imageVector = Icons.Filled.ArrowBack,
+                        painter = painterResource(id = R.drawable.ic_back_arrow),
                         tint = MaterialTheme.colorScheme.onPrimary,
                         contentDescription = stringResource(R.string.PinAndBioMetrics_Button_Back_COPY),
                         modifier = Modifier.size(width = 53.dp, height = 53.dp)
