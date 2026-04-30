@@ -114,7 +114,7 @@ fun HomePageWithAccountContent(
                     IconButton(onClick = { showBottomSheet = true }) {
                         Image(
                             painter = painterResource(id = R.drawable.ic_info),
-                            contentDescription = "",
+                            contentDescription = stringResource(id = R.string.About_Info_COPY),
                             modifier = Modifier.size(width = 46.dp, height = 46.dp)
                         )
                     }
