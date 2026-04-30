@@ -39,8 +39,13 @@ fun RequestAuthenticationScreen(
     withBackIcon = false
 ) {
     val authChallenge by viewModel.challenge.observeAsState(null)
+    val loginToService = if (authChallenge?.serviceName != null) {
+        authChallenge?.serviceName
+    } else {
+        authChallenge?.serviceProviderDisplayName
+    }
     RequestAuthenticationContent(
-        loginToService = authChallenge?.serviceProviderDisplayName,
+        loginToService = loginToService,
         padding = it,
         onLogin = { onLogin(authChallenge) },
         onCancel = onCancel,

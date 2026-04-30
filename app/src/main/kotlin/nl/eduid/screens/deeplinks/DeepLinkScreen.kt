@@ -26,6 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import nl.eduid.ErrorData
 import nl.eduid.R
+import nl.eduid.messaging.EduIdMessagingService.Companion.SERVICE_NAME
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.theme.findActivity
@@ -50,7 +51,8 @@ fun DeepLinkScreen(
         val currentGoToNext by rememberUpdatedState(newValue = goToNext)
         LaunchedEffect(key1 = dataString) {
             isParsingLinkPayload = true
-            val parseResult = viewModel.parseChallenge(dataString)
+            val serviceName = activity.intent.extras?.getString(SERVICE_NAME)
+            val parseResult = viewModel.parseChallenge(dataString, serviceName)
             viewModel.clearLastNotificationChallenge()
             if (parseResult is ChallengeParseResult.Failure) {
                 errorData = ErrorData(parseResult.failure.title, parseResult.failure.message)

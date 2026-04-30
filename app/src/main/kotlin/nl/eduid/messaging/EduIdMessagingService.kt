@@ -29,7 +29,7 @@ class EduIdMessagingService : FirebaseMessagingService() {
         private const val MESSAGE_TEXT = "text"
         private const val MESSAGE_CHALLENGE = "challenge"
         private const val CHANNEL_ID = "default"
-        private const val SERVICE_NAME = "serviceName"
+        const val SERVICE_NAME = "serviceName"
 
     }
 
@@ -87,6 +87,7 @@ class EduIdMessagingService : FirebaseMessagingService() {
                 //When using only FLAG_ACTIVITY_MULTIPLE_TASK a new separate task does not seem to be created for
 //                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
             }
+            intent.putExtra(SERVICE_NAME, serviceName)
             val flags =
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
 

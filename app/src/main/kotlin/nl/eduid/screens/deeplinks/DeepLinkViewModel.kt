@@ -1,7 +1,6 @@
 package nl.eduid.screens.deeplinks
 
 import android.content.res.Resources
-import androidx.lifecycle.MutableLiveData
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import nl.eduid.BaseViewModel
@@ -27,10 +26,10 @@ class DeepLinkViewModel @Inject constructor(
     moshi: Moshi
 ) : BaseViewModel(moshi) {
 
-    suspend fun parseChallenge(rawChallenge: String): ChallengeParseResult<*, ChallengeParseFailure> =
+    suspend fun parseChallenge(rawChallenge: String, serviceName: String? = null): ChallengeParseResult<*, ChallengeParseFailure> =
         when {
             enroll.isValidChallenge(rawChallenge) -> enroll.parseChallenge(rawChallenge)
-            auth.isValidChallenge(rawChallenge) -> auth.parseChallenge(rawChallenge)
+            auth.isValidChallenge(rawChallenge) -> auth.parseChallenge(rawChallenge, serviceName)
             else -> ChallengeParseResult.failure(
                 ParseFailure(
                     title = resources.getString(R.string.QR_UnknownErrorTitle_COPY),
