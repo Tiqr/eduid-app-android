@@ -16,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import nl.eduid.graphs.MainGraph
 import nl.eduid.messaging.EduIdMessagingService.Companion.SERVICE_NAME
 import nl.eduid.ui.theme.EduidAppAndroidTheme
+import org.tiqr.data.util.GooglePlayServicesUtil
 import org.tiqr.data.util.InAppUpdatesUtil
 import timber.log.Timber
 
@@ -36,7 +37,9 @@ class MainComposeActivity : ComponentActivity() {
 
             }
         }
-        InAppUpdatesUtil.checkForUpdates(this)
+        if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)) {
+            InAppUpdatesUtil.checkForUpdates(this)
+        }
     }
 
     override fun onResume() {
