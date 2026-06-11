@@ -69,3 +69,4 @@ app/keystore/keystorepass.txt
 
 # localicius leftovers
 android/
+/keystore/
