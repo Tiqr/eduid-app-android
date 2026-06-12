@@ -1,9 +1,13 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.hilt)
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.google.gms.gradle)
 }
 
 if (JavaVersion.current() < JavaVersion.VERSION_21) {
@@ -29,7 +33,13 @@ val keystorePass = if (devKeystorePassFile.exists()) {
 }
 //We want to have the testing app with editable feature flags uploaded to Google Play.
 //Apps uploaded to google play must not be debuggable, hence the flag:
-val isAppDebuggable = System.getenv("CI") != "true"
+val isAppDebuggable = false
+//val isAppDebuggable = System.getenv("CI") != "true"
+val debugSignProps = Properties()
+
+FileInputStream(File(rootDir, "keystore/develop.keystore.properties")).use { input ->
+    debugSignProps.load(input)
+}
 
 android {
     compileSdk = libs.versions.android.sdk.compile.get().toInt()
@@ -62,7 +72,9 @@ android {
         testInstrumentationRunner = "nl.eduid.runner.HiltAndroidTestRunner"
 
         // only package supported languages
-        resourceConfigurations += listOf("en", "nl")
+        androidResources {
+            localeFilters += listOf("en", "nl")
+        }
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -71,21 +83,27 @@ android {
         //Must use a unified debug signing certificate, otherwise deep linking verification will fail on Android>=12
         //Only used for signing debuggable builds when building locally or apks from PRs that are archived
         //Must not be used for signing when building a bundle for Google Play upload
-        if (isAppDebuggable) {
-            getByName("debug") {
-                storeFile = file("keystore/testing.keystore")
-                storePassword = keystorePass
-                keyAlias = "androiddebugkey"
-                keyPassword = keystorePass
-            }
-        } else {
-            println("SKIPPING debug signing")
+//        if (isAppDebuggable) {
+        getByName("debug") {
+            storeFile = File(rootDir, "keystore/develop.keystore")
+            storePassword = debugSignProps.getProperty("keystore.password")
+            keyAlias = debugSignProps.getProperty("key.alias")
+            keyPassword = debugSignProps.getProperty("key.password")
         }
+//        } else {
+        create("release") {
+            storeFile = File(rootDir, "keystore/develop.keystore")
+            storePassword = debugSignProps.getProperty("keystore.password")
+            keyAlias = debugSignProps.getProperty("key.alias")
+            keyPassword = debugSignProps.getProperty("key.password")
+        }
+//        }
     }
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
 
@@ -96,15 +114,17 @@ android {
             } else {
                 " TESTING"
             }
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            isDebuggable = isAppDebuggable
-            signingConfig = if (isAppDebuggable) {
-                signingConfigs.getByName("debug")
-            } else {
-                null
-            }
+            isDebuggable = true
+            signingConfig = signingConfigs.getByName("debug")
+//            signingConfig = if (isAppDebuggable) {
+//                signingConfigs.getByName("debug")
+//            } else {
+//                null
+//            }
         }
     }
 
@@ -117,10 +137,6 @@ android {
         isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
-    }
-
-    kotlin {
-        jvmToolchain(21)
     }
 
     lint {
@@ -138,6 +154,10 @@ android {
     namespace = "nl.eduid"
 }
 
+kotlin {
+    jvmToolchain(21)
+}
+
 dependencies {
     coreLibraryDesugaring(libs.coreLibraryDesugaring)
     implementation(project(":data"))
@@ -146,7 +166,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.collections.immutable)
-    implementation(libs.androidx.core)
 
     implementation(libs.androidx.activity)
     implementation(libs.androidx.autofill)
@@ -207,8 +226,4 @@ configurations {
         exclude(group = "com.google.firebase", module = "firebase-analytics")
         exclude(group = "com.google.firebase", module = "firebase-measurement-connector")
     }
-}
-
-apply {
-    plugin("com.google.gms.google-services")
 }

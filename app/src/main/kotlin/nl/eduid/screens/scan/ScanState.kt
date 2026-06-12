@@ -6,9 +6,9 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -16,7 +16,6 @@ import nl.eduid.ErrorData
 import org.tiqr.data.model.Challenge
 import org.tiqr.data.model.ChallengeParseResult
 import org.tiqr.data.scan.ScanComponent
-import java.util.*
 
 
 @Composable
