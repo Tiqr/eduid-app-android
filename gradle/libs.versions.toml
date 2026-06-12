@@ -88,6 +88,7 @@ appauth = "net.openid:appauth:0.11.1"
 jwtdecode = "com.auth0.android:jwtdecode:2.0.2"
 google-android-material = "com.google.android.material:material:1.13.0"
 google-mlkit-barcode = "com.google.mlkit:barcode-scanning:17.3.0"
+google-play-services-base = "com.google.android.gms:play-services-base:18.5.0"
 google-firebase-messaging = "com.google.firebase:firebase-messaging-ktx:24.1.2"
 material3-html-text = "de.charlex.compose.material3:material3-html-text:2.0.0-beta01"
 
