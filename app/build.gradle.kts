@@ -1,9 +1,11 @@
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.hilt)
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.google.gms.gradle)
 }
 
 if (JavaVersion.current() < JavaVersion.VERSION_21) {
@@ -62,7 +64,9 @@ android {
         testInstrumentationRunner = "nl.eduid.runner.HiltAndroidTestRunner"
 
         // only package supported languages
-        resourceConfigurations += listOf("en", "nl")
+        androidResources {
+            localeFilters += listOf("en", "nl")
+        }
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -97,7 +101,7 @@ android {
                 " TESTING"
             }
             isMinifyEnabled = false
-            isShrinkResources = false
+
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             isDebuggable = isAppDebuggable
             signingConfig = if (isAppDebuggable) {
@@ -119,10 +123,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
-    kotlin {
-        jvmToolchain(21)
-    }
-
     lint {
         abortOnError = false
     }
@@ -138,6 +138,10 @@ android {
     namespace = "nl.eduid"
 }
 
+kotlin {
+    jvmToolchain(21)
+}
+
 dependencies {
     coreLibraryDesugaring(libs.coreLibraryDesugaring)
     implementation(project(":data"))
@@ -146,7 +150,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.collections.immutable)
-    implementation(libs.androidx.core)
 
     implementation(libs.androidx.activity)
     implementation(libs.androidx.autofill)
@@ -207,8 +210,4 @@ configurations {
         exclude(group = "com.google.firebase", module = "firebase-analytics")
         exclude(group = "com.google.firebase", module = "firebase-measurement-connector")
     }
-}
-
-apply {
-    plugin("com.google.gms.google-services")
 }

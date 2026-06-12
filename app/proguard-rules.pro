@@ -109,6 +109,12 @@
 
 # Firebase
 -keep public class com.google.firebase.** {*;}
+-keep class com.google.mlkit.** { *; }
+-keep interface com.google.mlkit.** { *; }
+-keep class com.google.mlkit.common.internal.CommonComponentRegistrar {
+    public <init>();
+}
+-keep class com.google.firebase.components.ComponentRegistrar
 -keep class com.google.android.gms.** { *; }
 -keep class com.google.android.gms.internal.** { *; }
 -keepclasseswithmembers class com.google.firebase.FirebaseException
