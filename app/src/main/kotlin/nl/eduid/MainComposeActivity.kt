@@ -28,7 +28,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import nl.eduid.graphs.MainGraph
@@ -48,7 +47,7 @@ class MainComposeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val snackbarHostState = remember { SnackbarHostState() }
-            val isFcmTokenMissing by viewModel.isFcmTokenMissing.collectAsStateWithLifecycle()
+            val isFcmTokenMissing by viewModel.shouldInformFCMDisabled.collectAsStateWithLifecycle()
 
             EduidAppAndroidTheme {
                 val okButton = stringResource(R.string.Button_OK_COPY)
@@ -72,13 +71,17 @@ class MainComposeActivity : ComponentActivity() {
                             .align(Alignment.BottomCenter)
                             .systemBarsPadding()
                             .padding(bottom = 8.dp)
-                    ){ data ->
-                        Snackbar(modifier = Modifier
-                            .padding(12.dp), action = {
-                            TextButton(
-                                onClick = viewModel::clearFcmTokenMissing,
-                            ) { Text(data.visuals.actionLabel ?: "") }
-                        }) {
+                    ) { data ->
+                        Snackbar(
+                            modifier = Modifier
+                                .padding(12.dp), action = {
+                                TextButton(
+                                    onClick = {
+                                        viewModel.clearFcmTokenMissing()
+                                        data.performAction()
+                                    },
+                                ) { Text(data.visuals.actionLabel ?: "") }
+                            }) {
                             Text(data.visuals.message)
                         }
                     }

@@ -100,10 +100,11 @@ android {
             } else {
                 " TESTING"
             }
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
 
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            isDebuggable = isAppDebuggable
+            isDebuggable = false
             signingConfig = if (isAppDebuggable) {
                 signingConfigs.getByName("debug")
             } else {
