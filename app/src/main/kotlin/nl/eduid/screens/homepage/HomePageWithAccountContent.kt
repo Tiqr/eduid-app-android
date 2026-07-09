@@ -1,8 +1,9 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package nl.eduid.screens.homepage
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -45,31 +46,30 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_NO
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import kotlinx.coroutines.launch
 import nl.eduid.R
 import nl.eduid.screens.info.AboutInfo
 import nl.eduid.ui.AlertDialogWithTwoButton
 import nl.eduid.ui.PrimaryButtonWithIcon
-import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.SmallActionGray
-import nl.eduid.ui.theme.SplashScreenBackgroundColor
-import nl.eduid.ui.theme.ColorScale_Gray_Black
 import nl.eduid.ui.theme.ColorMain_Green_400
+import nl.eduid.ui.theme.ColorScale_Gray_Black
+import nl.eduid.ui.theme.EduidAppAndroidTheme
+import nl.eduid.ui.theme.SplashScreenBackgroundColor
 import org.tiqr.data.util.InAppUpdatesUtil
 import timber.log.Timber
 
@@ -112,9 +112,10 @@ fun HomePageWithAccountContent(
                 modifier = Modifier.padding(top = 42.dp, start = 26.dp, end = 26.dp),
                 navigationIcon = {
                     IconButton(onClick = { showBottomSheet = true }) {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.ic_info),
                             contentDescription = stringResource(id = R.string.About_Info_COPY),
+                            tint = Color.Unspecified,
                             modifier = Modifier.size(width = 46.dp, height = 46.dp)
                         )
                     }
@@ -132,7 +133,8 @@ fun HomePageWithAccountContent(
     ) { paddingValues ->
         val isAuthorizedForDataAccess by viewModel.isAuthorizedForDataAccess.observeAsState(false)
         viewModel.uiState.promptForAuth?.let {
-            AlertDialogWithTwoButton(title = stringResource(R.string.PromptForOAuth_Title_COPY),
+            AlertDialogWithTwoButton(
+                title = stringResource(R.string.PromptForOAuth_Title_COPY),
                 explanation = stringResource(id = R.string.PromptForOAuth_Description_COPY),
                 dismissButtonLabel = stringResource(R.string.Button_Cancel_COPY),
                 confirmButtonLabel = stringResource(R.string.PinAndBioMetrics_SignIn_COPY),
