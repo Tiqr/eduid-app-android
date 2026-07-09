@@ -56,7 +56,6 @@ import nl.eduid.ui.AlertDialogWithTwoButton
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.BlueText
 import nl.eduid.ui.theme.ColorMain_Green_400
-import nl.eduid.ui.theme.SmallActionGray
 import org.tiqr.data.model.EnrollmentChallenge
 import timber.log.Timber
 
@@ -82,7 +81,7 @@ fun HomePageNoAccountContent(
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_info),
-                            tint = SmallActionGray,
+                            tint = Color.Unspecified,
                             contentDescription = stringResource(id = R.string.About_Info_COPY),
                             modifier = Modifier.size(width = 46.dp, height = 46.dp)
                         )
