@@ -2304,6 +2304,10 @@ SHARED:
       COPY:
         en: No notification?
         nl: Geen melding?
+    NotificationsNotPossible:
+      COPY:
+        en: "Note: push notifications are disabled on this phone"
+        nl: "Let op: pushberichten zijn uitgeschakeld op deze telefoon"
     QrCodeLink:
       COPY:
         en: Create a QR-code

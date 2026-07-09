@@ -20,7 +20,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -45,9 +44,9 @@ import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
 import nl.eduid.ui.theme.AlertWarningBackground
 import nl.eduid.ui.theme.ColorAlertRed
-import nl.eduid.ui.theme.EduidAppAndroidTheme
-import nl.eduid.ui.theme.ColorScale_Gray_Black
 import nl.eduid.ui.theme.ColorMain_Green_400
+import nl.eduid.ui.theme.ColorScale_Gray_Black
+import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
 fun ManageAccountScreen(
