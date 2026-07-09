@@ -468,6 +468,7 @@
   <string name="UseApp_Info_COPY">"We hebben een pushmelding naar je app gestuurd om te controleren dat jij het bent die probeert in te loggen."</string>
   <string name="UseApp_Scan_COPY">"Scan deze QR-code met je eduID app"</string>
   <string name="UseApp_NoNotification_COPY">"Geen melding?"</string>
+  <string name="UseApp_NotificationsNotPossible_COPY">"Let op: pushberichten zijn uitgeschakeld op deze telefoon"</string>
   <string name="UseApp_QrCodeLink_COPY">"Maak een QR-code"</string>
   <string name="UseApp_QrCodePostfix_COPY">"en scan deze."</string>
   <string name="UseApp_Offline_COPY">"Toont je telefoon een code?"</string>

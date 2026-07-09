@@ -49,7 +49,7 @@ fun EduIdTopAppBar(
 ) {
     val topBarState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(topBarState)
-    val topAppBarColors = TopAppBarDefaults.centerAlignedTopAppBarColors()
+    val topAppBarColors = TopAppBarDefaults.topAppBarColors()
         .copy(scrolledContainerColor = Color.White)
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),

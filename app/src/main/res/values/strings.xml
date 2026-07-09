@@ -468,6 +468,7 @@
   <string name="UseApp_Info_COPY">"We have sent a push-notification to your app, to check it's you trying to log in."</string>
   <string name="UseApp_Scan_COPY">"Scan this QR code with your eduID app"</string>
   <string name="UseApp_NoNotification_COPY">"No notification?"</string>
+  <string name="UseApp_NotificationsNotPossible_COPY">"Note: push notifications are disabled on this phone"</string>
   <string name="UseApp_QrCodeLink_COPY">"Create a QR-code"</string>
   <string name="UseApp_QrCodePostfix_COPY">"and scan it."</string>
   <string name="UseApp_Offline_COPY">"Is your phone displaying a code?"</string>
