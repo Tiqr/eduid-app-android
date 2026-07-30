@@ -195,6 +195,7 @@
   <string name="Security_PasswordPlaceholder_COPY">"• • • • • • • • • •"</string>
   <string name="Security_ChangePassword_COPY">"Password"</string>
   <string name="Security_PasswordActivated_COPY">"Activated on %1$s"</string>
+  <string name="Security_Passkey_COPY">"Passkey"</string>
   <string name="Security_CredentialActivated_COPY">"%1$s: Activated on %2$s"</string>
   <string name="Security_TwoFAKey_COPY">"Login with app"</string>
   <string name="Security_ProvidedBy_COPY">"Provided by"</string>

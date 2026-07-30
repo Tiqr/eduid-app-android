@@ -107,10 +107,18 @@ fun SecurityScreenContent(
             modifier = Modifier.clickable { on2FaClicked() },
         )
     }
+    securityInfo.appCreatedAt?.let {
+        EditableSecurityField(
+            title = it.name,
+            subtitle = stringResource(R.string.Security_PasswordActivated_COPY,it.createdAt),
+            leadingIcon = R.drawable.ic_security_key,
+            modifier = Modifier.clickable {  },
+        )
+    }
     if (securityInfo.hasPassword) {
         EditableSecurityField(
             title = stringResource(R.string.Security_ChangePassword_COPY),
-            subtitle = "****",
+            subtitle = stringResource(R.string.Security_PasswordActivated_COPY,securityInfo.passwordDate.orEmpty()),
             leadingIcon = R.drawable.ic_security_password,
             modifier = Modifier.clickable { onConfigurePasswordClicked() },
         )
@@ -122,6 +130,16 @@ fun SecurityScreenContent(
         leadingIcon = R.drawable.ic_security_email_link,
         modifier = Modifier.clickable { onEditEmailClicked() },
     )
+
+    securityInfo.passKeys.forEach {
+        EditableSecurityField(
+            title = stringResource(R.string.Security_Passkey_COPY),
+            leadingIcon = R.drawable.ic_security_key,
+            subtitle = stringResource(R.string.Security_CredentialActivated_COPY,it.name, it.createdAt),
+            modifier = Modifier.clickable { },
+        )
+    }
+
 
     if (!securityInfo.hasPassword || securityInfo.showAddSecurityKey) {
         Text(
@@ -155,6 +173,7 @@ private fun PreviewSecurityScreenContent() = EduidAppAndroidTheme {
             twoFAProvider = "test.eduid.nl",
             email = "librarian@unseenuniveristy.disk",
             hasPassword = true,
+            passwordDate = "Activated on July 30, 2026"
         ),
     )
 }

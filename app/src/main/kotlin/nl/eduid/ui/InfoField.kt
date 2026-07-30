@@ -413,7 +413,11 @@ private fun Preview_InfoFields() = EduidAppAndroidTheme {
         )
         EditableSecurityField(
             leadingIcon = R.drawable.ic_security_email_link,
-            title = "Magic link email", subtitle = "librarian@unseenuniveristy.disk"
+            title = "Magic link email", subtitle = "librarian@unseenuniveristy.disk",
+        )
+        EditableSecurityField(
+            leadingIcon = R.drawable.ic_security_key,
+            title = "Login with app", subtitle = "librarian@unseenuniveristy.disk",
         )
         AddSecurityField(leadingIcon = R.drawable.ic_security_key, title = "Add security key")
         VerifiedInfoField(

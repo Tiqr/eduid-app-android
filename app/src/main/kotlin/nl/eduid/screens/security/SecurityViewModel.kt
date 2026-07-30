@@ -18,6 +18,9 @@ import nl.eduid.flags.FeatureFlag
 import nl.eduid.flags.RuntimeBehavior
 import nl.eduid.graphs.Security
 import org.tiqr.data.repository.IdentityRepository
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -77,10 +80,17 @@ class SecurityViewModel @Inject constructor(
         if (userDetails != null) {
             val identity = identity.identity(userDetails.id).firstOrNull()
             val provider = identity?.identityProvider?.displayName
+            val appCreated = userDetails.eduIdPerServiceProvider.values.find { it.serviceName.equals("eduID mobile app") }
+
             uiState.copy(
                 isLoading = false, errorData = null, email = userDetails.email,
                 twoFAProvider = provider,
                 hasPassword = userDetails.hasPasswordSet(),
+                passwordDate = formatDate(userDetails.passwordUpdatedAt),
+                passKeys = userDetails.publicKeyCredentials.mapNotNull { credential ->
+                    LoginCreatedData(credential.name, formatDate(credential.createdAt))
+                },
+                appCreatedAt = LoginCreatedData(name = appCreated?.serviceName.orEmpty(), createdAt = formatDate(appCreated?.createdAt))
             )
         } else {
             if (isChangeEmail) {
@@ -103,4 +113,12 @@ class SecurityViewModel @Inject constructor(
     fun dismissError() {
         uiState = uiState.copy(errorData = null)
     }
+
+    private fun formatDate(date: Long? = null) =
+        if (date == null) {
+            ""
+        } else {
+            SimpleDateFormat("MMMM d, yyyy", Locale.getDefault())
+                .format(Date(date))
+        }
 }

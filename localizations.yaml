@@ -973,6 +973,10 @@ SHARED:
       COPY:
         en: Activated on %1{{s}}
         nl: Geactiveerd op %1{{s}}
+    Passkey:
+      COPY:
+        en: Passkey
+        nl: Passkey
     CredentialActivated:
       COPY:
         en: "%1{{s}}: Activated on %2{{s}}"
