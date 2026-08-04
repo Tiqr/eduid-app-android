@@ -1,4 +1,0 @@
-OpenConext/OpenConext-myconext:
-  - source: localizations.yaml
-    dest: localizations.yaml
-
