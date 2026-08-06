@@ -149,6 +149,7 @@ fun EditableSecurityField(
     subtitle: String? = null,
     annotatedSubtitle: AnnotatedString? = null,
     modifier: Modifier = Modifier,
+    useImage: Boolean = false,
 ) = ListItem(colors = ListItemDefaults.colors(
     containerColor = MaterialTheme.colorScheme.surface,
     headlineColor = MaterialTheme.colorScheme.onSurface,
@@ -156,10 +157,17 @@ fun EditableSecurityField(
     trailingIconColor = MaterialTheme.colorScheme.onSurface,
     leadingIconColor = MaterialTheme.colorScheme.onSurface,
 ), leadingContent = {
-    Icon(
-        painter = painterResource(id = leadingIcon),
-        contentDescription = "",
-    )
+    if(useImage){
+        Image(
+            painter = painterResource(id = leadingIcon),
+            contentDescription = "",
+        )
+    } else {
+        Icon(
+            painter = painterResource(id = leadingIcon),
+            contentDescription = "",
+        )
+    }
 },
     headlineContent = {
         Text(

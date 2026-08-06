@@ -90,7 +90,8 @@ class SecurityViewModel @Inject constructor(
                 passKeys = userDetails.publicKeyCredentials.mapNotNull { credential ->
                     LoginCreatedData(credential.name, formatDate(credential.createdAt))
                 },
-                appCreatedAt = LoginCreatedData(name = appCreated?.serviceName.orEmpty(), createdAt = formatDate(appCreated?.createdAt))
+                appCreatedAt = LoginCreatedData(name = appCreated?.serviceName.orEmpty(), createdAt = formatDate(appCreated?.createdAt)),
+                withPhoneNumber = userDetails.registration?.phoneNumber
             )
         } else {
             if (isChangeEmail) {

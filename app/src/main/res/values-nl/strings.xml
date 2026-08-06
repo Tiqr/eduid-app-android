@@ -191,6 +191,9 @@
   <string name="Security_Title_COPY">"Beveiliging"</string>
   <string name="Security_SubTitle_COPY">"Hoe je kunt inloggen bij eduID"</string>
   <string name="Security_OtherMethods_COPY">"Andere manieren"</string>
+  <string name="Security_RecoveryOptions_COPY">"Herstelopties"</string>
+  <string name="Security_SMS_COPY">"sms"</string>
+  <string name="Security_ReceiveCodeAt_COPY">"Je ontvangt eenmalige codes op: ** ** *** %1$s"</string>
   <string name="Security_AddPassword_COPY">"Wachtwoord toevoegen"</string>
   <string name="Security_PasswordPlaceholder_COPY">"• • • • • • • • • •"</string>
   <string name="Security_ChangePassword_COPY">"Wachtwoord"</string>

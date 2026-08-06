@@ -957,6 +957,18 @@ SHARED:
       COPY:
         en: Other methods
         nl: Andere manieren
+    RecoveryOptions:
+      COPY:
+        en: Recovery options
+        nl: Herstelopties
+    SMS:
+      COPY:
+        en: SMS
+        nl: sms
+    ReceiveCodeAt:
+      COPY:
+        en: "You'll receive one-time codes at: ** ** *** %1{{s}}"
+        nl: "Je ontvangt eenmalige codes op: ** ** *** %1{{s}}"
     AddPassword:
       COPY:
         en: Add a password

@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -59,6 +61,7 @@ fun SecurityScreenContent(
 ) = Column(
     modifier = Modifier
         .fillMaxSize()
+        .verticalScroll(rememberScrollState())
         .padding(padding)
         .systemBarsPadding()
         .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
@@ -103,8 +106,9 @@ fun SecurityScreenContent(
                 )
                 append(it)
             },
-            leadingIcon = R.drawable.ic_security_key,
+            leadingIcon = R.drawable.ic_security_app,
             modifier = Modifier.clickable { on2FaClicked() },
+            useImage = true,
         )
     }
     securityInfo.appCreatedAt?.let {
@@ -163,9 +167,21 @@ fun SecurityScreenContent(
             modifier = Modifier.clickable { onConfigurePasswordClicked() },
         )
     }
+    if(securityInfo.withPhoneNumber!=null){
+        Text(
+            text = stringResource(R.string.Security_RecoveryOptions_COPY),
+            style = MaterialTheme.typography.bodyLarge,
+        )
+        EditableSecurityField(
+            title = stringResource(R.string.Security_SMS_COPY),
+            subtitle = stringResource(R.string.Security_ReceiveCodeAt_COPY, securityInfo.withPhoneNumber),
+            leadingIcon = R.drawable.ic_security_sms,
+            modifier = Modifier.clickable { },
+        )
+    }
 }
 
-@Preview
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun PreviewSecurityScreenContent() = EduidAppAndroidTheme {
     SecurityScreenContent(
@@ -173,12 +189,13 @@ private fun PreviewSecurityScreenContent() = EduidAppAndroidTheme {
             twoFAProvider = "test.eduid.nl",
             email = "librarian@unseenuniveristy.disk",
             hasPassword = true,
-            passwordDate = "Activated on July 30, 2026"
+            passwordDate = "Activated on July 30, 2026",
+            withPhoneNumber = "123"
         ),
     )
 }
 
-@Preview
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun Preview_OnlyEmailSecurityScreenContent() = EduidAppAndroidTheme {
     SecurityScreenContent(

@@ -14,6 +14,7 @@ data class SecurityScreenData(
     val passwordDate: String? = null,
     val passKeys: List<LoginCreatedData> = emptyList(),
     val appCreatedAt: LoginCreatedData? = null,
+    val withPhoneNumber: String? = null,
 )
 
 data class LoginCreatedData(val name: String, val createdAt: String)
