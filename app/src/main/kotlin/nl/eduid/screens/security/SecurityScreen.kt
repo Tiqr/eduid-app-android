@@ -106,7 +106,7 @@ fun SecurityScreenContent(
                 )
                 append(it)
             },
-            leadingIcon = R.drawable.ic_security_app,
+            leadingIcon = R.drawable.ic_security_sms,
             modifier = Modifier.clickable { on2FaClicked() },
             useImage = true,
         )
