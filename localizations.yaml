@@ -957,6 +957,18 @@ SHARED:
       COPY:
         en: Other methods
         nl: Andere manieren
+    RecoveryOptions:
+      COPY:
+        en: Recovery options
+        nl: Herstelopties
+    SMS:
+      COPY:
+        en: SMS
+        nl: sms
+    ReceiveCodeAt:
+      COPY:
+        en: "You'll receive one-time codes at: ** ** *** %1{{s}}"
+        nl: "Je ontvangt eenmalige codes op: ** ** *** %1{{s}}"
     AddPassword:
       COPY:
         en: Add a password
@@ -977,6 +989,10 @@ SHARED:
       COPY:
         en: "%1{{s}}: Activated on %2{{s}}"
         nl: "%1{{s}}: Geactiveerd op %2{{s}}"
+    Passkey:
+      COPY:
+        en: Passkey
+        nl: Passkey
     TwoFAKey:
       COPY:
         en: Login with app
@@ -2304,10 +2320,6 @@ SHARED:
       COPY:
         en: No notification?
         nl: Geen melding?
-    NotificationsNotPossible:
-      COPY:
-        en: "Note: push notifications are disabled on this phone"
-        nl: "Let op: pushberichten zijn uitgeschakeld op deze telefoon"
     QrCodeLink:
       COPY:
         en: Create a QR-code
