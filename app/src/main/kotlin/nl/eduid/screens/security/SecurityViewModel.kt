@@ -87,11 +87,17 @@ class SecurityViewModel @Inject constructor(
                 twoFAProvider = provider,
                 hasPassword = userDetails.hasPasswordSet(),
                 passwordDate = formatDate(userDetails.passwordUpdatedAt),
-                passKeys = userDetails.publicKeyCredentials.mapNotNull { credential ->
-                    LoginCreatedData(credential.name, formatDate(credential.createdAt))
+                passKeys = userDetails.publicKeyCredentials.map { credential ->
+                    PasskeyData(credential.name, formatDate(credential.createdAt), credential)
                 },
-                appCreatedAt = LoginCreatedData(name = appCreated?.serviceName.orEmpty(), createdAt = formatDate(appCreated?.createdAt)),
-                withPhoneNumber = userDetails.registration?.phoneNumber
+                appCreatedAt = if (userDetails.hasAppRegistered()) {
+                    LoginCreatedData(name = appCreated?.serviceName.orEmpty(), createdAt = formatDate(appCreated?.createdAt))
+                } else {
+                    null
+                },
+                showRecoveryOptions = userDetails.showRecoveryOptions(),
+                withPhoneNumber = userDetails.registration?.phoneNumber,
+                withRecoveryCode = userDetails.hasRecoveryCode()
             )
         } else {
             if (isChangeEmail) {

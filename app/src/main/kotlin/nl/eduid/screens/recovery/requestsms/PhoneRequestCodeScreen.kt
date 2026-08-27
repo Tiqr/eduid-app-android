@@ -88,6 +88,7 @@ fun PhoneRequestCodeScreen(
 
     PhoneRequestCodeContent(
         uiState = viewModel.uiState,
+        isReVerification = viewModel.isReVerification,
         padding = paddingValues,
         onClick = {
             viewModel.requestPhoneCode()
@@ -101,6 +102,7 @@ fun PhoneRequestCodeScreen(
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalLayoutApi::class)
 private fun PhoneRequestCodeContent(
     uiState: UiState,
+    isReVerification: Boolean = false,
     padding: PaddingValues = PaddingValues(),
     onClick: () -> Unit = {},
     onValueChange: (String) -> Unit = {},
@@ -120,7 +122,9 @@ private fun PhoneRequestCodeContent(
         val isKeyboardOpen by rememberUpdatedState(WindowInsets.isImeVisible)
 
         Text(
-            text = stringResource(R.string.Recovery_PhoneNumber_COPY),
+            text = stringResource(
+                if (isReVerification) R.string.CreateEduID_EnterPhoneNumber_ReVerificationTitle_COPY else R.string.Recovery_PhoneNumber_COPY
+            ),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.fillMaxWidth()
         )
@@ -137,7 +141,9 @@ private fun PhoneRequestCodeContent(
                     modifier = Modifier.height(8.dp)
                 )
                 Text(
-                    text = stringResource(R.string.Recovery_Info_COPY),
+                    text = stringResource(
+                        if (isReVerification) R.string.CreateEduID_EnterPhoneNumber_ReVerificationMainText_COPY else R.string.Recovery_Info_COPY
+                    ),
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -175,7 +181,7 @@ private fun PhoneRequestCodeContent(
     PrimaryButton(
         text = stringResource(R.string.PhoneVerification_Verify_COPY),
         onClick = onClick,
-        enabled = uiState.input.isNotEmpty(),
+        enabled = uiState.input.isNotEmpty() && !uiState.inProgress,
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 24.dp)
@@ -192,6 +198,10 @@ private fun PreviewEnroll() {
     }
 }
 
-
-
-
+@Preview()
+@Composable
+private fun PreviewReVerification() {
+    EduidAppAndroidTheme {
+        PhoneRequestCodeContent(UiState("065555555"), isReVerification = true)
+    }
+}

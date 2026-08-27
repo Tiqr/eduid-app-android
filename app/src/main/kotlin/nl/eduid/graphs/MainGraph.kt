@@ -6,11 +6,13 @@ import android.os.Build
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.navDeepLink
 import nl.eduid.di.model.ControlCode
 import nl.eduid.graphs.RequestEduIdLinkSent.LOGIN_REASON
@@ -20,6 +22,10 @@ import nl.eduid.screens.accountlinked.AccountLinkedViewModel
 import nl.eduid.screens.accountlinked.ResultAccountLinked
 import nl.eduid.screens.biometric.EnableBiometricScreen
 import nl.eduid.screens.biometric.EnableBiometricViewModel
+import nl.eduid.screens.changephone.ChangePhoneAuthViewModel
+import nl.eduid.screens.changephone.ChangePhoneConfirmCodeScreen
+import nl.eduid.screens.changephone.ChangePhoneExplanationScreen
+import nl.eduid.screens.changephone.ChangePhoneVerifyPinScreen
 import nl.eduid.screens.contbrowser.ContinueInBrowserScreen
 import nl.eduid.screens.created.RequestEduIdCreatedScreen
 import nl.eduid.screens.dataactivity.DataAndActivityScreen
@@ -29,6 +35,8 @@ import nl.eduid.screens.deeplinks.DeepLinkViewModel
 import nl.eduid.screens.deleteaccountfirstconfirm.DeleteAccountFirstConfirmScreen
 import nl.eduid.screens.deleteaccountsecondconfirm.DeleteAccountSecondConfirmScreen
 import nl.eduid.screens.deleteaccountsecondconfirm.DeleteAccountSecondConfirmViewModel
+import nl.eduid.screens.deletepasskey.DeletePasskeyScreen
+import nl.eduid.screens.deletepasskey.DeletePasskeyViewModel
 import nl.eduid.screens.editemail.EditEmailScreen
 import nl.eduid.screens.editemail.EditEmailViewModel
 import nl.eduid.screens.editname.EditNameFormScreen
@@ -53,6 +61,8 @@ import nl.eduid.screens.recovery.confirmsms.ConfirmCodeScreen
 import nl.eduid.screens.recovery.confirmsms.ConfirmCodeViewModel
 import nl.eduid.screens.recovery.requestsms.PhoneRequestCodeScreen
 import nl.eduid.screens.recovery.requestsms.PhoneRequestCodeViewModel
+import nl.eduid.screens.removeapp.RemoveMobileAppScreen
+import nl.eduid.screens.removeapp.RemoveMobileAppViewModel
 import nl.eduid.screens.requestiddetails.RequestEduIdFormScreen
 import nl.eduid.screens.requestiddetails.RequestEduIdFormViewModel
 import nl.eduid.screens.requestidlinksent.RequestEduIdEmailSentScreen
@@ -321,7 +331,12 @@ fun MainGraph(
         val isDeactivation = entry.arguments?.getBoolean(PhoneNumberRecovery.ConfirmCode.isDeactivationArg, false) ?: false
         ConfirmCodeScreen(viewModel = viewModel, phoneNumber = PhoneNumberRecovery.ConfirmCode.decodeFromEntry(entry), goToStartScreen = {
             if (isDeactivation) {
-                navController.popBackStack()
+                // When started from the Security screen, return there and reload it to reflect the removed app
+                if (navController.isOnBackStack(Security.Settings.route)) {
+                    navController.goToSecurityAndReload()
+                } else {
+                    navController.popBackStack()
+                }
             } else {
                 navController.navigate(Graph.WELCOME_START) {
                     //Flow for phone number recovery completed, remove from stack entirely
@@ -534,8 +549,77 @@ fun MainGraph(
             onConfigurePasswordClick = { navController.navigate(Graph.CONFIGURE_PASSWORD) },
             onEditEmailClicked = { navController.navigate(Graph.EDIT_EMAIL) },
             on2FaClicked = { navController.navigate(Graph.TWO_FA_DETAIL) },
+            onPasskeyClicked = { passkey -> navController.navigate(DeletePasskeyRoute.routeWithArgs(passkey)) },
+            onRemoveAppClicked = { navController.navigate(RemoveMobileAppRoute.route) },
+            onChangePhoneClicked = { navController.navigate(ChangePhone.Graph.route) },
         )
     }
+    composable(route = DeletePasskeyRoute.routeWithArgs, arguments = DeletePasskeyRoute.arguments) { entry ->
+        val viewModel = hiltViewModel<DeletePasskeyViewModel>(entry)
+        DeletePasskeyScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
+            onDeleteDone = { navController.goToSecurityAndReload() },
+        )
+    }
+    composable(RemoveMobileAppRoute.route) { entry ->
+        val viewModel = hiltViewModel<RemoveMobileAppViewModel>(entry)
+        RemoveMobileAppScreen(
+            viewModel = viewModel,
+            goBack = { navController.popBackStack() },
+            goToConfirmCode = { phoneNumber ->
+                navController.navigate(PhoneNumberRecovery.ConfirmCode.routeWithPhoneNumber(phoneNumber, true)) {
+                    popUpTo(RemoveMobileAppRoute.route) { inclusive = true }
+                }
+            },
+        )
+    }
+    //region Change SMS recovery phone number
+    navigation(route = ChangePhone.Graph.route, startDestination = ChangePhone.Explanation.route) {
+        composable(ChangePhone.Explanation.route) { entry ->
+            val parentEntry = remember(entry) { navController.getBackStackEntry(ChangePhone.Graph.route) }
+            val viewModel = hiltViewModel<ChangePhoneAuthViewModel>(parentEntry)
+            ChangePhoneExplanationScreen(
+                viewModel = viewModel,
+                goBack = { navController.popBackStack() },
+                goToVerifyPin = { navController.navigate(ChangePhone.VerifyPin.route) },
+                goToRequestCode = { navController.navigate(ChangePhone.RequestCode.route) },
+            )
+        }
+        composable(ChangePhone.VerifyPin.route) { entry ->
+            val parentEntry = remember(entry) { navController.getBackStackEntry(ChangePhone.Graph.route) }
+            val viewModel = hiltViewModel<ChangePhoneAuthViewModel>(parentEntry)
+            ChangePhoneVerifyPinScreen(
+                viewModel = viewModel,
+                goBack = { navController.popBackStack() },
+                abortFlow = { navController.popBackStack(ChangePhone.Graph.route, inclusive = true) },
+                goToRequestCode = {
+                    navController.navigate(ChangePhone.RequestCode.route) {
+                        popUpTo(ChangePhone.VerifyPin.route) { inclusive = true }
+                    }
+                },
+            )
+        }
+        composable(ChangePhone.RequestCode.route, arguments = ChangePhone.requestCodeArguments) { entry ->
+            val viewModel = hiltViewModel<PhoneRequestCodeViewModel>(entry)
+            PhoneRequestCodeScreen(
+                viewModel = viewModel,
+                onBackClicked = { navController.popBackStack() },
+            ) { phoneNumber ->
+                navController.navigate(ChangePhone.ConfirmCode.routeWithPhoneNumber(phoneNumber))
+            }
+        }
+        composable(ChangePhone.ConfirmCode.routeWithArgs, arguments = ChangePhone.confirmCodeArguments) { entry ->
+            val viewModel = hiltViewModel<ConfirmCodeViewModel>(entry)
+            ChangePhoneConfirmCodeScreen(
+                viewModel = viewModel,
+                phoneNumber = PhoneNumberRecovery.ConfirmCode.decodeFromEntry(entry),
+                goBack = { navController.popBackStack() },
+                onPhoneChanged = { navController.goToSecurityAndReload() },
+            )
+        }
+    }
+    //endregion
     composable(Graph.TWO_FA_DETAIL) {
         val viewModel = hiltViewModel<TwoFactorKeyViewModel>(it)
         TwoFactorKeyScreen(
@@ -653,4 +737,16 @@ fun NavController.goToWithPopCurrent(destination: String) {
     navigate(destination) {
         popUpTo(currentRouteId) { inclusive = true }
     }
+}
+
+private fun NavController.isOnBackStack(route: String): Boolean = try {
+    getBackStackEntry(route)
+    true
+} catch (_: IllegalArgumentException) {
+    false
+}
+
+/** Returns to the Security screen, recreating it so it reloads the latest user details. */
+private fun NavController.goToSecurityAndReload() = navigate(Security.Settings.route) {
+    popUpTo(Security.Settings.route) { inclusive = true }
 }

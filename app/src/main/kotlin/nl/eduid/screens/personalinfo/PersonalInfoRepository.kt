@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import nl.eduid.di.api.EduIdApi
 import nl.eduid.di.assist.UnauthorizedException
+import nl.eduid.di.assist.processEmptyResponse
 import nl.eduid.di.assist.processResponse
 import nl.eduid.di.model.ConfirmDeactivationCode
 import nl.eduid.di.model.ConfirmPhoneCode
@@ -15,14 +16,14 @@ import nl.eduid.di.model.ControlCode
 import nl.eduid.di.model.ControlCodeRequest
 import nl.eduid.di.model.DeleteServiceRequest
 import nl.eduid.di.model.DeleteTokensRequest
-import nl.eduid.di.model.EmailChangeRequest
 import nl.eduid.di.model.EnrollResponse
 import nl.eduid.di.model.GenerateEmailCodeRequest
 import nl.eduid.di.model.IdpScoping
-import nl.eduid.di.model.LinkedAccount
 import nl.eduid.di.model.LinkedAccountUpdateRequest
+import nl.eduid.di.model.PublicKeyCredential
 import nl.eduid.di.model.RequestPhoneCode
 import nl.eduid.di.model.SelfAssertedName
+import nl.eduid.di.model.StartAuthenticationResponse
 import nl.eduid.di.model.Token
 import nl.eduid.di.model.TokenResponse
 import nl.eduid.di.model.UrlResponse
@@ -33,7 +34,6 @@ import timber.log.Timber
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import kotlin.jvm.Throws
 
 class PersonalInfoRepository(
     private val eduIdApi: EduIdApi,
@@ -397,6 +397,41 @@ class PersonalInfoRepository(
     suspend fun deleteControlCode(): Result<UserDetails> = withContext(Dispatchers.IO)  {
         val response = eduIdApi.deleteControlCode()
         processResponse(response = response)
+    }
+
+    suspend fun removeCredential(credential: PublicKeyCredential): Result<UserDetails> = withContext(Dispatchers.IO) {
+        runCatching { eduIdApi.removeCredential(credential) }.fold(
+            onSuccess = { processResponse(response = it) },
+            onFailure = { Result.failure(it) },
+        )
+    }
+
+    suspend fun startAuthentication(): Result<StartAuthenticationResponse> = withContext(Dispatchers.IO) {
+        runCatching { eduIdApi.startAuthentication() }.fold(
+            onSuccess = { processResponse(response = it) },
+            onFailure = { Result.failure(it) },
+        )
+    }
+
+    suspend fun requestDeactivationCodeResult(): Result<Unit> = withContext(Dispatchers.IO) {
+        runCatching { eduIdApi.requestDeactivationForKnownPhone() }.fold(
+            onSuccess = { processEmptyResponse(response = it) },
+            onFailure = { Result.failure(it) },
+        )
+    }
+
+    suspend fun resendPhoneCode(phoneNumber: String): Result<Unit> = withContext(Dispatchers.IO) {
+        runCatching { eduIdApi.retryRequestPhoneCode(RequestPhoneCode(phoneNumber)) }.fold(
+            onSuccess = { processEmptyResponse(response = it) },
+            onFailure = { Result.failure(it) },
+        )
+    }
+
+    suspend fun reverifyPhoneCode(phoneCode: String): Result<Unit> = withContext(Dispatchers.IO) {
+        runCatching { eduIdApi.reverifyPhoneCode(ConfirmPhoneCode(phoneCode)) }.fold(
+            onSuccess = { processEmptyResponse(response = it) },
+            onFailure = { Result.failure(it) },
+        )
     }
 }
 

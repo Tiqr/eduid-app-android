@@ -1,16 +1,16 @@
 package nl.eduid.di.assist
 
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import nl.eduid.di.model.IdpScoping
-import nl.eduid.di.model.LinkedAccount
 import nl.eduid.di.model.LinkedAccountUpdateRequest
+import nl.eduid.di.model.PublicKeyCredential
 import nl.eduid.di.model.SelfAssertedName
+import nl.eduid.di.model.StartAuthenticationResponse
 import nl.eduid.di.model.TokenResponse
 import nl.eduid.di.model.UserDetails
 import nl.eduid.di.repository.StorageRepository
@@ -184,6 +184,31 @@ constructor(
     } catch (e: UnauthorizedException) {
         storageRepository.clearInvalidAuth()
         throw e
+    }
+
+    suspend fun removeCredential(credential: PublicKeyCredential): Result<UserDetails> =
+        infoRepository.removeCredential(credential)
+            .onSuccess { cachedDetails.emit(SaveableResult.Success(it)) }
+            .clearAuthOnUnauthorized()
+
+    suspend fun startAuthentication(): Result<StartAuthenticationResponse> =
+        infoRepository.startAuthentication().clearAuthOnUnauthorized()
+
+    suspend fun requestDeactivationCode(): Result<Unit> =
+        infoRepository.requestDeactivationCodeResult().clearAuthOnUnauthorized()
+
+    suspend fun resendPhoneCode(phoneNumber: String): Result<Unit> =
+        infoRepository.resendPhoneCode(phoneNumber).clearAuthOnUnauthorized()
+
+    suspend fun reverifyPhoneCode(phoneCode: String): Result<Unit> =
+        infoRepository.reverifyPhoneCode(phoneCode)
+            .onSuccess { refreshDetails() }
+            .clearAuthOnUnauthorized()
+
+    private suspend fun <T> Result<T>.clearAuthOnUnauthorized(): Result<T> = also {
+        if (it.exceptionOrNull() is UnauthorizedException) {
+            storageRepository.clearInvalidAuth()
+        }
     }
 
     private suspend fun forwardWithFallback(result: Result<UserDetails>, knownDetails: UserDetails, operation: String = "") =
