@@ -149,6 +149,7 @@ fun EditableSecurityField(
     subtitle: String? = null,
     annotatedSubtitle: AnnotatedString? = null,
     modifier: Modifier = Modifier,
+    useImage: Boolean = false,
 ) = ListItem(colors = ListItemDefaults.colors(
     containerColor = MaterialTheme.colorScheme.surface,
     headlineColor = MaterialTheme.colorScheme.onSurface,
@@ -156,10 +157,17 @@ fun EditableSecurityField(
     trailingIconColor = MaterialTheme.colorScheme.onSurface,
     leadingIconColor = MaterialTheme.colorScheme.onSurface,
 ), leadingContent = {
-    Icon(
-        painter = painterResource(id = leadingIcon),
-        contentDescription = "",
-    )
+    if(useImage){
+        Image(
+            painter = painterResource(id = leadingIcon),
+            contentDescription = "",
+        )
+    } else {
+        Icon(
+            painter = painterResource(id = leadingIcon),
+            contentDescription = "",
+        )
+    }
 },
     headlineContent = {
         Text(
@@ -413,7 +421,11 @@ private fun Preview_InfoFields() = EduidAppAndroidTheme {
         )
         EditableSecurityField(
             leadingIcon = R.drawable.ic_security_email_link,
-            title = "Magic link email", subtitle = "librarian@unseenuniveristy.disk"
+            title = "Magic link email", subtitle = "librarian@unseenuniveristy.disk",
+        )
+        EditableSecurityField(
+            leadingIcon = R.drawable.ic_security_key,
+            title = "Login with app", subtitle = "librarian@unseenuniveristy.disk",
         )
         AddSecurityField(leadingIcon = R.drawable.ic_security_key, title = "Add security key")
         VerifiedInfoField(

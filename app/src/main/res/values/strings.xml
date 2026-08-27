@@ -191,10 +191,14 @@
   <string name="Security_Title_COPY">"Security"</string>
   <string name="Security_SubTitle_COPY">"How to log in to eduID"</string>
   <string name="Security_OtherMethods_COPY">"Other methods"</string>
+  <string name="Security_RecoveryOptions_COPY">"Recovery options"</string>
+  <string name="Security_SMS_COPY">"SMS"</string>
+  <string name="Security_ReceiveCodeAt_COPY">"You'll receive one-time codes at: ** ** *** %1$s"</string>
   <string name="Security_AddPassword_COPY">"Add a password"</string>
   <string name="Security_PasswordPlaceholder_COPY">"• • • • • • • • • •"</string>
   <string name="Security_ChangePassword_COPY">"Password"</string>
   <string name="Security_PasswordActivated_COPY">"Activated on %1$s"</string>
+  <string name="Security_Passkey_COPY">"Passkey"</string>
   <string name="Security_CredentialActivated_COPY">"%1$s: Activated on %2$s"</string>
   <string name="Security_TwoFAKey_COPY">"Login with app"</string>
   <string name="Security_ProvidedBy_COPY">"Provided by"</string>

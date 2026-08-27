@@ -84,6 +84,7 @@ data class UserDetails(
     val usePassword: Boolean,
     val usePublicKey: Boolean,
     val forgottenPassword: Boolean,
+    val publicKeyCredentials: List<PublicKeyCredential>,
     val controlCode: ControlCode?,
     val linkedAccounts: List<LinkedAccount>,
     val externalLinkedAccounts: List<ExternalLinkedAccount>,
@@ -91,6 +92,7 @@ data class UserDetails(
     val uid: String,
     val rememberMe: Boolean,
     val created: Long,
+    val passwordUpdatedAt: Long?,
     val eduIdPerServiceProvider: Map<String, EduIdPerServiceProvider>,
     val loginOptions: List<String>,
     val registration: Registration?,
@@ -101,6 +103,13 @@ data class UserDetails(
 
     fun hasAppRegistered(): Boolean = loginOptions.contains("useApp")
 }
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class PublicKeyCredential(
+    val name: String,
+    val createdAt: Long
+) : Parcelable
 
 @Parcelize
 @JsonClass(generateAdapter = true)
