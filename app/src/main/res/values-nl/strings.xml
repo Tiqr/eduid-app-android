@@ -191,11 +191,15 @@
   <string name="Security_Title_COPY">"Beveiliging"</string>
   <string name="Security_SubTitle_COPY">"Hoe je kunt inloggen bij eduID"</string>
   <string name="Security_OtherMethods_COPY">"Andere manieren"</string>
+  <string name="Security_RecoveryOptions_COPY">"Herstelopties"</string>
+  <string name="Security_SMS_COPY">"sms"</string>
+  <string name="Security_ReceiveCodeAt_COPY">"Je ontvangt eenmalige codes op: ** ** *** %1$s"</string>
   <string name="Security_AddPassword_COPY">"Wachtwoord toevoegen"</string>
   <string name="Security_PasswordPlaceholder_COPY">"• • • • • • • • • •"</string>
   <string name="Security_ChangePassword_COPY">"Wachtwoord"</string>
   <string name="Security_PasswordActivated_COPY">"Geactiveerd op %1$s"</string>
   <string name="Security_CredentialActivated_COPY">"%1$s: Geactiveerd op %2$s"</string>
+  <string name="Security_Passkey_COPY">"Passkey"</string>
   <string name="Security_TwoFAKey_COPY">"Inloggen met app"</string>
   <string name="Security_ProvidedBy_COPY">"Gedeeld door"</string>
   <string name="Security_NotAddedYet_COPY">"Nog niet toegevoegd aan je eduID"</string>
@@ -468,7 +472,6 @@
   <string name="UseApp_Info_COPY">"We hebben een pushmelding naar je app gestuurd om te controleren dat jij het bent die probeert in te loggen."</string>
   <string name="UseApp_Scan_COPY">"Scan deze QR-code met je eduID app"</string>
   <string name="UseApp_NoNotification_COPY">"Geen melding?"</string>
-  <string name="UseApp_NotificationsNotPossible_COPY">"Let op: pushberichten zijn uitgeschakeld op deze telefoon"</string>
   <string name="UseApp_QrCodeLink_COPY">"Maak een QR-code"</string>
   <string name="UseApp_QrCodePostfix_COPY">"en scan deze."</string>
   <string name="UseApp_Offline_COPY">"Toont je telefoon een code?"</string>
