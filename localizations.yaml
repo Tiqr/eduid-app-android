@@ -957,6 +957,10 @@ SHARED:
       COPY:
         en: Other methods
         nl: Andere manieren
+    MobileApp:
+      COPY:
+        en: "eduID mobile App"
+        nl: "eduID mobiele app"
     RecoveryOptions:
       COPY:
         en: Recovery options
@@ -985,14 +989,14 @@ SHARED:
       COPY:
         en: Activated on %1{{s}}
         nl: Geactiveerd op %1{{s}}
-    Passkey:
-      COPY:
-        en: Passkey
-        nl: Passkey
     CredentialActivated:
       COPY:
         en: "%1{{s}}: Activated on %2{{s}}"
         nl: "%1{{s}}: Geactiveerd op %2{{s}}"
+    Passkey:
+      COPY:
+        en: Passkey
+        nl: Passkey
     TwoFAKey:
       COPY:
         en: Login with app
@@ -1315,6 +1319,85 @@ SHARED:
         COPY:
           en: No, back
           nl: Nee, ga terug
+  ConfirmDeletePasskey:
+    Title:
+      COPY:
+        en: Delete passkey
+        nl: Verwijder passkey
+    Subtitle:
+      COPY:
+        en: You can't undo this action
+        nl: Je kunt dit niet ongedaan maken
+    Description:
+      COPY:
+        en: "Are you sure you want to delete the passkey \"%1{{s}}\"?"
+        nl: "Weet je zeker dat je de passkey \"%1{{s}}\" wil verwijderen?"
+    Button:
+      Confirm:
+        COPY:
+          en: Yes, delete
+          nl: Ja, verwijder
+      Cancel:
+        COPY:
+          en: No, back
+          nl: Nee, ga terug
+  ConfirmRemoveMobileApp:
+    Title:
+      COPY:
+        en: Remove eduID mobile app
+        nl: Verwijder eduID mobiele app
+    Subtitle:
+      COPY:
+        en: You can't undo this action
+        nl: Je kunt dit niet ongedaan maken
+    Description:
+      COPY:
+        en: "Are you sure you want to remove the eduID mobile app as a login method? We'll send a verification code to your phone number to confirm this."
+        nl: "Weet je zeker dat je de eduID mobiele app als inlogmethode wil verwijderen? We sturen een verificatiecode naar je telefoonnummer om dit te bevestigen."
+    Button:
+      Confirm:
+        COPY:
+          en: Yes, remove
+          nl: Ja, verwijder
+      Cancel:
+        COPY:
+          en: No, back
+          nl: Nee, ga terug
+  ChangeSMSRecovery:
+    Title:
+      COPY:
+        en: Change SMS recovery number
+        nl: Wijzig sms-herstelnummer
+    Description:
+      COPY:
+        en: "To change your SMS recovery number, we first need to verify it's really you. Confirm with your PIN code or biometrics to continue."
+        nl: "Om je sms-herstelnummer te wijzigen, moeten we eerst verifiëren dat jij het echt bent. Bevestig met je pincode of biometrie om verder te gaan."
+    VerificationFailed:
+      COPY:
+        en: "We could not verify your identity. Please try again."
+        nl: "We konden je identiteit niet verifiëren. Probeer het opnieuw."
+    Button:
+      Back:
+        COPY:
+          en: No, go back
+          nl: Nee, ga terug
+      Change:
+        COPY:
+          en: Change
+          nl: Wijzig
+    Success:
+      Title:
+        COPY:
+          en: Identity verified
+          nl: Identiteit geverifieerd
+      Description:
+        COPY:
+          en: "Your identity has been verified and your SMS recovery number has been updated."
+          nl: "Je identiteit is geverifieerd en je sms-herstelnummer is bijgewerkt."
+      Button:
+        COPY:
+          en: OK
+          nl: OK
   Home:
     Home:
       COPY:
@@ -2320,10 +2403,6 @@ SHARED:
       COPY:
         en: No notification?
         nl: Geen melding?
-    NotificationsNotPossible:
-      COPY:
-        en: "Note: push notifications are disabled on this phone"
-        nl: "Let op: pushberichten zijn uitgeschakeld op deze telefoon"
     QrCodeLink:
       COPY:
         en: Create a QR-code
@@ -3527,6 +3606,19 @@ SHARED:
         COPY:
           en: "Close"
           nl: "Sluiten"
+    SessionExpired:
+      Title:
+        COPY:
+          en: "Session expired"
+          nl: "Sessie verlopen"
+      Description:
+        COPY:
+          en: "Your session has expired and you have been logged out. Please log in again."
+          nl: "Je sessie is verlopen en je bent uitgelogd. Log opnieuw in."
+      CloseButton:
+        COPY:
+          en: "OK"
+          nl: "OK"
   WelcomeToApp:
     Title:
       COPY:
@@ -3691,6 +3783,20 @@ SHARED:
         COPY:
           en: Send SMS code
           nl: Stuur sms-code
+      ReVerificationTitle:
+        COPY:
+          en: Add a phone number
+          nl: Telefoonnummer toevoegen
+      ReVerificationMainText:
+        COPY:
+          en: |
+            Your phone number will be used for security purposes, so that you can re-register the eduID app if you lose it.
+
+            We will send you a code to verify your phone number.
+          nl: |
+            Je telefoonnummer wordt gebruikt voor beveiligingsdoeleinden, zodat je de eduID-app opnieuw kunt registreren als je deze kwijtraakt.
+
+            We sturen je een code om je telefoonnummer te verifiëren.
     AddInstitution:
       MainTitle:
         COPY:
@@ -3924,6 +4030,15 @@ SHARED:
         COPY:
           en: Too many attempts, please try again later
           nl: Te veel pogingen, probeer het later opnieuw
+    SMSCodeError:
+      Title:
+        COPY:
+          en: Code verification failed
+          nl: Verificatie van code mislukt
+      Incorrect:
+        COPY:
+          en: "The code you entered is incorrect. Please check the SMS message and try again."
+          nl: "De ingevoerde code is onjuist. Controleer het sms-bericht en probeer het opnieuw."
     Auth:
       Invalid:
         Title:
