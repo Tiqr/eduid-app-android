@@ -2,58 +2,105 @@
 
 ## [Unreleased](https://github.com/SURFnet/eduid-app-android/tree/HEAD)
 
-# 0.2.2
+## 0.3.2
+- Remove beep sound when scanning a QR code
+
+## 0.3.1
+- Show the password created at time, the app itself and the passkeys
+
+## 0.3.0
+- Show message when the FCM token is not available
+- Fix info icon tint color
+
+## 0.2.9
+- Do not depend on Google Play services (GMS)
+- Fix crash at startup
+
+## 0.2.8
+- Merge screens for selecting an institution
+- Add service name to screens
+- Remove first time dialog
+- Handle crash when no hash is available
+- Improve texts and accessibility
+
+## 0.2.7
+- New screen for selecting an institution
+- Removed screen "are you studying in NL"
+- Banner introduced: "Update the app to the newest version"
+- General bug fixes and improvements
+
+## 0.2.6
+- Update app-core
+
+## 0.2.5
+- Fix linked account not being removed
+
+## 0.2.4
+- Fix crash when opening recent push notification
+- Update translations
+
+## 0.2.3
+- Fallback method enabled by default
+- Change email with email code
+- Reset password with email code
+- Better error message when password is weak
+- Fix navigation issues related to password change screens
+- Use keyboard for phone number
+- Update libraries and Android target versions
+- Update texts and translations
+
+## 0.2.2
 - Fix for crashes
 - Improve texts
 - Add (disabled) fallback method
 
-# 0.2.1
+## 0.2.1
 - Fix for crashes
 
-# 0.2.0
+## 0.2.0
 - Allow logging in without opening the push notification
 - Allow validation using eIDAS and iDIN
 - Improve layout(s)
 - Update translations
 
-# 0.1.25
+## 0.1.25
 - Update screen layouts
 - Update texts and translations
 - Improve on-boarding flow
 - Remove FIDO key
 
-# 0.1.21
+## 0.1.21
 - Update translations
 - Show version number in info screen
 - Improve error message if account already linked
 
-# 0.1.17
+## 0.1.17
 - Don't start recovery in the app when a second key is added. (065f9c6)
 - Update translations
 - Allow add/update passwords
 - Force recovery flow when enrolling
 - Fix UI issues
 
-# 0.1.0
+## 0.1.0
 Complete redesign of the app, allowing viewing and management of the eduID
 profile information.
 
-# 0.0.17
+## 0.0.17
 - Add dark theme
 
-# 0.0.16
+## 0.0.16
 - Update minSDK to 24 (Android 7) 
 - Add core sha to version name
 
-# 0.0.14
+## 0.0.14
 - Update to latest Tiqr-core
 - Update translations
 
-# 0.0.11
+## 0.0.11
 
 Light in-app icons
 
-# 0.0.10
+## 0.0.10
 
 * Update translations
 * @peterclijsters1 made their first contribution in https://github.com/Tiqr/eduid-app-android/pull/40
@@ -61,7 +108,7 @@ Light in-app icons
 
 **Full Changelog**: https://github.com/Tiqr/eduid-app-android/compare/v0.0.9...v0.0.10
 
-# 0.0.9
+## 0.0.9
 
 * Use correct core/data branche (https://github.com/Tiqr/eduid-app-android/commit/ac2adc8d90b1a2aca1db78d197c29263d908b355 by @welsinga)
 * Mitigations against task hijacking (https://github.com/Tiqr/eduid-app-android/commit/32e2cb9e41419c6f2f7930ab9b126a1658c57142 by @dzolnai)
@@ -70,7 +117,7 @@ Light in-app icons
 
 **Full Changelog**: https://github.com/Tiqr/eduid-app-android/compare/v0.0.8...v0.0.9
 
-# 0.0.8
+## 0.0.8
 
 * Use app-core as submodule (https://github.com/Tiqr/eduid-app-android/pull/34 https://github.com/Tiqr/eduid-app-android/commit/0fc71a048fb62e6ba696db36b28afd043f6070d4 by @welsinga)
 * Update library versions (https://github.com/Tiqr/eduid-app-android/commit/2f45e9c3fd0b4013b293d59aafb5a0bcea0b82d5 by @dzolnai)
@@ -78,7 +125,7 @@ Light in-app icons
 
 **Full Changelog**: https://github.com/Tiqr/eduid-app-android/compare/v0.0.7...v0.0.8
 
-# 0.0.7
+## 0.0.7
 
 * Enforce multiple hosts (https://github.com/Tiqr/eduid-app-android/commit/44bdb2f716a536c47153e3b32cac4d22b7ed6df4 by @dzolnai)
 * Fix splash logo (https://github.com/Tiqr/eduid-app-android/commit/cec4ba9870acb550220e200c3e32adaad3019487 by @dzolnai)
