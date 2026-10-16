@@ -24,13 +24,10 @@ class ResetPasswordConfirmViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val passwordHash: String
+    private val passwordHash: String = savedStateHandle.get<String>(ConfigurePassword.Form.passwordHashArg) ?: ""
+
     var uiState by mutableStateOf(UiState())
         private set
-
-    init {
-        passwordHash = savedStateHandle.get<String>(ConfigurePassword.Form.passwordHashArg) ?: ""
-    }
 
     fun onNewPasswordInput(newValue: String) {
         uiState = uiState.copy(newPasswordInput = newValue)

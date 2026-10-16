@@ -21,3 +21,19 @@ inline fun <reified T> processResponse(response: Response<out T>): Result<T> = w
         Result.failure(IOException(exception))
     }
 }
+
+/**
+ * Same as [processResponse], for calls which do not return a body. Non-401 failures are wrapped in a
+ * [RequestFailedException] so callers can react to specific HTTP status codes.
+ */
+fun processEmptyResponse(response: Response<*>): Result<Unit> = with(response) {
+    when {
+        isSuccessful -> Result.success(Unit)
+        code() == java.net.HttpURLConnection.HTTP_UNAUTHORIZED -> Result.failure(UnauthorizedException("Unauthorized call"))
+        else -> {
+            val exception = "${code()}/${message()} : ${errorBody()?.string()}"
+            Timber.e("Request failed. Exception: $exception")
+            Result.failure(RequestFailedException(code(), exception))
+        }
+    }
+}

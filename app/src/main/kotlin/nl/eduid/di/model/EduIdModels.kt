@@ -102,13 +102,29 @@ data class UserDetails(
     fun hasPasswordSet(): Boolean = loginOptions.contains("usePassword")
 
     fun hasAppRegistered(): Boolean = loginOptions.contains("useApp")
+
+    fun hasRecoveryCode(): Boolean = registration?.recoveryCode == true
+    fun hasVerifiedPhone(): Boolean = !registration?.phoneNumber.isNullOrEmpty() && registration.phoneVerified == true
+
+    fun showRecoveryOptions(): Boolean = hasRecoveryCode() || hasVerifiedPhone()
 }
 
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class PublicKeyCredential(
+    val identifier: String? = null,
+    val credential: String? = null,
     val name: String,
     val createdAt: Long
+) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class StartAuthenticationResponse(
+    val sessionKey: String?,
+    val url: String?,
+    val qr: String?,
+    val tiqrCookiePresent: Boolean?,
 ) : Parcelable
 
 @Parcelize

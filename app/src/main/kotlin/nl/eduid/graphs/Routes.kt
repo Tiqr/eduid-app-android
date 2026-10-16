@@ -5,13 +5,10 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.adapter
 import nl.eduid.di.model.ControlCode
+import nl.eduid.di.model.PublicKeyCredential
 import nl.eduid.di.model.SelfAssertedName
-import nl.eduid.graphs.AccountLinked.isRegistrationFlowArg
-import nl.eduid.graphs.VerifyIdentityRoute.isLinkedAccount
 import nl.eduid.screens.emailcodeentry.EmailCodeEntryViewModel
-import org.tiqr.data.model.AuthenticationChallenge
 import timber.log.Timber
 import java.io.UnsupportedEncodingException
 
@@ -122,7 +119,6 @@ object RequestEduIdLinkSent {
 sealed class PhoneNumberRecovery(val route: String) {
     data object RequestCode : PhoneNumberRecovery("phone_number_recover")
     data object ConfirmCode : PhoneNumberRecovery("phone_number_confirm_code") {
-        private const val phoneNumberArg = "phone_number_arg"
         const val isDeactivationArg = "is_deactivation_arg"
         val routeWithArgs = "${route}/{$phoneNumberArg}/{$isDeactivationArg}"
         val arguments = listOf(navArgument(phoneNumberArg) {
@@ -142,6 +138,13 @@ sealed class PhoneNumberRecovery(val route: String) {
             val phoneNumberArg = entry.arguments?.getString(phoneNumberArg) ?: ""
             return Uri.decode(phoneNumberArg)
         }
+    }
+
+    companion object {
+        const val phoneNumberArg = "phone_number_arg"
+
+        /** When true, the re-send/re-verify endpoints are used to change an already registered SMS recovery number. */
+        const val isReVerificationArg = "is_reverification_arg"
     }
 }
 
@@ -476,4 +479,61 @@ object VerifyIdentityWithIdCode {
 object ExternalAccountLinkedError {
     const val route = "external_account_linked_error"
     fun getUriPattern(baseUrl: String) = "$baseUrl/client/mobile/external-account-linked-error"
+}
+
+object DeletePasskeyRoute {
+    private const val route = "delete_passkey"
+
+    const val passkeyArg = "passkey"
+    const val routeWithArgs = "${route}?$passkeyArg={$passkeyArg}"
+
+    val arguments = listOf(navArgument(passkeyArg) {
+        type = NavType.StringType
+        nullable = false
+    })
+
+    fun routeWithArgs(passkey: PublicKeyCredential): String {
+        val adapter = Moshi.Builder().build().adapter(PublicKeyCredential::class.java)
+        return "${route}?$passkeyArg=${Uri.encode(adapter.toJson(passkey))}"
+    }
+
+    fun deserializePasskey(encodedPasskey: String?): PublicKeyCredential? = try {
+        val adapter = Moshi.Builder().build().adapter(PublicKeyCredential::class.java)
+        encodedPasskey?.let { adapter.fromJson(Uri.decode(it)) }
+    } catch (ex: Exception) {
+        Timber.w(ex, "Could not decode PublicKeyCredential!")
+        null
+    }
+}
+
+object RemoveMobileAppRoute {
+    const val route = "remove_mobile_app"
+}
+
+sealed class ChangePhone(val route: String) {
+    data object Graph : ChangePhone("change_phone_graph")
+    data object Explanation : ChangePhone("change_phone_explanation")
+    data object VerifyPin : ChangePhone("change_phone_verify_pin")
+    data object RequestCode : ChangePhone("change_phone_request_code")
+    data object ConfirmCode : ChangePhone("change_phone_confirm_code") {
+        val routeWithArgs = "${route}/{${PhoneNumberRecovery.phoneNumberArg}}"
+        fun routeWithPhoneNumber(phoneNumber: String) = "${route}/${Uri.encode(phoneNumber)}"
+    }
+
+    companion object {
+        private val reVerificationArgument = navArgument(PhoneNumberRecovery.isReVerificationArg) {
+            type = NavType.BoolType
+            nullable = false
+            defaultValue = true
+        }
+        val requestCodeArguments = listOf(reVerificationArgument)
+        val confirmCodeArguments = listOf(
+            navArgument(PhoneNumberRecovery.phoneNumberArg) {
+                type = NavType.StringType
+                nullable = false
+                defaultValue = ""
+            },
+            reVerificationArgument,
+        )
+    }
 }

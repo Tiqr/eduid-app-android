@@ -7,16 +7,17 @@ import nl.eduid.di.model.ControlCodeRequest
 import nl.eduid.di.model.CreateWithOneTimeCodeResponse
 import nl.eduid.di.model.DeleteServiceRequest
 import nl.eduid.di.model.DeleteTokensRequest
-import nl.eduid.di.model.EmailChangeRequest
 import nl.eduid.di.model.EnrollResponse
 import nl.eduid.di.model.GenerateEmailCodeRequest
 import nl.eduid.di.model.IdpScoping
 import nl.eduid.di.model.InstitutionNameResponse
 import nl.eduid.di.model.LinkedAccountUpdateRequest
 import nl.eduid.di.model.OneTimeCodeResponse
+import nl.eduid.di.model.PublicKeyCredential
 import nl.eduid.di.model.RequestEduIdAccount
 import nl.eduid.di.model.RequestPhoneCode
 import nl.eduid.di.model.SelfAssertedName
+import nl.eduid.di.model.StartAuthenticationResponse
 import nl.eduid.di.model.TokenResponse
 import nl.eduid.di.model.UpdatePasswordRequest
 import nl.eduid.di.model.UrlResponse
@@ -27,6 +28,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Query
@@ -85,8 +87,23 @@ interface EduIdApi {
 
     @POST("/mobile/tiqr/sp/re-send-phone-code")
     suspend fun retryRequestPhoneCode(
-        @Body request: RequestEduIdAccount,
+        @Header("Cookie") stepUpCookies: String,
+        @Body request: RequestPhoneCode,
     ): Response<Unit>
+
+    @POST("/mobile/tiqr/sp/re-verify-phone-code")
+    suspend fun reverifyPhoneCode(
+        @Header("Cookie") stepUpCookies: String,
+        @Body request: ConfirmPhoneCode,
+    ): Response<Unit>
+
+    @POST("/mobile/tiqr/sp/start-authentication")
+    suspend fun startAuthentication(): Response<StartAuthenticationResponse>
+
+    @PUT("/mobile/api/sp/credential")
+    suspend fun removeCredential(
+        @Body credential: PublicKeyCredential,
+    ): Response<UserDetails>
 
     @GET("mobile/api/sp/me")
     suspend fun getUserDetails(): Response<UserDetails>

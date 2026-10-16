@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.eduid.R
+import nl.eduid.di.model.PublicKeyCredential
 import nl.eduid.ui.AddSecurityField
 import nl.eduid.ui.AlertDialogWithSingleButton
 import nl.eduid.ui.EditableSecurityField
@@ -36,6 +37,9 @@ fun SecurityRoute(
     onConfigurePasswordClick: () -> Unit,
     onEditEmailClicked: () -> Unit,
     on2FaClicked: () -> Unit,
+    onPasskeyClicked: (PublicKeyCredential) -> Unit,
+    onRemoveAppClicked: () -> Unit,
+    onChangePhoneClicked: () -> Unit,
     goBack: () -> Unit,
 ) = EduIdTopAppBar(
     onBackClicked = goBack,
@@ -46,6 +50,9 @@ fun SecurityRoute(
         onConfigurePasswordClicked = onConfigurePasswordClick,
         onEditEmailClicked = onEditEmailClicked,
         on2FaClicked = on2FaClicked,
+        onPasskeyClicked = onPasskeyClicked,
+        onRemoveAppClicked = onRemoveAppClicked,
+        onChangePhoneClicked = onChangePhoneClicked,
         dismissError = viewModel::dismissError,
     )
 }
@@ -57,6 +64,9 @@ fun SecurityScreenContent(
     onConfigurePasswordClicked: () -> Unit = {},
     onEditEmailClicked: () -> Unit = {},
     on2FaClicked: () -> Unit = {},
+    onPasskeyClicked: (PublicKeyCredential) -> Unit = {},
+    onRemoveAppClicked: () -> Unit = {},
+    onChangePhoneClicked: () -> Unit = {},
     dismissError: () -> Unit = {},
 ) = Column(
     modifier = Modifier
@@ -114,15 +124,15 @@ fun SecurityScreenContent(
     securityInfo.appCreatedAt?.let {
         EditableSecurityField(
             title = it.name,
-            subtitle = stringResource(R.string.Security_PasswordActivated_COPY,it.createdAt),
+            subtitle = stringResource(R.string.Security_PasswordActivated_COPY, it.createdAt),
             leadingIcon = R.drawable.ic_security_key,
-            modifier = Modifier.clickable {  },
+            modifier = Modifier.clickable { onRemoveAppClicked() },
         )
     }
     if (securityInfo.hasPassword) {
         EditableSecurityField(
             title = stringResource(R.string.Security_ChangePassword_COPY),
-            subtitle = stringResource(R.string.Security_PasswordActivated_COPY,securityInfo.passwordDate.orEmpty()),
+            subtitle = stringResource(R.string.Security_PasswordActivated_COPY, securityInfo.passwordDate.orEmpty()),
             leadingIcon = R.drawable.ic_security_password,
             modifier = Modifier.clickable { onConfigurePasswordClicked() },
         )
@@ -139,8 +149,8 @@ fun SecurityScreenContent(
         EditableSecurityField(
             title = stringResource(R.string.Security_Passkey_COPY),
             leadingIcon = R.drawable.ic_security_key,
-            subtitle = stringResource(R.string.Security_CredentialActivated_COPY,it.name, it.createdAt),
-            modifier = Modifier.clickable { },
+            subtitle = stringResource(R.string.Security_CredentialActivated_COPY, it.name, it.createdAt),
+            modifier = Modifier.clickable { onPasskeyClicked(it.credential) },
         )
     }
 
@@ -167,17 +177,26 @@ fun SecurityScreenContent(
             modifier = Modifier.clickable { onConfigurePasswordClicked() },
         )
     }
-    if(securityInfo.withPhoneNumber!=null){
+    if (securityInfo.showRecoveryOptions) {
         Text(
             text = stringResource(R.string.Security_RecoveryOptions_COPY),
             style = MaterialTheme.typography.bodyLarge,
         )
-        EditableSecurityField(
-            title = stringResource(R.string.Security_SMS_COPY),
-            subtitle = stringResource(R.string.Security_ReceiveCodeAt_COPY, securityInfo.withPhoneNumber),
-            leadingIcon = R.drawable.ic_security_sms,
-            modifier = Modifier.clickable { },
-        )
+        if (securityInfo.withPhoneNumber != null) {
+            EditableSecurityField(
+                title = stringResource(R.string.Security_SMS_COPY),
+                subtitle = stringResource(R.string.Security_ReceiveCodeAt_COPY, securityInfo.withPhoneNumber),
+                leadingIcon = R.drawable.ic_security_sms,
+                modifier = Modifier.clickable { onChangePhoneClicked() },
+            )
+        } else if (securityInfo.withRecoveryCode) {
+            EditableSecurityField(
+                title = stringResource(R.string.Security_RecoveryCode_COPY),
+                subtitle = stringResource(R.string.Security_RecoveryCodeHopeful_COPY),
+                leadingIcon = R.drawable.ic_security_recovery_code_vault,
+                modifier = Modifier.clickable { },
+            )
+        }
     }
 }
 
@@ -187,9 +206,23 @@ private fun PreviewSecurityScreenContent() = EduidAppAndroidTheme {
     SecurityScreenContent(
         securityInfo = SecurityScreenData(
             twoFAProvider = "test.eduid.nl",
+            passKeys = listOf(
+                PasskeyData(
+                    name = "test.eduid.nl",
+                    createdAt = "July 30, 2026",
+                    credential = PublicKeyCredential(name = "test.eduid.nl", createdAt = 0L),
+                ),
+                PasskeyData(
+                    name = "second key",
+                    createdAt = "July 30, 2026",
+                    credential = PublicKeyCredential(name = "second key", createdAt = 0L),
+                ),
+            ),
+            appCreatedAt = LoginCreatedData(name = "eduID mobile app", createdAt = "July 30, 2026"),
             email = "librarian@unseenuniveristy.disk",
             hasPassword = true,
             passwordDate = "Activated on July 30, 2026",
+            showRecoveryOptions = true,
             withPhoneNumber = "123"
         ),
     )
@@ -201,6 +234,8 @@ private fun Preview_OnlyEmailSecurityScreenContent() = EduidAppAndroidTheme {
     SecurityScreenContent(
         securityInfo = SecurityScreenData(
             email = "librarian@unseenuniveristy.disk",
+            showRecoveryOptions = true,
+            withRecoveryCode = true,
         ),
     )
 }
