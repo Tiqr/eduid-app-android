@@ -26,6 +26,7 @@ constructor(
     private val storageRepository: StorageRepository,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
 ) {
+    private val stepUpSession = StepUpSession()
     private val cachedDetails = MutableStateFlow<SaveableResult<UserDetails>?>(null)
     val observableDetails: Flow<SaveableResult<UserDetails>?> = cachedDetails.map { knownValue ->
         if (knownValue == null) {
@@ -191,19 +192,47 @@ constructor(
             .onSuccess { cachedDetails.emit(SaveableResult.Success(it)) }
             .clearAuthOnUnauthorized()
 
-    suspend fun startAuthentication(): Result<StartAuthenticationResponse> =
-        infoRepository.startAuthentication().clearAuthOnUnauthorized()
+    /**
+     * Starts a tiqr step-up authentication and captures the session cookies the server binds it to. The cookies are
+     * required by [resendPhoneCode] and [reverifyPhoneCode] and are kept until [clearStepUpSession] is called.
+     */
+    suspend fun startAuthentication(): Result<StartAuthenticationResponse> {
+        stepUpSession.clear()
+        return infoRepository.startAuthentication()
+            .mapCatching { (body, rawResponse) ->
+                if (!stepUpSession.start(rawResponse)) {
+                    throw MissingStepUpSessionException("start-authentication did not set any session cookie")
+                }
+                body
+            }
+            .clearAuthOnUnauthorized()
+    }
+
+    fun clearStepUpSession() = stepUpSession.clear()
 
     suspend fun requestDeactivationCode(): Result<Unit> =
         infoRepository.requestDeactivationCodeResult().clearAuthOnUnauthorized()
 
-    suspend fun resendPhoneCode(phoneNumber: String): Result<Unit> =
-        infoRepository.resendPhoneCode(phoneNumber).clearAuthOnUnauthorized()
+    suspend fun resendPhoneCode(phoneNumber: String): Result<Unit> = withStepUpSession { cookies ->
+        infoRepository.resendPhoneCode(phoneNumber, cookies)
+    }
 
     suspend fun reverifyPhoneCode(phoneCode: String): Result<Unit> =
-        infoRepository.reverifyPhoneCode(phoneCode)
-            .onSuccess { refreshDetails() }
-            .clearAuthOnUnauthorized()
+        withStepUpSession { cookies -> infoRepository.reverifyPhoneCode(phoneCode, cookies) }
+            .onSuccess {
+                stepUpSession.clear()
+                refreshDetails()
+            }
+
+    private suspend fun withStepUpSession(
+        call: suspend (cookies: String) -> Pair<Result<Unit>, okhttp3.Response?>,
+    ): Result<Unit> {
+        val cookies = stepUpSession.cookieHeader()
+            ?: return Result.failure(MissingStepUpSessionException("No step-up session, start-authentication must succeed first"))
+        val (result, rawResponse) = call(cookies)
+        rawResponse?.let(stepUpSession::update)
+        return result.clearAuthOnUnauthorized()
+    }
 
     private suspend fun <T> Result<T>.clearAuthOnUnauthorized(): Result<T> = also {
         if (it.exceptionOrNull() is UnauthorizedException) {

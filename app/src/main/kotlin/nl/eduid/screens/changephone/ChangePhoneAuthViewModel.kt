@@ -127,6 +127,12 @@ class ChangePhoneAuthViewModel @Inject constructor(
 
     fun clearVerified() = _uiState.update { it.copy(isVerified = null) }
 
+    /** This ViewModel is scoped to the change phone graph, so it is cleared when the user leaves the flow. */
+    override fun onCleared() {
+        assistant.clearStepUpSession()
+        super.onCleared()
+    }
+
     private fun showError(errorData: ErrorData?) = _uiState.update { it.copy(inProgress = false, errorData = errorData) }
 
     private fun verificationFailedError() = ErrorData(

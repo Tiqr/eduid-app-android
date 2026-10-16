@@ -406,9 +406,10 @@ class PersonalInfoRepository(
         )
     }
 
-    suspend fun startAuthentication(): Result<StartAuthenticationResponse> = withContext(Dispatchers.IO) {
+    /** Also returns the raw response, so the caller can capture the session cookies it sets. */
+    suspend fun startAuthentication(): Result<Pair<StartAuthenticationResponse, okhttp3.Response>> = withContext(Dispatchers.IO) {
         runCatching { eduIdApi.startAuthentication() }.fold(
-            onSuccess = { processResponse(response = it) },
+            onSuccess = { response -> processResponse(response = response).map { it to response.raw() } },
             onFailure = { Result.failure(it) },
         )
     }
@@ -420,19 +421,23 @@ class PersonalInfoRepository(
         )
     }
 
-    suspend fun resendPhoneCode(phoneNumber: String): Result<Unit> = withContext(Dispatchers.IO) {
-        runCatching { eduIdApi.retryRequestPhoneCode(RequestPhoneCode(phoneNumber)) }.fold(
-            onSuccess = { processEmptyResponse(response = it) },
-            onFailure = { Result.failure(it) },
-        )
-    }
+    /** Returns the raw response on success as well as on HTTP failure, so the caller can apply any cookie updates. */
+    suspend fun resendPhoneCode(phoneNumber: String, stepUpCookies: String): Pair<Result<Unit>, okhttp3.Response?> =
+        withContext(Dispatchers.IO) {
+            runCatching { eduIdApi.retryRequestPhoneCode(stepUpCookies, RequestPhoneCode(phoneNumber)) }.fold(
+                onSuccess = { processEmptyResponse(response = it) to it.raw() },
+                onFailure = { Result.failure<Unit>(it) to null },
+            )
+        }
 
-    suspend fun reverifyPhoneCode(phoneCode: String): Result<Unit> = withContext(Dispatchers.IO) {
-        runCatching { eduIdApi.reverifyPhoneCode(ConfirmPhoneCode(phoneCode)) }.fold(
-            onSuccess = { processEmptyResponse(response = it) },
-            onFailure = { Result.failure(it) },
-        )
-    }
+    /** Returns the raw response on success as well as on HTTP failure, so the caller can apply any cookie updates. */
+    suspend fun reverifyPhoneCode(phoneCode: String, stepUpCookies: String): Pair<Result<Unit>, okhttp3.Response?> =
+        withContext(Dispatchers.IO) {
+            runCatching { eduIdApi.reverifyPhoneCode(stepUpCookies, ConfirmPhoneCode(phoneCode)) }.fold(
+                onSuccess = { processEmptyResponse(response = it) to it.raw() },
+                onFailure = { Result.failure<Unit>(it) to null },
+            )
+        }
 }
 
 private fun <T> Response<T>.bodyOrThrow(): T {
