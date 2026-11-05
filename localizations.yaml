@@ -957,6 +957,10 @@ SHARED:
       COPY:
         en: Other methods
         nl: Andere manieren
+    MobileApp:
+      COPY:
+        en: "eduID mobile App"
+        nl: "eduID mobiele app"
     RecoveryOptions:
       COPY:
         en: Recovery options
@@ -993,14 +997,14 @@ SHARED:
       COPY:
         en: Activated on %1{{s}}
         nl: Geactiveerd op %1{{s}}
-    Passkey:
-      COPY:
-        en: Passkey
-        nl: Passkey
     CredentialActivated:
       COPY:
         en: "%1{{s}}: Activated on %2{{s}}"
         nl: "%1{{s}}: Geactiveerd op %2{{s}}"
+    Passkey:
+      COPY:
+        en: Passkey
+        nl: Passkey
     TwoFAKey:
       COPY:
         en: Login with app
@@ -2407,10 +2411,6 @@ SHARED:
       COPY:
         en: No notification?
         nl: Geen melding?
-    NotificationsNotPossible:
-      COPY:
-        en: "Note: push notifications are disabled on this phone"
-        nl: "Let op: pushberichten zijn uitgeschakeld op deze telefoon"
     QrCodeLink:
       COPY:
         en: Create a QR-code
@@ -3614,6 +3614,19 @@ SHARED:
         COPY:
           en: "Close"
           nl: "Sluiten"
+    SessionExpired:
+      Title:
+        COPY:
+          en: "Session expired"
+          nl: "Sessie verlopen"
+      Description:
+        COPY:
+          en: "Your session has expired and you have been logged out. Please log in again."
+          nl: "Je sessie is verlopen en je bent uitgelogd. Log opnieuw in."
+      CloseButton:
+        COPY:
+          en: "OK"
+          nl: "OK"
   WelcomeToApp:
     Title:
       COPY:
