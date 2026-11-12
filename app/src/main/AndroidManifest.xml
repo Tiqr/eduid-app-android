@@ -81,10 +81,8 @@
         <activity
             android:name=".MainComposeActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:theme="@style/ComposeAppTheme"
-            android:windowSoftInputMode="adjustPan"
-            tools:ignore="LockedOrientationActivity">
+            android:windowSoftInputMode="adjustPan">
             <!--            Launcher is declared via the alias-->
             <intent-filter>
                 <action android:name="authorize_response" />
@@ -109,9 +107,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <!--All environments will use the same host for auth & enroll, not required to support subdomains-->
-                <data
-                    android:host="eduid.nl"
-                    android:scheme="https" />
+                <data android:scheme="https" />
+                <data android:host="eduid.nl" />
 
                 <!-- We accept the path both with and without the slash -->
                 <data android:path="/${tiqr_config_auth_path_param}" />
