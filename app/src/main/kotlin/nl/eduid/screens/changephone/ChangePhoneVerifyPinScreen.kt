@@ -1,5 +1,7 @@
 package nl.eduid.screens.changephone
 
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -96,10 +98,11 @@ private fun ChangePhoneVerifyPinContent(
     modifier = Modifier
         .fillMaxSize()
         .padding(padding)
+        .imePadding()
         .padding(horizontal = 24.dp),
     verticalArrangement = Arrangement.SpaceBetween,
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState())) {
         Text(
             text = stringResource(R.string.auth_pin_title),
             style = MaterialTheme.typography.titleLarge.copy(color = ColorMain_Green_400, textAlign = TextAlign.Start),
@@ -123,7 +126,6 @@ private fun ChangePhoneVerifyPinContent(
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .fillMaxWidth()
-            .imePadding()
             .navigationBarsPadding()
             .padding(bottom = 24.dp),
     ) {

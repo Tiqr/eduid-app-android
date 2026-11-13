@@ -1,5 +1,7 @@
 package nl.eduid.screens.created
 
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -115,7 +117,9 @@ private fun RequestEduIdCreatedContent(
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
+            .weight(1f)
             .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
     ) {
         Text(
             text = stringResource(R.string.CreateEduID_Created_MainTitleLabel_COPY),

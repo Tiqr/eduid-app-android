@@ -47,6 +47,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.constraintlayout.compose.ConstraintLayout
 import kotlinx.coroutines.launch
 import nl.eduid.R
@@ -70,7 +74,7 @@ fun HomePageNoAccountContent(
     onGoToConfirmDeactivation: (String) -> Unit = {},
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    var showBottomSheet by remember { mutableStateOf(false) }
+    var showBottomSheet by rememberSaveable { mutableStateOf(false) }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -215,10 +219,16 @@ fun HomePageNoAccountContent(
                 )
             }
         }
-        ConstraintLayout(
+        BoxWithConstraints(
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize()
+        ) {
+        ConstraintLayout(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = maxHeight)
+                .verticalScroll(rememberScrollState())
         ) {
             val (eduIdLogo, title, enrollLogo, requestEduIdButton, buttons) = createRefs()
             createVerticalChain(
@@ -334,6 +344,7 @@ fun HomePageNoAccountContent(
                     ),
                 )
             }
+        }
         }
     }
 }

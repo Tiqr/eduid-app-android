@@ -935,6 +935,7 @@
   <string name="LogInWithEmailCode_Problems_COPY">"Problemen?"</string>
   <string name="LogInWithEmailCode_ResendTheCode_COPY">"Stuur de code opnieuw"</string>
   <string name="LogInWithEmailCode_CodeHasBeenResent_COPY">"De code is opnieuw verzonden naar je e-mailadres."</string>
+  <string name="UseApp_NotificationsNotPossible_COPY">"Let op: pushberichten zijn uitgeschakeld op deze telefoon"</string>
   <string name="Button_OK_COPY">"OK"</string>
   <string name="Button_Cancel_COPY">"Annuleren"</string>
   <string name="Button_Retry_COPY">"Probeer opnieuw"</string>

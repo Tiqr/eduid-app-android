@@ -1,7 +1,6 @@
 package nl.eduid.screens.resetpasswordconfirm
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,7 +19,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -36,14 +34,12 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -53,6 +49,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
@@ -126,8 +123,7 @@ enum class Field {
 }
 
 @OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class, ExperimentalLayoutApi::class,
-    ExperimentalFoundationApi::class
+    ExperimentalLayoutApi::class,
 )
 @Composable
 fun ResetPasswordConfirmScreenContent(
@@ -146,8 +142,9 @@ fun ResetPasswordConfirmScreenContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
             .padding(padding)
+            .imePadding()
+            .verticalScroll(rememberScrollState())
             .navigationBarsPadding()
             .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
     ) {
@@ -179,15 +176,14 @@ fun ResetPasswordConfirmScreenContent(
         Text(
             style = MaterialTheme.typography.bodyLarge.copy(
                 textAlign =
-                TextAlign.Start
+                    TextAlign.Start
             ),
             text = stringResource(R.string.ChangePassword_Description_NewPassword_COPY),
             modifier = Modifier.fillMaxWidth()
         )
-        val bringIntoViewRequester = BringIntoViewRequester()
+        val bringIntoViewRequester = remember { BringIntoViewRequester() }
         Column(
             modifier = Modifier
-                .imePadding()
                 .bringIntoViewRequester(bringIntoViewRequester)
         ) {
             val coroutineScope = rememberCoroutineScope()

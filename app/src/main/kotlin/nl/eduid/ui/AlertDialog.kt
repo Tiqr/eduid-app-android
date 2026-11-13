@@ -9,13 +9,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.window.DialogProperties
 import nl.eduid.R
 import nl.eduid.ui.theme.ColorAlertRed
 import nl.eduid.ui.theme.ColorMain_Green_400
@@ -25,7 +24,7 @@ import nl.eduid.ui.theme.EduidAppAndroidTheme
 
 @Composable
 fun AlertDialogWithSingleButton(title: String, explanation: String, buttonLabel: String, onDismiss: () -> Unit = {}) {
-    val openDialog = remember { mutableStateOf(true) }
+    val openDialog = rememberSaveable { mutableStateOf(true) }
 
     if (openDialog.value) {
         AlertDialog(onDismissRequest = {
@@ -65,7 +64,7 @@ fun AlertDialogWithTwoButton(
     onDismiss: () -> Unit = {},
     onConfirm: () -> Unit = {},
 ) {
-    val openDialog = remember { mutableStateOf(true) }
+    val openDialog = rememberSaveable { mutableStateOf(true) }
 
     if (openDialog.value) {
         Box( // Box for scrim
@@ -117,7 +116,7 @@ fun AlertDialogWithTwoButton(
 
 @Composable
 fun DeleteServiceDialog(service: String, onDismiss: () -> Unit = {}, onConfirm: () -> Unit = {}) {
-    val openDialog = remember { mutableStateOf(true) }
+    val openDialog = rememberSaveable { mutableStateOf(true) }
 
     if (openDialog.value) {
         AlertDialog(onDismissRequest = {
@@ -156,7 +155,7 @@ fun DeleteServiceDialog(service: String, onDismiss: () -> Unit = {}, onConfirm: 
 
 @Composable
 fun RevokeTokenDialog(token: String, onDismiss: () -> Unit = {}, onConfirm: () -> Unit = {}) {
-    val openDialog = remember { mutableStateOf(true) }
+    val openDialog = rememberSaveable { mutableStateOf(true) }
 
     if (openDialog.value) {
         AlertDialog(onDismissRequest = {

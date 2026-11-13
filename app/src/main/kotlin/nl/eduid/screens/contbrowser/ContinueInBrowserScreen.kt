@@ -1,5 +1,7 @@
 package nl.eduid.screens.contbrowser
 
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -31,16 +33,18 @@ fun ContinueInBrowserScreen(
 ) = EduIdTopAppBar(
     withBackIcon = false
 ) {
-    ConstraintLayout(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(it)
             .navigationBarsPadding()
             .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
     ) {
-        val (bottomButton) = createRefs()
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
         ) {
             Text(
                 text = stringResource(R.string.WelcomeToApp_ReturnBrowserTitle_COPY),
@@ -72,9 +76,7 @@ fun ContinueInBrowserScreen(
             onClick = goHome,
             modifier = Modifier
                 .fillMaxWidth()
-                .constrainAs(bottomButton) {
-                    bottom.linkTo(parent.bottom)
-                },
+                .padding(top = 12.dp),
         )
     }
 }

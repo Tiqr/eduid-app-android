@@ -1,5 +1,7 @@
 package nl.eduid.screens.recovery.requestsms
 
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,7 +32,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -99,7 +100,7 @@ fun PhoneRequestCodeScreen(
 }
 
 @Composable
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class)
 private fun PhoneRequestCodeContent(
     uiState: UiState,
     isReVerification: Boolean = false,
@@ -116,7 +117,9 @@ private fun PhoneRequestCodeContent(
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
+            .weight(1f)
             .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
     ) {
         val keyboardController = LocalSoftwareKeyboardController.current
         val isKeyboardOpen by rememberUpdatedState(WindowInsets.isImeVisible)
