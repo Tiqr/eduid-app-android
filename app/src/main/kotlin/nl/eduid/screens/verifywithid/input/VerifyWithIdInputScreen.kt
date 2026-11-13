@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -88,9 +89,9 @@ fun VerifyWithIdInputScreenContent(
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
 
-    var firstName by remember { mutableStateOf(editCode?.firstName ?: "") }
-    var lastName by remember { mutableStateOf(editCode?.lastName ?: "") }
-    var dateOfBirth by remember { mutableStateOf(editCode?.dayOfBirth ?: "") }
+    var firstName by rememberSaveable { mutableStateOf(editCode?.firstName ?: "") }
+    var lastName by rememberSaveable { mutableStateOf(editCode?.lastName ?: "") }
+    var dateOfBirth by rememberSaveable { mutableStateOf(editCode?.dayOfBirth ?: "") }
 
     Column(
         modifier = Modifier

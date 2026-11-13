@@ -70,6 +70,7 @@ private fun DeleteAccountFirstConfirmScreenContent(
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
+            .weight(1f)
             .verticalScroll(rememberScrollState())
     ) {
         Text(

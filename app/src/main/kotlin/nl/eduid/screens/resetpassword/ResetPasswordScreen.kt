@@ -1,5 +1,7 @@
 package nl.eduid.screens.resetpassword
 
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -111,8 +113,7 @@ fun ResetPasswordScreenContent(
     verticalArrangement = Arrangement.SpaceBetween
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.Start,
     ) {
         if (inProgress) {

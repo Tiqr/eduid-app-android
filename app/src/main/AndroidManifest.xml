@@ -82,7 +82,7 @@
             android:name=".MainComposeActivity"
             android:exported="true"
             android:theme="@style/ComposeAppTheme"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustResize">
             <!--            Launcher is declared via the alias-->
             <intent-filter>
                 <action android:name="authorize_response" />

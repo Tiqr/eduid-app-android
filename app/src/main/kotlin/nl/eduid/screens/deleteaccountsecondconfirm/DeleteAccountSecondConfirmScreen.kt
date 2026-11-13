@@ -1,5 +1,7 @@
 package nl.eduid.screens.deleteaccountsecondconfirm
 
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -122,7 +124,11 @@ private fun DeleteAccountSecondConfirmScreenContent(
         )
     }
     Column(
-        horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()
+        horizontalAlignment = Alignment.Start,
+        modifier = Modifier
+            .weight(1f)
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
     ) {
         val keyboardController = LocalSoftwareKeyboardController.current
         val isKeyboardOpen by rememberUpdatedState(WindowInsets.isImeVisible)

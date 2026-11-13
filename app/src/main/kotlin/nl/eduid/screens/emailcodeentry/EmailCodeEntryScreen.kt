@@ -10,15 +10,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -141,9 +143,9 @@ fun EmailCodeEntryScreenContent(
     onBackClicked = onBackClicked
 ) {
     var codeValue by rememberSaveable { mutableStateOf("") }
-    var shouldShowKeyboard by remember { mutableStateOf(true) }
+    var shouldShowKeyboard by rememberSaveable { mutableStateOf(true) }
 
-    var showResendCodeOption by remember { mutableStateOf(false) }
+    var showResendCodeOption by rememberSaveable { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
@@ -205,8 +207,9 @@ fun EmailCodeEntryScreenContent(
         modifier = Modifier
             .fillMaxSize()
             .padding(it)
-            .padding(horizontal = 24.dp),
-        verticalArrangement = Arrangement.SpaceBetween
+            .imePadding()
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 24.dp)
     ) {
         Text(
             text = stringResource(R.string.LogInWithEmailCode_CheckYourEmail_COPY),
@@ -276,9 +279,6 @@ fun EmailCodeEntryScreenContent(
                 modifier = Modifier.fillMaxWidth()
             )
         }
-        Spacer(
-            modifier = Modifier.fillMaxHeight()
-        )
     }
 }
 

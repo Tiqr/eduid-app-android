@@ -1,5 +1,7 @@
 package nl.eduid.screens.deeplinks
 
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -84,6 +86,7 @@ private fun DeepLinkContent(
     modifier = Modifier
         .fillMaxSize()
         .padding(paddingValues)
+        .verticalScroll(rememberScrollState())
         .navigationBarsPadding()
         .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
 ) {

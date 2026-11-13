@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,7 +31,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import nl.eduid.R
 import nl.eduid.ui.EduIdTopAppBar
 import nl.eduid.ui.PrimaryButton
@@ -55,16 +56,18 @@ private fun WelcomeStartContent(
     padding: PaddingValues = PaddingValues(),
     onNext: () -> Unit = {},
 ) {
-    ConstraintLayout(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(padding)
             .navigationBarsPadding()
             .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
     ) {
-        val (bottomButton) = createRefs()
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
         ) {
             Text(
                 text = stringResource(R.string.WelcomeToApp_Title_COPY),
@@ -165,9 +168,7 @@ private fun WelcomeStartContent(
             onClick = onNext,
             modifier = Modifier
                 .fillMaxWidth()
-                .constrainAs(bottomButton) {
-                    bottom.linkTo(parent.bottom)
-                },
+                .padding(top = 12.dp),
         )
     }
 }
