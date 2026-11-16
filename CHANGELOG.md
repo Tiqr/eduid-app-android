@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/SURFnet/eduid-app-android/tree/HEAD)
 
+## 1.0.0
+- Add support for viewing and editing authentication methods to the app
+- Improve landscape mode support
+
 ## 0.3.2
 - Remove beep sound when scanning a QR code
 
