@@ -935,6 +935,7 @@
   <string name="LogInWithEmailCode_Problems_COPY">"Problems?"</string>
   <string name="LogInWithEmailCode_ResendTheCode_COPY">"Resend the code"</string>
   <string name="LogInWithEmailCode_CodeHasBeenResent_COPY">"The code has been resent to your email address."</string>
+  <string name="UseApp_NotificationsNotPossible_COPY">"Note: push notifications are disabled on this phone"</string>
   <string name="Button_OK_COPY">"OK"</string>
   <string name="Button_Cancel_COPY">"Cancel"</string>
   <string name="Button_Retry_COPY">"Retry"</string>

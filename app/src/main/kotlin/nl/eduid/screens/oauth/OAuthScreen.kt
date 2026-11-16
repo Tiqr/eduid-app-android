@@ -1,5 +1,7 @@
 package nl.eduid.screens.oauth
 
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Arrangement
@@ -105,7 +107,6 @@ private fun OAuthContent(
     dismissError: () -> Unit,
     onRetry: () -> Unit,
 ) {
-//    LogCompositions("Recomposition for OAuthContent")
     val context = LocalContext.current
     if (uiState.error != null) {
         AlertDialogWithSingleButton(
@@ -126,8 +127,7 @@ private fun OAuthContent(
     ) {
         Column(
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState())
         ) {
             Spacer(modifier = Modifier.height(40.dp))
             Text(

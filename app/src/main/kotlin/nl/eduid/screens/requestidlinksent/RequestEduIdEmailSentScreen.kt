@@ -1,5 +1,7 @@
 package nl.eduid.screens.requestidlinksent
 
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -62,51 +64,57 @@ fun RequestEduIdEmailSentScreen(
             .padding(horizontal = 24.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
-            text = stringResource(R.string.MagicLink_Header_COPY),
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(
-            modifier = Modifier.height(16.dp)
-        )
-
-        val reasonString = if (reasonExplanation == R.string.MagicLink_Info_COPY) {
-            "${stringResource(reasonExplanation)} $userEmail"
-        } else {
-            stringResource(reasonExplanation, userEmail)
-        }
-
-        val annotatedString = annotatedStringWithBoldParts(
-            reasonString,
-            userEmail
-        )
-
-        Text(
-            text = annotatedString,
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(
-            modifier = Modifier.height(32.dp)
-        )
-
-        CircularProgressIndicator(
+        Column(
             modifier = Modifier
-                .height(80.dp)
-                .width(80.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-        )
+                .weight(1f)
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+        ) {
+            Text(
+                text = stringResource(R.string.MagicLink_Header_COPY),
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.fillMaxWidth()
+            )
 
-        Spacer(
-            modifier = Modifier.height(32.dp)
-        )
+            Spacer(
+                modifier = Modifier.height(16.dp)
+            )
+
+            val reasonString = if (reasonExplanation == R.string.MagicLink_Info_COPY) {
+                "${stringResource(reasonExplanation)} $userEmail"
+            } else {
+                stringResource(reasonExplanation, userEmail)
+            }
+
+            val annotatedString = annotatedStringWithBoldParts(
+                reasonString,
+                userEmail
+            )
+
+            Text(
+                text = annotatedString,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(
+                modifier = Modifier.height(32.dp)
+            )
+
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .height(80.dp)
+                    .width(80.dp)
+                    .align(alignment = Alignment.CenterHorizontally)
+            )
+
+            Spacer(
+                modifier = Modifier.height(32.dp)
+            )
+        }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f, false)
                 .navigationBarsPadding()
                 .padding(bottom = 24.dp),
         ) {

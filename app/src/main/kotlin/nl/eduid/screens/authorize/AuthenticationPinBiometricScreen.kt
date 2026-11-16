@@ -1,5 +1,7 @@
 package nl.eduid.screens.authorize
 
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -98,7 +100,7 @@ private fun AuthenticationPinBiometricContent(
 ) {
     var isCheckingSecret by rememberSaveable { mutableStateOf(false) }
     var pinValue by rememberSaveable { mutableStateOf("") }
-    var shouldShowKeyboard by remember { mutableStateOf(!shouldPromptBiometric) }
+    var shouldShowKeyboard by rememberSaveable { mutableStateOf(!shouldPromptBiometric) }
     val owner = LocalLifecycleOwner.current
 
     if (isCheckingSecret && challengeComplete != null) {
@@ -171,7 +173,7 @@ private fun AuthenticationPinBiometricContent(
     }
 
     if (shouldPromptBiometric) {
-        var hasAutoRequestedBiometrics by remember {
+        var hasAutoRequestedBiometrics by rememberSaveable {
             mutableStateOf(false)
         }
         val launchBiometricSignIn = rememberLauncherForActivityResult(
@@ -196,13 +198,13 @@ private fun AuthenticationPinBiometricContent(
         modifier = Modifier
             .fillMaxSize()
             .padding(padding)
+            .imePadding()
             .padding(horizontal = 24.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column(
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState())
         ) {
             Text(
                 style = MaterialTheme.typography.titleLarge.copy(
@@ -236,7 +238,6 @@ private fun AuthenticationPinBiometricContent(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier
                 .fillMaxWidth()
-                .imePadding()
                 .navigationBarsPadding()
                 .padding(bottom = 24.dp)
         ) {

@@ -1,5 +1,7 @@
 package nl.eduid.screens.twofactorkeydelete
 
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -111,7 +113,7 @@ private fun TwoFactorKeyDeleteScreenContent(
         .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
     verticalArrangement = Arrangement.SpaceBetween
 ) {
-    Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.Start) {
+    Column(modifier = Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.Start) {
         Text(
             text = stringResource(R.string.TwoFactorKeys_DeleteKey_COPY),
             style = MaterialTheme.typography.titleLarge.copy(

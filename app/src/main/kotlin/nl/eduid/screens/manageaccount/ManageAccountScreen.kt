@@ -4,6 +4,8 @@ import android.app.DownloadManager
 import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -109,7 +111,11 @@ private fun ManageAccountScreenContent(
     verticalArrangement = Arrangement.SpaceBetween
 ) {
     Column(
-        horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()
+        horizontalAlignment = Alignment.Start,
+        modifier = Modifier
+            .weight(1f)
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
     ) {
         Text(
             text = stringResource(R.string.MyAccount_Title_COPY),
@@ -149,6 +155,7 @@ private fun ManageAccountScreenContent(
         )
     }
 
+    Spacer(Modifier.height(12.dp))
     Button(
         shape = RoundedCornerShape(CornerSize(6.dp)),
         onClick = onDeleteAccountPressed,

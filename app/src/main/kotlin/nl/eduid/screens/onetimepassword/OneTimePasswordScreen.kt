@@ -1,5 +1,7 @@
 package nl.eduid.screens.onetimepassword
 
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -10,7 +12,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -77,8 +78,7 @@ private fun OneTimePasswordContent(
     ) {
         Column(
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState())
         ) {
             Text(
                 style = MaterialTheme.typography.titleLarge.copy(
@@ -164,7 +164,6 @@ private fun OneTimePasswordContent(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier
                 .fillMaxWidth()
-                .imePadding()
                 .navigationBarsPadding()
                 .padding(bottom = 24.dp)
         ) {

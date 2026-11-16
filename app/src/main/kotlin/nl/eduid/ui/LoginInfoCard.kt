@@ -20,7 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,7 +46,7 @@ fun LoginInfoCard(
     onDeleteServiceClicked: () -> Unit = { },
     onRevokeTokenClicked: (scope: ScopeAccessGrant) -> Unit = { },
 ) {
-    var isExpanded by remember { mutableStateOf(isExpanded) }
+    var isExpanded by rememberSaveable { mutableStateOf(isExpanded) }
     val containerColor = if (isExpanded) ColorSupport_Blue_100 else MaterialTheme.colorScheme.surface
     val borderColor = if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
     val titleColor = if (isExpanded) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant

@@ -1,5 +1,7 @@
 package nl.eduid.screens.recovery.confirmsms
 
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -119,7 +121,9 @@ private fun ConfirmCodeContent(
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
+            .weight(1f)
             .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
     ) {
         Text(
             text = stringResource(R.string.PinAndBioMetrics_CheckMessages_COPY),

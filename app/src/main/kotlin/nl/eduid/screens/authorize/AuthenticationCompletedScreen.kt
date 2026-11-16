@@ -1,5 +1,7 @@
 package nl.eduid.screens.authorize
 
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -38,37 +40,43 @@ fun AuthenticationCompletedScreen(goHome: () -> Unit = {}) = EduIdTopAppBar(
             .padding(horizontal = 24.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
-            style = MaterialTheme.typography.titleLarge.copy(
-                textAlign = TextAlign.Start, color = ColorMain_Green_400
-            ),
-            text = stringResource(R.string.PinAndBioMetrics_LoginRequest_COPY),
-            modifier = Modifier.fillMaxWidth()
-        )
         Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
         ) {
-            Image(
-                painter = painterResource(R.drawable.ic_authorize_confirmed),
-                contentDescription = "",
-                modifier = Modifier.wrapContentSize(),
-                alignment = Alignment.Center
-            )
-
             Text(
-                text = stringResource(R.string.Profile_YouAreLoggedIn_COPY),
                 style = MaterialTheme.typography.titleLarge.copy(
-                    color = ColorMain_Green_400
+                    textAlign = TextAlign.Start, color = ColorMain_Green_400
                 ),
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center
+                text = stringResource(R.string.PinAndBioMetrics_LoginRequest_COPY),
+                modifier = Modifier.fillMaxWidth()
             )
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.ic_authorize_confirmed),
+                    contentDescription = "",
+                    modifier = Modifier.wrapContentSize(),
+                    alignment = Alignment.Center
+                )
+
+                Text(
+                    text = stringResource(R.string.Profile_YouAreLoggedIn_COPY),
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        color = ColorMain_Green_400
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
+            }
         }
         PrimaryButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f, false)
                 .navigationBarsPadding()
                 .padding(bottom = 24.dp),
             text = stringResource(R.string.Button_OK_COPY),

@@ -58,7 +58,12 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
+import android.content.res.Configuration
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import kotlinx.coroutines.launch
@@ -84,7 +89,8 @@ fun HomePageWithAccountContent(
     launchOAuth: () -> Unit = {},
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    var showBottomSheet by remember { mutableStateOf(false) }
+    var showBottomSheet by rememberSaveable { mutableStateOf(false) }
+    val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         val lifecycle = LocalLifecycleOwner.current.lifecycle
@@ -109,7 +115,7 @@ fun HomePageWithAccountContent(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                modifier = Modifier.padding(top = 42.dp, start = 26.dp, end = 26.dp),
+                modifier = Modifier.padding(top = if (isLandscape) 8.dp else 42.dp, start = 26.dp, end = 26.dp),
                 navigationIcon = {
                     IconButton(onClick = { showBottomSheet = true }) {
                         Icon(
@@ -188,7 +194,7 @@ private fun AccountContent(
     onSecurityClicked: () -> Unit = {},
     onActivityClicked: () -> Unit = {},
 ) {
-    var clickCount by remember { mutableIntStateOf(0) }
+    var clickCount by rememberSaveable { mutableIntStateOf(0) }
     val interactionSource = remember { MutableInteractionSource() }
     val bottomPadding = paddingValues.calculateBottomPadding()
     val context = LocalContext.current
@@ -198,59 +204,58 @@ private fun AccountContent(
         top = paddingValues.calculateTopPadding(),
         bottom = 0.dp
     )
-    ConstraintLayout(
+    val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
+    Column(
         modifier = Modifier
             .padding(paddingValuesWithoutBottom)
             .fillMaxSize()
     ) {
-        val (title, bottomColumn) = createRefs()
-
-        Text(
-            style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
-            text = buildAnnotatedString {
-                withStyle(style = SpanStyle(color = ColorMain_Green_400)) {
-                    append(stringResource(R.string.HomeView_MainText_FirstPart_COPY))
-                }
-                append("\n")
-                withStyle(style = SpanStyle(color = ColorScale_Gray_Black)) {
-                    append(stringResource(R.string.HomeView_MainText_SecondPart_COPY))
-                }
-            },
+        Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
-                .clickable(interactionSource = interactionSource, indication = null) {
-                    clickCount++
-                    if (clickCount % 5 == 0) {
-                        if (InAppUpdatesUtil.isTestingEnabled(context)) {
-                            InAppUpdatesUtil.setTestingEnabled(context, false)
-                            Toast.makeText(context, org.tiqr.data.R.string.app_update_testing_disabled, Toast.LENGTH_LONG).show()
-                        } else {
-                            InAppUpdatesUtil.setTestingEnabled(context, true)
-                            Toast.makeText(context, org.tiqr.data.R.string.app_update_testing_enabled, Toast.LENGTH_LONG).show()
-
+                .weight(1f)
+                .fillMaxWidth()
+        ) {
+            Text(
+                style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
+                text = buildAnnotatedString {
+                    withStyle(style = SpanStyle(color = ColorMain_Green_400)) {
+                        append(stringResource(R.string.HomeView_MainText_FirstPart_COPY))
+                    }
+                    append("\n")
+                    withStyle(style = SpanStyle(color = ColorScale_Gray_Black)) {
+                        append(stringResource(R.string.HomeView_MainText_SecondPart_COPY))
+                    }
+                },
+                modifier = Modifier
+                    .clickable(interactionSource = interactionSource, indication = null) {
+                        clickCount++
+                        if (clickCount % 5 == 0) {
+                            if (InAppUpdatesUtil.isTestingEnabled(context)) {
+                                InAppUpdatesUtil.setTestingEnabled(context, false)
+                                Toast.makeText(context, org.tiqr.data.R.string.app_update_testing_disabled, Toast.LENGTH_LONG).show()
+                            } else {
+                                InAppUpdatesUtil.setTestingEnabled(context, true)
+                                Toast.makeText(context, org.tiqr.data.R.string.app_update_testing_enabled, Toast.LENGTH_LONG).show()
+                            }
                         }
                     }
-                }
-                .fillMaxWidth()
-                .constrainAs(title) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(bottomColumn.top)
-                },
-        )
-
-        Column(
-            verticalArrangement = Arrangement.Bottom,
-            modifier = Modifier.constrainAs(bottomColumn) {
-                bottom.linkTo(parent.bottom)
-            },
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.medidate_image),
-                contentDescription = "",
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier
                     .fillMaxWidth()
-                    .offset(y = 1.dp)
+                    .verticalScroll(rememberScrollState()),
             )
+        }
+
+        Column(verticalArrangement = Arrangement.Bottom) {
+            if (!isLandscape) {
+                Image(
+                    painter = painterResource(id = R.drawable.medidate_image),
+                    contentDescription = "",
+                    contentScale = ContentScale.FillWidth,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .offset(y = 1.dp)
+                )
+            }
 
             Column(
                 Modifier

@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
@@ -117,6 +119,7 @@ fun EditNameFormContent(
     modifier = Modifier
         .fillMaxSize()
         .padding(padding)
+        .imePadding()
         .padding(horizontal = 24.dp),
     verticalArrangement = Arrangement.SpaceBetween
 ) {
@@ -131,7 +134,11 @@ fun EditNameFormContent(
         derivedStateOf { isGivenNameValid && isFamilyNameValid }
     }
     Column(
-        horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()
+        horizontalAlignment = Alignment.Start,
+        modifier = Modifier
+            .weight(1f)
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
     ) {
         val keyboardController = LocalSoftwareKeyboardController.current
         val focusRequester = remember { FocusRequester() }
@@ -195,7 +202,6 @@ fun EditNameFormContent(
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .fillMaxWidth()
-            .imePadding()
             .navigationBarsPadding()
             .padding(bottom = 24.dp),
     ) {

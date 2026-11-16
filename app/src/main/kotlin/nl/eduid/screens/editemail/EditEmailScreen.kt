@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
@@ -28,7 +30,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
+
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -103,7 +105,6 @@ fun EditEmailScreen(
     )
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EditEmailScreenContent(
     uiState: UiState,
@@ -115,13 +116,16 @@ fun EditEmailScreenContent(
     modifier = Modifier
         .fillMaxSize()
         .padding(padding)
+        .imePadding()
         .padding(horizontal = 24.dp),
     verticalArrangement = Arrangement.SpaceBetween
 ) {
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
+            .weight(1f)
             .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
     ) {
         val keyboardController = LocalSoftwareKeyboardController.current
         val focusRequester = remember { FocusRequester() }
@@ -176,7 +180,6 @@ fun EditEmailScreenContent(
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .fillMaxWidth()
-            .imePadding()
             .navigationBarsPadding()
             .padding(bottom = 24.dp),
     ) {

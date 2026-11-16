@@ -1,5 +1,7 @@
 package nl.eduid.screens.authorize
 
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -69,45 +71,51 @@ private fun RequestAuthenticationContent(
                 .padding(horizontal = 24.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(
-                style = MaterialTheme.typography.titleLarge.copy(
-                    textAlign = TextAlign.Start, color = ColorMain_Green_400
-                ),
-                text = stringResource(R.string.PinAndBioMetrics_LoginRequest_COPY),
-                modifier = Modifier.fillMaxWidth()
-            )
-            val loginQuestion = buildAnnotatedString {
-                pushStyle(
-                    MaterialTheme.typography.titleLarge.copy(
-                        color = ColorMain_Green_400
-                    ).toSpanStyle()
-                )
-                append(stringResource(R.string.PinAndBioMetrics_DoYouWantToLogInTo_COPY))
-                pop()
-                append("\n")
-                pushStyle(
-                    MaterialTheme.typography.titleLarge.copy(
-                        textAlign = TextAlign.Center
-                    ).toSpanStyle()
-                )
-                append(loginToService)
-                append("?")
-            }
-
-            Text(
-                text = loginQuestion,
+            Column(
                 modifier = Modifier
+                    .weight(1f)
                     .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally),
-                textAlign = TextAlign.Center,
-                lineHeight = 36.sp
-            )
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Text(
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        textAlign = TextAlign.Start, color = ColorMain_Green_400
+                    ),
+                    text = stringResource(R.string.PinAndBioMetrics_LoginRequest_COPY),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                val loginQuestion = buildAnnotatedString {
+                    pushStyle(
+                        MaterialTheme.typography.titleLarge.copy(
+                            color = ColorMain_Green_400
+                        ).toSpanStyle()
+                    )
+                    append(stringResource(R.string.PinAndBioMetrics_DoYouWantToLogInTo_COPY))
+                    pop()
+                    append("\n")
+                    pushStyle(
+                        MaterialTheme.typography.titleLarge.copy(
+                            textAlign = TextAlign.Center
+                        ).toSpanStyle()
+                    )
+                    append(loginToService)
+                    append("?")
+                }
+
+                Text(
+                    text = loginQuestion,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally),
+                    textAlign = TextAlign.Center,
+                    lineHeight = 36.sp
+                )
+            }
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier
                     .fillMaxWidth()
                     .navigationBarsPadding()
-                    .weight(1f, false)
                     .padding(bottom = 24.dp)
             ) {
                 SecondaryButton(

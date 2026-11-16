@@ -1,6 +1,11 @@
 ---
 # yamllint disable rule:line-length
 ANDROID:
+  UseApp:
+    NotificationsNotPossible:
+      COPY:
+        en: "Note: push notifications are disabled on this phone"
+        nl: "Let op: pushberichten zijn uitgeschakeld op deze telefoon"
   Button:
     OK:
       COPY:
